@@ -140,16 +140,22 @@ public class IndexController
 			
 			print_writers = CricketFunctions.processPrintWriter(session_configuration);
 			
-			this_scene.LoadScene("FULL-FRAME", print_writers, session_configuration);
-			this_scene.LoadScene("OVERLAYS", print_writers, session_configuration);
+			switch (select_broadcaster) {
+//			case "IPL_2024":
+			default:
+				this_scene.LoadScene("FULL-FRAME", print_writers, session_configuration);
+				this_scene.LoadScene("OVERLAYS", print_writers, session_configuration);
+				break;
+			}
 			
 			session_match.getMatch().setMatchFileName(selectedMatch);
-			session_match = CricketFunctions.populateMatchVariables(cricketService, CricketFunctions.readOrSaveMatchFile(CricketUtil.READ,CricketUtil.SETUP + "," + 
-					CricketUtil.MATCH + "," + CricketUtil.EVENT, session_match));			
+			session_match = CricketFunctions.populateMatchVariables(cricketService, 
+				CricketFunctions.readOrSaveMatchFile(CricketUtil.READ,CricketUtil.SETUP + "," + 
+				CricketUtil.MATCH + "," + CricketUtil.EVENT, session_match));			
 			session_match.getSetup().setMatchFileTimeStamp(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
 			
 			switch (select_broadcaster) {
-			case "ICC_U19_2024": case "IPL_2024":
+			case "ICC_U19_2024":
 
 				cricket_matches = CricketFunctions.getTournamentMatches(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + CricketUtil.MATCHES_DIRECTORY).listFiles(new FileFilter() {
 					@Override
@@ -159,7 +165,10 @@ public class IndexController
 				    }
 				}), cricketService);
 				session_statistics = cricketService.getAllStats();
-				past_tournament_stats = CricketFunctions.extractTournamentStats("PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
+				past_tournament_stats = CricketFunctions.extractTournamentStats(
+					"PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
+				this_caption = new Caption(print_writers, session_configuration, session_statistics, 
+					cricketService.getAllStatsType(), cricket_matches);
 				break;
 			}
 			show_speed = true;
@@ -209,7 +218,8 @@ public class IndexController
 			
 			session_statistics = cricketService.getAllStats();
 			past_tournament_stats = CricketFunctions.extractTournamentStats("PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
-
+			this_caption = new Caption(print_writers, session_configuration, session_statistics, 
+					cricketService.getAllStatsType(), cricket_matches);
 			session_match = CricketFunctions.populateMatchVariables(cricketService, CricketFunctions.readOrSaveMatchFile(
 				CricketUtil.READ,CricketUtil.SETUP, session_match));
 			
@@ -241,8 +251,9 @@ public class IndexController
 			if(whatToProcess.contains("GRAPHICS-OPTIONS")) {
 				return JSONObject.fromObject(GetGraphicOption(whatToProcess)).toString();
 			}else if(whatToProcess.contains("POPULATE-GRAPHICS")) {
-				all_ok_status = this_caption.PopulateGraphics(Integer.valueOf(valueToProcess), whichSide, 
-						print_writers, session_configuration);
+				all_ok_status = this_caption.PopulateGraphics(Integer.valueOf(valueToProcess), whichSide, session_match,
+					session_match.getMatch().getInning().stream().filter(
+					inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null).getInningNumber());
 				return all_ok_status;
 			}else if(whatToProcess.contains("ANIMATE-IN-GRAPHICS")) {
 				if(whichSide == 1) {
@@ -251,7 +262,9 @@ public class IndexController
 				} else {
 					this_animation.ChangeOn(Integer.valueOf(valueToProcess), whichSide, print_writers, session_configuration);
 					// Animation delay
-					all_ok_status = this_caption.PopulateGraphics(Integer.valueOf(valueToProcess), 1, print_writers, session_configuration);
+					all_ok_status = this_caption.PopulateGraphics(Integer.valueOf(valueToProcess), 1, session_match,
+						session_match.getMatch().getInning().stream().filter(
+						inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null).getInningNumber());
 					this_animation.CutBack(Integer.valueOf(valueToProcess), whichSide, print_writers, session_configuration);
 				}
 			}else if(whatToProcess.contains("CLEAR-ALL")) {
