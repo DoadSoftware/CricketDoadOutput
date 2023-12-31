@@ -3,7 +3,9 @@ package com.cricket.captions;
 import java.io.PrintWriter;
 import java.util.List;
 import com.cricket.containers.LowerThird;
+import com.cricket.model.BattingCard;
 import com.cricket.model.Configuration;
+import com.cricket.model.Inning;
 import com.cricket.model.MatchAllData;
 import com.cricket.model.Player;
 import com.cricket.model.Statistics;
@@ -25,6 +27,9 @@ public class Caption
 	public List<StatsType> statsTypes;
 	public List<MatchAllData> tournament_matches;
 	
+	
+	public BattingCard battingCard;
+	public Inning inning;
 	public Player player;
 	public Statistics stat;
 	public StatsType statsType;
@@ -49,7 +54,7 @@ public class Caption
 	{
 		switch (whatToProcess) {
 		case 1: // Scorecard FF
-			return PopulateScorecardFF(WhichSide, matchAllData, WhichInning);
+			return PopulateScorecardFF(WhichSide, whatToProcess, matchAllData, WhichInning);
 		case 2: // Bowling FF
 			return PopulateBowlingCardFF(WhichSide, matchAllData, WhichInning);
 		case 7: // L3rd Profile
@@ -104,7 +109,7 @@ public class Caption
 	{
 		for(PrintWriter print_writer : print_writers) {
 			switch (config.getBroadcaster().toUpperCase()) {
-			case "ICC-U19-2023":
+			case Constants.ICC_U19_2023:
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$BattingCard$Info$ExtrasGrp$Extras*GEOM*TEXT SET " 
 					+ lowerThird.getFirstName()  + "\0");
 				// on error return CricketUtil.NO;
@@ -121,7 +126,7 @@ public class Caption
 	{
 		for(PrintWriter print_writer : print_writers) {
 			switch (config.getBroadcaster().toUpperCase()) {
-			case "ICC-U19-2023":
+			case Constants.ICC_U19_2023:
 				//Show number of sublines
 				for(int iSubLine = 1; iSubLine <= lowerThird.getNumberOfSubLines(); iSubLine++) {
 					
@@ -175,7 +180,7 @@ public class Caption
 	{
 		for(PrintWriter print_writer : print_writers) {
 			switch (config.getBroadcaster().toUpperCase()) {
-			case "ICC-U19-2023":
+			case Constants.ICC_U19_2023:
 				switch (whatToProcess) {
 				case 7: // L3rd Profile
 					for(int iStat = 0; iStat <= 3; iStat++) {
@@ -196,76 +201,221 @@ public class Caption
 		}
 		return CricketUtil.YES;
 	}
-	public String PopulateScorecardFF(int WhichSide, MatchAllData matchAllData, int WhichInning)
+	public String PopulateScorecardFF(int WhichSide, int whatToProcess, MatchAllData matchAllData, int WhichInning)
 	{
-		for(PrintWriter print_writer : print_writers) {
-			if(PopulateFfHeader(WhichSide, matchAllData, WhichInning).equalsIgnoreCase(CricketUtil.YES)) {
-				switch (config.getBroadcaster().toUpperCase()) {
-				case "ICC-U19-2023":
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$BattingCard$Info$ExtrasGrp$Extras*GEOM*TEXT SET " 
-						+ matchAllData.getSetup().getHomeTeam().getTeamName1()  + "\0");
-					// on error return CricketUtil.NO;
-					break;
-//				case "IPL-2023":
-//					print_writer.println("-1 RENDERER*TREE*$Main$BattingCard$Info$ExtrasGrp$Extras*GEOM*TEXT SET " 
-//							+ matchAllData.getSetup().getHomeTeam().getTeamName1()  + "\0");
-//					break;
-				}
+		if(PopulateFfHeader(WhichSide, whatToProcess, matchAllData, WhichInning).equalsIgnoreCase(CricketUtil.YES)) {
+			if(PopulateFfBody(WhichSide, whatToProcess, matchAllData, WhichInning).equalsIgnoreCase(CricketUtil.YES)) {
+				return PopulateFfFooter(WhichSide, whatToProcess, matchAllData, WhichInning);
 			} else {
 				return CricketUtil.NO;
 			}
-			return PopulateFfFooter(WhichSide, matchAllData, WhichInning);
+		} else {
+			return CricketUtil.NO;
 		}
-		return CricketUtil.YES;
 	}
 	public String PopulateBowlingCardFF(int WhichSide, MatchAllData matchAllData, int WhichInning)
 	{
-		for(PrintWriter print_writer : print_writers) {
-			PopulateFfHeader(WhichSide, matchAllData, WhichInning);
+		return CricketUtil.YES;
+	}
+	public String PopulateFfHeader(int WhichSide, int whatToProcess, MatchAllData matchAllData, int WhichInning) 
+	{
+		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
+			return CricketUtil.NO;
+		} else {
+
 			switch (config.getBroadcaster().toUpperCase()) {
-			case "ICC-U19-2023":
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$BattingCard$Info$ExtrasGrp$Extras*GEOM*TEXT SET " 
-						+ matchAllData.getSetup().getHomeTeam().getTeamName1()  + "\0");
-				// on error return CricketUtil.NO;
+			case Constants.ICC_U19_2023:
+				
+				switch (whatToProcess) {
+				case 1: // Scorecard
+				
+					inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == WhichInning)
+						.findAny().orElse(null);
+					
+					if(inning != null) {
+						for(PrintWriter print_writer : print_writers) {
+							
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side" 
+								+ WhichSide + "$Flag$Image*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + inning.getBatting_team().getTeamLogo() + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side"
+								+ WhichSide + "$Select_HeaderTop*FUNCTION*Omo*vis_con SET 0 \0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side"
+								+ "$Select_HeaderTop$Big_First$txt_Team_1*GEOM*TEXT SET " + inning.getBatting_team().getTeamName1() +"\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side"
+								+ "$Select_HeaderTop$Big_First$txt_Team_2*GEOM*TEXT SET " + inning.getBowling_team().getTeamName1() +"\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side"
+								+ "$Bottom$txt_Subheader*GEOM*TEXT SET " + matchAllData.getSetup().getMatchIdent().toUpperCase() +"\0");
+							
+						}
+					} else {
+						return CricketUtil.NO;
+					}
+					break;
+				}
 				break;
-//			case "IPL-2023":
-//				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$BattingCard$Info$ExtrasGrp$Extras*GEOM*TEXT SET " 
-//						+ matchAllData.getSetup().getHomeTeam().getTeamName1()  + "\0");
-//				break;
 			}
-			PopulateFfFooter(WhichSide, matchAllData, WhichInning);
+			
 		}
 		return CricketUtil.YES;
 	}
-	public String PopulateFfHeader(int WhichSide, MatchAllData matchAllData, int WhichInning) 
+	public String PopulateFfBody(int WhichSide, int whatToProcess, MatchAllData matchAllData, int WhichInning) 
 	{
-		for(PrintWriter print_writer : print_writers) {
-			switch (config.getBroadcaster().toUpperCase()) {
-			case "ICC-U19-2023":
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$BattingCard$Info$ExtrasGrp$Extras*GEOM*TEXT SET " 
-						+ matchAllData.getMatch().getInning().get(WhichInning-1).getTotalRuns()  + "\0");
+		String container_name = "", how_out_txt = "";
+		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
+			return CricketUtil.NO;
+		} else {
+			switch (whatToProcess) {
+			case 1: // Scorecard
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.ICC_U19_2023:
+
+					inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == WhichInning).findAny().orElse(null);
+					if(inning == null) {
+						return CricketUtil.NO;
+					}
+					for(PrintWriter print_writer : print_writers) {
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Select_GraphicsType*FUNCTION*Omo*vis_con SET 1 \0");
+						for(int iRow = 1; iRow <= inning.getBattingCard().size(); iRow++) {
+							switch (inning.getBattingCard().get(iRow-1).getStatus().toUpperCase()) {
+							case CricketUtil.STILL_TO_BAT:
+								
+								if(inning.getBattingCard().get(iRow-1).getHowOut() == null) {
+
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+										+ "$Batting_Card$Rows$" + iRow + "$BattingData$Select_Row_Type*FUNCTION*Omo*vis_con SET 0 \0");
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+										+ "$Batting_Card$Rows$" + iRow + "$BattingData$Select_Row_Type$Still_To_Bat$Data$Name$txt_BatterName*GEOM*TEXT SET "
+										+ inning.getBattingCard().get(iRow-1).getPlayer().getTicker_name().toUpperCase() + "\0");
+									
+								} else {
+									
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+										+ "$Batting_Card$Rows$" + iRow + "$BattingData$Select_Row_Type*FUNCTION*Omo*vis_con SET 1 \0");
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+										+ "$Batting_Card$Rows$" + iRow + "$BattingData$Select_Row_Type$Out$Data$Name$txt_BatterName*GEOM*TEXT SET "
+										+ inning.getBattingCard().get(iRow-1).getPlayer().getTicker_name().toUpperCase() + "\0");
+									
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+										+ "$Batting_Card$Rows$" + iRow + "$BattingData$Select_Row_Type$Out$Data$How_Out_1$txt_OutType*GEOM*TEXT SET "
+										+ inning.getBattingCard().get(iRow-1).getHowOut().replace("_", " ").toLowerCase() + "\0");
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+										+ "$Batting_Card$Rows$" + iRow + "$BattingData$Select_Row_Type$Out$Data$How_Out_1$txt_FielderName*GEOM*TEXT SET \0");
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+										+ "$Batting_Card$Rows$" + iRow + "$BattingData$Select_Row_Type$Out$Data$How_Out_2$txt_Bold*GEOM*TEXT SET \0");
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+										+ "$Batting_Card$Rows$" + iRow + "$BattingData$Select_Row_Type$Out$Data$How_Out_2$txt_BowlerName*GEOM*TEXT SET \0");
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+										+ "$Batting_Card$Rows$" + iRow + "$BattingData$Select_Row_Type$Out$Data$Runs$txt_Runs*GEOM*TEXT SET " 
+										+ inning.getBattingCard().get(iRow-1).getRuns() + "\0");
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+										+ "$Batting_Card$Rows$" + iRow + "$BattingData$Select_Row_Type$Out$Data$Balls$txt_Balls*GEOM*TEXT SET " 
+										+ String.valueOf(inning.getBattingCard().get(iRow-1).getBalls()) + "\0");
+
+								}
+								break;
+								
+							default:
+								
+								how_out_txt = CricketFunctions.processHowOutText(how_out_txt, inning.getBattingCard().get(iRow-1));
+								
+								if(how_out_txt.split("|").length >= 4) {
+									
+									switch (inning.getBattingCard().get(iRow-1).getStatus().toUpperCase()) {
+									case CricketUtil.OUT:
+										print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+											+ "$Batting_Card$Rows$" + iRow + "$BattingData$Select_Row_Type*FUNCTION*Omo*vis_con SET 1 \0");
+										container_name = "Out";
+										break;
+									case CricketUtil.NOT_OUT:
+										print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+											+ "$Batting_Card$Rows$" + iRow + "$BattingData$Select_Row_Type*FUNCTION*Omo*vis_con SET 2 \0");
+										container_name = "Not_Out";
+										break;
+									}
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+										+ "$Batting_Card$Rows$" + iRow + "$BattingData$Select_Row_Type*FUNCTION*Omo*vis_con SET 1 \0");
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+										+ "$Batting_Card$Rows$" + iRow + "$BattingData$Select_Row_Type$" + container_name + "$Data$Name$txt_BatterName*GEOM*TEXT SET "
+										+ inning.getBattingCard().get(iRow-1).getPlayer().getTicker_name().toUpperCase() + "\0");
+										
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+										+ "$Batting_Card$Rows$" + iRow + "$BattingData$Select_Row_Type$" + container_name + 
+										"$Data$How_Out_1$txt_OutType*GEOM*TEXT SET " + how_out_txt.split("|")[0] + "\0");
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+										+ "$Batting_Card$Rows$" + iRow + "$BattingData$Select_Row_Type$" + container_name 
+										+ "$Data$How_Out_1$txt_FielderName*GEOM*TEXT SET " + how_out_txt.split("|")[1] + "\0");
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+										+ "$Batting_Card$Rows$" + iRow + "$BattingData$Select_Row_Type$" + container_name 
+										+ "$Data$How_Out_2$txt_Bold*GEOM*TEXT SET " + how_out_txt.split("|")[2] + "\0");
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+										+ "$Batting_Card$Rows$" + iRow + "$BattingData$Select_Row_Type$" + container_name 
+										+ "$Data$How_Out_2$txt_BowlerName*GEOM*TEXT SET " + how_out_txt.split("|")[3] + "\0");
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+										+ "$Batting_Card$Rows$" + iRow + "$BattingData$Select_Row_Type$" + container_name + "$Data$Runs$txt_Runs*GEOM*TEXT SET " 
+										+ inning.getBattingCard().get(iRow-1).getRuns() + "\0");
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+										+ "$Batting_Card$Rows$" + iRow + "$BattingData$Select_Row_Type$" + container_name + "$Data$Balls$txt_Balls*GEOM*TEXT SET " 
+										+ String.valueOf(inning.getBattingCard().get(iRow-1).getBalls()) + "\0");
+									
+								} else {
+									
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+										+ "$Batting_Card$Rows$" + iRow + "$BattingData$Select_Row_Type*FUNCTION*Omo*vis_con SET 0 \0");
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+										+ "$Batting_Card$Rows$" + iRow + "$BattingData$Select_Row_Type$Still_To_Bat$Data$Name$txt_BatterName*GEOM*TEXT SET \0");
+								
+								}
+								break;
+							}
+						}
+					}
+					break;
+				}
 				break;
-//			case "IPL-2023":
-//				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$BattingCard$Info$ExtrasGrp$Extras*GEOM*TEXT SET " 
-//						+ matchAllData.getSetup().getHomeTeam().getTeamName1()  + "\0");
-//				break;
 			}
 		}
 		return CricketUtil.YES;
 	}
-	public String PopulateFfFooter(int WhichSide, MatchAllData matchAllData, int WhichInning) 
+	public String PopulateFfFooter(int WhichSide, int whatToProcess, MatchAllData matchAllData, int WhichInning) 
 	{
-		for(PrintWriter print_writer : print_writers) {
+		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
+			return CricketUtil.NO;
+		} else {
+
 			switch (config.getBroadcaster().toUpperCase()) {
-			case "ICC-U19-2023":
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$BattingCard$Info$ExtrasGrp$Extras*GEOM*TEXT SET " 
-						+ matchAllData.getMatch().getInning().get(WhichInning-1).getTotalRuns()  + "\0");
+			case Constants.ICC_U19_2023:
+				
+				switch (whatToProcess) {
+				case 1: // Scorecard
+
+					inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == WhichInning).findAny().orElse(null);
+				
+					if(inning != null) {
+						for(PrintWriter print_writer : print_writers) {
+							
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Footer$Select_FooterType*FUNCTION*Omo*vis_con SET 1 \0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Footer$Select_FooterType$Score$Data$Side" 
+								+ WhichSide + "$Overs$txt_Overs_Value*GEOM*TEXT SET " + CricketFunctions.OverBalls(inning.getTotalOvers(),inning.getTotalBalls()) + "\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Footer$Select_FooterType$Score$Data$Side" 
+								+ WhichSide + "$Extras$txt_Extras_Value*GEOM*TEXT SET " + inning.getTotalExtras() + "\0");
+							if(matchAllData.getSetup().getTargetOvers() != null) {
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Footer$Select_FooterType$Score$Data$Side"
+									+ WhichSide + "$Overs$txt_Overs_2*GEOM*TEXT SET " + matchAllData.getSetup().getTargetOvers() + "\0");
+							}else {
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Footer$Select_FooterType$Score$Data$Side"
+										+ WhichSide + "$Overs$txt_Overs_2*GEOM*TEXT SET " + matchAllData.getSetup().getMaxOvers() + "\0");
+							}
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Footer$Select_FooterType$Score$Data$Side"
+									+ WhichSide + "$Overs$txt_Overs_2*GEOM*TEXT SET " + CricketFunctions.getTeamScore(inning, "-", false) + "\0");
+						}
+					} else {
+						return CricketUtil.NO;
+					}
+					break;
+				}
 				break;
-//			case "IPL-2023":
-//				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$BattingCard$Info$ExtrasGrp$Extras*GEOM*TEXT SET " 
-//						+ matchAllData.getSetup().getHomeTeam().getTeamName1()  + "\0");
-//				break;
 			}
+			
 		}
 		return CricketUtil.YES;
 	}
