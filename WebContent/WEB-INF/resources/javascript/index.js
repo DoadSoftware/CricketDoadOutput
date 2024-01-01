@@ -88,17 +88,54 @@ function processUserSelection(whichInput)
 			$('label[for=qtPortNumber], input#qtPortNumber').hide();
 		}
 		break;
+	case 'load_scene_btn':
+      	document.initialise_form.submit();
+		break;
+	case 'populate_namesuper_btn':
+		case 'populate_namesuper_btn':
+		processCricketProcedures("POPULATE-GRAPHICS", 121 + ',' + $('#selectNameSuper option:selected').val());
+		break;
 	}	
 }
 function processUserSelectionData(whatToProcess,dataToProcess){
 	switch (whatToProcess) {
 	case 'LOGGER_FORM_KEYPRESS':
 		switch(dataToProcess) {
-		case 1: case 2:
+		case 'SPEED':
+			processCricketProcedures('SHOW_SPEED');
+			break;
+		case 'RE_READ_DATA':
+			processCricketProcedures('RE_READ_DATA');
+			break;
+		case 32:
+			processCricketProcedures('CLEAR-ALL');
+			break;
+		case 49: case 50: case 51: case 52:
+			if(session_match.setup.maxOvers > 0){
+				switch (dataToProcess) {
+				case 51: case 52: // Key 1 to 4
+					alert("3rd and 4th inning NOT available in a limited over match");
+					return false;
+				}				
+			}
+			document.getElementById('which_keypress').value = parseInt(dataToProcess) - 48;
+			document.getElementById('selected_inning').innerHTML = 'Selected Inning: ' + (parseInt(dataToProcess) - 48);
+			break;
+			
+		case 189:
+			if(confirm('It will Also Delete Your Preview from Directory...\r\n \r\nAre You Sure To Animate Out? ') == true){
+				processCricketProcedures('ANIMATE-OUT');
+			}
+			break;
+		case 77:
 			processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 			break;
-		case 101: // NAME SUPER
-			processCricketProcedures("NAME-SUPER-GRAPHICS-OPTIONS", dataToProcess);
+		case 112:
+			dataToProcess = dataToProcess + ',' + document.getElementById('which_keypress').value;
+			processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
+			break;
+		case 121: // NAME SUPER
+			processCricketProcedures("NAMESUPER-GRAPHICS-OPTIONS", dataToProcess);
 			break;
 		}
 		break;
@@ -139,15 +176,89 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 				}
 				break;
 			default:
-				if(whatToProcess.contains('GRAPHICS-OPTIONS')) {
-					initialiseForm(whatToProcess,data);
-				}else if(whatToProcess.contains('POPULATE-GRAPHICS')) {
-					if(data == 'YES') {
-						processCricketProcedures(whatToProcess.replace('POPULATE-', 'ANIMATE-IN'));
+				if(whatToProcess == 'POPULATE-GRAPHICS') {
+					if(data == true) {
+						if(confirm('Animate In?') == true){
+							processCricketProcedures(whatToProcess.replace('POPULATE-', 'ANIMATE-IN-'),dataToProcess);
+						}
+					}else if(data == false){
+						alert('HAVE A ISSUE IN DATA FILLING');
 					}
+				}else if(whatToProcess == 'NAMESUPER-GRAPHICS-OPTIONS'){
+					addItemsToList('NAMESUPER-OPTION',data);
 				}
 				break;
 			}
 		}
 	});
+}
+function addItemsToList(whatToProcess,dataToProcess)
+{
+	var select,option,header_text,div,table,tbody,row,max_cols;
+	var cellCount = 0;
+	
+	
+	switch(whatToProcess) {
+	case 'NAMESUPER-OPTION':
+		$('#captions_div').empty();
+	
+		header_text = document.createElement('h6');
+		header_text.innerHTML = 'Select Graphic Options';
+		document.getElementById('select_graphic_options_div').appendChild(header_text);
+		
+		table = document.createElement('table');
+		table.setAttribute('class', 'table table-bordered');
+				
+		tbody = document.createElement('tbody');
+
+		table.appendChild(tbody);
+		document.getElementById('select_graphic_options_div').appendChild(table);
+		
+		row = tbody.insertRow(tbody.rows.length);
+		
+		switch(whatToProcess) {
+		case 'NAMESUPER-OPTION':
+			select = document.createElement('select');
+		
+				select.style = 'width:130px';
+				select.id = 'selectNameSuper';
+				select.name = select.id;
+				
+				dataToProcess.forEach(function(ns,index,arr1){
+					option = document.createElement('option');
+					option.value = ns.namesuperId;
+					option.text = ns.prompt ;
+					select.appendChild(option);
+				});
+				
+				row.insertCell(cellCount).appendChild(select);
+				cellCount = cellCount + 1;
+				
+				option = document.createElement('input');
+				option.type = 'button';
+				option.name = 'populate_namesuper_btn';
+			    option.value = 'Populate Namesuper';
+			    option.id = option.name;
+			    option.setAttribute('onclick',"processUserSelection(this)");
+			    
+			    div = document.createElement('div');
+			    div.append(option);
+		
+				option = document.createElement('input');
+				option.type = 'button';
+				option.name = 'cancel_graphics_btn';
+				option.id = option.name;
+				option.value = 'Cancel';
+				option.setAttribute('onclick','processUserSelection(this)');
+		
+			    div.append(option);
+			    
+			    row.insertCell(cellCount).appendChild(div);
+			    cellCount = cellCount + 1;
+			    
+				document.getElementById('select_graphic_options_div').style.display = '';
+			break;
+		}  
+		break;
+	}
 }

@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.List;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+
+import org.openqa.selenium.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -28,7 +30,10 @@ import com.cricket.captions.Animation;
 import com.cricket.captions.Caption;
 import com.cricket.captions.Scene;
 import com.cricket.model.Configuration;
+import com.cricket.model.EventFile;
+import com.cricket.model.Match;
 import com.cricket.model.MatchAllData;
+import com.cricket.model.Setup;
 import com.cricket.model.Statistics;
 import com.cricket.model.Tournament;
 import com.cricket.service.CricketService;
@@ -36,6 +41,9 @@ import com.cricket.util.CricketFunctions;
 import com.cricket.util.CricketUtil;
 import com.fasterxml.jackson.core.exc.StreamWriteException;
 import com.fasterxml.jackson.databind.DatabindException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @Controller
@@ -134,19 +142,37 @@ public class IndexController
 			whichSide = 1;
 			graphicOnScreen = 0;
 			
-			session_configuration = new Configuration(selectedMatch, select_broadcaster,qtIPAddress, qtPortNumber,qtScene, 
-				qtLanguage, vizIPAddress, vizPortNumber, vizScene, vizLanguage, 
-				vizSecondaryIPAddress, vizSecondaryPortNumber, vizSecondaryScene, vizSecondaryLanguage, 
-				vizTertiaryIPAddress, vizTertiaryPortNumber, vizTertiaryScene, vizTertiaryLanguage); 
+			session_configuration = new Configuration(selectedMatch, select_broadcaster,qtIPAddress, qtPortNumber,qtScene, qtLanguage, vizIPAddress, vizPortNumber, vizScene, 
+				vizLanguage,vizSecondaryIPAddress, vizSecondaryPortNumber, vizSecondaryScene, vizSecondaryLanguage,vizTertiaryIPAddress, vizTertiaryPortNumber,
+				vizTertiaryScene, vizTertiaryLanguage); 
+			
+			JAXBContext.newInstance(Configuration.class).createMarshaller().marshal(session_configuration, 
+					new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.CONFIGURATIONS_DIRECTORY + configuration_file_name));
 			
 			print_writers = CricketFunctions.processPrintWriter(session_configuration);
+			
+			this_scene = new Scene();
+			this_animation = new Animation();
 			
 			switch (select_broadcaster) {
 //			case "IPL_2024":
 			default:
-				this_scene.LoadScene("FULL-FRAME", print_writers, session_configuration);
+				this_scene.LoadScene("FULL-FRAMERS", print_writers, session_configuration);
 				this_scene.LoadScene("OVERLAYS", print_writers, session_configuration);
 				break;
+			}
+			
+			session_match = new MatchAllData();
+			
+			if(new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.SETUP_DIRECTORY + selectedMatch).exists()) {
+				session_match.setSetup(new ObjectMapper().readValue(new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.SETUP_DIRECTORY + 
+						selectedMatch), Setup.class));
+				session_match.setMatch(new ObjectMapper().readValue(new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.MATCHES_DIRECTORY + 
+						selectedMatch), Match.class));
+			}
+			if(new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.EVENT_DIRECTORY + selectedMatch).exists()) {
+				session_match.setEventFile(new ObjectMapper().readValue(new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.EVENT_DIRECTORY + 
+						selectedMatch), EventFile.class));
 			}
 			
 			session_match.getMatch().setMatchFileName(selectedMatch);
@@ -156,7 +182,7 @@ public class IndexController
 			session_match.getSetup().setMatchFileTimeStamp(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
 			
 			switch (select_broadcaster) {
-			case "ICC_U19_2024":
+			case "ICC-U19-2023":
 
 				cricket_matches = CricketFunctions.getTournamentMatches(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + CricketUtil.MATCHES_DIRECTORY).listFiles(new FileFilter() {
 					@Override
@@ -169,7 +195,7 @@ public class IndexController
 				past_tournament_stats = CricketFunctions.extractTournamentStats(
 					"PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
 				this_caption = new Caption(print_writers, session_configuration, session_statistics, 
-					cricketService.getAllStatsType(), cricket_matches);
+					cricketService.getAllStatsType(), cricket_matches,cricketService);
 				break;
 			}
 			show_speed = true;
@@ -197,7 +223,7 @@ public class IndexController
 		@RequestParam(value = "valueToProcess", required = false, defaultValue = "") String valueToProcess) 
 					throws Exception 
 	{
-		String all_ok_status = CricketUtil.NO;
+		boolean all_ok_status = false;
 		
 		switch (whatToProcess.toUpperCase()) {
 		case "GET-CONFIG-DATA":
@@ -219,8 +245,9 @@ public class IndexController
 			
 			session_statistics = cricketService.getAllStats();
 			past_tournament_stats = CricketFunctions.extractTournamentStats("PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
-			this_caption = new Caption(print_writers, session_configuration, session_statistics, 
-					cricketService.getAllStatsType(), cricket_matches);
+			
+			this_caption = new Caption(print_writers, session_configuration, session_statistics, cricketService.getAllStatsType(), cricket_matches,cricketService);
+			
 			session_match = CricketFunctions.populateMatchVariables(cricketService, CricketFunctions.readOrSaveMatchFile(
 				CricketUtil.READ,CricketUtil.SETUP, session_match));
 			
@@ -250,31 +277,36 @@ public class IndexController
 		default:
 			
 			if(whatToProcess.contains("GRAPHICS-OPTIONS")) {
-				return JSONObject.fromObject(GetGraphicOption(whatToProcess)).toString();
-			}else if(whatToProcess.contains("POPULATE-GRAPHICS")) {
-				all_ok_status = this_caption.PopulateGraphics(valueToProcess, whichSide, session_match,
-					session_match.getMatch().getInning().stream().filter(
-					inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null).getInningNumber());
-				return all_ok_status;
-			}else if(whatToProcess.contains("ANIMATE-IN-GRAPHICS")) {
+				return JSONArray.fromObject(GetGraphicOption(whatToProcess)).toString();
+			}
+			else if(whatToProcess.contains("POPULATE-GRAPHICS")) {
+				all_ok_status = this_caption.PopulateGraphics(valueToProcess, whichSide, session_match);
+				
+				return String.valueOf(all_ok_status);
+			}
+			else if(whatToProcess.contains("ANIMATE-IN-GRAPHICS")) {
 				if(whichSide == 1) {
-					all_ok_status = this_animation.AnimateIn(Integer.valueOf(valueToProcess), print_writers, session_configuration);
+					this_animation.AnimateIn(valueToProcess, print_writers, session_configuration);
 					whichSide = 3 - whichSide;
 				} else {
-					this_animation.ChangeOn(Integer.valueOf(valueToProcess), print_writers, session_configuration);
+					this_animation.ChangeOn(valueToProcess, print_writers, session_configuration);
 					// Animation delay
-					all_ok_status = this_caption.PopulateGraphics(valueToProcess, 1, session_match,
-						session_match.getMatch().getInning().stream().filter(
-						inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null).getInningNumber());
-					this_animation.CutBack(Integer.valueOf(valueToProcess), print_writers, session_configuration);
+					all_ok_status = this_caption.PopulateGraphics(valueToProcess, 1, session_match);
+					this_animation.CutBack(valueToProcess, print_writers, session_configuration);
 				}
-				graphicOnScreen = Integer.valueOf(valueToProcess);
-			}else if(whatToProcess.contains("CLEAR-ALL")) {
+				graphicOnScreen = Integer.valueOf(valueToProcess.split(",")[0]);
+			}
+			else if(whatToProcess.contains("ANIMATE-OUT")) {
+				this_animation.AnimateOut(String.valueOf(graphicOnScreen), print_writers, session_configuration);
+				graphicOnScreen = 0;
+				whichSide = 1;
+			}
+			else if(whatToProcess.contains("CLEAR-ALL")) {
 				whichSide = 1;
 				graphicOnScreen = 0;
-				return this_animation.AnimateOut(Integer.valueOf(valueToProcess), print_writers, session_configuration);
+				this_animation.ClearAll(print_writers);
 			}
-			return JSONObject.fromObject(all_ok_status).toString();
+			return JSONObject.fromObject(session_match).toString();
 		}
 	}
 	@ModelAttribute("session_configuration")

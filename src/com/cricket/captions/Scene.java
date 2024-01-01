@@ -14,11 +14,11 @@ public class Scene
 			for(PrintWriter print_writer : print_writers) {
 				switch (whatToProcess) {
 				case "FULL-FRAMERS":
-					print_writer.println("-1 RENDERER*BACK_LAYER SET_OBJECT SCENE*" + "Full Framers scene" + "\0");
+					print_writer.println("-1 RENDERER*BACK_LAYER SET_OBJECT SCENE*/Default/FullFrames" + "\0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*SCENE_DATA INITIALIZE \0");
 					break;
 				case "OVERLAYS":
-					print_writer.println("-1 RENDERER*FRONT_LAYER SET_OBJECT SCENE*" + "Infobar-scene" + "\0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER SET_OBJECT SCENE*/Default/Overlays" + "\0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*SCENE_DATA INITIALIZE \0");
 					break;
 				}

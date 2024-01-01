@@ -8,14 +8,20 @@ import com.cricket.util.CricketUtil;
 
 public class Animation 
 {
-	public String AnimateIn(int whatToProcess, List<PrintWriter> print_writers, Configuration config)
+	public String AnimateIn(String whatToProcess, List<PrintWriter> print_writers, Configuration config)
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
 		case "ICC-U19-2023":
 			for(PrintWriter print_writer : print_writers) {
-				switch (whatToProcess) {
-				case 1: // Scorecard
-					print_writer.println("-1 RENDERER* ANIMATE START \0");
+				switch (Integer.valueOf(whatToProcess.split(",")[0])) {
+				//Score card , match id
+				case 112: case 77:
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*In_Out START \0");
+					switch (Integer.valueOf(whatToProcess.split(",")[0])) {
+					case 77:
+						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Header_Shrink START \0");
+						break;
+					}
 					break;
 				case 2: // Bowling Card
 					print_writer.println("-1 RENDERER* CHANGE START \0");
@@ -29,22 +35,19 @@ public class Animation
 		}
 		return CricketUtil.YES;
 	}	
-	public String AnimateOut(int whatToProcess, List<PrintWriter> print_writers, Configuration config)
+	public String AnimateOut(String whatToProcess, List<PrintWriter> print_writers, Configuration config)
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
 		case "ICC-U19-2023":
 			for(PrintWriter print_writer : print_writers) {
-				switch (whatToProcess) {
-				case 1:
-					print_writer.println("-1 RENDERER* ANIMATE START \0");
-					break;
-				case 2:
-					print_writer.println("-1 RENDERER* CHANGE START \0");
-					//5 second delay
-					print_writer.println("-1 RENDERER* CHANGE START \0");
-					break;
-				case 3:
-					print_writer.println("-1 RENDERER* CHANGE START \0");
+				switch (Integer.valueOf(whatToProcess)) {
+				case 112: case 77:
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*In_Out CONTINUE \0");
+					switch (Integer.valueOf(whatToProcess)) {
+					case 77:
+						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Header_Shrink CONTINUE \0");
+						break;
+					}
 					break;
 				}
 			}
@@ -52,12 +55,12 @@ public class Animation
 		}
 		return CricketUtil.YES;
 	}	
-	public String ChangeOn(int whatToProcess, List<PrintWriter> print_writers, Configuration config)
+	public String ChangeOn(String whatToProcess, List<PrintWriter> print_writers, Configuration config)
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
 		case "ICC-U19-2023":
 			for(PrintWriter print_writer : print_writers) {
-				switch (whatToProcess) {
+				switch (Integer.valueOf(whatToProcess.split(",")[0])) {
 				case 1:
 					print_writer.println("-1 RENDERER* ANIMATE START \0");
 					break;
@@ -75,12 +78,12 @@ public class Animation
 		}
 		return CricketUtil.YES;
 	}
-	public String CutBack(int whatToProcess, List<PrintWriter> print_writers, Configuration config)
+	public String CutBack(String whatToProcess, List<PrintWriter> print_writers, Configuration config)
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
 		case "ICC-U19-2023":
 			for(PrintWriter print_writer : print_writers) {
-				switch (whatToProcess) {
+				switch (Integer.valueOf(whatToProcess.split(",")[0])) {
 				case 1:
 					print_writer.println("-1 RENDERER* ANIMATE START \0");
 					break;
@@ -98,12 +101,12 @@ public class Animation
 		}
 		return CricketUtil.YES;
 	}	
-	public String ResetAnimation(int whatToProcess, List<PrintWriter> print_writers, Configuration config)
+	public String ResetAnimation(String whatToProcess, List<PrintWriter> print_writers, Configuration config)
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
 		case "ICC-U19-2023":
 			for(PrintWriter print_writer : print_writers) {
-				switch (whatToProcess) {
+				switch (Integer.valueOf(whatToProcess.split(",")[0])) {
 				case 1:
 					print_writer.println("-1 RENDERER* ANIMATE START \0");
 					break;
@@ -121,4 +124,40 @@ public class Animation
 		}
 		return CricketUtil.YES;
 	}	
+	public boolean ClearAll(List<PrintWriter> print_writers) {
+		
+		for(PrintWriter print_writer : print_writers) {
+			print_writer.println("-1 SCENE CLEANUP\0");
+            print_writer.println("-1 IMAGE CLEANUP\0");
+            print_writer.println("-1 GEOM CLEANUP\0");
+            print_writer.println("-1 FONT CLEANUP\0");
+            
+            print_writer.println("-1 IMAGE INFO\0");
+            print_writer.println("-1 RENDERER*FRONT_LAYER SET_OBJECT SCENE*/Default/Overlays\0");
+	           	
+            print_writer.println("-1 RENDERER*FRONT_LAYER INITIALIZE\0");
+            print_writer.println("-1 RENDERER*FRONT_LAYER*SCENE_DATA INITIALIZE\0");
+            print_writer.println("-1 RENDERER*FRONT_LAYER*UPDATE SET 0\0");
+            print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE SHOW 0.0\0");
+           //print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Reset START \0");
+            
+            print_writer.println("-1 RENDERER*FRONT_LAYER*UPDATE SET 1\0");
+            
+            print_writer.println("-1 RENDERER*BACK_LAYER SET_OBJECT SCENE*/Default/FullFrames\0");
+	           	
+            print_writer.println("-1 RENDERER*BACK_LAYER INITIALIZE\0");
+            print_writer.println("-1 RENDERER*BACK_LAYER*SCENE_DATA INITIALIZE\0");
+            print_writer.println("-1 RENDERER*BACK_LAYER*UPDATE SET 0\0");
+            print_writer.println("-1 RENDERER*BACK_LAYER*STAGE SHOW 0.0\0");
+            print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Reset START \0");
+            
+            print_writer.println("-1 RENDERER*BACK_LAYER*UPDATE SET 1\0");
+            
+            print_writer.println("-1 SCENE CLEANUP\0");
+            print_writer.println("-1 IMAGE CLEANUP\0");
+            print_writer.println("-1 GEOM CLEANUP\0");
+            print_writer.println("-1 FONT CLEANUP\0");
+		}
+		return false;
+	}
 }
