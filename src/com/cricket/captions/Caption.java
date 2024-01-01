@@ -27,7 +27,6 @@ public class Caption
 	public List<StatsType> statsTypes;
 	public List<MatchAllData> tournament_matches;
 	
-	
 	public BattingCard battingCard;
 	public Inning inning;
 	public Player player;
@@ -49,22 +48,30 @@ public class Caption
 		this.tournament_matches = tournament_matches;
 	}
 
-	public String PopulateGraphics(int whatToProcess, int WhichSide, MatchAllData matchAllData, int WhichInning) 
+	public String PopulateGraphics(String whatToProcess, int WhichSide, MatchAllData matchAllData, int WhichInning) 
 		throws InterruptedException, JsonMappingException, JsonProcessingException
 	{
-		switch (whatToProcess) {
-		case 1: // Scorecard FF
-			return PopulateScorecardFF(WhichSide, whatToProcess, matchAllData, WhichInning);
-		case 2: // Bowling FF
-			return PopulateBowlingCardFF(WhichSide, matchAllData, WhichInning);
-		case 7: // L3rd Profile
-			return PopulateL3rdPlayerProfile(whatToProcess,WhichSide, matchAllData, WhichInning);
+		if(whatToProcess.contains(",")) {
+			switch (Integer.valueOf(whatToProcess.split(",")[0])) {
+			case 1: // Scorecard FF
+				return PopulateScorecardFF(WhichSide, Integer.valueOf(whatToProcess.split(",")[0]), matchAllData, 
+						Integer.valueOf(whatToProcess.split(",")[1]));
+			case 7: // L3rd Profile
+				return PopulateL3rdPlayerProfile(whatToProcess,WhichSide, matchAllData, WhichInning);
+			}
 		}
 		return CricketUtil.YES;
 	}	
-	public String PopulateL3rdPlayerProfile(int whatToProcess, int WhichSide, MatchAllData matchAllData, int WhichInning) 
+	public String PopulateL3rdPlayerProfile(String whatToProcess, int WhichSide, MatchAllData matchAllData, int WhichInning) 
 		throws JsonMappingException, JsonProcessingException, InterruptedException
 	{
+		if(!whatToProcess.contains(",") && whatToProcess.split(",").length >= 4) {
+			return CricketUtil.NO;
+		}
+
+		FirstPlayerId = Integer.valueOf(whatToProcess.split(",")[1]);
+		WhichProfileId = Integer.valueOf(whatToProcess.split(",")[2]);
+		
 		if(FirstPlayerId <= 0 || WhichProfileId <= 0) {
 			return CricketUtil.NO;
 		}
@@ -93,14 +100,13 @@ public class Caption
 		stat = CricketFunctions.updateStatisticsWithMatchData(stat, matchAllData);
 
 		lowerThird = new LowerThird("", player.getFirstname(), player.getSurname(), 
-			statsType.getStats_full_name(), "", "", 2, 
-			new String[]{"MATCHES", "RUNS", "100s", "50s"},
+			statsType.getStats_full_name(), "", "", 2, "FLAG",new String[]{"MATCHES", "RUNS", "100s", "50s"},
 			new String[]{String.valueOf(stat.getMatches()), String.valueOf(stat.getRuns()), 
 			String.valueOf(stat.getHundreds()), String.valueOf(stat.getFifties())},null,null);
 		
 		if(PopulateL3rdHeader(WhichSide).equalsIgnoreCase(CricketUtil.YES)) {
 			HideAndShowL3rdSubStrapContainers(WhichSide);
-			return PopulateL3rdBody(WhichSide, whatToProcess);
+			return PopulateL3rdBody(WhichSide, Integer.valueOf(whatToProcess));
 		} else {
 			return CricketUtil.NO;
 		}
@@ -112,6 +118,11 @@ public class Caption
 			case Constants.ICC_U19_2023:
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$BattingCard$Info$ExtrasGrp$Extras*GEOM*TEXT SET " 
 					+ lowerThird.getFirstName()  + "\0");
+				switch (lowerThird.getWhichSponsor()) {
+				case "FLAG":
+					//1		Flag : 			H1-48.0		H2-48.0		1020
+					break;
+				}
 				// on error return CricketUtil.NO;
 				break;
 //			case "IPL-2023":
@@ -172,6 +183,9 @@ public class Caption
 				for(int iSubLine = lowerThird.getNumberOfSubLines() + 1; iSubLine <= 4; iSubLine++) {
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$LowerThirdGfx$SubLine" + iSubLine + "*ACTIVE SET 0\0");
 				}
+				//Set position for header strap [Subline 2:  		 00.0		 00.0]
+				//Set Height for L3rd [Subline 2:  		-50.0		-50.0]
+				
 				break;
 			}
 		}
@@ -183,7 +197,7 @@ public class Caption
 			case Constants.ICC_U19_2023:
 				switch (whatToProcess) {
 				case 7: // L3rd Profile
-					for(int iStat = 0; iStat <= 3; iStat++) {
+					for(int iStat = 0; iStat <= 1; iStat++) {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$LowerThirdGfx$SubLine" 
 							+ 1 + "$TitleText" + (iStat + 1) + "*GEOM*TEXT SET " + lowerThird.getTitlesText()[iStat] + "\0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$LowerThirdGfx$SubLine" 

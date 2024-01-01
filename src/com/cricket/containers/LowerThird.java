@@ -10,6 +10,7 @@ public class LowerThird
 	private String SubTitle;
 	private String ScoreText;
 	private String BallsFacedText;
+	private String WhichSponsor;
 	
 	private int numberOfSubLines;
 	
@@ -19,24 +20,33 @@ public class LowerThird
 	private String[] RightText;
 	
 	public LowerThird(String headerText, String firstName, String surName, String subTitle, String scoreText,
-			String ballsFacedText, int numberOfSubLines, String[] titlesText, String[] statsText, String[] leftText,
+			String ballsFacedText, int numberOfSubLines, String WhichSponsor, String[] titlesText, String[] statsText, String[] leftText,
 			String[] rightText) {
 		super();
-		HeaderText = headerText;
-		FirstName = firstName;
-		SurName = surName;
-		SubTitle = subTitle;
-		ScoreText = scoreText;
-		BallsFacedText = ballsFacedText;
+		this.HeaderText = headerText;
+		this.FirstName = firstName;
+		this.SurName = surName;
+		this.SubTitle = subTitle;
+		this.ScoreText = scoreText;
+		this.BallsFacedText = ballsFacedText;
 		this.numberOfSubLines = numberOfSubLines;
-		TitlesText = titlesText;
-		StatsText = statsText;
-		LeftText = leftText;
-		RightText = rightText;
+		this.TitlesText = titlesText;
+		this.StatsText = statsText;
+		this.LeftText = leftText;
+		this.RightText = rightText;
+		this.WhichSponsor = WhichSponsor;
 	}
 
 	public LowerThird() {
 		super();
+	}
+
+	public String getWhichSponsor() {
+		return WhichSponsor;
+	}
+
+	public void setWhichSponsor(String whichSponsor) {
+		WhichSponsor = whichSponsor;
 	}
 
 	public String getHeaderText() {

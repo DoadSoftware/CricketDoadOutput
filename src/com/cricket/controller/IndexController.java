@@ -55,6 +55,7 @@ public class IndexController
 	public static List<PrintWriter> print_writers;
 	public static boolean show_speed = true;
 	public static int whichSide = 1;
+	public static int graphicOnScreen = 0;
 	
 	public static List<MatchAllData> cricket_matches = new ArrayList<MatchAllData>();
 	public static List<Tournament> past_tournament_stats = new ArrayList<Tournament>();
@@ -130,8 +131,8 @@ public class IndexController
 		}else {
 
 			last_match_time_stamp = new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.MATCHES_DIRECTORY + selectedMatch).lastModified();
-			
 			whichSide = 1;
+			graphicOnScreen = 0;
 			
 			session_configuration = new Configuration(selectedMatch, select_broadcaster,qtIPAddress, qtPortNumber,qtScene, 
 				qtLanguage, vizIPAddress, vizPortNumber, vizScene, vizLanguage, 
@@ -251,27 +252,29 @@ public class IndexController
 			if(whatToProcess.contains("GRAPHICS-OPTIONS")) {
 				return JSONObject.fromObject(GetGraphicOption(whatToProcess)).toString();
 			}else if(whatToProcess.contains("POPULATE-GRAPHICS")) {
-				all_ok_status = this_caption.PopulateGraphics(Integer.valueOf(valueToProcess), whichSide, session_match,
+				all_ok_status = this_caption.PopulateGraphics(valueToProcess, whichSide, session_match,
 					session_match.getMatch().getInning().stream().filter(
 					inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null).getInningNumber());
 				return all_ok_status;
 			}else if(whatToProcess.contains("ANIMATE-IN-GRAPHICS")) {
 				if(whichSide == 1) {
-					all_ok_status = this_animation.AnimateIn(Integer.valueOf(valueToProcess), whichSide, print_writers, session_configuration);
+					all_ok_status = this_animation.AnimateIn(Integer.valueOf(valueToProcess), print_writers, session_configuration);
 					whichSide = 3 - whichSide;
 				} else {
-					this_animation.ChangeOn(Integer.valueOf(valueToProcess), whichSide, print_writers, session_configuration);
+					this_animation.ChangeOn(Integer.valueOf(valueToProcess), print_writers, session_configuration);
 					// Animation delay
-					all_ok_status = this_caption.PopulateGraphics(Integer.valueOf(valueToProcess), 1, session_match,
+					all_ok_status = this_caption.PopulateGraphics(valueToProcess, 1, session_match,
 						session_match.getMatch().getInning().stream().filter(
 						inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null).getInningNumber());
-					this_animation.CutBack(Integer.valueOf(valueToProcess), whichSide, print_writers, session_configuration);
+					this_animation.CutBack(Integer.valueOf(valueToProcess), print_writers, session_configuration);
 				}
+				graphicOnScreen = Integer.valueOf(valueToProcess);
 			}else if(whatToProcess.contains("CLEAR-ALL")) {
 				whichSide = 1;
-				return this_animation.AnimateOut(Integer.valueOf(valueToProcess), whichSide, print_writers, session_configuration);
+				graphicOnScreen = 0;
+				return this_animation.AnimateOut(Integer.valueOf(valueToProcess), print_writers, session_configuration);
 			}
-			return JSONObject.fromObject(session_match).toString();
+			return JSONObject.fromObject(all_ok_status).toString();
 		}
 	}
 	@ModelAttribute("session_configuration")
