@@ -17,7 +17,6 @@ import java.util.concurrent.TimeUnit;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
-import org.openqa.selenium.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -209,10 +208,11 @@ public class IndexController
 
 	@SuppressWarnings("unchecked")
 	public <T> List<T> GetGraphicOption(String whatToProcess) {
-		
 		switch (whatToProcess) {
 		case "NAMESUPER-GRAPHICS-OPTIONS":
 		    return (List<T>) cricketService.getNameSupers();
+		case "MATCH_PROMO-GRAPHICS-OPTIONS":
+			return (List<T>) CricketFunctions.processAllFixtures(cricketService);
 		}
 		return null;
 	}
@@ -281,6 +281,7 @@ public class IndexController
 				return JSONArray.fromObject(GetGraphicOption(whatToProcess)).toString();
 			}
 			else if(whatToProcess.contains("POPULATE-GRAPHICS")) {
+				System.out.println("valueToProcess : " + valueToProcess);
 				all_ok_status = this_caption.PopulateGraphics(valueToProcess, whichSide, session_match);
 				
 				return String.valueOf(all_ok_status);

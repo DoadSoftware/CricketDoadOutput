@@ -101,9 +101,15 @@ function processUserSelection(whichInput)
 		processOnChangeData("HOWOUT-PLAYER", null);
 		break;
 		
+	case 'populate_promo_btn':
+		processCricketProcedures("POPULATE-GRAPHICS", 78 + ',' + $('#selectMatchPromo option:selected').val());
+		break;
 	case 'populate_namesuper_btn':
-		case 'populate_namesuper_btn':
 		processCricketProcedures("POPULATE-GRAPHICS", 121 + ',' + $('#selectNameSuper option:selected').val());
+		break;
+	case 'populate_howout_btn':
+		processCricketProcedures("POPULATE-GRAPHICS", 117 + ',' + $('#selectInn option:selected').val() 
+			+ ',' + $('#selectHowoutPlayers option:selected').val());
 		break;
 	}	
 }
@@ -157,13 +163,25 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 				processCricketProcedures('ANIMATE-OUT');
 			}
 			break;
-		case 77:
+		case 77://MATCH ID
 			processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 			break;
-		case 112: case 113:
+		case 112: case 113: //BATTING-BOWLING-CARD
 			dataToProcess = dataToProcess + ',' + document.getElementById('which_keypress').value;
 			processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 			break;
+		case 78: // MATCH PROMO
+			processCricketProcedures("MATCH_PROMO-GRAPHICS-OPTIONS", dataToProcess);
+			break;
+		case 66: // MATCH SUMMARY
+			if(document.getElementById('which_keypress').value == 2){
+				dataToProcess = dataToProcess + ',' + document.getElementById('which_keypress').value;
+				processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
+			}else{
+				alert('It Work only for Inning 2');
+			}
+			break;
+
 		case 117 :
 			addItemsToList("HOWOUT-OPTIONS", null);
 			processOnChangeData("HOWOUT-PLAYER", null);
@@ -220,6 +238,8 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 					}
 				}else if(whatToProcess == 'NAMESUPER-GRAPHICS-OPTIONS'){
 					addItemsToList('NAMESUPER-OPTION',data);
+				}else if(whatToProcess == 'MATCH_PROMO-GRAPHICS-OPTIONS'){
+					addItemsToList('PROMO-OPTION',data);
 				}
 				break;
 			}
@@ -231,9 +251,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 	var select,option,header_text,div,table,tbody,row,max_cols;
 	var cellCount = 0;
 	
-	
 	switch(whatToProcess) {
 	case 'HOWOUT-OPTIONS':
+		$("#captions_div").hide();
 		$('#select_graphic_options_div').empty();
 	
 		header_text = document.createElement('h6');
@@ -272,12 +292,35 @@ function addItemsToList(whatToProcess,dataToProcess)
 				row.insertCell(cellCount).appendChild(select);
 				cellCount = cellCount + 1;
 				
+				option = document.createElement('input');
+				option.type = 'button';
+				option.name = 'populate_howout_btn';
+			    option.value = 'Populate HowOut';
+			    option.id = option.name;
+			    option.setAttribute('onclick',"processUserSelection(this)");
+			    
+			    div = document.createElement('div');
+			    div.append(option);
+		
+				option = document.createElement('input');
+				option.type = 'button';
+				option.name = 'cancel_graphics_btn';
+				option.id = option.name;
+				option.value = 'Cancel';
+				option.setAttribute('onclick','processUserSelection(this)');
+		
+			    div.append(option);
+			    
+			    row.insertCell(cellCount).appendChild(div);
+			    cellCount = cellCount + 1;
+				
 				document.getElementById('select_graphic_options_div').style.display = '';
 				break;
 			}	
 			
 		break;
-	case 'NAMESUPER-OPTION':
+	case 'NAMESUPER-OPTION': case 'PROMO-OPTION':	
+		$("#captions_div").hide();
 		$('#select_graphic_options_div').empty();
 	
 		header_text = document.createElement('h6');
@@ -335,6 +378,46 @@ function addItemsToList(whatToProcess,dataToProcess)
 			    cellCount = cellCount + 1;
 			    
 				document.getElementById('select_graphic_options_div').style.display = '';
+			break;
+		case 'PROMO-OPTION':
+			select = document.createElement('select');
+			select.id = 'selectMatchPromo';
+			select.name = select.id;
+			dataToProcess.forEach(function(oop,index,arr1){	
+				option = document.createElement('option');
+                option.value = oop.matchnumber;
+                option.text = oop.matchnumber + ' - ' +oop.home_Team.teamName1 + ' Vs ' + oop.away_Team.teamName1 ;
+                select.appendChild(option);
+					
+            });
+			
+			row.insertCell(cellCount).appendChild(select);
+			cellCount = cellCount + 1;
+			
+			
+			option = document.createElement('input');
+			option.type = 'button';
+			option.name = 'populate_promo_btn';
+		    option.value = 'Populate Promo';
+		    option.id = option.name;
+		    option.setAttribute('onclick',"processUserSelection(this)");
+		    
+		    div = document.createElement('div');
+		    div.append(option);
+	
+			option = document.createElement('input');
+			option.type = 'button';
+			option.name = 'cancel_graphics_btn';
+			option.id = option.name;
+			option.value = 'Cancel';
+			option.setAttribute('onclick','processUserSelection(this)');
+	
+		    div.append(option);
+		    
+		    row.insertCell(cellCount).appendChild(div);
+		    cellCount = cellCount + 1;
+		    
+			document.getElementById('select_graphic_options_div').style.display = '';
 			break;
 		}  
 		break;
