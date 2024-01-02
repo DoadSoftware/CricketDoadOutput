@@ -91,6 +91,11 @@ function processUserSelection(whichInput)
 	case 'load_scene_btn':
       	document.initialise_form.submit();
 		break;
+	case 'cancel_graphics_btn':
+		$("#select_graphic_options_div").empty();
+		document.getElementById('select_graphic_options_div').style.display = 'none';
+		$("#captions_div").show();
+		break;
 	case 'populate_namesuper_btn':
 		case 'populate_namesuper_btn':
 		processCricketProcedures("POPULATE-GRAPHICS", 121 + ',' + $('#selectNameSuper option:selected').val());

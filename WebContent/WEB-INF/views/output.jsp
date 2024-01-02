@@ -35,7 +35,6 @@
 	   	  }else{
 	   		  e.preventDefault();
 	   		  key_val = e.which;
-	   		  alert(e.key);
 	   		  if(e.altKey) {
 	   			key_val = key_val + 250;
 	   		  }
@@ -72,8 +71,6 @@
           <div class="card-body">
           
 			  <div id="select_graphic_options_div" style="display:none;">
-			  </div>
-			  <div id="lastxball_div" style="display:none;">
 			  </div>
 			  <div id="captions_div" class="form-group row row-bottom-margin ml-2" style="margin-bottom:5px;">
 			    <label class="col-sm-4 col-form-label text-left">Match: ${session_match.match.matchFileName} </label>
