@@ -13,6 +13,7 @@ import com.cricket.model.BowlingCard;
 import com.cricket.model.Configuration;
 import com.cricket.model.FallOfWicket;
 import com.cricket.model.Fixture;
+import com.cricket.model.Ground;
 import com.cricket.model.Inning;
 import com.cricket.model.MatchAllData;
 import com.cricket.model.NameSuper;
@@ -120,7 +121,7 @@ public class Caption
 						how_out_txt = CricketFunctions.processHowOutText("FOUR-PART-HOW-OUT", bc);
 						
 						lowerThird = new LowerThird("", bc.getPlayer().getFirstname(), bc.getPlayer().getSurname(),"", String.valueOf(bc.getRuns()), String.valueOf(bc.getBalls()),
-								2, inn.getBatting_team().getTeamName4(),null,null,new String[]{how_out_txt,String.valueOf(bc.getFours()),String.valueOf(bc.getSixes())},
+								2, inn.getBatting_team().getTeamName4(),null,null,new String[]{how_out_txt.replace("|", " "),String.valueOf(bc.getFours()),String.valueOf(bc.getSixes())},
 								new String[]{bc.getStrikeRate()});
 					}
 				}
@@ -308,21 +309,22 @@ public class Caption
 							"$Select_Subline$1$Data$Stat*ACTIVE SET 0 \0");
 					
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
-							"$Select_Subline$2$Data$Left*ACTIVE SET 0 \0");
+							"$Select_Subline$2$Data$Left*ACTIVE SET 1 \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
-							"$Select_Subline$2$Data$Right*ACTIVE SET 1 \0");
+							"$Select_Subline$2$Data$Right*ACTIVE SET 0 \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
-							"$Select_Subline$2$Data$Title*ACTIVE SET 1 \0");
+							"$Select_Subline$2$Data$Title*ACTIVE SET 0 \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
 							"$Select_Subline$2$Data$Stat*ACTIVE SET 0 \0");
 					
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide 
 							+ "$Select_Subline$1$Data$Left$txt_1*GEOM*TEXT SET " + lowerThird.getLeftText()[0] + "\0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide 
-							+ "$Select_Subline$1$Data$Right$txt_1*GEOM*TEXT SET " + lowerThird.getRightText()[0] + "\0");
+							+ "$Select_Subline$1$Data$Right$txt_1*GEOM*TEXT SET " + "STRIKE RATE " + lowerThird.getRightText()[0] + "\0");
 					
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide 
-							+ "$Select_Subline$2$Data$Left$txt_1*GEOM*TEXT SET " + "FOURS " + lowerThird.getLeftText()[1] + " SIXES " + lowerThird.getLeftText()[2]  + "\0");
+							+ "$Select_Subline$2$Data$Left$txt_1*GEOM*TEXT SET " + "FOURS " + lowerThird.getLeftText()[1] + "      SIXES " + 
+							lowerThird.getLeftText()[2]  + "\0");
 					
 					break;
 				case 121:
@@ -425,8 +427,13 @@ public class Caption
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
 			return false;
 		} else {
-			String cout_name="";
-			
+			String cout_name="",city_name = "";
+			for(Ground ground : cricketService.getGrounds()) {
+				if(ground.getFullname().contains(matchAllData.getSetup().getVenueName())) {
+					city_name = ground.getCity();
+				}
+			}
+
 			switch (config.getBroadcaster().toUpperCase()) {
 			case Constants.ICC_U19_2023:
 				
@@ -442,7 +449,7 @@ public class Caption
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$Bottom_Align$HeaderDataAll$Side" + WhichSide +
 									"$Flag$img_Shadow*ACTIVE SET 1 \0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side" + WhichSide + 
-									"$In_Out$Change$Bottom$txt_Subheader*GEOM*TEXT SET " + matchAllData.getSetup().getTournament() +"\0");
+									"$In_Out$Change$Bottom$txt_Subheader*GEOM*TEXT SET " + matchAllData.getSetup().getHomeTeam().getTeamGroup() + ", " + city_name + "\0");
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side" + WhichSide + 
 									"$In_Out$Change$Select_HeaderTop$Big_First$txt_Team_1*GEOM*TEXT SET " + 
@@ -509,7 +516,8 @@ public class Caption
 								"$In_Out$Change$" + cout_name + "$Select_HeaderTop$Title$txt_Title*GEOM*TEXT SET " + "MATCH SUMMARY"+ "\0");
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$Bottom_Align$HeaderDataAll$Side" + WhichSide + 
-								"$In_Out$Change$" + cout_name + "$Change$Bottom$txt_Subheader*GEOM*TEXT SET " +  matchAllData.getSetup().getTournament() + "\0");
+								"$In_Out$Change$" + cout_name + "$Change$Bottom$txt_Subheader*GEOM*TEXT SET " + matchAllData.getSetup().getHomeTeam().getTeamGroup()
+								+ ", " + city_name + "\0");
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$MoveForExtraData$Overall_Scaling$Header"
 								+ "$Off$Bottom_Align$Header_Extra$loop$txt_Extra*GEOM*TEXT SET " + "" +"\0");
@@ -890,7 +898,7 @@ public class Caption
 									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$AllGraphics$Side" + WhichSide + "$Select_GraphicsType$Summary$Team_" + i + "$Row_"+rowId+
 											"$Bowler$txt_Name*GEOM*TEXT SET " + boc.getPlayer().getTicker_name() + "\0");
 									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$AllGraphics$Side" + WhichSide + "$Select_GraphicsType$Summary$Team_" + i + "$Row_"+rowId+
-											"$Bowler$txt_Figs*GEOM*TEXT SET " + boc.getWickets() + " - " + boc.getRuns() + "\0");
+											"$Bowler$txt_Figs*GEOM*TEXT SET " + boc.getWickets() + "-" + boc.getRuns() + "\0");
 									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$AllGraphics$Side" + WhichSide + "$Select_GraphicsType$Summary$Team_" + i + "$Row_"+rowId+
 											"$Bowler$txt_Overs*GEOM*TEXT SET " + CricketFunctions.OverBalls(boc.getOvers(), boc.getBalls()) + "\0");
 									

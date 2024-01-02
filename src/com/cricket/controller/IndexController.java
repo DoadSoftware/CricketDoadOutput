@@ -281,7 +281,7 @@ public class IndexController
 				return JSONArray.fromObject(GetGraphicOption(whatToProcess)).toString();
 			}
 			else if(whatToProcess.contains("POPULATE-GRAPHICS")) {
-				System.out.println("valueToProcess : " + valueToProcess);
+				//System.out.println("valueToProcess : " + valueToProcess);
 				all_ok_status = this_caption.PopulateGraphics(valueToProcess, whichSide, session_match);
 				
 				return String.valueOf(all_ok_status);
