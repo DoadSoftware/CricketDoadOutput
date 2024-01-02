@@ -100,6 +100,7 @@
 <input type="hidden" id="which_keypress" name="which_keypress" value="${session_match.setup.which_key_press}"/>
 <input type="hidden" name="selected_broadcaster" id="selected_broadcaster" value="${session_selected_broadcaster}"/>
 <input type="hidden" name="selected_second_broadcaster" id="selected_second_broadcaster" value="${session_selected_second_broadcaster}"/>
+<input type="hidden" name="selected_match_max_overs" id="selected_match_max_overs" value="${session_match.setup.maxOvers}"/>
 <input type="hidden" id="matchFileTimeStamp" name="matchFileTimeStamp" value="${session_match.setup.matchFileTimeStamp}"></input>
 </form:form>
 </body>

@@ -96,12 +96,37 @@ function processUserSelection(whichInput)
 		document.getElementById('select_graphic_options_div').style.display = 'none';
 		$("#captions_div").show();
 		break;
+		
+	case 'selectInn':
+		processOnChangeData("HOWOUT-PLAYER", null);
+		break;
+		
 	case 'populate_namesuper_btn':
 		case 'populate_namesuper_btn':
 		processCricketProcedures("POPULATE-GRAPHICS", 121 + ',' + $('#selectNameSuper option:selected').val());
 		break;
 	}	
 }
+
+function processOnChangeData(whatToProcess,dataToProcess){
+	switch(whatToProcess){
+		case 'HOWOUT-PLAYER':
+			$('#selectHowoutPlayers').empty();
+			session_match.match.inning.forEach(function(inn,index,arr){
+				if(inn.inningNumber == $('#selectInn option:selected').val()){
+					inn.battingCard.forEach(function(bc,bc_index,bc_arr){
+						$('#selectHowoutPlayers').append(
+						$(document.createElement('option')).prop({
+		                value: bc.playerId,
+		                text: bc.player.full_name + " - " + bc.status
+		            	}))				
+					});
+				}
+			});
+			break;
+	}
+}
+
 function processUserSelectionData(whatToProcess,dataToProcess){
 	switch (whatToProcess) {
 	case 'LOGGER_FORM_KEYPRESS':
@@ -139,6 +164,10 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			dataToProcess = dataToProcess + ',' + document.getElementById('which_keypress').value;
 			processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 			break;
+		case 117 :
+			addItemsToList("HOWOUT-OPTIONS", null);
+			processOnChangeData("HOWOUT-PLAYER", null);
+			break;	
 		case 121: // NAME SUPER
 			processCricketProcedures("NAMESUPER-GRAPHICS-OPTIONS", dataToProcess);
 			break;
@@ -204,8 +233,52 @@ function addItemsToList(whatToProcess,dataToProcess)
 	
 	
 	switch(whatToProcess) {
+	case 'HOWOUT-OPTIONS':
+		$('#select_graphic_options_div').empty();
+	
+		header_text = document.createElement('h6');
+		header_text.innerHTML = 'Select Graphic Options';
+		document.getElementById('select_graphic_options_div').appendChild(header_text);
+		
+		table = document.createElement('table');
+		table.setAttribute('class', 'table table-bordered');
+				
+		tbody = document.createElement('tbody');
+
+		table.appendChild(tbody);
+		document.getElementById('select_graphic_options_div').appendChild(table);
+		
+		row = tbody.insertRow(tbody.rows.length);
+		select = document.createElement('select');
+		select.id = 'selectInn';
+		select.name = select.id;
+		
+		for(var i=1; i<=2; i++){
+			option = document.createElement('option');
+			option.value = i;
+			option.text = 'Inning ' + i;
+			select.appendChild(option);
+		}
+		
+		row.insertCell(cellCount).appendChild(select);
+		cellCount = cellCount +1;
+		select.setAttribute('onchange',"processUserSelection(this)");
+		
+			switch(whatToProcess) {
+			case 'HOWOUT-OPTIONS':
+				select = document.createElement('select');
+				select.id = 'selectHowoutPlayers';
+				select.name = select.id;
+				row.insertCell(cellCount).appendChild(select);
+				cellCount = cellCount + 1;
+				
+				document.getElementById('select_graphic_options_div').style.display = '';
+				break;
+			}	
+			
+		break;
 	case 'NAMESUPER-OPTION':
-		$('#captions_div').empty();
+		$('#select_graphic_options_div').empty();
 	
 		header_text = document.createElement('h6');
 		header_text.innerHTML = 'Select Graphic Options';
