@@ -35,6 +35,7 @@
 	   	  }else{
 	   		  e.preventDefault();
 	   		  key_val = e.which;
+	   		  alert(e.key);
 	   		  if(e.altKey) {
 	   			key_val = key_val + 250;
 	   		  }

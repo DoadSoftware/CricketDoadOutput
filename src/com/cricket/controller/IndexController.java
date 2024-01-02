@@ -12,6 +12,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
@@ -194,8 +196,7 @@ public class IndexController
 				session_statistics = cricketService.getAllStats();
 				past_tournament_stats = CricketFunctions.extractTournamentStats(
 					"PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
-				this_caption = new Caption(print_writers, session_configuration, session_statistics, 
-					cricketService.getAllStatsType(), cricket_matches,cricketService);
+				this_caption = new Caption(print_writers, session_configuration, session_statistics,cricketService.getAllStatsType(), cricket_matches,cricketService);
 				break;
 			}
 			show_speed = true;
@@ -289,8 +290,8 @@ public class IndexController
 					this_animation.AnimateIn(valueToProcess, print_writers, session_configuration);
 					whichSide = 3 - whichSide;
 				} else {
-					this_animation.ChangeOn(valueToProcess, print_writers, session_configuration);
-					// Animation delay
+					this_animation.ChangeOn(valueToProcess,graphicOnScreen,print_writers, session_configuration);
+					TimeUnit.MILLISECONDS.sleep(2000);
 					all_ok_status = this_caption.PopulateGraphics(valueToProcess, 1, session_match);
 					this_animation.CutBack(valueToProcess, print_writers, session_configuration);
 				}

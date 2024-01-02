@@ -15,7 +15,7 @@ public class Animation
 			for(PrintWriter print_writer : print_writers) {
 				switch (Integer.valueOf(whatToProcess.split(",")[0])) {
 				//Score card , match id
-				case 112: case 77:
+				case 112: case 113: case 77:
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*In_Out START \0");
 					switch (Integer.valueOf(whatToProcess.split(",")[0])) {
 					case 77:
@@ -41,7 +41,7 @@ public class Animation
 		case "ICC-U19-2023":
 			for(PrintWriter print_writer : print_writers) {
 				switch (Integer.valueOf(whatToProcess)) {
-				case 112: case 77:
+				case 112: case 113: case 77:
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*In_Out CONTINUE \0");
 					switch (Integer.valueOf(whatToProcess)) {
 					case 77:
@@ -55,22 +55,29 @@ public class Animation
 		}
 		return CricketUtil.YES;
 	}	
-	public String ChangeOn(String whatToProcess, List<PrintWriter> print_writers, Configuration config)
+	public String ChangeOn(String whatToProcess,int whichGrapicOnScreen,List<PrintWriter> print_writers, Configuration config)
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
 		case "ICC-U19-2023":
 			for(PrintWriter print_writer : print_writers) {
+				
+				switch(whichGrapicOnScreen) {
+				case 112:
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Header START \0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Batting_Card START \0");
+					break;
+				case 113:
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Header START \0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Bowling_Card START \0");
+					break;
+				}
+				
 				switch (Integer.valueOf(whatToProcess.split(",")[0])) {
-				case 1:
-					print_writer.println("-1 RENDERER* ANIMATE START \0");
+				case 112:
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Batting_Card START \0");
 					break;
-				case 2:
-					print_writer.println("-1 RENDERER* CHANGE START \0");
-					//5 second delay
-					print_writer.println("-1 RENDERER* CHANGE START \0");
-					break;
-				case 3:
-					print_writer.println("-1 RENDERER* CHANGE START \0");
+				case 113:
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Bowling_Card START \0");
 					break;
 				}
 			}
@@ -84,16 +91,15 @@ public class Animation
 		case "ICC-U19-2023":
 			for(PrintWriter print_writer : print_writers) {
 				switch (Integer.valueOf(whatToProcess.split(",")[0])) {
-				case 1:
-					print_writer.println("-1 RENDERER* ANIMATE START \0");
+				case 112:
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Header SHOW 0.0 \0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Batting_Card SHOW 0.0 \0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Bowling_Card SHOW 0.0 \0");
 					break;
-				case 2:
-					print_writer.println("-1 RENDERER* CHANGE START \0");
-					//5 second delay
-					print_writer.println("-1 RENDERER* CHANGE START \0");
-					break;
-				case 3:
-					print_writer.println("-1 RENDERER* CHANGE START \0");
+				case 113:
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Header SHOW 0.0 \0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Batting_Card SHOW 0.0 \0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Bowling_Card SHOW 0.0 \0");
 					break;
 				}
 			}

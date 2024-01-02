@@ -130,7 +130,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		case 77:
 			processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 			break;
-		case 112:
+		case 112: case 113:
 			dataToProcess = dataToProcess + ',' + document.getElementById('which_keypress').value;
 			processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 			break;

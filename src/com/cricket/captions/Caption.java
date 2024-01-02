@@ -60,11 +60,13 @@ public class Caption
 		if(whatToProcess.contains(",")) {
 			switch (Integer.valueOf(whatToProcess.split(",")[0])) {
 			case 112: // Scorecard FF
-				return PopulateScorecardFF(WhichSide, Integer.valueOf(whatToProcess.split(",")[0]), matchAllData, 
-						Integer.valueOf(whatToProcess.split(",")[1]));
+				return PopulateScorecardFF(WhichSide, Integer.valueOf(whatToProcess.split(",")[0]), matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
+			case 113: // Bowling FF
+				return PopulateBowlingCardFF(WhichSide, Integer.valueOf(whatToProcess.split(",")[0]), matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
+			
+			
 			case 7: // L3rd Profile
 				return PopulateL3rdPlayerProfile(whatToProcess,WhichSide, matchAllData);
-			
 			case 121: //NameSuper DB
 				return populateLTNameSuper(whatToProcess,WhichSide);
 			}
@@ -248,6 +250,18 @@ public class Caption
 			return false;
 		}
 	}
+	public boolean PopulateBowlingCardFF(int WhichSide,int whatToProcess, MatchAllData matchAllData, int WhichInning)
+	{
+		if(PopulateFfHeader(WhichSide, whatToProcess, matchAllData, WhichInning) == true) {
+			if(PopulateFfBody(WhichSide, whatToProcess, matchAllData, WhichInning) == true) {
+				return PopulateFfFooter(WhichSide, whatToProcess, matchAllData, WhichInning);
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
 	public boolean populateFFMatchId(int WhichSide, int whatToProcess, MatchAllData matchAllData)
 	{
 		if(PopulateFfHeader(WhichSide, whatToProcess, matchAllData, 0) == true) {
@@ -260,10 +274,6 @@ public class Caption
 			return false;
 		}
 	}
-	public boolean PopulateBowlingCardFF(int WhichSide, MatchAllData matchAllData, int WhichInning)
-	{
-		return true;
-	}
 	
 	public boolean PopulateFfHeader(int WhichSide, int whatToProcess, MatchAllData matchAllData, int WhichInning) 
 	{
@@ -275,11 +285,9 @@ public class Caption
 			case Constants.ICC_U19_2023:
 				
 				switch (whatToProcess) {
-				case 112: // Scorecard
-				
+				case 112: case 113: // Scorecard - BowlingCard
 					inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == WhichInning)
 						.findAny().orElse(null);
-					
 					if(inning != null) {
 						for(PrintWriter print_writer : print_writers) {
 							
@@ -287,31 +295,49 @@ public class Caption
 									"$Flag$img_Flag*ACTIVE SET 1 \0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$Bottom_Align$HeaderDataAll$Side" + WhichSide +
 									"$Flag$img_Shadow*ACTIVE SET 1 \0");
-							
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side" 
-								+ WhichSide + "$Flag$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + inning.getBatting_team().getTeamName4() + "\0");
-							
-							if(WhichInning == 1) {
-								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side"+ WhichSide + 
-										"$In_Out$Change$Select_HeaderTop*FUNCTION*Omo*vis_con SET 1 \0");
-								
-								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side" + WhichSide + 
-										"$In_Out$Change$Select_HeaderTop$Big_First$txt_Team_1*GEOM*TEXT SET " + inning.getBatting_team().getTeamName1() +"\0");
-								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side" + WhichSide + 
-										"$In_Out$Change$Select_HeaderTop$Big_First$txt_Team_2*GEOM*TEXT SET " + inning.getBowling_team().getTeamName1() +"\0");
-							}else {
-								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side"+ WhichSide + 
-										"$In_Out$Change$Select_HeaderTop*FUNCTION*Omo*vis_con SET 2 \0");
-								
-								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side" + WhichSide + 
-										"$In_Out$Change$Select_HeaderTop$Small_First$txt_Team_1*GEOM*TEXT SET " + inning.getBowling_team().getTeamName1() +"\0");
-								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side" + WhichSide + 
-										"$In_Out$Change$Select_HeaderTop$Small_First$txt_Team_2*GEOM*TEXT SET " + inning.getBatting_team().getTeamName1() +"\0");
-							}
-
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side" + WhichSide + 
-									"$In_Out$Change$Bottom$txt_Subheader*GEOM*TEXT SET " + matchAllData.getSetup().getMatchIdent().toUpperCase() +"\0");
+									"$In_Out$Change$Bottom$txt_Subheader*GEOM*TEXT SET " + matchAllData.getSetup().getTournament() +"\0");
 							
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side" + WhichSide + 
+									"$In_Out$Change$Select_HeaderTop$Big_First$txt_Team_1*GEOM*TEXT SET " + 
+									matchAllData.getMatch().getInning().get(0).getBatting_team().getTeamName1() +"\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side" + WhichSide + 
+									"$In_Out$Change$Select_HeaderTop$Big_First$txt_Team_2*GEOM*TEXT SET " +
+									matchAllData.getMatch().getInning().get(0).getBowling_team().getTeamName1() +"\0");
+							
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side" + WhichSide + 
+									"$In_Out$Change$Select_HeaderTop$Small_First$txt_Team_1*GEOM*TEXT SET " + 
+									matchAllData.getMatch().getInning().get(0).getBatting_team().getTeamName1() +"\0");
+							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side" + WhichSide + 
+									"$In_Out$Change$Select_HeaderTop$Small_First$txt_Team_2*GEOM*TEXT SET " + 
+									matchAllData.getMatch().getInning().get(0).getBowling_team().getTeamName1() +"\0");
+							
+							switch(whatToProcess) {
+							case 112:
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side" 
+									+ WhichSide + "$Flag$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + inning.getBatting_team().getTeamName4() + "\0");
+									
+								if(WhichInning == 1) {
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side"+ WhichSide + 
+											"$In_Out$Change$Select_HeaderTop*FUNCTION*Omo*vis_con SET 1 \0");
+								}else {
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side"+ WhichSide + 
+											"$In_Out$Change$Select_HeaderTop*FUNCTION*Omo*vis_con SET 2 \0");
+								}
+								break;
+							case 113:
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side" 
+									+ WhichSide + "$Flag$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + inning.getBowling_team().getTeamName4() + "\0");
+								
+								if(WhichInning == 1) {
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side"+ WhichSide + 
+											"$In_Out$Change$Select_HeaderTop*FUNCTION*Omo*vis_con SET 2 \0");
+								}else {
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$HeaderDataAll$Side"+ WhichSide + 
+											"$In_Out$Change$Select_HeaderTop*FUNCTION*Omo*vis_con SET 1 \0");
+								}
+								break;
+							}
 						}
 					} else {
 						return false;
@@ -336,10 +362,10 @@ public class Caption
 								"$In_Out$Change$" + cout_name + "$Select_HeaderTop*FUNCTION*Omo*vis_con SET 3 \0");
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$Bottom_Align$HeaderDataAll$Side" + WhichSide + 
-								"$In_Out$Change$" + cout_name + "$Select_HeaderTop$Title$txt_Title*GEOM*TEXT SET " + matchAllData.getSetup().getTournament() + "\0");
+								"$In_Out$Change$" + cout_name + "$Select_HeaderTop$Title$txt_Title*GEOM*TEXT SET " + matchAllData.getSetup().getMatchIdent() + "\0");
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Header$Bottom_Align$HeaderDataAll$Side" + WhichSide + 
-								"$In_Out$Change$" + cout_name + "$Change$Bottom$txt_Subheader*GEOM*TEXT SET " + matchAllData.getSetup().getMatchIdent() + "\0");
+								"$In_Out$Change$" + cout_name + "$Change$Bottom$txt_Subheader*GEOM*TEXT SET " + matchAllData.getSetup().getTournament() + "\0");
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$MoveForExtraData$Overall_Scaling$Header"
 								+ "$Off$Bottom_Align$Header_Extra$loop$txt_Extra*GEOM*TEXT SET " + "" +"\0");
@@ -472,6 +498,47 @@ public class Caption
 					break;
 				}
 				break;
+			
+			case 113: //Bowling Card
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.ICC_U19_2023:
+					for(PrintWriter print_writer : print_writers) {
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Select_GraphicsType*FUNCTION*Omo*vis_con SET 4 \0");
+						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Select_GraphicsType$Bowling_Card$Rows$1"
+								+ "$Select_Row_Type*FUNCTION*Omo*vis_con SET 1 \0");
+						for(int iRow = 1; iRow <= inning.getBowlingCard().size(); iRow++) {
+							if(inning.getBowlingCard().get(iRow-1).getRuns() > 0 || 
+									((inning.getBowlingCard().get(iRow-1).getOvers()*6)+inning.getBowlingCard().get(iRow-1).getBalls()) > 0) {
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Select_GraphicsType$Bowling_Card$Rows$"
+									+ (iRow+1) + "$Select_Row_Type*FUNCTION*Omo*vis_con SET 2 \0");
+								
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$AllGraphics$Side" + WhichSide + "$Select_GraphicsType$Bowling_Card$Rows$"
+									+ (iRow+1) + "$Select_Row_Type$Players$Data$txt_Name*GEOM*TEXT SET " + inning.getBowlingCard().get(iRow-1).getPlayer().getTicker_name() + "\0");
+								
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$AllGraphics$Side" + WhichSide + "$Select_GraphicsType$Bowling_Card$Rows$"
+										+ (iRow+1) + "$Select_Row_Type$Players$Data$fig_Overs*GEOM*TEXT SET " + CricketFunctions.
+										OverBalls(inning.getBowlingCard().get(iRow-1).getOvers(), inning.getBowlingCard().get(iRow-1).getBalls()) + "\0");
+								
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$AllGraphics$Side" + WhichSide + "$Select_GraphicsType$Bowling_Card$Rows$"
+										+ (iRow+1) + "$Select_Row_Type$Players$Data$fig_Maidens*GEOM*TEXT SET " + inning.getBowlingCard().get(iRow-1).getMaidens() + "\0");
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$AllGraphics$Side" + WhichSide + "$Select_GraphicsType$Bowling_Card$Rows$"
+										+ (iRow+1) + "$Select_Row_Type$Players$Data$fig_Runs*GEOM*TEXT SET " + inning.getBowlingCard().get(iRow-1).getRuns() + "\0");
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$AllGraphics$Side" + WhichSide + "$Select_GraphicsType$Bowling_Card$Rows$"
+										+ (iRow+1) + "$Select_Row_Type$Players$Data$fig_Wickets*GEOM*TEXT SET " + inning.getBowlingCard().get(iRow-1).getWickets() + "\0");
+								
+								if(inning.getBowlingCard().get(iRow-1).getEconomyRate() != null) {
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$AllGraphics$Side" + WhichSide + "$Select_GraphicsType$Bowling_Card$Rows$"
+											+ (iRow+1) + "$Select_Row_Type$Players$Data$fig_Economy*GEOM*TEXT SET " + inning.getBowlingCard().get(iRow-1).getEconomyRate() + "\0");
+								}else {
+									print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$AllGraphics$Side" + WhichSide + "$Select_GraphicsType$Bowling_Card$Rows$"
+											+ (iRow+1) + "$Select_Row_Type$Players$Data$fig_Economy*GEOM*TEXT SET " + inning.getBowlingCard().get(iRow-1).getPlayer().getTicker_name() + "\0");
+								}
+							}
+						}
+					}
+					break;
+				}
+				break;
 				
 			case 77: //MATCH ID
 				switch (config.getBroadcaster().toUpperCase()) {
@@ -507,10 +574,9 @@ public class Caption
 
 			switch (config.getBroadcaster().toUpperCase()) {
 			case Constants.ICC_U19_2023:
-				
 				switch (whatToProcess) {
-				case 112: // Scorecard
-
+				// Scorecard - BowlingCard
+				case 112: case 113:
 					inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == WhichInning).findAny().orElse(null);
 				
 					if(inning != null) {
@@ -520,16 +586,16 @@ public class Caption
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Footer$Select_FooterType$Score$Data$Side"
 									+ WhichSide + "$In_Out$Change$In_Out$Extras$txt_Extras_Value*GEOM*TEXT SET " + inning.getTotalExtras() + "\0");
-							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Footer$Select_FooterType$Score$Data$Side"
-									+ WhichSide + "$In_Out$Change$In_Out$Overs$txt_Overs_Value*GEOM*TEXT SET " + CricketFunctions.OverBalls(inning.getTotalOvers(),inning.getTotalBalls()) + "\0");
+									+ WhichSide + "$In_Out$Change$In_Out$Overs$txt_Overs_Value*GEOM*TEXT SET " + 
+									CricketFunctions.OverBalls(inning.getTotalOvers(),inning.getTotalBalls()) + "\0");
 							
 							if(matchAllData.getSetup().getTargetOvers() != null) {
 								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Footer$Select_FooterType$Score$Data$Side"
 										+ WhichSide + "$In_Out$Change$In_Out$Overs$txt_Overs_2*GEOM*TEXT SET " + matchAllData.getSetup().getTargetOvers() + "\0");
 							}else {
 								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Footer$Select_FooterType$Score$Data$Side"
-										+ WhichSide + "$In_Out$Change$In_Out$Overs$txt_Overs_2*GEOM*TEXT SET " + matchAllData.getSetup().getMaxOvers() + "\0");
+										+ WhichSide + "$In_Out$Change$In_Out$Overs$txt_Overs_2*GEOM*TEXT SET " + "" + "\0");
 							}
 							
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Footer$Select_FooterType$Score$Data$Side"
@@ -545,8 +611,7 @@ public class Caption
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Footer$Top_Align$Select_FooterType*FUNCTION*Omo*vis_con SET 2 \0");
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$Footer$Top_Align$Select_FooterType$Info_Text$Data$Side" + WhichSide + 
-								"$txt_Info_1*GEOM*TEXT SET " + CricketFunctions.generateTossResult(matchAllData, CricketUtil.FULL, CricketUtil.FIELD, CricketUtil.FULL, 
-										CricketUtil.ELECTED).toUpperCase() + "\0");
+								"$txt_Info_1*GEOM*TEXT SET " + "LIVE FROM " + matchAllData.getSetup().getVenueName() + "\0");
 					}
 					break;
 				}
