@@ -31,7 +31,7 @@ public class Caption
 {
 	public int FirstPlayerId;
 	public int SecondPlayerId;
-	public int WhichProfileId;
+	public String WhichProfile;
 	
 	public List<PrintWriter> print_writers; 
 	public Configuration config;
@@ -49,6 +49,7 @@ public class Caption
 	
 	public NameSuper namesuper;
 	public Fixture fixture;
+	public Team team;
 	
 	public Caption() {
 		super();
@@ -80,10 +81,9 @@ public class Caption
 				return populateMatchSummary(WhichSide, Integer.valueOf(whatToProcess.split(",")[0]), matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
 
 			
-			case 7: // L3rd Profile
+			case 118: case 122: // L3rd BAT and BALL Profile
 				return PopulateL3rdPlayerProfile(whatToProcess,WhichSide, matchAllData);
 			case 117://HowOut
-				System.out.println("whatToProcess :" + whatToProcess);
 				return populateHowOut(whatToProcess,WhichSide,matchAllData);
 			case 121: //NameSuper DB
 				return populateLTNameSuper(whatToProcess,WhichSide);
@@ -138,48 +138,60 @@ public class Caption
 	public boolean PopulateL3rdPlayerProfile(String whatToProcess, int WhichSide, MatchAllData matchAllData) 
 		throws JsonMappingException, JsonProcessingException, InterruptedException
 	{
+		System.out.println(whatToProcess);
 		if(!whatToProcess.contains(",") && whatToProcess.split(",").length >= 4) {
 			return false;
 		}
 
 		FirstPlayerId = Integer.valueOf(whatToProcess.split(",")[1]);
-		WhichProfileId = Integer.valueOf(whatToProcess.split(",")[2]);
+		WhichProfile = whatToProcess.split(",")[2];
 		
-		if(FirstPlayerId <= 0 || WhichProfileId <= 0) {
+		if(FirstPlayerId <= 0 || WhichProfile == null) {
 			return false;
 		}
 		
-		stat = statistics.stream().filter(
-			st -> st.getPlayer_id() == FirstPlayerId).findAny().orElse(null);
+		stat = statistics.stream().filter(st -> st.getPlayer_id() == FirstPlayerId).findAny().orElse(null);
 		
 		if(stat == null) {
 			return false;
 		}
-
-		statsType = statsTypes.stream().filter(
-			st -> st.getStats_id() == WhichProfileId).findAny().orElse(null);
-			
+		
+		statsType = statsTypes.stream().filter(st -> st.getStats_short_name().equalsIgnoreCase(WhichProfile)).findAny().orElse(null);
+		
 		if(statsType == null) {
 			return false;
 		}
 		
 		player = CricketFunctions.getPlayerFromMatchData(stat.getPlayer_id(), matchAllData); 
+		
 		if(player == null) {
 			return false;
 		}
 		
+		team = cricketService.getTeams().stream().filter(tm -> tm.getTeamId() == player.getTeamId()).findAny().orElse(null);
+		
+		if(team == null) {
+			return false;
+		}
+		
 		stat.setStats_type(statsType);
-		stat = CricketFunctions.updateTournamentDataWithStats(stat, tournament_matches, matchAllData);
-		stat = CricketFunctions.updateStatisticsWithMatchData(stat, matchAllData);
-
-		lowerThird = new LowerThird("", player.getFirstname(), player.getSurname(), 
-			statsType.getStats_full_name(), "", "", 2, "FLAG",new String[]{"MATCHES", "RUNS", "100s", "50s"},
-			new String[]{String.valueOf(stat.getMatches()), String.valueOf(stat.getRuns()), 
-			String.valueOf(stat.getHundreds()), String.valueOf(stat.getFifties())},null,null);
+		//stat = CricketFunctions.updateTournamentDataWithStats(stat, tournament_matches, matchAllData);
+		//stat = CricketFunctions.updateStatisticsWithMatchData(stat, matchAllData);
+		
+		if(Integer.valueOf(whatToProcess.split(",")[0]) == 118) {
+			lowerThird = new LowerThird("", player.getFirstname(), player.getSurname(),statsType.getStats_full_name(), "", "", 2, team.getTeamName4(),
+					new String[]{"MATCHES", "RUNS", "100s", "50s", "BEST", "", ""},new String[]{String.valueOf(stat.getMatches()), String.valueOf(stat.getRuns()), 
+					String.valueOf(stat.getHundreds()), String.valueOf(stat.getFifties()), stat.getBest_score() ,"",""},null,null);
+		}
+		else if(Integer.valueOf(whatToProcess.split(",")[0]) == 122) {
+			lowerThird = new LowerThird("", player.getFirstname(), player.getSurname(),statsType.getStats_full_name(), "", "", 2, team.getTeamName4(),
+					new String[]{"MATCHES", "WICKETS", "3WI", "5WI", "BEST", "", ""},new String[]{String.valueOf(stat.getMatches()), String.valueOf(stat.getWickets()), 
+					String.valueOf(stat.getPlus_3()), String.valueOf(stat.getPlus_5()), stat.getBest_figures() ,"",""},null,null);
+		}
 		
 		if(PopulateL3rdHeader(Integer.valueOf(whatToProcess.split(",")[0]),WhichSide) == true) {
-			HideAndShowL3rdSubStrapContainers(WhichSide);
-			return PopulateL3rdBody(WhichSide, Integer.valueOf(whatToProcess));
+			//HideAndShowL3rdSubStrapContainers(WhichSide);
+			return PopulateL3rdBody(WhichSide, Integer.valueOf(whatToProcess.split(",")[0]));
 		} else {
 			return false;
 		}
@@ -205,7 +217,6 @@ public class Caption
 					
 					break;
 				case 117:
-					
 					if(lowerThird.getWhichSponsor() != null) {
 						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"+ WhichSide + 
 								"$Select_Flags*FUNCTION*Omo*vis_con SET 1 \0");
@@ -225,6 +236,21 @@ public class Caption
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide 
 							+ "$Name$Change_Out$Score$txt_Not_Out*GEOM*TEXT SET " + "(" + lowerThird.getBallsFacedText() + ")" + "\0");
 					
+					break;
+				case 118: case 122:
+					if(lowerThird.getWhichSponsor() != null) {
+						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"+ WhichSide + 
+								"$Select_Flags*FUNCTION*Omo*vis_con SET 1 \0");
+						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide + 
+								"$Select_Flags$Flag$Change_Out$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + lowerThird.getWhichSponsor() + "\0");
+					}
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide 
+							+ "$Name$Change_Out$txt_Name*GEOM*TEXT SET " + lowerThird.getFirstName() + " " + lowerThird.getSurName() + "\0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide 
+							+ "$Name$Change_Out$txt_Designation*GEOM*TEXT SET " + lowerThird.getSubTitle() + "\0");
+					
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide +
+							"$Name$Change_Out$Score*ACTIVE SET 0 \0");
 					break;
 				}
 				break;
@@ -327,6 +353,35 @@ public class Caption
 							lowerThird.getLeftText()[2]  + "\0");
 					
 					break;
+				case 118: case 122:
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_"+ WhichSide + 
+							"$Select_Subline*FUNCTION*Omo*vis_con SET " + lowerThird.getNumberOfSubLines() + "\0");
+					
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+							"$Select_Subline$1$Data$Left*ACTIVE SET 0 \0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+							"$Select_Subline$1$Data$Right*ACTIVE SET 0 \0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+							"$Select_Subline$1$Data$Title*ACTIVE SET 1 \0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+							"$Select_Subline$1$Data$Stat*ACTIVE SET 0 \0");
+					
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+							"$Select_Subline$2$Data$Left*ACTIVE SET 0 \0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+							"$Select_Subline$2$Data$Right*ACTIVE SET 0 \0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+							"$Select_Subline$2$Data$Title*ACTIVE SET 0 \0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+							"$Select_Subline$2$Data$Stat*ACTIVE SET 1 \0");
+					
+					for(int iStat = 0; iStat < 7; iStat++) {
+						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide 
+							+ "$Select_Subline$1$Data$Title$txt_" + (iStat + 1) + "*GEOM*TEXT SET " + lowerThird.getTitlesText()[iStat] + "\0");
+						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide 
+							+ "$Select_Subline$2$Data$Stat$txt_" + (iStat + 1) + "*GEOM*TEXT SET " + lowerThird.getStatsText()[iStat] + "\0");
+					}
+					break;
 				case 121:
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_"+ WhichSide + 
 							"$Select_Subline*FUNCTION*Omo*vis_con SET " + lowerThird.getNumberOfSubLines() + "\0");
@@ -343,16 +398,7 @@ public class Caption
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide 
 							+ "$Select_Subline$1$Data$Left$txt_1*GEOM*TEXT SET " + lowerThird.getTitlesText()[0] + "\0");
 					break;
-				case 7: // L3rd Profile
-					for(int iStat = 0; iStat <= 1; iStat++) {
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$LowerThirdGfx$SubLine" 
-							+ 1 + "$TitleText" + (iStat + 1) + "*GEOM*TEXT SET " + lowerThird.getTitlesText()[iStat] + "\0");
-						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Main$LowerThirdGfx$SubLine" 
-							+ 2 + "$StatsText" + (iStat + 1) + "*GEOM*TEXT SET " + lowerThird.getStatsText()[iStat] + "\0");
-					}
-					break;
 				}
-				// on error return false;
 				break;
 			}
 		}

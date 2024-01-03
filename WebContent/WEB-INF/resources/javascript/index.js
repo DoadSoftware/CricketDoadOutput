@@ -100,6 +100,9 @@ function processUserSelection(whichInput)
 	case 'selectInn':
 		processOnChangeData("HOWOUT-PLAYER", null);
 		break;
+	case 'selectTeamsName':
+		processOnChangeData("PLAYER-PROFILE", null);
+		break;
 		
 	case 'populate_promo_btn':
 		processCricketProcedures("POPULATE-GRAPHICS", 78 + ',' + $('#selectMatchPromo option:selected').val());
@@ -110,6 +113,14 @@ function processUserSelection(whichInput)
 	case 'populate_howout_btn':
 		processCricketProcedures("POPULATE-GRAPHICS", 117 + ',' + $('#selectInn option:selected').val() 
 			+ ',' + $('#selectHowoutPlayers option:selected').val());
+		break;
+	case 'populate_l3playerprofilebat_btn':
+		processCricketProcedures("POPULATE-GRAPHICS", 118 + ',' + $('#selectPlayerName option:selected').val()
+			+ ',' + $('#selectProfile option:selected').val());
+		break;
+	case 'populate_l3playerprofileball_btn':
+		processCricketProcedures("POPULATE-GRAPHICS", 122 + ',' + $('#selectPlayerName option:selected').val()
+			+ ',' + $('#selectProfile option:selected').val());
 		break;
 	}	
 }
@@ -129,6 +140,40 @@ function processOnChangeData(whatToProcess,dataToProcess){
 					});
 				}
 			});
+			break;
+		case 'PLAYER-PROFILE':
+			$('#selectPlayerName').empty();
+			if(session_match.setup.homeTeamId == $('#selectTeamsName option:selected').val()){
+				session_match.setup.homeSquad.forEach(function(hs,index,arr){
+					$('#selectPlayerName').append(
+						$(document.createElement('option')).prop({
+						value: hs.playerId,
+						text: hs.full_name
+					}))
+				});
+				session_match.setup.homeOtherSquad.forEach(function(hos,index,arr){
+					$('#selectPlayerName').append(
+						$(document.createElement('option')).prop({
+						value: hos.playerId,
+						text: hos.full_name + ' (OTHER)'
+					}))
+				});
+			}else{
+				session_match.setup.awaySquad.forEach(function(as,index,arr){
+					$('#selectPlayerName').append(
+						$(document.createElement('option')).prop({
+						value: as.playerId,
+						text: as.full_name
+					}))
+				});
+				session_match.setup.awayOtherSquad.forEach(function(aos,index,arr){
+					$('#selectPlayerName').append(
+						$(document.createElement('option')).prop({
+						value: aos.playerId,
+						text: aos.full_name + ' (OTHER)'
+					}))
+				});
+			}
 			break;
 	}
 }
@@ -182,9 +227,13 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			}
 			break;
 
-		case 117 :
+		case 117 : //HowOut
 			addItemsToList("HOWOUT-OPTIONS", null);
 			processOnChangeData("HOWOUT-PLAYER", null);
+			break;
+		case 118: case 122: //Lt-Bat-Ball-Profile
+			addItemsToList('L3PLAYERPROFILE-OPTIONS',dataToProcess);
+			processOnChangeData('PLAYER-PROFILE',null);
 			break;	
 		case 121: // NAME SUPER
 			processCricketProcedures("NAMESUPER-GRAPHICS-OPTIONS", dataToProcess);
@@ -319,7 +368,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 			}	
 			
 		break;
-	case 'NAMESUPER-OPTION': case 'PROMO-OPTION':	
+	case 'PROMO-OPTION':
+	case 'NAMESUPER-OPTION': case 'L3PLAYERPROFILE-OPTIONS':
 		$("#captions_div").hide();
 		$('#select_graphic_options_div').empty();
 	
@@ -338,46 +388,153 @@ function addItemsToList(whatToProcess,dataToProcess)
 		row = tbody.insertRow(tbody.rows.length);
 		
 		switch(whatToProcess) {
+		case 'L3PLAYERPROFILE-OPTIONS':
+			select = document.createElement('select');
+			select.id = 'selectTeamsName';
+			select.name = select.id;
+			
+			if(dataToProcess == 118){
+				if(session_match.match.inning[0].isCurrentInning.toUpperCase().includes('YES')){
+					option = document.createElement('option');
+					option.value = session_match.match.inning[0].battingTeamId;
+					option.text = session_match.match.inning[0].batting_team.teamName4;
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = session_match.match.inning[0].bowlingTeamId;
+					option.text = session_match.match.inning[0].bowling_team.teamName4;
+					select.appendChild(option);
+				}else{
+					option = document.createElement('option');
+					option.value = session_match.match.inning[1].battingTeamId;
+					option.text = session_match.match.inning[1].batting_team.teamName4;
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = session_match.match.inning[1].bowlingTeamId;
+					option.text = session_match.match.inning[1].bowling_team.teamName4;
+					select.appendChild(option);
+				}
+			}else if(dataToProcess == 122){
+				if(session_match.match.inning[0].isCurrentInning.toUpperCase().includes('YES')){
+					option = document.createElement('option');
+					option.value = session_match.match.inning[0].bowlingTeamId;
+					option.text = session_match.match.inning[0].bowling_team.teamName4;
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = session_match.match.inning[0].battingTeamId;
+					option.text = session_match.match.inning[0].batting_team.teamName4;
+					select.appendChild(option);
+					
+				}else{
+					option = document.createElement('option');
+					option.value = session_match.match.inning[1].bowlingTeamId;
+					option.text = session_match.match.inning[1].bowling_team.teamName4;
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = session_match.match.inning[1].battingTeamId;
+					option.text = session_match.match.inning[1].batting_team.teamName4;
+					select.appendChild(option);
+				}
+			}
+			
+			select.setAttribute('onchange',"processUserSelection(this)");
+			row.insertCell(cellCount).appendChild(select);
+			cellCount = cellCount + 1;
+			
+			select = document.createElement('select');
+			select.id = 'selectPlayerName';
+			select.name = select.id;
+			
+			row.insertCell(cellCount).appendChild(select);
+			cellCount = cellCount + 1;
+			
+			select = document.createElement('select');
+			select.id = 'selectProfile';
+			select.name = select.id;
+			
+			option = document.createElement('option');
+			option.value = 'DT20';
+			option.text = 'T20';
+			select.appendChild(option);
+			
+			row.insertCell(cellCount).appendChild(select);
+			cellCount = cellCount + 1
+			
+			option = document.createElement('input');
+			option.type = 'button';
+			switch(dataToProcess){
+				case 118:
+					option.name = 'populate_l3playerprofilebat_btn';
+		    		option.value = 'Populate Profile Bat';
+					break;
+				case 122:
+					option.name = 'populate_l3playerprofileball_btn';
+		    		option.value = 'Populate Profile Ball';
+					break;
+			}
+		    option.id = option.name;
+		    option.setAttribute('onclick',"processUserSelection(this)");
+		    
+		    div = document.createElement('div');
+		    div.append(option);
+	
+			option = document.createElement('input');
+			option.type = 'button';
+			option.name = 'cancel_graphics_btn';
+			option.id = option.name;
+			option.value = 'Cancel';
+			option.setAttribute('onclick','processUserSelection(this)');
+	
+		    div.append(option);
+		    
+		    row.insertCell(cellCount).appendChild(div);
+		    cellCount = cellCount + 1;
+		    
+			document.getElementById('select_graphic_options_div').style.display = '';
+			break;
 		case 'NAMESUPER-OPTION':
 			select = document.createElement('select');
 		
-				select.style = 'width:130px';
-				select.id = 'selectNameSuper';
-				select.name = select.id;
-				
-				dataToProcess.forEach(function(ns,index,arr1){
-					option = document.createElement('option');
-					option.value = ns.namesuperId;
-					option.text = ns.prompt ;
-					select.appendChild(option);
-				});
-				
-				row.insertCell(cellCount).appendChild(select);
-				cellCount = cellCount + 1;
-				
-				option = document.createElement('input');
-				option.type = 'button';
-				option.name = 'populate_namesuper_btn';
-			    option.value = 'Populate Namesuper';
-			    option.id = option.name;
-			    option.setAttribute('onclick',"processUserSelection(this)");
-			    
-			    div = document.createElement('div');
-			    div.append(option);
-		
-				option = document.createElement('input');
-				option.type = 'button';
-				option.name = 'cancel_graphics_btn';
-				option.id = option.name;
-				option.value = 'Cancel';
-				option.setAttribute('onclick','processUserSelection(this)');
-		
-			    div.append(option);
-			    
-			    row.insertCell(cellCount).appendChild(div);
-			    cellCount = cellCount + 1;
-			    
-				document.getElementById('select_graphic_options_div').style.display = '';
+			select.style = 'width:130px';
+			select.id = 'selectNameSuper';
+			select.name = select.id;
+			
+			dataToProcess.forEach(function(ns,index,arr1){
+				option = document.createElement('option');
+				option.value = ns.namesuperId;
+				option.text = ns.prompt ;
+				select.appendChild(option);
+			});
+			
+			row.insertCell(cellCount).appendChild(select);
+			cellCount = cellCount + 1;
+			
+			option = document.createElement('input');
+			option.type = 'button';
+			option.name = 'populate_namesuper_btn';
+		    option.value = 'Populate Namesuper';
+		    option.id = option.name;
+		    option.setAttribute('onclick',"processUserSelection(this)");
+		    
+		    div = document.createElement('div');
+		    div.append(option);
+	
+			option = document.createElement('input');
+			option.type = 'button';
+			option.name = 'cancel_graphics_btn';
+			option.id = option.name;
+			option.value = 'Cancel';
+			option.setAttribute('onclick','processUserSelection(this)');
+	
+		    div.append(option);
+		    
+		    row.insertCell(cellCount).appendChild(div);
+		    cellCount = cellCount + 1;
+		    
+			document.getElementById('select_graphic_options_div').style.display = '';
 			break;
 		case 'PROMO-OPTION':
 			select = document.createElement('select');

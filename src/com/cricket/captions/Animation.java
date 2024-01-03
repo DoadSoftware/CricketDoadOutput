@@ -23,7 +23,7 @@ public class Animation
 						break;
 					}
 					break;
-				case 121: case 117: // NameSuperDB-HOWOUT
+				case 121: case 117: case 118: case 122: // NameSuperDB-HOWOUT
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Essentials START \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Row START \0");
 					break;
@@ -47,7 +47,7 @@ public class Animation
 						break;
 					}
 					break;
-				case 121: // NameSuperDB
+				case 121: case 117: case 118: case 122: // NameSuperDB
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Essentials CONTINUE \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Row CONTINUE \0");
 					break;
