@@ -307,7 +307,7 @@ public class IndexController
 					this_animation.ChangeOn(valueToProcess,graphicOnScreen,print_writers, session_configuration);
 					TimeUnit.MILLISECONDS.sleep(2000);
 					all_ok_status = this_caption.PopulateGraphics(valueToProcess, 1, session_match);
-					this_animation.CutBack(valueToProcess, print_writers, session_configuration);
+					this_animation.CutBack(valueToProcess,graphicOnScreen,print_writers, session_configuration);
 				}
 				graphicOnScreen = Integer.valueOf(valueToProcess.split(",")[0]);
 			}

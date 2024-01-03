@@ -23,9 +23,11 @@ public class Animation
 						break;
 					}
 					break;
-				case 121: case 117: case 118: case 122: // NameSuperDB-HOWOUT
+				//NameSuperDB, HOWOUT, LTBatProfile, NameSuperPlayer, LtBallProfile, BatThisMatch, BallThisMatch
+				case 121: case 117: case 118: case 119: case 122: case 116: case 120:
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Essentials START \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Row START \0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*HeaderDynamic START \0");
 					break;
 				}
 			}
@@ -47,9 +49,11 @@ public class Animation
 						break;
 					}
 					break;
-				case 121: case 117: case 118: case 122: // NameSuperDB
+				//NameSuperDB, HOWOUT, LTBatProfile, NameSuperPlayer, LtBallProfile, BatThisMatch, BallThisMatch
+				case 121: case 117: case 118: case 119: case 122: case 116: case 120:
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Essentials CONTINUE \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Row CONTINUE \0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*HeaderDynamic SHOW 0.0 \0");
 					break;
 				}
 			}
@@ -87,7 +91,7 @@ public class Animation
 		}
 		return CricketUtil.YES;
 	}
-	public String CutBack(String whatToProcess, List<PrintWriter> print_writers, Configuration config)
+	public String CutBack(String whatToProcess,int whichGrapicOnScreen,List<PrintWriter> print_writers, Configuration config)
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
 		case "ICC-U19-2023":
@@ -131,7 +135,7 @@ public class Animation
 			break;
 		}
 		return CricketUtil.YES;
-	}	
+	}
 	public boolean ClearAll(List<PrintWriter> print_writers) {
 		
 		for(PrintWriter print_writer : print_writers) {
@@ -168,4 +172,5 @@ public class Animation
 		}
 		return false;
 	}
+	
 }
