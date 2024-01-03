@@ -34,12 +34,14 @@ import com.cricket.model.Configuration;
 import com.cricket.model.EventFile;
 import com.cricket.model.Match;
 import com.cricket.model.MatchAllData;
+import com.cricket.model.NameSuper;
 import com.cricket.model.Setup;
 import com.cricket.model.Statistics;
 import com.cricket.model.Tournament;
 import com.cricket.service.CricketService;
 import com.cricket.util.CricketFunctions;
 import com.cricket.util.CricketUtil;
+import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.core.exc.StreamWriteException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -69,6 +71,7 @@ public class IndexController
 	public static List<MatchAllData> cricket_matches = new ArrayList<MatchAllData>();
 	public static List<Tournament> past_tournament_stats = new ArrayList<Tournament>();
 	public static List<Statistics> session_statistics = new ArrayList<Statistics>();
+	public static List<NameSuper> session_name_super = new ArrayList<NameSuper>(); 
 	
 	@RequestMapping(value = {"/","/initialise"}, method={RequestMethod.GET,RequestMethod.POST}) 
 	public String initialisePage(ModelMap model, 
@@ -182,22 +185,8 @@ public class IndexController
 				CricketUtil.MATCH + "," + CricketUtil.EVENT, session_match));			
 			session_match.getSetup().setMatchFileTimeStamp(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
 			
-			switch (select_broadcaster) {
-			case "ICC-U19-2023":
-
-				cricket_matches = CricketFunctions.getTournamentMatches(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + CricketUtil.MATCHES_DIRECTORY).listFiles(new FileFilter() {
-					@Override
-				    public boolean accept(File pathname) {
-				        String name = pathname.getName().toLowerCase();
-				        return name.endsWith(".json") && pathname.isFile();
-				    }
-				}), cricketService);
-				session_statistics = cricketService.getAllStats();
-				past_tournament_stats = CricketFunctions.extractTournamentStats(
-					"PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
-				this_caption = new Caption(print_writers, session_configuration, session_statistics,cricketService.getAllStatsType(), cricket_matches,cricketService);
-				break;
-			}
+			GetVariousDBData(session_configuration);
+			
 			show_speed = true;
 			
 			model.addAttribute("session_match", session_match);
@@ -210,11 +199,39 @@ public class IndexController
 	public <T> List<T> GetGraphicOption(String whatToProcess) {
 		switch (whatToProcess) {
 		case "NAMESUPER-GRAPHICS-OPTIONS":
-		    return (List<T>) cricketService.getNameSupers();
+		    return (List<T>) session_name_super;
 		case "MATCH_PROMO-GRAPHICS-OPTIONS":
 			return (List<T>) CricketFunctions.processAllFixtures(cricketService);
 		}
 		return null;
+	}
+	
+	public void GetVariousDBData(Configuration config) throws StreamReadException, DatabindException, 
+		IllegalAccessException, InvocationTargetException, JAXBException, IOException
+	{
+		switch (config.getBroadcaster()) {
+//		case "IPL-2024":
+//			session_statistics = cricketService.getAllStats();
+//			past_tournament_stats = CricketFunctions.extractTournamentStats(
+//				"PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
+//			this_caption = new Caption(print_writers, session_configuration, 
+//				session_statistics,cricketService.getAllStatsType(), cricket_matches, cricketService);
+//			break;
+		default:
+			cricket_matches = CricketFunctions.getTournamentMatches(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + CricketUtil.MATCHES_DIRECTORY).listFiles(new FileFilter() {
+				@Override
+			    public boolean accept(File pathname) {
+			        String name = pathname.getName().toLowerCase();
+			        return name.endsWith(".json") && pathname.isFile();
+			    }
+			}), cricketService);
+			session_statistics = cricketService.getAllStats();
+			past_tournament_stats = CricketFunctions.extractTournamentStats(
+				"PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
+			session_name_super =  cricketService.getNameSupers();
+			this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), cricket_matches, session_name_super);
+			break;
+		}
 	}
 	
 	@RequestMapping(value = {"/processCricketProcedures"}, method={RequestMethod.GET,RequestMethod.POST})    
@@ -236,22 +253,7 @@ public class IndexController
 			
 		case "RE_READ_DATA":
 
-			cricket_matches = CricketFunctions.getTournamentMatches(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + CricketUtil.MATCHES_DIRECTORY).listFiles(new FileFilter() {
-				@Override
-			    public boolean accept(File pathname) {
-			        String name = pathname.getName().toLowerCase();
-			        return name.endsWith(".json") && pathname.isFile();
-			    }
-			}), cricketService);
-			
-			session_statistics = cricketService.getAllStats();
-			past_tournament_stats = CricketFunctions.extractTournamentStats("PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
-			
-			this_caption = new Caption(print_writers, session_configuration, session_statistics, cricketService.getAllStatsType(), cricket_matches,cricketService);
-			
-			session_match = CricketFunctions.populateMatchVariables(cricketService, CricketFunctions.readOrSaveMatchFile(
-				CricketUtil.READ,CricketUtil.SETUP, session_match));
-			
+			GetVariousDBData(session_configuration);
 			return JSONObject.fromObject(session_match).toString();
 			
 		case "SHOW_SPEED":

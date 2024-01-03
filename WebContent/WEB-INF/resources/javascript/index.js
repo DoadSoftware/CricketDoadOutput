@@ -1,4 +1,5 @@
 var session_match;
+var selected_options = [];
 function processWaitingButtonSpinner(whatToProcess) 
 {
 	switch (whatToProcess) {
@@ -10,6 +11,13 @@ function processWaitingButtonSpinner(whatToProcess)
 		$('.spinner-border').hide();
 		$(':button').prop('disabled', false);
 		break;
+	}
+}
+function initialiseOutput()
+{
+	selected_options = [];
+	for(var i = 1; i <= 4; i++) {
+	    selected_options.push('');
 	}
 }
 function initialiseForm(whatToProcess,dataToProcess)
@@ -96,32 +104,31 @@ function processUserSelection(whichInput)
 		document.getElementById('select_graphic_options_div').style.display = 'none';
 		$("#captions_div").show();
 		break;
-		
-	case 'selectInn':
-		processOnChangeData("HOWOUT-PLAYER", null);
+//	case 'selectInn':
+//		processOnChangeData("HOWOUT-PLAYER", null);
+//		break;
+//	case 'selectTeamsName':
+//		processOnChangeData("PLAYER-PROFILE", null);
+//		break;
+	case 'populate_promo_btn': case 'populate_namesuper_btn':
+		processCricketProcedures("POPULATE-GRAPHICS", $('#which_keypress').val() + ',' + selected_options.toString());
+//		processCricketProcedures("POPULATE-GRAPHICS", 78 + ',' + $('#selectMatchPromo option:selected').val());
 		break;
-	case 'selectTeamsName':
-		processOnChangeData("PLAYER-PROFILE", null);
-		break;
-		
-	case 'populate_promo_btn':
-		processCricketProcedures("POPULATE-GRAPHICS", 78 + ',' + $('#selectMatchPromo option:selected').val());
-		break;
-	case 'populate_namesuper_btn':
-		processCricketProcedures("POPULATE-GRAPHICS", 121 + ',' + $('#selectNameSuper option:selected').val());
-		break;
-	case 'populate_howout_btn':
-		processCricketProcedures("POPULATE-GRAPHICS", 117 + ',' + $('#selectInn option:selected').val() 
-			+ ',' + $('#selectHowoutPlayers option:selected').val());
-		break;
-	case 'populate_l3playerprofilebat_btn':
-		processCricketProcedures("POPULATE-GRAPHICS", 118 + ',' + $('#selectPlayerName option:selected').val()
-			+ ',' + $('#selectProfile option:selected').val());
-		break;
-	case 'populate_l3playerprofileball_btn':
-		processCricketProcedures("POPULATE-GRAPHICS", 122 + ',' + $('#selectPlayerName option:selected').val()
-			+ ',' + $('#selectProfile option:selected').val());
-		break;
+//	case 'populate_namesuper_btn':
+//		processCricketProcedures("POPULATE-GRAPHICS", 121 + ',' + $('#selectNameSuper option:selected').val());
+//		break;
+//	case 'populate_howout_btn':
+//		processCricketProcedures("POPULATE-GRAPHICS", 117 + ',' + $('#selectInn option:selected').val() 
+//			+ ',' + $('#selectHowoutPlayers option:selected').val());
+//		break;
+//	case 'populate_l3playerprofilebat_btn':
+//		processCricketProcedures("POPULATE-GRAPHICS", 118 + ',' + $('#selectPlayerName option:selected').val()
+//			+ ',' + $('#selectProfile option:selected').val());
+//		break;
+//	case 'populate_l3playerprofileball_btn':
+//		processCricketProcedures("POPULATE-GRAPHICS", 122 + ',' + $('#selectPlayerName option:selected').val()
+//			+ ',' + $('#selectProfile option:selected').val());
+//		break;
 	}	
 }
 
@@ -178,7 +185,10 @@ function processOnChangeData(whatToProcess,dataToProcess){
 	}
 }
 
-function processUserSelectionData(whatToProcess,dataToProcess){
+function processUserSelectionData(whatToProcess,dataToProcess)
+{
+	copyDropdownSelectionToHiddenField(null);
+
 	switch (whatToProcess) {
 	case 'LOGGER_FORM_KEYPRESS':
 		switch(dataToProcess) {
@@ -200,7 +210,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 				}				
 			}
 			document.getElementById('which_keypress').value = parseInt(dataToProcess) - 48;
-			document.getElementById('selected_inning').innerHTML = 'Selected Inning: ' + (parseInt(dataToProcess) - 48);
+			document.getElementById('selected_inning').innerHTML = (parseInt(dataToProcess) - 48);
 			break;
 			
 		case 189:
@@ -208,36 +218,37 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 				processCricketProcedures('ANIMATE-OUT');
 			}
 			break;
-		case 77://MATCH ID
-			processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
-			break;
-		case 112: case 113: //BATTING-BOWLING-CARD
-			dataToProcess = dataToProcess + ',' + document.getElementById('which_keypress').value;
+		case 66: case 77: case 112: case 113:
+			if(document.getElementById('selected_inning').innerHtml < 1 && document.getElementById('selected_inning').innerHtml > 4) {
+				alert(document.getElementById('selected_inning').innerHtml + ' must be between 1 to 4');
+				return false;
+			}
+			dataToProcess = dataToProcess + ',' + document.getElementById('selected_inning').value;
 			processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 			break;
 		case 78: // MATCH PROMO
-			processCricketProcedures("MATCH_PROMO-GRAPHICS-OPTIONS", dataToProcess);
-			break;
-		case 66: // MATCH SUMMARY
-			if(document.getElementById('which_keypress').value == 2){
-				dataToProcess = dataToProcess + ',' + document.getElementById('which_keypress').value;
-				processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
-			}else{
-				alert('It Work only for Inning 2');
+		case 118: case 122: //Lt-Bat-Ball-Profile
+		case 121: // NAME SUPER
+		 	switch(dataToProcess) {
+			case 118: case 122: //Lt-Bat-Ball-Profile
+				addItemsToList(dataToProcess,session_match);
+				break;
+			default:
+				processCricketProcedures("GRAPHICS-OPTIONS", dataToProcess);
+				break;
 			}
 			break;
-
 		case 117 : //HowOut
 			addItemsToList("HOWOUT-OPTIONS", null);
-			processOnChangeData("HOWOUT-PLAYER", null);
+			//processOnChangeData("HOWOUT-PLAYER", null);
 			break;
-		case 118: case 122: //Lt-Bat-Ball-Profile
-			addItemsToList('L3PLAYERPROFILE-OPTIONS',dataToProcess);
-			processOnChangeData('PLAYER-PROFILE',null);
-			break;	
-		case 121: // NAME SUPER
-			processCricketProcedures("NAMESUPER-GRAPHICS-OPTIONS", dataToProcess);
-			break;
+//		case 118: case 122: //Lt-Bat-Ball-Profile
+//			addItemsToList('L3PLAYERPROFILE-OPTIONS',dataToProcess);
+//			processOnChangeData('PLAYER-PROFILE',null);
+//			break;	
+//		case 121: // NAME SUPER
+//			processCricketProcedures("NAMESUPER-GRAPHICS-OPTIONS", dataToProcess);
+//			break;
 		}
 		break;
 	}
@@ -294,6 +305,10 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 			}
 		}
 	});
+}
+function setDropdownOptionToSelectOptionArray(whichInput, whichIndex)
+{
+	selected_options[whichIndex] = $('#' + $(whichInput).attr('id') + ' option:selected').val();
 }
 function addItemsToList(whatToProcess,dataToProcess)
 {
@@ -368,8 +383,10 @@ function addItemsToList(whatToProcess,dataToProcess)
 			}	
 			
 		break;
+		
 	case 'PROMO-OPTION':
 	case 'NAMESUPER-OPTION': case 'L3PLAYERPROFILE-OPTIONS':
+		
 		$("#captions_div").hide();
 		$('#select_graphic_options_div').empty();
 	
@@ -447,6 +464,10 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select = document.createElement('select');
 			select.id = 'selectPlayerName';
 			select.name = select.id;
+
+//DJ make shcnages to this...
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+//DJ make shcnages to this...
 			
 			row.insertCell(cellCount).appendChild(select);
 			cellCount = cellCount + 1;
@@ -466,14 +487,14 @@ function addItemsToList(whatToProcess,dataToProcess)
 			option = document.createElement('input');
 			option.type = 'button';
 			switch(dataToProcess){
-				case 118:
-					option.name = 'populate_l3playerprofilebat_btn';
-		    		option.value = 'Populate Profile Bat';
-					break;
-				case 122:
-					option.name = 'populate_l3playerprofileball_btn';
-		    		option.value = 'Populate Profile Ball';
-					break;
+			case 118:
+				option.name = 'populate_l3playerprofilebat_btn';
+	    		option.value = 'Populate Profile Bat';
+				break;
+			case 122:
+				option.name = 'populate_l3playerprofileball_btn';
+	    		option.value = 'Populate Profile Ball';
+				break;
 			}
 		    option.id = option.name;
 		    option.setAttribute('onclick',"processUserSelection(this)");
@@ -535,8 +556,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 		    cellCount = cellCount + 1;
 		    
 			document.getElementById('select_graphic_options_div').style.display = '';
+			
 			break;
+			
 		case 'PROMO-OPTION':
+			
 			select = document.createElement('select');
 			select.id = 'selectMatchPromo';
 			select.name = select.id;
@@ -545,12 +569,9 @@ function addItemsToList(whatToProcess,dataToProcess)
                 option.value = oop.matchnumber;
                 option.text = oop.matchnumber + ' - ' +oop.home_Team.teamName1 + ' Vs ' + oop.away_Team.teamName1 ;
                 select.appendChild(option);
-					
             });
-			
 			row.insertCell(cellCount).appendChild(select);
 			cellCount = cellCount + 1;
-			
 			
 			option = document.createElement('input');
 			option.type = 'button';

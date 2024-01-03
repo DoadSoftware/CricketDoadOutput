@@ -56,7 +56,7 @@
   </script>
 
 </head>
-<body>
+<body onload="initialiseOutput()">
 <form:form name="output_form" autocomplete="off" action="POST">
 <div class="content py-5" style="background-color: #EAE8FF; color: #2E008B">
   <div class="container">
@@ -76,7 +76,7 @@
 			    <label class="col-sm-4 col-form-label text-left">Match: ${session_match.match.matchFileName} </label>
 			    <label class="col-sm-4 col-form-label text-left">Broadcaster: ${session_selected_broadcaster.replace("_"," ")} </label>
 			    <label class="col-sm-4 col-form-label text-left">2nd Broadcaster: ${session_selected_second_broadcaster.replace("_"," ")} </label>
-			    <label id="selected_inning" class="col-sm-4 col-form-label text-left">Current Inning: ${current_inning} </label>
+			    <label id="selected_inning" class="col-sm-4 col-form-label text-left">Selected Inning: ${current_inning} </label>
 			    <label id="inning1_totalruns_lbl" class="col-sm-4 col-form-label text-left">${curr_team_total}</label>
 			    <label id="inning1_battingcard1_lbl" class="col-sm-4 col-form-label text-left">${curr_player}</label>
 			    <label id="inning1_battingcard2_lbl" class="col-sm-4 col-form-label text-left">${curr_player2}</label>
