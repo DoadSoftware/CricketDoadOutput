@@ -15,18 +15,37 @@
   <link rel="stylesheet" href="<c:url value="/webjars/bootstrap/5.1.3/css/bootstrap.min.css"/>"/>  
   <link href="<c:url value="/webjars/font-awesome/6.0.0/css/all.css"/>" rel="stylesheet">
   
-  <script type="text/javascript">
+   <script type="text/javascript">
+  var keys = {}, whichKey;
   
-  var key_val = 0;
-  
-  $(document).on("keydown", function(e){
+  $(document).keydown(function (e) {
 	  var event = document.all ? window.event : e;
-	  switch (e.target.tagName.toLowerCase()) {
-	    case "input":
-	    case "textarea":
-	      break;
-	    default:
-	      if(e.altKey && e.key === 's'){
+		switch (e.target.tagName.toLowerCase()) {
+	  	case "input":
+	  	case "textarea":
+	    break;
+
+		default:
+			console.log('down');
+			keys[e.which] = true;
+			printKeys(e);
+		break;
+		}
+	  });
+	 
+  function printKeys(e) {
+		whichKey = '';
+		for (var i in keys) 
+		{
+			if (!keys.hasOwnProperty(i)) continue;
+	    	whichKey += i;
+		}
+		$(document).keyup(function (e) {
+			 console.log('up');
+			delete keys[e.which];
+		  });
+	  	console.log(whichKey);
+	  	if(e.altKey && e.key === 's'){
 	   		  e.preventDefault()
 	   		  processUserSelectionData('LOGGER_FORM_KEYPRESS','SPEED');
 	   	  }else if(e.altKey && e.key === 'r'){
@@ -34,26 +53,14 @@
 	   		  processUserSelectionData('LOGGER_FORM_KEYPRESS','RE_READ_DATA');
 	   	  }else{
 	   		  e.preventDefault();
-	   		  key_val = e.which;
-	   		  if(e.altKey) {
-	   			key_val = key_val + 250;
-	   		  }
-			  if(e.ctrlKey) {
-		   		key_val = key_val + 300;
-	   		  }
-			  if(e.shiftKey) {
-		   		key_val = key_val + 350;
-		   	  }
-			  //DJ check upper case and lower case
-	   		  processUserSelectionData('LOGGER_FORM_KEYPRESS',key_val);
+	   		  processUserSelectionData('LOGGER_FORM_KEYPRESS',whichKey);
 	   	  }
-	      break;
+	  	
 	  }
-  }); 
   
   setInterval(() => {processCricketProcedures('READ-MATCH-AND-POPULATE');}, 1000);
- 	
   </script>
+
 
 </head>
 <body onload="initialiseOutput()">

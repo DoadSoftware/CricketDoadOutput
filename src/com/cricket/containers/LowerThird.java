@@ -11,6 +11,7 @@ public class LowerThird
 	private String ScoreText;
 	private String BallsFacedText;
 	private String WhichSponsor;
+	private String WhichTeamFlag;
 	
 	private int numberOfSubLines;
 	
@@ -20,7 +21,7 @@ public class LowerThird
 	private String[] RightText;
 	
 	public LowerThird(String headerText, String firstName, String surName, String subTitle, String scoreText,
-			String ballsFacedText, int numberOfSubLines, String WhichSponsor, String[] titlesText, String[] statsText, String[] leftText,
+			String ballsFacedText, int numberOfSubLines, String WhichSponsor, String WhichTeamFlag, String[] titlesText, String[] statsText, String[] leftText,
 			String[] rightText) {
 		super();
 		this.HeaderText = headerText;
@@ -35,6 +36,7 @@ public class LowerThird
 		this.LeftText = leftText;
 		this.RightText = rightText;
 		this.WhichSponsor = WhichSponsor;
+		this.WhichTeamFlag = WhichTeamFlag;
 	}
 
 	public LowerThird() {
@@ -135,6 +137,14 @@ public class LowerThird
 
 	public void setRightText(String[] rightText) {
 		RightText = rightText;
+	}
+
+	public String getWhichTeamFlag() {
+		return WhichTeamFlag;
+	}
+
+	public void setWhichTeamFlag(String whichTeamFlag) {
+		WhichTeamFlag = whichTeamFlag;
 	}
 
 	@Override

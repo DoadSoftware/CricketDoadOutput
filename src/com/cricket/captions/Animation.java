@@ -15,10 +15,10 @@ public class Animation
 			for(PrintWriter print_writer : print_writers) {
 				switch (Integer.valueOf(whatToProcess.split(",")[0])) {
 				//Score card ,bowling card, summary ,match id,match promo
-				case 112: case 113: case 66: case 77: case 78:
+				case 112: case 113: case 16122: case 77: case 1777:
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*In_Out START \0");
 					switch (Integer.valueOf(whatToProcess.split(",")[0])) {
-					case 77: case 78: case 66:
+					case 77: case 1777: case 16122:
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Header_Shrink START \0");
 						break;
 					}
@@ -39,10 +39,10 @@ public class Animation
 		case "ICC-U19-2023":
 			for(PrintWriter print_writer : print_writers) {
 				switch (Integer.valueOf(whatToProcess)) {
-				case 112: case 113: case 66: case 77: case 78:
+				case 112: case 113: case 16122: case 77: case 1777:
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*In_Out CONTINUE \0");
 					switch (Integer.valueOf(whatToProcess)) {
-					case 77: case 78: case 66:
+					case 77: case 1777: case 16122:
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Header_Shrink CONTINUE \0");
 						break;
 					}

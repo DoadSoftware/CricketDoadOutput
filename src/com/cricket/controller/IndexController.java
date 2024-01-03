@@ -32,11 +32,14 @@ import com.cricket.captions.Caption;
 import com.cricket.captions.Scene;
 import com.cricket.model.Configuration;
 import com.cricket.model.EventFile;
+import com.cricket.model.Fixture;
+import com.cricket.model.Ground;
 import com.cricket.model.Match;
 import com.cricket.model.MatchAllData;
 import com.cricket.model.NameSuper;
 import com.cricket.model.Setup;
 import com.cricket.model.Statistics;
+import com.cricket.model.Team;
 import com.cricket.model.Tournament;
 import com.cricket.service.CricketService;
 import com.cricket.util.CricketFunctions;
@@ -71,7 +74,10 @@ public class IndexController
 	public static List<MatchAllData> cricket_matches = new ArrayList<MatchAllData>();
 	public static List<Tournament> past_tournament_stats = new ArrayList<Tournament>();
 	public static List<Statistics> session_statistics = new ArrayList<Statistics>();
-	public static List<NameSuper> session_name_super = new ArrayList<NameSuper>(); 
+	public static List<NameSuper> session_name_super = new ArrayList<NameSuper>();
+	public static List<Fixture> session_fixture = new ArrayList<Fixture>(); 
+	public static List<Team> session_team = new ArrayList<Team>(); 
+	public static List<Ground> session_ground = new ArrayList<Ground>();
 	
 	@RequestMapping(value = {"/","/initialise"}, method={RequestMethod.GET,RequestMethod.POST}) 
 	public String initialisePage(ModelMap model, 
@@ -197,10 +203,10 @@ public class IndexController
 
 	@SuppressWarnings("unchecked")
 	public <T> List<T> GetGraphicOption(String whatToProcess) {
-		switch (whatToProcess) {
-		case "NAMESUPER-GRAPHICS-OPTIONS":
+		switch (Integer.valueOf(whatToProcess)) {
+		case 121:
 		    return (List<T>) session_name_super;
-		case "MATCH_PROMO-GRAPHICS-OPTIONS":
+		case 1777:
 			return (List<T>) CricketFunctions.processAllFixtures(cricketService);
 		}
 		return null;
@@ -229,7 +235,12 @@ public class IndexController
 			past_tournament_stats = CricketFunctions.extractTournamentStats(
 				"PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
 			session_name_super =  cricketService.getNameSupers();
-			this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), cricket_matches, session_name_super);
+			session_fixture =  CricketFunctions.processAllFixtures(cricketService);
+			session_team =  cricketService.getTeams();
+			session_ground =  cricketService.getGrounds();
+			
+			this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), cricket_matches, session_name_super,
+					session_fixture, session_team, session_ground);
 			break;
 		}
 	}
@@ -280,10 +291,10 @@ public class IndexController
 		default:
 			
 			if(whatToProcess.contains("GRAPHICS-OPTIONS")) {
-				return JSONArray.fromObject(GetGraphicOption(whatToProcess)).toString();
+				return JSONArray.fromObject(GetGraphicOption(valueToProcess)).toString();
 			}
 			else if(whatToProcess.contains("POPULATE-GRAPHICS")) {
-				//System.out.println("valueToProcess : " + valueToProcess);
+				System.out.println("valueToProcess : " + valueToProcess);
 				all_ok_status = this_caption.PopulateGraphics(valueToProcess, whichSide, session_match);
 				
 				return String.valueOf(all_ok_status);
