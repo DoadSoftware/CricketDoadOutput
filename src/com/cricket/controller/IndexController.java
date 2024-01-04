@@ -29,6 +29,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.cricket.captions.Animation;
 import com.cricket.captions.Caption;
+import com.cricket.captions.FullFramesGfx;
+import com.cricket.captions.InfobarGfx;
+import com.cricket.captions.LowerThirdGfx;
 import com.cricket.captions.Scene;
 import com.cricket.model.Configuration;
 import com.cricket.model.EventFile;
@@ -66,10 +69,11 @@ public class IndexController
 	public static Scene this_scene;
 	public static Caption this_caption;
 	public static Animation this_animation;
+	public static InfobarGfx this_infobar;
 	public static List<PrintWriter> print_writers;
 	public static boolean show_speed = true;
 	public static int whichSide = 1;
-	public static int graphicOnScreen = 0;
+	public static String graphicOnScreen = "";
 	
 	public static List<MatchAllData> cricket_matches = new ArrayList<MatchAllData>();
 	public static List<Tournament> past_tournament_stats = new ArrayList<Tournament>();
@@ -150,7 +154,7 @@ public class IndexController
 
 			last_match_time_stamp = new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.MATCHES_DIRECTORY + selectedMatch).lastModified();
 			whichSide = 1;
-			graphicOnScreen = 0;
+			graphicOnScreen = "";
 			
 			session_configuration = new Configuration(selectedMatch, select_broadcaster,qtIPAddress, qtPortNumber,qtScene, qtLanguage, vizIPAddress, vizPortNumber, vizScene, 
 				vizLanguage,vizSecondaryIPAddress, vizSecondaryPortNumber, vizSecondaryScene, vizSecondaryLanguage,vizTertiaryIPAddress, vizTertiaryPortNumber,
@@ -203,11 +207,12 @@ public class IndexController
 
 	@SuppressWarnings("unchecked")
 	public <T> List<T> GetGraphicOption(String whatToProcess) {
-		switch (Integer.valueOf(whatToProcess)) {
-		case 121:
+		switch (whatToProcess) {
+		case "F10":
 		    return (List<T>) session_name_super;
-		case 1777:
+		case "Control m":
 			return (List<T>) CricketFunctions.processAllFixtures(cricketService);
+
 		}
 		return null;
 	}
@@ -240,7 +245,8 @@ public class IndexController
 			session_ground =  cricketService.getGrounds();
 			
 			this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), cricket_matches, session_name_super,
-					session_fixture, session_team, session_ground);
+					session_fixture, session_team, session_ground,new FullFramesGfx(),new LowerThirdGfx());
+			
 			break;
 		}
 	}
@@ -309,16 +315,16 @@ public class IndexController
 					all_ok_status = this_caption.PopulateGraphics(valueToProcess, 1, session_match);
 					this_animation.CutBack(valueToProcess,graphicOnScreen,print_writers, session_configuration);
 				}
-				graphicOnScreen = Integer.valueOf(valueToProcess.split(",")[0]);
+				graphicOnScreen = valueToProcess.split(",")[0];
 			}
 			else if(whatToProcess.contains("ANIMATE-OUT")) {
 				this_animation.AnimateOut(String.valueOf(graphicOnScreen), print_writers, session_configuration);
-				graphicOnScreen = 0;
+				graphicOnScreen = "";
 				whichSide = 1;
 			}
 			else if(whatToProcess.contains("CLEAR-ALL")) {
 				whichSide = 1;
-				graphicOnScreen = 0;
+				graphicOnScreen = "";
 				this_animation.ClearAll(print_writers);
 			}
 			return JSONObject.fromObject(session_match).toString();

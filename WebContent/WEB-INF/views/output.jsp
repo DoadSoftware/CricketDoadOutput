@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="<c:url value="/webjars/bootstrap/5.1.3/css/bootstrap.min.css"/>"/>  
   <link href="<c:url value="/webjars/font-awesome/6.0.0/css/all.css"/>" rel="stylesheet">
   
-   <script type="text/javascript">
+    <script type="text/javascript">
   var keys = {}, whichKey;
   
   $(document).keydown(function (e) {
@@ -26,8 +26,7 @@
 	    break;
 
 		default:
-			console.log('down');
-			keys[e.which] = true;
+			keys[e.key] = true;
 			printKeys(e);
 		break;
 		}
@@ -38,13 +37,20 @@
 		for (var i in keys) 
 		{
 			if (!keys.hasOwnProperty(i)) continue;
-	    	whichKey += i;
+	    	whichKey = whichKey + "+" + i;
+	    	
+	    	if(whichKey.charAt(0) == '+'){
+	    		whichKey = whichKey.substring(1);
+	    	}
+	    	
+	    	if(whichKey == ' '){
+	    		whichKey = 'Space';
+	    	}
 		}
 		$(document).keyup(function (e) {
-			 console.log('up');
-			delete keys[e.which];
+			delete keys[e.key];
 		  });
-	  	console.log(whichKey);
+		console.log(whichKey)
 	  	if(e.altKey && e.key === 's'){
 	   		  e.preventDefault()
 	   		  processUserSelectionData('LOGGER_FORM_KEYPRESS','SPEED');
@@ -60,6 +66,7 @@
   
   setInterval(() => {processCricketProcedures('READ-MATCH-AND-POPULATE');}, 1000);
   </script>
+
 
 
 </head>

@@ -13,22 +13,26 @@ public class Animation
 		switch (config.getBroadcaster().toUpperCase()) {
 		case "ICC-U19-2023":
 			for(PrintWriter print_writer : print_writers) {
-				switch (Integer.valueOf(whatToProcess.split(",")[0])) {
+				switch (whatToProcess.split(",")[0]) {
 				//Score card ,bowling card, summary ,match id,match promo
-				case 112: case 113: case 16122: case 77: case 1777:
+				case "F1": case "F2": case "Shift F11": case "m": case "Control m":
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*In_Out START \0");
-					switch (Integer.valueOf(whatToProcess.split(",")[0])) {
-					case 77: case 1777: case 16122:
+					switch (whatToProcess.split(",")[0]) {
+					case "m": case "Control m": case "Shift F11":
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Header_Shrink START \0");
 						break;
 					}
 					break;
 				//NameSuperDB, HOWOUT, LTBatProfile, NameSuperPlayer, LtBallProfile, BatThisMatch, BallThisMatch
-				case 121: case 117: case 118: case 119: case 122: case 116: case 120:
-				case 17116: case 17120: case 1765: case 1875:
+				case "F5": case "F6": case "F7": case "F8": case "F9": case "F10": case "F11":
+				case "Control F5": case "Control F9": case "Control a": case "Alt k": 
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Essentials START \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Row START \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*HeaderDynamic START \0");
+					break;
+
+				case "F12": //Infobar
+					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*In_Out START \0");
 					break;
 				}
 			}
@@ -41,21 +45,24 @@ public class Animation
 		switch (config.getBroadcaster().toUpperCase()) {
 		case "ICC-U19-2023":
 			for(PrintWriter print_writer : print_writers) {
-				switch (Integer.valueOf(whatToProcess)) {
-				case 112: case 113: case 16122: case 77: case 1777:
+				switch (whatToProcess) {
+				case "F1": case "F2": case "Shift F11": case "m": case "Control m":
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*In_Out CONTINUE \0");
-					switch (Integer.valueOf(whatToProcess)) {
-					case 77: case 1777: case 16122:
+					switch (whatToProcess) {
+					case "m": case "Control m": case "Shift F11":
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Header_Shrink CONTINUE \0");
 						break;
 					}
 					break;
 				//NameSuperDB, HOWOUT, LTBatProfile, NameSuperPlayer, LtBallProfile, BatThisMatch, BallThisMatch
-				case 121: case 117: case 118: case 119: case 122: case 116: case 120:
-				case 17116: case 17120: case 1765: case 1875:
+				case "F10": case "F6": case "F7": case "F8": case "F11": case "F5": case "F9":
+				case "Control F5": case "Control F9": case "Control a": case "Alt k":
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Essentials CONTINUE \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Row CONTINUE \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*HeaderDynamic SHOW 0.0 \0");
+					break;
+				case "F12": //Infobar
+					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*In_Out CONTINUE \0");
 					break;
 				}
 			}
@@ -63,28 +70,28 @@ public class Animation
 		}
 		return CricketUtil.YES;
 	}	
-	public String ChangeOn(String whatToProcess,int whichGrapicOnScreen,List<PrintWriter> print_writers, Configuration config)
+	public String ChangeOn(String whatToProcess,String whichGrapicOnScreen,List<PrintWriter> print_writers, Configuration config)
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
 		case "ICC-U19-2023":
 			for(PrintWriter print_writer : print_writers) {
 				
 				switch(whichGrapicOnScreen) {
-				case 112:
+				case "F1":
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Header START \0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Batting_Card START \0");
 					break;
-				case 113:
+				case "F2":
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Header START \0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Bowling_Card START \0");
 					break;
 				}
 				
-				switch (Integer.valueOf(whatToProcess.split(",")[0])) {
-				case 112:
+				switch (whatToProcess.split(",")[0]) {
+				case "F1":
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Batting_Card START \0");
 					break;
-				case 113:
+				case "F2":
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Bowling_Card START \0");
 					break;
 				}
@@ -93,18 +100,18 @@ public class Animation
 		}
 		return CricketUtil.YES;
 	}
-	public String CutBack(String whatToProcess,int whichGrapicOnScreen,List<PrintWriter> print_writers, Configuration config)
+	public String CutBack(String whatToProcess,String whichGrapicOnScreen,List<PrintWriter> print_writers, Configuration config)
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
 		case "ICC-U19-2023":
 			for(PrintWriter print_writer : print_writers) {
-				switch (Integer.valueOf(whatToProcess.split(",")[0])) {
-				case 112:
+				switch (whatToProcess.split(",")[0]) {
+				case "F1":
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Header SHOW 0.0 \0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Batting_Card SHOW 0.0 \0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Bowling_Card SHOW 0.0 \0");
 					break;
-				case 113:
+				case "F2":
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Header SHOW 0.0 \0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Batting_Card SHOW 0.0 \0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Bowling_Card SHOW 0.0 \0");
@@ -137,6 +144,11 @@ public class Animation
 			break;
 		}
 		return CricketUtil.YES;
+	}
+	public void processAnimation(PrintWriter print_writer,String animationDirectorName, String animationCommand)
+	{
+		print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*"+ animationDirectorName + " " + animationCommand +" \0");
+		
 	}
 	public boolean ClearAll(List<PrintWriter> print_writers) {
 		

@@ -117,12 +117,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 {
 	switch (whatToProcess) {
 	case 'LOGGER_FORM_KEYPRESS':
-		if(dataToProcess=='SPEED' || dataToProcess == 'RE_READ_DATA'){
-			
-		}else{
-			dataToProcess = parseInt(dataToProcess);
-		}
-		document.getElementById('which_keypress').value = parseInt(dataToProcess);
+		document.getElementById('which_keypress').value = dataToProcess;
 		switch(dataToProcess) {
 		case 'SPEED':
 			processCricketProcedures('SHOW_SPEED');
@@ -130,32 +125,36 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 		case 'RE_READ_DATA':
 			processCricketProcedures('RE_READ_DATA');
 			break;
-		case 32:
+		case 'Space':
 			processCricketProcedures('CLEAR-ALL');
 			break;
-		case 49: case 50: case 51: case 52:
+		case '1': case '2': case '3': case '4':
 			if(session_match.setup.maxOvers > 0){
 				switch (dataToProcess) {
-				case 51: case 52: // Key 1 to 4
+				case '3': case '4': // Key 1 to 4
 					document.body.focus();
 					keys = [];
 					alert("3rd and 4th inning NOT available in a limited over match");
 					return false;
 				}				
 			}
-			document.getElementById('which_inning').value = parseInt(dataToProcess) - 48;
-			document.getElementById('selected_inning').innerHTML = 'Selected Inning: ' + (parseInt(dataToProcess) - 48);
+			document.getElementById('which_inning').value = dataToProcess;
+			document.getElementById('selected_inning').innerHTML = 'Selected Inning: ' + dataToProcess;
 			break;
 			
-		case 189:
+		case '-':
 			document.body.focus();
 			keys = [];
 			if(confirm('It will Also Delete Your Preview from Directory...\r\n \r\nAre You Sure To Animate Out? ') == true){
 				processCricketProcedures('ANIMATE-OUT');
 			}
 			break;
+		case 'F12':
+			processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
+			break;
+		
 		//Summary, MatchId, BattingCard, BowlingCard, BatsmanStyle, BowlerStyle 
-		case 16122: case 77: case 112: case 113: case 1765: case 1875:
+		case 'Shift+F11': case 'm': case 'F1': case 'F2': case 'Control+a': case 'Alt+k':
 			if(document.getElementById('selected_inning').innerHtml < 1 && document.getElementById('selected_inning').innerHtml > 4) {
 				document.body.focus();
 				keys = [];
@@ -166,13 +165,11 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 			break;
 		
-		case 1777: // MATCH PROMO
-		case 118: case 122: //Lt-Bat-Ball-Profile
-		case 121: // NAMESUPER
-		case 17116: case 17120: // BATSMAN STYLE, BOWLER STYLE
-		case 116: case 117: case 119: case 120: //BatThisMatch, HowOut, NameSuper-Player, BallThisMatch
+		case 'Control+m': // MATCH PROMO
+		case 'Control+F5': case 'Control+F9': // BATSMAN STYLE, BOWLER STYLE
+		case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11': //BatThisMatch, HowOut, NameSuper-Player, BallThisMatch
 		 	switch(dataToProcess) {
-			case 17116: case 17120: case 116: case 117 : case 118: case 119: case 120: case 122:
+			case 'Control+F5': case 'Control+F9': case 'F5': case 'F6' : case 'F7': case 'F8': case 'F9': case 'F11':
 				addItemsToList(dataToProcess,null);
 				break;
 			default:
@@ -249,8 +246,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 	var cellCount = 0;
 	
 	switch(whatToProcess) {
-	case 1777: case 116: case 117: case 118: case 119: case 120: case 121: case 122:
-	case 17116: case 17120:
+	case 'Control+m': case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11':
+	case 'Control+F5': case 'Control+F9':
 		$("#captions_div").hide();
 		$('#select_graphic_options_div').empty();
 	
@@ -268,7 +265,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 		
 		row = tbody.insertRow(tbody.rows.length);
 			switch(whatToProcess) {
-			case 17116://Batsman Style
+			case 'Control+F5'://Batsman Style
 				select = document.createElement('select');
 				select.id = 'selectPlayerName';
 				select.name = select.id;
@@ -310,7 +307,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 				setDropdownOptionToSelectOptionArray($(select),0);
 				cellCount = cellCount + 1;
 				break;	
-			case 17120: //BowlerStyle
+			case 'Control+F9': //BowlerStyle
 				select = document.createElement('select');
 				select.id = 'selectPlayerName';
 				select.name = select.id;
@@ -352,7 +349,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 				setDropdownOptionToSelectOptionArray($(select),0);
 				cellCount = cellCount + 1;
 				break;
-			case 1777: //MATCH-PROMO
+			case 'Control+m': //MATCH-PROMO
 				select = document.createElement('select');
 				select.id = 'selectMatchPromo';
 				select.name = select.id;
@@ -369,7 +366,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 				
 				cellCount = cellCount + 1;
 				break;
-			case 116://BatThisMatch
+			case 'F5'://BatThisMatch
 				select = document.createElement('select');
 				select.id = 'selectBatamanThisMatch';
 				select.name = select.id;
@@ -390,7 +387,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 				setDropdownOptionToSelectOptionArray($(select),0);
 				cellCount = cellCount + 1;
 				break;
-			case 120://BallThisMatch
+			case 'F9'://BallThisMatch
 				select = document.createElement('select');
 				select.id = 'selectBatamanThisMatch';
 				select.name = select.id;
@@ -410,7 +407,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 				setDropdownOptionToSelectOptionArray($(select),0);
 				cellCount = cellCount + 1;
 				break;
-			case 117://HowOut
+			case 'F6'://HowOut
 				select = document.createElement('select');
 				select.id = 'selectHowoutPlayers';
 				select.name = select.id;
@@ -431,7 +428,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 				setDropdownOptionToSelectOptionArray($(select),0);
 				cellCount = cellCount + 1;
 				break;
-			case 118://Lt Bat Profile
+			case 'F7'://Lt Bat Profile
 				select = document.createElement('select');
 				select.id = 'selectPlayerName';
 				select.name = select.id;
@@ -487,7 +484,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 				setDropdownOptionToSelectOptionArray($(select),1);
 				cellCount = cellCount + 1
 				break;
-			case 119://NameSuper Player
+			case 'F8'://NameSuper Player
 				select = document.createElement('select');
 				select.style = 'width:100px';
 				select.id = 'selectPlayer';
@@ -554,7 +551,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 				setDropdownOptionToSelectOptionArray($(select),1);
 				cellCount = cellCount + 1;
 				break;
-			case 121://NameSuperDB
+			case 'F10'://NameSuperDB
 				select = document.createElement('select');
 				select.style = 'width:130px';
 				select.id = 'selectNameSuper';
@@ -573,7 +570,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 				
 				cellCount = cellCount + 1;
 				break;
-			case 122://Lt Ball Profile
+			case 'F11'://Lt Ball Profile
 				select = document.createElement('select');
 				select.id = 'selectPlayerName';
 				select.name = select.id;
