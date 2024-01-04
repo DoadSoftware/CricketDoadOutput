@@ -154,7 +154,8 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				processCricketProcedures('ANIMATE-OUT');
 			}
 			break;
-		case 16122: case 77: case 112: case 113:
+		//Summary, MatchId, BattingCard, BowlingCard, BatsmanStyle, BowlerStyle 
+		case 16122: case 77: case 112: case 113: case 1765: case 1875:
 			if(document.getElementById('selected_inning').innerHtml < 1 && document.getElementById('selected_inning').innerHtml > 4) {
 				document.body.focus();
 				keys = [];
@@ -168,9 +169,10 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 		case 1777: // MATCH PROMO
 		case 118: case 122: //Lt-Bat-Ball-Profile
 		case 121: // NAMESUPER
+		case 17116: case 17120: // BATSMAN STYLE, BOWLER STYLE
 		case 116: case 117: case 119: case 120: //BatThisMatch, HowOut, NameSuper-Player, BallThisMatch
 		 	switch(dataToProcess) {
-			case 116: case 117 : case 118: case 119: case 120: case 122:
+			case 17116: case 17120: case 116: case 117 : case 118: case 119: case 120: case 122:
 				addItemsToList(dataToProcess,null);
 				break;
 			default:
@@ -248,6 +250,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	
 	switch(whatToProcess) {
 	case 1777: case 116: case 117: case 118: case 119: case 120: case 121: case 122:
+	case 17116: case 17120:
 		$("#captions_div").hide();
 		$('#select_graphic_options_div').empty();
 	
@@ -264,8 +267,91 @@ function addItemsToList(whatToProcess,dataToProcess)
 		document.getElementById('select_graphic_options_div').appendChild(table);
 		
 		row = tbody.insertRow(tbody.rows.length);
-		
 			switch(whatToProcess) {
+			case 17116://Batsman Style
+				select = document.createElement('select');
+				select.id = 'selectPlayerName';
+				select.name = select.id;
+				
+				session_match.match.inning.forEach(function(inn,index,arr){
+					if(inn.isCurrentInning == 'YES'){
+						if(inn.battingTeamId == session_match.setup.homeTeamId){
+							session_match.setup.homeSquad.forEach(function(hs,index,arr){
+								option = document.createElement('option');
+								option.value = hs.playerId;
+								option.text = hs.full_name;
+								select.appendChild(option);
+							});
+							session_match.setup.homeOtherSquad.forEach(function(hos,index,arr){
+								option = document.createElement('option');
+								option.value = hos.playerId;
+								option.text = hos.full_name  + ' (OTHER)';
+								select.appendChild(option);
+							});
+						}else {
+							session_match.setup.awaySquad.forEach(function(as,index,arr){
+								option = document.createElement('option');
+								option.value = as.playerId;
+								option.text = as.full_name;
+								select.appendChild(option);
+							});
+							session_match.setup.awayOtherSquad.forEach(function(aos,index,arr){
+								option = document.createElement('option');
+								option.value = aos.playerId;
+								option.text = aos.full_name  + ' (OTHER)';
+								select.appendChild(option);
+							});
+						}
+					}
+				});
+	
+				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+				row.insertCell(cellCount).appendChild(select);
+				setDropdownOptionToSelectOptionArray($(select),0);
+				cellCount = cellCount + 1;
+				break;	
+			case 17120: //BowlerStyle
+				select = document.createElement('select');
+				select.id = 'selectPlayerName';
+				select.name = select.id;
+				
+				session_match.match.inning.forEach(function(inn,index,arr){
+					if(inn.isCurrentInning == 'YES'){
+						if(inn.bowlingTeamId == session_match.setup.homeTeamId){
+							session_match.setup.homeSquad.forEach(function(hs,index,arr){
+								option = document.createElement('option');
+								option.value = hs.playerId;
+								option.text = hs.full_name;
+								select.appendChild(option);
+							});
+							session_match.setup.homeOtherSquad.forEach(function(hos,index,arr){
+								option = document.createElement('option');
+								option.value = hos.playerId;
+								option.text = hos.full_name  + ' (OTHER)';
+								select.appendChild(option);
+							});
+						}else {
+							session_match.setup.awaySquad.forEach(function(as,index,arr){
+								option = document.createElement('option');
+								option.value = as.playerId;
+								option.text = as.full_name;
+								select.appendChild(option);
+							});
+							session_match.setup.awayOtherSquad.forEach(function(aos,index,arr){
+								option = document.createElement('option');
+								option.value = aos.playerId;
+								option.text = aos.full_name  + ' (OTHER)';
+								select.appendChild(option);
+							});
+						}
+					}
+				});
+	
+				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+				row.insertCell(cellCount).appendChild(select);
+				setDropdownOptionToSelectOptionArray($(select),0);
+				cellCount = cellCount + 1;
+				break;
 			case 1777: //MATCH-PROMO
 				select = document.createElement('select');
 				select.id = 'selectMatchPromo';
