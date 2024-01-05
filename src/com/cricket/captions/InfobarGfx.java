@@ -23,21 +23,33 @@ public class InfobarGfx
 	Inning inning;
 	
 	public boolean updateInfobar(List<PrintWriter> print_writers,Configuration config,MatchAllData matchAllData) throws InterruptedException {
-		if(infobarTeamNameScore(print_writers,config,matchAllData) != true) {
-			return false;
-		}else {
-			infobar.setMiddle_section(CricketUtil.BATSMAN);
-			populateVizInfobarBatsman(print_writers, matchAllData, 1);
-			populateVizInfobarBowler(print_writers, matchAllData, 1);
-			infobar.setLeft_bottom("CRR");
+		
+		infobarTeamNameScore(true,print_writers,config,matchAllData);
+		populateVizInfobarBatsman(print_writers, matchAllData, 1);
+		populateVizInfobarBowler(print_writers, matchAllData, 1);
+		
+		if(infobar.getLeft_bottom() != null) {
 			populateVizInfobarLeftBottom(print_writers, matchAllData, 1);
-			infobar.setMiddle_section("PROJECTED");
+		}		
+		if(infobar.getLeft_bottom() != null && !infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
 			populateVizInfobarMiddleSection(print_writers, matchAllData, 1);
 		}
 		return true;
 	}
 	
-	public boolean infobarTeamNameScore(List<PrintWriter> print_writers,Configuration config,MatchAllData matchAllData) {
+	public boolean populateInfobar(List<PrintWriter> print_writers,Configuration config,String whatToProcess,MatchAllData matchAllData) throws InterruptedException {
+		if(infobarTeamNameScore(false,print_writers,config,matchAllData) != true) {
+			return false;
+		}else {
+			infobar.setMiddle_section(whatToProcess.split(",")[1]);
+			infobar.setLeft_bottom(whatToProcess.split(",")[2]);
+			populateVizInfobarLeftBottom(print_writers, matchAllData, 1);
+			populateVizInfobarMiddleSection(print_writers, matchAllData, 1);
+		}
+		return true;
+	}
+	
+	public boolean infobarTeamNameScore(boolean is_this_updating,List<PrintWriter> print_writers,Configuration config,MatchAllData matchAllData) {
 		
 		String Overs_omo = "";
 		switch(config.getBroadcaster()) {
@@ -45,17 +57,37 @@ public class InfobarGfx
 			for(PrintWriter print_writer : print_writers) {
 				for(Inning inn : matchAllData.getMatch().getInning()) {
 					if(inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)) {
-						//Flag
-						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Flag_Left$img_Flag*TEXTURE*IMAGE SET " + 
-								Constants.ICC_U19_2023_FLAG_PATH + inn.getBatting_team().getTeamName4() + "\0");
-						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Flag_Right$img_Flag*TEXTURE*IMAGE SET " + 
-								Constants.ICC_U19_2023_FLAG_PATH + inn.getBowling_team().getTeamName4() + "\0");
-
-						//Team Name
-						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Top$Scorebox$txt_Team_2*GEOM*TEXT SET " + 
-								inn.getBatting_team().getTeamName4() + "\0");
-						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Top$txt_Team_1*GEOM*TEXT SET " + 
-								inn.getBowling_team().getTeamName4() + "\0");
+						if(is_this_updating == false) {
+							//Flag
+							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Flag_Left$img_Flag*TEXTURE*IMAGE SET " + 
+									Constants.ICC_U19_2023_FLAG_PATH + inn.getBatting_team().getTeamName4() + "\0");
+							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Flag_Right$img_Flag*TEXTURE*IMAGE SET " + 
+									Constants.ICC_U19_2023_FLAG_PATH + inn.getBowling_team().getTeamName4() + "\0");
+							
+							//Team Name
+							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Top$Scorebox$txt_Team_2*GEOM*TEXT SET " + 
+									inn.getBatting_team().getTeamName4() + "\0");
+							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Top$txt_Team_1*GEOM*TEXT SET " + 
+									inn.getBowling_team().getTeamName4() + "\0");
+							
+							if(!CricketFunctions.processPowerPlay(CricketUtil.MINI,matchAllData).isEmpty()) {
+								 if(infobar.isPowerplay_on_screen() == true) {
+									 break;
+						         }
+						         else {
+						        	 infobar.setPowerplay_on_screen(true);
+						        	 print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Top$Powerplay$txt_Powerplay*GEOM*TEXT SET " + 
+						        			 CricketFunctions.processPowerPlay(CricketUtil.MINI,matchAllData) + "\0");
+						        	 print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Powerplay START \0");
+						         }
+							}
+					    	else {
+								if(infobar.isPowerplay_on_screen() == true) {
+									print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Powerplay SHOW 0.0 \0");
+									infobar.setPowerplay_on_screen(false);
+						         }
+							}
+						}
 						
 						//Score and Overs
 						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Top$Scorebox$txt_Score*GEOM*TEXT SET " + 
@@ -73,24 +105,6 @@ public class InfobarGfx
 						
 						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Top$" + Overs_omo + "$txt_Overs*GEOM*TEXT SET " + 
 								CricketFunctions.OverBalls(inn.getTotalOvers(),inn.getTotalBalls()) + "\0");
-						
-						if(!CricketFunctions.processPowerPlay(CricketUtil.MINI,matchAllData).isEmpty()) {
-							 if(infobar.isPowerplay_on_screen() == true) {
-								 break;
-					         }
-					         else {
-					        	 infobar.setPowerplay_on_screen(true);
-					        	 print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Top$Powerplay$txt_Powerplay*GEOM*TEXT SET " + 
-					        			 CricketFunctions.processPowerPlay(CricketUtil.MINI,matchAllData) + "\0");
-					        	 print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Powerplay START \0");
-					         }
-						}
-				    	else {
-							if(infobar.isPowerplay_on_screen() == true) {
-								print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Powerplay SHOW 0.0 \0");
-								infobar.setPowerplay_on_screen(false);
-					         }
-						}
 					}
 				}
 			}
@@ -102,9 +116,7 @@ public class InfobarGfx
 	public void populateVizInfobarBatsman(List<PrintWriter> print_writers,MatchAllData matchAllData,int WhichSide) throws InterruptedException
 	{ 
 		List<BattingCard> current_batsmen = new ArrayList<BattingCard>();
-		switch (infobar.getMiddle_section().toUpperCase()) {
-		case CricketUtil.BATSMAN:
-			for(PrintWriter print_writer : print_writers)
+		for(PrintWriter print_writer : print_writers) {
 			for(Inning inn : matchAllData.getMatch().getInning()) {
 				if (inn.getIsCurrentInning().toUpperCase().equalsIgnoreCase(CricketUtil.YES)) {
 					for (BattingCard bc : inn.getBattingCard()) {
@@ -123,8 +135,8 @@ public class InfobarGfx
 					populateCurrentBatsmen(print_writer, matchAllData,WhichSide,current_batsmen);
 				}
 			}
-			break;
 		}
+		
 	}
 	public void populateCurrentBatsmen(PrintWriter print_writer, MatchAllData matchAllData,int WhichSide,List<BattingCard> current_batsmen) throws InterruptedException {
 		
@@ -322,11 +334,15 @@ public class InfobarGfx
 			infobar.setLast_left_bottom(infobar.getLeft_bottom());
 		}
 	}
-	
-	public void populateVizInfobarMiddleSection(List<PrintWriter> print_writers, MatchAllData matchAllData,int WhichSide) {
+	public void populateVizInfobarMiddleSection(List<PrintWriter> print_writers, MatchAllData matchAllData,int WhichSide) throws InterruptedException {
 		
 		for(PrintWriter print_writer : print_writers) {
 			switch(infobar.getMiddle_section().toUpperCase()) {
+			case CricketUtil.BATSMAN:
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Select_Type*FUNCTION*Omo*vis_con SET 0 \0");
+				populateVizInfobarBatsman(print_writers, matchAllData, 1);
+				populateVizInfobarBowler(print_writers, matchAllData, 1);
+				break;
 			case "TARGET":
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Select_Type*FUNCTION*Omo*vis_con SET 1 \0");
 				for(Inning inn : matchAllData.getMatch().getInning()) {
@@ -338,6 +354,38 @@ public class InfobarGfx
 								CricketFunctions.getTargetRuns(matchAllData) + "\0");
 						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Target$txt_Balls_Value*GEOM*TEXT SET " + 
 								(matchAllData.getSetup().getMaxOvers()*6) + "\0");
+					}
+				}
+				break;
+			case "LAST_WICKET":
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Select_Type*FUNCTION*Omo*vis_con SET 18 \0");
+				inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
+				
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Last_Wicket_Wide$Top$img_Flag*TEXTURE*IMAGE SET " + 
+						Constants.ICC_U19_2023_FLAG_PATH + inning.getBatting_team().getTeamName4() + "\0");
+				
+				for(BattingCard bc : inning.getBattingCard()){
+					if(inning.getFallsOfWickets() != null && !inning.getFallsOfWickets().isEmpty()) {
+						if(inning.getFallsOfWickets().get(inning.getFallsOfWickets().size() - 1).getFowPlayerID() == bc.getPlayerId()) {
+							
+							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Last_Wicket_Wide$Top$txt_Firstname*GEOM*TEXT SET " + 
+						    		bc.getPlayer().getFirstname() + "\0");
+							if(bc.getPlayer().getSurname() != null) {
+								print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Last_Wicket_Wide$Top$"
+										+ "txt_SecondName*GEOM*TEXT SET " + bc.getPlayer().getSurname() + "\0");
+							}else {
+								print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Last_Wicket_Wide$Top$"
+										+ "txt_SecondName*GEOM*TEXT SET " + "" + "\0");
+							}
+							
+							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Last_Wicket_Wide$Top$"
+									+ "txt_Score*GEOM*TEXT SET " + bc.getRuns() + "\0");
+							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Last_Wicket_Wide$Top$"
+									+ "txt_Balls*GEOM*TEXT SET " + "(" + bc.getBalls() + ")" + "\0");
+							
+							print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Last_Wicket_Wide$txt_HowOut*GEOM*TEXT SET " + 
+						    		bc.getHowOutText() + "\0");
+						}
 					}
 				}
 				break;
@@ -404,4 +452,5 @@ public class InfobarGfx
 			infobar.setLast_middle_section(infobar.getMiddle_section());
 		}
 	}
+
 }

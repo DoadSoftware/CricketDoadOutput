@@ -1,16 +1,11 @@
 package com.cricket.captions;
 
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Month;
-import java.util.Collections;
 import java.util.List;
 import com.cricket.containers.LowerThird;
 import com.cricket.model.BattingCard;
 import com.cricket.model.BowlingCard;
 import com.cricket.model.Configuration;
-import com.cricket.model.FallOfWicket;
 import com.cricket.model.Fixture;
 import com.cricket.model.Ground;
 import com.cricket.model.Inning;

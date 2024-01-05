@@ -149,9 +149,6 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				processCricketProcedures('ANIMATE-OUT');
 			}
 			break;
-		case 'F12':
-			processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
-			break;
 		
 		//Summary, MatchId, BattingCard, BowlingCard, BatsmanStyle, BowlerStyle 
 		case 'Shift+F11': case 'm': case 'F1': case 'F2': case 'Control+a': case 'Alt+k':
@@ -166,10 +163,12 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			break;
 		
 		case 'Control+m': // MATCH PROMO
-		case 'Control+F5': case 'Control+F9': // BATSMAN STYLE, BOWLER STYLE
+		case 'F12': case 'Alt+1': case 'Alt+2': //InfoBar Left-Middle
+		case 'Control+F5': case 'Control+F9': case 'Control+F8': // BATSMAN STYLE, BOWLER STYLE, PlayingXI
 		case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11': //BatThisMatch, HowOut, NameSuper-Player, BallThisMatch
 		 	switch(dataToProcess) {
-			case 'Control+F5': case 'Control+F9': case 'F5': case 'F6' : case 'F7': case 'F8': case 'F9': case 'F11':
+			case 'F12': case 'Alt+1': case 'Alt+2': //InfoBar Left-Middle
+			case 'Control+F5': case 'Control+F8': case 'Control+F9': case 'F5': case 'F6' : case 'F7': case 'F8': case 'F9': case 'F11':
 				addItemsToList(dataToProcess,null);
 				break;
 			default:
@@ -247,7 +246,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 	
 	switch(whatToProcess) {
 	case 'Control+m': case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11':
-	case 'Control+F5': case 'Control+F9':
+	case 'Control+F5': case 'Control+F9': case 'Control+F8':
+	case 'F12': case 'Alt+1': case 'Alt+2': //InfoBar Left-Middle
 		$("#captions_div").hide();
 		$('#select_graphic_options_div').empty();
 	
@@ -265,6 +265,126 @@ function addItemsToList(whatToProcess,dataToProcess)
 		
 		row = tbody.insertRow(tbody.rows.length);
 			switch(whatToProcess) {
+			case 'F12':
+				select = document.createElement('select');
+				select.id = 'selectMiddleStat';
+				select.name = select.id;
+				
+				option = document.createElement('option');
+				option.value = 'BATSMAN';
+				option.text = 'Batsman/Bowler';
+				select.appendChild(option);
+				
+				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+				row.insertCell(cellCount).appendChild(select);
+				setDropdownOptionToSelectOptionArray($(select),0);
+				cellCount = cellCount + 1;
+				
+				select = document.createElement('select');
+				select.id = 'selectLeftBottom';
+				select.name = select.id;
+				session_match.match.inning.forEach(function(inn,index,arr){
+					if(inn.isCurrentInning == 'YES'){
+						if(inn.inningNumber == 1){
+							option = document.createElement('option');
+							option.value = 'CRR';
+							option.text = 'CRR';
+							select.appendChild(option);
+						}
+						else{
+							option = document.createElement('option');
+							option.value = 'CRR';
+							option.text = 'CRR';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'TARGET';
+							option.text = 'TARGET';
+							select.appendChild(option);
+						}
+					}
+				});
+				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+				row.insertCell(cellCount).appendChild(select);
+				setDropdownOptionToSelectOptionArray($(select),1);
+				cellCount = cellCount + 1;
+				break;
+			case 'Alt+1':
+				select = document.createElement('select');
+				select.id = 'selectLeftBottom';
+				select.name = select.id;
+				session_match.match.inning.forEach(function(inn,index,arr){
+					if(inn.isCurrentInning == 'YES'){
+						if(inn.inningNumber == 1){
+							option = document.createElement('option');
+							option.value = 'CRR';
+							option.text = 'CRR';
+							select.appendChild(option);
+						}
+						else{
+							option = document.createElement('option');
+							option.value = 'CRR';
+							option.text = 'CRR';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'TARGET';
+							option.text = 'TARGET';
+							select.appendChild(option);
+						}
+					}
+				});
+				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+				row.insertCell(cellCount).appendChild(select);
+				setDropdownOptionToSelectOptionArray($(select),0);
+				cellCount = cellCount + 1;
+				break;
+			case 'Alt+2':
+				select = document.createElement('select');
+				select.id = 'selectMiddleStat';
+				select.name = select.id;
+				session_match.match.inning.forEach(function(inn,index,arr){
+					if(inn.isCurrentInning == 'YES'){
+						if(inn.inningNumber == 1){
+							
+							option = document.createElement('option');
+							option.value = 'BATSMAN';
+							option.text = 'BATSMAN';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'CURR_PARTNERSHIP';
+							option.text = 'CURRENT PARTNERSHIP';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'PROJECTED';
+							option.text = 'PROJECTED SCORE';
+							select.appendChild(option);
+						}
+						else{
+							option = document.createElement('option');
+							option.value = 'BATSMAN';
+							option.text = 'BATSMAN';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'CURR_PARTNERSHIP';
+							option.text = 'CURRENT PARTNERSHIP';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'TARGET';
+							option.text = 'TARGET';
+							select.appendChild(option);
+						}
+					}
+				});
+				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+				row.insertCell(cellCount).appendChild(select);
+				setDropdownOptionToSelectOptionArray($(select),0);
+				cellCount = cellCount + 1;
+				break;
 			case 'Control+F5'://Batsman Style
 				select = document.createElement('select');
 				select.id = 'selectPlayerName';
@@ -306,7 +426,27 @@ function addItemsToList(whatToProcess,dataToProcess)
 				row.insertCell(cellCount).appendChild(select);
 				setDropdownOptionToSelectOptionArray($(select),0);
 				cellCount = cellCount + 1;
-				break;	
+				break;
+			case 'Control+F8':
+				select = document.createElement('select');
+				select.id = 'selectTeams';
+				select.name = select.id;
+				
+				option = document.createElement('option');
+				option.value = session_match.setup.homeTeamId;
+				option.text = session_match.setup.homeTeam.teamName1;
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = session_match.setup.awayTeamId;
+				option.text = session_match.setup.awayTeam.teamName1;
+				select.appendChild(option);
+				
+				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+				row.insertCell(cellCount).appendChild(select);
+				setDropdownOptionToSelectOptionArray($(select),0);
+				cellCount = cellCount + 1;
+				break;
 			case 'Control+F9': //BowlerStyle
 				select = document.createElement('select');
 				select.id = 'selectPlayerName';

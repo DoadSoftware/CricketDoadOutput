@@ -167,6 +167,7 @@ public class IndexController
 			
 			this_scene = new Scene();
 			this_animation = new Animation();
+			this_infobar = new InfobarGfx();
 			
 			switch (select_broadcaster) {
 //			case "IPL_2024":
@@ -291,6 +292,10 @@ public class IndexController
 					CricketUtil.MATCH + "," + CricketUtil.EVENT, session_match));
 				last_match_time_stamp = new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.MATCHES_DIRECTORY 
 						+ session_match.getMatch().getMatchFileName()).lastModified();
+				
+				
+				
+				this_infobar.updateInfobar(print_writers, session_configuration, session_match);
 			}
 			return JSONObject.fromObject(session_match).toString();
 			

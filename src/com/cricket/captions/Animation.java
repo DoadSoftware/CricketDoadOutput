@@ -15,7 +15,7 @@ public class Animation
 			for(PrintWriter print_writer : print_writers) {
 				switch (whatToProcess.split(",")[0]) {
 				//Score card ,bowling card, summary ,match id,match promo
-				case "F1": case "F2": case "Shift F11": case "m": case "Control m":
+				case "F1": case "F2": case "Shift F11": case "m": case "Control m": case "Control F8":
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*In_Out START \0");
 					switch (whatToProcess.split(",")[0]) {
 					case "m": case "Control m": case "Shift F11":
@@ -46,7 +46,7 @@ public class Animation
 		case "ICC-U19-2023":
 			for(PrintWriter print_writer : print_writers) {
 				switch (whatToProcess) {
-				case "F1": case "F2": case "Shift F11": case "m": case "Control m":
+				case "F1": case "F2": case "Shift F11": case "m": case "Control m": case "Control F8":
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*In_Out CONTINUE \0");
 					switch (whatToProcess) {
 					case "m": case "Control m": case "Shift F11":

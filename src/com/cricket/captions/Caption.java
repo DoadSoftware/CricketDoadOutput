@@ -3,6 +3,7 @@ package com.cricket.captions;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.List;
+
 import com.cricket.containers.LowerThird;
 import com.cricket.model.BattingCard;
 import com.cricket.model.Configuration;
@@ -78,6 +79,9 @@ public class Caption
 	{
 		if(whatToProcess.contains(",")) {
 			switch (whatToProcess.split(",")[0]) {
+			case "F12":// InfoBar
+				return this_infobarGfx.populateInfobar(print_writers,config,whatToProcess,matchAllData);
+			
 			case "F1": // Scorecard FF
 				return this_fullFramesGfx.PopulateScorecardFF(WhichSide, whatToProcess.split(",")[0], matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
 			case "F2": // Bowling FF
@@ -88,6 +92,8 @@ public class Caption
 				return this_fullFramesGfx.populateFFMatchPromo(WhichSide, whatToProcess,matchAllData);
 			case "Shift F11": //MATCH SUMMARY
 				return this_fullFramesGfx.populateMatchSummary(WhichSide, whatToProcess.split(",")[0], matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
+			case "Control F8": //Playing XI
+				return this_fullFramesGfx.populatePlayingXI(WhichSide, whatToProcess.split(",")[0],Integer.valueOf(whatToProcess.split(",")[1]), matchAllData, 0);
 			
 			case "F7": case "F11": // L3rd BAT and BALL Profile
 				return this_lowerThirdGfx.PopulateL3rdPlayerProfile(whatToProcess,WhichSide, matchAllData);
@@ -109,12 +115,6 @@ public class Caption
 				return this_lowerThirdGfx.populateL3rdCurrentPartnership(whatToProcess,WhichSide,matchAllData);
 			case "Control a"://Projected
 				return this_lowerThirdGfx.populateL3rdProjected(whatToProcess,WhichSide,matchAllData);
-
-			}
-		}else {
-			switch (whatToProcess) {
-			case "F12":
-				return this_infobarGfx.updateInfobar(print_writers,config,matchAllData);
 			}
 		}
 		return true;
