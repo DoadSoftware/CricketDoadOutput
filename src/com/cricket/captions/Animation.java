@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import com.cricket.model.Configuration;
+import com.cricket.util.CricketFunctions;
 import com.cricket.util.CricketUtil;
 
 public class Animation 
@@ -147,10 +148,10 @@ public class Animation
 		}
 		return CricketUtil.YES;
 	}
-	public void processAnimation(PrintWriter print_writer,String animationDirectorName, String animationCommand)
+	public void processAnimation(List<PrintWriter> print_writers,String animationDirectorName, String animationCommand)
 	{
-		print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*"+ animationDirectorName + " " + animationCommand +" \0");
-		
+		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*"
+			+ animationDirectorName + " " + animationCommand +" \0", print_writers);
 	}
 	public boolean ClearAll(List<PrintWriter> print_writers) {
 		
