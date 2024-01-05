@@ -15,7 +15,7 @@ public class Animation
 			for(PrintWriter print_writer : print_writers) {
 				switch (whatToProcess.split(",")[0]) {
 				//Score card ,bowling card, summary ,match id,match promo
-				case "F1": case "F2": case "Shift F11": case "m": case "Control m": case "Control F8":
+				case "F1": case "F2": case "F4": case "Shift F11": case "m": case "Control m": case "Control F8": case "Control d": case "Control e":
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*In_Out START \0");
 					switch (whatToProcess.split(",")[0]) {
 					case "m": case "Control m": case "Shift F11":
@@ -25,7 +25,8 @@ public class Animation
 					break;
 				//NameSuperDB, HOWOUT, LTBatProfile, NameSuperPlayer, LtBallProfile, BatThisMatch, BallThisMatch
 				case "F5": case "F6": case "F7": case "F8": case "F9": case "F10": case "F11":
-				case "Control F5": case "Control F9": case "Control a": case "Alt k": 
+				case "Control F5": case "Control F9": case "Control a": case "Alt k":
+				case "Shift F3": case "s": case "d": case "e":
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Essentials START \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Row START \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*HeaderDynamic START \0");
@@ -46,7 +47,7 @@ public class Animation
 		case "ICC-U19-2023":
 			for(PrintWriter print_writer : print_writers) {
 				switch (whatToProcess) {
-				case "F1": case "F2": case "Shift F11": case "m": case "Control m": case "Control F8":
+				case "F1": case "F2": case "F4": case "Shift F11": case "m": case "Control m": case "Control F8": case "Control d": case "Control e":
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*In_Out CONTINUE \0");
 					switch (whatToProcess) {
 					case "m": case "Control m": case "Shift F11":
@@ -57,6 +58,7 @@ public class Animation
 				//NameSuperDB, HOWOUT, LTBatProfile, NameSuperPlayer, LtBallProfile, BatThisMatch, BallThisMatch
 				case "F10": case "F6": case "F7": case "F8": case "F11": case "F5": case "F9":
 				case "Control F5": case "Control F9": case "Control a": case "Alt k":
+				case "Shift F3": case "s": case "d": case "e":
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Essentials CONTINUE \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Row CONTINUE \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*HeaderDynamic SHOW 0.0 \0");

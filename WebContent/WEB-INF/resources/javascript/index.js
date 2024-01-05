@@ -109,6 +109,7 @@ function processUserSelection(whichInput)
 		//alert(selected_options.toString());
 		//alert('KEY ' + $('#which_keypress').val());
 		processCricketProcedures("POPULATE-GRAPHICS", $('#which_keypress').val() + ',' + selected_options.toString());
+		document.getElementById("populate_btn").blur();
 		break;
 	}	
 }
@@ -125,7 +126,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 		case 'RE_READ_DATA':
 			processCricketProcedures('RE_READ_DATA');
 			break;
-		case 'Space':
+		case ' ':
 			processCricketProcedures('CLEAR-ALL');
 			break;
 		case '1': case '2': case '3': case '4':
@@ -151,7 +152,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			break;
 		
 		//Summary, MatchId, BattingCard, BowlingCard, BatsmanStyle, BowlerStyle 
-		case 'Shift+F11': case 'm': case 'F1': case 'F2': case 'Control+a': case 'Alt+k':
+		case 'Shift+F11': case 'm': case 'F1': case 'F2': case 'F4': case 'Control+a': case 'Alt+k':  case 'Shift+F3': case 'd': case 'e':
 			if(document.getElementById('selected_inning').innerHtml < 1 && document.getElementById('selected_inning').innerHtml > 4) {
 				document.body.focus();
 				keys = [];
@@ -162,13 +163,15 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 			break;
 		
-		case 'Control+m': // MATCH PROMO
+		case 'Control+m': case 'Control+d': case 'Control+e': // MATCH PROMO
 		case 'F12': case 'Alt+1': case 'Alt+2': //InfoBar Left-Middle
 		case 'Control+F5': case 'Control+F9': case 'Control+F8': // BATSMAN STYLE, BOWLER STYLE, PlayingXI
 		case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11': //BatThisMatch, HowOut, NameSuper-Player, BallThisMatch
+		case 's':	
 		 	switch(dataToProcess) {
 			case 'F12': case 'Alt+1': case 'Alt+2': //InfoBar Left-Middle
 			case 'Control+F5': case 'Control+F8': case 'Control+F9': case 'F5': case 'F6' : case 'F7': case 'F8': case 'F9': case 'F11':
+			case 's':
 				addItemsToList(dataToProcess,null);
 				break;
 			default:
@@ -237,7 +240,8 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 }
 function setDropdownOptionToSelectOptionArray(whichInput, whichIndex)
 {
-	selected_options[whichIndex] = $('#' + $(whichInput).attr('id') + ' option:selected').val();
+	selected_options[0] = document.getElementById('which_inning').value;
+	selected_options[whichIndex+1] = $('#' + $(whichInput).attr('id') + ' option:selected').val();
 }
 function addItemsToList(whatToProcess,dataToProcess)
 {
@@ -246,7 +250,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	
 	switch(whatToProcess) {
 	case 'Control+m': case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11':
-	case 'Control+F5': case 'Control+F9': case 'Control+F8':
+	case 'Control+F5': case 'Control+F9': case 'Control+F8': case 'Control+d': case 'Control+e': case 's':
 	case 'F12': case 'Alt+1': case 'Alt+2': //InfoBar Left-Middle
 		$("#captions_div").hide();
 		$('#select_graphic_options_div').empty();
@@ -377,6 +381,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 							option.value = 'TARGET';
 							option.text = 'TARGET';
 							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'COMPARE';
+							option.text = 'COMPARE';
+							select.appendChild(option);
 						}
 					}
 				});
@@ -384,6 +393,26 @@ function addItemsToList(whatToProcess,dataToProcess)
 				row.insertCell(cellCount).appendChild(select);
 				setDropdownOptionToSelectOptionArray($(select),0);
 				cellCount = cellCount + 1;
+				break;
+			case 's':
+				select = document.createElement('select');
+				select.id = 'selectSplit';
+				select.name = select.id;
+				
+				option = document.createElement('option');
+				option.value = '50';
+				option.text = '50-Split';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = '100';
+				option.text = '100-Split';
+				select.appendChild(option);
+				
+				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+				row.insertCell(cellCount).appendChild(select);
+				setDropdownOptionToSelectOptionArray($(select),0);
+				cellCount = cellCount + 1
 				break;
 			case 'Control+F5'://Batsman Style
 				select = document.createElement('select');
@@ -568,7 +597,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 				setDropdownOptionToSelectOptionArray($(select),0);
 				cellCount = cellCount + 1;
 				break;
-			case 'F7'://Lt Bat Profile
+			case 'F7': case 'Control+d': //Lt Bat Profile 
 				select = document.createElement('select');
 				select.id = 'selectPlayerName';
 				select.name = select.id;
@@ -710,7 +739,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 				
 				cellCount = cellCount + 1;
 				break;
-			case 'F11'://Lt Ball Profile
+			case 'F11': case 'Control+e': //Lt Ball Profile
 				select = document.createElement('select');
 				select.id = 'selectPlayerName';
 				select.name = select.id;

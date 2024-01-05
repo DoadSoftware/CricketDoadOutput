@@ -88,12 +88,18 @@ public class Caption
 				return this_fullFramesGfx.PopulateBowlingCardFF(WhichSide, whatToProcess.split(",")[0], matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
 			case "m": //Match id
 				return this_fullFramesGfx.populateFFMatchId(WhichSide,whatToProcess.split(",")[0], matchAllData);
-			case "Control m": //MATCH PROMO
-				return this_fullFramesGfx.populateFFMatchPromo(WhichSide, whatToProcess,matchAllData);
 			case "Shift F11": //MATCH SUMMARY
 				return this_fullFramesGfx.populateMatchSummary(WhichSide, whatToProcess.split(",")[0], matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
+			case "F4": //All Partnership
+				return this_fullFramesGfx.populatePartnership(WhichSide, whatToProcess, matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
+			
 			case "Control F8": //Playing XI
-				return this_fullFramesGfx.populatePlayingXI(WhichSide, whatToProcess.split(",")[0],Integer.valueOf(whatToProcess.split(",")[1]), matchAllData, 0);
+				return this_fullFramesGfx.populatePlayingXI(WhichSide, whatToProcess.split(",")[0],Integer.valueOf(whatToProcess.split(",")[2]), matchAllData, 0);
+			case "Control m": //MATCH PROMO
+				return this_fullFramesGfx.populateFFMatchPromo(WhichSide, whatToProcess,matchAllData);
+			case "Control d": case "Control e":
+				return this_fullFramesGfx.populatePlayerProfile(WhichSide, whatToProcess, matchAllData, 0);
+
 			
 			case "F7": case "F11": // L3rd BAT and BALL Profile
 				return this_lowerThirdGfx.PopulateL3rdPlayerProfile(whatToProcess,WhichSide, matchAllData);
@@ -115,6 +121,14 @@ public class Caption
 				return this_lowerThirdGfx.populateL3rdCurrentPartnership(whatToProcess,WhichSide,matchAllData);
 			case "Control a"://Projected
 				return this_lowerThirdGfx.populateL3rdProjected(whatToProcess,WhichSide,matchAllData);
+			case "Shift F3": //Fall of Wicket
+				return this_lowerThirdGfx.populateFOW(whatToProcess, WhichSide, matchAllData);
+			case "s": //30-50
+				return this_lowerThirdGfx.populate30_50Split(whatToProcess, WhichSide, matchAllData);
+			case "d": //Target
+				return this_lowerThirdGfx.populateL3rdTarget(whatToProcess, WhichSide, matchAllData);
+			case "e": //Equation
+				return this_lowerThirdGfx.populateL3rdEquation(whatToProcess, WhichSide, matchAllData);	
 			}
 		}
 		return true;

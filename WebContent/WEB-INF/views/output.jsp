@@ -16,56 +16,69 @@
   <link href="<c:url value="/webjars/font-awesome/6.0.0/css/all.css"/>" rel="stylesheet">
   
     <script type="text/javascript">
-  var keys = {}, whichKey;
-  
-  $(document).keydown(function (e) {
-	  var event = document.all ? window.event : e;
-		switch (e.target.tagName.toLowerCase()) {
-	  	case "input":
-	  	case "textarea":
-	    break;
-
-		default:
-			keys[e.key] = true;
-			printKeys(e);
-		break;
-		}
-	  });
-	 
-  function printKeys(e) {
-		whichKey = '';
-		for (var i in keys) 
-		{
-			if (!keys.hasOwnProperty(i)) continue;
-	    	whichKey = whichKey + "+" + i;
-	    	
-	    	if(whichKey.charAt(0) == '+'){
-	    		whichKey = whichKey.substring(1);
-	    	}
-	    	
-	    	if(whichKey == ' '){
-	    		whichKey = 'Space';
-	    	}
-		}
-		$(document).keyup(function (e) {
-			delete keys[e.key];
-		  });
-		console.log(whichKey)
-	  	if(e.altKey && e.key === 's'){
-	   		  e.preventDefault()
-	   		  processUserSelectionData('LOGGER_FORM_KEYPRESS','SPEED');
-	   	  }else if(e.altKey && e.key === 'r'){
-	   		  e.preventDefault()
-	   		  processUserSelectionData('LOGGER_FORM_KEYPRESS','RE_READ_DATA');
-	   	  }else{
-	   		  e.preventDefault();
-	   		  processUserSelectionData('LOGGER_FORM_KEYPRESS',whichKey);
-	   	  }
-	  	
+    
+  	function KeyPress(e) {
+  		
+      var evtobj = window.event? event : e;
+      
+      e.preventDefault();
+      
+      var whichKey = '';
+	  var validKeyFound = false;
+    
+      if(evtobj.ctrlKey) {
+    	  whichKey = 'Control';
+      }
+      if(evtobj.altKey) {
+    	  if(whichKey) {
+        	  whichKey = whichKey + '+Alt';
+    	  } else {
+        	  whichKey = 'Alt';
+    	  }
+      }
+      if(evtobj.shiftKey) {
+    	  if(whichKey) {
+        	  whichKey = whichKey + '+Shift';
+    	  } else {
+        	  whichKey = 'Shift';
+    	  }
+      }
+      
+	  if(evtobj.keyCode) {
+    	  if(whichKey) {
+    		  if(!whichKey.includes(evtobj.key)) {
+            	  whichKey = whichKey + '+' + evtobj.key;
+    		  }
+    	  } else {
+        	  whichKey = evtobj.key;
+    	  }
 	  }
-  
-  setInterval(() => {processCricketProcedures('READ-MATCH-AND-POPULATE');}, 1000);
+
+	  validKeyFound = false;
+	  if (whichKey.includes('+')) {
+		  whichKey.split("+").forEach(function (this_key) {
+			  switch (this_key) {
+			  case 'Control': case 'Shift': case 'Alt':
+				break;
+			  default:
+				validKeyFound = true;
+				break;
+			  }
+		  });
+	   } else {
+		  if(whichKey != 'Control' && whichKey != 'Alt' && whichKey != 'Shift') {
+			  validKeyFound = true;
+		  }
+	   }
+	   if(validKeyFound == true) {
+		   processUserSelectionData('LOGGER_FORM_KEYPRESS',whichKey);
+	      console.log(whichKey);
+	   }
+	}
+	document.onkeydown = KeyPress;  
+  	setInterval(() => {processCricketProcedures('READ-MATCH-AND-POPULATE');}, 1000);
   </script>
+
 
 
 
