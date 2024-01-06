@@ -99,6 +99,7 @@ public class Caption
 			case "F10": //NameSuper DB
 				return this_lowerThirdGfx.populateLTNameSuper(whatToProcess,WhichSide);
 			case "F12":// InfoBar
+				this_infobarGfx.config = config;
 				return this_infobarGfx.populateInfobar(print_writers,config,whatToProcess,matchAllData);
 			case "Control F5"://Batsman Style
 				return this_lowerThirdGfx.populateBattingStyle(whatToProcess,WhichSide,matchAllData);

@@ -530,11 +530,12 @@ public class LowerThirdGfx
 		case Constants.ICC_U19_2023:
 			switch(whatToProcess) {
 			case "Shift F3":
+				
 				if(lowerThird.getWhichTeamFlag() != null) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"+ WhichSide + 
-							"$Select_Flags*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+						"$Select_Flags*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide + 
-							"$Select_Flags$Flag$Change_Out$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + lowerThird.getWhichTeamFlag() + "\0", print_writers);
+						"$Select_Flags$Flag$Change_Out$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + lowerThird.getWhichTeamFlag() + "\0", print_writers);
 				}
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Top_Line$Data$Side_" + WhichSide 
@@ -549,7 +550,9 @@ public class LowerThirdGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide 
 						+ "$Name$Change_Out$Score$txt_Not_Out*GEOM*TEXT SET " + "" + "\0", print_writers);
 				break;
+				
 			case "s":
+				
 				if(lowerThird.getWhichTeamFlag() != null) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"+ WhichSide + 
 							"$Select_Flags*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
@@ -569,7 +572,9 @@ public class LowerThirdGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide 
 						+ "$Name$Change_Out$Score$txt_Not_Out*GEOM*TEXT SET " + "" + "\0", print_writers);
 				break;
+				
 			case "d":  case "e":
+				
 				if(lowerThird.getWhichTeamFlag() != null) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"+ WhichSide + 
 							"$Select_Flags*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
@@ -583,8 +588,10 @@ public class LowerThirdGfx
 						+ "$Name$Change_Out$txt_Designation*GEOM*TEXT SET " + "" + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"
 						+ WhichSide + "$Name$Change_Out$Score*ACTIVE SET 0 \0", print_writers);
-				break;	
+				break;
+				
 			case "Control a":
+				
 				if(lowerThird.getWhichTeamFlag() != null) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"+ WhichSide + 
 							"$Select_Flags*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
@@ -610,7 +617,9 @@ public class LowerThirdGfx
 						+ "$Name$Change_Out$Score$txt_Not_Out*GEOM*TEXT SET " + "" + "\0", print_writers);
 				
 				break;	
+				
 			case "Alt k":
+				
 				if(lowerThird.getWhichTeamFlag() != null) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"+ WhichSide + 
 							"$Select_Flags*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
@@ -713,7 +722,9 @@ public class LowerThirdGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"
 						+ WhichSide + "$Name$Change_Out$Score*ACTIVE SET 0 \0", print_writers);
 				break;
+				
 			case "F10":
+				
 				//Dj implement DoadWriteTextToSelectedViz everywhere for sponsor process
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Top_Line$Data$Side_"+ WhichSide + 
 						"$Select_Flags*FUNCTION*Omo*vis_con SET 0 \0", print_writers);

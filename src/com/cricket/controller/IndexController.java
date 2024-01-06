@@ -13,10 +13,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,11 +24,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
 import com.cricket.captions.Animation;
 import com.cricket.captions.Caption;
 import com.cricket.captions.FullFramesGfx;
-import com.cricket.captions.InfobarGfx;
 import com.cricket.captions.LowerThirdGfx;
 import com.cricket.captions.Scene;
 import com.cricket.model.Configuration;
@@ -51,7 +47,6 @@ import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.core.exc.StreamWriteException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -69,7 +64,6 @@ public class IndexController
 	public static Scene this_scene;
 	public static Caption this_caption;
 	public static Animation this_animation;
-	public static InfobarGfx this_infobar;
 	public static List<PrintWriter> print_writers;
 	public static boolean show_speed = true;
 	public static int whichSide = 1;
@@ -167,7 +161,6 @@ public class IndexController
 			
 			this_scene = new Scene();
 			this_animation = new Animation();
-			this_infobar = new InfobarGfx();
 			
 			switch (select_broadcaster) {
 //			case "IPL_2024":
@@ -292,10 +285,9 @@ public class IndexController
 					CricketUtil.MATCH + "," + CricketUtil.EVENT, session_match));
 				last_match_time_stamp = new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.MATCHES_DIRECTORY 
 						+ session_match.getMatch().getMatchFileName()).lastModified();
-				
-				
-				
-				this_infobar.updateInfobar(print_writers, session_configuration, session_match);
+
+				//DJ to update infobar through this_caption
+				//this_infobar.updateInfobar(print_writers, session_configuration, session_match);
 			}
 			return JSONObject.fromObject(session_match).toString();
 			

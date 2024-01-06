@@ -252,6 +252,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Control+m': case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11':
 	case 'Control+F5': case 'Control+F9': case 'Control+F8': case 'Control+d': case 'Control+e': case 's':
 	case 'F12': case 'Alt+1': case 'Alt+2': //InfoBar Left-Middle
+	
 		$("#captions_div").hide();
 		$('#select_graphic_options_div').empty();
 	
@@ -394,7 +395,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 				setDropdownOptionToSelectOptionArray($(select),0);
 				cellCount = cellCount + 1;
 				break;
+				
 			case 's':
+				
 				select = document.createElement('select');
 				select.id = 'selectSplit';
 				select.name = select.id;
@@ -414,6 +417,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 				setDropdownOptionToSelectOptionArray($(select),0);
 				cellCount = cellCount + 1
 				break;
+				
 			case 'Control+F5'://Batsman Style
 				select = document.createElement('select');
 				select.id = 'selectPlayerName';
@@ -592,7 +596,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 					}
 				});
 				
-				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+				select.setAttribute('onchange','setDropdownOptionToSelectOptionArray(this, 0)');
 				row.insertCell(cellCount).appendChild(select);
 				setDropdownOptionToSelectOptionArray($(select),0);
 				cellCount = cellCount + 1;
