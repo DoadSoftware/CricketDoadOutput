@@ -14,8 +14,7 @@
   
   <link rel="stylesheet" href="<c:url value="/webjars/bootstrap/5.1.3/css/bootstrap.min.css"/>"/>  
   <link href="<c:url value="/webjars/font-awesome/6.0.0/css/all.css"/>" rel="stylesheet">
-  
-    <script type="text/javascript">
+  <script type="text/javascript">
     
   	function KeyPress(e) {
   		
@@ -31,14 +30,14 @@
       }
       if(evtobj.altKey) {
     	  if(whichKey) {
-        	  whichKey = whichKey + '+Alt';
+        	  whichKey = whichKey + '_Alt';
     	  } else {
         	  whichKey = 'Alt';
     	  }
       }
       if(evtobj.shiftKey) {
     	  if(whichKey) {
-        	  whichKey = whichKey + '+Shift';
+        	  whichKey = whichKey + '_Shift';
     	  } else {
         	  whichKey = 'Shift';
     	  }
@@ -47,7 +46,7 @@
 	  if(evtobj.keyCode) {
     	  if(whichKey) {
     		  if(!whichKey.includes(evtobj.key)) {
-            	  whichKey = whichKey + '+' + evtobj.key;
+            	  whichKey = whichKey + '_' + evtobj.key;
     		  }
     	  } else {
         	  whichKey = evtobj.key;
@@ -55,8 +54,8 @@
 	  }
 
 	  validKeyFound = false;
-	  if (whichKey.includes('+')) {
-		  whichKey.split("+").forEach(function (this_key) {
+	  if (whichKey.includes('_')) {
+		  whichKey.split("_").forEach(function (this_key) {
 			  switch (this_key) {
 			  case 'Control': case 'Shift': case 'Alt':
 				break;
@@ -75,13 +74,11 @@
 	      console.log(whichKey);
 	   }
 	}
-	document.onkeydown = KeyPress;  
-  	setInterval(() => {processCricketProcedures('READ-MATCH-AND-POPULATE');}, 1000);
-  </script>
 
-
-
-
+	document.onkeydown = KeyPress;  
+  	setInterval(() => {processCricketProcedures('READ-MATCH-AND-POPULATE');}, 1000);
+  </script>
+    
 </head>
 <body onload="initialiseOutput()">
 <form:form name="output_form" autocomplete="off" action="POST">

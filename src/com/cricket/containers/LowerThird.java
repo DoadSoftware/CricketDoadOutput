@@ -19,10 +19,11 @@ public class LowerThird
 	private String[] StatsText;
 	private String[] LeftText;
 	private String[] RightText;
+	private String[] Position;
 	
 	public LowerThird(String headerText, String firstName, String surName, String subTitle, String scoreText,
 			String ballsFacedText, int numberOfSubLines, String WhichSponsor, String WhichTeamFlag, String[] titlesText, String[] statsText, String[] leftText,
-			String[] rightText) {
+			String[] rightText,String[] position) {
 		super();
 		this.HeaderText = headerText;
 		this.FirstName = firstName;
@@ -37,6 +38,7 @@ public class LowerThird
 		this.RightText = rightText;
 		this.WhichSponsor = WhichSponsor;
 		this.WhichTeamFlag = WhichTeamFlag;
+		this.Position = position;
 	}
 
 	public LowerThird() {
@@ -147,13 +149,22 @@ public class LowerThird
 		WhichTeamFlag = whichTeamFlag;
 	}
 
+	public String[] getPosition() {
+		return Position;
+	}
+
+	public void setPosition(String[] position) {
+		Position = position;
+	}
+
 	@Override
 	public String toString() {
 		return "LowerThird [HeaderText=" + HeaderText + ", FirstName=" + FirstName + ", SurName=" + SurName
 				+ ", SubTitle=" + SubTitle + ", ScoreText=" + ScoreText + ", BallsFacedText=" + BallsFacedText
-				+ ", numberOfSubLines=" + numberOfSubLines + ", TitlesText=" + Arrays.toString(TitlesText)
-				+ ", StatsText=" + Arrays.toString(StatsText) + ", LeftText=" + Arrays.toString(LeftText)
-				+ ", RightText=" + Arrays.toString(RightText) + "]";
+				+ ", WhichSponsor=" + WhichSponsor + ", WhichTeamFlag=" + WhichTeamFlag + ", numberOfSubLines="
+				+ numberOfSubLines + ", TitlesText=" + Arrays.toString(TitlesText) + ", StatsText="
+				+ Arrays.toString(StatsText) + ", LeftText=" + Arrays.toString(LeftText) + ", RightText="
+				+ Arrays.toString(RightText) + ", Position=" + Arrays.toString(Position) + "]";
 	}
 
 }

@@ -285,9 +285,8 @@ public class IndexController
 					CricketUtil.MATCH + "," + CricketUtil.EVENT, session_match));
 				last_match_time_stamp = new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.MATCHES_DIRECTORY 
 						+ session_match.getMatch().getMatchFileName()).lastModified();
-
-				//DJ to update infobar through this_caption
-				//this_infobar.updateInfobar(print_writers, session_configuration, session_match);
+				
+				this_caption.this_infobarGfx.updateInfobar(print_writers, session_match);
 			}
 			return JSONObject.fromObject(session_match).toString();
 			
@@ -298,14 +297,29 @@ public class IndexController
 			}
 			else if(whatToProcess.contains("POPULATE-GRAPHICS")) {
 				System.out.println("valueToProcess : " + valueToProcess);
+				if(valueToProcess.split(",")[0].equalsIgnoreCase("Alt_1") || valueToProcess.split(",")[0].equalsIgnoreCase("Alt_2")) {
+					whichSide = 2;
+				}
+				
 				all_ok_status = this_caption.PopulateGraphics(valueToProcess, whichSide, session_match);
 				
 				return String.valueOf(all_ok_status);
 			}
 			else if(whatToProcess.contains("ANIMATE-IN-GRAPHICS")) {
 				if(whichSide == 1) {
+					if(graphicOnScreen.equalsIgnoreCase("F12") && this_caption.this_infobarGfx.infobar.isInfobar_on_screen() == true) {
+						this_animation.scoreBugAnimation(print_writers,graphicOnScreen,valueToProcess.split(",")[0],session_configuration);
+					}
+					
 					this_animation.AnimateIn(valueToProcess, print_writers, session_configuration);
-					whichSide = 3 - whichSide;
+					
+					if(valueToProcess.split(",")[0].equalsIgnoreCase("F12") && this_caption.this_infobarGfx.infobar.isInfobar_on_screen() == false) {
+						this_caption.this_infobarGfx.infobar.setInfobar_on_screen(true);
+					}else {
+						whichSide = 3 - whichSide;
+						System.out.println("whichSide" + whichSide);
+					}
+					
 				} else {
 					this_animation.ChangeOn(valueToProcess,graphicOnScreen,print_writers, session_configuration);
 					TimeUnit.MILLISECONDS.sleep(2000);
@@ -315,13 +329,29 @@ public class IndexController
 				graphicOnScreen = valueToProcess.split(",")[0];
 			}
 			else if(whatToProcess.contains("ANIMATE-OUT")) {
-				this_animation.AnimateOut(String.valueOf(graphicOnScreen), print_writers, session_configuration);
-				graphicOnScreen = "";
+				this_animation.AnimateOut(graphicOnScreen, print_writers, session_configuration);
+				
+				if(this_caption.this_infobarGfx.infobar.isInfobar_on_screen() == true) {
+					if(!graphicOnScreen.equalsIgnoreCase("F12")) {
+						this_animation.scoreBugAnimation(print_writers,graphicOnScreen,"F12",session_configuration);
+						graphicOnScreen = "F12";
+					}else {
+						this_caption.this_infobarGfx.infobar.setInfobar_on_screen(false);
+						graphicOnScreen = "";
+					}
+				}else {
+					graphicOnScreen = "";
+				}
 				whichSide = 1;
+			}
+			else if(whatToProcess.contains("SCOREBUG-IN") || whatToProcess.contains("SCOREBUG-OUT") || whatToProcess.contains("SCOREBUG-SHRINK")) {
+				whichSide = 1;
+				this_animation.AnimateIn(valueToProcess, print_writers, session_configuration);
 			}
 			else if(whatToProcess.contains("CLEAR-ALL")) {
 				whichSide = 1;
 				graphicOnScreen = "";
+				this_caption.this_infobarGfx.infobar.setInfobar_on_screen(false);
 				this_animation.ClearAll(print_writers);
 			}
 			return JSONObject.fromObject(session_match).toString();

@@ -7,8 +7,8 @@ import com.cricket.model.BowlingCard;
 
 public class Infobar {
 	
-	private boolean infobar_on_screen;
-	private boolean powerplay_on_screen;
+	private boolean infobar_on_screen = false;
+	private boolean powerplay_on_screen = false;
 	
 	private int player_id;
 	
