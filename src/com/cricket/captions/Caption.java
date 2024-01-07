@@ -21,11 +21,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 public class Caption 
 {
-	public int FirstPlayerId;
-	public int SecondPlayerId;
-	public String WhichProfile;
-	
 	public InfobarGfx this_infobarGfx = new InfobarGfx();
+	public LowerThirdGfx this_lowerThirdGfx;
+	public FullFramesGfx this_fullFramesGfx;
 	
 	public List<PrintWriter> print_writers; 
 	public Configuration config;
@@ -43,21 +41,23 @@ public class Caption
 	public Statistics stat;
 	public StatsType statsType;
 	public LowerThird lowerThird;
-	
 	public NameSuper namesuper;
 	public Fixture fixture;
 	public Team team;
+
+	public int FirstPlayerId, SecondPlayerId, whichSide;
+	public String WhichProfile, typeOfGraphics = "";
 	
-	LowerThirdGfx this_lowerThirdGfx;
-	FullFramesGfx this_fullFramesGfx;
+	private String status;
 	
 	public Caption() {
 		super();
 	}
 	
 	public Caption(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics,
-			List<StatsType> statsTypes, List<MatchAllData> tournament_matches, List<NameSuper> nameSupers,List<Fixture> fixTures, 
-			List<Team> Teams, List<Ground> Grounds,FullFramesGfx this_fullFramesGfx,LowerThirdGfx this_lowerThirdGfx) {
+		List<StatsType> statsTypes, List<MatchAllData> tournament_matches, List<NameSuper> nameSupers,
+		List<Fixture> fixTures, List<Team> Teams, List<Ground> Grounds,FullFramesGfx this_fullFramesGfx,
+		LowerThirdGfx this_lowerThirdGfx, int whichSide, String whichGraphhicsOnScreen, String slashOrDash) {
 	
 		super();
 		this.print_writers = print_writers;
@@ -73,82 +73,114 @@ public class Caption
 				nameSupers, fixTures, Teams, Grounds);
 		this.this_lowerThirdGfx = new LowerThirdGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
 				nameSupers, fixTures, Teams, Grounds);
+		this.whichSide = whichSide;
+		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers);
+		this.status = "";
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
-	public boolean PopulateGraphics(String whatToProcess, int WhichSide, MatchAllData matchAllData) 
-		throws InterruptedException, JsonMappingException, JsonProcessingException, NumberFormatException, ParseException
+	public void PopulateGraphics(String whatToProcess, MatchAllData matchAllData) 
+		throws InterruptedException, JsonMappingException, JsonProcessingException, 
+		NumberFormatException, ParseException
 	{
 		if(whatToProcess.contains(",")) {
 			switch (whatToProcess.split(",")[0]) {
 			case "F1": // Scorecard FF
-				return this_fullFramesGfx.PopulateScorecardFF(WhichSide, whatToProcess.split(",")[0], matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
+				status = this_fullFramesGfx.PopulateScorecardFF(whichSide, whatToProcess.split(",")[0], matchAllData, 
+					Integer.valueOf(whatToProcess.split(",")[1]));
+				break;
 			case "F2": // Bowling FF
-				return this_fullFramesGfx.PopulateBowlingCardFF(WhichSide, whatToProcess.split(",")[0], matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
+				status = this_fullFramesGfx.PopulateBowlingCardFF(whichSide, whatToProcess.split(",")[0], matchAllData, 
+					Integer.valueOf(whatToProcess.split(",")[1]));
+				break;
 			case "F4": //All Partnership
-				return this_fullFramesGfx.populatePartnership(WhichSide, whatToProcess.split(",")[0], matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
+				status = this_fullFramesGfx.populatePartnership(whichSide, whatToProcess.split(",")[0], matchAllData, 
+					Integer.valueOf(whatToProcess.split(",")[1]));
+				break;
 			case "F5": //BAT THIS MATCH
-				return this_lowerThirdGfx.populateBatThisMatch(whatToProcess, WhichSide, matchAllData);
+				status = this_lowerThirdGfx.populateBatThisMatch(whatToProcess, whichSide, matchAllData);
+				break;
 			case "F6"://HowOut
-				return this_lowerThirdGfx.populateHowOut(whatToProcess,WhichSide,matchAllData);
+				status = this_lowerThirdGfx.populateHowOut(whatToProcess,whichSide,matchAllData);
+				break;
 			case "F7": case "F11": // L3rd BAT and BALL Profile
-				return this_lowerThirdGfx.PopulateL3rdPlayerProfile(whatToProcess,WhichSide, matchAllData);
+				status = this_lowerThirdGfx.PopulateL3rdPlayerProfile(whatToProcess,whichSide, matchAllData);
+				break;
 			case "F8": //NAMESUPER PLAYER
-				return this_lowerThirdGfx.populateLTNameSuperPlayer(whatToProcess,WhichSide,matchAllData);
+				status = this_lowerThirdGfx.populateLTNameSuperPlayer(whatToProcess,whichSide,matchAllData);
+				break;
 			case "F9": //BOWL THIS MATCH
-				return this_lowerThirdGfx.populateBowlThisMatch(whatToProcess, WhichSide, matchAllData);
+				status = this_lowerThirdGfx.populateBowlThisMatch(whatToProcess, whichSide, matchAllData);
+				break;
 			case "F10": //NameSuper DB
-				return this_lowerThirdGfx.populateLTNameSuper(whatToProcess,WhichSide);
-			
+				status = this_lowerThirdGfx.populateLTNameSuper(whatToProcess,whichSide);
+				break;
 			case "F12":// InfoBar
-				this_infobarGfx.config = config;
-				System.out.println(whatToProcess);
-				this_infobarGfx.infobar.setMiddle_section(whatToProcess.split(",")[2]);
-				this_infobarGfx.infobar.setLeft_bottom(whatToProcess.split(",")[3]);
-				return this_infobarGfx.populateInfobar(print_writers,whatToProcess,matchAllData);
-			
-			case "Alt_1": // Infobar Left Bottom
-				if(this_infobarGfx.infobar.getLast_left_bottom() != null) {
-					this_infobarGfx.infobar.setLeft_bottom(whatToProcess.split(",")[2]);
-					return this_infobarGfx.populateVizInfobarLeftBottom(print_writers, matchAllData, WhichSide);
-				}
-			case "Alt_2": // Infobar Middle
-				if(this_infobarGfx.infobar.getLast_middle_section() != null) {
-					this_infobarGfx.infobar.setMiddle_section(whatToProcess.split(",")[2]);
-					return this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, WhichSide);
-				}
-			
-			case "Shift_K"://FF curr part
-				return this_fullFramesGfx.populateCurrPartnership(WhichSide, whatToProcess.split(",")[0], matchAllData, WhichSide);
+				status = this_infobarGfx.populateInfobar(print_writers,whatToProcess,matchAllData);
+				break;
 			case "Control_F5"://Batsman Style
-				return this_lowerThirdGfx.populateBattingStyle(whatToProcess,WhichSide,matchAllData);
+				status = this_lowerThirdGfx.populateBattingStyle(whatToProcess,whichSide,matchAllData);
+				break;
 			case "Control_F7": // Double Teams
-				return this_fullFramesGfx.PopulateDoubleTeams(WhichSide, whatToProcess.split(",")[0], matchAllData);
+				status = this_fullFramesGfx.PopulateDoubleTeams(whichSide, whatToProcess.split(",")[0], matchAllData);
+				break;
 			case "Control_F8": //Playing XI
-				return this_fullFramesGfx.populatePlayingXI(WhichSide, whatToProcess.split(",")[0],Integer.valueOf(whatToProcess.split(",")[2]), matchAllData, 0);
+				status = this_fullFramesGfx.populatePlayingXI(whichSide, whatToProcess.split(",")[0],
+					Integer.valueOf(whatToProcess.split(",")[2]), matchAllData, 0);
+				break;
 			case "Control_F9"://Bowler Style
-				return this_lowerThirdGfx.populateBowlingStyle(whatToProcess,WhichSide,matchAllData);
+				status = this_lowerThirdGfx.populateBowlingStyle(whatToProcess,whichSide,matchAllData);
+				break;
 			case "Shift_F3": //Fall of Wicket
-				return this_lowerThirdGfx.populateFOW(whatToProcess, WhichSide, matchAllData);
+				status = this_lowerThirdGfx.populateFOW(whatToProcess, whichSide, matchAllData);
+				break;
 			case "Shift_F11": //MATCH SUMMARY
-				return this_fullFramesGfx.populateMatchSummary(WhichSide, whatToProcess.split(",")[0], matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
+				status = this_fullFramesGfx.populateMatchSummary(whichSide, whatToProcess.split(",")[0], matchAllData, 
+					Integer.valueOf(whatToProcess.split(",")[1]));
+				break;
 			case "d": //Target
-				return this_lowerThirdGfx.populateL3rdTarget(whatToProcess, WhichSide, matchAllData);
+				status = this_lowerThirdGfx.populateL3rdTarget(whatToProcess, whichSide, matchAllData);
+				break;
 			case "e": //Equation
-				return this_lowerThirdGfx.populateL3rdEquation(whatToProcess, WhichSide, matchAllData);	
+				status = this_lowerThirdGfx.populateL3rdEquation(whatToProcess, whichSide, matchAllData);	
+				break;
 			case "m": //Match id
-				return this_fullFramesGfx.populateFFMatchId(WhichSide,whatToProcess.split(",")[0], matchAllData);
+				status = this_fullFramesGfx.populateFFMatchId(whichSide,whatToProcess.split(",")[0], matchAllData);
+				break;
 			case "s": //30-50
-				return this_lowerThirdGfx.populate30_50Split(whatToProcess, WhichSide, matchAllData);
+				status = this_lowerThirdGfx.populate30_50Split(whatToProcess, whichSide, matchAllData);
+				break;
 			case "Control_a"://Projected
-				return this_lowerThirdGfx.populateL3rdProjected(whatToProcess,WhichSide,matchAllData);
+				status = this_lowerThirdGfx.populateL3rdProjected(whatToProcess,whichSide,matchAllData);
+				break;
 			case "Control_d": case "Control_e":
-				return this_fullFramesGfx.populatePlayerProfile(WhichSide, whatToProcess, matchAllData, 0);
+				status = this_fullFramesGfx.populatePlayerProfile(whichSide, whatToProcess, matchAllData, 0);
+				break;
 			case "Control_m": //MATCH PROMO
-				return this_fullFramesGfx.populateFFMatchPromo(WhichSide, whatToProcess,matchAllData);
+				status = this_fullFramesGfx.populateFFMatchPromo(whichSide, whatToProcess,matchAllData);
+				break;
+			case "Shift_K"://FF curr part
+				status = this_fullFramesGfx.populateCurrPartnership(whichSide, whatToProcess.split(",")[0], 
+					matchAllData, whichSide);
+				break;
 			case "Alt_k"://Curr Part
-				return this_lowerThirdGfx.populateL3rdCurrentPartnership(whatToProcess,WhichSide,matchAllData);
+				status = this_lowerThirdGfx.populateL3rdCurrentPartnership(whatToProcess,whichSide,matchAllData);
+				break;
+			case "Alt_1": // Infobar Left Bottom
+				this_infobarGfx.infobar.setLeft_bottom(whatToProcess.split(",")[2]);
+				status = this_infobarGfx.populateVizInfobarLeftBottom(print_writers, matchAllData, whichSide);
+				break;
+			case "Alt_2": // Infobar Middle
+				this_infobarGfx.infobar.setMiddle_section(whatToProcess.split(",")[2]);
+				status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
+				break;
 			}
 		}
-		return true;
+		status = Constants.OK;
 	}
 }

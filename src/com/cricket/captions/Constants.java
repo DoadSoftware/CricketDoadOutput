@@ -2,6 +2,18 @@ package com.cricket.captions;
 
 public class Constants 
 {
+	public final static String OK = "OK";
+	public final static String FULL_FRAMER = "FULL_FRAMER";
+	public final static String LOWER_THIRD = "LOWER_THIRD";
+	public final static String INFO_BAR = "INFO_BAR";
+
+	public final static String SHRUNK_INFOBAR = "SHRUNK_INFOBAR";
+	public final static String TWO_LINER_INFOBAR = "TWO_LINER_INFOBAR";
+
+	public final static String FRONT = "FRONT";
+	public final static String BACK = "BACK";
+	public final static String MIDDLE = "MIDDLE";
+
 	public final static String ICC_U19_2023 = "ICC-U19-2023";
 	public final static String ICC_U19_2023_FLAG_PATH = "IMAGE*/Default/Essentials/Flags/";
 	public final static String ICC_U19_2023_LOGOS_PATH = "IMAGE*/Default/Essentials/Logos/";

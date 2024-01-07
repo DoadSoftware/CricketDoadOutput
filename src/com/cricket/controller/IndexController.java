@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,9 +27,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import com.cricket.captions.Animation;
 import com.cricket.captions.Caption;
+import com.cricket.captions.Constants;
 import com.cricket.captions.FullFramesGfx;
 import com.cricket.captions.LowerThirdGfx;
 import com.cricket.captions.Scene;
+import com.cricket.containers.Infobar;
 import com.cricket.model.Configuration;
 import com.cricket.model.EventFile;
 import com.cricket.model.Fixture;
@@ -66,8 +69,6 @@ public class IndexController
 	public static Animation this_animation;
 	public static List<PrintWriter> print_writers;
 	public static boolean show_speed = true;
-	public static int whichSide = 1;
-	public static String graphicOnScreen = "";
 	
 	public static List<MatchAllData> cricket_matches = new ArrayList<MatchAllData>();
 	public static List<Tournament> past_tournament_stats = new ArrayList<Tournament>();
@@ -106,19 +107,16 @@ public class IndexController
 		return "initialise";
 	}
 
-	@RequestMapping(value = {"/output"}, method={RequestMethod.GET,RequestMethod.POST}) 
+	@RequestMapping(value = {"/output"}, method={RequestMethod.GET,RequestMethod.POST},
+		consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}) 
 	public String outputPage(ModelMap model,
 			@ModelAttribute("session_configuration") Configuration session_configuration,
 			@RequestParam(value = "configuration_file_name", required = false, defaultValue = "") String configuration_file_name,
+			@RequestParam(value = "select_cricket_matches", required = false, defaultValue = "") String selectedMatch,
 			@RequestParam(value = "select_broadcaster", required = false, defaultValue = "") String select_broadcaster,
 			@RequestParam(value = "select_second_broadcaster", required = false, defaultValue = "") String select_second_broadcaster,
-			@RequestParam(value = "which_layer", required = false, defaultValue = "") String which_layer,
-			@RequestParam(value = "which_scene", required = false, defaultValue = "") String which_scene,
-			@RequestParam(value = "select_cricket_matches", required = false, defaultValue = "") String selectedMatch,
 			@RequestParam(value = "qtIPAddress", required = false, defaultValue = "") String qtIPAddress,
 			@RequestParam(value = "qtPortNumber", required = false, defaultValue = "") int qtPortNumber,
-			@RequestParam(value = "qtSceneName", required = false, defaultValue = "") String qtScene,
-			@RequestParam(value = "qtLanguage", required = false, defaultValue = "") String qtLanguage,
 			@RequestParam(value = "vizIPAddress", required = false, defaultValue = "") String vizIPAddress,
 			@RequestParam(value = "vizPortNumber", required = false, defaultValue = "") int vizPortNumber,
 			@RequestParam(value = "vizSceneName", required = false, defaultValue = "") String vizScene,
@@ -146,25 +144,23 @@ public class IndexController
 			
 		}else {
 
-			last_match_time_stamp = new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.MATCHES_DIRECTORY + selectedMatch).lastModified();
-			whichSide = 1;
-			graphicOnScreen = "";
-			
-			session_configuration = new Configuration(selectedMatch, select_broadcaster,qtIPAddress, qtPortNumber,qtScene, qtLanguage, vizIPAddress, vizPortNumber, vizScene, 
-				vizLanguage,vizSecondaryIPAddress, vizSecondaryPortNumber, vizSecondaryScene, vizSecondaryLanguage,vizTertiaryIPAddress, vizTertiaryPortNumber,
-				vizTertiaryScene, vizTertiaryLanguage); 
+			last_match_time_stamp = new File(CricketUtil.CRICKET_SERVER_DIRECTORY + CricketUtil.MATCHES_DIRECTORY 
+				+ selectedMatch).lastModified();
+			session_configuration = new Configuration(selectedMatch, select_broadcaster,qtIPAddress, 
+				qtPortNumber,"", "", vizIPAddress, vizPortNumber, vizScene, vizLanguage,
+				vizSecondaryIPAddress, vizSecondaryPortNumber, vizSecondaryScene, vizSecondaryLanguage,
+				vizTertiaryIPAddress, vizTertiaryPortNumber,vizTertiaryScene, vizTertiaryLanguage); 
 			
 			JAXBContext.newInstance(Configuration.class).createMarshaller().marshal(session_configuration, 
-					new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.CONFIGURATIONS_DIRECTORY + configuration_file_name));
+					new File(CricketUtil.CRICKET_SERVER_DIRECTORY + CricketUtil.CONFIGURATIONS_DIRECTORY + configuration_file_name));
 			
 			print_writers = CricketFunctions.processPrintWriter(session_configuration);
 			
 			this_scene = new Scene();
-			this_animation = new Animation();
+			this_animation = new Animation(new Infobar());
 			
 			switch (select_broadcaster) {
-//			case "IPL_2024":
-			default:
+			case Constants.ICC_U19_2023:
 				this_scene.LoadScene("FULL-FRAMERS", print_writers, session_configuration);
 				this_scene.LoadScene("OVERLAYS", print_writers, session_configuration);
 				break;
@@ -195,6 +191,7 @@ public class IndexController
 			
 			model.addAttribute("session_match", session_match);
 			model.addAttribute("session_configuration", session_configuration);
+			
 			return "output";
 		}
 	}
@@ -204,9 +201,8 @@ public class IndexController
 		switch (whatToProcess) {
 		case "F10":
 		    return (List<T>) session_name_super;
-		case "Control m":
+		case "Control_m":
 			return (List<T>) CricketFunctions.processAllFixtures(cricketService);
-
 		}
 		return null;
 	}
@@ -215,14 +211,8 @@ public class IndexController
 		IllegalAccessException, InvocationTargetException, JAXBException, IOException
 	{
 		switch (config.getBroadcaster()) {
-//		case "IPL-2024":
-//			session_statistics = cricketService.getAllStats();
-//			past_tournament_stats = CricketFunctions.extractTournamentStats(
-//				"PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
-//			this_caption = new Caption(print_writers, session_configuration, 
-//				session_statistics,cricketService.getAllStatsType(), cricket_matches, cricketService);
-//			break;
-		default:
+		case Constants.ICC_U19_2023:
+			
 			cricket_matches = CricketFunctions.getTournamentMatches(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + CricketUtil.MATCHES_DIRECTORY).listFiles(new FileFilter() {
 				@Override
 			    public boolean accept(File pathname) {
@@ -237,9 +227,14 @@ public class IndexController
 			session_fixture =  CricketFunctions.processAllFixtures(cricketService);
 			session_team =  cricketService.getTeams();
 			session_ground =  cricketService.getGrounds();
-			
-			this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), cricket_matches, session_name_super,
-					session_fixture, session_team, session_ground,new FullFramesGfx(),new LowerThirdGfx());
+
+			switch (config.getBroadcaster()) {
+			case Constants.ICC_U19_2023:
+				this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), 
+					cricket_matches, session_name_super, session_fixture, session_team, session_ground,
+					new FullFramesGfx(),new LowerThirdGfx(), 1, "", "-");
+				break;
+			}
 			
 			break;
 		}
@@ -250,10 +245,8 @@ public class IndexController
 		@ModelAttribute("session_configuration") Configuration session_configuration,
 		@RequestParam(value = "whatToProcess", required = false, defaultValue = "") String whatToProcess,
 		@RequestParam(value = "valueToProcess", required = false, defaultValue = "") String valueToProcess) 
-					throws Exception 
+			throws Exception 
 	{
-		boolean all_ok_status = false;
-		
 		switch (whatToProcess.toUpperCase()) {
 		case "GET-CONFIG-DATA":
 
@@ -279,6 +272,10 @@ public class IndexController
 
 		case "READ-MATCH-AND-POPULATE":
 			
+			if(session_match == null) {
+				return JSONObject.fromObject(null).toString();
+			}
+			
 			if(last_match_time_stamp != new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.MATCHES_DIRECTORY 
 				+ session_match.getMatch().getMatchFileName()).lastModified()) {
 				session_match = CricketFunctions.populateMatchVariables(cricketService, CricketFunctions.readOrSaveMatchFile(CricketUtil.READ,
@@ -291,69 +288,90 @@ public class IndexController
 			return JSONObject.fromObject(session_match).toString();
 			
 		default:
+
+//			System.out.println("BEFORE...");
+//			System.out.println("whatToProcess = " + whatToProcess);
+//			System.out.println("valueToProcess = " + valueToProcess);
+//			System.out.println("whichGraphicOnScreen = " + this_animation.whichGraphicOnScreen);
+//			System.out.println("whichSide = " + this_caption.whichSide);
+//			System.out.println("graphics type = " + this_animation.getTypeOfGraphicsOnScreen(valueToProcess));
 			
 			if(whatToProcess.contains("GRAPHICS-OPTIONS")) {
 				return JSONArray.fromObject(GetGraphicOption(valueToProcess)).toString();
+			} else if(whatToProcess.contains("POPULATE-GRAPHICS")) {
+				switch(this_animation.getTypeOfGraphicsOnScreen(valueToProcess)){
+				case Constants.INFO_BAR:
+					if(this_animation.infobar.isInfobar_on_screen()) {
+						this_caption.whichSide = 2;
+					} else {
+						this_caption.whichSide = 1;
+					}
+					break;
+				default:
+					if(this_animation.whichGraphicOnScreen.isEmpty()) {
+						this_caption.whichSide = 1;
+					} else {
+						//Don't allow L3rds change-on while FFs are on screen
+						switch (this_animation.getTypeOfGraphicsOnScreen(this_animation.whichGraphicOnScreen)) {
+						case Constants.FULL_FRAMER: case Constants.LOWER_THIRD:
+							if(this_animation.getTypeOfGraphicsOnScreen(valueToProcess) 
+								!= this_animation.getTypeOfGraphicsOnScreen(this_animation.whichGraphicOnScreen)) {
+								this_caption.setStatus(this_animation.getTypeOfGraphicsOnScreen(
+									this_animation.whichGraphicOnScreen).replace("_", " ") + " is on screen. "
+									+ this_animation.getTypeOfGraphicsOnScreen(valueToProcess).replace("_", " ")
+									+ " not allowed" );
+								return JSONObject.fromObject(this_caption).toString();
+							}
+							break;
+						}
+						this_caption.whichSide = 2;
+					}
+					break;
+				}
+				this_caption.PopulateGraphics(valueToProcess, session_match);
+				return JSONObject.fromObject(this_caption).toString();
 			}
-			else if(whatToProcess.contains("POPULATE-GRAPHICS")) {
-				System.out.println("valueToProcess : " + valueToProcess);
-				if(valueToProcess.split(",")[0].equalsIgnoreCase("Alt_1") || valueToProcess.split(",")[0].equalsIgnoreCase("Alt_2")) {
-					whichSide = 2;
+			else if(whatToProcess.contains("ANIMATE-IN-GRAPHICS") || whatToProcess.contains("ANIMATE-OUT-GRAPHICS")
+				|| whatToProcess.contains("ANIMATE-OUT-INFOBAR")) {
+				
+				if(whatToProcess.contains("ANIMATE-IN-GRAPHICS")) {
+					switch(this_animation.getTypeOfGraphicsOnScreen(valueToProcess)){
+					case Constants.INFO_BAR:
+						this_animation.ChangeOn(valueToProcess, print_writers, session_configuration);
+						TimeUnit.MILLISECONDS.sleep(2000);
+						this_caption.whichSide = 1;
+						this_caption.PopulateGraphics(valueToProcess, session_match);
+						this_animation.CutBack(valueToProcess, print_writers, session_configuration);
+						break;
+					default:
+						if(this_animation.whichGraphicOnScreen.isEmpty()) {
+							this_animation.AnimateIn(valueToProcess, print_writers, session_configuration);
+						} else { // Change on
+							this_animation.ChangeOn(valueToProcess, print_writers, session_configuration);
+							TimeUnit.MILLISECONDS.sleep(2000);
+							this_caption.whichSide = 1;
+							this_caption.PopulateGraphics(valueToProcess, session_match);
+							this_animation.CutBack(valueToProcess, print_writers, session_configuration);
+						}
+						break;
+					}
+				} else if(whatToProcess.contains("ANIMATE-OUT-GRAPHICS")) {
+					this_animation.AnimateOut(this_animation.whichGraphicOnScreen, print_writers, session_configuration);
+				} else if(whatToProcess.contains("ANIMATE-OUT-INFOBAR")) {
+					this_animation.AnimateOut("F12,", print_writers, session_configuration);
 				}
 				
-				all_ok_status = this_caption.PopulateGraphics(valueToProcess, whichSide, session_match);
-				
-				return String.valueOf(all_ok_status);
+			} else if(whatToProcess.contains("CLEAR-ALL") || whatToProcess.contains("CLEAR-ALL-WITH-INFOBAR")) {
+				this_animation.ResetAnimation(whatToProcess, print_writers, session_configuration);
 			}
-			else if(whatToProcess.contains("ANIMATE-IN-GRAPHICS")) {
-				if(whichSide == 1) {
-					if(graphicOnScreen.equalsIgnoreCase("F12") && this_caption.this_infobarGfx.infobar.isInfobar_on_screen() == true) {
-						this_animation.scoreBugAnimation(print_writers,graphicOnScreen,valueToProcess.split(",")[0],session_configuration);
-					}
-					
-					this_animation.AnimateIn(valueToProcess, print_writers, session_configuration);
-					
-					if(valueToProcess.split(",")[0].equalsIgnoreCase("F12") && this_caption.this_infobarGfx.infobar.isInfobar_on_screen() == false) {
-						this_caption.this_infobarGfx.infobar.setInfobar_on_screen(true);
-					}else {
-						whichSide = 3 - whichSide;
-						System.out.println("whichSide" + whichSide);
-					}
-					
-				} else {
-					this_animation.ChangeOn(valueToProcess,graphicOnScreen,print_writers, session_configuration);
-					TimeUnit.MILLISECONDS.sleep(2000);
-					all_ok_status = this_caption.PopulateGraphics(valueToProcess, 1, session_match);
-					this_animation.CutBack(valueToProcess,graphicOnScreen,print_writers, session_configuration);
-				}
-				graphicOnScreen = valueToProcess.split(",")[0];
-			}
-			else if(whatToProcess.contains("ANIMATE-OUT")) {
-				this_animation.AnimateOut(graphicOnScreen, print_writers, session_configuration);
-				
-				if(this_caption.this_infobarGfx.infobar.isInfobar_on_screen() == true) {
-					if(!graphicOnScreen.equalsIgnoreCase("F12")) {
-						this_animation.scoreBugAnimation(print_writers,graphicOnScreen,"F12",session_configuration);
-						graphicOnScreen = "F12";
-					}else {
-						this_caption.this_infobarGfx.infobar.setInfobar_on_screen(false);
-						graphicOnScreen = "";
-					}
-				}else {
-					graphicOnScreen = "";
-				}
-				whichSide = 1;
-			}
-			else if(whatToProcess.contains("SCOREBUG-IN") || whatToProcess.contains("SCOREBUG-OUT") || whatToProcess.contains("SCOREBUG-SHRINK")) {
-				whichSide = 1;
-				this_animation.AnimateIn(valueToProcess, print_writers, session_configuration);
-			}
-			else if(whatToProcess.contains("CLEAR-ALL")) {
-				whichSide = 1;
-				graphicOnScreen = "";
-				this_caption.this_infobarGfx.infobar.setInfobar_on_screen(false);
-				this_animation.ClearAll(print_writers);
-			}
+			
+//			System.out.println("AFTER...");
+//			System.out.println("whatToProcess = " + whatToProcess);
+//			System.out.println("valueToProcess = " + valueToProcess);
+//			System.out.println("whichGraphicOnScreen = " + this_animation.whichGraphicOnScreen);
+//			System.out.println("whichSide = " + this_caption.whichSide);
+//			System.out.println("graphics type = " + this_animation.getTypeOfGraphicsOnScreen(valueToProcess));
+			
 			return JSONObject.fromObject(session_match).toString();
 		}
 	}

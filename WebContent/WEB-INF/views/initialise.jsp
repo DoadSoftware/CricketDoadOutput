@@ -17,7 +17,7 @@
 		
 </head>
 <body>
-<form:form name="initialise_form" autocomplete="off" action="output" method="POST">
+<form:form name="initialise_form" method="POST" action="output" enctype="multipart/form-data">
 <div class="content py-5" style="background-color: #EAE8FF; color: #2E008B">
   <div class="container">
 	<div class="row">
@@ -65,7 +65,6 @@
 			    <label for="select_broadcaster" class="col-sm-4 col-form-label text-left">Select Broadcaster </label>
 			    <div class="col-sm-6 col-md-6">
 			      <select id="select_broadcaster" name="select_broadcaster" class="browser-default custom-select custom-select-sm">
-			      		<option value=""></option>
 			      		<option value="ICC-U19-2023">ICC Under-19 WC 2023</option>
 			      </select>
 			    </div>
@@ -75,8 +74,7 @@
 			    <div class="col-sm-6 col-md-6">
 			      <select id="select_second_broadcaster" name="select_second_broadcaster" class="browser-default custom-select custom-select-sm"
 			      		onchange="processUserSelection(this)">
-			      		<option value=""></option>
-			      		<option value="Quidich">Quidich</option>
+			      		<option value="quidich">Quidich</option>
 			      </select>
 			    </div>
 			  </div>

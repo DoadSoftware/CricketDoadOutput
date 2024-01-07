@@ -9,21 +9,43 @@ public class Infobar {
 	
 	private boolean infobar_on_screen = false;
 	private boolean powerplay_on_screen = false;
+	private boolean infobar_pushed = false;
 	
 	private int player_id;
+	
+	private String infobar_status;
 	
 	private String Left_bottom;
 	private String Last_left_bottom;
 	
 	private String Right_bottom;
 	private String Last_right_bottom;
-	
+
 	private String Middle_section;
 	private String Last_middle_section;
 	
-	List<BattingCard> last_batsmen;
-	BowlingCard last_bowler;
+	private List<BattingCard> last_batsmen;
+	private BowlingCard last_bowler;
+	private String last_this_over;
 	
+	public boolean isInfobar_pushed() {
+		return infobar_pushed;
+	}
+	public void setInfobar_pushed(boolean infobar_pushed) {
+		this.infobar_pushed = infobar_pushed;
+	}
+	public String getInfobar_status() {
+		return infobar_status;
+	}
+	public void setInfobar_status(String infobar_status) {
+		this.infobar_status = infobar_status;
+	}
+	public String getLast_this_over() {
+		return last_this_over;
+	}
+	public void setLast_this_over(String last_this_over) {
+		this.last_this_over = last_this_over;
+	}
 	public boolean isInfobar_on_screen() {
 		return infobar_on_screen;
 	}
