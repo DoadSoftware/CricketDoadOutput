@@ -137,7 +137,7 @@
     </div>
   </div>
 <input type="hidden" id="which_keypress" name="which_keypress"/>
-<input type="hidden" id="which_inning" name="which_inning"/>
+<input type="hidden" id="which_inning" name="which_inning" value="${which_inning}"/>
 <input type="hidden" name="selected_broadcaster" id="selected_broadcaster" value="${session_configuration.broadcaster}"/>
 <input type="hidden" name="selected_second_broadcaster" id="selected_second_broadcaster" value="${session_configuration.secondaryBroadcaster}"/>
 <input type="hidden" name="selected_match_max_overs" id="selected_match_max_overs" value="${session_match.setup.maxOvers}"/>

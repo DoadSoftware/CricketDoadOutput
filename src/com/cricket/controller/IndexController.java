@@ -191,6 +191,12 @@ public class IndexController
 			
 			show_speed = true;
 			
+			if(session_match.getMatch().getInning() != null) {
+				model.addAttribute("which_inning", session_match.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning()
+						.equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null).getInningNumber());
+			} else {
+				model.addAttribute("which_inning", "1");
+			}
 			model.addAttribute("session_match", session_match);
 			model.addAttribute("session_configuration", session_configuration);
 			model.addAttribute("select_second_broadcaster", select_second_broadcaster);

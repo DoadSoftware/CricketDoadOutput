@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-                                                                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                                                                                
+    
     
     
     
@@ -70,7 +71,8 @@
     
     
     <wb-module deploy-name="CricketDoadOutput-1.6">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+        
         
         
         
@@ -141,7 +143,8 @@
         
         
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+        
         
         
         
@@ -212,7 +215,8 @@
         
         
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+        
         
         
         
@@ -283,10 +287,11 @@
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <dependent-module archiveName="CricketLibrary-1.264.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/CricketLibrary/CricketLibrary">
+        <dependent-module archiveName="CricketLibrary-1.265.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/CricketLibrary/CricketLibrary">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+        
         
         
         
@@ -357,7 +362,8 @@
         
         
         <property name="java-output-path" value="/Cricket Output/target/classes"/>
-                                                                                                
+                                                                                                        
+        
         
         
         
@@ -369,7 +375,8 @@
         
         
         <property name="context-root" value="CricketDoadOutput"/>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+    
     
     
     
@@ -440,7 +447,8 @@
     
     
     </wb-module>
-                                                                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                                            
+
 
 
 

@@ -19,6 +19,8 @@ function initialiseSelectedOptionsList()
 	for(var i = 1; i <= 4; i++) {
 	    selected_options.push('');
 	}
+	
+	document.getElementById('selected_inning').innerHTML = 'Selected Inning: ' + document.getElementById('which_inning').value;
 }
 function initialiseForm(whatToProcess,dataToProcess)
 {

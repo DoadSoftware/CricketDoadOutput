@@ -65,12 +65,18 @@ public class Animation
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			//NameSuperDB, HOWOUT, LTBatProfile, NameSuperPlayer, LtBallProfile, BatThisMatch, BallThisMatch
-			case "F5": case "F6": case "F7": case "F8": case "F9": case "F10": case "F11":
+			case "F5": case "F6": case "F7": case "F9": case "F11":
 			case "Control_F5": case "Control_F9": case "Control_a": case "Alt_k":
 			case "Shift_F3": case "s": case "d": case "e":
 				AnimateIn("Alt_f,", print_writers, config); // Shrink infobar
 				processAnimation(Constants.FRONT, print_writers, "Essentials", "START");
 				processAnimation(Constants.FRONT, print_writers, "Row", "START");
+				processAnimation(Constants.FRONT, print_writers, "HeaderDynamic", "START");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;
+			case "F8": case "F10":
+				AnimateIn("Alt_f,", print_writers, config); // Shrink infobar
+				processAnimation(Constants.FRONT, print_writers, "anim_NameSupers", "START");
 				processAnimation(Constants.FRONT, print_writers, "HeaderDynamic", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
@@ -140,7 +146,7 @@ public class Animation
 				AnimateIn("ArrowUp,", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;
-			case "F10": case "F6": case "F7": case "F8": case "F11": case "F5": case "F9":
+			case "F5": case "F6": case "F7": case "F9": case "F11":
 			case "Control_F5": case "Control_F9": case "Control_a": case "Alt_k":
 			case "Shift_F3": case "s": case "d": case "e":
 				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "CONTINUE");
@@ -149,7 +155,14 @@ public class Animation
 				this.whichGraphicOnScreen = "";
 				//print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*HeaderDynamic SHOW 0.0 \0");
 				break;
-			
+			case "F8": case "F10":
+				processAnimation(Constants.FRONT, print_writers, "anim_NameSupers", "CONTINUE");
+				TimeUnit.MILLISECONDS.sleep(1000);
+				AnimateIn("Alt_f,", print_writers, config); // Restore infobar
+				this.whichGraphicOnScreen = "";
+				//print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*HeaderDynamic SHOW 0.0 \0");
+				break;
+				
 			case "Shift_O": case "Control_k": case "k": case "g": case "f":
 				processAnimation(Constants.FRONT, print_writers, "Anim_Bugs$Essentials", "CONTINUE");
 				this.whichGraphicOnScreen = "";
@@ -211,8 +224,14 @@ public class Animation
 					}
 				}
 				break;
-			case "F5": 
+			case "F5": case "F6": case "F7": case "F9": case "F11":
+			case "Control_F5": case "Control_F9": case "Control_a": case "Alt_k":
+			case "Shift_F3": case "s": case "d": case "e":
 				processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "START");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;
+			case "F8": case "F10":
+				processAnimation(Constants.FRONT, print_writers, "Anim_NameSuperChange", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "Alt_1": case "Alt_2":
@@ -246,8 +265,13 @@ public class Animation
 			case "Alt_2":
 				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_Right_Info", "SHOW 0.0");
 				break;
-			case "F5":
+			case "F5": case "F6": case "F7": case "F9": case "F11":
+			case "Control_F5": case "Control_F9": case "Control_a": case "Alt_k":
+			case "Shift_F3": case "s": case "d": case "e":
 				processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "SHOW 0.0");
+				break;
+			case "F8": case "F10":
+				processAnimation(Constants.FRONT, print_writers, "Anim_NameSuperChange", "SHOW 0.0");
 				break;
 			case "F1": case "F2": case "F4":
 				processAnimation(Constants.BACK, print_writers, "Change$Header", "SHOW 0.0");
