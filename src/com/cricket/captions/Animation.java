@@ -171,13 +171,15 @@ public class Animation
 						break;
 					}
 				}
-				switch(whatToProcess.split(",")[0]) {
-				case "F1":  
-					processAnimation(Constants.BACK, print_writers, "Change$Batting_Card", "START");
-					break;
-				case "F2":
-					processAnimation(Constants.BACK, print_writers, "Change$Bowling_Card", "START");
-					break;
+				if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase(whatToProcess.split(",")[0])) {
+					switch(whatToProcess.split(",")[0]) {
+					case "F1": 
+						processAnimation(Constants.BACK, print_writers, "Change$Batting_Card", "START");
+						break;
+					case "F2":
+						processAnimation(Constants.BACK, print_writers, "Change$Bowling_Card", "START");
+						break;
+					}
 				}
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
@@ -205,7 +207,7 @@ public class Animation
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.ICC_U19_2023:
 
-			if(!whatToProcess.contains(",") || !whichGraphicOnScreen.contains(",")) {
+			if(!whatToProcess.contains(",")) {
 				return CricketUtil.NO;
 			}	
 			
@@ -230,13 +232,15 @@ public class Animation
 					processAnimation(Constants.BACK, print_writers, "Change$Bowling_Card", "SHOW 0.0");
 					break;
 				}
-				switch(whatToProcess.split(",")[0]) {
-				case "F1":  
-					processAnimation(Constants.BACK, print_writers, "Change$Batting_Card", "SHOW 0.0");
-					break;
-				case "F2":
-					processAnimation(Constants.BACK, print_writers, "Change$Bowling_Card", "SHOW 0.0");
-					break;
+				if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase(whatToProcess.split(",")[0])) {
+					switch(whatToProcess.split(",")[0]) {
+					case "F1":  
+						processAnimation(Constants.BACK, print_writers, "Change$Batting_Card", "SHOW 0.0");
+						break;
+					case "F2":
+						processAnimation(Constants.BACK, print_writers, "Change$Bowling_Card", "SHOW 0.0");
+						break;
+					}
 				}
 				break;
 			}
