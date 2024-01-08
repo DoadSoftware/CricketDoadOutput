@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.cricket.containers.LowerThird;
 import com.cricket.model.BattingCard;
+import com.cricket.model.Bugs;
 import com.cricket.model.Configuration;
 import com.cricket.model.Fixture;
 import com.cricket.model.Ground;
@@ -22,6 +23,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 public class Caption 
 {
 	public InfobarGfx this_infobarGfx = new InfobarGfx();
+	public BugsAndMiniGfx this_bugsAndMiniGfx = new BugsAndMiniGfx();
 	public LowerThirdGfx this_lowerThirdGfx;
 	public FullFramesGfx this_fullFramesGfx;
 	
@@ -34,6 +36,7 @@ public class Caption
 	public List<Fixture> fixTures;
 	public List<Team> Teams;
 	public List<Ground> Grounds;
+	public List<Bugs> bugs;
 	
 	public BattingCard battingCard;
 	public Inning inning;
@@ -55,7 +58,7 @@ public class Caption
 	}
 	
 	public Caption(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics,
-		List<StatsType> statsTypes, List<MatchAllData> tournament_matches, List<NameSuper> nameSupers,
+		List<StatsType> statsTypes, List<MatchAllData> tournament_matches, List<NameSuper> nameSupers,List<Bugs> bugs,
 		List<Fixture> fixTures, List<Team> Teams, List<Ground> Grounds,FullFramesGfx this_fullFramesGfx,
 		LowerThirdGfx this_lowerThirdGfx, int whichSide, String whichGraphhicsOnScreen, String slashOrDash) {
 	
@@ -75,6 +78,7 @@ public class Caption
 				nameSupers, fixTures, Teams, Grounds);
 		this.whichSide = whichSide;
 		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers);
+		this.this_bugsAndMiniGfx = new BugsAndMiniGfx(print_writers, config, tournament_matches, bugs, Teams, Grounds);
 		this.status = "";
 	}
 	public String getStatus() {
@@ -136,8 +140,15 @@ public class Caption
 			case "Control_F9"://Bowler Style
 				status = this_lowerThirdGfx.populateBowlingStyle(whatToProcess,whichSide,matchAllData);
 				break;
+			case "Control_F10":
+				status = this_fullFramesGfx.populateManhattan(whichSide, whatToProcess.split(",")[0],matchAllData,Integer.valueOf(whatToProcess.split(",")[1]));
+				break;
 			case "Shift_F3": //Fall of Wicket
 				status = this_lowerThirdGfx.populateFOW(whatToProcess, whichSide, matchAllData);
+				break;
+			case "Shift_F10": //MATCH SUMMARY
+				status = this_fullFramesGfx.populateWorms(whichSide, whatToProcess.split(",")[0], matchAllData, 
+					Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
 			case "Shift_F11": //MATCH SUMMARY
 				status = this_fullFramesGfx.populateMatchSummary(whichSide, whatToProcess.split(",")[0], matchAllData, 
@@ -148,6 +159,15 @@ public class Caption
 				break;
 			case "e": //Equation
 				status = this_lowerThirdGfx.populateL3rdEquation(whatToProcess, whichSide, matchAllData);	
+				break;
+			case "f": // Bug Batsman Score
+				status = this_bugsAndMiniGfx.populateBatScore(whatToProcess, matchAllData, whichSide);
+				break;
+			case "g": //Bug Bowler Score
+				status = this_bugsAndMiniGfx.populateBowlScore(whatToProcess, matchAllData, whichSide);
+				break;
+			case "k": //DataBase
+				status = this_bugsAndMiniGfx.bugsDB(whatToProcess,whichSide);
 				break;
 			case "m": //Match id
 				status = this_fullFramesGfx.populateFFMatchId(whichSide,whatToProcess.split(",")[0], matchAllData);
@@ -161,12 +181,18 @@ public class Caption
 			case "Control_d": case "Control_e":
 				status = this_fullFramesGfx.populatePlayerProfile(whichSide, whatToProcess, matchAllData, 0);
 				break;
+			case "Control_k": //Curr Partnership
+				status = this_bugsAndMiniGfx.bugsCurrPartnership(whatToProcess,matchAllData,whichSide);
+				break;
 			case "Control_m": //MATCH PROMO
 				status = this_fullFramesGfx.populateFFMatchPromo(whichSide, whatToProcess,matchAllData);
 				break;
 			case "Shift_K"://FF curr part
 				status = this_fullFramesGfx.populateCurrPartnership(whichSide, whatToProcess.split(",")[0], 
 					matchAllData, whichSide);
+				break;
+			case "Shift_O":
+				status = this_bugsAndMiniGfx.bugsDismissal(whatToProcess,matchAllData,whichSide);
 				break;
 			case "Alt_k"://Curr Part
 				status = this_lowerThirdGfx.populateL3rdCurrentPartnership(whatToProcess,whichSide,matchAllData);

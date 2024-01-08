@@ -1,4 +1,4 @@
-var session_match;
+var session_match,qt_btn;
 var selected_options = [];
 function processWaitingButtonSpinner(whatToProcess) 
 {
@@ -57,7 +57,39 @@ function processUserSelection(whichInput)
 		break;
 	case 'populate_btn':
 		processCricketProcedures("POPULATE-GRAPHICS", $('#which_keypress').val() + ',' + selected_options.toString());
-		document.getElementById("populate_btn").blur();
+		break;
+	case 'f4_graphic_btn': case 'f6_graphic_btn': case 'f7_graphic_btn': case 'f8_graphic_btn': case 'f9_graphic_btn': 
+	case 'f_graphic_btn': case 's_graphic_btn': case 'w_graphic_btn': case 'z_graphic_btn':
+		switch ($(whichInput).attr('name')){
+			case 'f4_graphic_btn':
+				qt_btn = 'F4_BTN';
+				break;
+			case 'f6_graphic_btn':
+				qt_btn = 'F6_BTN';
+				break;
+			case 'f7_graphic_btn':
+				qt_btn = 'F7_BTN';
+				break;
+			case 'f8_graphic_btn':
+				qt_btn = 'F8_BTN';
+				break;	
+			case 'f9_graphic_btn':
+				qt_btn = 'F9_BTN';
+				break;
+			case 'f_graphic_btn':
+				qt_btn = 'F_BTN';
+				break;
+			case 's_graphic_btn':
+				qt_btn = 'S_BTN';
+				break;
+			case 'w_graphic_btn':
+				qt_btn = 'W_BTN';
+				break;
+			case 'z_graphic_btn':
+				qt_btn = 'Z_BTN';
+				break;
+		}
+		processCricketProcedures("ANIMATE-QT", qt_btn + ",");
 		break;
 	}	
 }
@@ -127,10 +159,12 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'F12': case 'Alt_1': case 'Alt_2': 
 			case 'Control_F5': case 'Control_F8': case 'Control_F9': case 'F5': case 'F6' : case 'F7': 
 			case 'F8': case 'F9': case 'F11': case 's':
+			case 'Shift_O': case 'k': case 'g': case 'f':
 				addItemsToList(dataToProcess,null);
 				break;
-			case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'F4': case 'Control_a': 
+			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'F4': case 'Control_a': 
 			case 'Alt_k':  case 'Shift_F3': case 'd': case 'e': case 'Control_F7': case 'Shift_K':
+			case 'Control_k': case 'Control_F10':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 				break;
@@ -211,6 +245,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	switch(whatToProcess) {
 	case 'Control_m': case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11':
 	case 'Control_F5': case 'Control_F9': case 'Control_F8': case 'Control_d': case 'Control_e': case 's':
+	case 'Shift_O': case 'k': case 'g': case 'f':
 	case 'F12': case 'Alt_1': case 'Alt_2': //InfoBar Left-Middle
 	
 		$("#captions_div").hide();
@@ -558,7 +593,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			break;
 			
-		case 'F5'://BatThisMatch
+		case 'F5': case 'f': //BatThisMatch
 		
 			select = document.createElement('select');
 			select.id = 'selectBatsmanThisMatch';
@@ -581,7 +616,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			break;
 			
-		case 'F9'://BallThisMatch
+		case 'F9': case 'g': //BallThisMatch
 		
 			select = document.createElement('select');
 			select.id = 'selectBatamanThisMatch';
@@ -604,7 +639,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			break;
 			
-		case 'F6'://HowOut
+		case 'F6': case 'Shift_O': //HowOut
 			select = document.createElement('select');
 			select.id = 'selectHowoutPlayers';
 			select.name = select.id;
@@ -822,6 +857,24 @@ function addItemsToList(whatToProcess,dataToProcess)
 			row.insertCell(cellCount).appendChild(select);
 			setDropdownOptionToSelectOptionArray($(select),1);
 			cellCount = cellCount + 1
+			break;
+		case 'k':
+			select = document.createElement('select');
+			select.style = 'width:130px';
+			select.id = 'selectBugdb';
+			select.name = select.id;
+			
+			dataToProcess.forEach(function(bug,index,arr1){
+				option = document.createElement('option');
+				option.value = bug.bugId;
+				option.text = bug.prompt;
+				select.appendChild(option);
+			});
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			cellCount = cellCount + 1;
 			break;
 		}
 		option = document.createElement('input');

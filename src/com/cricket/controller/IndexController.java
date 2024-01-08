@@ -32,6 +32,7 @@ import com.cricket.captions.FullFramesGfx;
 import com.cricket.captions.LowerThirdGfx;
 import com.cricket.captions.Scene;
 import com.cricket.containers.Infobar;
+import com.cricket.model.Bugs;
 import com.cricket.model.Configuration;
 import com.cricket.model.EventFile;
 import com.cricket.model.Fixture;
@@ -74,6 +75,7 @@ public class IndexController
 	public static List<Tournament> past_tournament_stats = new ArrayList<Tournament>();
 	public static List<Statistics> session_statistics = new ArrayList<Statistics>();
 	public static List<NameSuper> session_name_super = new ArrayList<NameSuper>();
+	public static List<Bugs> session_bugs = new ArrayList<Bugs>();
 	public static List<Fixture> session_fixture = new ArrayList<Fixture>(); 
 	public static List<Team> session_team = new ArrayList<Team>(); 
 	public static List<Ground> session_ground = new ArrayList<Ground>();
@@ -146,8 +148,8 @@ public class IndexController
 
 			last_match_time_stamp = new File(CricketUtil.CRICKET_SERVER_DIRECTORY + CricketUtil.MATCHES_DIRECTORY 
 				+ selectedMatch).lastModified();
-			session_configuration = new Configuration(selectedMatch, select_broadcaster,qtIPAddress, 
-				qtPortNumber,"", "", vizIPAddress, vizPortNumber, vizScene, vizLanguage,
+			session_configuration = new Configuration(selectedMatch, select_broadcaster,select_second_broadcaster,
+				qtIPAddress,qtPortNumber,"", "", vizIPAddress, vizPortNumber, vizScene, vizLanguage,
 				vizSecondaryIPAddress, vizSecondaryPortNumber, vizSecondaryScene, vizSecondaryLanguage,
 				vizTertiaryIPAddress, vizTertiaryPortNumber,vizTertiaryScene, vizTertiaryLanguage); 
 			
@@ -191,7 +193,8 @@ public class IndexController
 			
 			model.addAttribute("session_match", session_match);
 			model.addAttribute("session_configuration", session_configuration);
-			
+			model.addAttribute("select_second_broadcaster", select_second_broadcaster);
+			model.addAttribute("select_broadcaster", select_broadcaster);
 			return "output";
 		}
 	}
@@ -201,6 +204,8 @@ public class IndexController
 		switch (whatToProcess) {
 		case "F10":
 		    return (List<T>) session_name_super;
+		case "k":
+			return (List<T>) session_bugs;
 		case "Control_m":
 			return (List<T>) CricketFunctions.processAllFixtures(cricketService);
 		}
@@ -231,7 +236,7 @@ public class IndexController
 			switch (config.getBroadcaster()) {
 			case Constants.ICC_U19_2023:
 				this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), 
-					cricket_matches, session_name_super, session_fixture, session_team, session_ground,
+					cricket_matches, session_name_super,session_bugs,session_fixture, session_team, session_ground,
 					new FullFramesGfx(),new LowerThirdGfx(), 1, "", "-");
 				break;
 			}
@@ -332,7 +337,7 @@ public class IndexController
 				return JSONObject.fromObject(this_caption).toString();
 			}
 			else if(whatToProcess.contains("ANIMATE-IN-GRAPHICS") || whatToProcess.contains("ANIMATE-OUT-GRAPHICS")
-				|| whatToProcess.contains("ANIMATE-OUT-INFOBAR")) {
+				|| whatToProcess.contains("ANIMATE-OUT-INFOBAR") || whatToProcess.contains("ANIMATE-QT")) {
 				
 				if(whatToProcess.contains("ANIMATE-IN-GRAPHICS")) {
 					switch(this_animation.getTypeOfGraphicsOnScreen(valueToProcess)){
@@ -359,6 +364,8 @@ public class IndexController
 					this_animation.AnimateOut(this_animation.whichGraphicOnScreen, print_writers, session_configuration);
 				} else if(whatToProcess.contains("ANIMATE-OUT-INFOBAR")) {
 					this_animation.AnimateOut("F12,", print_writers, session_configuration);
+				}else if(whatToProcess.contains("ANIMATE-QT")) {
+					this_animation.processQt(valueToProcess, print_writers);
 				}
 				
 			} else if(whatToProcess.contains("CLEAR-ALL") || whatToProcess.contains("CLEAR-ALL-WITH-INFOBAR")) {

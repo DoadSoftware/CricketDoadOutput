@@ -104,6 +104,31 @@
 			    <label class="col-sm-4 col-form-label text-left">2nd Broadcaster: ${session_configuration.secondaryBroadcaster.replace("_"," ")} </label>
 			    <label id="selected_inning" class="col-sm-4 col-form-label text-left">Selected Inning: </label>
 			    <label id="speed_lbl" class="col-sm-4 col-form-label text-left">Show Speed: YES</label>
+			    <c:if test="${(session_configuration.secondaryBroadcaster == 'quidich')}">
+					<div class="left" style = "margin-top: 5px; font-size: 21px;">
+				
+					<button style="background-color:#ffeb2b;color:#000000;margin:3px;" class="btn btn-sm" type="button"
+				  		name="f4_graphic_btn" id="f4_graphic_btn" onclick="processUserSelection(this)"> RESET</button>
+				  	<button style="background-color:#ffeb2b;color:#000000;margin:3px;" class="btn btn-sm" type="button"
+				  		name="f6_graphic_btn" id="f6_graphic_btn" onclick="processUserSelection(this)"> STAND-BY</button>
+				  	<button style="background-color:#ffeb2b;color:#000000;margin:3px;" class="btn btn-sm" type="button"
+				  		name="f7_graphic_btn" id="f7_graphic_btn" onclick="processUserSelection(this)"> ANIMATE IN</button>
+				  	<button style="background-color:#ffeb2b;color:#000000;margin:3px;" class="btn btn-sm" type="button"
+				  		name="f8_graphic_btn" id="f8_graphic_btn" onclick="processUserSelection(this)"> STADIUM ANIMATE OUT</button>	
+				  	<button style="background-color:#ffeb2b;color:#000000;margin:3px;" class="btn btn-sm" type="button"
+				  		name="f9_graphic_btn" id="f9_graphic_btn" onclick="processUserSelection(this)"> ANIMATE OUT</button>
+				  		
+				  	<button style="background-color:#ffeb2b;color:#000000;margin:3px;" class="btn btn-sm" type="button"
+				  		name="f_graphic_btn" id="f_graphic_btn" onclick="processUserSelection(this)"> SHOW PITCH DIMENSIONS</button>
+				  	<button style="background-color:#ffeb2b;color:#000000;margin:3px;" class="btn btn-sm" type="button"
+				  		name="s_graphic_btn" id="s_graphic_btn" onclick="processUserSelection(this)"> SHOW STADIUM</button>
+				  	<button style="background-color:#ffeb2b;color:#000000;margin:3px;" class="btn btn-sm" type="button"
+				  		name="w_graphic_btn" id="w_graphic_btn" onclick="processUserSelection(this)"> SHOW WIND</button>
+				  	<button style="background-color:#ffeb2b;color:#000000;margin:3px;" class="btn btn-sm" type="button"
+				  		name="z_graphic_btn" id="z_graphic_btn" onclick="processUserSelection(this)"> ZOOM PITCH</button>			
+				  			
+				</div>	
+				</c:if>	
 			  </div>
 			  </div>
 	       </div>

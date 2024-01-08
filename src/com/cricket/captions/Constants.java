@@ -6,6 +6,8 @@ public class Constants
 	public final static String FULL_FRAMER = "FULL_FRAMER";
 	public final static String LOWER_THIRD = "LOWER_THIRD";
 	public final static String INFO_BAR = "INFO_BAR";
+	public final static String BUGS = "BUGS";
+	public final static String QT = "QT";
 
 	public final static String SHRUNK_INFOBAR = "SHRUNK_INFOBAR";
 	public final static String TWO_LINER_INFOBAR = "TWO_LINER_INFOBAR";
