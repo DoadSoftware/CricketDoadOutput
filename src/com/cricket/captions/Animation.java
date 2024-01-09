@@ -75,7 +75,7 @@ public class Animation
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "F8": case "F10":
-				AnimateIn("Alt_f,", print_writers, config); // Shrink infobar
+				AnimateIn("Alt_g,", print_writers, config); // Shrink infobar
 				processAnimation(Constants.FRONT, print_writers, "anim_NameSupers", "START");
 				processAnimation(Constants.FRONT, print_writers, "HeaderDynamic", "START");
 				this.whichGraphicOnScreen = whatToProcess;
@@ -104,7 +104,7 @@ public class Animation
 					this.infobar.setInfobar_pushed(true);
 				}
 				break;
-			case "Alt_f":
+			case "Alt_f": case "Alt_g":
 				if(this.infobar.isInfobar_on_screen() == true) {
 					switch (this.infobar.getInfobar_status()) {
 					case Constants.SHRUNK_INFOBAR:
@@ -112,6 +112,16 @@ public class Animation
 						this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
 						break;
 					case Constants.TWO_LINER_INFOBAR:
+						switch (whatToProcess.split(",")[0]) {
+						case "Alt_f":
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*Infobar$Overall_Transformation*"
+								+ "ANIMATION*KEY*$Shrink_In*VALUE SET 120\0",print_writers);
+							break;
+						case "Alt_g":
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*Infobar$Overall_Transformation*"
+								+ "ANIMATION*KEY*$Shrink_In*VALUE SET 183\0",print_writers);
+							break;
+						}
 						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Small", "START");
 						this.infobar.setInfobar_status(Constants.SHRUNK_INFOBAR);
 						break;
@@ -240,7 +250,7 @@ public class Animation
 					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_Bottom_Left", "START");
 					break;
 				case "Alt_2":
-					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_Right_Info", "START");
+					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo", "START");
 					break;
 				}
 				break;
@@ -258,12 +268,12 @@ public class Animation
 				return CricketUtil.NO;
 			}	
 			
-			switch(whichGraphicOnScreen.split(",")[0]) {
+			switch(whatToProcess.split(",")[0]) {
 			case "Alt_1":
 				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_Bottom_Left", "SHOW 0.0");
 				break;
 			case "Alt_2":
-				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_Right_Info", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo", "SHOW 0.0");
 				break;
 			case "F5": case "F6": case "F7": case "F9": case "F11":
 			case "Control_F5": case "Control_F9": case "Control_a": case "Alt_k":

@@ -1,4 +1,4 @@
-var session_match,qt_btn;
+var session_match;
 var selected_options = [];
 function processWaitingButtonSpinner(whatToProcess) 
 {

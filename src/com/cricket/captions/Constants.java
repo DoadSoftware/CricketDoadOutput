@@ -9,6 +9,7 @@ public class Constants
 	public final static String BUGS = "BUGS";
 	public final static String QT = "QT";
 
+	public final static String FORCED = "FORCED";
 	public final static String SHRUNK_INFOBAR = "SHRUNK_INFOBAR";
 	public final static String TWO_LINER_INFOBAR = "TWO_LINER_INFOBAR";
 
