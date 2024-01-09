@@ -205,52 +205,6 @@ public class IndexController
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public <T> List<T> GetGraphicOption(String whatToProcess) {
-		switch (whatToProcess) {
-		case "F10":
-		    return (List<T>) session_name_super;
-		case "k":
-			return (List<T>) session_bugs;
-		case "Control_m":
-			return (List<T>) CricketFunctions.processAllFixtures(cricketService);
-		}
-		return null;
-	}
-	
-	public void GetVariousDBData(Configuration config) throws StreamReadException, DatabindException, 
-		IllegalAccessException, InvocationTargetException, JAXBException, IOException
-	{
-		switch (config.getBroadcaster()) {
-		case Constants.ICC_U19_2023:
-			
-			cricket_matches = CricketFunctions.getTournamentMatches(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + CricketUtil.MATCHES_DIRECTORY).listFiles(new FileFilter() {
-				@Override
-			    public boolean accept(File pathname) {
-			        String name = pathname.getName().toLowerCase();
-			        return name.endsWith(".json") && pathname.isFile();
-			    }
-			}), cricketService);
-			session_statistics = cricketService.getAllStats();
-			past_tournament_stats = CricketFunctions.extractTournamentStats(
-				"PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
-			session_name_super =  cricketService.getNameSupers();
-			session_fixture =  CricketFunctions.processAllFixtures(cricketService);
-			session_team =  cricketService.getTeams();
-			session_ground =  cricketService.getGrounds();
-
-			switch (config.getBroadcaster()) {
-			case Constants.ICC_U19_2023:
-				this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), 
-					cricket_matches, session_name_super,session_bugs,session_fixture, session_team, session_ground,
-					new FullFramesGfx(),new LowerThirdGfx(), 1, "", "-");
-				break;
-			}
-			
-			break;
-		}
-	}
-	
 	@RequestMapping(value = {"/processCricketProcedures"}, method={RequestMethod.GET,RequestMethod.POST})    
 	public @ResponseBody String processCricketProcedures(
 		@ModelAttribute("session_configuration") Configuration session_configuration,
@@ -297,16 +251,9 @@ public class IndexController
 				this_caption.this_infobarGfx.updateInfobar(print_writers, session_match);
 			}
 			return JSONObject.fromObject(session_match).toString();
-			
+		
 		default:
 
-//			System.out.println("BEFORE...");
-//			System.out.println("whatToProcess = " + whatToProcess);
-//			System.out.println("valueToProcess = " + valueToProcess);
-//			System.out.println("whichGraphicOnScreen = " + this_animation.whichGraphicOnScreen);
-//			System.out.println("whichSide = " + this_caption.whichSide);
-//			System.out.println("graphics type = " + this_animation.getTypeOfGraphicsOnScreen(valueToProcess));
-			
 			if(whatToProcess.contains("GRAPHICS-OPTIONS")) {
 				return JSONArray.fromObject(GetGraphicOption(valueToProcess)).toString();
 			} else if(whatToProcess.contains("POPULATE-GRAPHICS")) {
@@ -343,7 +290,7 @@ public class IndexController
 				return JSONObject.fromObject(this_caption).toString();
 			}
 			else if(whatToProcess.contains("ANIMATE-IN-GRAPHICS") || whatToProcess.contains("ANIMATE-OUT-GRAPHICS")
-				|| whatToProcess.contains("ANIMATE-OUT-INFOBAR") || whatToProcess.contains("ANIMATE-QT")) {
+				|| whatToProcess.contains("ANIMATE-OUT-INFOBAR") || whatToProcess.contains("QUIDICH-COMMANDS")) {
 				
 				if(whatToProcess.contains("ANIMATE-IN-GRAPHICS")) {
 					switch(this_animation.getTypeOfGraphicsOnScreen(valueToProcess)){
@@ -370,8 +317,8 @@ public class IndexController
 					this_animation.AnimateOut(this_animation.whichGraphicOnScreen, print_writers, session_configuration);
 				} else if(whatToProcess.contains("ANIMATE-OUT-INFOBAR")) {
 					this_animation.AnimateOut("F12,", print_writers, session_configuration);
-				}else if(whatToProcess.contains("ANIMATE-QT")) {
-					this_animation.processQt(valueToProcess, print_writers);
+				}else if(whatToProcess.contains("QUIDICH-COMMANDS")) {
+					this_animation.processQuidichCommands(valueToProcess, print_writers, session_configuration);
 				}
 				
 			} else if(whatToProcess.contains("CLEAR-ALL") || whatToProcess.contains("CLEAR-ALL-WITH-INFOBAR")) {
@@ -391,5 +338,51 @@ public class IndexController
 	@ModelAttribute("session_configuration")
 	public Configuration session_configuration(){
 		return new Configuration();
-	} 
+	}
+	@SuppressWarnings("unchecked")
+	public <T> List<T> GetGraphicOption(String whatToProcess) {
+		switch (whatToProcess) {
+		case "F10":
+		    return (List<T>) session_name_super;
+		case "k":
+			return (List<T>) session_bugs;
+		case "Control_m":
+			return (List<T>) CricketFunctions.processAllFixtures(cricketService);
+		}
+		return null;
+	}
+	
+	public void GetVariousDBData(Configuration config) throws StreamReadException, DatabindException, 
+		IllegalAccessException, InvocationTargetException, JAXBException, IOException
+	{
+		switch (config.getBroadcaster()) {
+		case Constants.ICC_U19_2023:
+			
+			cricket_matches = CricketFunctions.getTournamentMatches(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + CricketUtil.MATCHES_DIRECTORY).listFiles(new FileFilter() {
+				@Override
+			    public boolean accept(File pathname) {
+			        String name = pathname.getName().toLowerCase();
+			        return name.endsWith(".json") && pathname.isFile();
+			    }
+			}), cricketService);
+			session_statistics = cricketService.getAllStats();
+			past_tournament_stats = CricketFunctions.extractTournamentStats(
+				"PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
+			session_name_super =  cricketService.getNameSupers();
+			session_fixture =  CricketFunctions.processAllFixtures(cricketService);
+			session_team =  cricketService.getTeams();
+			session_ground =  cricketService.getGrounds();
+
+			switch (config.getBroadcaster()) {
+			case Constants.ICC_U19_2023:
+				this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), 
+					cricket_matches, session_name_super,session_bugs,session_fixture, session_team, session_ground,
+					new FullFramesGfx(),new LowerThirdGfx(), 1, "", "-");
+				break;
+			}
+			
+			break;
+		}
+	}
+	
 }

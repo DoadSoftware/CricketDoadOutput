@@ -13,14 +13,21 @@ function processWaitingButtonSpinner(whatToProcess)
 		break;
 	}
 }
+function onPageLoadEvent(whichPage){
+	switch(whichPage){
+	case 'OUTPUT':
+		document.getElementById('selected_inning').innerHTML = 
+			'Selected Inning: ' + document.getElementById('which_inning').value;
+		initialiseSelectedOptionsList();
+		break;
+	}
+}
 function initialiseSelectedOptionsList()
 {
 	selected_options = [];
 	for(var i = 1; i <= 4; i++) {
 	    selected_options.push('');
 	}
-	
-	document.getElementById('selected_inning').innerHTML = 'Selected Inning: ' + document.getElementById('which_inning').value;
 }
 function initialiseForm(whatToProcess,dataToProcess)
 {
@@ -57,41 +64,11 @@ function processUserSelection(whichInput)
 		document.getElementById('select_graphic_options_div').style.display = 'none';
 		$("#captions_div").show();
 		break;
+	case 'sendQuidichCommandsBtn':
+		processCricketProcedures("QUIDICH-COMMANDS", $('#selectQuidichGfxCommands option:selected').val());
+		break;
 	case 'populate_btn':
 		processCricketProcedures("POPULATE-GRAPHICS", $('#which_keypress').val() + ',' + selected_options.toString());
-		break;
-	case 'f4_graphic_btn': case 'f6_graphic_btn': case 'f7_graphic_btn': case 'f8_graphic_btn': case 'f9_graphic_btn': 
-	case 'f_graphic_btn': case 's_graphic_btn': case 'w_graphic_btn': case 'z_graphic_btn':
-		switch ($(whichInput).attr('name')){
-			case 'f4_graphic_btn':
-				qt_btn = 'F4_BTN';
-				break;
-			case 'f6_graphic_btn':
-				qt_btn = 'F6_BTN';
-				break;
-			case 'f7_graphic_btn':
-				qt_btn = 'F7_BTN';
-				break;
-			case 'f8_graphic_btn':
-				qt_btn = 'F8_BTN';
-				break;	
-			case 'f9_graphic_btn':
-				qt_btn = 'F9_BTN';
-				break;
-			case 'f_graphic_btn':
-				qt_btn = 'F_BTN';
-				break;
-			case 's_graphic_btn':
-				qt_btn = 'S_BTN';
-				break;
-			case 'w_graphic_btn':
-				qt_btn = 'W_BTN';
-				break;
-			case 'z_graphic_btn':
-				qt_btn = 'Z_BTN';
-				break;
-		}
-		processCricketProcedures("ANIMATE-QT", qt_btn + ",");
 		break;
 	}	
 }
@@ -112,6 +89,13 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 		case 'Alt_ ':
 			processCricketProcedures('CLEAR-ALL-WITH-INFOBAR');
 			break;
+		case 'Alt_=':
+			switch($('#selected_broadcaster').val()) {
+			case 'ICC-U19-2024':
+				addItemsToList('QUIDICH',data);
+				break;
+			}
+			break;
 		case ' ':
 			processCricketProcedures('CLEAR-ALL');
 			break;
@@ -119,8 +103,8 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			if(session_match.setup.maxOvers > 0){
 				switch (dataToProcess) {
 				case '3': case '4': // Key 1 to 4
-					document.body.focus();
-					keys = [];
+/*					document.body.focus();
+					keys = [];*/
 					alert("3rd and 4th inning NOT available in a limited over match");
 					return false;
 				}				
@@ -131,16 +115,17 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			
 		case '-':
 			
-			document.body.focus();
-			keys = [];
+/*			document.body.focus();
+			keys = [];*/
 			if(confirm('It will Also Delete Your Preview from Directory...\r\n \r\nAre You Sure To Animate Out? ') == true){
 				processCricketProcedures('ANIMATE-OUT-GRAPHICS');
 			}
 			break;
+			
 		case 'Alt_-':
 			
-			document.body.focus();
-			keys = [];
+/*			document.body.focus();
+			keys = [];*/
 			if(confirm('Animate Out Infobar? ') == true){
 				processCricketProcedures('ANIMATE-OUT-INFOBAR');
 			}
@@ -150,8 +135,8 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			
 			switch($('#which_inning').val()) {
 			case 1: case 2: case 3: case 4:  
-				document.body.focus();
-				keys = [];
+/*				document.body.focus();
+				keys = [];*/
 				alert('Selected inning must be between 1 to 4 [found ' 
 					+ document.getElementById('which_inning').value + ']');
 				return false;
@@ -182,6 +167,9 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 {
 	var valueToProcess = dataToProcess;
 	switch(whatToProcess) {
+	case 'QUIDICH-COMMANDS':
+		valueToProcess = dataToProcess;
+		break;
 	case 'GET-CONFIG-DATA':
 		valueToProcess = $('#select_configuration_file option:selected').val();
 		break;
@@ -213,10 +201,11 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 				}
 				break;
 			default:
-				if(whatToProcess == 'POPULATE-GRAPHICS') {
+				switch(whatToProcess) {
+				case 'POPULATE-GRAPHICS':
 					if(data.status == 'OK') {
-						document.body.focus();
-						keys = [];
+/*						document.body.focus();
+						keys = [];*/
 						if(confirm('Animate In?') == true){
 							processCricketProcedures(whatToProcess.replace('POPULATE-', 'ANIMATE-IN-'),dataToProcess);
 							$("#select_graphic_options_div").empty();
@@ -226,8 +215,10 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 					} else {
 						alert(data.status);
 					}
-				}else if(whatToProcess == 'GRAPHICS-OPTIONS'){
+					break;
+				case 'GRAPHICS-OPTIONS':
 					addItemsToList(dataToProcess,data);
+					break;
 				}
 				break;
 			}
@@ -245,6 +236,94 @@ function addItemsToList(whatToProcess,dataToProcess)
 	var cellCount = 0;
 	
 	switch(whatToProcess) {
+	case 'QUIDICH':
+
+		header_text = document.createElement('h6');
+		header_text.innerHTML = 'Select Quidich Graphics Options';
+		document.getElementById('select_graphic_options_div').appendChild(header_text);
+		
+		table = document.createElement('table');
+		table.setAttribute('class', 'table table-bordered');
+				
+		tbody = document.createElement('tbody');
+
+		table.appendChild(tbody);
+		document.getElementById('select_graphic_options_div').appendChild(table);
+		
+		row = tbody.insertRow(tbody.rows.length);
+		
+		select = document.createElement('select');
+		select.id = 'selectQuidichGfxCommands';
+		select.name = select.id;
+		
+		for(var i = 1; i <= 9; i++){
+			option = document.createElement('option');
+			switch(i){
+			case 1:
+				option.value = 'F4';
+				option.text = 'Reset';
+				break;
+			case 2:
+				option.value = 'F6';
+				option.text = 'Stand By';
+				break;
+			case 3:
+				option.value = 'F7';
+				option.text = 'Animate In';
+				break;
+			case 4:
+				option.value = 'F8';
+				option.text = 'Stadium Animate Out';
+				break;
+			case 5:
+				option.value = 'F9';
+				option.text = 'Animate Out';
+				break;
+			case 6:
+				option.value = 'F';
+				option.text = 'Show Pitch Dimension';
+				break;
+			case 7:
+				option.value = 'S';
+				option.text = 'Show Stadium';
+				break;
+			case 8:
+				option.value = 'W';
+				option.text = 'Show Wind';
+				break;
+			case 9:
+				option.value = 'Z';
+				option.text = 'Zoom Pitch';
+				break;
+			}
+			select.appendChild(option);
+		}		
+		row.insertCell(0).appendChild(select);
+
+		option = document.createElement('input');
+		option.type = 'button';
+		option.name = 'sendQuidichCommandsBtn';
+		option.value = 'Send Quidich Commands';
+	    option.id = option.name;
+	    option.setAttribute('onclick',"processUserSelection(this)");
+	    
+	    div = document.createElement('div');
+	    div.append(option);
+
+		option = document.createElement('input');
+		option.type = 'button';
+		option.name = 'cancel_graphics_btn';
+		option.id = option.name;
+		option.value = 'Cancel';
+		option.setAttribute('onclick','processUserSelection(this)');
+
+	    div.append(option);
+	    
+	    row.insertCell(1).appendChild(div);
+		
+		document.getElementById('select_graphic_options_div').style.display = '';
+		break;
+		
 	case 'Control_m': case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11':
 	case 'Control_F5': case 'Control_F9': case 'Control_F8': case 'Control_d': case 'Control_e': case 's':
 	case 'Shift_O': case 'k': case 'g': case 'f':

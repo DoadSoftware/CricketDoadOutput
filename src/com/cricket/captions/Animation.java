@@ -354,39 +354,15 @@ public class Animation
 				+ animationDirectorName + " " + animationCommand +" \0", print_writers);
 		} else {
 			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*STAGE*DIRECTOR*"
-					+ animationDirectorName + " " + animationCommand +" \0", print_writers);
+				+ animationDirectorName + " " + animationCommand +" \0", print_writers);
 		}
 	}
 	
-	public void processQt(String whatToProcess, List<PrintWriter> print_writers)
+	public void processQuidichCommands(String whatToProcess, List<PrintWriter> print_writers, Configuration config)
 	{
-		switch(whatToProcess.split(",")[0]) {
-		case "F4_BTN":
-			print_writers.get(0).printf("%s","F4");
-			break;
-		case "F6_BTN":
-			print_writers.get(0).printf("%s","F6");
-			break;
-		case "F7_BTN":
-			print_writers.get(0).printf("%s","F7");
-			break;
-		case "F8_BTN":
-			print_writers.get(0).printf("%s","F8");
-			break;	
-		case "F9_BTN":
-			print_writers.get(0).printf("%s","F9");
-			break;
-		case "F_BTN":
-			print_writers.get(0).printf("%s","F");
-			break;
-		case "S_BTN":
-			print_writers.get(0).printf("%s","S");
-			break;
-		case "W_BTN":
-			print_writers.get(0).printf("%s","W");
-			break;
-		case "Z_BTN":
-			print_writers.get(0).printf("%s","Z");
+		switch (config.getBroadcaster().toUpperCase()) {
+		case Constants.ICC_U19_2023:
+			print_writers.get(0).printf("%s",whatToProcess);
 			break;
 		}
 	}
