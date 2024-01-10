@@ -253,7 +253,6 @@ public class IndexController
 			return JSONObject.fromObject(session_match).toString();
 		
 		default:
-
 			if(whatToProcess.contains("GRAPHICS-OPTIONS")) {
 				return JSONArray.fromObject(GetGraphicOption(valueToProcess)).toString();
 			} else if(whatToProcess.contains("POPULATE-GRAPHICS")) {
@@ -324,14 +323,6 @@ public class IndexController
 			} else if(whatToProcess.contains("CLEAR-ALL") || whatToProcess.contains("CLEAR-ALL-WITH-INFOBAR")) {
 				this_animation.ResetAnimation(whatToProcess, print_writers, session_configuration);
 			}
-			
-//			System.out.println("AFTER...");
-//			System.out.println("whatToProcess = " + whatToProcess);
-//			System.out.println("valueToProcess = " + valueToProcess);
-//			System.out.println("whichGraphicOnScreen = " + this_animation.whichGraphicOnScreen);
-//			System.out.println("whichSide = " + this_caption.whichSide);
-//			System.out.println("graphics type = " + this_animation.getTypeOfGraphicsOnScreen(valueToProcess));
-			
 			return JSONObject.fromObject(session_match).toString();
 		}
 	}

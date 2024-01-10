@@ -14,6 +14,7 @@ public class Infobar {
 	private int player_id;
 	
 	private String infobar_status;
+	private String BatsmanAndBowlOrSponsor;
 	
 	private String Left_bottom;
 	private String Last_left_bottom;
@@ -111,6 +112,12 @@ public class Infobar {
 	}
 	public void setLast_middle_section(String last_middle_section) {
 		Last_middle_section = last_middle_section;
+	}
+	public String getBatsmanAndBowlOrSponsor() {
+		return BatsmanAndBowlOrSponsor;
+	}
+	public void setBatsmanAndBowlOrSponsor(String batsmanAndBowlOrSponsor) {
+		BatsmanAndBowlOrSponsor = batsmanAndBowlOrSponsor;
 	}
 	
 }

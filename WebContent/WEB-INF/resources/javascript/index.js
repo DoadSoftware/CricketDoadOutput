@@ -91,7 +91,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			break;
 		case 'Alt_=':
 			switch($('#selected_broadcaster').val()) {
-			case 'ICC-U19-2024':
+			case 'ICC-U19-2023':
 				addItemsToList('QUIDICH',data);
 				break;
 			}
@@ -143,14 +143,14 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			}
 			
 			switch(dataToProcess) {
-			case 'F12': case 'Alt_1': case 'Alt_2': 
-			case 'Control_F5': case 'Control_F8': case 'Control_F9': case 'F5': case 'F6' : case 'F7': 
+			case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': 
+			case 'Control_F5': case 'Control_F8': case 'Control_F9': case 'F4': case 'F5': case 'F6' : case 'F7': 
 			case 'F8': case 'F9': case 'F11': case 's': case 'q': case 'v': case 'b':
-			case 'Shift_O': case 'k': case 'g': case 'f': case 'p':
+			case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'p':
 				addItemsToList(dataToProcess,null);
 				break;
-			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'F4': case 'Control_a': 
-			case 'Alt_k':  case 'Shift_F3': case 'd': case 'e': case 'Control_F7': case 'Shift_K':
+			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2':  case 'Control_a': 
+			case 'Alt_k':  case 'Shift_F3': case 'd': case 'e': case 'Control_F7':
 			case 'Control_k': case 'Control_F10': case 'h': case 'Control_c':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
@@ -229,6 +229,11 @@ function setDropdownOptionToSelectOptionArray(whichInput, whichIndex)
 {
 	selected_options[0] = document.getElementById('which_inning').value;
 	selected_options[whichIndex+1] = $('#' + $(whichInput).attr('id') + ' option:selected').val();
+}
+function setTextBoxOptionToSelectOptionArray(whichIndex)
+{
+	selected_options[0] = document.getElementById('which_inning').value;
+	selected_options[whichIndex+1] = $('#selectFreeText').val();
 }
 function addItemsToList(whatToProcess,dataToProcess)
 {
@@ -324,10 +329,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 		document.getElementById('select_graphic_options_div').style.display = '';
 		break;
 		
-	case 'Control_m': case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11':
+	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11':
 	case 'Control_F5': case 'Control_F9': case 'Control_F8': case 'Control_d': case 'Control_e': case 's':
-	case 'Shift_O': case 'k': case 'g': case 'f': case 'v': case 'b': case 'p': case 'q':
-	case 'F12': case 'Alt_1': case 'Alt_2': //InfoBar Left-Middle
+	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'v': case 'b': case 'p': case 'q':
+	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7':
+	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 	
 		$("#captions_div").hide();
 		$('#select_graphic_options_div').empty();
@@ -459,7 +465,12 @@ function addItemsToList(whatToProcess,dataToProcess)
 
 			option = document.createElement('option');
 			option.value = 'BATSMAN';
-			option.text = 'Batsman';
+			option.text = 'Batsman/Bowler';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'BATSMAN_TOURNAMENT';
+			option.text = 'Batsman/Tournament';
 			select.appendChild(option);
 			
 			option = document.createElement('option');
@@ -485,6 +496,16 @@ function addItemsToList(whatToProcess,dataToProcess)
 			option = document.createElement('option');
 			option.value = 'LAST_WICKET';
 			option.text = 'Last Wicket';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'BALLS_SINCE_LAST_BOUNDARY';
+			option.text = 'Balls Since Last Boundary';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'ARAMCO_POTD';
+			option.text = 'Aramco POTD';
 			select.appendChild(option);
 
 			session_match.match.inning.forEach(function(inn,index,arr){
@@ -522,6 +543,95 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			
 			break;
+		
+		case 'Alt_5':
+			select = document.createElement('input');
+			select.type = "text";
+			select.id = 'selectFreeText';
+			select.value = '10';
+			
+			row.insertCell(cellCount).appendChild(select);
+			setTextBoxOptionToSelectOptionArray(0);
+			cellCount = cellCount + 1;
+			break;
+			
+		case 'Alt_6':
+			select = document.createElement('select');
+			select.id = 'selectWhichSponsor';
+			select.name = select.id;
+			
+			option = document.createElement('option');
+			option.value = '1';
+			option.text = 'DP World';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = '2';
+			option.text = 'IndusInd Bank';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = '3';
+			option.text = 'Emirates';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = '4';
+			option.text = 'Coco Cola';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = '5';
+			option.text = 'Aramco';
+			select.appendChild(option);
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			cellCount = cellCount + 1
+			break;
+		case 'Alt_7':
+			select = document.createElement('select');
+			select.id = 'selectRightBottom';
+			select.name = select.id;
+			
+			option = document.createElement('option');
+			option.value = 'BOWLING_END';
+			option.text = 'BOWLING END';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'OVER';
+			option.text = 'THIS OVER';
+			select.appendChild(option);
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			cellCount = cellCount + 1
+			break;
+			
+		case 'Shift_K': case 'F4':
+			select = document.createElement('select');
+			select.id = 'selectSponsor';
+			select.name = select.id;
+			
+			option = document.createElement('option');
+			option.value = 'cocaCola';
+			option.text = 'Coca Cola';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'noSponsor';
+			option.text = 'withoutSponsor';
+			select.appendChild(option);
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			cellCount = cellCount + 1
+			break;
+
 		case 'p':
 			select = document.createElement('select');
 			select.id = 'selectPowerplay';
@@ -765,7 +875,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
 			break;
-		case 'F7': case 'Control_d': //Lt Bat Profile 
+		case 'F7': case 'Control_d': case 'Alt_3': //Lt Bat Profile 
 			select = document.createElement('select');
 			select.id = 'selectPlayerName';
 			select.name = select.id;
@@ -807,13 +917,24 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
 			
-			select = document.createElement('select');
-			select.id = 'selectProfile';
-			select.name = select.id;
+			option = document.createElement('option');
+			option.value = 'U19ODI';
+			option.text = 'U19 ODI';
+			select.appendChild(option);
 			
 			option = document.createElement('option');
-			option.value = 'DT20';
-			option.text = 'T20';
+			option.value = 'LIST A';
+			option.text = 'LIST A';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'ACCU19';
+			option.text = 'ACC U19';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'SA TRI-NATION 2023-24';
+			option.text = 'SA TRI-NATION';
 			select.appendChild(option);
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
@@ -883,7 +1004,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			option.text = 'WicketKeeper';
 			select.appendChild(option);
 			
-			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
 			row.insertCell(cellCount).appendChild(select);
 			setDropdownOptionToSelectOptionArray($(select),1);
 			cellCount = cellCount + 1;
@@ -907,7 +1028,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			cellCount = cellCount + 1;
 			break;
-		case 'F11': case 'Control_e': //Lt Ball Profile
+		case 'F11': case 'Control_e': case 'Alt_4': //Lt Ball Profile
 			select = document.createElement('select');
 			select.id = 'selectPlayerName';
 			select.name = select.id;
@@ -954,8 +1075,23 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select.name = select.id;
 			
 			option = document.createElement('option');
-			option.value = 'DT20';
-			option.text = 'T20';
+			option.value = 'U19ODI';
+			option.text = 'U19 ODI';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'LIST A';
+			option.text = 'LIST A';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'ACCU19';
+			option.text = 'ACC U19';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'SA TRI-NATION 2023-24';
+			option.text = 'SA TRI-NATION';
 			select.appendChild(option);
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");

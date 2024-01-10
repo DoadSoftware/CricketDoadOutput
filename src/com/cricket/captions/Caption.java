@@ -77,7 +77,7 @@ public class Caption
 		this.this_lowerThirdGfx = new LowerThirdGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
 				nameSupers, fixTures, Teams, Grounds);
 		this.whichSide = whichSide;
-		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers);
+		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers, statistics, statsTypes, tournament_matches);
 		this.this_bugsAndMiniGfx = new BugsAndMiniGfx(print_writers, config, tournament_matches, bugs, Teams, Grounds);
 		this.status = "";
 	}
@@ -103,6 +103,7 @@ public class Caption
 					Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
 			case "F4": //All Partnership
+				this_fullFramesGfx.whichSponsor = whatToProcess.split(",")[2];
 				status = this_fullFramesGfx.populatePartnership(whichSide, whatToProcess.split(",")[0], matchAllData, 
 					Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
@@ -206,6 +207,7 @@ public class Caption
 				status = this_fullFramesGfx.populateFFMatchPromo(whichSide, whatToProcess,matchAllData);
 				break;
 			case "Shift_K"://FF curr part
+				this_fullFramesGfx.whichSponsor = whatToProcess.split(",")[2];
 				status = this_fullFramesGfx.populateCurrPartnership(whichSide, whatToProcess.split(",")[0], 
 					matchAllData, whichSide);
 				break;
@@ -221,8 +223,35 @@ public class Caption
 				break;
 			case "Alt_2": // Infobar Middle
 				this_infobarGfx.infobar.setMiddle_section(whatToProcess.split(",")[2]);
+				status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers,matchAllData, whichSide);
+				break;
+			case "Alt_3": 
+				this_infobarGfx.infobar.setMiddle_section("BAT_PROFILE_CAREER");
+				this_infobarGfx.FirstPlayerId = Integer.valueOf(whatToProcess.split(",")[2]);
+				this_infobarGfx.WhichProfile = whatToProcess.split(",")[3];
 				status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
 				break;
+			case "Alt_4":
+				this_infobarGfx.infobar.setMiddle_section("BALL_PROFILE_CAREER");
+				this_infobarGfx.FirstPlayerId = Integer.valueOf(whatToProcess.split(",")[2]);
+				this_infobarGfx.WhichProfile = whatToProcess.split(",")[3];
+				status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
+				break;
+			case "Alt_5":
+				this_infobarGfx.infobar.setMiddle_section("LAST_X_BALLS");
+				this_infobarGfx.lastXballs = Integer.valueOf(whatToProcess.split(",")[2]);
+				status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
+				break;
+			case "Alt_6":
+				this_infobarGfx.infobar.setMiddle_section("BATSMAN_SPONSOR");
+				this_infobarGfx.sponsor_omo = Integer.valueOf(whatToProcess.split(",")[2]);
+				status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
+				break;
+			case "Alt_7":
+				this_infobarGfx.infobar.setRight_bottom(whatToProcess.split(",")[2]);
+				status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, 1, whichSide);
+				break;
+				
 			}
 		}
 		status = Constants.OK;
