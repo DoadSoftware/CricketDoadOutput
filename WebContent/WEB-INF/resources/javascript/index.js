@@ -155,6 +155,11 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 				break;
+			//All key presses which doesn't require graphics population will come here
+			case 'Alt_f': case 'Alt_g': case 'ArrowDown': case 'ArrowUp':
+				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
+				processCricketProcedures("ANIMATE-IN-GRAPHICS", dataToProcess);
+				break;
 			default:
 				processCricketProcedures("GRAPHICS-OPTIONS", dataToProcess);
 				break;
