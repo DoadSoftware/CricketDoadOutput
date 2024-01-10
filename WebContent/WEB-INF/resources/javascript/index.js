@@ -145,13 +145,13 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			switch(dataToProcess) {
 			case 'F12': case 'Alt_1': case 'Alt_2': 
 			case 'Control_F5': case 'Control_F8': case 'Control_F9': case 'F5': case 'F6' : case 'F7': 
-			case 'F8': case 'F9': case 'F11': case 's':
-			case 'Shift_O': case 'k': case 'g': case 'f':
+			case 'F8': case 'F9': case 'F11': case 's': case 'q': case 'v': case 'b':
+			case 'Shift_O': case 'k': case 'g': case 'f': case 'p':
 				addItemsToList(dataToProcess,null);
 				break;
 			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'F4': case 'Control_a': 
 			case 'Alt_k':  case 'Shift_F3': case 'd': case 'e': case 'Control_F7': case 'Shift_K':
-			case 'Control_k': case 'Control_F10':
+			case 'Control_k': case 'Control_F10': case 'h': case 'Control_c':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 				break;
@@ -326,7 +326,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 		
 	case 'Control_m': case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11':
 	case 'Control_F5': case 'Control_F9': case 'Control_F8': case 'Control_d': case 'Control_e': case 's':
-	case 'Shift_O': case 'k': case 'g': case 'f':
+	case 'Shift_O': case 'k': case 'g': case 'f': case 'v': case 'b': case 'p': case 'q':
 	case 'F12': case 'Alt_1': case 'Alt_2': //InfoBar Left-Middle
 	
 		$("#captions_div").hide();
@@ -522,7 +522,31 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			
 			break;
+		case 'p':
+			select = document.createElement('select');
+			select.id = 'selectPowerplay';
+			select.name = select.id;
 			
+			option = document.createElement('option');
+			option.value = 'p1';
+			option.text = 'Powerplay 1';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'p2';
+			option.text = 'Powerplay 2';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'p3';
+			option.text = 'Powerplay 3';
+			select.appendChild(option);
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			cellCount = cellCount + 1
+			break;	
 		case 's':
 			
 			select = document.createElement('select');
@@ -611,7 +635,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			break;
 			
-		case 'Control+F9': //BowlerStyle
+		case 'Control_F9': //BowlerStyle
 		
 			select = document.createElement('select');
 			select.id = 'selectPlayerName';
@@ -674,7 +698,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			break;
 			
-		case 'F5': case 'f': //BatThisMatch
+		case 'F5': case 'f': case 'v': case 'q'://BatThisMatch
 		
 			select = document.createElement('select');
 			select.id = 'selectBatsmanThisMatch';
@@ -697,7 +721,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			break;
 			
-		case 'F9': case 'g': //BallThisMatch
+		case 'F9': case 'g': case 'b': //BallThisMatch
 		
 			select = document.createElement('select');
 			select.id = 'selectBatamanThisMatch';

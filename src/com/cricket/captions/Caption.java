@@ -175,9 +175,27 @@ public class Caption
 			case "s": //30-50
 				status = this_lowerThirdGfx.populate30_50Split(whatToProcess, whichSide, matchAllData);
 				break;
+			case "q"://Boundaries
+				status = this_lowerThirdGfx.populateBoundaries(whatToProcess,whichSide,matchAllData);
+				break;
+			case "v"://Bat 012
+				status = this_lowerThirdGfx.populateBatSummary(whatToProcess,whichSide,matchAllData);
+				break;
+			case "b"://Ball 012
+				status = this_lowerThirdGfx.populateBallSummary(whatToProcess,whichSide,matchAllData);
+				break;
+			case "h"://Teams 012
+				status = this_lowerThirdGfx.populateTeamSummary(whatToProcess,whichSide,matchAllData);
+				break;
+			case "p"://powerplay
+				status = this_lowerThirdGfx.populatePowerplay(whatToProcess,whichSide,matchAllData);
+				break;	
 			case "Control_a"://Projected
 				status = this_lowerThirdGfx.populateL3rdProjected(whatToProcess,whichSide,matchAllData);
 				break;
+			case "Control_c"://Comparison
+				status = this_lowerThirdGfx.populateL3rdComparison(whatToProcess,whichSide,matchAllData);
+				break;	
 			case "Control_d": case "Control_e":
 				status = this_fullFramesGfx.populatePlayerProfile(whichSide, whatToProcess, matchAllData, 0);
 				break;
