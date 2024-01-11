@@ -123,6 +123,7 @@ public class IndexController
 			@RequestParam(value = "vizPortNumber", required = false, defaultValue = "") int vizPortNumber,
 			@RequestParam(value = "vizSceneName", required = false, defaultValue = "") String vizScene,
 			@RequestParam(value = "vizLanguage", required = false, defaultValue = "") String vizLanguage,
+			@RequestParam(value = "primaryVariousOptions", required = false, defaultValue = "") String primaryVariousOptions,
 			@RequestParam(value = "vizSecondaryIPAddress", required = false, defaultValue = "") String vizSecondaryIPAddress,
 			@RequestParam(value = "vizSecondaryPortNumber", required = false, defaultValue = "") int vizSecondaryPortNumber,
 			@RequestParam(value = "vizSecondaryScene", required = false, defaultValue = "") String vizSecondaryScene,
@@ -148,10 +149,9 @@ public class IndexController
 
 			last_match_time_stamp = new File(CricketUtil.CRICKET_SERVER_DIRECTORY + CricketUtil.MATCHES_DIRECTORY 
 				+ selectedMatch).lastModified();
-			session_configuration = new Configuration(selectedMatch, select_broadcaster,select_second_broadcaster,
-				qtIPAddress,qtPortNumber,"", "", vizIPAddress, vizPortNumber, vizScene, vizLanguage,
-				vizSecondaryIPAddress, vizSecondaryPortNumber, vizSecondaryScene, vizSecondaryLanguage,
-				vizTertiaryIPAddress, vizTertiaryPortNumber,vizTertiaryScene, vizTertiaryLanguage); 
+			
+			session_configuration = new Configuration(selectedMatch, select_broadcaster, select_second_broadcaster, 
+				vizIPAddress, vizPortNumber, vizLanguage, qtIPAddress, qtPortNumber, primaryVariousOptions);
 			
 			JAXBContext.newInstance(Configuration.class).createMarshaller().marshal(session_configuration, 
 					new File(CricketUtil.CRICKET_SERVER_DIRECTORY + CricketUtil.CONFIGURATIONS_DIRECTORY + configuration_file_name));
@@ -163,7 +163,9 @@ public class IndexController
 			
 			switch (select_broadcaster) {
 			case Constants.ICC_U19_2023:
-				this_scene.LoadScene("FULL-FRAMERS", print_writers, session_configuration);
+				if(session_configuration.getPrimaryVariousOptions().contains(Constants.FULL_FRAMER)) {
+					this_scene.LoadScene("FULL-FRAMERS", print_writers, session_configuration);
+				}
 				this_scene.LoadScene("OVERLAYS", print_writers, session_configuration);
 				break;
 			}
@@ -265,6 +267,15 @@ public class IndexController
 					}
 					break;
 				default:
+					switch (session_configuration.getBroadcaster()) {
+					case Constants.ICC_U19_2023:
+						if(!session_configuration.getPrimaryVariousOptions().contains(Constants.FULL_FRAMER)
+							&& this_animation.getTypeOfGraphicsOnScreen(valueToProcess).contains(Constants.FULL_FRAMER)) {
+							this_caption.setStatus("Error: Full framers captions NOT selected on start-up");
+							return JSONObject.fromObject(this_caption).toString();
+						}
+						break;
+					}
 					if(this_animation.whichGraphicOnScreen.isEmpty()) {
 						this_caption.whichSide = 1;
 					} else {

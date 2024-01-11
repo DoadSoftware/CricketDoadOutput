@@ -72,8 +72,8 @@
 			  <div class="form-group row row-bottom-margin ml-2" style="margin-bottom:5px;">
 			    <label for="select_second_broadcaster" class="col-sm-4 col-form-label text-left">Select 2nd Broadcaster </label>
 			    <div class="col-sm-6 col-md-6">
-			      <select id="select_second_broadcaster" name="select_second_broadcaster" class="browser-default custom-select custom-select-sm"
-			      		onchange="processUserSelection(this)">
+			      <select id="select_second_broadcaster" name="select_second_broadcaster" 
+			      		class="browser-default custom-select custom-select-sm" onchange="processUserSelection(this)">
 			      		<option value="quidich">Quidich</option>
 			      </select>
 			    </div>
@@ -105,9 +105,12 @@
 		             	class="form-control form-control-sm floatlabel"></input>
 			      </td>
 			      <td>
-				    <label for="vizSceneName" class="col-sm-4 col-form-label text-left">1st Scene</label>				    
-		             <input type="text" id="vizSceneName" name="vizSceneName" value="${session_configuration.primaryScene}"
-		             	class="form-control form-control-sm floatlabel"></input>
+				    <label for="primaryVariousOptions" class="col-sm-4 col-form-label text-left">Options</label>			    
+				      <select id="primaryVariousOptions" name="primaryVariousOptions" 
+				      		class="browser-default custom-select custom-select-sm">
+				          <option value="FULL_FRAMER_OVERLAYS">FFs & Overlays both</option>
+				          <option value="OVERLAYS">Overlays Only</option>
+				      </select>
 			      </td>
 			      <td>
 				    <label for="vizLanguage" class="col-sm-4 col-form-label text-left">1st Language</label>			    
@@ -166,7 +169,7 @@
 			      <td>
 				    <label for="vizTertiaryLanguage" class="col-sm-4 col-form-label text-left">3rd Language</label>				    
 				      <select id="vizTertiaryLanguage" name="vizTertiaryLanguage" 
-				      class="browser-default custom-select custom-select-sm">
+				      		class="browser-default custom-select custom-select-sm">
 				          <option value="english">English</option>
 				          <option value="hindi">Hindi</option>
 				          <option value="telugu">Telugu</option>

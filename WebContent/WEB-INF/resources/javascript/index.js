@@ -42,6 +42,7 @@ function initialiseForm(whatToProcess,dataToProcess)
 		document.getElementById('qtPortNumber').value = dataToProcess.qtPortNumber;
 		document.getElementById('vizIPAddress').value = dataToProcess.primaryIpAddress;
 		document.getElementById('vizPortNumber').value = dataToProcess.primaryPortNumber;
+		document.getElementById('primaryVariousOptions').value = dataToProcess.primaryVariousOptions;
 		document.getElementById('vizSecondaryIPAddress').value = dataToProcess.secondaryIpAddress;
 		document.getElementById('vizSecondaryPortNumber').value = dataToProcess.secondaryPortNumber;
 		document.getElementById('vizTertiaryIPAddress').value = dataToProcess.tertiaryIpAddress;
@@ -66,7 +67,6 @@ function processUserSelection(whichInput)
 		break;
 	case 'sendQuidichCommandsBtn':
 		processCricketProcedures("QUIDICH-COMMANDS", $('#selectQuidichGfxCommands option:selected').val());
-		
 		$("#select_graphic_options_div").empty();
 		document.getElementById('select_graphic_options_div').style.display = 'none';
 		$("#captions_div").show();

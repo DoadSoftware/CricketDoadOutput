@@ -4,6 +4,7 @@ public class Constants
 {
 	public final static String OK = "OK";
 	public final static String FULL_FRAMER = "FULL_FRAMER";
+	public final static String OVERLAYS = "OVERLAYS";
 	public final static String LOWER_THIRD = "LOWER_THIRD";
 	public final static String INFO_BAR = "INFO_BAR";
 	public final static String BUGS = "BUGS";
