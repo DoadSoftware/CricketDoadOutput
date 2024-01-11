@@ -817,7 +817,7 @@ public class LowerThirdGfx
 		
 		if(whatToProcess.split(",")[0].equalsIgnoreCase("F7")) {
 			lowerThird = new LowerThird("", player.getFirstname(), player.getSurname(),statsType.getStats_full_name(), "", "", 2,"",team.getTeamName4(),
-					new String[]{"MATCHES", "RUNS", "AVERAGE", "FIFTIES", "HUNDREDS", "BEST", "STRKE RATE"},new String[]{String.valueOf(stat.getMatches()), String.format("%,d\n", stat.getRuns()),
+					new String[]{"MATCHES", "RUNS", "AVERAGE", "FIFTIES", "HUNDREDS", "BEST", "STRIKE RATE"},new String[]{String.valueOf(stat.getMatches()), String.format("%,d\n", stat.getRuns()),
 					CricketFunctions.getAverage(stat.getMatches(), stat.getNot_out(), stat.getRuns(), 1, "-") ,String.valueOf(stat.getFifties()), 
 					String.valueOf(stat.getHundreds()), stat.getBest_score(),CricketFunctions.generateStrikeRate(stat.getRuns(), 
 							stat.getBalls_faced(), 2)},null,null,new String[] {"-503.0","-335.0","-177.0","-7.0","166.0","337.0","510.0"});
@@ -826,7 +826,7 @@ public class LowerThirdGfx
 			lowerThird = new LowerThird("", player.getFirstname(), player.getSurname(),statsType.getStats_full_name(), "", "", 2,"",team.getTeamName4(),
 					new String[]{"MATCHES", "WICKETS", "AVERAGE", "ECONOMY", "5WI", "BEST"},new String[]{String.valueOf(stat.getMatches()), String.valueOf(stat.getWickets()), 
 					CricketFunctions.getEconomy(stat.getRuns_conceded(), stat.getBalls_bowled(),1,"-"), Data, String.valueOf(stat.getPlus_5()), 
-					stat.getBest_figures()},null,null,new String[] {"-503.0","-269.0","-38.0","174.0","357.0","510.0"});
+					stat.getBest_figures()},null,null,new String[] {"-503.0","-269.0","-38.0","174.0","380.0","550.0"});
 		}
 		
 		status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);

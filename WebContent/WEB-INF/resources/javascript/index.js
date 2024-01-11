@@ -922,6 +922,10 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
 			
+			select = document.createElement('select');
+			select.id = 'selectProfile';
+			select.name = select.id;
+			
 			option = document.createElement('option');
 			option.value = 'U19ODI';
 			option.text = 'U19 ODI';

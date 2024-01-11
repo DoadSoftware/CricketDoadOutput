@@ -276,7 +276,7 @@ public class Animation
 				return CricketUtil.NO;
 			}	
 			switch(whatToProcess.split(",")[0]) {
-			case "F1": case "F2": case "F4":
+			case "F1": case "F2": case "F4": case "Shift_F11":
 				processAnimation(Constants.BACK, print_writers, "Change$Header", "START");
 				processAnimation(Constants.BACK, print_writers, "Change$Footer", "START");
 				if(whichGraphicOnScreen.contains(",")) {
@@ -290,7 +290,7 @@ public class Animation
 					case "F4":
 						processAnimation(Constants.BACK, print_writers, "Change$Partnership_List", "START");
 						break;
-					case "Shift_F10":
+					case "Shift_F11":
 						processAnimation(Constants.BACK, print_writers, "Change$Summary", "START");
 						break;
 					}
@@ -306,7 +306,7 @@ public class Animation
 					case "F4":
 						processAnimation(Constants.BACK, print_writers, "Change$Partnership_List", "START");
 						break;
-					case "Shift_F10":
+					case "Shift_F11":
 						processAnimation(Constants.BACK, print_writers, "Change$Summary", "START");
 						break;
 					}
@@ -371,7 +371,7 @@ public class Animation
 			case "F8": case "F10":
 				processAnimation(Constants.FRONT, print_writers, "Anim_NameSuperChange", "SHOW 0.0");
 				break;
-			case "F1": case "F2": case "F4":
+			case "F1": case "F2": case "F4": case "Shift_F11":
 				processAnimation(Constants.BACK, print_writers, "Change$Header", "SHOW 0.0");
 				processAnimation(Constants.BACK, print_writers, "Change$Footer", "SHOW 0.0");
 				switch(whichGraphicOnScreen.split(",")[0]) {
@@ -384,7 +384,7 @@ public class Animation
 				case "F4":
 					processAnimation(Constants.BACK, print_writers, "Change$Partnership_List", "SHOW 0.0");
 					break;
-				case "Shift_F10":
+				case "Shift_F11":
 					processAnimation(Constants.BACK, print_writers, "Change$Summary", "SHOW 0.0");
 					break;
 				}
@@ -399,7 +399,7 @@ public class Animation
 					case "F4":
 						processAnimation(Constants.BACK, print_writers, "Change$Partnership_List", "SHOW 0.0");
 						break;
-					case "Shift_F10":
+					case "Shift_F11":
 						processAnimation(Constants.BACK, print_writers, "Change$Summary", "SHOW 0.0");
 						break;
 					}

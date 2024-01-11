@@ -367,47 +367,49 @@ public class FullFramesGfx
 		
 		String In="",Out="",Change_In="",Change_Out="";
 		
-		switch(footer_omo) {
-		case 1:
-			In = "33.5";
-			Out = "57.0";
+		if(whichside == 1) {
+			switch(footer_omo) {
+			case 1:
+				In = "33.5";
+				Out = "33.5";
+				Change_Out = "33.5";
+				break;
+			case 2: case 4:
+				In = "57.5";
+				Out = "57.5";
+				Change_Out = "57.5";
+				break;
+			case 3:
+				In = "26.0";
+				Out = "26.0";
+				Change_Out = "26.0";
+				break;
+			}
 			
-			Change_Out = "33.5";
-			Change_In = "57.0";
-			break;
-		case 2:
-			In = "57.5";
-			Out = "47.0";
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$FooterDynamic$FooterDynamic_Mask"
+					+ "*ANIMATION*KEY*$In*VALUE SET " + In + "\0", print_writers);
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$FooterDynamic$FooterDynamic_Mask"
+					+ "*ANIMATION*KEY*$Out*VALUE SET " + Out + "\0",print_writers);
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$FooterDynamic$FooterDynamic_Mask"
+					+ "*ANIMATION*KEY*$Change_Out*VALUE SET " + Change_Out + "\0",print_writers);
 			
-			Change_Out = "57.5";
-			Change_In = "47.0";
-			break;
-		case 3:
-			In = "26.0";
-			Out = "26.0";
-			
-			Change_Out = "26.0";
-			Change_In = "26.0";
-			break;
-		case 4:
-			In = "57.5";
-			Out = "37.0";
-			
-			Change_Out = "57.5";
-			Change_In = "37.0";
-			break;
 		}
-		
-		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$FooterDynamic$FooterDynamic_Mask"
-				+ "*ANIMATION*KEY*$In*VALUE SET " + In + "\0", print_writers);
-		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$FooterDynamic$FooterDynamic_Mask"
-				+ "*ANIMATION*KEY*$Out*VALUE SET " + Out + "\0",print_writers);
-		
-		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$FooterDynamic$FooterDynamic_Mask"
-				+ "*ANIMATION*KEY*$Change_In*VALUE SET " + Change_In + "\0",print_writers);
-		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$FooterDynamic$FooterDynamic_Mask"
-				+ "*ANIMATION*KEY*$Change_Out*VALUE SET " + Change_Out + "\0",print_writers);
-		
+		else if(whichside == 2) {
+			switch(footer_omo) {
+			case 1:
+				Change_In = "33.5";
+				break;
+			case 2: case 4:
+				Change_In = "57.5";
+				break;
+			case 3:
+				Change_In = "26.0";
+				break;
+			}
+
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$FooterDynamic$FooterDynamic_Mask"
+					+ "*ANIMATION*KEY*$Change_In*VALUE SET " + Change_In + "\0",print_writers);
+		}
 	}
 	
 	public String PopulateFfHeader(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) 
@@ -945,6 +947,9 @@ public class FullFramesGfx
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i +
 									"$Row_" + rowId + "*ACTIVE SET 1 \0", print_writers);
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i + 
+									"$Row_" + rowId + "Batsman*ACTIVE SET 1 \0", print_writers);
+							
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i + 
 									"$Row_" + rowId + "$Batsman$txt_Name*GEOM*TEXT SET " + bc.getPlayer().getTicker_name() + "\0", print_writers);
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i + 
 									"$Row_" + rowId + "$Batsman$txt_Runs*GEOM*TEXT SET " + bc.getRuns() + "\0", print_writers);
@@ -965,7 +970,13 @@ public class FullFramesGfx
 							}
 						}
 					}
-				}	
+				}
+				
+				for(int j = rowId+1; j <= 4; j++) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i + 
+							"$Row_" + j + "$Batsman*ACTIVE SET 0 \0", print_writers);
+				}
+				
 				if(i == 1) {
 					rowId = 0;
 				}
@@ -982,6 +993,9 @@ public class FullFramesGfx
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i + 
 									"$Row_" + rowId + "*ACTIVE SET 1 \0", print_writers);
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i + 
+									"$Row_" + rowId + "Bowler*ACTIVE SET 1 \0", print_writers);
+							
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i + 
 									"$Row_" + rowId + "$Bowler$txt_Name*GEOM*TEXT SET " + boc.getPlayer().getTicker_name() + "\0", print_writers);
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i + 
 									"$Row_" + rowId + "$Bowler$txt_Figs*GEOM*TEXT SET " + boc.getWickets() + "-" + boc.getRuns() + "\0", print_writers);
@@ -996,6 +1010,10 @@ public class FullFramesGfx
 							}
 						}
 					}
+				}
+				for(int j = rowId+1; j <= 4; j++) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i + 
+							"$Row_" + j + "$Bowler*ACTIVE SET 0 \0", print_writers);
 				}
 			}
 			break;
