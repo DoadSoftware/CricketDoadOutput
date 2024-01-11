@@ -19,11 +19,17 @@ public class Infobar {
 	private String Left_bottom;
 	private String Last_left_bottom;
 	
+	private String Right_top;
+	private String Last_right_top;
+	
 	private String Right_bottom;
 	private String Last_right_bottom;
 
 	private String Middle_section;
 	private String Last_middle_section;
+	
+	private String Right_section;
+	private String Last_right_section;
 	
 	private List<BattingCard> last_batsmen;
 	private BowlingCard last_bowler;
@@ -118,6 +124,30 @@ public class Infobar {
 	}
 	public void setBatsmanAndBowlOrSponsor(String batsmanAndBowlOrSponsor) {
 		BatsmanAndBowlOrSponsor = batsmanAndBowlOrSponsor;
+	}
+	public String getRight_section() {
+		return Right_section;
+	}
+	public void setRight_section(String right_section) {
+		Right_section = right_section;
+	}
+	public String getLast_right_section() {
+		return Last_right_section;
+	}
+	public void setLast_right_section(String last_right_section) {
+		Last_right_section = last_right_section;
+	}
+	public String getRight_top() {
+		return Right_top;
+	}
+	public void setRight_top(String right_top) {
+		Right_top = right_top;
+	}
+	public String getLast_right_top() {
+		return Last_right_top;
+	}
+	public void setLast_right_top(String last_right_top) {
+		Last_right_top = last_right_top;
 	}
 	
 }

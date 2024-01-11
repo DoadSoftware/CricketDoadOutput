@@ -17,11 +17,14 @@ import com.cricket.model.Player;
 import com.cricket.model.Statistics;
 import com.cricket.model.StatsType;
 import com.cricket.model.Team;
+import com.cricket.util.CricketUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 public class Caption 
 {
+	private boolean specialBug_on_screen = false;
+	
 	public InfobarGfx this_infobarGfx = new InfobarGfx();
 	public BugsAndMiniGfx this_bugsAndMiniGfx = new BugsAndMiniGfx();
 	public LowerThirdGfx this_lowerThirdGfx;
@@ -57,6 +60,14 @@ public class Caption
 		super();
 	}
 	
+	public boolean isSpecialBug_on_screen() {
+		return specialBug_on_screen;
+	}
+
+	public void setSpecialBug_on_screen(boolean specialBug_on_screen) {
+		this.specialBug_on_screen = specialBug_on_screen;
+	}
+
 	public Caption(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics,
 		List<StatsType> statsTypes, List<MatchAllData> tournament_matches, List<NameSuper> nameSupers,List<Bugs> bugs,
 		List<Fixture> fixTures, List<Team> Teams, List<Ground> Grounds,FullFramesGfx this_fullFramesGfx,
@@ -80,6 +91,7 @@ public class Caption
 		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers, statistics, statsTypes, tournament_matches);
 		this.this_bugsAndMiniGfx = new BugsAndMiniGfx(print_writers, config, tournament_matches, bugs, Teams, Grounds);
 		this.status = "";
+		this.specialBug_on_screen = false;
 	}
 	public String getStatus() {
 		return status;
@@ -128,6 +140,10 @@ public class Caption
 			case "F12":// InfoBar
 				status = this_infobarGfx.populateInfobar(print_writers,whatToProcess,matchAllData);
 				break;
+			case "Control_F1":// Photo ScoreCard
+				status = this_fullFramesGfx.PopulatePhotoScorecardFF(whichSide, whatToProcess.split(",")[0], matchAllData, 
+						Integer.valueOf(whatToProcess.split(",")[1]));
+				break;
 			case "Control_F5"://Batsman Style
 				status = this_lowerThirdGfx.populateBattingStyle(whatToProcess,whichSide,matchAllData);
 				break;
@@ -167,8 +183,11 @@ public class Caption
 			case "g": //Bug Bowler Score
 				status = this_bugsAndMiniGfx.populateBowlScore(whatToProcess, matchAllData, whichSide);
 				break;
+			case "j": //NameSuper DB
+				status = this_lowerThirdGfx.populateLTNameSuperSingle(whatToProcess,whichSide);
+				break;
 			case "k": //DataBase
-				status = this_bugsAndMiniGfx.bugsDB(whatToProcess,whichSide);
+				status = this_bugsAndMiniGfx.bugsDB(whatToProcess,whichSide,matchAllData);
 				break;
 			case "m": //Match id
 				status = this_fullFramesGfx.populateFFMatchId(whichSide,whatToProcess.split(",")[0], matchAllData);
@@ -206,6 +225,9 @@ public class Caption
 			case "Control_m": //MATCH PROMO
 				status = this_fullFramesGfx.populateFFMatchPromo(whichSide, whatToProcess,matchAllData);
 				break;
+			case "Control_p": //Lt MATCH SUMMARY
+				status = this_lowerThirdGfx.populateL3rdMatchSummary(whatToProcess,whichSide,matchAllData);
+				break;
 			case "Shift_K"://FF curr part
 				this_fullFramesGfx.whichSponsor = whatToProcess.split(",")[2];
 				status = this_fullFramesGfx.populateCurrPartnership(whichSide, whatToProcess.split(",")[0], 
@@ -214,8 +236,14 @@ public class Caption
 			case "Shift_O":
 				status = this_bugsAndMiniGfx.bugsDismissal(whatToProcess,matchAllData,whichSide);
 				break;
+			case "Alt_F9": // Single Teams
+				status = this_fullFramesGfx.populateSingleTeams(whichSide, whatToProcess, matchAllData, 0);
+				break;
 			case "Alt_k"://Curr Part
 				status = this_lowerThirdGfx.populateL3rdCurrentPartnership(whatToProcess,whichSide,matchAllData);
+				break;
+			case "Alt_p":
+				status = this_bugsAndMiniGfx.bugsToss(whatToProcess,matchAllData,whichSide);
 				break;
 			case "Alt_1": // Infobar Left Bottom
 				this_infobarGfx.infobar.setLeft_bottom(whatToProcess.split(",")[2]);
@@ -250,6 +278,27 @@ public class Caption
 			case "Alt_7":
 				this_infobarGfx.infobar.setRight_bottom(whatToProcess.split(",")[2]);
 				status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, 1, whichSide);
+				break;
+			case "Alt_8":
+				if(this_infobarGfx.infobar.getRight_section() != null && !this_infobarGfx.infobar.getRight_section().isEmpty()) {
+					if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
+						this_infobarGfx.infobar.setRight_top(whatToProcess.split(",")[2]);
+						this_infobarGfx.infobar.setRight_bottom("BOWLING_END");
+						
+						this_infobarGfx.populateVizInfobarBowler(print_writers, matchAllData, 1);
+						
+						this_infobarGfx.infobar.setRight_section("");this_infobarGfx.infobar.setLast_right_section("");
+					}else {
+						this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
+						this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, whichSide);
+					}
+				}else {
+					this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
+					this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 1);
+					
+					this_infobarGfx.infobar.setRight_top("");this_infobarGfx.infobar.setRight_bottom("");
+					this_infobarGfx.infobar.setLast_right_top("");;this_infobarGfx.infobar.setLast_right_bottom("");
+				}
 				break;
 				
 			}

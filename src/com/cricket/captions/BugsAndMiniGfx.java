@@ -68,7 +68,7 @@ public class BugsAndMiniGfx
 				return "bugsDismissal: Team id [" + battingCard.getPlayer().getTeamId() + "] from database is returning NULL";
 			}
 		}
-		if(PopulateBugBody(WhichSide, whatToProcess.split(",")[0]) == Constants.OK) {
+		if(PopulateBugBody(WhichSide, whatToProcess.split(",")[0],matchAllData) == Constants.OK) {
 			status = Constants.OK;
 		}
 		return status;
@@ -92,12 +92,12 @@ public class BugsAndMiniGfx
 				return "bugsCurrPartnership: Team id [" + inning.getBattingTeamId() + "] from database is returning NULL";
 			}
 		}
-		if(PopulateBugBody(WhichSide, whatToProcess.split(",")[0]) == Constants.OK) {
+		if(PopulateBugBody(WhichSide, whatToProcess.split(",")[0],matchAllData) == Constants.OK) {
 			status = Constants.OK;
 		}
 		return status;
 	}
-	public String bugsDB(String whatToProcess,int WhichSide) {
+	public String bugsDB(String whatToProcess,int WhichSide,MatchAllData matchAllData) {
 		
 		bug = this.bugs.stream().filter(bug -> bug.getBugId() == Integer.valueOf(whatToProcess.split(",")[2])).findAny().orElse(null);
 		if(bug == null) {
@@ -111,7 +111,7 @@ public class BugsAndMiniGfx
 			}
 		}
 		
-		if(PopulateBugBody(WhichSide, whatToProcess.split(",")[0]) == Constants.OK) {
+		if(PopulateBugBody(WhichSide, whatToProcess.split(",")[0],matchAllData) == Constants.OK) {
 			status = Constants.OK;
 		}
 		return status;
@@ -134,7 +134,7 @@ public class BugsAndMiniGfx
 				return "populateBowlScore: Team id [" + bowlingCard.getPlayer().getTeamId() + "] from database is returning NULL";
 			}
 		}
-		if(PopulateBugBody(WhichSide, whatToProcess.split(",")[0]) == Constants.OK) {
+		if(PopulateBugBody(WhichSide, whatToProcess.split(",")[0],matchAllData) == Constants.OK) {
 			status = Constants.OK;;
 		}
 		return status;		
@@ -157,17 +157,49 @@ public class BugsAndMiniGfx
 				return "populateBatScore: Team id [" + battingCard.getPlayer().getTeamId() + "] from database is returning NULL";
 			}
 		}
-		if(PopulateBugBody(WhichSide, whatToProcess.split(",")[0]) == Constants.OK) {
+		if(PopulateBugBody(WhichSide, whatToProcess.split(",")[0],matchAllData) == Constants.OK) {
 			status = Constants.OK;
 		}
 		return status;
 	}
 	
-	public String PopulateBugBody(int WhichSide, String whatToProcess) {
+	public String bugsToss(String whatToProcess, MatchAllData matchAllData, int WhichSide) {
+		if (matchAllData == null || matchAllData.getMatch() == null ||
+			matchAllData.getMatch().getInning() == null|| matchAllData.getSetup()==null) {
+			status = "BugsToss match is null Or Inning is null";
+		} else {
+			inning = matchAllData.getMatch().getInning().stream().
+					filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).
+					findAny().orElse(null);
+		}
+		if(PopulateBugBody(WhichSide, whatToProcess.split(",")[0],matchAllData) == Constants.OK) {
+			status = Constants.OK;
+		}
+		return status;
+	}
+
+	public String PopulateBugBody(int WhichSide, String whatToProcess,MatchAllData matchAllData) {
 		
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.ICC_U19_2023:
 			switch(whatToProcess) {
+			case "Alt_p":
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Center_Bug$Select"
+						+ "*FUNCTION*Omo*vis_con SET 1  \0", print_writers);
+				System.out.println("HOME TEAM "+matchAllData.getMatch().getInning().get(0).getBatting_team().getTeamName4());
+				System.out.println("AWAY TEAM "+matchAllData.getMatch().getInning().get(0).getBowling_team().getTeamName4());
+				System.out.println("RESULT:-  "+CricketFunctions.generateTossResult(matchAllData, CricketUtil.FULL, "", CricketUtil.SHORT, null).toUpperCase()+" & ELECTED TO "+matchAllData.getSetup().getTossWinningDecision());
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Center_Bug$Toss$img_Flag1*TEXTURE*IMAGE SET " 
+				+ Constants.ICC_U19_2023_FLAG_PATH + matchAllData.getMatch().getInning().get(0).getBatting_team().getTeamName4() + "\0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Center_Bug$Toss$img_Flag2*TEXTURE*IMAGE SET " 
+						+ Constants.ICC_U19_2023_FLAG_PATH + matchAllData.getMatch().getInning().get(0).getBowling_team().getTeamName4() + "\0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Center_Bug$Toss"
+						+ "$txt_Info*GEOM*TEXT SET " + CricketFunctions.generateTossResult(matchAllData, CricketUtil.FULL, "", CricketUtil.SHORT, null).toUpperCase()+
+						" & ELECTED TO "+matchAllData.getSetup().getTossWinningDecision()+ "\0", print_writers);
+				
+				break;
 			case "g":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
 						+ "$img_Flag*ACTIVE SET 1 \0", print_writers);

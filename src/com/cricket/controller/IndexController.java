@@ -159,7 +159,7 @@ public class IndexController
 			print_writers = CricketFunctions.processPrintWriter(session_configuration);
 			
 			this_scene = new Scene();
-			this_animation = new Animation(new Infobar());
+			this_animation = new Animation(new Infobar(),new Caption());
 			
 			switch (select_broadcaster) {
 			case Constants.ICC_U19_2023:
@@ -285,8 +285,13 @@ public class IndexController
 					}
 					break;
 				}
-				this_caption.PopulateGraphics(valueToProcess, session_match);
-				return JSONObject.fromObject(this_caption).toString();
+				if(this_animation.caption.isSpecialBug_on_screen() == true && valueToProcess.split(",")[0].equalsIgnoreCase("Alt_p")) {
+					this_caption.setStatus("OUT");
+					return JSONObject.fromObject(this_caption).toString();
+				}else {
+					this_caption.PopulateGraphics(valueToProcess, session_match);
+					return JSONObject.fromObject(this_caption).toString();
+				}
 			}
 			else if(whatToProcess.contains("ANIMATE-IN-GRAPHICS") || whatToProcess.contains("ANIMATE-OUT-GRAPHICS")
 				|| whatToProcess.contains("ANIMATE-OUT-INFOBAR") || whatToProcess.contains("QUIDICH-COMMANDS")) {
@@ -313,8 +318,12 @@ public class IndexController
 						break;
 					}
 				} else if(whatToProcess.contains("ANIMATE-OUT-GRAPHICS")) {
-					this_animation.AnimateOut(this_animation.whichGraphicOnScreen, print_writers, session_configuration);
-				} else if(whatToProcess.contains("ANIMATE-OUT-INFOBAR")) {
+					if(this_animation.caption.isSpecialBug_on_screen() == true && valueToProcess.split(",")[0].equalsIgnoreCase("Alt_p")) {
+						this_animation.AnimateOut(valueToProcess.split(",")[0], print_writers, session_configuration);
+					}else {
+						this_animation.AnimateOut(this_animation.whichGraphicOnScreen, print_writers, session_configuration);
+					}
+				}else if(whatToProcess.contains("ANIMATE-OUT-INFOBAR")) {
 					this_animation.AnimateOut("F12,", print_writers, session_configuration);
 				}else if(whatToProcess.contains("QUIDICH-COMMANDS")) {
 					this_animation.processQuidichCommands(valueToProcess, print_writers, session_configuration);
@@ -333,7 +342,7 @@ public class IndexController
 	@SuppressWarnings("unchecked")
 	public <T> List<T> GetGraphicOption(String whatToProcess) {
 		switch (whatToProcess) {
-		case "F10":
+		case "F10": case "j":
 		    return (List<T>) session_name_super;
 		case "k":
 			return (List<T>) session_bugs;
