@@ -519,6 +519,22 @@ public class FullFramesGfx
 			ConcussExtend_Y.add("0.0 -50.0 0.0");
 			ConcussExtend_Y.add("0.0 -430.0 -0.2");
 			break;
+			
+		case 13:
+			ConcussExtend_Y.add("0.0 0.0 0.0");
+			ConcussExtend_Y.add("0.0 0.0 0.0");
+			ConcussExtend_Y.add("740.0");
+			ConcussExtend_Y.add("740.0");
+			ConcussExtend_Y.add("0.0 0.0 0.0");
+			ConcussExtend_Y.add(".0 -380 -0.2");
+			
+			ConcussExtend_Y.add("0.0 50.0 0.0");
+			ConcussExtend_Y.add("0.0 -50.0 0.0");
+			ConcussExtend_Y.add("840.0");
+			ConcussExtend_Y.add("840.0");
+			ConcussExtend_Y.add("0.0 -100.0 0.0");
+			ConcussExtend_Y.add("0.0 -480.0 -0.2");
+			break;
 		}
 		
 		
@@ -574,7 +590,7 @@ public class FullFramesGfx
 		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
 				+ "*ANIMATION*KEY*$Out_1*VALUE SET " + ConcussExtend_Y.get(11) + "\0", print_writers);
 		
-		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*ConcussExtend_Y START \0", print_writers);
+		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*ConcussExtend_Y SHOW 0.500 \0", print_writers);
 	}
 
 	public String PopulateFfHeader(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) 
@@ -2426,7 +2442,6 @@ case "Control_d":
 							generateMatchSummaryStatus(WhichInning, matchAllData,CricketUtil.FULL).toUpperCase() + "\0", print_writers);
 					break;
 				case "Alt_F9":
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*ConcussExtend_Y SHOW 0.500 \0", print_writers);
 					if(WhichStyle.equalsIgnoreCase("Age")) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Top_Align$Side" + WhichSide + "$Select_FooterType"
 								+ "$Info_Text$Data$txt_Info_1*GEOM*TEXT SET " + statsType.getStats_full_name() + "\0", print_writers);

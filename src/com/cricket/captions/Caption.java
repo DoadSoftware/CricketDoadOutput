@@ -198,10 +198,10 @@ public class Caption
 			case "q"://Boundaries
 				status = this_lowerThirdGfx.populateBoundaries(whatToProcess,whichSide,matchAllData);
 				break;
-			case "v"://Bat 012
+			case "Shift_F5"://Bat 012
 				status = this_lowerThirdGfx.populateBatSummary(whatToProcess,whichSide,matchAllData);
 				break;
-			case "b"://Ball 012
+			case "Shift_F9"://Ball 012
 				status = this_lowerThirdGfx.populateBallSummary(whatToProcess,whichSide,matchAllData);
 				break;
 			case "h"://Teams 012

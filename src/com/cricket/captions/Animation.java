@@ -48,8 +48,8 @@ public class Animation
 		case "Shift_K": case "Alt_F9":
 			return Constants.FULL_FRAMER;
 		case "F5": case "F6": case "F7": case "F8": case "F9": case "F10": case "F11":
-		case "Control_F1": case "Control_F5": case "Control_F9": case "Control_a":  case "Control_c": case "Alt_k":
-		case "Shift_F3": case "s": case "d": case "e": case "q": case "v": case "b": case "h":
+		case "Control_F1": case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
+		case "Shift_F3": case "s": case "d": case "e": case "q": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 		case "p": case "Control_p": case "j":	
 			return Constants.LOWER_THIRD;
 		case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8":
@@ -73,7 +73,7 @@ public class Animation
 				
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
 				
-				processAnimation(Constants.BACK, print_writers, "In_Out", "START");
+				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames", "START");
 				
 				switch (whatToProcess.split(",")[0]) {
 				case "m": case "Control_m": case "Shift_F11": case "Control_F7":
@@ -101,8 +101,8 @@ public class Animation
 			
 			//NameSuperDB, HOWOUT, LTBatProfile, NameSuperPlayer, LtBallProfile, BatThisMatch, BallThisMatch
 			case "F5": case "F6": case "F7": case "F9": case "F11":
-			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_c": case "Alt_k":
-			case "Shift_F3": case "s": case "d": case "e": case "v": case "b": case "h":
+			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
+			case "Shift_F3": case "s": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "p": case "Control_p": case "j":
 				
 				if(this.infobar.isInfobar_on_screen() == true) {
@@ -262,8 +262,8 @@ public class Animation
 				this.whichGraphicOnScreen = "";
 				break;
 			case "F5": case "F6": case "F7": case "F9": case "F11":
-			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_c": case "Alt_k":
-			case "Shift_F3": case "s": case "d": case "e": case "v": case "b": case "h":
+			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
+			case "Shift_F3": case "s": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "p": case "Control_p": case "j":
 				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "CONTINUE");
 				TimeUnit.MILLISECONDS.sleep(1000);
@@ -352,8 +352,8 @@ public class Animation
 				}
 				break;
 			case "F5": case "F6": case "F7": case "F9": case "F11":
-			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_c": case "Alt_k":
-			case "Shift_F3": case "s": case "d": case "e": case "v": case "b": case "h":
+			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
+			case "Shift_F3": case "s": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "p": case "Control_p": case "j":
 				processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "START");
 				this.whichGraphicOnScreen = whatToProcess;
@@ -425,7 +425,7 @@ public class Animation
 				}
 				break;
 			case "F5": case "F6": case "F7": case "F9": case "F11": case "p": case "Control_p": case "j":
-			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_c": case "Alt_k":
+			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
 				processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "SHOW 0.0");
 				break;
 			case "F8": case "F10":

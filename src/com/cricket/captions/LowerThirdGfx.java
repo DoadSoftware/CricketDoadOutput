@@ -1023,7 +1023,7 @@ public class LowerThirdGfx
 				
 				break;
 				
-			case "Control_c":
+			case "Control_F3":
 				if(lowerThird.getWhichTeamFlag() != null) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"+ WhichSide + 
 							"$Select_Flags*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
@@ -1261,7 +1261,7 @@ public class LowerThirdGfx
 				
 				break;	
 			
-			case "v": case "b":
+			case "Shift_F5": case "Shift_F9":
 				if(config.getSecondaryIpAddress()!= null && !config.getSecondaryIpAddress().isEmpty()) {
 					CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Top_Line$Data$Side_"+ WhichSide + 
 							"$Select_Flags*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
@@ -1281,7 +1281,7 @@ public class LowerThirdGfx
 						+ WhichSide + "$Name" + containerName + "$Score*ACTIVE SET 1 \0", print_writers);
 				
 				switch(whatToProcess) {
-				case "v":
+				case "Shift_F5":
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide 
 							+ "$Name" + containerName + "$Score$txt_Score*GEOM*TEXT SET " + lowerThird.getScoreText() + "\0", print_writers);
 					
@@ -1289,7 +1289,7 @@ public class LowerThirdGfx
 							+ "$Name" + containerName + "$Score$txt_Not_Out*GEOM*TEXT SET " + lowerThird.getBallsFacedText() + " BALL" + 
 							CricketFunctions.Plural(Integer.valueOf(lowerThird.getBallsFacedText())).toUpperCase() + "\0", print_writers);
 					break;
-				case "b":
+				case "Shift_F9":
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide 
 							+ "$Name" + containerName + "$Score$txt_Score*GEOM*TEXT SET " + lowerThird.getScoreText() + "-" + lowerThird.getBallsFacedText() + "\0", print_writers);
 					
@@ -1299,7 +1299,7 @@ public class LowerThirdGfx
 				}
 				break;
 				
-			case "h":
+			case "Alt_F12":
 				if(config.getSecondaryIpAddress()!= null && !config.getSecondaryIpAddress().isEmpty()) {
 					CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Top_Line$Data$Side_"+ WhichSide + 
 							"$Select_Flags*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
@@ -1783,7 +1783,7 @@ public class LowerThirdGfx
 					+ "$Select_Subline$2$Data$Left$txt_1*GEOM*TEXT SET " + lowerThird.getLeftText()[1] + "\0", print_writers);
 				
 				break;
-			case "Control_c":
+			case "Control_F3":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide 
 					+ "$Select_Subline$1$Data$Left$txt_1*GEOM*TEXT SET " + 
 					lowerThird.getLeftText()[0]+" "+lowerThird.getLeftText()[1]+" "+lowerThird.getLeftText()[2]+ "\0", print_writers);
@@ -1870,7 +1870,7 @@ public class LowerThirdGfx
 						"$Select_Subline$2" + containerName + "$Data$Stat$txt_"+(i+1)+"*GEOM*TEXT SET " + lowerThird.getStatsText()[i] + "\0", print_writers);
 				}
 				break;
-			case "v": case "b": case "h":
+			case "Shift_F5": case "Shift_F9": case "Alt_F12":
 				for(int i=0; i<lowerThird.getTitlesText().length; i++) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
 						"$Select_Subline$1" + containerName + "$Data$Title$txt_"+(i+1)+"*GEOM*TEXT SET " + lowerThird.getTitlesText()[i] + "\0", print_writers);

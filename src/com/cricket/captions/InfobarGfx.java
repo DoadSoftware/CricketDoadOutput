@@ -627,6 +627,8 @@ public class InfobarGfx
 				if(infobar.getRight_section() != null && !infobar.getRight_section().isEmpty()) {
 					populateVizInfobarRightSection(print_writers, matchAllData, WhichSide, 1);
 				}else {
+					this.infobar.setRight_top(CricketUtil.BOWLER);
+					this.infobar.setRight_bottom("BOWLING_END");
 					populateVizInfobarBowler(print_writers, matchAllData, WhichSide);
 				}
 				break;

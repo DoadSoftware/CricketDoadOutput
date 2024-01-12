@@ -145,13 +145,13 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			switch(dataToProcess) {
 			case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': 
 			case 'Control_F5': case 'Control_F8': case 'Control_F9': case 'F4': case 'F5': case 'F6' : case 'F7': 
-			case 'F8': case 'F9': case 'F11': case 's': case 'q': case 'v': case 'b':
+			case 'F8': case 'F9': case 'F11': case 's': case 'q': case 'Shift_F5': case 'Shift_F9':
 			case 'Shift_K': case 'Shift_O': case 'Alt_F9': case 'k': case 'g': case 'f': case 'p':
 				addItemsToList(dataToProcess,null);
 				break;
 			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'Control_F1': case 'Control_a':  
 			case 'Alt_k':  case 'Shift_F3': case 'd': case 'e': case 'Control_F7': case 'Alt_p':
-			case 'Control_k': case 'Control_F10': case 'h': case 'Control_c': case 'Control_p':
+			case 'Control_k': case 'Control_F10': case 'Alt_F12': case 'Control_F3': case 'Control_p':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 				break;
@@ -347,7 +347,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 		
 	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11':
 	case 'Control_F5': case 'Control_F9': case 'Control_F8': case 'Control_d': case 'Control_e': case 's':
-	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'v': case 'b': case 'p': case 'q':
+	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'Shift_F5': case 'Shift_F9': case 'p': case 'q':
 	case 'Alt_F9': case 'j':
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
@@ -930,7 +930,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			break;
 			
-		case 'F5': case 'f': case 'v': case 'q'://BatThisMatch
+		case 'F5': case 'f': case 'Shift_F5': case 'q'://BatThisMatch
 		
 			select = document.createElement('select');
 			select.id = 'selectBatsmanThisMatch';
@@ -953,7 +953,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			break;
 			
-		case 'F9': case 'g': case 'b': //BallThisMatch
+		case 'F9': case 'g': case 'Shift_F9': //BallThisMatch
 		
 			select = document.createElement('select');
 			select.id = 'selectBatamanThisMatch';
