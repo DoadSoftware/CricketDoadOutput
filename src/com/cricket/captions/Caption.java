@@ -29,6 +29,7 @@ public class Caption
 	public BugsAndMiniGfx this_bugsAndMiniGfx = new BugsAndMiniGfx();
 	public LowerThirdGfx this_lowerThirdGfx;
 	public FullFramesGfx this_fullFramesGfx;
+	public Animation this_anim = new Animation();
 	
 	public List<PrintWriter> print_writers; 
 	public Configuration config;
@@ -311,5 +312,24 @@ public class Caption
 				break;
 			}
 		}
+		
+		switch (whatToProcess.split(",")[0]) {
+		case "F1": case "F2": case "F4": case "Control_F1": case "Control_F7": case "Control_F8": case "Control_F10": 
+		case "Shift_F10": case "Shift_F11": case "m": case "Control_d": case "Control_e": case "Control_m": 
+		case "Shift_K": case "Alt_F9":
+			if(status.equalsIgnoreCase(Constants.OK)) {
+				status = this_anim.processFullFramesPreview(whatToProcess, print_writers, whichSide);
+			}
+			break;
+		case "F5": case "F6": case "F7": case "F9": case "F11":
+		case "Control_F5": case "Control_F9": case "Control_a":  case "Control_c":
+		case "Shift_F3": case "s": case "d": case "e": case "v": case "b": case "h":
+		case "p": case "Control_p": case "j":case "Alt_k":case "F8": case "F10":
+			if(status.equalsIgnoreCase(Constants.OK)) {
+				status = this_anim.processL3Preview(whatToProcess, print_writers, whichSide);
+			}
+			break;
+		}
+		status = Constants.OK;
 	}
 }

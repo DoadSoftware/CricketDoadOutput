@@ -186,9 +186,6 @@ public class BugsAndMiniGfx
 			case "Alt_p":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Center_Bug$Select"
 						+ "*FUNCTION*Omo*vis_con SET 1  \0", print_writers);
-				System.out.println("HOME TEAM "+matchAllData.getMatch().getInning().get(0).getBatting_team().getTeamName4());
-				System.out.println("AWAY TEAM "+matchAllData.getMatch().getInning().get(0).getBowling_team().getTeamName4());
-				System.out.println("RESULT:-  "+CricketFunctions.generateTossResult(matchAllData, CricketUtil.FULL, "", CricketUtil.SHORT, null).toUpperCase()+" & ELECTED TO "+matchAllData.getSetup().getTossWinningDecision());
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Center_Bug$Toss$img_Flag1*TEXTURE*IMAGE SET " 
 				+ Constants.ICC_U19_2023_FLAG_PATH + matchAllData.getMatch().getInning().get(0).getBatting_team().getTeamName4() + "\0", print_writers);
 				
@@ -196,8 +193,8 @@ public class BugsAndMiniGfx
 						+ Constants.ICC_U19_2023_FLAG_PATH + matchAllData.getMatch().getInning().get(0).getBowling_team().getTeamName4() + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Center_Bug$Toss"
-						+ "$txt_Info*GEOM*TEXT SET " + CricketFunctions.generateTossResult(matchAllData, CricketUtil.FULL, "", CricketUtil.SHORT, null).toUpperCase()+
-						" & ELECTED TO "+matchAllData.getSetup().getTossWinningDecision()+ "\0", print_writers);
+						+ "$txt_Info*GEOM*TEXT SET " + CricketFunctions.generateTossResult(matchAllData, CricketUtil.FULL, CricketUtil.FIELD, 
+								CricketUtil.FULL, CricketUtil.ELECTED).toUpperCase() + "\0", print_writers);
 				
 				break;
 			case "g":

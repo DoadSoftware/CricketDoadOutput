@@ -94,8 +94,6 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			if(session_match.setup.maxOvers > 0){
 				switch (dataToProcess) {
 				case '3': case '4': // Key 1 to 4
-/*					document.body.focus();
-					keys = [];*/
 					alert("3rd and 4th inning NOT available in a limited over match");
 					return false;
 				}				
@@ -121,9 +119,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 		default:
 			
 			switch($('#which_inning').val()) {
-			case 1: case 2: case 3: case 4:  
-/*				document.body.focus();
-				keys = [];*/
+			case 1: case 2: case 3: case 4:
 				alert('Selected inning must be between 1 to 4 [found ' 
 					+ document.getElementById('which_inning').value + ']');
 				return false;
@@ -196,13 +192,15 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 				}
 				break;
 			default:
-				switch(whatToProcess) {
+				switch(whatToProcess) {	
 				case 'POPULATE-GRAPHICS':
-					if(dataToProcess.includes('Alt_p')) {
+					//alert('session_animation.specialBugOnScreen = ' + session_animation.specialBugOnScreen);
+					if(typeof session_animation !== 'undefined' && typeof session_animation.specialBugOnScreen !== 'undefined' &&
+							dataToProcess.includes('Alt_p')) {
 						if(session_animation.specialBugOnScreen.includes('TOSS')) {
-							processCricketProcedures("ANIMATE-OUT-GRAPHICS", dataToProcess);
+							processCricketProcedures("ANIMATE-OUT-GRAPHICS", dataToProcess);	
 						}
-					} else {
+					}else {
 						if(data.status == 'OK') {
 							if(confirm('Animate In?') == true){
 								processCricketProcedures(whatToProcess.replace('POPULATE-', 'ANIMATE-IN-'),dataToProcess);
@@ -224,7 +222,10 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 					break;
 				default:
 					if(whatToProcess.includes("ANIMATE-IN-") || whatToProcess.includes("ANIMATE-OUT-")) {
-						session_animation = data;
+						if(data){
+							session_animation = data;	
+						}
+						//alert('session_animation.specialBugOnScreen = ' + session_animation.specialBugOnScreen);
 					}
 					break;
 				}

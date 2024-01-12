@@ -27,7 +27,7 @@ public class Animation
 		case Constants.ICC_U19_2023:
 			if(this.infobar.isInfobar_on_screen() == true) {
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Overall_Position_Y*"
-					+ "TRANSFORMATION*POSITION*Y SET 90.0 \0",print_writers);
+					+ "TRANSFORMATION*POSITION*Y SET 40.0 \0",print_writers);
 			}else if(this.specialBugOnScreen.equalsIgnoreCase(CricketUtil.TOSS)) {
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Overall_Position_Y*"
 					+ "TRANSFORMATION*POSITION*Y SET 106.0 \0",print_writers);
@@ -102,7 +102,7 @@ public class Animation
 			case "F5": case "F6": case "F7": case "F9": case "F11":
 			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
 			case "Shift_F3": case "s": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":
-			case "p": case "Control_p": case "j":
+			case "p": case "Control_p":
 				
 				if(this.infobar.isInfobar_on_screen() == true) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Overall_Position_Y*"
@@ -118,7 +118,7 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "HeaderDynamic", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
-			case "F8": case "F10":
+			case "F8": case "F10": case "j":
 				
 				setPositionOfLowerThirds(config, print_writers);
 				AnimateIn(Constants.MIDDLE + Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
@@ -172,9 +172,6 @@ public class Animation
 				}
 				break;
 			case "Alt_f": case "Alt_g": case Constants.SHRUNK_INFOBAR: case Constants.MIDDLE + Constants.SHRUNK_INFOBAR:
-				System.out.println("whatToProcess = " + whatToProcess.split(",")[0]);
-				System.out.println("infobar on screen = " + this.infobar.isInfobar_on_screen());
-				System.out.println("this.infobar.getInfobar_status() = " + this.infobar.getInfobar_status());
 				if(this.infobar.isInfobar_on_screen() == true) {
 					switch (whatToProcess.split(",")[0]) {
 					case "Alt_f": 
@@ -263,16 +260,16 @@ public class Animation
 			case "F5": case "F6": case "F7": case "F9": case "F11":
 			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
 			case "Shift_F3": case "s": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":
-			case "p": case "Control_p": case "j":
+			case "p": case "Control_p":
 				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "CONTINUE");
 				TimeUnit.MILLISECONDS.sleep(1000);
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;
-			case "F8": case "F10":
+			case "F8": case "F10": case "j":
 				processAnimation(Constants.FRONT, print_writers, "anim_NameSupers", "CONTINUE");
 				TimeUnit.MILLISECONDS.sleep(1000);
-				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
+				AnimateIn(Constants.MIDDLE + Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;
 				
@@ -353,11 +350,11 @@ public class Animation
 			case "F5": case "F6": case "F7": case "F9": case "F11":
 			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
 			case "Shift_F3": case "s": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":
-			case "p": case "Control_p": case "j":
+			case "p": case "Control_p":
 				processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
-			case "F8": case "F10":
+			case "F8": case "F10": case "j":
 				processAnimation(Constants.FRONT, print_writers, "Anim_NameSuperChange", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
@@ -381,7 +378,6 @@ public class Animation
 						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_All$In_Out", "CONTINUE");
 						infobar.setRight_section("");
 					}else {
-						System.out.println(infobar.getRight_section());
 						if(infobar.getRight_section()!= null && !infobar.getRight_section().isEmpty()) {
 							processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_All$Change", "START");
 						}else {
@@ -424,11 +420,11 @@ public class Animation
 					}
 				}
 				break;
-			case "F5": case "F6": case "F7": case "F9": case "F11": case "p": case "Control_p": case "j":
+			case "F5": case "F6": case "F7": case "F9": case "F11": case "p": case "Control_p":
 			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
 				processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "SHOW 0.0");
 				break;
-			case "F8": case "F10":
+			case "F8": case "F10": case "j":
 				processAnimation(Constants.FRONT, print_writers, "Anim_NameSuperChange", "SHOW 0.0");
 				break;
 			case "F1": case "F2": case "F4": case "Shift_F11":
@@ -549,5 +545,151 @@ public class Animation
 			}
 			break;
 		}
+	}
+	
+	public String processFullFramesPreview(String whatToProcess, List<PrintWriter> print_writer, int whichside) {
+		if(whatToProcess.contains(",")) {
+			if(whichside == 1) {
+				switch(whatToProcess.split(",")[0]) {
+				case "F1"://battingCard
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png Anim_FullFrames$In_Out$Essentials$In 2.140 "
+						+ "Anim_FullFrames$In_Out$Header$In 1.800 Anim_FullFrames$In_Out$Main$Batting_Card$In 1.860 "
+						+ "Anim_FullFrames$In_Out$Footer$In 1.800 \0", print_writer);
+					break;
+				case "F2"://bowlingCard
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png Anim_FullFrames$In_Out$Essentials$In 2.140 "
+						+ "Anim_FullFrames$In_Out$Header$In 1.800 Anim_FullFrames$In_Out$Main$Bowling_Card$In 1.860 "
+						+ "Anim_FullFrames$In_Out$Footer$In 1.800 \0", print_writer);
+					break;
+				case "F4": //All Partnership
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png Anim_FullFrames$In_Out$Essentials$In 2.140 "
+						+ "Anim_FullFrames$In_Out$Header$In 1.800 Anim_FullFrames$In_Out$Main$Partnership_List$In 1.820 "
+						+ "Anim_FullFrames$In_Out$Footer$In 1.800 \0", print_writer);
+					break;
+				case "Control_F7":// Double Teams
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png Anim_FullFrames$In_Out$Essentials$In 2.140 "
+						+ "Anim_FullFrames$In_Out$Header$In 1.800 Anim_FullFrames$In_Out$Main$Teams$In 1.860 "
+						+ "Anim_FullFrames$In_Out$Footer$In 1.800 \0", print_writer);
+					break;
+				case "Control_F8": //Playing XI
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png Anim_FullFrames$In_Out$Essentials$In 2.140 "
+						+ "Anim_FullFrames$In_Out$Header$In 1.800 Anim_FullFrames$In_Out$Main$LineUp_Image$In 2.040 "
+						+ "Anim_FullFrames$In_Out$Footer$In 1.800 \0", print_writer);
+					break;
+				case "Control_F1":// Photo ScoreCard
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png Anim_FullFrames$In_Out$Essentials$In 2.140 "
+						+ "Anim_FullFrames$In_Out$Header$In 1.800 Anim_FullFrames$In_Out$Main$Batting_Card_Image$In 2.040 "
+						+ "Anim_FullFrames$In_Out$Footer$In 1.800 \0", print_writer);
+					break;
+				
+				case "Control_F10"://Manhattan
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png Anim_FullFrames$In_Out$Essentials$In 2.140 "
+						+ "Anim_FullFrames$In_Out$Header$In 1.800 Anim_FullFrames$In_Out$Main$Manhattan$In 2.900 "
+						+ "Anim_FullFrames$In_Out$Footer$In 1.800 \0", print_writer);
+					break;
+				case "Shift_F10"://WORMS
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png Anim_FullFrames$In_Out$Essentials$In 2.140 "
+						+ "Anim_FullFrames$In_Out$Header$In 1.800 Anim_FullFrames$In_Out$Main$Worm$In 2.440 "
+						+ "Anim_FullFrames$In_Out$Footer$In 1.800 \0", print_writer);
+					break;
+				case "Shift_F11":  //MATCH SUMMARY
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png Anim_FullFrames$In_Out$Essentials$In 2.140 "
+						+ "Anim_FullFrames$In_Out$Header$In 1.800 Anim_FullFrames$In_Out$Main$Summary$In 1.820 "
+						+ "Anim_FullFrames$In_Out$Footer$In 1.800 \0", print_writer);
+					break;
+				case "m"://Match id	
+				case "Control_m": //MATCH PROMO
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png Anim_FullFrames$In_Out$Essentials$In 2.140 "
+						+ "Anim_FullFrames$In_Out$Header$In 1.800 Anim_FullFrames$In_Out$Main$Ident$In 1.920 "
+						+ "Anim_FullFrames$In_Out$Footer$In 1.800 \0", print_writer);
+					break;
+				case "Control_d": case "Control_e"://PlayerProfile
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png Anim_FullFrames$In_Out$Essentials$In 2.140 "
+						+ "Anim_FullFrames$In_Out$Header$In 1.800 Anim_FullFrames$In_Out$Main$Profilet$In 2.300 "
+						+ "Anim_FullFrames$In_Out$Footer$In 1.800 \0", print_writer);
+					break;
+				case "Shift_K"://FFCurrPartnership
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png Anim_FullFrames$In_Out$Essentials$In 2.140 "
+						+ "Anim_FullFrames$In_Out$Header$In 1.800 Anim_FullFrames$In_Out$Main$Partnership$In 2.300 "
+						+ "Anim_FullFrames$In_Out$Footer$In 1.800 \0", print_writer);
+					break;
+				case "Alt_F9": // Single Teams
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png Anim_FullFrames$In_Out$Essentials$In 2.140 "
+						+ "Anim_FullFrames$In_Out$Header$In 1.800 Anim_FullFrames$In_Out$Main$Team_Single$In 1.860 "
+						+ "Anim_FullFrames$In_Out$Footer$In 1.800 \0", print_writer);
+					break;
+				}
+			}else if(whichside == 2) {
+				switch(whatToProcess.split(",")[0]) {
+				case "F1":case "Shift_K":case "Alt_F9": case "Control_d": case "Control_e":
+				case "m":case "Control_m":case "Shift_F10":case "Control_F10":case "F2":
+				case "F4":	case "Control_F7":	case "Control_F8": case "Control_F1":
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+							+ "/Default/FullFrames" + " C:/Temp/Preview.png Change 2.420 "+"\0", print_writer);
+					break;
+				}
+			}
+		}
+		return Constants.OK;
+	}
+
+	public String processL3Preview(String whatToProcess, List<PrintWriter> print_writer, int whichside) {
+		if(whatToProcess.contains(",")) {
+			if(whichside == 1) {
+				switch(whatToProcess.split(",")[0]) {
+				case "F5": case "F6": case "F7": case "F9": case "F11":
+				case "Control_F5": case "Control_F9": case "Control_a":  case "Control_c":
+				case "Shift_F3": case "s": case "d": case "e": case "v": case "b": case "h":
+				case "p": case "Control_p": case "Alt_k":
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+							+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$In_Out 2.980 "
+									+ "anim_Lower_Third$Essentials$In 1.400 anim_Lower_Third$Row$In 0.620 \0", print_writer);
+					break;
+				case "F8": case "F10": case "j":
+					if(this.infobar.isInfobar_on_screen() == true) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+								+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$In_Out 0.0 "
+										+ "anim_NameSupers$In 1.400 \0", print_writer);
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+								+ "/Default/Overlays" + " C:/Temp/Preview.png anim_NameSupers$In 1.400 "
+								+ "\0", print_writer);	
+					}
+					
+					break;
+				
+				}
+			}else if(whichside == 2) {
+				switch(whatToProcess.split(",")[0]) {
+				case "F5": case "F6": case "F7": case "F9": case "F11":
+				case "Control_F5": case "Control_F9": case "Control_a":  case "Control_c":
+				case "Shift_F3": case "s": case "d": case "e": case "v": case "b": case "h":
+				case "p": case "Control_p": case "Alt_k":
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+							+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_LtChange 1.300 \0", print_writer);
+					break;
+				case "F8": case "F10": case "j":
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+							+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_NameSuperChange 1.300 \0", print_writer);
+					break;
+				}
+			}
+		}
+		return  Constants.OK;
+		
 	}
 }

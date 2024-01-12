@@ -150,7 +150,7 @@ public class IndexController
 			last_match_time_stamp = new File(CricketUtil.CRICKET_SERVER_DIRECTORY + CricketUtil.MATCHES_DIRECTORY 
 				+ selectedMatch).lastModified();
 			
-			session_configuration = new Configuration(selectedMatch, select_broadcaster, select_second_broadcaster, 
+			session_configuration = new Configuration(selectedMatch, select_broadcaster, select_second_broadcaster,
 				vizIPAddress, vizPortNumber, vizLanguage, qtIPAddress, qtPortNumber, primaryVariousOptions, vizSecondaryIPAddress,
 				vizSecondaryPortNumber, vizSecondaryLanguage);
 			
@@ -298,6 +298,8 @@ public class IndexController
 					break;
 				}
 				this_caption.PopulateGraphics(valueToProcess, session_match);
+				System.out.println("this_caption = " + this_caption.getStatus());
+				System.out.println("this_animation = " + this_animation.specialBugOnScreen);
 				return JSONObject.fromObject(this_caption).toString();
 			}
 			else if(whatToProcess.contains("ANIMATE-IN-GRAPHICS") || whatToProcess.contains("ANIMATE-OUT-GRAPHICS")
