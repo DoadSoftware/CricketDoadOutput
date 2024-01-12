@@ -67,7 +67,9 @@ public class InfobarGfx
 			populateCurrentBatsmen(print_writers, matchAllData, 1);
 			populateVizInfobarBowler(print_writers, matchAllData, 1);
 			populateVizInfobarLeftBottom(print_writers, matchAllData, 1);
-			populateVizInfobarMiddleSection(print_writers, matchAllData, 1);
+			if(!infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
+				populateVizInfobarMiddleSection(print_writers, matchAllData, 1);
+			}
 			populateVizInfobarRightBottom(print_writers, matchAllData, 1, 1);
 			populateVizInfobarRightSection(print_writers, matchAllData, 1, 1);
 			break;
@@ -202,7 +204,10 @@ public class InfobarGfx
 				+ infobar.getBatsmanAndBowlOrSponsor() + "$Bat_" + WhichBatsman + "$Side" + WhichSubSide + "$txt_Balls*GEOM*TEXT SET " 
 				+ battingCardList.get(WhichBatsman-1).getBalls() + "\0", print_writers);
 			
-			if(battingCardList.get(0).getStatus().equalsIgnoreCase(CricketUtil.NOT_OUT)) {
+			System.out.println(battingCardList.size());
+			
+			if((WhichBatsman == 1 && battingCardList.get(0).getStatus().equalsIgnoreCase(CricketUtil.NOT_OUT)) || 
+					(WhichBatsman == 2 && battingCardList.get(1).getStatus().equalsIgnoreCase(CricketUtil.NOT_OUT))) {
 				this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bat_" + WhichBatsman + "_Lowlight", "SHOW 0.0");
 			} else {
 				this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bat_" + WhichBatsman + "_Lowlight", "SHOW 0.4");
@@ -483,8 +488,22 @@ public class InfobarGfx
 									+ inning.getTotalFours() + "\0", print_writers);
 						
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + 
+								"$Bowl_Part_All$Side" + WhichSubSide + "$Boundaries$Position$Boundaries$txt_FourHead*GEOM*TEXT SET " 
+									+ "FOUR" + CricketFunctions.Plural(inning.getTotalFours()).toUpperCase() + "\0", print_writers);
+						
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + 
 								"$Bowl_Part_All$Side" + WhichSubSide + "$Boundaries$Position$Boundaries$Sixes$txt_Six*GEOM*TEXT SET " 
 									+ inning.getTotalSixes() + "\0", print_writers);
+						
+						if(inning.getTotalSixes()==1) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + 
+									"$Bowl_Part_All$Side" + WhichSubSide + "$Boundaries$Position$Boundaries$txt_SixHead*GEOM*TEXT SET " 
+										+ "SIX" + "\0", print_writers);
+						}else {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + 
+									"$Bowl_Part_All$Side" + WhichSubSide + "$Boundaries$Position$Boundaries$txt_SixHead*GEOM*TEXT SET " 
+										+ "SIXES" + "\0", print_writers);
+						}
 						
 						break;
 					case "COMPARE":

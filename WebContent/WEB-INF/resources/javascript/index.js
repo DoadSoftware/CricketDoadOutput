@@ -65,12 +65,6 @@ function processUserSelection(whichInput)
 		document.getElementById('select_graphic_options_div').style.display = 'none';
 		$("#captions_div").show();
 		break;
-	case 'sendQuidichCommandsBtn':
-		processCricketProcedures("QUIDICH-COMMANDS", $('#selectQuidichGfxCommands option:selected').val());
-		$("#select_graphic_options_div").empty();
-		document.getElementById('select_graphic_options_div').style.display = 'none';
-		$("#captions_div").show();
-		break;
 	case 'populate_btn':
 		processCricketProcedures("POPULATE-GRAPHICS", $('#which_keypress').val() + ',' + selected_options.toString());
 		break;
@@ -92,13 +86,6 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			break;
 		case 'Alt_ ':
 			processCricketProcedures('CLEAR-ALL-WITH-INFOBAR');
-			break;
-		case 'Alt_=':
-			switch($('#selected_broadcaster').val()) {
-			case 'ICC-U19-2023':
-				addItemsToList('QUIDICH',null);
-				break;
-			}
 			break;
 		case ' ':
 			processCricketProcedures('CLEAR-ALL');
@@ -156,6 +143,9 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 				break;
 			//All key presses which doesn't require graphics population will come here
+			case '5': case '6': case '7': case '8': case '9':
+				processCricketProcedures("QUIDICH-COMMANDS", dataToProcess);
+				break;
 			case 'Alt_f': case 'Alt_g': case 'ArrowDown': case 'ArrowUp':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("ANIMATE-IN-GRAPHICS", dataToProcess);
@@ -222,6 +212,9 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 							}
 						} else {
 							alert(data.status);
+							$("#select_graphic_options_div").empty();
+							document.getElementById('select_graphic_options_div').style.display = 'none';
+							$("#captions_div").show();
 						}
 					}
 					session_caption = data;
@@ -255,96 +248,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	var select,option,header_text,div,table,tbody,row;
 	var cellCount = 0;
 	
-	switch(whatToProcess) {
-	case 'QUIDICH':
-		
-		$("#captions_div").hide();
-		header_text = document.createElement('h6');
-		header_text.innerHTML = 'Select Quidich Graphics Options';
-		document.getElementById('select_graphic_options_div').appendChild(header_text);
-		
-		table = document.createElement('table');
-		table.setAttribute('class', 'table table-bordered');
-				
-		tbody = document.createElement('tbody');
-
-		table.appendChild(tbody);
-		document.getElementById('select_graphic_options_div').appendChild(table);
-		
-		row = tbody.insertRow(tbody.rows.length);
-		
-		select = document.createElement('select');
-		select.id = 'selectQuidichGfxCommands';
-		select.name = select.id;
-		
-		for(var i = 1; i <= 9; i++){
-			option = document.createElement('option');
-			switch(i){
-			case 1:
-				option.value = 'F4';
-				option.text = 'Reset';
-				break;
-			case 2:
-				option.value = 'F6';
-				option.text = 'Stand By';
-				break;
-			case 3:
-				option.value = 'F7';
-				option.text = 'Animate In';
-				break;
-			case 4:
-				option.value = 'F8';
-				option.text = 'Stadium Animate Out';
-				break;
-			case 5:
-				option.value = 'F9';
-				option.text = 'Animate Out';
-				break;
-			case 6:
-				option.value = 'F';
-				option.text = 'Show Pitch Dimension';
-				break;
-			case 7:
-				option.value = 'S';
-				option.text = 'Show Stadium';
-				break;
-			case 8:
-				option.value = 'W';
-				option.text = 'Show Wind';
-				break;
-			case 9:
-				option.value = 'Z';
-				option.text = 'Zoom Pitch';
-				break;
-			}
-			select.appendChild(option);
-		}		
-		row.insertCell(0).appendChild(select);
-
-		option = document.createElement('input');
-		option.type = 'button';
-		option.name = 'sendQuidichCommandsBtn';
-		option.value = 'Send Quidich Commands';
-	    option.id = option.name;
-	    option.setAttribute('onclick',"processUserSelection(this)");
-	    
-	    div = document.createElement('div');
-	    div.append(option);
-
-		option = document.createElement('input');
-		option.type = 'button';
-		option.name = 'cancel_graphics_btn';
-		option.id = option.name;
-		option.value = 'Cancel';
-		option.setAttribute('onclick','processUserSelection(this)');
-
-	    div.append(option);
-	    
-	    row.insertCell(1).appendChild(div);
-		
-		document.getElementById('select_graphic_options_div').style.display = '';
-		break;
-		
+	switch(whatToProcess) {	
 	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11':
 	case 'Control_F5': case 'Control_F9': case 'Control_F8': case 'Control_d': case 'Control_e': case 's':
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'Shift_F5': case 'Shift_F9': case 'p': case 'q':

@@ -82,7 +82,6 @@ public class Animation
 				case "Shift_K": case "F4":
 					TimeUnit.MILLISECONDS.sleep(1500);
 					processAnimation(Constants.BACK, print_writers, "Sponsor", "START");
-					TimeUnit.MILLISECONDS.sleep(1500);
 					break;
 				case "Control_d": case "Control_e":
 					if(Integer.valueOf(whatToProcess.split(",")[4]) > 0) {
@@ -254,7 +253,7 @@ public class Animation
 				}
 				switch (whatToProcess.split(",")[0]) {
 				case "m": case "Shift_K":
-					processAnimation(Constants.BACK, print_writers, "Base_Gradient", "START");
+					processAnimation(Constants.BACK, print_writers, "Base_Gradient", "CONTINUE");
 					break;
 				}
 				TimeUnit.MILLISECONDS.sleep(1000);
@@ -398,7 +397,7 @@ public class Animation
 		}
 		return CricketUtil.YES;
 	}
-	public String CutBack(String whatToProcess,List<PrintWriter> print_writers, Configuration config)
+	public String CutBack(String whatToProcess,List<PrintWriter> print_writers, Configuration config) throws InterruptedException
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.ICC_U19_2023:
@@ -412,6 +411,7 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_Bottom_Left", "SHOW 0.0");
 				break;
 			case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6":
+				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo", "SHOW 0.0");
 				break;
 			case "Alt_7":
@@ -522,11 +522,31 @@ public class Animation
 		}
 	}
 	
-	public void processQuidichCommands(String whatToProcess, List<PrintWriter> print_writers, Configuration config)
+	public void processQuidichCommands(String whatToProcess, List<PrintWriter> print_writers, Configuration config) throws InterruptedException
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.ICC_U19_2023:
-			print_writers.get(0).printf("%s",whatToProcess);
+			switch(whatToProcess) {
+			case "5": // Reset
+				print_writers.get(0).printf("%s","F4");
+				break;
+			case "6": // Stand-By
+				print_writers.get(0).printf("%s","F6");
+				break;
+			case "7": //Animate-In
+				print_writers.get(0).printf("%s","F6");
+				TimeUnit.MILLISECONDS.sleep(100);
+				print_writers.get(0).printf("%s","F7");
+				break;
+			case "8": //Animate-Out
+				print_writers.get(0).printf("%s","F9");
+				TimeUnit.MILLISECONDS.sleep(1000);
+				print_writers.get(0).printf("%s","F4");
+				break;
+			case "9": //Load	
+				print_writers.get(0).printf("%s","LOAD");
+				break;
+			}
 			break;
 		}
 	}

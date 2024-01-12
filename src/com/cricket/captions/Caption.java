@@ -138,6 +138,7 @@ public class Caption
 				status = this_lowerThirdGfx.populateLTNameSuper(whatToProcess,whichSide);
 				break;
 			case "F12":// InfoBar
+				this_infobarGfx.infobar.setPowerplay_on_screen(false);
 				status = this_infobarGfx.populateInfobar(print_writers,whatToProcess,matchAllData);
 				break;
 			case "Control_F1":// Photo ScoreCard
@@ -204,7 +205,7 @@ public class Caption
 			case "Shift_F9"://Ball 012
 				status = this_lowerThirdGfx.populateBallSummary(whatToProcess,whichSide,matchAllData);
 				break;
-			case "h"://Teams 012
+			case "Alt_F12"://Teams 012
 				status = this_lowerThirdGfx.populateTeamSummary(whatToProcess,whichSide,matchAllData);
 				break;
 			case "p"://powerplay
@@ -213,7 +214,7 @@ public class Caption
 			case "Control_a"://Projected
 				status = this_lowerThirdGfx.populateL3rdProjected(whatToProcess,whichSide,matchAllData);
 				break;
-			case "Control_c"://Comparison
+			case "Control_F3"://Comparison
 				status = this_lowerThirdGfx.populateL3rdComparison(whatToProcess,whichSide,matchAllData);
 				break;	
 			case "Control_d": case "Control_e":
@@ -276,33 +277,39 @@ public class Caption
 				status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
 				break;
 			case "Alt_7":
-				this_infobarGfx.infobar.setRight_bottom(whatToProcess.split(",")[2]);
-				status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, 1, whichSide);
-				break;
-			case "Alt_8":
-				if(this_infobarGfx.infobar.getRight_section() != null && !this_infobarGfx.infobar.getRight_section().isEmpty()) {
-					if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
-						this_infobarGfx.infobar.setRight_top(whatToProcess.split(",")[2]);
-						this_infobarGfx.infobar.setRight_bottom("BOWLING_END");
-						
-						this_infobarGfx.populateVizInfobarBowler(print_writers, matchAllData, 1);
-						
-						this_infobarGfx.infobar.setRight_section("");this_infobarGfx.infobar.setLast_right_section("");
-					}else {
-						this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
-						this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, whichSide);
-					}
+				if(this_infobarGfx.infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
+					this_infobarGfx.infobar.setRight_bottom(whatToProcess.split(",")[2]);
+					status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, 1, whichSide);
 				}else {
-					this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
-					this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 1);
-					
-					this_infobarGfx.infobar.setRight_top("");this_infobarGfx.infobar.setRight_bottom("");
-					this_infobarGfx.infobar.setLast_right_top("");;this_infobarGfx.infobar.setLast_right_bottom("");
+					status = "IN Alt+2 Section BASTMAN/BOWLER NOT SELECTED";
 				}
 				break;
-				
+			case "Alt_8":
+				if(this_infobarGfx.infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
+					if(this_infobarGfx.infobar.getRight_section() != null && !this_infobarGfx.infobar.getRight_section().isEmpty()) {
+						if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
+							this_infobarGfx.infobar.setRight_top(whatToProcess.split(",")[2]);
+							this_infobarGfx.infobar.setRight_bottom("BOWLING_END");
+							
+							status = this_infobarGfx.populateVizInfobarBowler(print_writers, matchAllData, 1);
+							
+							this_infobarGfx.infobar.setRight_section("");this_infobarGfx.infobar.setLast_right_section("");
+						}else {
+							this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
+							status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, whichSide);
+						}
+					}else {
+						this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
+						status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 1);
+						
+						this_infobarGfx.infobar.setRight_top("");this_infobarGfx.infobar.setRight_bottom("");
+						this_infobarGfx.infobar.setLast_right_top("");;this_infobarGfx.infobar.setLast_right_bottom("");
+					}
+				}else {
+					status = "IN Alt+2 Section BASTMAN/BOWLER NOT SELECTED";
+				}
+				break;
 			}
 		}
-		status = Constants.OK;
 	}
 }

@@ -5,8 +5,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hamcrest.core.Is;
-
 import com.cricket.containers.LowerThird;
 import com.cricket.model.BattingCard;
 import com.cricket.model.BowlingCard;

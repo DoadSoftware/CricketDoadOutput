@@ -151,7 +151,8 @@ public class IndexController
 				+ selectedMatch).lastModified();
 			
 			session_configuration = new Configuration(selectedMatch, select_broadcaster, select_second_broadcaster, 
-				vizIPAddress, vizPortNumber, vizLanguage, qtIPAddress, qtPortNumber, primaryVariousOptions);
+				vizIPAddress, vizPortNumber, vizLanguage, qtIPAddress, qtPortNumber, primaryVariousOptions, vizSecondaryIPAddress,
+				vizSecondaryPortNumber, vizSecondaryLanguage);
 			
 			JAXBContext.newInstance(Configuration.class).createMarshaller().marshal(session_configuration, 
 					new File(CricketUtil.CRICKET_SERVER_DIRECTORY + CricketUtil.CONFIGURATIONS_DIRECTORY + configuration_file_name));
