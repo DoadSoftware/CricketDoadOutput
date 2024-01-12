@@ -1,4 +1,4 @@
-var session_match;
+var session_match, session_caption, session_animation;
 var selected_options = [];
 function processWaitingButtonSpinner(whatToProcess) 
 {
@@ -119,8 +119,6 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			
 		case '-':
 			
-/*			document.body.focus();
-			keys = [];*/
 			if(confirm('It will Also Delete Your Preview from Directory...\r\n \r\nAre You Sure To Animate Out? ') == true){
 				processCricketProcedures('ANIMATE-OUT-GRAPHICS');
 			}
@@ -128,8 +126,6 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			
 		case 'Alt_-':
 			
-/*			document.body.focus();
-			keys = [];*/
 			if(confirm('Animate Out Infobar? ') == true){
 				processCricketProcedures('ANIMATE-OUT-INFOBAR');
 			}
@@ -212,23 +208,31 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 			default:
 				switch(whatToProcess) {
 				case 'POPULATE-GRAPHICS':
-					if(data.status == 'OK') {
-						if(confirm('Animate In?') == true){
-							processCricketProcedures(whatToProcess.replace('POPULATE-', 'ANIMATE-IN-'),dataToProcess);
-							$("#select_graphic_options_div").empty();
-							document.getElementById('select_graphic_options_div').style.display = 'none';
-							$("#captions_div").show();
-						}
-					}else if(data.status == 'OUT'){
-						if(confirm('It will Also Delete Your Preview from Directory...\r\n \r\nAre You Sure To Animate Out? ') == true){
-							processCricketProcedures('ANIMATE-OUT-GRAPHICS',dataToProcess);
+					if(dataToProcess.includes('Alt_p')) {
+						if(session_animation.specialBugOnScreen.includes('TOSS')) {
+							processCricketProcedures("ANIMATE-OUT-GRAPHICS", dataToProcess);
 						}
 					} else {
-						alert(data.status);
+						if(data.status == 'OK') {
+							if(confirm('Animate In?') == true){
+								processCricketProcedures(whatToProcess.replace('POPULATE-', 'ANIMATE-IN-'),dataToProcess);
+								$("#select_graphic_options_div").empty();
+								document.getElementById('select_graphic_options_div').style.display = 'none';
+								$("#captions_div").show();
+							}
+						} else {
+							alert(data.status);
+						}
 					}
+					session_caption = data;
 					break;
 				case 'GRAPHICS-OPTIONS':
 					addItemsToList(dataToProcess,data);
+					break;
+				default:
+					if(whatToProcess.includes("ANIMATE-IN-") || whatToProcess.includes("ANIMATE-OUT-")) {
+						session_animation = data;
+					}
 					break;
 				}
 				break;

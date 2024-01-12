@@ -3,7 +3,6 @@ package com.cricket.captions;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import com.cricket.containers.Infobar;
 import com.cricket.model.Configuration;
 import com.cricket.util.CricketFunctions;
@@ -11,20 +10,36 @@ import com.cricket.util.CricketUtil;
 
 public class Animation 
 {
-	public String whichGraphicOnScreen = "";
+	public String whichGraphicOnScreen = "", specialBugOnScreen = "";
 	public Infobar infobar;
-	public Caption caption;
 	
-	
-	public Animation(Infobar infobar, Caption caption) {
+	public Animation(Infobar infobar) {
 		super();
 		this.infobar = infobar;
-		this.caption = caption;
 	}
 
 	public Animation() {
 		super();
 	}
+	public void setPositionOfLowerThirds(Configuration config, List<PrintWriter> print_writers) 
+	{
+		switch (config.getBroadcaster().toUpperCase()) {
+		case Constants.ICC_U19_2023:
+			if(this.infobar.isInfobar_on_screen() == true) {
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Overall_Position_Y*"
+					+ "TRANSFORMATION*POSITION*Y SET 90.0 \0",print_writers);
+			}else if(this.specialBugOnScreen.equalsIgnoreCase(CricketUtil.TOSS)) {
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Overall_Position_Y*"
+					+ "TRANSFORMATION*POSITION*Y SET 106.0 \0",print_writers);
+			}else {
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Overall_Position_Y*"
+						+ "TRANSFORMATION*POSITION*Y SET 56.0 \0",print_writers);
+			}
+			break;
+		}
+		
+	}
+	
 	public String getTypeOfGraphicsOnScreen(String whatToProcess)
 	{
 		switch (whatToProcess.split(",")[0]) {
@@ -105,17 +120,8 @@ public class Animation
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "F8": case "F10":
-				if(this.infobar.isInfobar_on_screen() == true) {
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Overall_Position_Y*"
-						+ "TRANSFORMATION*POSITION*Y SET 90.0 \0",print_writers);
-				}else if(this.caption.isSpecialBug_on_screen() == true) {
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Overall_Position_Y*"
-						+ "TRANSFORMATION*POSITION*Y SET 106.0 \0",print_writers);
-				}else {
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Overall_Position_Y*"
-							+ "TRANSFORMATION*POSITION*Y SET 56.0 \0",print_writers);
-				}
-
+				
+				setPositionOfLowerThirds(config, print_writers);
 				AnimateIn(Constants.MIDDLE + Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
 				processAnimation(Constants.FRONT, print_writers, "anim_NameSupers", "START");
 				processAnimation(Constants.FRONT, print_writers, "HeaderDynamic", "START");
@@ -139,7 +145,7 @@ public class Animation
 			case "Alt_p":
 				processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "START");
 				this.whichGraphicOnScreen = "";
-				this.caption.setSpecialBug_on_screen(true);
+				this.specialBugOnScreen = CricketUtil.TOSS;
 				break;
 				
 			case "Shift_O": case "Control_k": case "k": case "g": case "f":
@@ -272,8 +278,10 @@ public class Animation
 				break;
 				
 			case "Alt_p":
-				processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "CONTINUE");
-				this.caption.setSpecialBug_on_screen(false);
+				if(this.specialBugOnScreen.equalsIgnoreCase(CricketUtil.TOSS)) {
+					processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "CONTINUE");
+					this.specialBugOnScreen = "";
+				}
 				break;
 				
 			case "q":
@@ -495,9 +503,9 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar", "SHOW 0.0");
 				this.infobar.setInfobar_on_screen(false);
 				this.infobar.setInfobar_status("");
-				this.infobar.setInfobar_on_screen(false);
 			}
 			this.whichGraphicOnScreen = "";
+			this.specialBugOnScreen = "";
 			break;
 		}
 		return CricketUtil.YES;

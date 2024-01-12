@@ -159,7 +159,7 @@ public class IndexController
 			print_writers = CricketFunctions.processPrintWriter(session_configuration);
 			
 			this_scene = new Scene();
-			this_animation = new Animation(new Infobar(),new Caption());
+			this_animation = new Animation(new Infobar());
 			
 			switch (select_broadcaster) {
 			case Constants.ICC_U19_2023:
@@ -296,13 +296,8 @@ public class IndexController
 					}
 					break;
 				}
-				if(this_animation.caption.isSpecialBug_on_screen() == true && valueToProcess.split(",")[0].equalsIgnoreCase("Alt_p")) {
-					this_caption.setStatus("OUT");
-					return JSONObject.fromObject(this_caption).toString();
-				}else {
-					this_caption.PopulateGraphics(valueToProcess, session_match);
-					return JSONObject.fromObject(this_caption).toString();
-				}
+				this_caption.PopulateGraphics(valueToProcess, session_match);
+				return JSONObject.fromObject(this_caption).toString();
 			}
 			else if(whatToProcess.contains("ANIMATE-IN-GRAPHICS") || whatToProcess.contains("ANIMATE-OUT-GRAPHICS")
 				|| whatToProcess.contains("ANIMATE-OUT-INFOBAR") || whatToProcess.contains("QUIDICH-COMMANDS")) {
@@ -329,21 +324,28 @@ public class IndexController
 						break;
 					}
 				} else if(whatToProcess.contains("ANIMATE-OUT-GRAPHICS")) {
-					if(this_animation.caption.isSpecialBug_on_screen() == true && valueToProcess.split(",")[0].equalsIgnoreCase("Alt_p")) {
-						this_animation.AnimateOut(valueToProcess.split(",")[0], print_writers, session_configuration);
-					}else {
-						this_animation.AnimateOut(this_animation.whichGraphicOnScreen, print_writers, session_configuration);
+					switch (valueToProcess.split(",")[0]) {
+					case "Alt_p":
+						if(!this_animation.whichGraphicOnScreen.isEmpty()) {
+							this_caption.setStatus("Cannot animate out bugs while " + 
+								this_animation.whichGraphicOnScreen + " is on screen");
+							return JSONObject.fromObject(this_caption).toString();
+						}
+						this_animation.whichGraphicOnScreen = valueToProcess.split(",")[0];
+						break;
 					}
+					this_animation.AnimateOut(this_animation.whichGraphicOnScreen, print_writers, session_configuration);
 				}else if(whatToProcess.contains("ANIMATE-OUT-INFOBAR")) {
 					this_animation.AnimateOut("F12,", print_writers, session_configuration);
 				}else if(whatToProcess.contains("QUIDICH-COMMANDS")) {
 					this_animation.processQuidichCommands(valueToProcess, print_writers, session_configuration);
 				}
-				
+				return JSONObject.fromObject(this_animation).toString();
 			} else if(whatToProcess.contains("CLEAR-ALL") || whatToProcess.contains("CLEAR-ALL-WITH-INFOBAR")) {
 				this_animation.ResetAnimation(whatToProcess, print_writers, session_configuration);
+				return JSONObject.fromObject(this_animation).toString();
 			}
-			return JSONObject.fromObject(session_match).toString();
+			return JSONObject.fromObject(null).toString();
 		}
 	}
 	@ModelAttribute("session_configuration")
