@@ -72,6 +72,7 @@ public class Animation
 			case "Shift_K": case "Alt_F9":
 				
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
+				TimeUnit.MILLISECONDS.sleep(500);
 				
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames", "START");
 				
@@ -113,6 +114,7 @@ public class Animation
 				}
 				
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
+				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "Essentials", "START");
 				processAnimation(Constants.FRONT, print_writers, "Row", "START");
 				processAnimation(Constants.FRONT, print_writers, "HeaderDynamic", "START");
@@ -122,6 +124,7 @@ public class Animation
 				
 				setPositionOfLowerThirds(config, print_writers);
 				AnimateIn(Constants.MIDDLE + Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
+				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "anim_NameSupers", "START");
 				processAnimation(Constants.FRONT, print_writers, "HeaderDynamic", "START");
 				this.whichGraphicOnScreen = whatToProcess;
@@ -136,6 +139,7 @@ public class Animation
 						+ "TRANSFORMATION*POSITION*Y SET 3.0 \0",print_writers);
 				}
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
+				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "anim_Boundary_LT", "START");
 				processAnimation(Constants.FRONT, print_writers, "HeaderDynamic", "START");
 				this.whichGraphicOnScreen = whatToProcess;
@@ -172,6 +176,9 @@ public class Animation
 				}
 				break;
 			case "Alt_f": case "Alt_g": case Constants.SHRUNK_INFOBAR: case Constants.MIDDLE + Constants.SHRUNK_INFOBAR:
+				System.out.println("this.infobar.isInfobar_on_screen() = " + this.infobar.isInfobar_on_screen());
+				System.out.println("whatToProcess = " + whatToProcess);
+				System.out.println("this.infobar.setInfobar_status = " + this.infobar.getInfobar_status());
 				if(this.infobar.isInfobar_on_screen() == true) {
 					switch (whatToProcess.split(",")[0]) {
 					case "Alt_f": 
@@ -655,20 +662,12 @@ public class Animation
 				case "Shift_F3": case "s": case "d": case "e": case "v": case "b": case "h":
 				case "p": case "Control_p": case "Alt_k":
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-							+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$In_Out 2.980 "
-									+ "anim_Lower_Third$Essentials$In 1.400 anim_Lower_Third$Row$In 0.620 \0", print_writer);
+						+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$In_Out 2.980 "
+						+ "anim_Lower_Third$Essentials$In 1.400 anim_Lower_Third$Row$In 0.620 \0", print_writer);
 					break;
 				case "F8": case "F10": case "j":
-					if(this.infobar.isInfobar_on_screen() == true) {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-								+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$In_Out 0.0 "
-										+ "anim_NameSupers$In 1.400 \0", print_writer);
-					}else {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-								+ "/Default/Overlays" + " C:/Temp/Preview.png anim_NameSupers$In 1.400 "
-								+ "\0", print_writer);	
-					}
-					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$In_Out 0.0 "
+						+ "anim_NameSupers$In 1.400 \0", print_writer);
 					break;
 				
 				}

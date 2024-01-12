@@ -135,17 +135,17 @@ public class IndexController
 				throws StreamWriteException, DatabindException, IllegalAccessException, InvocationTargetException, 
 				JAXBException, IOException, URISyntaxException, ParseException, InterruptedException 
 	{
-		if(current_date == null || current_date.isEmpty()) {
-			
-			model.addAttribute("error_message","You must be connected to the internet online");
-			return "error";
-		
-		} else if(new SimpleDateFormat("yyyy-MM-dd").parse(expiry_date).before(new SimpleDateFormat("yyyy-MM-dd").parse(current_date))) {
-			
-			model.addAttribute("error_message","This software has expired");
-			return "error";
-			
-		}else {
+//		if(current_date == null || current_date.isEmpty()) {
+//			
+//			model.addAttribute("error_message","You must be connected to the internet online");
+//			return "error";
+//		
+//		} else if(new SimpleDateFormat("yyyy-MM-dd").parse(expiry_date).before(new SimpleDateFormat("yyyy-MM-dd").parse(current_date))) {
+//			
+//			model.addAttribute("error_message","This software has expired");
+//			return "error";
+//			
+//		}else {
 
 			last_match_time_stamp = new File(CricketUtil.CRICKET_SERVER_DIRECTORY + CricketUtil.MATCHES_DIRECTORY 
 				+ selectedMatch).lastModified();
@@ -205,7 +205,7 @@ public class IndexController
 			model.addAttribute("select_second_broadcaster", select_second_broadcaster);
 			model.addAttribute("select_broadcaster", select_broadcaster);
 			return "output";
-		}
+//		}
 	}
 
 	@RequestMapping(value = {"/processCricketProcedures"}, method={RequestMethod.GET,RequestMethod.POST})    
@@ -256,6 +256,7 @@ public class IndexController
 			return JSONObject.fromObject(session_match).toString();
 		
 		default:
+			
 			if(whatToProcess.contains("GRAPHICS-OPTIONS")) {
 				return JSONArray.fromObject(GetGraphicOption(valueToProcess)).toString();
 			} else if(whatToProcess.contains("POPULATE-GRAPHICS")) {
@@ -298,8 +299,6 @@ public class IndexController
 					break;
 				}
 				this_caption.PopulateGraphics(valueToProcess, session_match);
-				System.out.println("this_caption = " + this_caption.getStatus());
-				System.out.println("this_animation = " + this_animation.specialBugOnScreen);
 				return JSONObject.fromObject(this_caption).toString();
 			}
 			else if(whatToProcess.contains("ANIMATE-IN-GRAPHICS") || whatToProcess.contains("ANIMATE-OUT-GRAPHICS")
