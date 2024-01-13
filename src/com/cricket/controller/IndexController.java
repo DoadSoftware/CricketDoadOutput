@@ -382,8 +382,7 @@ public class IndexController
 			    }
 			}), cricketService);
 			session_statistics = cricketService.getAllStats();
-			past_tournament_stats = CricketFunctions.extractTournamentStats(
-				"PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
+			past_tournament_stats = CricketFunctions.extractTournamentStats("PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
 			session_name_super =  cricketService.getNameSupers();
 			session_fixture =  CricketFunctions.processAllFixtures(cricketService);
 			session_team =  cricketService.getTeams();

@@ -10,6 +10,7 @@ public class Infobar {
 	private boolean infobar_on_screen = false;
 	private boolean powerplay_on_screen = false;
 	private boolean infobar_pushed = false;
+	private boolean thisOvers_Title_Fade = false;
 	
 	private int player_id;
 	
@@ -149,5 +150,10 @@ public class Infobar {
 	public void setLast_right_top(String last_right_top) {
 		Last_right_top = last_right_top;
 	}
-	
+	public boolean isThisOvers_Title_Fade() {
+		return thisOvers_Title_Fade;
+	}
+	public void setThisOvers_Title_Fade(boolean thisOvers_Title_Fade) {
+		this.thisOvers_Title_Fade = thisOvers_Title_Fade;
+	}
 }

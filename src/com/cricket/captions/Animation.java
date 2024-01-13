@@ -317,7 +317,7 @@ public class Animation
 				return CricketUtil.NO;
 			}	
 			switch(whatToProcess.split(",")[0]) {
-			case "F1": case "F2": case "F4": case "Shift_F11":
+			case "F1": case "F2": case "F4": case "Shift_F11": case "Control_F8":
 				processAnimation(Constants.BACK, print_writers, "Change$Header", "START");
 				processAnimation(Constants.BACK, print_writers, "Change$Footer", "START");
 				if(whichGraphicOnScreen.contains(",")) {
@@ -333,6 +333,10 @@ public class Animation
 						break;
 					case "Shift_F11":
 						processAnimation(Constants.BACK, print_writers, "Change$Summary", "START");
+						break;
+					case "Control_F8":
+						processAnimation(Constants.BACK, print_writers, "Change$LineUp_Image", "START");
+						TimeUnit.MILLISECONDS.sleep(1000);
 						break;
 					}
 				}
@@ -432,7 +436,7 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "Anim_NameSuperChange", "SHOW 0.0");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
-			case "F1": case "F2": case "F4": case "Shift_F11":
+			case "F1": case "F2": case "F4": case "Shift_F11": case "Control_F8":
 				processAnimation(Constants.BACK, print_writers, "Change$Header", "SHOW 0.0");
 				processAnimation(Constants.BACK, print_writers, "Change$Footer", "SHOW 0.0");
 				switch(whichGraphicOnScreen.split(",")[0]) {
@@ -447,6 +451,9 @@ public class Animation
 					break;
 				case "Shift_F11":
 					processAnimation(Constants.BACK, print_writers, "Change$Summary", "SHOW 0.0");
+					break;
+				case "Control_F8":
+					processAnimation(Constants.BACK, print_writers, "Change$LineUp_Image", "SHOW 0.0");
 					break;
 				}
 				if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase(whatToProcess.split(",")[0])) {

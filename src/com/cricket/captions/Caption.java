@@ -88,8 +88,7 @@ public class Caption
 		this.status = status;
 	}
 
-	public void PopulateGraphics(String whatToProcess, MatchAllData matchAllData) 
-		throws InterruptedException, JsonMappingException, JsonProcessingException, 
+	public void PopulateGraphics(String whatToProcess, MatchAllData matchAllData) throws InterruptedException, JsonMappingException, JsonProcessingException, 
 		NumberFormatException, ParseException
 	{
 		if(whatToProcess.contains(",")) {
@@ -291,7 +290,7 @@ public class Caption
 						status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 1);
 						
 						this_infobarGfx.infobar.setRight_top("");this_infobarGfx.infobar.setRight_bottom("");
-						this_infobarGfx.infobar.setLast_right_top("");;this_infobarGfx.infobar.setLast_right_bottom("");
+						this_infobarGfx.infobar.setLast_right_top("");this_infobarGfx.infobar.setLast_right_bottom("");
 					}
 				}else {
 					status = "IN Alt+2 Section BASTMAN/BOWLER NOT SELECTED";
@@ -317,6 +316,5 @@ public class Caption
 			}
 			break;
 		}
-		status = Constants.OK;
 	}
 }
