@@ -17,6 +17,7 @@ import com.cricket.model.Player;
 import com.cricket.model.Statistics;
 import com.cricket.model.StatsType;
 import com.cricket.model.Team;
+import com.cricket.model.Tournament;
 import com.cricket.util.CricketUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -34,6 +35,7 @@ public class Caption
 	public List<Statistics> statistics;
 	public List<StatsType> statsTypes;
 	public List<MatchAllData> tournament_matches;
+	public List<Tournament> tournament;
 	public List<NameSuper> nameSupers;
 	public List<Fixture> fixTures;
 	public List<Team> Teams;
@@ -60,7 +62,7 @@ public class Caption
 	public Caption(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics,
 		List<StatsType> statsTypes, List<MatchAllData> tournament_matches, List<NameSuper> nameSupers,List<Bugs> bugs,
 		List<Fixture> fixTures, List<Team> Teams, List<Ground> Grounds,FullFramesGfx this_fullFramesGfx,
-		LowerThirdGfx this_lowerThirdGfx, int whichSide, String whichGraphhicsOnScreen, String slashOrDash) {
+		LowerThirdGfx this_lowerThirdGfx, int whichSide, String whichGraphhicsOnScreen, String slashOrDash, List<Tournament> tournament) {
 	
 		super();
 		this.print_writers = print_writers;
@@ -72,10 +74,11 @@ public class Caption
 		this.fixTures = fixTures;
 		this.Teams = Teams;
 		this.Grounds = Grounds;
+		this.tournament = tournament;
 		this.this_fullFramesGfx = new FullFramesGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
 				nameSupers, fixTures, Teams, Grounds);
 		this.this_lowerThirdGfx = new LowerThirdGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
-				nameSupers, fixTures, Teams, Grounds);
+				nameSupers, fixTures, Teams, Grounds,tournament);
 		this.whichSide = whichSide;
 		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers, statistics, statsTypes, tournament_matches);
 		this.this_bugsAndMiniGfx = new BugsAndMiniGfx(print_writers, config, tournament_matches, bugs, Teams, Grounds);
@@ -147,6 +150,9 @@ public class Caption
 				break;
 			case "Control_F10":
 				status = this_fullFramesGfx.populateManhattan(whichSide, whatToProcess.split(",")[0],matchAllData,Integer.valueOf(whatToProcess.split(",")[1]));
+				break;
+			case "Control_s":
+				status = this_lowerThirdGfx.populateL3rdThisSeries(whatToProcess,whichSide,matchAllData);
 				break;
 			case "Shift_F3": //Fall of Wicket
 				status = this_lowerThirdGfx.populateFOW(whatToProcess, whichSide, matchAllData);
@@ -224,6 +230,12 @@ public class Caption
 			case "Shift_O":
 				status = this_bugsAndMiniGfx.bugsDismissal(whatToProcess,matchAllData,whichSide);
 				break;
+			case "Control_F6":
+				status = this_lowerThirdGfx.populateQuickHowOut(whatToProcess,whichSide,matchAllData);
+				break;
+			case "Shift_F6":
+				status = this_lowerThirdGfx.populateHowOutWithOutFielder(whatToProcess,whichSide,matchAllData);
+				break;	
 			case "Alt_F9": // Single Teams
 				status = this_fullFramesGfx.populateSingleTeams(whichSide, whatToProcess, matchAllData, 0);
 				break;
