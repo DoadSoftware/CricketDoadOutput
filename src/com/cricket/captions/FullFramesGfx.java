@@ -81,12 +81,18 @@ public class FullFramesGfx
 		
 	public String PopulateScorecardFF(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException
 	{
+		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == WhichInning)
+				.findAny().orElse(null);
+		if(inning == null) {
+			return "populateMatchSummary: current inning is NULL";
+		}
+		
 		status = PopulateFfHeader(WhichSide, whatToProcess, matchAllData, WhichInning);
 		if(status == Constants.OK) {
 			status = PopulateFfBody(WhichSide, whatToProcess, matchAllData, WhichInning);
 			if(status == Constants.OK) {
 				setFullFrameFooterPosition(WhichSide, 1);
-				setCuncussionForAlloutPartnership(11);
+				setCuncussionForAlloutPartnership(inning.getBattingCard().size());
 				return PopulateFfFooter(WhichSide, whatToProcess, matchAllData, WhichInning);
 			} else {
 				return status;
@@ -165,6 +171,7 @@ public class FullFramesGfx
 			status = PopulateFfBody(WhichSide, whatToProcess, matchAllData, WhichInning);
 			if(status == Constants.OK) {
 				setFullFrameFooterPosition(WhichSide, 2);
+				setCuncussionForAlloutPartnership(inning.getBattingCard().size());
 				return PopulateFfFooter(WhichSide, whatToProcess, matchAllData, WhichInning);
 			} else {
 				return status;
@@ -225,13 +232,24 @@ public class FullFramesGfx
 	}
 	public String populatePartnership(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException 
 	{
-		
+		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == WhichInning)
+				.findAny().orElse(null);
+		if(inning == null) {
+			return "populateMatchSummary: current inning is NULL";
+		}
 		status = PopulateFfHeader(WhichSide, whatToProcess.split(",")[0], matchAllData, WhichInning);
 		if(status == Constants.OK) {
 			setCuncussionForAlloutPartnership(10);
 			status = PopulateFfBody(WhichSide, whatToProcess.split(",")[0], matchAllData, WhichInning);
 			if(status == Constants.OK) {
 				setFullFrameFooterPosition(WhichSide, 1);
+				if(inning.getPartnerships().size()>=10) {
+					setCuncussionForAlloutPartnership(inning.getPartnerships().size());
+				}else {
+					setCuncussionForAlloutPartnership(inning.getBattingCard().size());
+				}
+				
+				
 				return PopulateFfFooter(WhichSide, whatToProcess.split(",")[0], matchAllData, WhichInning);
 			} else {
 				return status;
@@ -295,6 +313,7 @@ public class FullFramesGfx
 			status = PopulateFfBody(WhichSide, whatToProcess, matchAllData, 0);
 			if(status == Constants.OK) {
 				setFullFrameFooterPosition(WhichSide, 2);
+				setCuncussionForAlloutPartnership(12);
 				return PopulateFfFooter(WhichSide, whatToProcess, matchAllData, 0);
 			} else {
 				return status;
@@ -357,6 +376,7 @@ public class FullFramesGfx
 			status = PopulateFfBody(WhichSide, whatToProcess, matchAllData, WhichInning);
 			if(status == Constants.OK) {
 				setFullFrameFooterPosition(WhichSide, 1);
+				setCuncussionForAlloutPartnership(12);
 				return PopulateFfFooter(WhichSide, whatToProcess, matchAllData, WhichInning);
 			} else {
 				return status;
@@ -381,6 +401,7 @@ public class FullFramesGfx
 			status = PopulateFfBody(WhichSide, whatToProcess, matchAllData, WhichInning);
 			if(status == Constants.OK) {
 				setFullFrameFooterPosition(WhichSide, 2);
+				setCuncussionForAlloutPartnership(12);
 				return PopulateFfFooter(WhichSide, whatToProcess, matchAllData, WhichInning);
 			} else {
 				return status;
@@ -486,11 +507,11 @@ public class FullFramesGfx
 		}
 	}
 	public void setCuncussionForAlloutPartnership(int noOfRows) {
-		
+
 		List<String> ConcussExtend_Y = new ArrayList<String>();
-		
+			
 		switch(noOfRows) {
-		case 10:
+			case 10:
 			ConcussExtend_Y.add("0.0 -25.0 0.0");
 			ConcussExtend_Y.add("0.0 25.0 0.0");
 			ConcussExtend_Y.add("690.0");
@@ -552,6 +573,7 @@ public class FullFramesGfx
 				+ "*ANIMATION*KEY*$F_Out_1*VALUE SET " + ConcussExtend_Y.get(4) + "\0", print_writers);
 		
 	}
+
 
 	public String PopulateFfHeader(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) 
 	{
