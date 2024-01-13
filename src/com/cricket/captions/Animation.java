@@ -12,6 +12,8 @@ public class Animation
 {
 	public String whichGraphicOnScreen = "", specialBugOnScreen = "", status = "";
 	public Infobar infobar;
+	public Caption caption;
+	public int lastNumberOfRows = 0;
 	
 	public Animation(Infobar infobar) {
 		super();
@@ -71,6 +73,7 @@ public class Animation
 			case "Control_F8": case "Control_d": case "Control_e": case "Control_F7": case "Control_F10":
 			case "Shift_K": case "Alt_F9":
 				
+				setVariousAnimationsKeys("ANIMATE-IN", print_writers, config);
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
 				TimeUnit.MILLISECONDS.sleep(500);
 				
@@ -97,6 +100,7 @@ public class Animation
 					break;
 				}
 				this.whichGraphicOnScreen = whatToProcess;
+				lastNumberOfRows = caption.this_fullFramesGfx.numberOfRows;
 				break;
 			
 			//NameSuperDB, HOWOUT, LTBatProfile, NameSuperPlayer, LtBallProfile, BatThisMatch, BallThisMatch
@@ -107,10 +111,10 @@ public class Animation
 				
 				if(this.infobar.isInfobar_on_screen() == true) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Overall_Position_Y*"
-							+ "TRANSFORMATION*POSITION*Y SET 40.0 \0",print_writers);
+						+ "TRANSFORMATION*POSITION*Y SET 40.0 \0",print_writers);
 				}else {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Overall_Position_Y*"
-							+ "TRANSFORMATION*POSITION*Y SET 3.0 \0",print_writers);
+						+ "TRANSFORMATION*POSITION*Y SET 3.0 \0",print_writers);
 				}
 				
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
@@ -318,6 +322,7 @@ public class Animation
 			}	
 			switch(whatToProcess.split(",")[0]) {
 			case "F1": case "F2": case "F4": case "Shift_F11": case "Control_F8":
+				setVariousAnimationsKeys("CHANGE-ON", print_writers, config);
 				processAnimation(Constants.BACK, print_writers, "Change$Header", "START");
 				processAnimation(Constants.BACK, print_writers, "Change$Footer", "START");
 				if(whichGraphicOnScreen.contains(",")) {
@@ -355,6 +360,13 @@ public class Animation
 						processAnimation(Constants.BACK, print_writers, "Change$Summary", "START");
 						break;
 					}
+				}
+				System.out.println("lastNumberOfRows = " + lastNumberOfRows);
+				System.out.println("caption.this_fullFramesGfx.numberOfRows = " + caption.this_fullFramesGfx.numberOfRows);
+				if(caption.this_fullFramesGfx.numberOfRows != lastNumberOfRows) {
+					System.out.println("ConcussExtend_Y START");
+					processAnimation(Constants.BACK, print_writers, "ConcussExtend_Y", "START");
+					lastNumberOfRows = caption.this_fullFramesGfx.numberOfRows;
 				}
 				break;
 			case "F5": case "F6": case "F7": case "F9": case "F11":
@@ -472,6 +484,8 @@ public class Animation
 						break;
 					}
 				}
+				setVariousAnimationsKeys("CUT-BACK", print_writers, config);
+				processAnimation(Constants.BACK, print_writers, "ConcussExtend_Y", "SHOW 0.0");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			}
@@ -553,6 +567,105 @@ public class Animation
 				break;
 			case "9": //Load	
 				print_writers.get(0).printf("%s","LOAD");
+				break;
+			}
+			break;
+		}
+	}
+	
+	public void setVariousAnimationsKeys(String whatToProcess, List<PrintWriter> print_writers, Configuration config) 
+	{
+		switch (config.getBroadcaster()) {
+		case Constants.ICC_U19_2023:
+			
+			float MoveForExtraData, BasePositionY = 0f, obj_BiggerBase = 0f, obj__Mask_6_ = 0f, PositionY = 0f, Sponsor = 0f;
+			
+			switch(caption.this_fullFramesGfx.numberOfRows) {
+			case 10:
+				MoveForExtraData = -25f;
+				BasePositionY = 25f;
+				obj_BiggerBase = 690f;
+				obj__Mask_6_ = 690f;
+				PositionY = 50f;
+				Sponsor = -330f;
+				break;
+			case 12:
+				MoveForExtraData = 25f;
+				BasePositionY = -25f;
+				obj_BiggerBase = 790f;
+				obj__Mask_6_ = 790f;
+				PositionY = -50f;
+				Sponsor = -430f;
+				break;
+			case 13:
+				MoveForExtraData = 50f;
+				BasePositionY = -50f;
+				obj_BiggerBase = 840f;
+				obj__Mask_6_ = 840f;
+				PositionY = -100f;
+				Sponsor = -480f;
+				break;
+			default: // 11 straps
+				MoveForExtraData = 0f;
+				BasePositionY = 0f;
+				obj_BiggerBase = 740f;
+				obj__Mask_6_ = 740f;
+				PositionY = 0f;
+				Sponsor = -380f;
+			}
+
+			switch (whatToProcess) {
+			case "ANIMATE-IN":
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$MoveForExtraData"
+					+ "*ANIMATION*KEY*$ED_In_1*VALUE SET 0.0 " + MoveForExtraData + " 0.0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$MoveForExtraData"
+					+ "*ANIMATION*KEY*$ED_Out_1*VALUE SET 0.0 " + MoveForExtraData + " 0.0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$BasePositionY"
+					+ "*ANIMATION*KEY*$E_In_1*VALUE SET 0.0 " + BasePositionY + " 0.0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$BasePositionY"
+					+ "*ANIMATION*KEY*$E_Out_1*VALUE SET 0.0 " + BasePositionY + " 0.0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$obj_BiggerBase"
+					+ "*ANIMATION*KEY*$BB_In_1*VALUE SET " + obj_BiggerBase + " \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$obj_BiggerBase"
+					+ "*ANIMATION*KEY*$BB_Out_1*VALUE SET " + obj_BiggerBase + " \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$obj__Mask_6_"
+					+ "*ANIMATION*KEY*$MA_In_1*VALUE SET " + obj__Mask_6_ + " \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$obj__Mask_6_"
+					+ "*ANIMATION*KEY*$MA_Out_1*VALUE SET " + obj__Mask_6_ + " \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$FooterAll$Footer$PositionY"
+					+ "*ANIMATION*KEY*$F_In_1*VALUE SET 0.0 " + PositionY + " 0.0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$FooterAll$Footer$PositionY"
+					+ "*ANIMATION*KEY*$F_Out_1*VALUE SET 0.0 " + PositionY + " 0.0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
+					+ "*ANIMATION*KEY*$S_In_1*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);
+				break;
+			case "CHANGE-ON":
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$MoveForExtraData"
+					+ "*ANIMATION*KEY*$In_2*VALUE SET 0.0 " + MoveForExtraData + " 0.0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$BasePositionY"
+					+ "*ANIMATION*KEY*$In_2*VALUE SET 0.0 " + BasePositionY + " 0.0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$obj_BiggerBase"
+					+ "*ANIMATION*KEY*$In_2*VALUE SET " + obj_BiggerBase + " \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$obj__Mask_6_"
+					+ "*ANIMATION*KEY*$In_2*VALUE SET " + obj__Mask_6_ + " \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$FooterAll$Footer$PositionY"
+					+ "*ANIMATION*KEY*$In_2*VALUE SET 0.0 " + PositionY + " 0.0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
+					+ "*ANIMATION*KEY*$In_2*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);				
+				break;
+			case "CUT-BACK":
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$MoveForExtraData"
+					+ "*ANIMATION*KEY*$In_1*VALUE SET 0.0 " + MoveForExtraData + " 0.0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$BasePositionY"
+					+ "*ANIMATION*KEY*$In_1*VALUE SET 0.0 " + BasePositionY + " 0.0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$obj_BiggerBase"
+					+ "*ANIMATION*KEY*$In_1*VALUE SET " + obj_BiggerBase + " \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$obj__Mask_6_"
+					+ "*ANIMATION*KEY*$In_1*VALUE SET " + obj__Mask_6_ + " \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$FooterAll$Footer$PositionY"
+					+ "*ANIMATION*KEY*$In_1*VALUE SET 0.0 " + PositionY + " 0.0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
+					+ "*ANIMATION*KEY*$In_1*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);				
 				break;
 			}
 			break;
@@ -732,7 +845,8 @@ public class Animation
 	@Override
 	public String toString() {
 		return "Animation [whichGraphicOnScreen=" + whichGraphicOnScreen + ", specialBugOnScreen=" + specialBugOnScreen
-				+ ", status=" + status + ", infobar=" + infobar + "]";
+				+ ", status=" + status + ", caption=" + caption + ", lastNumberOfRows="
+				+ lastNumberOfRows + "]";
 	}
-	
+
 }

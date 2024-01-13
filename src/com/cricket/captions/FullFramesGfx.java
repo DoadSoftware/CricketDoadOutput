@@ -28,7 +28,7 @@ import com.cricket.util.CricketUtil;
 
 public class FullFramesGfx 
 {
-	public int FirstPlayerId, rowId = 0;
+	public int FirstPlayerId, rowId = 0, numberOfRows = 0;
 	public String WhichProfile, WhichStyle, WhichType, status = "", containerName = "",containerName_2 = "";
 	
 	public List<PrintWriter> print_writers; 
@@ -82,17 +82,16 @@ public class FullFramesGfx
 	public String PopulateScorecardFF(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException
 	{
 		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == WhichInning)
-				.findAny().orElse(null);
+			.findAny().orElse(null);
 		if(inning == null) {
 			return "populateMatchSummary: current inning is NULL";
 		}
-		
 		status = PopulateFfHeader(WhichSide, whatToProcess, matchAllData, WhichInning);
 		if(status == Constants.OK) {
 			status = PopulateFfBody(WhichSide, whatToProcess, matchAllData, WhichInning);
 			if(status == Constants.OK) {
 				setFullFrameFooterPosition(WhichSide, 1);
-				setCuncussionForAlloutPartnership(inning.getBattingCard().size());
+				this.numberOfRows = inning.getBattingCard().size();
 				return PopulateFfFooter(WhichSide, whatToProcess, matchAllData, WhichInning);
 			} else {
 				return status;
@@ -130,7 +129,7 @@ public class FullFramesGfx
 			status = PopulateFfBody(WhichSide, whatToProcess, matchAllData, WhichInning);
 			if(status == Constants.OK) {
 				setFullFrameFooterPosition(WhichSide, 1);
-				setCuncussionForAlloutPartnership(11);
+				this.numberOfRows = 11;
 				return PopulateFfFooter(WhichSide, whatToProcess, matchAllData, WhichInning);
 			} else {
 				return status;
@@ -171,7 +170,7 @@ public class FullFramesGfx
 			status = PopulateFfBody(WhichSide, whatToProcess, matchAllData, WhichInning);
 			if(status == Constants.OK) {
 				setFullFrameFooterPosition(WhichSide, 2);
-				setCuncussionForAlloutPartnership(inning.getBattingCard().size());
+				this.numberOfRows = inning.getBattingCard().size();
 				return PopulateFfFooter(WhichSide, whatToProcess, matchAllData, WhichInning);
 			} else {
 				return status;
@@ -239,17 +238,14 @@ public class FullFramesGfx
 		}
 		status = PopulateFfHeader(WhichSide, whatToProcess.split(",")[0], matchAllData, WhichInning);
 		if(status == Constants.OK) {
-			setCuncussionForAlloutPartnership(10);
 			status = PopulateFfBody(WhichSide, whatToProcess.split(",")[0], matchAllData, WhichInning);
 			if(status == Constants.OK) {
 				setFullFrameFooterPosition(WhichSide, 1);
 				if(inning.getPartnerships().size()>=10) {
-					setCuncussionForAlloutPartnership(inning.getPartnerships().size());
+					this.numberOfRows = inning.getPartnerships().size();
 				}else {
-					setCuncussionForAlloutPartnership(inning.getBattingCard().size());
+					this.numberOfRows = inning.getBattingCard().size();
 				}
-				
-				
 				return PopulateFfFooter(WhichSide, whatToProcess.split(",")[0], matchAllData, WhichInning);
 			} else {
 				return status;
@@ -313,7 +309,7 @@ public class FullFramesGfx
 			status = PopulateFfBody(WhichSide, whatToProcess, matchAllData, 0);
 			if(status == Constants.OK) {
 				setFullFrameFooterPosition(WhichSide, 2);
-				setCuncussionForAlloutPartnership(12);
+				this.numberOfRows = 12;
 				return PopulateFfFooter(WhichSide, whatToProcess, matchAllData, 0);
 			} else {
 				return status;
@@ -376,7 +372,7 @@ public class FullFramesGfx
 			status = PopulateFfBody(WhichSide, whatToProcess, matchAllData, WhichInning);
 			if(status == Constants.OK) {
 				setFullFrameFooterPosition(WhichSide, 1);
-				setCuncussionForAlloutPartnership(12);
+				this.numberOfRows = 12;
 				return PopulateFfFooter(WhichSide, whatToProcess, matchAllData, WhichInning);
 			} else {
 				return status;
@@ -401,7 +397,7 @@ public class FullFramesGfx
 			status = PopulateFfBody(WhichSide, whatToProcess, matchAllData, WhichInning);
 			if(status == Constants.OK) {
 				setFullFrameFooterPosition(WhichSide, 2);
-				setCuncussionForAlloutPartnership(12);
+				this.numberOfRows = 12;
 				return PopulateFfFooter(WhichSide, whatToProcess, matchAllData, WhichInning);
 			} else {
 				return status;
@@ -448,7 +444,7 @@ public class FullFramesGfx
 			status = PopulateFfBody(WhichSide, whatToProcess.split(",")[0], matchAllData, 0);
 			if(status == Constants.OK) {
 				setFullFrameFooterPosition(WhichSide, 2);
-				setCuncussionForAlloutPartnership(12);
+				this.numberOfRows = 12;
 				return PopulateFfFooter(WhichSide, whatToProcess.split(",")[0], matchAllData, 0);
 			} else {
 				return status;
@@ -458,122 +454,61 @@ public class FullFramesGfx
 		}
 	}
 
-	public void setFullFrameFooterPosition(int whichside,int footer_omo) {
-		
-		String In="",Out="",Change_In="",Change_Out="";
-		
-		if(whichside == 1) {
-			switch(footer_omo) {
-			case 1:
-				In = "33.5";
-				Out = "33.5";
-				Change_Out = "33.5";
-				break;
-			case 2: case 4:
-				In = "57.5";
-				Out = "57.5";
-				Change_Out = "57.5";
-				break;
-			case 3:
-				In = "26.0";
-				Out = "26.0";
-				Change_Out = "26.0";
-				break;
-			}
-			
-			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$FooterDynamic$FooterDynamic_Mask"
-					+ "*ANIMATION*KEY*$In*VALUE SET " + In + "\0", print_writers);
-			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$FooterDynamic$FooterDynamic_Mask"
-					+ "*ANIMATION*KEY*$Out*VALUE SET " + Out + "\0",print_writers);
-			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$FooterDynamic$FooterDynamic_Mask"
-					+ "*ANIMATION*KEY*$Change_Out*VALUE SET " + Change_Out + "\0",print_writers);
-			
-		}
-		else if(whichside == 2) {
-			switch(footer_omo) {
-			case 1:
-				Change_In = "33.5";
-				break;
-			case 2: case 4:
-				Change_In = "57.5";
-				break;
-			case 3:
-				Change_In = "26.0";
-				break;
-			}
+	public void setFullFrameFooterPosition(int whichside,int footer_omo) 
+	{
 
-			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$FooterDynamic$FooterDynamic_Mask"
+		switch (config.getBroadcaster()) {
+		case Constants.ICC_U19_2023:
+		
+			String In="",Out="",Change_In="",Change_Out="";
+			
+			if(whichside == 1) {
+				switch(footer_omo) {
+				case 1:
+					In = "33.5";
+					Out = "33.5";
+					Change_Out = "33.5";
+					break;
+				case 2: case 4:
+					In = "57.5";
+					Out = "57.5";
+					Change_Out = "57.5";
+					break;
+				case 3:
+					In = "26.0";
+					Out = "26.0";
+					Change_Out = "26.0";
+					break;
+				}
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$FooterDynamic$FooterDynamic_Mask"
+						+ "*ANIMATION*KEY*$In*VALUE SET " + In + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$FooterDynamic$FooterDynamic_Mask"
+						+ "*ANIMATION*KEY*$Out*VALUE SET " + Out + "\0",print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$FooterDynamic$FooterDynamic_Mask"
+						+ "*ANIMATION*KEY*$Change_Out*VALUE SET " + Change_Out + "\0",print_writers);
+				
+			}
+			else if(whichside == 2) {
+				switch(footer_omo) {
+				case 1:
+					Change_In = "33.5";
+					break;
+				case 2: case 4:
+					Change_In = "57.5";
+					break;
+				case 3:
+					Change_In = "26.0";
+					break;
+				}
+
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$FooterDynamic$FooterDynamic_Mask"
 					+ "*ANIMATION*KEY*$Change_In*VALUE SET " + Change_In + "\0",print_writers);
-		}
-	}
-	public void setCuncussionForAlloutPartnership(int noOfRows) {
-
-		List<String> ConcussExtend_Y = new ArrayList<String>();
-			
-		switch(noOfRows) {
-			case 10:
-			ConcussExtend_Y.add("0.0 -25.0 0.0");
-			ConcussExtend_Y.add("0.0 25.0 0.0");
-			ConcussExtend_Y.add("690.0");
-			ConcussExtend_Y.add("690.0");
-			ConcussExtend_Y.add("0.0 50.0 0.0");
-			ConcussExtend_Y.add("0.0 -330.0 -0.2");
-			break;
-		case 11:
-			ConcussExtend_Y.add("0.0 0.0 0.0");
-			ConcussExtend_Y.add("0.0 0.0 0.0");
-			ConcussExtend_Y.add("740.0");
-			ConcussExtend_Y.add("740.0");
-			ConcussExtend_Y.add("0.0 0.0 0.0");
-			ConcussExtend_Y.add("0.0 -380 -0.2");
-		case 12:
-			ConcussExtend_Y.add("0.0 25.0 0.0");
-			ConcussExtend_Y.add("0.0 -25.0 0.0");
-			ConcussExtend_Y.add("790.0");
-			ConcussExtend_Y.add("790.0");
-			ConcussExtend_Y.add("0.0 -50.0 0.0");
-			ConcussExtend_Y.add("0.0 -430.0 -0.2");
-			break;
-		case 13:
-			ConcussExtend_Y.add("0.0 50.0 0.0");
-			ConcussExtend_Y.add("0.0 -50.0 0.0");
-			ConcussExtend_Y.add("840.0");
-			ConcussExtend_Y.add("840.0");
-			ConcussExtend_Y.add("0.0 -100.0 0.0");
-			ConcussExtend_Y.add("0.0 -480.0 -0.2");
+			}
 			break;
 		}
 		
-		
-		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$MoveForExtraData"
-				+ "*ANIMATION*KEY*$ED_In_1*VALUE SET " + ConcussExtend_Y.get(0) + "\0", print_writers);
-		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$BasePositionY"
-				+ "*ANIMATION*KEY*$E_In_1*VALUE SET " + ConcussExtend_Y.get(1) + "\0", print_writers);
-		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$obj_BiggerBase"
-				+ "*ANIMATION*KEY*$BB_In_1*VALUE SET " + ConcussExtend_Y.get(2) + "\0", print_writers);
-		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$obj__Mask_6_"
-				+ "*ANIMATION*KEY*$MA_In_1*VALUE SET " + ConcussExtend_Y.get(3) + "\0", print_writers);
-		
-		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$FooterAll$Footer$PositionY"
-				+ "*ANIMATION*KEY*$F_In_1*VALUE SET " + ConcussExtend_Y.get(4) + "\0", print_writers);
-		
-		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
-				+ "*ANIMATION*KEY*$S_In_1*VALUE SET " + ConcussExtend_Y.get(5) + "\0", print_writers);
-		
-		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$MoveForExtraData"
-				+ "*ANIMATION*KEY*$ED_Out_1*VALUE SET " + ConcussExtend_Y.get(0) + "\0", print_writers);
-		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$BasePositionY"
-				+ "*ANIMATION*KEY*$E_Out_1*VALUE SET " + ConcussExtend_Y.get(1) + "\0", print_writers);
-		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$obj_BiggerBase"
-				+ "*ANIMATION*KEY*$BB_Out_1*VALUE SET " + ConcussExtend_Y.get(2) + "\0", print_writers);
-		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$obj__Mask_6_"
-				+ "*ANIMATION*KEY*$MA_Out_1*VALUE SET " + ConcussExtend_Y.get(3) + "\0", print_writers);
-		
-		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$FooterAll$Footer$PositionY"
-				+ "*ANIMATION*KEY*$F_Out_1*VALUE SET " + ConcussExtend_Y.get(4) + "\0", print_writers);
-		
 	}
-
 
 	public String PopulateFfHeader(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) 
 	{
@@ -2405,10 +2340,11 @@ public class FullFramesGfx
 				break;
 
 			case "Control_d": case "Control_e":
-				 CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer*ACTIVE SET 0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer*ACTIVE SET 0 \0", print_writers);
 				break;
 
 			 case "Control_F7": case "Control_F8": //PlayingXI
+				 
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer*ACTIVE SET 1 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Side" + WhichSide + "$Select_FooterType"
 						+ "*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
@@ -2419,6 +2355,7 @@ public class FullFramesGfx
 				break;
 			
 			case "m": case "Control_m": //MATCH ID
+				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer*ACTIVE SET 1 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Side" + WhichSide + "$Select_FooterType"
 						+ "*FUNCTION*Omo*vis_con SET 4 \0", print_writers);

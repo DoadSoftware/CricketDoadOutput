@@ -304,7 +304,7 @@ public class Caption
 		case "Shift_F10": case "Shift_F11": case "m": case "Control_d": case "Control_e": case "Control_m": 
 		case "Shift_K": case "Alt_F9":
 			if(status.equalsIgnoreCase(Constants.OK)) {
-				status = this_anim.processFullFramesPreview(whatToProcess, print_writers, whichSide);
+				this.status = this_anim.processFullFramesPreview(whatToProcess, print_writers, whichSide);
 			}
 			break;
 		case "F5": case "F6": case "F7": case "F9": case "F11":
@@ -312,9 +312,15 @@ public class Caption
 		case "Shift_F3": case "s": case "d": case "e": case "v": case "b": case "h":
 		case "p": case "Control_p": case "j":case "Alt_k":case "F8": case "F10":
 			if(status.equalsIgnoreCase(Constants.OK)) {
-				status = this_anim.processL3Preview(whatToProcess, print_writers, whichSide);
+				this.status = this_anim.processL3Preview(whatToProcess, print_writers, whichSide);
 			}
 			break;
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "Caption [this_anim=" + this_anim + "]";
+	}
+	
 }

@@ -299,6 +299,7 @@ public class IndexController
 					break;
 				}
 				this_caption.PopulateGraphics(valueToProcess, session_match);
+				this_animation.caption = this_caption;
 				return JSONObject.fromObject(this_caption).toString();
 			}
 			else if(whatToProcess.contains("ANIMATE-IN-GRAPHICS") || whatToProcess.contains("ANIMATE-OUT-GRAPHICS")
