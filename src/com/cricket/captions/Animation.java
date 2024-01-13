@@ -673,7 +673,7 @@ public class Animation
 		}
 	}
 	
-	public String processFullFramesPreview(String whatToProcess, List<PrintWriter> print_writer, int whichside) {
+	public void processFullFramesPreview(String whatToProcess, List<PrintWriter> print_writer, int whichside) {
 		if(whatToProcess.contains(",")) {
 			if(whichside == 1) {
 				switch(whatToProcess.split(",")[0]) {
@@ -693,7 +693,7 @@ public class Animation
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
 						+ "/Default/FullFrames" + " C:/Temp/Preview.png Anim_FullFrames$In_Out$Essentials$In 2.140 "
 						+ "Anim_FullFrames$In_Out$Header$In 1.800 Anim_FullFrames$In_Out$Main$Partnership_List$In 1.820 "
-						+ "Anim_FullFrames$In_Out$Footer$In 1.800 \0", print_writer);
+						+ "Anim_FullFrames$In_Out$Footer$In 1.800 Sponsor 1.200 \0", print_writer);
 					break;
 				case "Control_F7":// Double Teams
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
@@ -733,6 +733,12 @@ public class Animation
 						+ "Anim_FullFrames$In_Out$Footer$In 1.800 \0", print_writer);
 					break;
 				case "m"://Match id	
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+							+ "/Default/FullFrames" + " C:/Temp/Preview.png Anim_FullFrames$In_Out$Essentials$In 2.140 "
+							+ "Anim_FullFrames$In_Out$Header$In 1.800 Anim_FullFrames$In_Out$Main$Ident$In 1.920 "
+							+ "Anim_FullFrames$In_Out$Footer$In 1.800 "
+							+ "Base_Gradient 0.500 \0", print_writer);
+					break;
 				case "Control_m": //MATCH PROMO
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
 						+ "/Default/FullFrames" + " C:/Temp/Preview.png Anim_FullFrames$In_Out$Essentials$In 2.140 "
@@ -740,16 +746,25 @@ public class Animation
 						+ "Anim_FullFrames$In_Out$Footer$In 1.800 \0", print_writer);
 					break;
 				case "Control_d": case "Control_e"://PlayerProfile
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+					if(Integer.valueOf(whatToProcess.split(",")[4]) > 0) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
 						+ "/Default/FullFrames" + " C:/Temp/Preview.png Anim_FullFrames$In_Out$Essentials$In 2.140 "
-						+ "Anim_FullFrames$In_Out$Header$In 1.800 Anim_FullFrames$In_Out$Main$Profilet$In 2.300 "
-						+ "Anim_FullFrames$In_Out$Footer$In 1.800 \0", print_writer);
+						+ "Anim_FullFrames$In_Out$Header$In 1.800 Anim_FullFrames$In_Out$Main$Profile$In 2.300 "
+						+ "Anim_FullFrames$In_Out$Footer$In 1.800 "
+						+ "Profile_Highlight$Side1$"+whatToProcess.split(",")[4] +" 1.000 \0", print_writer);	
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png Anim_FullFrames$In_Out$Essentials$In 2.140 "
+						+ "Anim_FullFrames$In_Out$Header$In 1.800 Anim_FullFrames$In_Out$Main$Profile$In 2.300 "
+						+ "Anim_FullFrames$In_Out$Footer$In 1.800 \0", print_writer);	
+					}
 					break;
 				case "Shift_K"://FFCurrPartnership
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
 						+ "/Default/FullFrames" + " C:/Temp/Preview.png Anim_FullFrames$In_Out$Essentials$In 2.140 "
 						+ "Anim_FullFrames$In_Out$Header$In 1.800 Anim_FullFrames$In_Out$Main$Partnership$In 2.300 "
-						+ "Anim_FullFrames$In_Out$Footer$In 1.800 \0", print_writer);
+						+ "Anim_FullFrames$In_Out$Footer$In 1.800 "
+						+ "Base_Gradient 0.500 Sponsor 1.200 \0", print_writer);
 					break;
 				case "Alt_F9": // Single Teams
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
@@ -758,21 +773,117 @@ public class Animation
 						+ "Anim_FullFrames$In_Out$Footer$In 1.800 \0", print_writer);
 					break;
 				}
-			}else if(whichside == 2) {
+			}
+			if(whichside == 2) {
 				switch(whatToProcess.split(",")[0]) {
-				case "F1":case "Shift_K":case "Alt_F9": case "Control_d": case "Control_e":
-				case "m":case "Control_m":case "Shift_F10":case "Control_F10":case "F2":
-				case "F4":	case "Control_F7":	case "Control_F8": case "Control_F1":
+				case "F1"://battingCard
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-							+ "/Default/FullFrames" + " C:/Temp/Preview.png Change 2.420 "+"\0", print_writer);
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png "
+						+ "Change$Header 1.320 Change$Header$Change_Out 0.420 "
+						+ "Change$Batting_Card 1.380 Change$Batting_Card$Change_Out 1.380 "
+						+ "Change$Footer 1.700 Change$Footer$Change_Out 0.580 \0", print_writer);
+					break;
+				case "F2"://bowlingCard
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png "
+						+ "Change$Header 1.320 Change$Header$Change_Out 0.420 "
+						+ "Change$Bowling_Card 1.300 Change$Bowling_Card$Change_Out 1.840 "
+						+ "Change$Footer 1.700 Change$Footer$Change_Out 0.580 \0", print_writer);
+					break;
+				case "F4":	 //All Partnership 
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png "
+						+ "Change$Header 1.320 Change$Header$Change_Out 0.420 "
+						+ "Change$Partnership_List 1.360 Change$Partnership_List$Change_Out 0.880 "
+						+ "Change$Footer 1.700 Change$Footer$Change_Out 0.580 Sponsor 1.200 \0", print_writer);
+					break;
+				case "Control_F7":// Double Teams
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png "
+						+ "Change$Header 1.320 Change$Header$Change_Out 0.420 "
+						+ "Change$Teams 1.440 Change$Teams$Change_Out 1.860 "
+						+ "Change$Footer 1.700 Change$Footer$Change_Out 0.580 \0", print_writer);
+					break;
+				case "Control_F8":  //Playing XI
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png "
+						+ "Change$Header 1.320 Change$Header$Change_Out 0.420 "
+						+ "Change$LineUp_Image 1.560 Change$LineUp_Image$Change_Out 0.500 "
+						+ "Change$Footer 1.700 Change$Footer$Change_Out 0.580 \0", print_writer);
+					break;
+				case "Shift_K"://FFCurrPartnership
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+							+ "/Default/FullFrames" + " C:/Temp/Preview.png "
+							+ "Change$Header 1.320 Change$Header$Change_Out 0.420 "
+							+ "Change$Partnership 1.900 Change$Partnership$Change_Out 0.600 "
+							+ "Change$Footer 1.700 Change$Footer$Change_Out 0.580 Sponsor 1.200 \0", print_writer);
+					break;
+				case "Alt_F9": // Single Teams
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png "
+						+ "Change$Header 1.320 Change$Header$Change_Out 0.420 "
+						+ "Change$Team_Single 1.400 Change$Team_Single$Change_Out 0.860 "
+						+ "Change$Footer 1.700 Change$Footer$Change_Out 0.580 \0", print_writer);
+					break;
+				case "Control_d": case "Control_e"://PlayerProfile
+					if(Integer.valueOf(whatToProcess.split(",")[4]) > 0) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png "
+						+ "Change$Header 1.320 Change$Header$Change_Out 0.420 "
+						+ "Change$Profile 1.900 Change$Profile$Change_Out 0.600 "
+						+ "Change$Footer 1.700 Change$Footer$Change_Out 0.580 "
+						+ "Profile_Highlight$Side1$"+whatToProcess.split(",")[4] +"1.000 "+"\0", print_writer);	
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png "
+						+ "Change$Header 1.320 Change$Header$Change_Out 0.420 "
+						+ "Change$Profile 1.900 Change$Profile$Change_Out 0.600 "
+						+ "Change$Footer 1.700 Change$Footer$Change_Out 0.580 "+"\0", print_writer);
+					}
+					
+					break;
+				case "m"://Match id	
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png "
+						+ "Change$Header 1.320 Change$Header$Change_Out 0.420 "
+						+ "Change$Ident 1.460 Change$Ident$Change_Out 0.600 "
+						+ "Change$Footer 1.700 Change$Footer$Change_Out 0.580 "
+						+ "Base_Gradient 0.500 \0", print_writer);
+					break;
+				case "Control_m"://Match promo
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png "
+						+ "Change$Header 1.320 Change$Header$Change_Out 0.420 "
+						+ "Change$Ident 1.460 Change$Ident$Change_Out 0.600 "
+						+ "Change$Footer 1.700 Change$Footer$Change_Out 0.580 \0", print_writer);
+					break;
+				case "Shift_F10"://WORMS
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png "
+						+ "Change$Header 1.320 Change$Header$Change_Out 0.420 "
+						+ "Change$Worm 2.140 Change$Worm$Change_Out 1.860 "
+						+ "Change$Footer 1.700 Change$Footer$Change_Out 0.580 \0", print_writer);
+					break;
+				case "Control_F10"://Manhattan
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png "
+						+ "Change$Header 1.320 Change$Header$Change_Out 0.420 "
+						+ "Change$Manhattan 2.420 Change$Manhattan$Change_Out 0.600 "
+						+ "Change$Footer 1.700 Change$Footer$Change_Out 0.580 \0", print_writer);
+					break;
+				case "Control_F1":// Photo ScoreCard
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+						+ "/Default/FullFrames" + " C:/Temp/Preview.png "
+						+ "Change$Header 1.320 Change$Header$Change_Out 0.420 "
+						+ "Change$Batting_Card_Image 1.560 Change$Batting_Card_Image$Change_Out 0.500 "
+						+ "Change$Footer 1.700 Change$Footer$Change_Out 0.580 \0", print_writer);
 					break;
 				}
 			}
 		}
-		return Constants.OK;
 	}
 
-	public String processL3Preview(String whatToProcess, List<PrintWriter> print_writer, int whichside) {
+	public void processL3Preview(String whatToProcess, List<PrintWriter> print_writer, int whichside) {
 		if(whatToProcess.contains(",")) {
 			if(whichside == 1) {
 				switch(whatToProcess.split(",")[0]) {
@@ -781,34 +892,41 @@ public class Animation
 				case "Shift_F3": case "s": case "d": case "e": case "v": case "b": case "h":
 				case "p": case "Control_p": case "Alt_k":
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-						+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$In_Out 2.980 "
-						+ "anim_Lower_Third$Essentials$In 1.400 anim_Lower_Third$Row$In 0.620 \0", print_writer);
+						+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$Small 1.00 "
+						+ "anim_Lower_Third$Essentials 2.200 "+ "anim_Lower_Third$Essentials$In 1.400 "
+						+ "anim_Lower_Third$Row 2.160 anim_Lower_Third$Row$In 0.620 \0", print_writer);
 					break;
 				case "F8": case "F10": case "j":
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-							+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$In_Out 0.0 "
-									+ "anim_NameSupers$In 1.400 \0", print_writer);
+							+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$Small 1.00 "
+							+"anim_NameSupers 3.600 anim_NameSupers$In 1.400 \0", print_writer);
 					break;
 				
 				}
-			}else if(whichside == 2) {
+			}
+			if(whichside == 2) {
 				switch(whatToProcess.split(",")[0]) {
 				case "F5": case "F6": case "F7": case "F9": case "F11":
 				case "Control_F5": case "Control_F9": case "Control_a":  case "Control_c":
 				case "Shift_F3": case "s": case "d": case "e": case "v": case "b": case "h":
-				case "p": case "Control_p": case "Alt_k":
-					
+				case "p": case "Control_p": case "Alt_k"://Anim_LtChange 1.300 
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-							+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_LtChange 1.300 \0", print_writer);
+							+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$Small 1.00 "
+							+ "Anim_LtChange$Flag 1.300 Anim_LtChange$Sublines 1.240 "
+							+ "Anim_LtChange$Topline 0.900 Anim_LtChange$Lt_Position 0.940 "
+							+ "Anim_LtChange$HeaderDynamic 1.220 \0", print_writer);
 					break;
 				case "F8": case "F10": case "j":
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-							+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_NameSuperChange 1.300 \0", print_writer);
+							+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$Small 1.00 "
+							+ "Anim_NameSuperChange 1.300 "
+							+ "Anim_NameSuperChange$Flag 1.300 Anim_NameSuperChange$Sublines 1.240 "
+							+ "Anim_NameSuperChange$Topline 0.900 "
+							+ "Anim_NameSuperChange$HeaderDynamic 1.220 \0", print_writer);
 					break;
 				}
 			}
 		}
-		return  Constants.OK;
 		
 	}
 
