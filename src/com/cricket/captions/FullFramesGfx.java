@@ -2321,15 +2321,14 @@ public class FullFramesGfx
 				case "F4": case "Shift_K":
 					if(whichSponsor.equalsIgnoreCase("COCACOLA")) {
 						CricketFunctions.DoadWriteCommandToSelectedViz(1,"-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor$Select_Logo"
-								+ "*FUNCTION*Omo*vis_con SET 4 \0", print_writers);
+							+ "*FUNCTION*Omo*vis_con SET 4 \0", print_writers);
 					}else {
 						CricketFunctions.DoadWriteCommandToSelectedViz(1,"-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor$Select_Logo"
-								+ "*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+							+ "*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
 					}
-					
-					if(config.getSecondaryIpAddress()!= null && !config.getSecondaryIpAddress().isEmpty()) {
-						CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor" + 
-								"$Select_Logo*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+					if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
+						CricketFunctions.DoadWriteCommandToSelectedViz(2,"-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor$Select_Logo"
+							+ "*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
 					}
 					break;
 				}

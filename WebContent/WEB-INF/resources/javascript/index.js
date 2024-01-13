@@ -248,7 +248,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	var cellCount = 0;
 	
 	switch(whatToProcess) {	
-	case 'HELP-FILE':
+/*	case 'HELP-FILE':
 		
 		$('#help_file_div').empty();
 
@@ -295,7 +295,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 				row.insertCell(iCol).appendChild(header_text);
 			}
 		}
-		break;
+		break;*/
 		
 	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11':
 	case 'Control_F5': case 'Control_F9': case 'Control_F8': case 'Control_d': case 'Control_e': case 's':

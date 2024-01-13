@@ -18,14 +18,17 @@
   
   <script type="text/javascript">
     
-  	function KeyPress(e) {
-  		
+  $(document).on("keydown", function(e){
+
       var evtobj = window.event? event : e;
-      switch(e.target.tagName.toLowerCase()){
+
+	  e.preventDefault();
+      
+      switch(e.target.tagName.toLowerCase())
+      {
       case "input": case "textarea":
     	 break;
       default:
-		 e.preventDefault();
 	      var whichKey = '';
 		  var validKeyFound = false;
 	    
@@ -73,16 +76,13 @@
 			  }
 		   }
 		   if(validKeyFound == true) {
+			   console.log('whichKey = ' + whichKey);
 			  processUserSelectionData('LOGGER_FORM_KEYPRESS',whichKey);
 		   }
 	      }
-      
-	 	 break;
-      }
-
-	  document.onkeydown = KeyPress;  
-  	  setInterval(() => {processCricketProcedures('READ-MATCH-AND-POPULATE');}, 1000);
-	
+	  }); 
+	  //document.onkeydown = KeyPress;  
+   	  setInterval(() => {processCricketProcedures('READ-MATCH-AND-POPULATE');}, 1000);
   </script>
     
 </head>

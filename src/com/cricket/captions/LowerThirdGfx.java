@@ -724,8 +724,7 @@ public class LowerThirdGfx
 		
 		tournament = tournaments.stream().filter(tourn -> tourn.getPlayerId() == Integer.valueOf(whatToProcess.split(",")[2])).findAny().orElse(null);
 		
-		System.out.println(tournament.getPlayer().getFull_name() + " - " + tournament.getMatches() + " - " + tournament.getRuns());
-		
+//		System.out.println(tournament.getPlayer().getFull_name() + " - " + tournament.getMatches() + " - " + tournament.getRuns());
 		lowerThird = new LowerThird("", tournament.getPlayer().getFirstname(), tournament.getPlayer().getSurname(),"THIS SERIES", "", "", 2,"",String.valueOf(tournament.getPlayer().getTeamId()),
 				new String[]{"MATCHES", "RUNS", "FIFTIES", "HUNDREDS", "STRIKE RATE"},new String[]{String.valueOf(tournament.getMatches()), String.format("%,d\n", tournament.getRuns()),
 				String.valueOf(tournament.getFifty()),String.valueOf(tournament.getHundreds()),CricketFunctions.generateStrikeRate(tournament.getRuns(), 

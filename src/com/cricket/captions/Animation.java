@@ -367,10 +367,10 @@ public class Animation
 						break;
 					}
 				}
-				System.out.println("lastNumberOfRows = " + lastNumberOfRows);
-				System.out.println("caption.this_fullFramesGfx.numberOfRows = " + caption.this_fullFramesGfx.numberOfRows);
+//				System.out.println("lastNumberOfRows = " + lastNumberOfRows);
+//				System.out.println("caption.this_fullFramesGfx.numberOfRows = " + caption.this_fullFramesGfx.numberOfRows);
 				if(caption.this_fullFramesGfx.numberOfRows != lastNumberOfRows) {
-					System.out.println("ConcussExtend_Y START");
+//					System.out.println("ConcussExtend_Y START");
 					processAnimation(Constants.BACK, print_writers, "ConcussExtend_Y", "START");
 					lastNumberOfRows = caption.this_fullFramesGfx.numberOfRows;
 				}
@@ -560,23 +560,23 @@ public class Animation
 		case Constants.ICC_U19_2023:
 			switch(whatToProcess) {
 			case "5": // Reset
-				print_writers.get(0).printf("%s","F4");
+				print_writers.get(print_writers.size()-1).printf("%s","F4");
 				break;
 			case "6": // Stand-By
-				print_writers.get(0).printf("%s","F6");
+				print_writers.get(print_writers.size()-1).printf("%s","F6");
 				break;
 			case "7": //Animate-In
-				print_writers.get(0).printf("%s","F6");
+				print_writers.get(print_writers.size()-1).printf("%s","F6");
 				TimeUnit.MILLISECONDS.sleep(100);
-				print_writers.get(0).printf("%s","F7");
+				print_writers.get(print_writers.size()-1).printf("%s","F7");
 				break;
 			case "8": //Animate-Out
-				print_writers.get(0).printf("%s","F9");
+				print_writers.get(print_writers.size()-1).printf("%s","F9");
 				TimeUnit.MILLISECONDS.sleep(1000);
-				print_writers.get(0).printf("%s","F4");
+				print_writers.get(print_writers.size()-1).printf("%s","F4");
 				break;
 			case "9": //Load	
-				print_writers.get(0).printf("%s","LOAD");
+				print_writers.get(print_writers.size()-1).printf("%s","LOAD");
 				break;
 			}
 			break;
@@ -623,7 +623,8 @@ public class Animation
 				PositionY = 0f;
 				Sponsor = -380f;
 			}
-
+//			System.out.println("setVariousAnimationsKeys -> whatToProcess = " + whatToProcess + ": Sponsor = " + Sponsor 
+//				+ ": numberOfRows = " + caption.this_fullFramesGfx.numberOfRows);
 			switch (whatToProcess) {
 			case "ANIMATE-IN":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$MoveForExtraData"
