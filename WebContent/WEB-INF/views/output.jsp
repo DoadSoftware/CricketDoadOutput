@@ -23,67 +23,65 @@
       var evtobj = window.event? event : e;
       switch(e.target.tagName.toLowerCase()){
       case "input": case "textarea":
-    	  break;
+    	 break;
       default:
-e.preventDefault();
-      
-      var whichKey = '';
-	  var validKeyFound = false;
-    
-      if(evtobj.ctrlKey) {
-    	  whichKey = 'Control';
-      }
-      if(evtobj.altKey) {
-    	  if(whichKey) {
-        	  whichKey = whichKey + '_Alt';
-    	  } else {
-        	  whichKey = 'Alt';
-    	  }
-      }
-      if(evtobj.shiftKey) {
-    	  if(whichKey) {
-        	  whichKey = whichKey + '_Shift';
-    	  } else {
-        	  whichKey = 'Shift';
-    	  }
-      }
-      
-	  if(evtobj.keyCode) {
-    	  if(whichKey) {
-    		  if(!whichKey.includes(evtobj.key)) {
-            	  whichKey = whichKey + '_' + evtobj.key;
-    		  }
-    	  } else {
-        	  whichKey = evtobj.key;
-    	  }
-	  }
-
-	  validKeyFound = false;
-	  if (whichKey.includes('_')) {
-		  whichKey.split("_").forEach(function (this_key) {
-			  switch (this_key) {
-			  case 'Control': case 'Shift': case 'Alt':
-				break;
-			  default:
-				validKeyFound = true;
-				break;
-			  }
-		  });
-	   } else {
-		  if(whichKey != 'Control' && whichKey != 'Alt' && whichKey != 'Shift') {
-			  validKeyFound = true;
+		 e.preventDefault();
+	      var whichKey = '';
+		  var validKeyFound = false;
+	    
+	      if(evtobj.ctrlKey) {
+	    	  whichKey = 'Control';
+	      }
+	      if(evtobj.altKey) {
+	    	  if(whichKey) {
+	        	  whichKey = whichKey + '_Alt';
+	    	  } else {
+	        	  whichKey = 'Alt';
+	    	  }
+	      }
+	      if(evtobj.shiftKey) {
+	    	  if(whichKey) {
+	        	  whichKey = whichKey + '_Shift';
+	    	  } else {
+	        	  whichKey = 'Shift';
+	    	  }
+	      }
+	      
+		  if(evtobj.keyCode) {
+	    	  if(whichKey) {
+	    		  if(!whichKey.includes(evtobj.key)) {
+	            	  whichKey = whichKey + '_' + evtobj.key;
+	    		  }
+	    	  } else {
+	        	  whichKey = evtobj.key;
+	    	  }
 		  }
-	   }
-	   if(validKeyFound == true) {
-		  processUserSelectionData('LOGGER_FORM_KEYPRESS',whichKey);
-	   }
+		  validKeyFound = false;
+		  if (whichKey.includes('_')) {
+			  whichKey.split("_").forEach(function (this_key) {
+				  switch (this_key) {
+				  case 'Control': case 'Shift': case 'Alt':
+					break;
+				  default:
+					validKeyFound = true;
+					break;
+				  }
+			  });
+		   } else {
+			  if(whichKey != 'Control' && whichKey != 'Alt' && whichKey != 'Shift') {
+				  validKeyFound = true;
+			  }
+		   }
+		   if(validKeyFound == true) {
+			  processUserSelectionData('LOGGER_FORM_KEYPRESS',whichKey);
+		   }
+	      }
+      
+	 	 break;
       }
-      
-      
-	}
 
-	document.onkeydown = KeyPress;  
-  	setInterval(() => {processCricketProcedures('READ-MATCH-AND-POPULATE');}, 1000);
+	  document.onkeydown = KeyPress;  
+  	  setInterval(() => {processCricketProcedures('READ-MATCH-AND-POPULATE');}, 1000);
 	
   </script>
     
@@ -101,21 +99,70 @@ e.preventDefault();
             <!--   <h3 class="mb-0">${licence_expiry_message}</h3>  -->
            </div>
           <div class="card-body">
-          
-			  <div id="select_graphic_options_div" style="display:none;">
+			<div class="content py-5" style="background-color:#EAE8FF;color:#2E008B;">
+				<div class="container">
+					  <div id="select_graphic_options_div" style="display:none;">
+					  </div>
+					  <div id="captions_div" class="form-group row row-bottom-margin ml-2" style="margin-bottom:5px;">
+					    <label class="col-sm-4 col-form-label text-left">Match: ${session_match.match.matchFileName} </label>
+					    <label class="col-sm-4 col-form-label text-left">Broadcaster: ${session_configuration.broadcaster.replace("_"," ")} </label>
+					    <label class="col-sm-4 col-form-label text-left">2nd Broadcaster: ${session_configuration.secondaryBroadcaster.replace("_"," ")} </label>
+					    <label id="selected_inning" class="col-sm-4 col-form-label text-left">Selected Inning: </label>
+					    <label id="speed_lbl" class="col-sm-4 col-form-label text-left">Show Speed: YES</label>
+					  </div>
+				
+<!-- 				    <div id="output_sub_menu" class="panel-collapse collapse" role="tabpanel" aria-labelledby="output_heading">
+				      <div class="panel-body">
+				      </div> -->
+<%-- 					<div class="panel-group" id="output_tab_menu" role="tablist" aria-multiselectable="true">
+
+					  <div class="panel panel-default" id="output-panel">
+					    <div class="panel-heading" role="tab" id="output_heading" style="border-style:solid;border-width:medium;border-radius:25px;">
+					      <h5 class="panel-title" style="position:relative;left:10px;">
+					        <a data-toggle="collapse" data-parent="#output_tab_menu" href="#output_sub_menu" aria-expanded="true"  
+					        	aria-controls="output_sub_menu"> Output 
+					        </a>
+					      </h5>
+					    </div>
+					    <div id="output_sub_menu" class="panel-collapse collapse" role="tabpanel" aria-labelledby="output_heading">
+					      <div class="panel-body">
+							  <div id="select_graphic_options_div" style="display:none;">
+							  </div>
+							  <div id="captions_div" class="form-group row row-bottom-margin ml-2" style="margin-bottom:5px;">
+							    <label class="col-sm-4 col-form-label text-left">Match: ${session_match.match.matchFileName} </label>
+							    <label class="col-sm-4 col-form-label text-left">Broadcaster: ${session_configuration.broadcaster.replace("_"," ")} </label>
+							    <label class="col-sm-4 col-form-label text-left">2nd Broadcaster: ${session_configuration.secondaryBroadcaster.replace("_"," ")} </label>
+							    <label id="selected_inning" class="col-sm-4 col-form-label text-left">Selected Inning: </label>
+							    <label id="speed_lbl" class="col-sm-4 col-form-label text-left">Show Speed: YES</label>
+							  </div>
+					      </div>
+					    </div>
+					  </div>
+
+					  <div class="panel panel-default" id="help-file-panel" style="margin-top:5px;display:none;">
+					    <div class="panel-heading" role="tab" id="help_file_heading" style="border-style:solid;border-width:medium;border-radius:25px;">
+					      <h5 class="panel-title" style="position:relative;left:10px;">
+					        <a class="collapsed" data-toggle="collapse" data-parent="#output_tab_menu" href="#help_file_sub_menu" aria-expanded="false" 
+					        	aria-controls="help_file_sub_menu">Help 
+					        </a>
+					      </h5>
+					    </div>
+					    <div id="help_file_sub_menu" class="panel-collapse collapse" role="tabpanel" aria-labelledby="help_file_heading">
+					      <div class="panel-body">
+							  <div id="help_file_div" style="display:none;">
+							  </div>
+					      </div>
+					    </div>
+					  </div>
+				  </div> --%>
+				  
 			  </div>
-			  <div id="captions_div" class="form-group row row-bottom-margin ml-2" style="margin-bottom:5px;">
-			    <label class="col-sm-4 col-form-label text-left">Match: ${session_match.match.matchFileName} </label>
-			    <label class="col-sm-4 col-form-label text-left">Broadcaster: ${session_configuration.broadcaster.replace("_"," ")} </label>
-			    <label class="col-sm-4 col-form-label text-left">2nd Broadcaster: ${session_configuration.secondaryBroadcaster.replace("_"," ")} </label>
-			    <label id="selected_inning" class="col-sm-4 col-form-label text-left">Selected Inning: </label>
-			    <label id="speed_lbl" class="col-sm-4 col-form-label text-left">Show Speed: YES</label>
-			  </div>
-			  </div>
-	       </div>
-	    </div>
-       </div>
+		  </div>
+	     </div>
+      </div>
     </div>
+   </div>
+  </div>
   </div>
 <input type="hidden" id="which_keypress" name="which_keypress"/>
 <input type="hidden" id="which_inning" name="which_inning" value="${which_inning}"/>

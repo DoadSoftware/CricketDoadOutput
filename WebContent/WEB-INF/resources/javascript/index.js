@@ -19,6 +19,7 @@ function onPageLoadEvent(whichPage){
 		document.getElementById('selected_inning').innerHTML = 
 			'Selected Inning: ' + document.getElementById('which_inning').value;
 		initialiseSelectedOptionsList();
+		addItemsToList('HELP-FILE',session_match);
 		break;
 	}
 }
@@ -250,6 +251,55 @@ function addItemsToList(whatToProcess,dataToProcess)
 	var cellCount = 0;
 	
 	switch(whatToProcess) {	
+	case 'HELP-FILE':
+		
+		$('#help_file_div').empty();
+
+		table = document.createElement('table');
+		table.setAttribute('class', 'table table-bordered');
+				
+		tbody = document.createElement('tbody');
+
+		table.appendChild(tbody);
+		document.getElementById('help_file_div').appendChild(table);
+		
+		for(var iRow=0; iRow<=1; iRow++){
+			row = tbody.insertRow(tbody.rows.length);
+			for(var iCol=0; iCol<=2; iCol++){
+				header_text = document.createElement('h6');
+				switch(iRow){
+				case 0:
+					switch(iCol){
+					case 0:
+						header_text.innerHTML = 'Ful Framers';
+						break;
+					case 1:
+						header_text.innerHTML = 'Lower Thirds';
+						break;
+					case 2:
+						header_text.innerHTML = 'Infobar';
+						break;
+					}
+					break;
+				case 1:
+					switch(iCol){
+					case 0:
+						header_text.innerHTML = 'F1: Scorecard';
+						break;
+					case 1:
+						header_text.innerHTML = 'F4: partnership';
+						break;
+					case 2:
+						header_text.innerHTML = 'Alt+1: Bottom left options';
+						break;
+					}
+					break;
+				}
+				row.insertCell(iCol).appendChild(header_text);
+			}
+		}
+		break;
+		
 	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11':
 	case 'Control_F5': case 'Control_F9': case 'Control_F8': case 'Control_d': case 'Control_e': case 's':
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'Shift_F5': case 'Shift_F9': case 'p': case 'q':
