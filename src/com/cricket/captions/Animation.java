@@ -10,7 +10,7 @@ import com.cricket.util.CricketUtil;
 
 public class Animation 
 {
-	public String whichGraphicOnScreen = "", specialBugOnScreen = "";
+	public String whichGraphicOnScreen = "", specialBugOnScreen = "", status = "";
 	public Infobar infobar;
 	
 	public Animation(Infobar infobar) {
@@ -147,7 +147,6 @@ public class Animation
 				
 			case "Alt_p":
 				processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "START");
-				this.whichGraphicOnScreen = "";
 				this.specialBugOnScreen = CricketUtil.TOSS;
 				break;
 				
@@ -176,9 +175,9 @@ public class Animation
 				}
 				break;
 			case "Alt_f": case "Alt_g": case Constants.SHRUNK_INFOBAR: case Constants.MIDDLE + Constants.SHRUNK_INFOBAR:
-				System.out.println("this.infobar.isInfobar_on_screen() = " + this.infobar.isInfobar_on_screen());
-				System.out.println("whatToProcess = " + whatToProcess);
-				System.out.println("this.infobar.setInfobar_status = " + this.infobar.getInfobar_status());
+//				System.out.println("this.infobar.isInfobar_on_screen() = " + this.infobar.isInfobar_on_screen());
+//				System.out.println("whatToProcess = " + whatToProcess);
+//				System.out.println("this.infobar.setInfobar_status = " + this.infobar.getInfobar_status());
 				if(this.infobar.isInfobar_on_screen() == true) {
 					switch (whatToProcess.split(",")[0]) {
 					case "Alt_f": 
@@ -359,15 +358,12 @@ public class Animation
 			case "Shift_F3": case "s": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "p": case "Control_p":
 				processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "START");
-				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "F8": case "F10": case "j":
 				processAnimation(Constants.FRONT, print_writers, "Anim_NameSuperChange", "START");
-				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "q":
 				processAnimation(Constants.FRONT, print_writers, "Anim_Boundary_LTChange", "START");
-				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8":
 				switch(whatToProcess.split(",")[0]) {
@@ -430,9 +426,11 @@ public class Animation
 			case "F5": case "F6": case "F7": case "F9": case "F11": case "p": case "Control_p":
 			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
 				processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "SHOW 0.0");
+				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "F8": case "F10": case "j":
 				processAnimation(Constants.FRONT, print_writers, "Anim_NameSuperChange", "SHOW 0.0");
+				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "F1": case "F2": case "F4": case "Shift_F11":
 				processAnimation(Constants.BACK, print_writers, "Change$Header", "SHOW 0.0");
@@ -466,8 +464,8 @@ public class Animation
 						processAnimation(Constants.BACK, print_writers, "Change$Summary", "SHOW 0.0");
 						break;
 					}
-					this.whichGraphicOnScreen = whatToProcess;
 				}
+				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			}
 			break;
@@ -691,4 +689,43 @@ public class Animation
 		return  Constants.OK;
 		
 	}
+
+	public String getWhichGraphicOnScreen() {
+		return whichGraphicOnScreen;
+	}
+
+	public void setWhichGraphicOnScreen(String whichGraphicOnScreen) {
+		this.whichGraphicOnScreen = whichGraphicOnScreen;
+	}
+
+	public String getSpecialBugOnScreen() {
+		return specialBugOnScreen;
+	}
+
+	public void setSpecialBugOnScreen(String specialBugOnScreen) {
+		this.specialBugOnScreen = specialBugOnScreen;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Infobar getInfobar() {
+		return infobar;
+	}
+
+	public void setInfobar(Infobar infobar) {
+		this.infobar = infobar;
+	}
+
+	@Override
+	public String toString() {
+		return "Animation [whichGraphicOnScreen=" + whichGraphicOnScreen + ", specialBugOnScreen=" + specialBugOnScreen
+				+ ", status=" + status + ", infobar=" + infobar + "]";
+	}
+	
 }

@@ -23,8 +23,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 public class Caption 
 {
-	private boolean specialBug_on_screen = false;
-	
 	public InfobarGfx this_infobarGfx = new InfobarGfx();
 	public BugsAndMiniGfx this_bugsAndMiniGfx = new BugsAndMiniGfx();
 	public LowerThirdGfx this_lowerThirdGfx;
@@ -53,22 +51,12 @@ public class Caption
 	public Team team;
 
 	public int FirstPlayerId, SecondPlayerId, whichSide;
-	public String WhichProfile, typeOfGraphics = "";
-	
-	private String status;
+	public String WhichProfile, status;
 	
 	public Caption() {
 		super();
 	}
 	
-	public boolean isSpecialBug_on_screen() {
-		return specialBug_on_screen;
-	}
-
-	public void setSpecialBug_on_screen(boolean specialBug_on_screen) {
-		this.specialBug_on_screen = specialBug_on_screen;
-	}
-
 	public Caption(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics,
 		List<StatsType> statsTypes, List<MatchAllData> tournament_matches, List<NameSuper> nameSupers,List<Bugs> bugs,
 		List<Fixture> fixTures, List<Team> Teams, List<Ground> Grounds,FullFramesGfx this_fullFramesGfx,
@@ -92,7 +80,6 @@ public class Caption
 		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers, statistics, statsTypes, tournament_matches);
 		this.this_bugsAndMiniGfx = new BugsAndMiniGfx(print_writers, config, tournament_matches, bugs, Teams, Grounds);
 		this.status = "";
-		this.specialBug_on_screen = false;
 	}
 	public String getStatus() {
 		return status;

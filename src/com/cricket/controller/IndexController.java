@@ -329,25 +329,26 @@ public class IndexController
 					switch (valueToProcess.split(",")[0]) {
 					case "Alt_p":
 						if(!this_animation.whichGraphicOnScreen.isEmpty()) {
-							this_caption.setStatus("Cannot animate out bugs while " + 
-								this_animation.whichGraphicOnScreen + " is on screen");
-							return JSONObject.fromObject(this_caption).toString();
+							this_animation.status = "Cannot animate out bugs while " + 
+								this_animation.whichGraphicOnScreen + " is on screen";
+							return JSONObject.fromObject(this_animation).toString();
 						}
-						this_animation.whichGraphicOnScreen = valueToProcess.split(",")[0];
+						this_animation.AnimateOut(valueToProcess, print_writers, session_configuration);
+						break;
+					default:
+						this_animation.AnimateOut(this_animation.whichGraphicOnScreen, print_writers, session_configuration);
 						break;
 					}
-					this_animation.AnimateOut(this_animation.whichGraphicOnScreen, print_writers, session_configuration);
 				}else if(whatToProcess.contains("ANIMATE-OUT-INFOBAR")) {
 					this_animation.AnimateOut("F12,", print_writers, session_configuration);
 				}else if(whatToProcess.contains("QUIDICH-COMMANDS")) {
 					this_animation.processQuidichCommands(valueToProcess, print_writers, session_configuration);
 				}
-				return JSONObject.fromObject(this_animation).toString();
 			} else if(whatToProcess.contains("CLEAR-ALL") || whatToProcess.contains("CLEAR-ALL-WITH-INFOBAR")) {
 				this_animation.ResetAnimation(whatToProcess, print_writers, session_configuration);
-				return JSONObject.fromObject(this_animation).toString();
 			}
-			return JSONObject.fromObject(null).toString();
+			System.out.println("this_animation = " + this_animation);
+			return JSONObject.fromObject(this_animation).toString();
 		}
 	}
 	@ModelAttribute("session_configuration")

@@ -133,10 +133,19 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				addItemsToList(dataToProcess,null);
 				break;
 			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'Control_F1': case 'Control_a':  
-			case 'Alt_k':  case 'Shift_F3': case 'd': case 'e': case 'Control_F7': case 'Alt_p':
+			case 'Alt_k':  case 'Shift_F3': case 'd': case 'e': case 'Control_F7':
 			case 'Control_k': case 'Control_F10': case 'Alt_F12': case 'Control_F3': case 'Control_p':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
+				break;
+			//These buttons will animate in & animate out graphics
+			case 'Alt_p':
+				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
+				if(session_animation != null && session_animation.specialBugOnScreen == 'TOSS') {
+					processCricketProcedures("ANIMATE-OUT-GRAPHICS", dataToProcess);
+				} else {
+					processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
+				}
 				break;
 			//All key presses which doesn't require graphics population will come here
 			case '5': case '6': case '7': case '8': case '9':
@@ -194,38 +203,26 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 			default:
 				switch(whatToProcess) {	
 				case 'POPULATE-GRAPHICS':
-					//alert('session_animation.specialBugOnScreen = ' + session_animation.specialBugOnScreen);
-					if(typeof session_animation !== 'undefined' && typeof session_animation.specialBugOnScreen !== 'undefined' &&
-							dataToProcess.includes('Alt_p')) {
-						if(session_animation.specialBugOnScreen.includes('TOSS')) {
-							processCricketProcedures("ANIMATE-OUT-GRAPHICS", dataToProcess);	
-						}
-					}else {
-						if(data.status == 'OK') {
-							if(confirm('Animate In?') == true){
-								processCricketProcedures(whatToProcess.replace('POPULATE-', 'ANIMATE-IN-'),dataToProcess);
-								$("#select_graphic_options_div").empty();
-								document.getElementById('select_graphic_options_div').style.display = 'none';
-								$("#captions_div").show();
-							}
-						} else {
-							alert(data.status);
+					if(data.status == 'OK') {
+						session_caption = data;
+						if(confirm('Animate In?') == true){
+							processCricketProcedures(whatToProcess.replace('POPULATE-', 'ANIMATE-IN-'),dataToProcess);
 							$("#select_graphic_options_div").empty();
 							document.getElementById('select_graphic_options_div').style.display = 'none';
 							$("#captions_div").show();
 						}
+					} else {
+						$("#select_graphic_options_div").empty();
+						document.getElementById('select_graphic_options_div').style.display = 'none';
+						$("#captions_div").show();
 					}
-					session_caption = data;
 					break;
 				case 'GRAPHICS-OPTIONS':
 					addItemsToList(dataToProcess,data);
 					break;
 				default:
 					if(whatToProcess.includes("ANIMATE-IN-") || whatToProcess.includes("ANIMATE-OUT-")) {
-						if(data){
-							session_animation = data;	
-						}
-						//alert('session_animation.specialBugOnScreen = ' + session_animation.specialBugOnScreen);
+						session_animation = data;	
 					}
 					break;
 				}
