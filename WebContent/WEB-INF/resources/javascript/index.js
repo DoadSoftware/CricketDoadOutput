@@ -129,15 +129,24 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			switch(dataToProcess) {
 			case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': 
 			case 'Control_F5': case 'Control_F8': case 'Control_F9': case 'F4': case 'F5': case 'F6' : case 'F7': 
-			case 'F8': case 'F9': case 'F11': case 's': case 'q': case 'Shift_F5': case 'Shift_F9':
-			case 'Shift_K': case 'Shift_O': case 'Alt_F9': case 'k': case 'g': case 'f': case 'p':
+			case 'F8': case 'F9': case 'F11': case 's': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6':
+			case 'Shift_K': case 'Shift_O': case 'Alt_F9': case 'k': case 'g': case 'f': case 'p': case 'Control_s':
 				addItemsToList(dataToProcess,null);
 				break;
-			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'Control_F1': case 'Control_a':  
-			case 'Alt_k':  case 'Shift_F3': case 'd': case 'e': case 'Control_F7': case 'Alt_p':
+			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'Control_F1': case 'Control_a':
+			case 'Alt_k':  case 'Shift_F3': case 'd': case 'e': case 'Control_F7': case 'Control_F6':
 			case 'Control_k': case 'Control_F10': case 'Alt_F12': case 'Control_F3': case 'Control_p':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
+				break;
+			//These buttons will animate in & animate out graphics
+			case 'Alt_p':
+				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
+				if(session_animation != null && session_animation.specialBugOnScreen == 'TOSS') {
+					processCricketProcedures("ANIMATE-OUT-GRAPHICS", dataToProcess);
+				} else {
+					processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
+				}
 				break;
 			//All key presses which doesn't require graphics population will come here
 			case '5': case '6': case '7': case '8': case '9':
@@ -195,38 +204,26 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 			default:
 				switch(whatToProcess) {	
 				case 'POPULATE-GRAPHICS':
-					//alert('session_animation.specialBugOnScreen = ' + session_animation.specialBugOnScreen);
-					if(typeof session_animation !== 'undefined' && typeof session_animation.specialBugOnScreen !== 'undefined' &&
-							dataToProcess.includes('Alt_p')) {
-						if(session_animation.specialBugOnScreen.includes('TOSS')) {
-							processCricketProcedures("ANIMATE-OUT-GRAPHICS", dataToProcess);	
-						}
-					}else {
-						if(data.status == 'OK') {
-							if(confirm('Animate In?') == true){
-								processCricketProcedures(whatToProcess.replace('POPULATE-', 'ANIMATE-IN-'),dataToProcess);
-								$("#select_graphic_options_div").empty();
-								document.getElementById('select_graphic_options_div').style.display = 'none';
-								$("#captions_div").show();
-							}
-						} else {
-							alert(data.status);
+					if(data.status == 'OK') {
+						session_caption = data;
+						if(confirm('Animate In?') == true){
+							processCricketProcedures(whatToProcess.replace('POPULATE-', 'ANIMATE-IN-'),dataToProcess);
 							$("#select_graphic_options_div").empty();
 							document.getElementById('select_graphic_options_div').style.display = 'none';
 							$("#captions_div").show();
 						}
+					} else {
+						$("#select_graphic_options_div").empty();
+						document.getElementById('select_graphic_options_div').style.display = 'none';
+						$("#captions_div").show();
 					}
-					session_caption = data;
 					break;
 				case 'GRAPHICS-OPTIONS':
 					addItemsToList(dataToProcess,data);
 					break;
 				default:
 					if(whatToProcess.includes("ANIMATE-IN-") || whatToProcess.includes("ANIMATE-OUT-")) {
-						if(data){
-							session_animation = data;	
-						}
-						//alert('session_animation.specialBugOnScreen = ' + session_animation.specialBugOnScreen);
+						session_animation = data;	
 					}
 					break;
 				}
@@ -303,7 +300,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11':
 	case 'Control_F5': case 'Control_F9': case 'Control_F8': case 'Control_d': case 'Control_e': case 's':
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'Shift_F5': case 'Shift_F9': case 'p': case 'q':
-	case 'Alt_F9': case 'j':
+	case 'Alt_F9': case 'j': case 'Shift_F6': case 'Control_s':
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 	
@@ -476,7 +473,12 @@ function addItemsToList(whatToProcess,dataToProcess)
 			option.value = 'ARAMCO_POTD';
 			option.text = 'Aramco POTD';
 			select.appendChild(option);
-
+			
+			option = document.createElement('option');
+			option.value = 'TOURNAMENT_SIXES';
+			option.text = 'TOURNAMENT SIXES';
+			select.appendChild(option);
+			
 			session_match.match.inning.forEach(function(inn,index,arr){
 				if(inn.isCurrentInning == 'YES'){
 					if(inn.inningNumber == 1){
@@ -676,7 +678,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1
 			break;
 			
-		case 'Control_F5'://Batsman Style
+		case 'Control_F5': case 'Control_s'://Batsman Style
 		
 			select = document.createElement('select');
 			select.id = 'selectPlayerName';
@@ -931,7 +933,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			break;
 			
-		case 'F6': case 'Shift_O': //HowOut
+		case 'F6': case 'Shift_O': case 'Shift_F6': //HowOut
 			select = document.createElement('select');
 			select.id = 'selectHowoutPlayers';
 			select.name = select.id;
@@ -1118,6 +1120,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select.style = 'width:100px';
 			select.id = 'selectCaptainWicketKeeper';
 			select.name = select.id;
+			
+			option = document.createElement('option');
+			option.value = 'Team';
+			option.text = 'Team';
+			select.appendChild(option);
 			
 			option = document.createElement('option');
 			option.value = 'Player Of The Match';

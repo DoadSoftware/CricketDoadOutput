@@ -17,14 +17,13 @@ import com.cricket.model.Player;
 import com.cricket.model.Statistics;
 import com.cricket.model.StatsType;
 import com.cricket.model.Team;
+import com.cricket.model.Tournament;
 import com.cricket.util.CricketUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 public class Caption 
 {
-	private boolean specialBug_on_screen = false;
-	
 	public InfobarGfx this_infobarGfx = new InfobarGfx();
 	public BugsAndMiniGfx this_bugsAndMiniGfx = new BugsAndMiniGfx();
 	public LowerThirdGfx this_lowerThirdGfx;
@@ -36,6 +35,7 @@ public class Caption
 	public List<Statistics> statistics;
 	public List<StatsType> statsTypes;
 	public List<MatchAllData> tournament_matches;
+	public List<Tournament> tournament;
 	public List<NameSuper> nameSupers;
 	public List<Fixture> fixTures;
 	public List<Team> Teams;
@@ -53,26 +53,16 @@ public class Caption
 	public Team team;
 
 	public int FirstPlayerId, SecondPlayerId, whichSide;
-	public String WhichProfile, typeOfGraphics = "";
-	
-	private String status;
+	public String WhichProfile, status;
 	
 	public Caption() {
 		super();
 	}
 	
-	public boolean isSpecialBug_on_screen() {
-		return specialBug_on_screen;
-	}
-
-	public void setSpecialBug_on_screen(boolean specialBug_on_screen) {
-		this.specialBug_on_screen = specialBug_on_screen;
-	}
-
 	public Caption(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics,
 		List<StatsType> statsTypes, List<MatchAllData> tournament_matches, List<NameSuper> nameSupers,List<Bugs> bugs,
 		List<Fixture> fixTures, List<Team> Teams, List<Ground> Grounds,FullFramesGfx this_fullFramesGfx,
-		LowerThirdGfx this_lowerThirdGfx, int whichSide, String whichGraphhicsOnScreen, String slashOrDash) {
+		LowerThirdGfx this_lowerThirdGfx, int whichSide, String whichGraphhicsOnScreen, String slashOrDash, List<Tournament> tournament) {
 	
 		super();
 		this.print_writers = print_writers;
@@ -84,15 +74,15 @@ public class Caption
 		this.fixTures = fixTures;
 		this.Teams = Teams;
 		this.Grounds = Grounds;
+		this.tournament = tournament;
 		this.this_fullFramesGfx = new FullFramesGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
 				nameSupers, fixTures, Teams, Grounds);
 		this.this_lowerThirdGfx = new LowerThirdGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
-				nameSupers, fixTures, Teams, Grounds);
+				nameSupers, fixTures, Teams, Grounds,tournament);
 		this.whichSide = whichSide;
 		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers, statistics, statsTypes, tournament_matches);
 		this.this_bugsAndMiniGfx = new BugsAndMiniGfx(print_writers, config, tournament_matches, bugs, Teams, Grounds);
 		this.status = "";
-		this.specialBug_on_screen = false;
 	}
 	public String getStatus() {
 		return status;
@@ -101,9 +91,8 @@ public class Caption
 		this.status = status;
 	}
 
-	public void PopulateGraphics(String whatToProcess, MatchAllData matchAllData) 
-		throws InterruptedException, JsonMappingException, JsonProcessingException, 
-		NumberFormatException, ParseException
+	public void PopulateGraphics(String whatToProcess, MatchAllData matchAllData) throws InterruptedException, JsonMappingException, JsonProcessingException, 
+		NumberFormatException, ParseException, CloneNotSupportedException
 	{
 		if(whatToProcess.contains(",")) {
 			switch (whatToProcess.split(",")[0]) {
@@ -139,7 +128,6 @@ public class Caption
 				status = this_lowerThirdGfx.populateLTNameSuper(whatToProcess,whichSide);
 				break;
 			case "F12":// InfoBar
-				this_infobarGfx.infobar.setPowerplay_on_screen(false);
 				status = this_infobarGfx.populateInfobar(print_writers,whatToProcess,matchAllData);
 				break;
 			case "Control_F1":// Photo ScoreCard
@@ -161,6 +149,9 @@ public class Caption
 				break;
 			case "Control_F10":
 				status = this_fullFramesGfx.populateManhattan(whichSide, whatToProcess.split(",")[0],matchAllData,Integer.valueOf(whatToProcess.split(",")[1]));
+				break;
+			case "Control_s":
+				status = this_lowerThirdGfx.populateL3rdThisSeries(whatToProcess,whichSide,matchAllData);
 				break;
 			case "Shift_F3": //Fall of Wicket
 				status = this_lowerThirdGfx.populateFOW(whatToProcess, whichSide, matchAllData);
@@ -238,6 +229,12 @@ public class Caption
 			case "Shift_O":
 				status = this_bugsAndMiniGfx.bugsDismissal(whatToProcess,matchAllData,whichSide);
 				break;
+			case "Control_F6":
+				status = this_lowerThirdGfx.populateQuickHowOut(whatToProcess,whichSide,matchAllData);
+				break;
+			case "Shift_F6":
+				status = this_lowerThirdGfx.populateHowOutWithOutFielder(whatToProcess,whichSide,matchAllData);
+				break;	
 			case "Alt_F9": // Single Teams
 				status = this_fullFramesGfx.populateSingleTeams(whichSide, whatToProcess, matchAllData, 0);
 				break;
@@ -304,7 +301,7 @@ public class Caption
 						status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 1);
 						
 						this_infobarGfx.infobar.setRight_top("");this_infobarGfx.infobar.setRight_bottom("");
-						this_infobarGfx.infobar.setLast_right_top("");;this_infobarGfx.infobar.setLast_right_bottom("");
+						this_infobarGfx.infobar.setLast_right_top("");this_infobarGfx.infobar.setLast_right_bottom("");
 					}
 				}else {
 					status = "IN Alt+2 Section BASTMAN/BOWLER NOT SELECTED";
@@ -318,7 +315,7 @@ public class Caption
 		case "Shift_F10": case "Shift_F11": case "m": case "Control_d": case "Control_e": case "Control_m": 
 		case "Shift_K": case "Alt_F9":
 			if(status.equalsIgnoreCase(Constants.OK)) {
-				status = this_anim.processFullFramesPreview(whatToProcess, print_writers, whichSide);
+				this_anim.processFullFramesPreview(whatToProcess, print_writers, whichSide);
 			}
 			break;
 		case "F5": case "F6": case "F7": case "F9": case "F11":
@@ -326,10 +323,15 @@ public class Caption
 		case "Shift_F3": case "s": case "d": case "e": case "v": case "b": case "h":
 		case "p": case "Control_p": case "j":case "Alt_k":case "F8": case "F10":
 			if(status.equalsIgnoreCase(Constants.OK)) {
-				status = this_anim.processL3Preview(whatToProcess, print_writers, whichSide);
+				this_anim.processL3Preview(whatToProcess, print_writers, whichSide);
 			}
 			break;
 		}
-		status = Constants.OK;
 	}
+
+	@Override
+	public String toString() {
+		return "Caption [this_anim=" + this_anim + "]";
+	}
+	
 }

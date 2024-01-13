@@ -133,7 +133,7 @@ public class IndexController
 			@RequestParam(value = "vizTertiaryScene", required = false, defaultValue = "") String vizTertiaryScene,
 			@RequestParam(value = "vizTertiaryLanguage", required = false, defaultValue = "") String vizTertiaryLanguage) 
 				throws StreamWriteException, DatabindException, IllegalAccessException, InvocationTargetException, 
-				JAXBException, IOException, URISyntaxException, ParseException, InterruptedException 
+				JAXBException, IOException, URISyntaxException, ParseException, InterruptedException, CloneNotSupportedException 
 	{
 //		if(current_date == null || current_date.isEmpty()) {
 //			
@@ -299,6 +299,7 @@ public class IndexController
 					break;
 				}
 				this_caption.PopulateGraphics(valueToProcess, session_match);
+				this_animation.caption = this_caption;
 				return JSONObject.fromObject(this_caption).toString();
 			}
 			else if(whatToProcess.contains("ANIMATE-IN-GRAPHICS") || whatToProcess.contains("ANIMATE-OUT-GRAPHICS")
@@ -329,25 +330,25 @@ public class IndexController
 					switch (valueToProcess.split(",")[0]) {
 					case "Alt_p":
 						if(!this_animation.whichGraphicOnScreen.isEmpty()) {
-							this_caption.setStatus("Cannot animate out bugs while " + 
-								this_animation.whichGraphicOnScreen + " is on screen");
-							return JSONObject.fromObject(this_caption).toString();
+							this_animation.status = "Cannot animate out bugs while " + 
+								this_animation.whichGraphicOnScreen + " is on screen";
+							return JSONObject.fromObject(this_animation).toString();
 						}
-						this_animation.whichGraphicOnScreen = valueToProcess.split(",")[0];
+						this_animation.AnimateOut(valueToProcess, print_writers, session_configuration);
+						break;
+					default:
+						this_animation.AnimateOut(this_animation.whichGraphicOnScreen, print_writers, session_configuration);
 						break;
 					}
-					this_animation.AnimateOut(this_animation.whichGraphicOnScreen, print_writers, session_configuration);
 				}else if(whatToProcess.contains("ANIMATE-OUT-INFOBAR")) {
 					this_animation.AnimateOut("F12,", print_writers, session_configuration);
 				}else if(whatToProcess.contains("QUIDICH-COMMANDS")) {
 					this_animation.processQuidichCommands(valueToProcess, print_writers, session_configuration);
 				}
-				return JSONObject.fromObject(this_animation).toString();
 			} else if(whatToProcess.contains("CLEAR-ALL") || whatToProcess.contains("CLEAR-ALL-WITH-INFOBAR")) {
 				this_animation.ResetAnimation(whatToProcess, print_writers, session_configuration);
-				return JSONObject.fromObject(this_animation).toString();
 			}
-			return JSONObject.fromObject(null).toString();
+			return JSONObject.fromObject(this_animation).toString();
 		}
 	}
 	@ModelAttribute("session_configuration")
@@ -368,7 +369,7 @@ public class IndexController
 	}
 	
 	public void GetVariousDBData(Configuration config) throws StreamReadException, DatabindException, 
-		IllegalAccessException, InvocationTargetException, JAXBException, IOException
+		IllegalAccessException, InvocationTargetException, JAXBException, IOException, CloneNotSupportedException
 	{
 		switch (config.getBroadcaster()) {
 		case Constants.ICC_U19_2023:
@@ -382,7 +383,7 @@ public class IndexController
 			}), cricketService);
 			session_statistics = cricketService.getAllStats();
 			past_tournament_stats = CricketFunctions.extractTournamentStats(
-				"PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
+				"COMBINED_PAST_CURRENT_MATCH_DATA",false, cricket_matches, cricketService, session_match, null);
 			session_name_super =  cricketService.getNameSupers();
 			session_fixture =  CricketFunctions.processAllFixtures(cricketService);
 			session_team =  cricketService.getTeams();
@@ -392,7 +393,9 @@ public class IndexController
 			case Constants.ICC_U19_2023:
 				this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), 
 					cricket_matches, session_name_super,session_bugs,session_fixture, session_team, session_ground,
-					new FullFramesGfx(),new LowerThirdGfx(), 1, "", "-");
+					new FullFramesGfx(),new LowerThirdGfx(), 1, "", "-",past_tournament_stats);
+				this_caption.this_infobarGfx.previous_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixes("COMBINED_PAST_CURRENT_MATCH_DATA", 
+						cricket_matches, session_match, null).getTournament_sixes());
 				break;
 			}
 			
