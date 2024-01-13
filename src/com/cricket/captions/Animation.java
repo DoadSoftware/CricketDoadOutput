@@ -335,6 +335,7 @@ public class Animation
 						break;
 					case "F4":
 						processAnimation(Constants.BACK, print_writers, "Change$Partnership_List", "START");
+						processAnimation(Constants.BACK, print_writers, "Sponsor", "CONTINUE REVERSE");
 						break;
 					case "Shift_F11":
 						processAnimation(Constants.BACK, print_writers, "Change$Summary", "START");
@@ -348,15 +349,20 @@ public class Animation
 				if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase(whatToProcess.split(",")[0])) {
 					switch(whatToProcess.split(",")[0]) {
 					case "F1": 
+						processAnimation(Constants.BACK, print_writers, "Header_Shrink", "SHOW 0.0");
 						processAnimation(Constants.BACK, print_writers, "Change$Batting_Card", "START");
 						break;
 					case "F2":
+						processAnimation(Constants.BACK, print_writers, "Header_Shrink", "SHOW 0.0");
 						processAnimation(Constants.BACK, print_writers, "Change$Bowling_Card", "START");
 						break;
 					case "F4":
+						processAnimation(Constants.BACK, print_writers, "Header_Shrink", "SHOW 0.0");
 						processAnimation(Constants.BACK, print_writers, "Change$Partnership_List", "START");
+						processAnimation(Constants.BACK, print_writers, "Sponsor", "START");
 						break;
 					case "Shift_F11":
+						processAnimation(Constants.BACK, print_writers, "Header_Shrink", "START");
 						processAnimation(Constants.BACK, print_writers, "Change$Summary", "START");
 						break;
 					}
@@ -472,12 +478,15 @@ public class Animation
 				if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase(whatToProcess.split(",")[0])) {
 					switch(whatToProcess.split(",")[0]) {
 					case "F1":  
+						processAnimation(Constants.BACK, print_writers, "Header_Shrink", "SHOW 0.0");
 						processAnimation(Constants.BACK, print_writers, "Change$Batting_Card", "SHOW 0.0");
 						break;
 					case "F2":
+						processAnimation(Constants.BACK, print_writers, "Header_Shrink", "SHOW 0.0");
 						processAnimation(Constants.BACK, print_writers, "Change$Bowling_Card", "SHOW 0.0");
 						break;
 					case "F4":
+						processAnimation(Constants.BACK, print_writers, "Header_Shrink", "SHOW 0.0");
 						processAnimation(Constants.BACK, print_writers, "Change$Partnership_List", "SHOW 0.0");
 						break;
 					case "Shift_F11":
