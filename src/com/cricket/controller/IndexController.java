@@ -348,7 +348,6 @@ public class IndexController
 			} else if(whatToProcess.contains("CLEAR-ALL") || whatToProcess.contains("CLEAR-ALL-WITH-INFOBAR")) {
 				this_animation.ResetAnimation(whatToProcess, print_writers, session_configuration);
 			}
-			System.out.println("this_animation = " + this_animation);
 			return JSONObject.fromObject(this_animation).toString();
 		}
 	}
@@ -383,7 +382,8 @@ public class IndexController
 			    }
 			}), cricketService);
 			session_statistics = cricketService.getAllStats();
-			past_tournament_stats = CricketFunctions.extractTournamentStats("PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
+			past_tournament_stats = CricketFunctions.extractTournamentStats(
+				"COMBINED_PAST_CURRENT_MATCH_DATA",false, cricket_matches, cricketService, session_match, null);
 			session_name_super =  cricketService.getNameSupers();
 			session_fixture =  CricketFunctions.processAllFixtures(cricketService);
 			session_team =  cricketService.getTeams();
@@ -393,7 +393,7 @@ public class IndexController
 			case Constants.ICC_U19_2023:
 				this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), 
 					cricket_matches, session_name_super,session_bugs,session_fixture, session_team, session_ground,
-					new FullFramesGfx(),new LowerThirdGfx(), 1, "", "-");
+					new FullFramesGfx(),new LowerThirdGfx(), 1, "", "-",past_tournament_stats);
 				break;
 			}
 			
