@@ -347,7 +347,6 @@ public class IndexController
 			} else if(whatToProcess.contains("CLEAR-ALL") || whatToProcess.contains("CLEAR-ALL-WITH-INFOBAR")) {
 				this_animation.ResetAnimation(whatToProcess, print_writers, session_configuration);
 			}
-			System.out.println("this_animation = " + this_animation);
 			return JSONObject.fromObject(this_animation).toString();
 		}
 	}

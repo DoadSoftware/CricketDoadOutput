@@ -18,6 +18,7 @@ import com.cricket.model.Statistics;
 import com.cricket.model.StatsType;
 import com.cricket.model.Team;
 import com.cricket.model.Tournament;
+import com.cricket.util.CricketFunctions;
 import com.cricket.util.CricketUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -92,11 +93,13 @@ public class Caption
 	}
 
 	public void PopulateGraphics(String whatToProcess, MatchAllData matchAllData) throws InterruptedException, JsonMappingException, JsonProcessingException, 
-		NumberFormatException, ParseException
+		NumberFormatException, ParseException, CloneNotSupportedException
 	{
 		if(whatToProcess.contains(",")) {
 			switch (whatToProcess.split(",")[0]) {
 			case "F1": // Scorecard FF
+				System.out.println(CricketFunctions.extracttournamentFoursAndSixes("COMBINED_PAST_CURRENT_MATCH_DATA", tournament_matches, 
+						matchAllData, null).getTournament_sixes());
 				status = this_fullFramesGfx.PopulateScorecardFF(whichSide, whatToProcess.split(",")[0], matchAllData, 
 					Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
