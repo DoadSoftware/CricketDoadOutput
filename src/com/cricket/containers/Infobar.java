@@ -9,6 +9,7 @@ public class Infobar {
 	
 	private boolean infobar_on_screen = false;
 	private boolean powerplay_on_screen = false;
+	private boolean powerplay_end = false;
 	private boolean infobar_pushed = false;
 	private boolean thisOvers_Title_Fade = false;
 	
@@ -156,4 +157,11 @@ public class Infobar {
 	public void setThisOvers_Title_Fade(boolean thisOvers_Title_Fade) {
 		this.thisOvers_Title_Fade = thisOvers_Title_Fade;
 	}
+	public boolean isPowerplay_end() {
+		return powerplay_end;
+	}
+	public void setPowerplay_end(boolean powerplay_end) {
+		this.powerplay_end = powerplay_end;
+	}
+	
 }

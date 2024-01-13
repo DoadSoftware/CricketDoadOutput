@@ -133,7 +133,7 @@ public class IndexController
 			@RequestParam(value = "vizTertiaryScene", required = false, defaultValue = "") String vizTertiaryScene,
 			@RequestParam(value = "vizTertiaryLanguage", required = false, defaultValue = "") String vizTertiaryLanguage) 
 				throws StreamWriteException, DatabindException, IllegalAccessException, InvocationTargetException, 
-				JAXBException, IOException, URISyntaxException, ParseException, InterruptedException 
+				JAXBException, IOException, URISyntaxException, ParseException, InterruptedException, CloneNotSupportedException 
 	{
 //		if(current_date == null || current_date.isEmpty()) {
 //			
@@ -369,7 +369,7 @@ public class IndexController
 	}
 	
 	public void GetVariousDBData(Configuration config) throws StreamReadException, DatabindException, 
-		IllegalAccessException, InvocationTargetException, JAXBException, IOException
+		IllegalAccessException, InvocationTargetException, JAXBException, IOException, CloneNotSupportedException
 	{
 		switch (config.getBroadcaster()) {
 		case Constants.ICC_U19_2023:
@@ -394,6 +394,8 @@ public class IndexController
 				this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), 
 					cricket_matches, session_name_super,session_bugs,session_fixture, session_team, session_ground,
 					new FullFramesGfx(),new LowerThirdGfx(), 1, "", "-",past_tournament_stats);
+				this_caption.this_infobarGfx.previous_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixes("COMBINED_PAST_CURRENT_MATCH_DATA", 
+						cricket_matches, session_match, null).getTournament_sixes());
 				break;
 			}
 			

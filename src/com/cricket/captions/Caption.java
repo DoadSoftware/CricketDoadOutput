@@ -18,7 +18,6 @@ import com.cricket.model.Statistics;
 import com.cricket.model.StatsType;
 import com.cricket.model.Team;
 import com.cricket.model.Tournament;
-import com.cricket.util.CricketFunctions;
 import com.cricket.util.CricketUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -98,8 +97,6 @@ public class Caption
 		if(whatToProcess.contains(",")) {
 			switch (whatToProcess.split(",")[0]) {
 			case "F1": // Scorecard FF
-				System.out.println(CricketFunctions.extracttournamentFoursAndSixes("COMBINED_PAST_CURRENT_MATCH_DATA", tournament_matches, 
-						matchAllData, null).getTournament_sixes());
 				status = this_fullFramesGfx.PopulateScorecardFF(whichSide, whatToProcess.split(",")[0], matchAllData, 
 					Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
@@ -131,7 +128,6 @@ public class Caption
 				status = this_lowerThirdGfx.populateLTNameSuper(whatToProcess,whichSide);
 				break;
 			case "F12":// InfoBar
-				this_infobarGfx.infobar.setPowerplay_on_screen(false);
 				status = this_infobarGfx.populateInfobar(print_writers,whatToProcess,matchAllData);
 				break;
 			case "Control_F1":// Photo ScoreCard

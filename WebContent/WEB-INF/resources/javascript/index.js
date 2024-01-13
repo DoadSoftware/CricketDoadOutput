@@ -423,7 +423,12 @@ function addItemsToList(whatToProcess,dataToProcess)
 			option.value = 'ARAMCO_POTD';
 			option.text = 'Aramco POTD';
 			select.appendChild(option);
-
+			
+			option = document.createElement('option');
+			option.value = 'TOURNAMENT_SIXES';
+			option.text = 'TOURNAMENT SIXES';
+			select.appendChild(option);
+			
 			session_match.match.inning.forEach(function(inn,index,arr){
 				if(inn.isCurrentInning == 'YES'){
 					if(inn.inningNumber == 1){
