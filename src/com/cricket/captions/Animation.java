@@ -560,10 +560,7 @@ public class Animation
 		case Constants.ICC_U19_2023:
 			switch(whatToProcess) {
 			case "5": // Reset
-				System.out.println("print_writers.size() : " + print_writers.get(print_writers.size()-1));
-				System.out.println("whatToProcess : " + whatToProcess);
 				print_writers.get(print_writers.size()-1).printf("%s","F4");
-				System.out.println("HELLO");
 				break;
 			case "6": // Stand-By
 				print_writers.get(print_writers.size()-1).printf("%s","F6");
