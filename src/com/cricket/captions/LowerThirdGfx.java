@@ -607,16 +607,16 @@ public class LowerThirdGfx
 					null,null,new String[]{namesuper.getSubLine()},null,null);
 		}else if(namesuper.getSponsor()!= null && namesuper.getFlag()!= null && namesuper.getSubLine() == null) {
 			lowerThird = new LowerThird("", namesuper.getFirstname(), surName,"", "", "", 0, namesuper.getSponsor() ,namesuper.getFlag(),
-					null,null,new String[]{namesuper.getSubLine()},null,null);
+					null,null,new String[]{""},null,null);
 		}else if(namesuper.getSponsor()!= null && namesuper.getFlag()== null && namesuper.getSubLine() == null) {
 			lowerThird = new LowerThird("", namesuper.getFirstname(), surName,"", "", "", 0, namesuper.getSponsor() ,"",
-					null,null,null,null,null);
+					null,null,new String[]{""},null,null);
 		}else if(namesuper.getSponsor()== null && namesuper.getFlag()!= null && namesuper.getSubLine() == null) {
 			lowerThird = new LowerThird("", namesuper.getFirstname(), surName,"", "", "", 0, "" ,namesuper.getFlag(),
-					null,null,new String[]{namesuper.getSubLine()},null,null);
+					null,null,new String[]{""},null,null);
 		}else if(namesuper.getSponsor()== null && namesuper.getFlag()== null && namesuper.getSubLine() == null) {
 			lowerThird = new LowerThird("", namesuper.getFirstname(), surName,"", "", "", 0, "" ,"",
-					null,null,null,null,null);
+					null,null,new String[]{""},null,null);
 		}else {
 			lowerThird = new LowerThird("", namesuper.getFirstname(), surName,"", "", "", 1, "" ,"",
 					null,null,new String[]{namesuper.getSubLine()},null,null);
