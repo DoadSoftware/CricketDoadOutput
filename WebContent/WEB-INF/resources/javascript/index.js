@@ -481,9 +481,14 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select.appendChild(option);
 			
 			option = document.createElement('option');
+			option.value = 'THIS_MATCH_SIXES';
+			option.text = 'THIS MATCH SIXES';
+			select.appendChild(option);
+			
+			/*option = document.createElement('option');
 			option.value = 'TOURNAMENT_SIXES';
 			option.text = 'TOURNAMENT SIXES';
-			select.appendChild(option);
+			select.appendChild(option);*/
 			
 			session_match.match.inning.forEach(function(inn,index,arr){
 				if(inn.isCurrentInning == 'YES'){
