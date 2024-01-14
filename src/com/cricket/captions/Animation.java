@@ -32,7 +32,7 @@ public class Animation
 					+ "TRANSFORMATION*POSITION*Y SET 40.0 \0",print_writers);
 			}else if(this.specialBugOnScreen.equalsIgnoreCase(CricketUtil.TOSS)) {
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Overall_Position_Y*"
-					+ "TRANSFORMATION*POSITION*Y SET 106.0 \0",print_writers);
+					+ "TRANSFORMATION*POSITION*Y SET 56.0 \0",print_writers);
 			}else {
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Overall_Position_Y*"
 						+ "TRANSFORMATION*POSITION*Y SET 56.0 \0",print_writers);
@@ -54,7 +54,7 @@ public class Animation
 		case "Shift_F3": case "s": case "d": case "e": case "q": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 		case "p": case "Control_p": case "j": case "Control_F6": case "Shift_F6": case "Control_s":
 			return Constants.LOWER_THIRD;
-		case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8":
+		case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": case "Alt_9":
 			return Constants.INFO_BAR;
 		case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Alt_p":
 			return Constants.BUGS;
@@ -387,12 +387,12 @@ public class Animation
 			case "q":
 				processAnimation(Constants.FRONT, print_writers, "Anim_Boundary_LTChange", "START");
 				break;
-			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8":
+			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": case "Alt_9":
 				switch(whatToProcess.split(",")[0]) {
 				case "Alt_1":
 					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_Bottom_Left", "START");
 					break;
-				case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6":
+				case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_9":
 					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo", "START");
 					break;
 				case "Alt_7":
@@ -431,7 +431,7 @@ public class Animation
 			case "Alt_1":
 				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_Bottom_Left", "SHOW 0.0");
 				break;
-			case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6":
+			case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_9":
 				//TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo", "SHOW 0.0");
 				break;
@@ -560,7 +560,10 @@ public class Animation
 		case Constants.ICC_U19_2023:
 			switch(whatToProcess) {
 			case "5": // Reset
+				System.out.println("print_writers.size() : " + print_writers.get(print_writers.size()-1));
+				System.out.println("whatToProcess : " + whatToProcess);
 				print_writers.get(print_writers.size()-1).printf("%s","F4");
+				System.out.println("HELLO");
 				break;
 			case "6": // Stand-By
 				print_writers.get(print_writers.size()-1).printf("%s","F6");

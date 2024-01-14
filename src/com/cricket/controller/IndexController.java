@@ -37,6 +37,7 @@ import com.cricket.model.Configuration;
 import com.cricket.model.EventFile;
 import com.cricket.model.Fixture;
 import com.cricket.model.Ground;
+import com.cricket.model.InfobarStats;
 import com.cricket.model.Match;
 import com.cricket.model.MatchAllData;
 import com.cricket.model.NameSuper;
@@ -76,6 +77,7 @@ public class IndexController
 	public static List<Statistics> session_statistics = new ArrayList<Statistics>();
 	public static List<NameSuper> session_name_super = new ArrayList<NameSuper>();
 	public static List<Bugs> session_bugs = new ArrayList<Bugs>();
+	public static List<InfobarStats> session_infoBarStats = new ArrayList<InfobarStats>();
 	public static List<Fixture> session_fixture = new ArrayList<Fixture>(); 
 	public static List<Team> session_team = new ArrayList<Team>(); 
 	public static List<Ground> session_ground = new ArrayList<Ground>();
@@ -364,6 +366,8 @@ public class IndexController
 			return (List<T>) session_bugs;
 		case "Control_m":
 			return (List<T>) CricketFunctions.processAllFixtures(cricketService);
+		case "Alt_9":
+			return (List<T>) session_infoBarStats;
 		}
 		return null;
 	}
@@ -388,11 +392,13 @@ public class IndexController
 			session_fixture =  CricketFunctions.processAllFixtures(cricketService);
 			session_team =  cricketService.getTeams();
 			session_ground =  cricketService.getGrounds();
+			session_bugs = cricketService.getBugs();
+			session_infoBarStats = cricketService.getInfobarStats();
 
 			switch (config.getBroadcaster()) {
 			case Constants.ICC_U19_2023:
-				this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), 
-					cricket_matches, session_name_super,session_bugs,session_fixture, session_team, session_ground,
+				this_caption = new Caption(print_writers, config, session_statistics, cricketService.getAllStatsType(), 
+					cricket_matches, session_name_super, session_bugs, session_infoBarStats, session_fixture, session_team, session_ground,
 					new FullFramesGfx(),new LowerThirdGfx(), 1, "", "-",past_tournament_stats);
 				this_caption.this_infobarGfx.previous_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixes("COMBINED_PAST_CURRENT_MATCH_DATA", 
 						cricket_matches, session_match, null).getTournament_sixes());

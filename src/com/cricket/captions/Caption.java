@@ -10,6 +10,7 @@ import com.cricket.model.Bugs;
 import com.cricket.model.Configuration;
 import com.cricket.model.Fixture;
 import com.cricket.model.Ground;
+import com.cricket.model.InfobarStats;
 import com.cricket.model.Inning;
 import com.cricket.model.MatchAllData;
 import com.cricket.model.NameSuper;
@@ -41,6 +42,7 @@ public class Caption
 	public List<Team> Teams;
 	public List<Ground> Grounds;
 	public List<Bugs> bugs;
+	public List<InfobarStats> infobarStats;
 	
 	public BattingCard battingCard;
 	public Inning inning;
@@ -60,8 +62,8 @@ public class Caption
 	}
 	
 	public Caption(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics,
-		List<StatsType> statsTypes, List<MatchAllData> tournament_matches, List<NameSuper> nameSupers,List<Bugs> bugs,
-		List<Fixture> fixTures, List<Team> Teams, List<Ground> Grounds,FullFramesGfx this_fullFramesGfx,
+		List<StatsType> statsTypes, List<MatchAllData> tournament_matches, List<NameSuper> nameSupers, List<Bugs> bugs,
+		List<InfobarStats> infobarStats, List<Fixture> fixTures, List<Team> Teams, List<Ground> Grounds,FullFramesGfx this_fullFramesGfx,
 		LowerThirdGfx this_lowerThirdGfx, int whichSide, String whichGraphhicsOnScreen, String slashOrDash, List<Tournament> tournament) {
 	
 		super();
@@ -71,6 +73,8 @@ public class Caption
 		this.statsTypes = statsTypes;
 		this.tournament_matches = tournament_matches;
 		this.nameSupers = nameSupers;
+		this.bugs = bugs;
+		this.infobarStats = infobarStats;
 		this.fixTures = fixTures;
 		this.Teams = Teams;
 		this.Grounds = Grounds;
@@ -80,7 +84,7 @@ public class Caption
 		this.this_lowerThirdGfx = new LowerThirdGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
 				nameSupers, fixTures, Teams, Grounds,tournament);
 		this.whichSide = whichSide;
-		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers, statistics, statsTypes, tournament_matches);
+		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers, statistics, statsTypes, infobarStats, tournament_matches);
 		this.this_bugsAndMiniGfx = new BugsAndMiniGfx(print_writers, config, tournament_matches, bugs, Teams, Grounds);
 		this.status = "";
 	}
@@ -307,10 +311,15 @@ public class Caption
 					status = "IN Alt+2 Section BASTMAN/BOWLER NOT SELECTED";
 				}
 				break;
+			case "Alt_9":
+				this_infobarGfx.infobar.setMiddle_section("FREE_TEXT");
+				this_infobarGfx.infobarStatsId = Integer.valueOf(whatToProcess.split(",")[2]);
+				status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
+				break;
 			}
 		}
 		
-		switch (whatToProcess.split(",")[0]) {
+		/*switch (whatToProcess.split(",")[0]) {
 		case "F1": case "F2": case "F4": case "Control_F1": case "Control_F7": case "Control_F8": case "Control_F10": 
 		case "Shift_F10": case "Shift_F11": case "m": case "Control_d": case "Control_e": case "Control_m": 
 		case "Shift_K": case "Alt_F9":
@@ -326,7 +335,7 @@ public class Caption
 				this_anim.processL3Preview(whatToProcess, print_writers, whichSide);
 			}
 			break;
-		}
+		}*/
 	}
 
 	@Override

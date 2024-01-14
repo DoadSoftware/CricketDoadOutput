@@ -127,10 +127,10 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			}
 			
 			switch(dataToProcess) {
-			case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': 
+			case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8':
 			case 'Control_F5': case 'Control_F8': case 'Control_F9': case 'F4': case 'F5': case 'F6' : case 'F7': 
 			case 'F8': case 'F9': case 'F11': case 's': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6':
-			case 'Shift_K': case 'Shift_O': case 'Alt_F9': case 'k': case 'g': case 'f': case 'p': case 'Control_s':
+			case 'Shift_K': case 'Shift_O': case 'Alt_F9': case 'g': case 'f': case 'p': case 'Control_s':
 				addItemsToList(dataToProcess,null);
 				break;
 			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'Control_F1': case 'Control_a':
@@ -213,6 +213,7 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 							$("#captions_div").show();
 						}
 					} else {
+						alert(data.status);
 						$("#select_graphic_options_div").empty();
 						document.getElementById('select_graphic_options_div').style.display = 'none';
 						$("#captions_div").show();
@@ -301,7 +302,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Control_F5': case 'Control_F9': case 'Control_F8': case 'Control_d': case 'Control_e': case 's':
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'Shift_F5': case 'Shift_F9': case 'p': case 'q':
 	case 'Alt_F9': case 'j': case 'Shift_F6': case 'Control_s':
-	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8':
+	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 	
 		$("#captions_div").hide();
@@ -323,6 +324,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 		
 		switch(whatToProcess) {
 		case 'F12':
+			header_text.innerHTML = 'MAIN INFOBAR';
 			
 			select = document.createElement('select');
 			select.id = 'selectMiddleStat';
@@ -385,7 +387,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 			break;
 
 		case 'Alt_1':
-
+			header_text.innerHTML = 'LEFT BOTTON INFOBAR SECTION';
+	
 			select = document.createElement('select');
 			select.id = 'selectLeftBottom';
 			select.name = select.id;
@@ -424,6 +427,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			break;
 			
 		case 'Alt_2':
+			header_text.innerHTML = 'MIDDLE INFOBAR SECTION';
 			
 			select = document.createElement('select');
 			select.id = 'selectMiddleStat';
@@ -434,10 +438,10 @@ function addItemsToList(whatToProcess,dataToProcess)
 			option.text = 'Batsman/Bowler';
 			select.appendChild(option);
 			
-			option = document.createElement('option');
+			/*option = document.createElement('option');
 			option.value = 'BATSMAN_TOURNAMENT';
 			option.text = 'Batsman/Tournament';
-			select.appendChild(option);
+			select.appendChild(option);*/
 			
 			option = document.createElement('option');
 			option.value = 'IDENT_TEAM';
@@ -511,6 +515,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 			break;
 		
 		case 'Alt_5':
+			header_text.innerHTML = 'MIDDLE INFOBAR SECTION - LAST x BALLS';
+		
 			select = document.createElement('input');
 			select.type = "text";
 			select.id = 'selectFreeText';
@@ -522,6 +528,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 			break;
 			
 		case 'Alt_6':
+			header_text.innerHTML = 'MIDDLE INFOBAR SECTION - BAT & SPONSOR';
+		
 			select = document.createElement('select');
 			select.id = 'selectWhichSponsor';
 			select.name = select.id;
@@ -558,6 +566,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 			break;
 			
 		case 'Alt_7':
+			header_text.innerHTML = 'RIGHT BOTTOM INFOBAR SECTION';
+			
 			select = document.createElement('select');
 			select.id = 'selectRightBottom';
 			select.name = select.id;
@@ -579,6 +589,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 			break;
 			
 		case 'Alt_8':
+			header_text.innerHTML = 'RIGHT INFOBAR SECTION';
+		
 			select = document.createElement('select');
 			select.id = 'selectRightSection';
 			select.name = select.id;
@@ -602,6 +614,26 @@ function addItemsToList(whatToProcess,dataToProcess)
 						select.appendChild(option);
 					}
 				}
+			});
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			cellCount = cellCount + 1
+			break;
+			
+		case 'Alt_9':
+			header_text.innerHTML = 'MIDDLE INFOBAR SECTION - FREE TEXT';
+		
+			select = document.createElement('select');
+			select.id = 'selectInfoBarStats';
+			select.name = select.id;
+			
+			dataToProcess.forEach(function(pro,index,arr1){
+				option = document.createElement('option');
+				option.value = pro.order;
+				option.text = pro.order + '-' + pro.prompt ;
+				select.appendChild(option);
 			});
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
@@ -954,7 +986,13 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
 			break;
-		case 'F7': case 'Control_d': case 'Alt_3': //Lt Bat Profile 
+		case 'F7': case 'Control_d': case 'Alt_3': //Lt Bat Profile
+			switch(whatToProcess){
+				case 'Alt_3':
+				header_text.innerHTML = 'MIDDLE INFOBAR SECTION - BAT PLAYER PROFILE';
+				break;
+			}
+			
 			select = document.createElement('select');
 			select.id = 'selectPlayerName';
 			select.name = select.id;
@@ -1171,6 +1209,12 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			break;
 		case 'F11': case 'Control_e': case 'Alt_4': //Lt Ball Profile
+			switch(whatToProcess){
+				case 'Alt_4':
+				header_text.innerHTML = 'MIDDLE INFOBAR SECTION - BALL PLAYER PROFILE';
+				break;
+			}
+		
 			select = document.createElement('select');
 			select.id = 'selectPlayerName';
 			select.name = select.id;
