@@ -164,8 +164,17 @@ public class Caption
 			case "Control_s":
 				status = this_lowerThirdGfx.populateL3rdThisSeries(whatToProcess,whichSide,matchAllData);
 				break;
+			case "Shift_F1":
+				status = this_bugsAndMiniGfx.populateMiniScorecard(whichSide, whatToProcess,matchAllData);
+				break;
+			case "Shift_F2":
+				status = this_bugsAndMiniGfx.populateMiniBowlingcard(whichSide, whatToProcess,matchAllData);
+				break;
 			case "Shift_F3": //Fall of Wicket
 				status = this_lowerThirdGfx.populateFOW(whatToProcess, whichSide, matchAllData);
+				break;
+			case "Shift_D":
+				status = this_fullFramesGfx.populateTarget(whichSide, whatToProcess.split(",")[0], matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
 			case "Shift_F10": //MATCH SUMMARY
 				status = this_fullFramesGfx.populateWorms(whichSide, whatToProcess.split(",")[0], matchAllData, 

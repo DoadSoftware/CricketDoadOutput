@@ -8,6 +8,7 @@ public class Constants
 	public final static String LOWER_THIRD = "LOWER_THIRD";
 	public final static String INFO_BAR = "INFO_BAR";
 	public final static String BUGS = "BUGS";
+	public final static String MINIS = "MINIS";
 	public final static String QT = "QT";
 
 	public final static String FORCED = "FORCED";
