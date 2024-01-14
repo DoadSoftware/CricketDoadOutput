@@ -614,6 +614,9 @@ public class LowerThirdGfx
 		}else if(namesuper.getSponsor()== null && namesuper.getFlag()!= null && namesuper.getSubLine() == null) {
 			lowerThird = new LowerThird("", namesuper.getFirstname(), surName,"", "", "", 0, "" ,namesuper.getFlag(),
 					null,null,new String[]{namesuper.getSubLine()},null,null);
+		}else if(namesuper.getSponsor()== null && namesuper.getFlag()== null && namesuper.getSubLine() == null) {
+			lowerThird = new LowerThird("", namesuper.getFirstname(), surName,"", "", "", 0, "" ,"",
+					null,null,null,null,null);
 		}else {
 			lowerThird = new LowerThird("", namesuper.getFirstname(), surName,"", "", "", 1, "" ,"",
 					null,null,new String[]{namesuper.getSubLine()},null,null);
@@ -947,7 +950,7 @@ public class LowerThirdGfx
 		
 		lowerThird = new LowerThird("", battingCard.getPlayer().getFirstname(), surName,"", String.valueOf(battingCard.getRuns()), 
 				String.valueOf(battingCard.getBalls()), 2, "", inning.getBatting_team().getTeamName4(),new String[] {"DOTS", "ONES", "TWOS", "THREES", "FOURS", "SIXES"},
-				new String[]{Count[0],Count[1],Count[2],Count[3],Count[4],Count[6]},null,null,new String[] {"-530.0","-337.0","-133.0","105.0","323.0","527.0"});
+				new String[]{Count[0],Count[1],Count[2],Count[3],Count[4],Count[6]},null,null,new String[] {"-517.0","-328.0","-122.0","115.0","344.0","560.0"});
 		
 		
 		status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);
@@ -990,7 +993,7 @@ public class LowerThirdGfx
 		
 		lowerThird = new LowerThird("", bowlingCard.getPlayer().getFirstname(), surName,"", String.valueOf(bowlingCard.getWickets()), 
 				String.valueOf(bowlingCard.getRuns()), 2, "", inning.getBowling_team().getTeamName4(),new String[] {"DOTS", "ONES", "TWOS", "THREES", "FOURS", "SIXES"},
-				new String[]{Count[0],Count[1],Count[2],Count[3],Count[4],Count[6]},null,null,new String[] {"-530.0","-337.0","-133.0","105.0","323.0","527.0"});
+				new String[]{Count[0],Count[1],Count[2],Count[3],Count[4],Count[6]},null,null,new String[] {"-517.0","-328.0","-122.0","115.0","344.0","560.0"});
 		
 		
 		status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);
@@ -1023,7 +1026,7 @@ public class LowerThirdGfx
 		lowerThird = new LowerThird(inning.getBatting_team().getTeamName1(), "", "","", String.valueOf(inning.getTotalRuns()) + "-" + String.valueOf(inning.getTotalWickets()), 
 				CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls()), 2, "", inning.getBatting_team().getTeamName4(),
 				new String[] {"DOTS", "ONES", "TWOS", "THREES", "FOURS", "SIXES"},new String[]{Count[0],Count[1],Count[2],Count[3],String.valueOf(inning.getTotalFours()),
-				String.valueOf(inning.getTotalSixes())},null,null,new String[] {"-530.0","-337.0","-133.0","105.0","323.0","527.0"});
+				String.valueOf(inning.getTotalSixes())},null,null,new String[] {"-517.0","-328.0","-122.0","115.0","344.0","560.0"});
 		
 		
 		status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);
@@ -1099,7 +1102,7 @@ public class LowerThirdGfx
 					new String[]{pp_ovrs,pp.split(",")[0].split("-")[0],pp.split(",")[0].split("-")[1],
 					CricketFunctions.generateRunRates(Integer.valueOf(pp.split(",")[0].split("-")[0]), Integer.valueOf(pp_ovrs.split("-")[0]), 
 					Integer.valueOf(pp_ovrs.split("-")[1]), 2,matchAllData),pp.split(",")[1],pp.split(",")[2]},null,
-					null,new String[] {"-530.0","-337.0","-133.0","105.0","323.0","527.0"});
+					null,new String[] {"-517.0","-328.0","-122.0","115.0","344.0","560.0"});
 			
 				status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);
 				if(status == Constants.OK) {

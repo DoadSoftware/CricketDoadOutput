@@ -24,8 +24,6 @@ import com.cricket.util.CricketUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-import net.sf.json.JSONObject;
-
 public class Caption 
 {
 	public InfobarGfx this_infobarGfx = new InfobarGfx();
