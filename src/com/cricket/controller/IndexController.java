@@ -265,7 +265,7 @@ public class IndexController
 			if(whatToProcess.contains("GRAPHICS-OPTIONS")) {
 				return JSONArray.fromObject(GetGraphicOption(valueToProcess)).toString();
 			} else if(whatToProcess.contains("POPULATE-GRAPHICS")) {
-				switch(this_animation.getTypeOfGraphicsOnScreen(valueToProcess)){
+				switch(this_animation.getTypeOfGraphicsOnScreen(session_configuration,valueToProcess)){
 				case Constants.INFO_BAR:
 					if(this_animation.infobar.isInfobar_on_screen()) {
 						this_caption.whichSide = 2;
@@ -277,7 +277,7 @@ public class IndexController
 					switch (session_configuration.getBroadcaster()) {
 					case Constants.ICC_U19_2023:
 						if(!session_configuration.getPrimaryVariousOptions().contains(Constants.FULL_FRAMER)
-							&& this_animation.getTypeOfGraphicsOnScreen(valueToProcess).contains(Constants.FULL_FRAMER)) {
+							&& this_animation.getTypeOfGraphicsOnScreen(session_configuration, valueToProcess).contains(Constants.FULL_FRAMER)) {
 							this_caption.setStatus("Error: Full framers captions NOT selected on start-up");
 							return JSONObject.fromObject(this_caption).toString();
 						}
@@ -287,13 +287,15 @@ public class IndexController
 						this_caption.whichSide = 1;
 					} else {
 						//Don't allow L3rds change-on while FFs are on screen
-						switch (this_animation.getTypeOfGraphicsOnScreen(this_animation.whichGraphicOnScreen)) {
-						case Constants.FULL_FRAMER: case Constants.LOWER_THIRD:
-							if(this_animation.getTypeOfGraphicsOnScreen(valueToProcess) 
-								!= this_animation.getTypeOfGraphicsOnScreen(this_animation.whichGraphicOnScreen)) {
-								this_caption.setStatus(this_animation.getTypeOfGraphicsOnScreen(
+						switch (this_animation.getTypeOfGraphicsOnScreen(session_configuration, this_animation.whichGraphicOnScreen)) {
+						case Constants.FULL_FRAMER: case Constants.LOWER_THIRD: 
+						case Constants.NAME_SUPERS + Constants.LOWER_THIRD:
+						case Constants.BOUNDARIES + Constants.LOWER_THIRD:
+							if(this_animation.getTypeOfGraphicsOnScreen(session_configuration,valueToProcess) 
+								!= this_animation.getTypeOfGraphicsOnScreen(session_configuration,this_animation.whichGraphicOnScreen)) {
+								this_caption.setStatus(this_animation.getTypeOfGraphicsOnScreen(session_configuration,
 									this_animation.whichGraphicOnScreen).replace("_", " ") + " is on screen. "
-									+ this_animation.getTypeOfGraphicsOnScreen(valueToProcess).replace("_", " ")
+									+ this_animation.getTypeOfGraphicsOnScreen(session_configuration,valueToProcess).replace("_", " ")
 									+ " not allowed" );
 								return JSONObject.fromObject(this_caption).toString();
 							}
@@ -305,13 +307,30 @@ public class IndexController
 				}
 				this_caption.PopulateGraphics(valueToProcess, session_match);
 				this_animation.caption = this_caption;
+				//Previews
+				switch (this_animation.getTypeOfGraphicsOnScreen(session_configuration, valueToProcess)) {
+				case Constants.FULL_FRAMER:
+					this_animation.processFullFramesPreview(valueToProcess, print_writers, this_caption.whichSide, 
+						session_configuration, this_animation.whichGraphicOnScreen);
+					break;
+				case Constants.LOWER_THIRD: 
+				case Constants.NAME_SUPERS + Constants.LOWER_THIRD:
+				case Constants.BOUNDARIES + Constants.LOWER_THIRD:
+					this_animation.processL3Preview(valueToProcess, print_writers, this_caption.whichSide, 
+						session_configuration, this_animation.whichGraphicOnScreen);
+					break;
+				case Constants.BUGS:
+					this_animation.processBugsPreview(valueToProcess, print_writers, this_caption.whichSide, 
+						session_configuration, this_animation.whichGraphicOnScreen);
+					break;
+				}
 				return JSONObject.fromObject(this_caption).toString();
 			}
 			else if(whatToProcess.contains("ANIMATE-IN-GRAPHICS") || whatToProcess.contains("ANIMATE-OUT-GRAPHICS")
 				|| whatToProcess.contains("ANIMATE-OUT-INFOBAR") || whatToProcess.contains("QUIDICH-COMMANDS")) {
 				
 				if(whatToProcess.contains("ANIMATE-IN-GRAPHICS")) {
-					switch(this_animation.getTypeOfGraphicsOnScreen(valueToProcess)){
+					switch(this_animation.getTypeOfGraphicsOnScreen(session_configuration,valueToProcess)){
 					case Constants.INFO_BAR:
 						this_animation.ChangeOn(valueToProcess, print_writers, session_configuration);
 						TimeUnit.MILLISECONDS.sleep(2000);
@@ -392,7 +411,6 @@ public class IndexController
 			past_tournament_stats = CricketFunctions.extractTournamentStats(
 				"COMBINED_PAST_CURRENT_MATCH_DATA",false, cricket_matches, cricketService, session_match, null);
 			session_name_super =  cricketService.getNameSupers();
-			session_fixture =  CricketFunctions.processAllFixtures(cricketService);
 			session_team =  cricketService.getTeams();
 			session_ground =  cricketService.getGrounds();
 			session_bugs = cricketService.getBugs();
@@ -401,15 +419,14 @@ public class IndexController
 
 			switch (config.getBroadcaster()) {
 			case Constants.ICC_U19_2023:
+				session_fixture =  CricketFunctions.processAllFixtures(cricketService);
 				this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), 
 					cricket_matches, session_name_super,session_bugs,session_infoBarStats,session_fixture, session_team, session_ground,
 					new FullFramesGfx(),new LowerThirdGfx(), 1, "", "-",past_tournament_stats,session_dls);
-
 				this_caption.this_infobarGfx.previous_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixes("COMBINED_PAST_CURRENT_MATCH_DATA", 
-						cricket_matches, session_match, null).getTournament_sixes());
+					cricket_matches, session_match, null).getTournament_sixes());
 				break;
 			}
-			
 			break;
 		}
 	}
