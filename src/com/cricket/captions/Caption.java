@@ -8,6 +8,7 @@ import com.cricket.containers.LowerThird;
 import com.cricket.model.BattingCard;
 import com.cricket.model.Bugs;
 import com.cricket.model.Configuration;
+import com.cricket.model.DuckWorthLewis;
 import com.cricket.model.Fixture;
 import com.cricket.model.Ground;
 import com.cricket.model.InfobarStats;
@@ -22,6 +23,8 @@ import com.cricket.model.Tournament;
 import com.cricket.util.CricketUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+
+import net.sf.json.JSONObject;
 
 public class Caption 
 {
@@ -54,6 +57,8 @@ public class Caption
 	public Fixture fixture;
 	public Team team;
 
+	public List<DuckWorthLewis> dls;
+	
 	public int FirstPlayerId, SecondPlayerId, whichSide;
 	public String WhichProfile, status;
 	
@@ -62,9 +67,10 @@ public class Caption
 	}
 	
 	public Caption(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics,
-		List<StatsType> statsTypes, List<MatchAllData> tournament_matches, List<NameSuper> nameSupers, List<Bugs> bugs,
-		List<InfobarStats> infobarStats, List<Fixture> fixTures, List<Team> Teams, List<Ground> Grounds,FullFramesGfx this_fullFramesGfx,
-		LowerThirdGfx this_lowerThirdGfx, int whichSide, String whichGraphhicsOnScreen, String slashOrDash, List<Tournament> tournament) {
+		List<StatsType> statsTypes, List<MatchAllData> tournament_matches, List<NameSuper> nameSupers,List<Bugs> bugs,
+		List<InfobarStats> infobarStats,List<Fixture> fixTures, List<Team> Teams, List<Ground> Grounds,FullFramesGfx this_fullFramesGfx,
+		LowerThirdGfx this_lowerThirdGfx, int whichSide, String whichGraphhicsOnScreen, String slashOrDash, List<Tournament> tournament,
+		List<DuckWorthLewis> dls) {
 	
 		super();
 		this.print_writers = print_writers;
@@ -79,6 +85,7 @@ public class Caption
 		this.Teams = Teams;
 		this.Grounds = Grounds;
 		this.tournament = tournament;
+		this.dls = dls;
 		this.this_fullFramesGfx = new FullFramesGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
 				nameSupers, fixTures, Teams, Grounds);
 		this.this_lowerThirdGfx = new LowerThirdGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
@@ -204,8 +211,14 @@ public class Caption
 			case "Alt_F12"://Teams 012
 				status = this_lowerThirdGfx.populateTeamSummary(whatToProcess,whichSide,matchAllData);
 				break;
-			case "p"://powerplay
+			case "Alt_d":// DLS Target
+				status = this_lowerThirdGfx.populateDlsTarget(whatToProcess,whichSide,matchAllData);
+				break;	
+			case "Control_g"://powerplay
 				status = this_lowerThirdGfx.populatePowerplay(whatToProcess,whichSide,matchAllData);
+				break;
+			case "Control_h"://powerplay Summary
+				status = this_lowerThirdGfx.populateL3rdPowerPlay(whatToProcess,whichSide,matchAllData);
 				break;	
 			case "Control_a"://Projected
 				status = this_lowerThirdGfx.populateL3rdProjected(whatToProcess,whichSide,matchAllData);

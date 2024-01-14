@@ -34,6 +34,7 @@ import com.cricket.captions.Scene;
 import com.cricket.containers.Infobar;
 import com.cricket.model.Bugs;
 import com.cricket.model.Configuration;
+import com.cricket.model.DuckWorthLewis;
 import com.cricket.model.EventFile;
 import com.cricket.model.Fixture;
 import com.cricket.model.Ground;
@@ -81,6 +82,8 @@ public class IndexController
 	public static List<Fixture> session_fixture = new ArrayList<Fixture>(); 
 	public static List<Team> session_team = new ArrayList<Team>(); 
 	public static List<Ground> session_ground = new ArrayList<Ground>();
+	
+	List<DuckWorthLewis> session_dls = new ArrayList<DuckWorthLewis>();
 	
 	@RequestMapping(value = {"/","/initialise"}, method={RequestMethod.GET,RequestMethod.POST}) 
 	public String initialisePage(ModelMap model, 
@@ -373,7 +376,7 @@ public class IndexController
 	}
 	
 	public void GetVariousDBData(Configuration config) throws StreamReadException, DatabindException, 
-		IllegalAccessException, InvocationTargetException, JAXBException, IOException, CloneNotSupportedException
+		IllegalAccessException, InvocationTargetException, JAXBException, IOException, CloneNotSupportedException, InterruptedException
 	{
 		switch (config.getBroadcaster()) {
 		case Constants.ICC_U19_2023:
@@ -394,12 +397,14 @@ public class IndexController
 			session_ground =  cricketService.getGrounds();
 			session_bugs = cricketService.getBugs();
 			session_infoBarStats = cricketService.getInfobarStats();
+			session_dls = CricketFunctions.populateDuckWorthLewis(session_match);
 
 			switch (config.getBroadcaster()) {
 			case Constants.ICC_U19_2023:
-				this_caption = new Caption(print_writers, config, session_statistics, cricketService.getAllStatsType(), 
-					cricket_matches, session_name_super, session_bugs, session_infoBarStats, session_fixture, session_team, session_ground,
-					new FullFramesGfx(),new LowerThirdGfx(), 1, "", "-",past_tournament_stats);
+				this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), 
+					cricket_matches, session_name_super,session_bugs,session_infoBarStats,session_fixture, session_team, session_ground,
+					new FullFramesGfx(),new LowerThirdGfx(), 1, "", "-",past_tournament_stats,session_dls);
+
 				this_caption.this_infobarGfx.previous_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixes("COMBINED_PAST_CURRENT_MATCH_DATA", 
 						cricket_matches, session_match, null).getTournament_sixes());
 				break;
