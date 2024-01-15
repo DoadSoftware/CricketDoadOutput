@@ -131,12 +131,12 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Control_F5': case 'Control_F8': case 'Control_F9': case 'F4': case 'F5': case 'F6' : case 'F7': 
 			case 'F8': case 'F9': case 'F11': case 's': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6':
 			case 'Shift_K': case 'Shift_O': case 'Alt_F9': case 'g': case 'f': case 'Control_g': case 'Control_s': case 'Control_f':
-			case 'Control_h':
+			case 'Control_h': case 'Alt_F12':
 				addItemsToList(dataToProcess,null);
 				break;
 			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'Control_F1': case 'Control_a':
 			case 'Alt_k':  case 'Shift_F3': case 'd': case 'e': case 'Control_F7': case 'Control_F6':
-			case 'Control_k': case 'Control_F10': case 'Alt_F12': case 'Control_F3': case 'Alt_d':
+			case 'Control_k': case 'Control_F10': case 'Control_F3': case 'Alt_d':
 			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
@@ -303,7 +303,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11':
 	case 'Control_F5': case 'Control_F9': case 'Control_F8': case 'Control_d': case 'Control_e': case 's':
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q':
-	case 'Alt_F9': case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f':
+	case 'Alt_F9': case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12':
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 	
@@ -691,6 +691,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 			break;
 
 		case 'Control_h': case 'Control_g':
+			header_text.innerHTML = 'POWERPLAY';
+			
 			select = document.createElement('select');
 			select.id = 'selectPowerplay';
 			select.name = select.id;
@@ -717,6 +719,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 			break;	
 		case 's':
 			
+			header_text.innerHTML = '50-100 SPLIT';
+			
 			select = document.createElement('select');
 			select.id = 'selectSplit';
 			select.name = select.id;
@@ -738,7 +742,17 @@ function addItemsToList(whatToProcess,dataToProcess)
 			break;
 			
 		case 'Control_F5': case 'Control_s':  case 'Control_f'://Batsman Style
-		
+			switch(whatToProcess) {
+			case 'Control_F5':
+				header_text.innerHTML = 'BAT STYLE';
+				break;
+			case 'Control_s':
+				header_text.innerHTML = 'LT THIS SERIES BAT';
+				break;
+			case 'Control_f':
+				header_text.innerHTML = 'LT THIS SERIES BALL';
+				break;		
+			}
 			select = document.createElement('select');
 			select.id = 'selectPlayerName';
 			select.name = select.id;
@@ -781,8 +795,12 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			break;
 			
-		case 'Control_F8': case 'Alt_F9':
-			
+		case 'Control_F8': case 'Alt_F9': case 'Alt_F12':
+			switch(whatToProcess) {
+			case 'Alt_F12':
+				header_text.innerHTML = 'TEAM 0,1,2';
+				break;		
+			}
 			select = document.createElement('select');
 			select.id = 'selectTeams';
 			select.name = select.id;
@@ -931,11 +949,6 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select.name = select.id;
 			
 			option = document.createElement('option');
-			option.value = 'WITHOUTEND';
-			option.text = 'WITHOUT END';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
 			option.value = session_match.setup.ground.first_bowling_end;
 			option.text = session_match.setup.ground.first_bowling_end;
 			select.appendChild(option);
@@ -943,6 +956,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 			option = document.createElement('option');
 			option.value = session_match.setup.ground.second_bowling_end;
 			option.text = session_match.setup.ground.second_bowling_end;
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'WITHOUTEND';
+			option.text = 'WITHOUT END';
 			select.appendChild(option);
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
@@ -971,7 +989,17 @@ function addItemsToList(whatToProcess,dataToProcess)
 			break;
 			
 		case 'F5': case 'f': case 'Shift_F5': case 'q'://BatThisMatch
-		
+			switch(whatToProcess) {
+			case 'F5':
+				header_text.innerHTML = 'BAT THIS MATCH';
+				break;
+			case 'Shift_F5':
+				header_text.innerHTML = 'BAT 0,1,2';
+				break;
+			case 'Q':
+				header_text.innerHTML = 'PLAYER BOUNDARY';
+				break;				
+			}
 			select = document.createElement('select');
 			select.id = 'selectBatsmanThisMatch';
 			select.name = select.id;
@@ -994,7 +1022,16 @@ function addItemsToList(whatToProcess,dataToProcess)
 			break;
 			
 		case 'F9': case 'g': case 'Shift_F9': //BallThisMatch
-		
+			
+			switch(whatToProcess) {
+			case 'F9':
+				header_text.innerHTML = 'BALL THIS MATCH';
+				break;
+			case 'Shift_F9':
+				header_text.innerHTML = 'BALL 0,1,2';
+				break;				
+			}
+			
 			select = document.createElement('select');
 			select.id = 'selectBatamanThisMatch';
 			select.name = select.id;
@@ -1017,6 +1054,14 @@ function addItemsToList(whatToProcess,dataToProcess)
 			break;
 			
 		case 'F6': case 'Shift_O': case 'Shift_F6': //HowOut
+			switch(whatToProcess) {
+			case 'F6':
+				header_text.innerHTML = 'HOW OUT';
+				break;
+			case 'Shift_F6':
+				header_text.innerHTML = 'HOW OUT WITHOUT FIELDER';
+				break;					
+			}
 			select = document.createElement('select');
 			select.id = 'selectHowoutPlayers';
 			select.name = select.id;
@@ -1038,9 +1083,13 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			break;
 		case 'F7': case 'Control_d': case 'Alt_3': //Lt Bat Profile
+		
 			switch(whatToProcess){
 				case 'Alt_3':
 				header_text.innerHTML = 'MIDDLE INFOBAR SECTION - BAT PLAYER PROFILE';
+				break;
+				case 'F7':
+				header_text.innerHTML = 'BAT PLAYER PROFILE';
 				break;
 			}
 			
@@ -1169,6 +1218,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 			break;
 			
 		case 'F8'://NameSuper Player
+			switch(whatToProcess){
+				case 'F8':
+				header_text.innerHTML = 'NAMESUPER PLAYER';
+				break;
+			}
 			select = document.createElement('select');
 			select.style = 'width:100px';
 			select.id = 'selectPlayer';
@@ -1226,12 +1280,12 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select.appendChild(option);
 			
 			option = document.createElement('option');
-			option.value = 'Captain-WicketKeeper';
+			option.value = 'Captain Wicket-Keeper';
 			option.text = 'Captain-WicketKeeper';
 			select.appendChild(option);
 			
 			option = document.createElement('option');
-			option.value = 'Wicket_Keeper';
+			option.value = 'Wicket-Keeper';
 			option.text = 'WicketKeeper';
 			select.appendChild(option);
 			
@@ -1241,6 +1295,14 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			break;
 		case 'F10': case 'j': //NameSuperDB
+			switch(whatToProcess){
+				case 'F10':
+				header_text.innerHTML = 'NAMESUPER DATABASE';
+				break;
+				case 'j':
+				header_text.innerHTML = 'NAMESUPER SINGLE LINE';
+				break;
+			}
 			select = document.createElement('select');
 			select.style = 'width:130px';
 			select.id = 'selectNameSuper';
@@ -1263,6 +1325,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 			switch(whatToProcess){
 				case 'Alt_4':
 				header_text.innerHTML = 'MIDDLE INFOBAR SECTION - BALL PLAYER PROFILE';
+				break;
+				case 'F11':
+				header_text.innerHTML = 'BALL PLAYER PROFILE';
 				break;
 			}
 		
