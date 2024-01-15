@@ -130,7 +130,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8':
 			case 'Control_F5': case 'Control_F8': case 'Control_F9': case 'F4': case 'F5': case 'F6' : case 'F7': 
 			case 'F8': case 'F9': case 'F11': case 's': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6':
-			case 'Shift_K': case 'Shift_O': case 'Alt_F9': case 'g': case 'f': case 'Control_g': case 'Control_s':
+			case 'Shift_K': case 'Shift_O': case 'Alt_F9': case 'g': case 'f': case 'Control_g': case 'Control_s': case 'Control_f':
 			case 'Control_h':
 				addItemsToList(dataToProcess,null);
 				break;
@@ -303,7 +303,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11':
 	case 'Control_F5': case 'Control_F9': case 'Control_F8': case 'Control_d': case 'Control_e': case 's':
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q':
-	case 'Alt_F9': case 'j': case 'Shift_F6': case 'Control_s':
+	case 'Alt_F9': case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f':
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 	
@@ -717,7 +717,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1
 			break;
 			
-		case 'Control_F5': case 'Control_s'://Batsman Style
+		case 'Control_F5': case 'Control_s':  case 'Control_f'://Batsman Style
 		
 			select = document.createElement('select');
 			select.id = 'selectPlayerName';
@@ -905,6 +905,30 @@ function addItemsToList(whatToProcess,dataToProcess)
 			row.insertCell(cellCount).appendChild(select);
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
+			
+			select = document.createElement('select');
+			select.id = 'selectBowlingEnd';
+			select.name = select.id;
+			
+			option = document.createElement('option');
+			option.value = 'WITHOUTEND';
+			option.text = 'WITHOUT END';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = session_match.setup.ground.first_bowling_end;
+			option.text = session_match.setup.ground.first_bowling_end;
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = session_match.setup.ground.second_bowling_end;
+			option.text = session_match.setup.ground.second_bowling_end;
+			select.appendChild(option);
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),1);
+			cellCount = cellCount + 1
 			break;
 			
 		case 'Control_m': //MATCH-PROMO
