@@ -89,7 +89,8 @@ public class Caption
 		this.this_lowerThirdGfx = new LowerThirdGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
 				nameSupers, fixTures, Teams, Grounds,tournament,dls);
 		this.whichSide = whichSide;
-		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers, statistics, statsTypes, infobarStats, tournament_matches);
+		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers, statistics, statsTypes, infobarStats, Grounds, 
+				tournament_matches, dls);
 		this.this_bugsAndMiniGfx = new BugsAndMiniGfx(print_writers, config, tournament_matches, bugs, Teams, Grounds);
 		this.status = "";
 	}

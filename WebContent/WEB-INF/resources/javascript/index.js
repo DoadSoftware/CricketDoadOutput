@@ -399,6 +399,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 			option.value = 'CRR';
 			option.text = 'Run Rate';
 			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'VENUE';
+			option.text = 'Venue Name';
+			select.appendChild(option);
 
 			session_match.match.inning.forEach(function(inn,index,arr){
 				if(inn.isCurrentInning == 'YES'){
@@ -419,6 +424,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 						option.value = 'TARGET';
 						option.text = 'Target';
 						select.appendChild(option);
+						
+						/*option = document.createElement('option');
+						option.value = 'DLSTARGET';
+						option.text = 'D/L Target';
+						select.appendChild(option);*/
 					}
 				}
 			});
@@ -457,12 +467,17 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			option = document.createElement('option');
 			option.value = 'CURR_PARTNERSHIP';
-			option.text = 'Current Partership';
+			option.text = 'Current Partnership';
 			select.appendChild(option);
 			
 			option = document.createElement('option');
 			option.value = 'EXTRAS';
 			option.text = 'Extras';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'FOW';
+			option.text = 'Fall Of Wickets';
 			select.appendChild(option);
 
 			option = document.createElement('option');
@@ -482,12 +497,12 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			option = document.createElement('option');
 			option.value = 'THIS_MATCH_SIXES';
-			option.text = 'THIS MATCH SIXES';
+			option.text = 'This Match Sixes';
 			select.appendChild(option);
 			
 			option = document.createElement('option');
 			option.value = 'TOURNAMENT_SIXES';
-			option.text = 'TOURNAMENT SIXES';
+			option.text = 'Tournament Sixes';
 			select.appendChild(option);
 			
 			session_match.match.inning.forEach(function(inn,index,arr){
@@ -509,6 +524,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 						option = document.createElement('option');
 						option.value = 'EQUATION';
 						option.text = 'Equation';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = 'DLS_PAR_SCORE';
+						option.text = 'D/L Par Score';
 						select.appendChild(option);
 					}
 				}
@@ -581,12 +601,12 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			option = document.createElement('option');
 			option.value = 'BOWLING_END';
-			option.text = 'BOWLING END';
+			option.text = 'Bowling End';
 			select.appendChild(option);
 			
 			option = document.createElement('option');
 			option.value = 'OVER';
-			option.text = 'THIS OVER';
+			option.text = 'This Over';
 			select.appendChild(option);
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
@@ -604,12 +624,12 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			option = document.createElement('option');
 			option.value = 'BOWLER';
-			option.text = 'BOWLER';
+			option.text = 'Bowler';
 			select.appendChild(option);
 			
 			option = document.createElement('option');
 			option.value = 'BOUNDARY';
-			option.text = 'INNINGS BOUNDARIES';
+			option.text = 'Innings Boundaries';
 			select.appendChild(option);
 			
 			session_match.match.inning.forEach(function(inn,index,arr){

@@ -415,7 +415,9 @@ public class IndexController
 			session_ground =  cricketService.getGrounds();
 			session_bugs = cricketService.getBugs();
 			session_infoBarStats = cricketService.getInfobarStats();
-			session_dls = CricketFunctions.populateDuckWorthLewis(session_match);
+			if(new File(CricketUtil.CRICKET_DIRECTORY + "ParScores BB.html").exists()) {
+				session_dls = CricketFunctions.populateDuckWorthLewis(session_match);
+			}
 
 			switch (config.getBroadcaster()) {
 			case Constants.ICC_U19_2023:
