@@ -88,11 +88,75 @@ public class InfobarGfx
 			}
 			populateVizInfobarRightBottom(print_writers, matchAllData, 1, 1);
 			populateVizInfobarRightSection(print_writers, matchAllData, 1, 1);
+			
+//			if(infobar.isShow_winner() == false) {
+//				showWinner(print_writers, matchAllData, 2);
+//			}
 			break;
 		}
 		return Constants.OK;
 	}
 	
+	public String showWinner(List<PrintWriter> print_writers,MatchAllData match,int WhichSide) throws InterruptedException
+	{
+		if(CricketFunctions.getRequiredRuns(match) == 0 || match.getMatch().getInning().get(1).getTotalWickets() >= 10 || 
+				CricketFunctions.getRequiredBalls(match) == 0) {
+			
+			this_data_str = new ArrayList<String>();
+//			if(generateMatchSummaryStatus(2, match, CricketUtil.FULL, "BEAT").contains("super over")) {
+//				this_data_str.add(generateMatchSummaryStatus(2, match, CricketUtil.FULL, "BEAT"));
+//			}else {
+//				this_data_str.add(generateMatchSummaryStatus(2, match, CricketUtil.FULL, "BEAT").split("by")[0]);
+//				this_data_str.add("by" + generateMatchSummaryStatus(2, match, CricketUtil.FULL, "BEAT").split("by")[1]);
+//			}
+			if(this_data_str == null) {
+				return "SHOW WINNER IS NULL";
+			}
+			
+			if(infobar.getMiddle_section() != null && !infobar.getMiddle_section().trim().isEmpty()) {
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
+						+ "$Select_Type*FUNCTION*Omo*vis_con SET 3 \0", print_writers);
+				
+				if(this_data_str.size() == 1) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Top*GEOM*TEXT SET " + 
+							this_data_str.get(0).toUpperCase() + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + 
+							"" + "\0", print_writers);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Top*GEOM*TEXT SET " + 
+							this_data_str.get(0).toUpperCase() + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + 
+							this_data_str.get(1).toUpperCase() + "\0", print_writers);
+				}
+				
+				this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo", "START");
+				
+				infobar.setMiddle_section("RESULT");
+				
+				TimeUnit.MILLISECONDS.sleep(2000);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_1$Select_Type*FUNCTION*Omo*vis_con SET 3 \0", print_writers);
+				
+				if(this_data_str.size() == 1) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_1$Analytics_1_Wide$txt_Top*GEOM*TEXT SET " + 
+							this_data_str.get(0).toUpperCase() + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_1$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + 
+							"" + "\0", print_writers);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_1$Analytics_1_Wide$txt_Top*GEOM*TEXT SET " + 
+							this_data_str.get(0).toUpperCase() + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_1$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + 
+							this_data_str.get(1).toUpperCase() + "\0", print_writers);
+				}
+				
+				this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo", "SHOW 0.0");
+				infobar.setShow_winner(true);
+			}
+		}
+		return null;
+	}
+
 	public String populateInfobar(List<PrintWriter> print_writers,String whatToProcess, MatchAllData matchAllData) throws InterruptedException, CloneNotSupportedException, JsonMappingException, JsonProcessingException {
 		
 		switch (config.getBroadcaster()) {
