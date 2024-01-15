@@ -35,7 +35,7 @@ public class Animation
 					+ "TRANSFORMATION*POSITION*Y SET 56.0 \0",print_writers);
 			}else {
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Overall_Position_Y*"
-					+ "TRANSFORMATION*POSITION*Y SET 56.0 \0",print_writers);
+					+ "TRANSFORMATION*POSITION*Y SET 3.0 \0",print_writers);
 			}
 			break;
 		}
@@ -54,12 +54,12 @@ public class Animation
 			case "Control_F1": case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
 			case "Shift_F3": case "s": case "d": case "e": case "q": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "Control_g": case "Control_h": case "Control_p": case "j": case "Control_F6": case "Shift_F6": 
-			case "Control_s": case "Alt_d": case "Control_f":
+			case "Control_s": case "Alt_d": case "Control_f": case "Control_q":
 				
 				switch (whatToProcess.split(",")[0]) {
 				case "F8": case "F10": case "j": // Name super L3rd
 					return Constants.NAME_SUPERS + Constants.LOWER_THIRD;
-				case "q": // Boundary L3rd
+				case "q": case "Control_q":// Boundary L3rd
 					return Constants.BOUNDARIES + Constants.LOWER_THIRD;
 				default:
 					return Constants.LOWER_THIRD;
@@ -205,7 +205,7 @@ public class Animation
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 				
-			case "q": // Boundary L3rd
+			case "q": case "Control_q":// Boundary L3rd
 				
 				if(this.infobar.isInfobar_on_screen() == true) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$BoundaryLowerthird$Overall_Position_Y*"
@@ -327,7 +327,7 @@ public class Animation
 				break;
 			
 			case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Shift_F11": case "m": case "Control_m": 
-			case "Control_F8": case "Control_d": case "Control_e": case "Control_F7": case "Control_F10":
+			case "Control_F8": case "Control_d": case "Control_e": case "Control_F7": case "Control_F10": case "Shift_K": case "Alt_F9":
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out", "CONTINUE");
 				switch (whatToProcess.split(",")[0]) {
 				case "m": case "Control_m": case "Shift_F11": case "Control_F7":
@@ -375,7 +375,7 @@ public class Animation
 				}
 				break;
 				
-			case "q":
+			case "q": case "Control_q":
 				processAnimation(Constants.FRONT, print_writers, "anim_Boundary_LT", "CONTINUE");
 				TimeUnit.MILLISECONDS.sleep(1000);
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
@@ -474,7 +474,7 @@ public class Animation
 			case "F8": case "F10": case "j":
 				processAnimation(Constants.FRONT, print_writers, "Anim_NameSuperChange", "START");
 				break;
-			case "q":
+			case "q": case "Control_q":
 				processAnimation(Constants.FRONT, print_writers, "Anim_Boundary_LTChange", "START");
 				break;
 			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": case "Alt_9":
@@ -936,7 +936,7 @@ public class Animation
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
 						+ "/Default/Overlays C:/Temp/Preview.png Anim_Infobar$Push 0.500 anim_NameSupers$In 1.400 \0", print_writer);
 					break;
-				case "q":
+				case "q": case "Control_q":
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
 						+ "/Default/Overlays C:/Temp/Preview.png Anim_Infobar$Push 0.500 anim_Boundary_LT$Essentials 2.200 "
 						+ "anim_Boundary_LT$Essentials$In 1.400 anim_Boundary_LT$Row 2.160 anim_Boundary_LT$Row$In 0.620 \0", print_writer);
@@ -957,7 +957,7 @@ public class Animation
 							+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_NameSuperChange$Flag 1.300 "
 							+ "Anim_NameSuperChange$Sublines 0.700 Anim_NameSuperChange$Topline 0.900 Anim_NameSuperChange$HeaderDynamic 1.220 \0", print_writer);
 						break;
-					case "q":
+					case "q": case "Control_q":
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
 							+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Boundary_LtChange$Flag 1.300 "
 							+ "Anim_Boundary_LtChange$Sublines 1.200 Anim_Boundary_LtChange$Topline 0.900 Anim_Boundary_LtChange$Lt_Position 0.940 "

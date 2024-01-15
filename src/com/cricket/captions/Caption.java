@@ -213,6 +213,9 @@ public class Caption
 			case "q"://Boundaries
 				status = this_lowerThirdGfx.populateBoundaries(whatToProcess,whichSide,matchAllData);
 				break;
+			case "Control_q"://Boundaries
+				status = this_lowerThirdGfx.populateTeamsBoundaries(whatToProcess,whichSide,matchAllData);
+				break;	
 			case "Shift_F5"://Bat 012
 				status = this_lowerThirdGfx.populateBatSummary(whatToProcess,whichSide,matchAllData);
 				break;
@@ -246,9 +249,9 @@ public class Caption
 			case "Control_m": //MATCH PROMO
 				status = this_fullFramesGfx.populateFFMatchPromo(whichSide, whatToProcess,matchAllData);
 				break;
-			case "Control_p": //Lt MATCH SUMMARY
-				status = this_lowerThirdGfx.populateL3rdMatchSummary(whatToProcess,whichSide,matchAllData);
-				break;
+//			case "Control_p": //Lt MATCH SUMMARY
+//				status = this_lowerThirdGfx.populateL3rdMatchSummary(whatToProcess,whichSide,matchAllData);
+//				break;
 			case "Shift_K"://FF curr part
 				this_fullFramesGfx.whichSponsor = whatToProcess.split(",")[2];
 				status = this_fullFramesGfx.populateCurrPartnership(whichSide, whatToProcess.split(",")[0], 
