@@ -142,7 +142,7 @@ public class Caption
 				break;
 			case "Control_F1":// Photo ScoreCard
 				status = this_fullFramesGfx.PopulatePhotoScorecardFF(whichSide, whatToProcess.split(",")[0], matchAllData, 
-						Integer.valueOf(whatToProcess.split(",")[1]));
+					Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
 			case "Control_F5"://Batsman Style
 				status = this_lowerThirdGfx.populateBattingStyle(whatToProcess,whichSide,matchAllData);

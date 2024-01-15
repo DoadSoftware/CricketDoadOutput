@@ -425,31 +425,39 @@ public class Animation
 						break;
 					case "F4":
 						processAnimation(Constants.BACK, print_writers, "Change$Partnership_List", "START");
-						processAnimation(Constants.BACK, print_writers, "Sponsor", "CONTINUE REVERSE");
+						if(caption.this_fullFramesGfx.whichSponsor != null || !caption.this_fullFramesGfx.whichSponsor.isEmpty()) {
+							processAnimation(Constants.BACK, print_writers, "Sponsor", "CONTINUE REVERSE");
+						}
 						break;
 					case "Shift_F11":
 						processAnimation(Constants.BACK, print_writers, "Change$Summary", "START");
+						switch(whatToProcess.split(",")[0]) {
+						case "Shift_F11":
+							break;
+						default:
+							processAnimation(Constants.BACK, print_writers, "Header_Shrink", "CONTINUE REVERSE");
+							break;
+						}
 						break;
 					case "Control_F8":
 						processAnimation(Constants.BACK, print_writers, "Change$LineUp_Image", "START");
-						TimeUnit.MILLISECONDS.sleep(1000);
+						//TimeUnit.MILLISECONDS.sleep(1000);
 						break;
 					}
 				}
 				if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase(whatToProcess.split(",")[0])) {
 					switch(whatToProcess.split(",")[0]) {
 					case "F1": 
-						processAnimation(Constants.BACK, print_writers, "Header_Shrink", "SHOW 0.0");
 						processAnimation(Constants.BACK, print_writers, "Change$Batting_Card", "START");
 						break;
 					case "F2":
-						processAnimation(Constants.BACK, print_writers, "Header_Shrink", "SHOW 0.0");
 						processAnimation(Constants.BACK, print_writers, "Change$Bowling_Card", "START");
 						break;
 					case "F4":
-						processAnimation(Constants.BACK, print_writers, "Header_Shrink", "SHOW 0.0");
 						processAnimation(Constants.BACK, print_writers, "Change$Partnership_List", "START");
-						processAnimation(Constants.BACK, print_writers, "Sponsor", "START");
+						if(caption.this_fullFramesGfx.whichSponsor != null || !caption.this_fullFramesGfx.whichSponsor.isEmpty()) {
+							processAnimation(Constants.BACK, print_writers, "Sponsor", "START");
+						}
 						break;
 					case "Shift_F11":
 						processAnimation(Constants.BACK, print_writers, "Header_Shrink", "START");
@@ -457,10 +465,7 @@ public class Animation
 						break;
 					}
 				}
-//				System.out.println("lastNumberOfRows = " + lastNumberOfRows);
-//				System.out.println("caption.this_fullFramesGfx.numberOfRows = " + caption.this_fullFramesGfx.numberOfRows);
 				if(caption.this_fullFramesGfx.numberOfRows != lastNumberOfRows) {
-//					System.out.println("ConcussExtend_Y START");
 					processAnimation(Constants.BACK, print_writers, "ConcussExtend_Y", "START");
 					lastNumberOfRows = caption.this_fullFramesGfx.numberOfRows;
 				}
@@ -550,11 +555,11 @@ public class Animation
 				processAnimation(Constants.BACK, print_writers, "Change$Footer", "SHOW 0.0");
 				switch(whichGraphicOnScreen.split(",")[0]) {
 				case "F1":  
-					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Batting_Card", "SHOW 0.0");
+					//processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Batting_Card", "SHOW 0.0");
 					processAnimation(Constants.BACK, print_writers, "Change$Batting_Card", "SHOW 0.0");
 					break;
 				case "F2":  
-					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Bowling_Card", "SHOW 0.0");
+					//processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Bowling_Card", "SHOW 0.0");
 					processAnimation(Constants.BACK, print_writers, "Change$Bowling_Card", "SHOW 0.0");
 					break;
 				case "F4":
@@ -909,7 +914,7 @@ public class Animation
 						break;
 				    }
 			    }
-			    System.out.println("previewCommand = " + previewCommand);
+		    System.out.println("previewCommand = " + previewCommand);
 			    CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/FullFrames "
 			    	+ "C:/Temp/Preview.png " + previewCommand + " \0", print_writer);
 			}

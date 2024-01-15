@@ -2539,7 +2539,6 @@ public class FullFramesGfx
 				switch (whatToProcess) {
 				case "F4": case "Shift_K":
 					if(whichSponsor.equalsIgnoreCase("COCACOLA")) {
-						System.out.println("HELLO");
 						CricketFunctions.DoadWriteCommandToSelectedViz(1,"-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor$Select_Logo"
 							+ "*FUNCTION*Omo*vis_con SET 4 \0", print_writers);
 					}else {

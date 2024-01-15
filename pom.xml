@@ -5,7 +5,7 @@
   <artifactId>CricketDoadOutput</artifactId>
   <version>1.26</version>
   <packaging>war</packaging>
-  <name>CricketOutput</name>
+  <name>CricketDoadOutput</name>
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
