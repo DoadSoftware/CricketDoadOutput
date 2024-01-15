@@ -32,5 +32,7 @@ public class Constants
 	public final static String RIGHT_1024 = "\\RIGHT_1024\\";
 	public final static String RIGHT_2048 = "\\RIGHT_2048\\";
 	
+	public final static String LOCAL_ICC_U19_2023_PHOTOS_PATH = "c\\Images\\ICC\\U19_MENS";
+	
 	
 }
