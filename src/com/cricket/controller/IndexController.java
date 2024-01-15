@@ -310,18 +310,18 @@ public class IndexController
 				//Previews
 				switch (this_animation.getTypeOfGraphicsOnScreen(session_configuration, valueToProcess)) {
 				case Constants.FULL_FRAMER:
-//					this_animation.processFullFramesPreview(valueToProcess, print_writers, this_caption.whichSide, 
-//						session_configuration, this_animation.whichGraphicOnScreen);
+					this_animation.processFullFramesPreview(valueToProcess, print_writers, this_caption.whichSide, 
+						session_configuration, this_animation.whichGraphicOnScreen);
 					break;
 				case Constants.LOWER_THIRD: 
 				case Constants.NAME_SUPERS + Constants.LOWER_THIRD:
 				case Constants.BOUNDARIES + Constants.LOWER_THIRD:
-//					this_animation.processL3Preview(valueToProcess, print_writers, this_caption.whichSide, 
-//						session_configuration, this_animation.whichGraphicOnScreen);
+					this_animation.processL3Preview(valueToProcess, print_writers, this_caption.whichSide, 
+						session_configuration, this_animation.whichGraphicOnScreen);
 					break;
 				case Constants.BUGS:
-//					this_animation.processBugsPreview(valueToProcess, print_writers, this_caption.whichSide, 
-//						session_configuration, this_animation.whichGraphicOnScreen);
+					this_animation.processBugsPreview(valueToProcess, print_writers, this_caption.whichSide, 
+						session_configuration, this_animation.whichGraphicOnScreen);
 					break;
 				}
 				return JSONObject.fromObject(this_caption).toString();

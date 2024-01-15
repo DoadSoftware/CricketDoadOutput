@@ -555,11 +555,11 @@ public class Animation
 				processAnimation(Constants.BACK, print_writers, "Change$Footer", "SHOW 0.0");
 				switch(whichGraphicOnScreen.split(",")[0]) {
 				case "F1":  
-					//processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Batting_Card", "SHOW 0.0");
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Batting_Card", "SHOW 0.0");
 					processAnimation(Constants.BACK, print_writers, "Change$Batting_Card", "SHOW 0.0");
 					break;
 				case "F2":  
-					//processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Bowling_Card", "SHOW 0.0");
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Bowling_Card", "SHOW 0.0");
 					processAnimation(Constants.BACK, print_writers, "Change$Bowling_Card", "SHOW 0.0");
 					break;
 				case "F4":
@@ -793,8 +793,6 @@ public class Animation
 		Configuration config,String whichGraphicOnScreen) 
 	{
 		String previewCommand = "";
-		System.out.println("processFullFramesPreview: config.getBroadcaster() = " + config.getBroadcaster());
-		System.out.println("processFullFramesPreview: whatToProcess = " + whatToProcess);
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.ICC_U19_2023:
 			if(whatToProcess.contains(",")) {
@@ -856,24 +854,23 @@ public class Animation
 			    if(whichside == 2) {
 					switch(whatToProcess.split(",")[0]) {
 					case "F1": case "F2": case "F4": case "Shift_F11": case "Control_F8":
-						previewCommand = previewCommand + " Change$Header$Change_Out 0.420 Change$Header$Change_In 1.320";
-						previewCommand = previewCommand + " Change$Footer$Chnage_Out 0.580 Change$Footer$Change_In 1.700";
+						previewCommand = previewCommand + " Change$Header 1.320 Change$Header$Change_Out 0.420 Change$Header$Change_In 1.320";
 						if(whichGraphicOnScreen.contains(",")) {
 							switch(whichGraphicOnScreen.split(",")[0]) {
 							case "F1":  
-								previewCommand = previewCommand + " Change$Batting_Card$Change_Out 0.880 Change$Batting_Card$Change_In 1.380";
+								previewCommand = previewCommand + " Change$Batting_Card 1.380 Change$Batting_Card$Change_Out 0.880 Change$Batting_Card$Change_In 1.380";
 								break;
 							case "F2":  
-								previewCommand = previewCommand + " Change$Bowling_Card$Change_Out 0.840 Change$Bowling_Card$Change_In 1.300";
+								previewCommand = previewCommand + " Change$Bowling_Card 1.300 Change$Bowling_Card$Change_Out 0.840 Change$Bowling_Card$Change_In 1.300";
 								break;
 							case "F4":
-								previewCommand = previewCommand + " Change$Partnership_List$Change_Out 0.880 Change$Partnership_List$Change_In 1.360 Sponsor 0.000";
+								previewCommand = previewCommand + " Change$Partnership_List 1.360 Change$Partnership_List$Change_Out 0.880 Change$Partnership_List$Change_In 1.360 Sponsor 0.000";
 								break;
 							case "Shift_F11":
-								previewCommand = previewCommand + " Change$Summary$Change_Out 0.720 Change$Summary$Change_In 1.340";
+								previewCommand = previewCommand + " Change$Summary 1.340 Change$Summary$Change_Out 0.720 Change$Summary$Change_In 1.340";
 								break;
 							case "Control_F8":
-								previewCommand = previewCommand + " Change$LineUp_Image$Change_Out 0.500 Change$LineUp_Image$Change_In 1.560";
+								previewCommand = previewCommand + " Change$LineUp_Image 1.560 Change$LineUp_Image$Change_Out 0.500 Change$LineUp_Image$Change_In 1.560";
 								break;
 							}
 						}
@@ -894,27 +891,27 @@ public class Animation
 
 							switch(whatToProcess.split(",")[0]) {
 							case "F1": 
-								previewCommand = previewCommand + " Change$Batting_Card$Change_Out 0.880 Change$Batting_Card$Change_In 1.380";
+								previewCommand = previewCommand + " Change$Batting_Card 1.380 Change$Batting_Card$Change_Out 0.880 Change$Batting_Card$Change_In 1.380";
 								break;
 							case "F2":
-								previewCommand = previewCommand + " Change$Bowling_Card$Change_Out 0.840 Change$Bowling_Card$Change_In 1.300";
+								previewCommand = previewCommand + " Change$Bowling_Card 1.300 Change$Bowling_Card$Change_Out 0.840 Change$Bowling_Card$Change_In 1.300";
 								break;
 							case "F4":
-								previewCommand = previewCommand + " Change$Partnership_List$Change_Out 0.880 Change$Partnership_List$Change_In 1.360 Sponsor 0.000";
+								previewCommand = previewCommand + " Change$Partnership_List 1.360 Change$Partnership_List$Change_Out 0.880 Change$Partnership_List$Change_In 1.360 Sponsor 0.000";
 								break;
 							case "Shift_F11":
-								previewCommand = previewCommand + " Change$Summary$Change_Out 0.720 Change$Summary$Change_In 1.340";
+								previewCommand = previewCommand + " Change$Summary 1.340 Change$Summary$Change_Out 0.720 Change$Summary$Change_In 1.340";
 								break;
 							}
 						}
-
+						previewCommand = previewCommand + " Change$Footer 1.700 Change$Footer$Chnage_Out 0.580 Change$Footer$Change_In 1.700";
 						if(caption.this_fullFramesGfx.numberOfRows != lastNumberOfRows) {
-							previewCommand = previewCommand + "ConcussExtend_Y 1.000 ConcussExtend_Y$In 0.500";
+							previewCommand = previewCommand + " ConcussExtend_Y 1.000 ConcussExtend_Y$In 0.500";
 						}
 						break;
 				    }
 			    }
-		    System.out.println("previewCommand = " + previewCommand);
+			    System.out.println("previewCommand = " + previewCommand);
 			    CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/FullFrames "
 			    	+ "C:/Temp/Preview.png " + previewCommand + " \0", print_writer);
 			}
