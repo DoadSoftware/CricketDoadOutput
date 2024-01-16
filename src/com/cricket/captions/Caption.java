@@ -220,6 +220,9 @@ public class Caption
 				break;
 			case "l"://All-rounderStats
 				status = this_lowerThirdGfx.populateL3rdAllRounderStats(whatToProcess,whichSide,matchAllData);
+				break;
+			case "n": // POWERPLAY COMPARISON 
+				status = this_lowerThirdGfx.populateL3rdAllPowerPlay(whatToProcess,whichSide,matchAllData);
 				break;	
 			case "Shift_F5"://Bat 012
 				status = this_lowerThirdGfx.populateBatSummary(whatToProcess,whichSide,matchAllData);

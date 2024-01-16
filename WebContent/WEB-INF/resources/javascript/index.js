@@ -131,12 +131,12 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Control_F5': case 'Control_F8': case 'Control_F9': case 'F4': case 'F5': case 'F6' : case 'F7': 
 			case 'F8': case 'F9': case 'F11': case 's': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6':
 			case 'Shift_K': case 'Shift_O': case 'Alt_F9': case 'g': case 'f': case 'Control_g': case 'Control_s': case 'Control_f':
-			case 'Control_h': case 'Alt_F12':
+			case 'Control_h': case 'Alt_F12': case 'l':
 				addItemsToList(dataToProcess,null);
 				break;
 			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'Control_F1': case 'Control_a':
 			case 'Alt_k':  case 'Shift_F3': case 'd': case 'e': case 'Control_F7': case 'Control_F6':
-			case 'Control_k': case 'Control_F10': case 'Control_F3': case 'Alt_d':
+			case 'Control_k': case 'Control_F10': case 'Control_F3': case 'Alt_d': case 'n':
 			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
@@ -306,7 +306,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11':
 	case 'Control_F5': case 'Control_F9': case 'Control_F8': case 'Control_d': case 'Control_e': case 's':
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q':
-	case 'Alt_F9': case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12':
+	case 'Alt_F9': case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l':
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 	
@@ -749,16 +749,13 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1
 			break;
 			
-		case 'Control_F5': case 'Control_s':  case 'Control_f'://Batsman Style
+		case 'Control_F5': case 'Control_s'://Batsman Style
 			switch(whatToProcess) {
 			case 'Control_F5':
 				header_text.innerHTML = 'BAT STYLE';
 				break;
 			case 'Control_s':
 				header_text.innerHTML = 'LT THIS SERIES BAT';
-				break;
-			case 'Control_f':
-				header_text.innerHTML = 'LT THIS SERIES BALL';
 				break;		
 			}
 			select = document.createElement('select');
@@ -909,8 +906,17 @@ function addItemsToList(whatToProcess,dataToProcess)
 			}
 			break;
 			
-		case 'Control_F9': //BowlerStyle
-		
+		case 'Control_F9':  case 'Control_f'://BowlerStyle
+			
+			switch(whatToProcess) {
+			case 'Control_F9':
+				header_text.innerHTML = 'BALL STYLE';
+				break;
+			case 'Control_f':
+				header_text.innerHTML = 'LT BALL THIS SERIES';
+				break;			
+			}
+			
 			select = document.createElement('select');
 			select.id = 'selectPlayerName';
 			select.name = select.id;
@@ -952,29 +958,34 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
 			
-			select = document.createElement('select');
-			select.id = 'selectBowlingEnd';
-			select.name = select.id;
+			switch(whatToProcess) {
+			case 'Control_F9':
+				select = document.createElement('select');
+				select.id = 'selectBowlingEnd';
+				select.name = select.id;
+				
+				option = document.createElement('option');
+				option.value = session_match.setup.ground.first_bowling_end;
+				option.text = session_match.setup.ground.first_bowling_end;
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = session_match.setup.ground.second_bowling_end;
+				option.text = session_match.setup.ground.second_bowling_end;
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'WITHOUTEND';
+				option.text = 'WITHOUT END';
+				select.appendChild(option);
+				
+				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+				row.insertCell(cellCount).appendChild(select);
+				setDropdownOptionToSelectOptionArray($(select),1);
+				cellCount = cellCount + 1
+				break;			
+			}
 			
-			option = document.createElement('option');
-			option.value = session_match.setup.ground.first_bowling_end;
-			option.text = session_match.setup.ground.first_bowling_end;
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = session_match.setup.ground.second_bowling_end;
-			option.text = session_match.setup.ground.second_bowling_end;
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'WITHOUTEND';
-			option.text = 'WITHOUT END';
-			select.appendChild(option);
-			
-			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
-			row.insertCell(cellCount).appendChild(select);
-			setDropdownOptionToSelectOptionArray($(select),1);
-			cellCount = cellCount + 1
 			break;
 			
 		case 'Control_m': //MATCH-PROMO
@@ -1090,6 +1101,78 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
 			break;
+		case 'l':
+		
+			select = document.createElement('select');
+			select.id = 'selectType';
+			select.name = select.id;
+			
+			option = document.createElement('option');
+			option.value = 'Economy';
+			option.text = 'This match - First (Economy)';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'Catches';
+			option.text = 'This Match - Second (Catches)';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'Tournament';
+			option.text = 'Career / Tournament';
+			select.appendChild(option);
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			cellCount = cellCount + 1;
+			
+			
+			select = document.createElement('select');
+			select.id = 'selectPlayerName';
+			select.name = select.id;
+			
+			session_match.match.inning.forEach(function(inn,index,arr){
+				if(inn.isCurrentInning == 'YES'){
+					session_match.setup.homeSquad.forEach(function(hs,index,arr){
+							if(hs.role == 'All-rounder'){
+								option = document.createElement('option');
+								option.value = hs.playerId;
+								option.text = hs.full_name+' -('+session_match.setup.homeTeam.teamName4+')';
+								select.appendChild(option);	
+							}
+						});
+
+						session_match.setup.homeOtherSquad.forEach(function(hos,index,arr){
+							if(hos.role == 'All-rounder'){
+							option = document.createElement('option');
+							option.value = hos.playerId;
+							option.text = hos.full_name  + ' (OTHER)'+' -('+session_match.setup.homeTeam.teamName4+')';
+							select.appendChild(option);
+						}
+						});
+							session_match.setup.awaySquad.forEach(function(as,index,arr){
+							if(as.role == 'All-rounder'){
+							option = document.createElement('option');
+							option.value = as.playerId;
+							option.text = as.full_name+' -('+session_match.setup.awayTeam.teamName4+')';
+							select.appendChild(option);
+							}
+						});
+						session_match.setup.awayOtherSquad.forEach(function(aos,index,arr){
+							if(aos.role == 'All-rounder'){
+							option = document.createElement('option');
+							option.value = aos.playerId;
+							option.text = aos.full_name  + ' (OTHER)'+' -('+session_match.setup.awayTeam.teamName4+')';
+							select.appendChild(option);
+							}
+						});
+				}
+			});
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),1);
+			cellCount = cellCount + 1;
+			break;	
 		case 'F7': case 'Control_d': case 'Alt_3': //Lt Bat Profile
 		
 			switch(whatToProcess){
