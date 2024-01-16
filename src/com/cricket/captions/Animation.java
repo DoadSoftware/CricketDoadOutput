@@ -638,7 +638,7 @@ public class Animation
 			processAnimation(Constants.FRONT, print_writers, "Anim_Mini", "SHOW 0.0");
 //			processAnimation(Constants.FRONT, print_writers, "Anim_MiniChange", "SHOW 0.0");
 			
-			if(infobar.isInfobar_on_screen() == true) {
+			if(whatToProcess.contains("CLEAR-ALL-WITH-INFOBAR")) {
 				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar", "SHOW 0.0");
 				this.infobar.setInfobar_on_screen(false);
 				this.infobar.setInfobar_status("");

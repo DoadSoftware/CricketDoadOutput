@@ -286,6 +286,7 @@ public class IndexController
 						break;
 					}
 					if(this_animation.whichGraphicOnScreen.isEmpty()) {
+						this_animation.ResetAnimation("CLEAR-ALL", print_writers, session_configuration);
 						this_caption.whichSide = 1;
 					} else {
 						//Don't allow L3rds change-on while FFs are on screen
