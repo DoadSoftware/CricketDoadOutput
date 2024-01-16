@@ -87,7 +87,7 @@ public class Caption
 		this.VariousText = varioustText;
 		this.dls = dls;
 		this.this_fullFramesGfx = new FullFramesGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
-				nameSupers, fixTures, Teams, Grounds, VariousText);
+				nameSupers, fixTures, Teams, Grounds,tournament, VariousText);
 		this.this_lowerThirdGfx = new LowerThirdGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
 				nameSupers, fixTures, Teams, Grounds,tournament,dls);
 		this.whichSide = whichSide;

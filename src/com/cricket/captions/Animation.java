@@ -325,6 +325,7 @@ public class Animation
 			case "Shift_D":
 				processAnimation(Constants.BACK, print_writers, "Target", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "TargetLoop", "CONTINUE");
+				AnimateIn("ArrowUp,", print_writers, config);
 				break;
 			
 			case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Shift_F11": case "m": case "Control_m": 
@@ -797,10 +798,9 @@ public class Animation
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.ICC_U19_2023:
 			if(whatToProcess.contains(",")) {
-
 				switch(whatToProcess.split(",")[0]) {
 				case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Shift_F11": case "m": case "Control_m": 
-				case "Control_F8": case "Control_d": case "Control_e": case "Control_F7": case "Control_F10":
+				case "Control_F8": case "Control_d": case "Control_e": case "Control_F7": case "Control_F10": case "Alt_F9": case "Shift_K":
 					previewCommand = "Anim_FullFrames$In_Out$Essentials$In 2.140 Anim_FullFrames$In_Out$Header$In 1.800 "
 						+ "Anim_FullFrames$In_Out$Footer$In 1.800";
 					break;
@@ -828,7 +828,7 @@ public class Animation
 					previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Manhattan$In 2.900";
 					break;
 				case "Shift_F10"://WORMS
-					previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Worm$In 2.440";
+					previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Worm$In 3.000";
 					break;
 				case "Shift_F11":  //MATCH SUMMARY
 					previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Summary$In 1.820";
@@ -846,11 +846,15 @@ public class Animation
 					}	
 					break;
 				case "Shift_K"://FFCurrPartnership
-					previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Partnership$In 2.300 Base_Gradient 0.500 Sponsor 0.900";
+					previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Partnership$In 3.000 Base_Gradient 0.500 Sponsor 0.900";
 					break;
 				case "Alt_F9": // Single Teams
-					previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Team_Single$In 1.860";
+					previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Team_Single$In 3.000";
 					break;
+				case "Shift_D": // target
+					previewCommand = previewCommand + " Target 2.100 Target$In 2.100 Target$In$Data 2.100";
+					break;
+				
 				}
 			    if(whichside == 2) {
 					switch(whatToProcess.split(",")[0]) {
