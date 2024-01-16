@@ -21,6 +21,7 @@ import com.cricket.model.Statistics;
 import com.cricket.model.StatsType;
 import com.cricket.model.Team;
 import com.cricket.model.Tournament;
+import com.cricket.model.VariousText;
 import com.cricket.util.CricketUtil;
 
 public class Caption 
@@ -43,6 +44,7 @@ public class Caption
 	public List<Ground> Grounds;
 	public List<Bugs> bugs;
 	public List<InfobarStats> infobarStats;
+	public List<VariousText> VariousText;
 	
 	public BattingCard battingCard;
 	public Inning inning;
@@ -65,7 +67,7 @@ public class Caption
 	
 	public Caption(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics,
 		List<StatsType> statsTypes, List<MatchAllData> tournament_matches, List<NameSuper> nameSupers,List<Bugs> bugs,
-		List<InfobarStats> infobarStats,List<Fixture> fixTures, List<Team> Teams, List<Ground> Grounds,FullFramesGfx this_fullFramesGfx,
+		List<InfobarStats> infobarStats,List<Fixture> fixTures, List<Team> Teams, List<Ground> Grounds, List<VariousText> varioustText,FullFramesGfx this_fullFramesGfx,
 		LowerThirdGfx this_lowerThirdGfx, int whichSide, String whichGraphhicsOnScreen, String slashOrDash, List<Tournament> tournament,
 		List<DuckWorthLewis> dls) {
 	
@@ -82,9 +84,10 @@ public class Caption
 		this.Teams = Teams;
 		this.Grounds = Grounds;
 		this.tournament = tournament;
+		this.VariousText = varioustText;
 		this.dls = dls;
 		this.this_fullFramesGfx = new FullFramesGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
-				nameSupers, fixTures, Teams, Grounds);
+				nameSupers, fixTures, Teams, Grounds, VariousText);
 		this.this_lowerThirdGfx = new LowerThirdGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
 				nameSupers, fixTures, Teams, Grounds,tournament,dls);
 		this.whichSide = whichSide;

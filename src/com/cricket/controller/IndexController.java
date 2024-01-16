@@ -46,6 +46,7 @@ import com.cricket.model.Setup;
 import com.cricket.model.Statistics;
 import com.cricket.model.Team;
 import com.cricket.model.Tournament;
+import com.cricket.model.VariousText;
 import com.cricket.service.CricketService;
 import com.cricket.util.CricketFunctions;
 import com.cricket.util.CricketUtil;
@@ -82,6 +83,7 @@ public class IndexController
 	public static List<Fixture> session_fixture = new ArrayList<Fixture>(); 
 	public static List<Team> session_team = new ArrayList<Team>(); 
 	public static List<Ground> session_ground = new ArrayList<Ground>();
+	public static List<VariousText> session_variousText = new ArrayList<VariousText>();
 	
 	List<DuckWorthLewis> session_dls = new ArrayList<DuckWorthLewis>();
 	
@@ -415,6 +417,7 @@ public class IndexController
 			session_ground =  cricketService.getGrounds();
 			session_bugs = cricketService.getBugs();
 			session_infoBarStats = cricketService.getInfobarStats();
+			session_variousText = cricketService.getVariousTexts();
 			if(new File(CricketUtil.CRICKET_DIRECTORY + "ParScores BB.html").exists()) {
 				session_dls = CricketFunctions.populateDuckWorthLewis(session_match);
 			}
@@ -423,7 +426,7 @@ public class IndexController
 			case Constants.ICC_U19_2023:
 				session_fixture =  CricketFunctions.processAllFixtures(cricketService);
 				this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), 
-					cricket_matches, session_name_super,session_bugs,session_infoBarStats,session_fixture, session_team, session_ground,
+					cricket_matches, session_name_super,session_bugs,session_infoBarStats,session_fixture, session_team, session_ground,session_variousText,
 					new FullFramesGfx(),new LowerThirdGfx(), 1, "", "-",past_tournament_stats,session_dls);
 				this_caption.this_infobarGfx.previous_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixes("COMBINED_PAST_CURRENT_MATCH_DATA", 
 					cricket_matches, session_match, null).getTournament_sixes());

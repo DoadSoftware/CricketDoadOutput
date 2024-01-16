@@ -88,6 +88,7 @@ public class Animation
 				TimeUnit.MILLISECONDS.sleep(500);
 				processAnimation(Constants.BACK, print_writers, "Target", "START");
 				processAnimation(Constants.BACK, print_writers, "TargetLoop", "START");
+				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			
 			case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Shift_F11": case "m": case "Control_m": 
