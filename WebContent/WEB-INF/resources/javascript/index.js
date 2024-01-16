@@ -357,6 +357,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select.name = select.id;
 
 			option = document.createElement('option');
+			option.value = 'VENUE';
+			option.text = 'Venue Name';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
 			option.value = 'CRR';
 			option.text = 'Run Rate';
 			select.appendChild(option);
@@ -372,7 +377,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 					else{
 						option = document.createElement('option');
 						option.value = 'TARGET';
-						option.text = 'target';
+						option.text = 'Target';
 						select.appendChild(option);
 						
 						option = document.createElement('option');

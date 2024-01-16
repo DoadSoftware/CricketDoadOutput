@@ -554,22 +554,12 @@ public class InfobarGfx
 						default:
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_"+ WhichSide + "$Bottom_Right_Part$Side_" + 
 									WhichSubSide + "$Balls$" + (iBall + 1) + "$Extra$txt_Extra*GEOM*TEXT SET " + this_data_str.get(this_data_str.size()-1).
-										split(",")[iBall] + "\0", print_writers);
+										split(",")[iBall].toUpperCase() + "\0", print_writers);
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_"+ WhichSide + "$Bottom_Right_Part$Side_" + 
 									WhichSubSide + "$Balls$" + (iBall + 1) + "$Choose_Type*FUNCTION*Omo*vis_con SET 5 \0", print_writers);
 							
 							break;
 						}
-					}
-					
-					if(Integer.valueOf(CricketFunctions.processThisOverRunsCount(infobar.getLast_bowler().getPlayerId(),matchAllData.getEventFile().getEvents())
-							.split(slashOrDash)[1]) > 0) {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_"+ WhichSide + "$Bottom_Right_Part$Side_" + 
-								WhichSubSide + "$Balls*FUNCTION*Omo*vis_con SET " + (this_data_str.get(this_data_str.size()-1).split(",").length) + "\0", print_writers);
-					}
-					else {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_"+ WhichSide + "$Bottom_Right_Part$Side_" + 
-								WhichSubSide + "$Balls*FUNCTION*Omo*vis_con SET " + "0" + "\0", print_writers);
 					}
 					
 					if(this_data_str.get(this_data_str.size()-1).split(",").length > 6) {
@@ -585,6 +575,17 @@ public class InfobarGfx
 							infobar.setThisOvers_Title_Fade(false);
 						}
 					}
+					
+					if(Integer.valueOf(CricketFunctions.processThisOverRunsCount(infobar.getLast_bowler().getPlayerId(),matchAllData.getEventFile().getEvents())
+							.split(slashOrDash)[1]) > 0) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_"+ WhichSide + "$Bottom_Right_Part$Side_" + 
+								WhichSubSide + "$Balls*FUNCTION*Omo*vis_con SET " + (this_data_str.get(this_data_str.size()-1).split(",").length) + "\0", print_writers);
+					}
+					else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_"+ WhichSide + "$Bottom_Right_Part$Side_" + 
+								WhichSubSide + "$Balls*FUNCTION*Omo*vis_con SET " + "0" + "\0", print_writers);
+					}
+					
 					infobar.setLast_this_over(this_data_str.get(this_data_str.size()-1));
 					break;
 				}
@@ -737,8 +738,18 @@ public class InfobarGfx
 					+ "$Choose_Type*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Bottom$Side_" + WhichSide 
 					+ "$Stat$txt_Title*GEOM*TEXT SET " + "TARGET" + "\0", print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Bottom$Side_" + WhichSide 
-					+ "$Stat$txt_Value*GEOM*TEXT SET " + CricketFunctions.getTargetRuns(matchAllData) + "\0", print_writers);
+				
+				if(matchAllData.getSetup().getTargetType().contains(CricketUtil.DLS)) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Bottom$Side_" + WhichSide 
+							+ "$Stat$txt_Value*GEOM*TEXT SET " + CricketFunctions.getTargetRuns(matchAllData) + " (" + CricketUtil.DLS + ")" + "\0", print_writers);
+				}else if(matchAllData.getSetup().getTargetType().contains(CricketUtil.VJD)) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Bottom$Side_" + WhichSide 
+							+ "$Stat$txt_Value*GEOM*TEXT SET " + CricketFunctions.getTargetRuns(matchAllData) + " (" + CricketUtil.VJD + ")" + "\0", print_writers);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Bottom$Side_" + WhichSide 
+							+ "$Stat$txt_Value*GEOM*TEXT SET " + CricketFunctions.getTargetRuns(matchAllData) + "\0", print_writers);
+				}
+				
 				break;
 			
 			case "DLSTARGET":
@@ -979,6 +990,7 @@ public class InfobarGfx
 							+ "$Stats_Wide$Stats$Stat_" + i + "*ACTIVE SET 0 \0",print_writers);
 					}
 				}
+				TimeUnit.MILLISECONDS.sleep(1000);
 				break;
 				
 			case "LAST_X_BALLS":

@@ -348,6 +348,7 @@ public class IndexController
 							TimeUnit.MILLISECONDS.sleep(2000);
 							this_caption.whichSide = 1;
 							this_caption.PopulateGraphics(valueToProcess, session_match);
+							//TimeUnit.MILLISECONDS.sleep(1000);
 							this_animation.CutBack(valueToProcess, print_writers, session_configuration);
 						}
 						break;
