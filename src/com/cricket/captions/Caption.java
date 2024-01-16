@@ -36,6 +36,7 @@ public class Caption
 	public Configuration config;
 	public List<Statistics> statistics;
 	public List<StatsType> statsTypes;
+	public List<Tournament> tournaments;
 	public List<MatchAllData> tournament_matches;
 	public List<Tournament> tournament;
 	public List<NameSuper> nameSupers;
@@ -87,9 +88,9 @@ public class Caption
 		this.VariousText = varioustText;
 		this.dls = dls;
 		this.this_fullFramesGfx = new FullFramesGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
-				nameSupers, fixTures, Teams, Grounds, VariousText);
+				nameSupers, fixTures, Teams, Grounds, tournament, VariousText);
 		this.this_lowerThirdGfx = new LowerThirdGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
-				nameSupers, fixTures, Teams, Grounds,tournament,dls);
+				nameSupers, fixTures, Teams, Grounds, tournament, dls);
 		this.whichSide = whichSide;
 		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers, statistics, statsTypes, infobarStats, Grounds, 
 				tournament_matches, dls);
@@ -271,6 +272,7 @@ public class Caption
 				status = this_lowerThirdGfx.populateHowOutWithOutFielder(whatToProcess,whichSide,matchAllData);
 				break;	
 			case "Alt_F9": // Single Teams
+				System.out.println("whatToProcess : " + whatToProcess);
 				status = this_fullFramesGfx.populateSingleTeams(whichSide, whatToProcess, matchAllData, 0);
 				break;
 			case "Alt_k"://Curr Part

@@ -77,6 +77,7 @@ public class IndexController
 	public static List<MatchAllData> cricket_matches = new ArrayList<MatchAllData>();
 	public static List<Tournament> past_tournament_stats = new ArrayList<Tournament>();
 	public static List<Statistics> session_statistics = new ArrayList<Statistics>();
+	public static Statistics session_statistics_past_matches = new Statistics();
 	public static List<NameSuper> session_name_super = new ArrayList<NameSuper>();
 	public static List<Bugs> session_bugs = new ArrayList<Bugs>();
 	public static List<InfobarStats> session_infoBarStats = new ArrayList<InfobarStats>();
@@ -412,8 +413,7 @@ public class IndexController
 			    }
 			}), cricketService);
 			session_statistics = cricketService.getAllStats();
-			past_tournament_stats = CricketFunctions.extractTournamentStats(
-				"PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
+			past_tournament_stats = CricketFunctions.extractTournamentStats("PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
 			session_name_super =  cricketService.getNameSupers();
 			session_team =  cricketService.getTeams();
 			session_ground =  cricketService.getGrounds();
@@ -423,7 +423,7 @@ public class IndexController
 			if(new File(CricketUtil.CRICKET_DIRECTORY + "ParScores BB.html").exists()) {
 				session_dls = CricketFunctions.populateDuckWorthLewis(session_match);
 			}
-
+			
 			switch (config.getBroadcaster()) {
 			case Constants.ICC_U19_2023:
 				session_fixture =  CricketFunctions.processAllFixtures(cricketService);

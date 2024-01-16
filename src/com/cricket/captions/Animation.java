@@ -325,6 +325,9 @@ public class Animation
 			case "Shift_D":
 				processAnimation(Constants.BACK, print_writers, "Target", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "TargetLoop", "CONTINUE");
+				TimeUnit.MILLISECONDS.sleep(1000);
+				AnimateIn("ArrowUp,", print_writers, config); // Restore infobar
+				this.whichGraphicOnScreen = "";
 				break;
 			
 			case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Shift_F11": case "m": case "Control_m": 

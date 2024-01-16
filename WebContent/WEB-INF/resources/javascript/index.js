@@ -195,6 +195,9 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 					session_match = data;
 					initialiseForm('UPDATE-MATCH-ON-OUTPUT-FORM',data);
 				}
+				if(whatToProcess == "RE_READ_DATA"){
+					alert("Data is Loaded");
+				}
 				break;
 			case 'SHOW_SPEED':
 				if(data == true){
@@ -836,10 +839,10 @@ function addItemsToList(whatToProcess,dataToProcess)
 				option.text = 'U19 ODI';
 				select.appendChild(option);
 				
-				option = document.createElement('option');
-				option.value = 'U19CWC_2024';
+				/*option = document.createElement('option');
+				option.value = 'TS';
 				option.text = 'U19 CWC 2024';
-				select.appendChild(option);
+				select.appendChild(option);*/
 				
 				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
 				row.insertCell(cellCount).appendChild(select);
