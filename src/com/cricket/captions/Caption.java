@@ -36,6 +36,7 @@ public class Caption
 	public Configuration config;
 	public List<Statistics> statistics;
 	public List<StatsType> statsTypes;
+	public List<Tournament> tournaments;
 	public List<MatchAllData> tournament_matches;
 	public List<Tournament> tournament;
 	public List<NameSuper> nameSupers;
@@ -86,10 +87,10 @@ public class Caption
 		this.tournament = tournament;
 		this.VariousText = varioustText;
 		this.dls = dls;
-		this.this_fullFramesGfx = new FullFramesGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
+		this.this_fullFramesGfx = new FullFramesGfx(print_writers, config, statistics, statsTypes, tournament_matches,
 				nameSupers, fixTures, Teams, Grounds,tournament, VariousText);
 		this.this_lowerThirdGfx = new LowerThirdGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
-				nameSupers, fixTures, Teams, Grounds,tournament,dls);
+				nameSupers, fixTures, Teams, Grounds, tournament, dls);
 		this.whichSide = whichSide;
 		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers, statistics, statsTypes, infobarStats, Grounds, 
 				tournament_matches, dls);
@@ -219,6 +220,9 @@ public class Caption
 				break;
 			case "l"://All-rounderStats
 				status = this_lowerThirdGfx.populateL3rdAllRounderStats(whatToProcess,whichSide,matchAllData);
+				break;
+			case "n": // POWERPLAY COMPARISON 
+				status = this_lowerThirdGfx.populateL3rdAllPowerPlay(whatToProcess,whichSide,matchAllData);
 				break;	
 			case "Shift_F5"://Bat 012
 				status = this_lowerThirdGfx.populateBatSummary(whatToProcess,whichSide,matchAllData);
@@ -271,6 +275,7 @@ public class Caption
 				status = this_lowerThirdGfx.populateHowOutWithOutFielder(whatToProcess,whichSide,matchAllData);
 				break;	
 			case "Alt_F9": // Single Teams
+				System.out.println("whatToProcess : " + whatToProcess);
 				status = this_fullFramesGfx.populateSingleTeams(whichSide, whatToProcess, matchAllData, 0);
 				break;
 			case "Alt_k"://Curr Part

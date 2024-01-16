@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -394,7 +395,7 @@ public class LowerThirdGfx
 				splitNumber[split_id] = String.valueOf(split_id+1);
 	    	}
 			
-			if(Integer.valueOf(whatToProcess.split(",")[2]) == 30) {
+			if(Integer.valueOf(whatToProcess.split(",")[2]) == 50) {
 				whichSplit = "BALLS PER FIFTY";
 				lowerThird = new LowerThird("", matchAllData.getSetup().getAwayTeam().getTeamName1(), "",whichSplit, String.valueOf(inning.getTotalRuns() + "-" + inning.getTotalWickets()), "",
 						2,"",matchAllData.getSetup().getAwayTeam().getTeamName4(),splitNumber,splitData,new String[]{"FIFTIES","BALLS"},null,
@@ -440,66 +441,50 @@ public class LowerThirdGfx
 	public String populateL3rdTarget(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws InterruptedException
 	{
 		
-		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES))
+		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == Integer.valueOf(whatToProcess.split(",")[1]))
 			.findAny().orElse(null);
 		
 		if(inning == null) {
 			return "populateTarget: Current Inning NOT found in this match";
 		}
 			
-		int requiredRuns = matchAllData.getMatch().getInning().get(0).getTotalRuns() + 1;
-		String runRate = "";
-		if(matchAllData.getSetup().getTargetRuns() != 0) {
-			requiredRuns = matchAllData.getSetup().getTargetRuns();
-		}
+		String runRate = "",summary = "";
 		
-		if(requiredRuns <= 0) {
-			requiredRuns = 0;
-		}
-		int requiredBalls = 0;
-		if(matchAllData.getSetup().getTargetOvers() != null && !matchAllData.getSetup().getTargetOvers().trim().isEmpty()) {
-			if(matchAllData.getSetup().getTargetOvers().contains(".")) {
-				requiredBalls = ((Integer.valueOf(matchAllData.getSetup().getTargetOvers().split(".")[0]) * 6) + 
-						Integer.valueOf(matchAllData.getSetup().getTargetOvers().split(".")[1]));
-			} else {
-				requiredBalls = ((Integer.valueOf(matchAllData.getSetup().getTargetOvers()) * 6));
-			}
-		}else {
-			requiredBalls = ((matchAllData.getSetup().getMaxOvers()) * 6);
-		}
-		if(requiredBalls <= 0) {
-			requiredBalls = 0;
-		}
-		
-		String summary=inning.getBatting_team().getTeamName1()+" NEED "+(matchAllData.getMatch().getInning().get(0).getTotalRuns()+1)+" RUN"+
-				CricketFunctions.Plural(matchAllData.getMatch().getInning().get(0).getTotalRuns()-inning.getTotalRuns()).toUpperCase()+" TO WIN ";
-//			String summary=inning.getBatting_team().getTeamName1()+" NEED "+(matchAllData.getMatch().getInning().get(0).getTotalRuns()-inning.getTotalRuns())+" RUN"+CricketFunctions.Plural(matchAllData.getMatch().getInning().get(0).getTotalRuns()-inning.getTotalRuns()).toUpperCase()+" TO WIN ";
-		runRate = " AT " + CricketFunctions.generateRunRate(requiredRuns, 0, requiredBalls, 2,matchAllData) + " RUNS PER OVER";
-		
-		if(matchAllData.getSetup().getTargetOvers() == "" || matchAllData.getSetup().getTargetOvers().trim().isEmpty() && 
-				matchAllData.getSetup().getTargetRuns() == 0) {
+		if(matchAllData.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.SUPER_OVER) && matchAllData.getSetup().getMaxOvers() == 1) {
+			summary = inning.getBatting_team().getTeamName1() + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN ";
 			
 			lowerThird = new LowerThird(summary, "", "","", "", "",1,"",inning.getBatting_team().getTeamName4(),null,null,
-					new String[]{inning.getBatting_team().getTeamName1(),String.valueOf(CricketFunctions.getTargetRuns(matchAllData)),
-							String.valueOf("FROM "+matchAllData.getSetup().getMaxOvers())+ " OVERS",runRate},null,null);
+					new String[]{String.valueOf("FROM " + matchAllData.getSetup().getMaxOvers()*6)+ " BALLS",""},null,null);
 		}else {
-			if(matchAllData.getSetup().getTargetOvers() != "") {
+			if(matchAllData.getSetup().getTargetOvers() == "" || matchAllData.getSetup().getTargetOvers().trim().isEmpty() && matchAllData.getSetup().getTargetRuns() == 0) {
+				
+				summary = inning.getBatting_team().getTeamName1() + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN ";
+				runRate = " AT " + CricketFunctions.generateRunRate(CricketFunctions.getRequiredRuns(matchAllData),
+						0,CricketFunctions.getRequiredBalls(matchAllData),2,matchAllData) + " RUNS PER OVER";
 				
 				lowerThird = new LowerThird(summary, "", "","", "", "",1,"",inning.getBatting_team().getTeamName4(),null,null,
-						new String[]{inning.getBatting_team().getTeamName1(),String.valueOf(CricketFunctions.getTargetRuns(matchAllData)),
-								String.valueOf("FROM "+matchAllData.getSetup().getTargetOvers())+ " OVERS",runRate},null,null);
-			}
-			if(matchAllData.getSetup().getTargetType().toUpperCase().equalsIgnoreCase("VJD")) {
-				
-				lowerThird = new LowerThird(summary, "", "","", "", "",1,"",inning.getBatting_team().getTeamName4(),null,null,
-						new String[]{inning.getBatting_team().getTeamName1(),String.valueOf(CricketFunctions.getTargetRuns(matchAllData)),
-								String.valueOf("FROM "+matchAllData.getSetup().getTargetOvers())+ " OVERS (VJD)",runRate},null,null);
-				
-			}else if(matchAllData.getSetup().getTargetType().toUpperCase().equalsIgnoreCase("DLS")) {
+						new String[]{String.valueOf("FROM " + CricketFunctions.getTargetOvers(matchAllData))+ " OVERS",runRate},null,null);
 
-				lowerThird = new LowerThird(summary, "", "","", "", "",1,"",inning.getBatting_team().getTeamName4(),null,null,
-						new String[]{inning.getBatting_team().getTeamName1(),String.valueOf(CricketFunctions.getTargetRuns(matchAllData)),
-								String.valueOf("FROM "+matchAllData.getSetup().getTargetOvers())+ " OVERS (DLS)",runRate},null,null);
+			}else {
+				summary = inning.getBatting_team().getTeamName1() + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN ";
+				runRate = " AT " + CricketFunctions.generateRunRate(CricketFunctions.getRequiredRuns(matchAllData),
+						0,CricketFunctions.getRequiredBalls(matchAllData),2,matchAllData) + " RUNS PER OVER";
+				
+				if(matchAllData.getSetup().getTargetOvers() != "") {
+					
+					lowerThird = new LowerThird(summary, "", "","", "", "",1,"",inning.getBatting_team().getTeamName4(),null,null,
+							new String[]{String.valueOf("FROM " + CricketFunctions.getTargetOvers(matchAllData))+ " OVERS",runRate},null,null);
+				}
+				if(matchAllData.getSetup().getTargetType().toUpperCase().equalsIgnoreCase("VJD")) {
+					
+					lowerThird = new LowerThird(summary, "", "","", "", "",1,"",inning.getBatting_team().getTeamName4(),null,null,
+							new String[]{String.valueOf("FROM " + CricketFunctions.getTargetOvers(matchAllData))+ " OVERS (VJD)",runRate},null,null);
+					
+				}else if(matchAllData.getSetup().getTargetType().toUpperCase().equalsIgnoreCase("DLS")) {
+					
+					lowerThird = new LowerThird(summary, "", "","", "", "",1,"",inning.getBatting_team().getTeamName4(),null,null,
+							new String[]{String.valueOf("FROM " + CricketFunctions.getTargetOvers(matchAllData))+ " OVERS (DLS)",runRate},null,null);
+				}
 			}
 		}
 		
@@ -523,31 +508,36 @@ public class LowerThirdGfx
 			return "populateEquation: current inning is 1";
 		}
 		
-		int requiredBalls = 0;
-		requiredBalls = ((matchAllData.getSetup().getReducedOvers()) * 6) - (inning.getTotalOvers()*6 + inning.getTotalBalls());
-		if(requiredBalls <= 0) {
-			requiredBalls = 0;
-		}
 		String line_1 = "";
-		if(requiredBalls < 100) {
-			 line_1 = "FROM " + requiredBalls + " BALL" + CricketFunctions.Plural(requiredBalls).toUpperCase() + " AT " +
-		CricketFunctions.generateRunRate((matchAllData.getMatch().getInning().get(0).getTotalRuns() - inning.getTotalRuns()), 0, requiredBalls, 2,matchAllData) + " RUNS PER OVER ";
+		
+		if(CricketFunctions.getRequiredBalls(matchAllData) < 100) {
+			line_1 = "FROM " + CricketFunctions.getRequiredBalls(matchAllData) + " BALL" + CricketFunctions.Plural(CricketFunctions.getRequiredBalls(matchAllData)).toUpperCase();
 
 		}else {
-			if(requiredBalls%6 == 0) {
-				 line_1 = "FROM " + requiredBalls/6 + " OVER" + CricketFunctions.Plural(requiredBalls/6).toUpperCase()
-				 + " AT " + CricketFunctions.generateRunRate((matchAllData.getMatch().getInning().get(0).getTotalRuns() - inning.getTotalRuns()), 0, requiredBalls, 2,matchAllData) + " RUNS PER OVER ";
+			if(CricketFunctions.getRequiredBalls(matchAllData)%6 == 0) {
+				 line_1 = "FROM " + CricketFunctions.getRequiredBalls(matchAllData)/6 + " OVERS";
 
 			}else {
-				line_1 = "FROM " + requiredBalls/6 + "." + requiredBalls%6 + " OVER" + CricketFunctions.Plural(requiredBalls/6).toUpperCase()
-				+ " AT " + CricketFunctions.generateRunRate((matchAllData.getMatch().getInning().get(0).getTotalRuns()-inning.getTotalRuns()), 0, requiredBalls, 2,matchAllData) + " RUNS PER OVER ";
+				line_1 = "FROM " + CricketFunctions.OverBalls(CricketFunctions.getRequiredBalls(matchAllData)/6, CricketFunctions.getRequiredBalls(matchAllData)%6) + " OVERS";
 			}
 		}
-		String summary=inning.getBatting_team().getTeamName1() + " NEED " + (matchAllData.getMatch().getInning().get(0).getTotalRuns()-inning.getTotalRuns()+1) + 
-				" MORE " + "RUN" + CricketFunctions.Plural((matchAllData.getMatch().getInning().get(0).getTotalRuns()-inning.getTotalRuns()+1)).toUpperCase() + " TO WIN ";
-//			String summary = inning.getBatting_team().getTeamName1() + " NEED " + (matchAllData.getMatch().getInning().get(0).getTotalRuns() - inning.getTotalRuns()) + " MORE RUNS TO WIN ";
+		
+		if(matchAllData.getSetup().getTargetType()!= null) {
+			if(matchAllData.getSetup().getTargetType().toUpperCase().equalsIgnoreCase("VJD")) {
+				line_1 = line_1 + "(" + CricketUtil.VJD + ")";
+			}else if(matchAllData.getSetup().getTargetType().toUpperCase().equalsIgnoreCase("DLS")) {
+				line_1 = line_1 + "(" + CricketUtil.DLS + ")";
+			}
+		}
+		
+		String summary = inning.getBatting_team().getTeamName1() + " NEED " + CricketFunctions.getRequiredRuns(matchAllData) + 
+				" MORE " + "RUN" + CricketFunctions.Plural(CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " TO WIN ";
+		
+		line_1 = line_1 + " AT " + CricketFunctions.generateRunRate(CricketFunctions.getRequiredRuns(matchAllData), 0, 
+				CricketFunctions.getRequiredBalls(matchAllData), 2,matchAllData) + " RUNS PER OVER ";
+		
 		String line_2 = "WITH " + (10-inning.getTotalWickets()) + " WICKET" + CricketFunctions.Plural(10 - inning.getTotalWickets()).toUpperCase() + " REMAINING";
-
+		
 		lowerThird = new LowerThird(summary, "", "","", "", "",2,"",inning.getBatting_team().getTeamName4(),null,null,
 				new String[]{line_1,line_2},null,null);
 			
@@ -1167,17 +1157,23 @@ public class LowerThirdGfx
 	{
 		String powerplay = "",Subheader = "", Subline = "";
 		
+		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
+		
+		if(inning == null) {
+			return "populateHowOut: Inning is Not Found";
+		}
+		
 		if(whatToProcess.split(",")[2].equalsIgnoreCase("p1")) {
 			powerplay = "POWERPLAY 1";
-			Subheader = "(OVERS 1 TO 10)";
+			Subheader = "(OVERS " + inning.getFirstPowerplayStartOver() + " TO " + inning.getFirstPowerplayEndOver() + ")";
 			Subline = "NO MORE THAN 2 FIELDERS ALLOWED OUTSIDE 30-YARD CIRCLE";
 		}else if(whatToProcess.split(",")[2].equalsIgnoreCase("p2")) {
 			powerplay = "POWERPLAY 2";
-			Subheader = "(OVERS 11 TO 40)";
+			Subheader = "(OVERS " + inning.getSecondPowerplayStartOver() + " TO " + inning.getSecondPowerplayEndOver() + ")";
 			Subline = "NO MORE THAN 4 FIELDERS ALLOWED OUTSIDE 30-YARD CIRCLE";
 		}else if(whatToProcess.split(",")[2].equalsIgnoreCase("p3")) {
 			powerplay = "POWERPLAY 3";
-			Subheader = "(OVERS 41 TO 50)";
+			Subheader = "(OVERS " + inning.getThirdPowerplayStartOver() + " TO " + inning.getThirdPowerplayEndOver() + ")";
 			Subline = "NO MORE THAN 5 FIELDERS ALLOWED OUTSIDE 30-YARD CIRCLE";
 		}
 		lowerThird = new LowerThird(powerplay, matchAllData.getSetup().getHomeTeam().getTeamName4(), 
@@ -1205,7 +1201,7 @@ public class LowerThirdGfx
 				return status;
 			}
 			
-			String runs="",overs="",matches="",balls="",strike="",wickets="",economy="",player="",team="",flag="",type="";
+			String runs="",overs="",balls="",strike="",wickets="",economy="",player="",team="",flag="",type="";
 			if(whatToProcess.split(",")[2].equalsIgnoreCase("Economy")||whatToProcess.split(",")[2].equalsIgnoreCase("Catches")) {
 				if( matchAllData.getMatch().getInning().get(0).getBowlingCard()
 						.stream().filter(boc->boc.getPlayerId()==Integer.valueOf(whatToProcess.split(",")[3]))
@@ -1233,7 +1229,7 @@ public class LowerThirdGfx
 								economy=String.valueOf(bowlingCard.getEconomyRate());
 							}else if(whatToProcess.split(",")[2].equalsIgnoreCase("Catches")) {
 								type="CATCHES";
-								economy=String.valueOf(bowlingCard.getCatchAsBowler()+bowlingCard.getCatchAsFielder());
+								economy=String.valueOf(CricketFunctions.getAllRounderCatches(Integer.valueOf(whatToProcess.split(",")[3]), matchAllData, matchAllData.getEventFile().getEvents()));
 							}
 						}
 					}
@@ -1264,13 +1260,13 @@ public class LowerThirdGfx
 								economy=String.valueOf(bowlingCard.getEconomyRate());
 							}else if(whatToProcess.split(",")[2].equalsIgnoreCase("Catches")) {
 								type="CATCHES";
-								economy=String.valueOf(bowlingCard.getCatchAsBowler()+bowlingCard.getCatchAsFielder());
+								economy=String.valueOf(CricketFunctions.getAllRounderCatches(Integer.valueOf(whatToProcess.split(",")[3]), matchAllData, matchAllData.getEventFile().getEvents()));
 							}
 						}
 						}
 					}
 					lowerThird = new LowerThird(player,team, "","", "","", 
-						2, "" ,flag,new String[]{"RUNS","BALLS","STRIKE RATE","OVERS","WICKETS",type},
+						4, "" ,flag,new String[]{"RUNS","BALLS","STRIKE RATE","OVERS","WICKETS",type},
 						new String[]{String.valueOf(runs),
 								balls,strike,overs,wickets,economy},null,
 						null,new String[] {"-517.0","-328.0","-122.0","115.0","344.0","560.0"});
@@ -1303,7 +1299,7 @@ public class LowerThirdGfx
 						flag=matchAllData.getMatch().getInning().get(1).getBowling_team().getTeamName4();
 					}
 					lowerThird = new LowerThird(player,team, "","", "","", 
-							2, "" ,flag,new String[]{"MATCHES","RUNS","AVERAGE","WICKETS","ECONOMY"},
+							4, "" ,flag,new String[]{"MATCHES","RUNS","AVERAGE","WICKETS","ECONOMY"},
 							new String[]{String.valueOf(stat.getMatches()),
 									String.valueOf(stat.getRuns()),
 									String.valueOf(CricketFunctions.getAverage(stat.getInnings(), stat.getNot_out(), stat.getRuns(), 2, "-")),
@@ -1325,6 +1321,46 @@ public class LowerThirdGfx
 			}
 	}
 	
+	public String populateL3rdAllPowerPlay(String whatToProcess, int WhichSide, MatchAllData matchAllData) throws InterruptedException {
+		
+		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
+			return status;
+		} else {
+			inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES) && 
+					inn.getInningNumber()==2).findAny().orElse(null);
+			if(inning == null) {
+				return "populateTeamSummary: Inning is Not Found";
+			}
+			
+			List<String> this_data_str1 = new ArrayList<String>();
+			List<String> this_data_str2 = new ArrayList<String>();
+			String pp_ovrs="";
+			this_data_str=CricketFunctions.getFirstPowerPlayScores(matchAllData, Arrays.asList(1,2), matchAllData.getEventFile().getEvents());
+			
+			this_data_str1=CricketFunctions.getSecPowerPlayScores(matchAllData, Arrays.asList(1,2), matchAllData.getEventFile().getEvents());
+			
+			this_data_str2=CricketFunctions.getThirdPowerPlayScore(matchAllData, Arrays.asList(1,2), matchAllData.getEventFile().getEvents());
+			
+			pp_ovrs= CricketFunctions.PowerPlayMatchOvers(inning.getInningNumber(),matchAllData,",");
+			
+			lowerThird = new LowerThird("POWERPLAY COMPARISON","", "",matchAllData.getSetup().getHomeTeam().getTeamName4(), "","", 
+					4, matchAllData.getSetup().getAwayTeam().getTeamName4(),""
+					,new String[]{"   ","OVERS",inning.getBowling_team().getTeamName1(),inning.getBatting_team().getTeamName1()},
+					new String[]{"P1",pp_ovrs.split(",")[0],this_data_str.get(0),this_data_str.get(1),"P2",pp_ovrs.split(",")[1],
+						this_data_str1.get(0),this_data_str1.get(1),"P3",pp_ovrs.split(",")[2],this_data_str2.get(0),this_data_str2.get(1)},
+					null,null,new String[] {"-253.0","33.0","277.0","533.0"});
+						
+			status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);
+			if(status == Constants.OK) {
+				HideAndShowL3rdSubStrapContainers(WhichSide);
+				setPositionOfLT(whatToProcess,WhichSide,config);
+				return PopulateL3rdBody(WhichSide, whatToProcess.split(",")[0]);
+			} else {
+				return status;
+			}
+		}
+	}
+	
 	public String populateL3rdPowerPlay(String whatToProcess, int WhichSide, MatchAllData matchAllData) throws InterruptedException {
 		String powerplay = "";
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
@@ -1338,16 +1374,16 @@ public class LowerThirdGfx
 			
 			if(whatToProcess.split(",")[2].equalsIgnoreCase("p1")) {
 				powerplay = "POWERPLAY 1";
-				pp_ovrs= CricketFunctions.PowerPlayMatchOvers(matchAllData,",").split(",")[0];
+				pp_ovrs= CricketFunctions.PowerPlayMatchOvers(inning.getInningNumber(),matchAllData,",").split(",")[0];
 				pp=CricketFunctions.getFirstPowerPlayScore(matchAllData,inning.getInningNumber(), matchAllData.getEventFile().getEvents());
 
 			}else if(whatToProcess.split(",")[2].equalsIgnoreCase("p2")) {
 				powerplay = "POWERPLAY 2";
-				pp_ovrs= CricketFunctions.PowerPlayMatchOvers(matchAllData,",").split(",")[1];
+				pp_ovrs= CricketFunctions.PowerPlayMatchOvers(inning.getInningNumber(),matchAllData,",").split(",")[1];
 				pp=CricketFunctions.getSecPowerPlayScore(matchAllData, inning.getInningNumber(), matchAllData.getEventFile().getEvents());
 			}else if(whatToProcess.split(",")[2].equalsIgnoreCase("p3")) {
 				powerplay = "POWERPLAY 3";
-				pp_ovrs= CricketFunctions.PowerPlayMatchOvers(matchAllData,",").split(",")[2];
+				pp_ovrs= CricketFunctions.PowerPlayMatchOvers(inning.getInningNumber(),matchAllData,",").split(",")[2];
 				pp=CricketFunctions.getThirdPowerPlayScore(matchAllData, inning.getInningNumber(), matchAllData.getEventFile().getEvents());
 			} 
 			lowerThird = new LowerThird(powerplay,inning.getBatting_team().getTeamName1(), "",whatToProcess.split(",")[2], "","", 
@@ -1738,7 +1774,44 @@ public class LowerThirdGfx
 						+ "$Name" + containerName + "$txt_Designation*GEOM*TEXT SET " + "" + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"
 						+ WhichSide + "$Name" + containerName + "$Score*ACTIVE SET 0 \0", print_writers);
-				break;	
+				break;
+			
+			case "n":
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"+ WhichSide + 
+						"$Select_Flags*FUNCTION*Omo*vis_con SET 5 \0", print_writers);
+				
+				if(lowerThird.getSubTitle().equalsIgnoreCase("NEP")) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide +
+							"$Select_Flags$Flag_Flag" + containerName + "$img_Shadow*ACTIVE SET 1 \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide +
+							"$Select_Flags$Flag_Flag" + containerName + "$img_Shadow2*ACTIVE SET 0 \0", print_writers);
+				}else if(lowerThird.getWhichSponsor().equalsIgnoreCase("NEP")) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide +
+							"$Select_Flags$Flag_Flag" + containerName + "$img_Shadow*ACTIVE SET 0 \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide +
+							"$Select_Flags$Flag_Flag" + containerName + "$img_Shadow2*ACTIVE SET 1 \0", print_writers);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide +
+							"$Select_Flags$Flag_Flag" + containerName + "$img_Shadow*ACTIVE SET 1 \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide +
+							"$Select_Flags$Flag_Flag" + containerName + "$img_Shadow2*ACTIVE SET 1 \0", print_writers);
+				}
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide + 
+						"$Select_Flags$Flag_Flag" + containerName + "$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + lowerThird.getSubTitle() + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide + 
+						"$Select_Flags$Flag_Flag" + containerName + "$img_Flag2*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + lowerThird.getWhichSponsor() + "\0", print_writers);
+				
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Top_Line$Data$Side_" + WhichSide 
+					+ "$Name" + containerName + "$txt_Name*GEOM*TEXT SET " + lowerThird.getHeaderText()+ "\0", print_writers);
+			
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Top_Line$Data$Side_" + WhichSide 
+						+ "$Name" + containerName + "$txt_Designation*GEOM*TEXT SET " + "" + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"
+						+ WhichSide + "$Name" + containerName + "$Score*ACTIVE SET 0 \0", print_writers);
+				break;
+				
 			case "Control_a":
 				if(lowerThird.getWhichTeamFlag() != null) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"+ WhichSide + 
@@ -1765,6 +1838,28 @@ public class LowerThirdGfx
 						+ "$Name" + containerName + "$Score$txt_Score*GEOM*TEXT SET " + lowerThird.getScoreText() + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide 
 						+ "$Name" + containerName + "$Score$txt_Not_Out*GEOM*TEXT SET " + "" + "\0", print_writers);
+				
+				break;
+			
+			case "l":
+				if(lowerThird.getWhichTeamFlag() != null) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"+ WhichSide + 
+							"$Select_Flags*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide + 
+							"$Select_Flags$Flag" + containerName + "$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + lowerThird.getWhichTeamFlag() + "\0", print_writers);
+				}
+
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Top_Line$Data$Side_" + WhichSide 
+						+ "$Name" + containerName + "$txt_Name*GEOM*TEXT SET " + lowerThird.getHeaderText() + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Top_Line$Data$Side_" + WhichSide 
+						+ "$Name" + containerName + "$txt_Designation*GEOM*TEXT SET " + lowerThird.getFirstName() + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"
+						+ WhichSide + "$Name" + containerName + "$Score*ACTIVE SET 1 \0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide 
+						+ "$Name" + containerName + "$Score$txt_Score*GEOM*TEXT SET " + "" + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide 
+						+ "$Name" + containerName + "$Score$txt_Not_Out*GEOM*TEXT SET " +"" + "\0", print_writers);
 				
 				break;
 				
@@ -2377,323 +2472,6 @@ public class LowerThirdGfx
 		}
 		return Constants.OK;
 	}
-	public void HideAndShowL3rdSubStrapContainers(int WhichSide)
-	{
-		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023:
-			//Show number of sublines
-			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
-					"$Select_Subline$1" + containerName + "$Divider*ACTIVE SET 0 \0", print_writers);
-			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
-					"$Select_Subline$2" + containerName + "$Divider*ACTIVE SET 0 \0", print_writers);
-			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
-					"$Select_Subline$3" + containerName + "$Divider*ACTIVE SET 0 \0", print_writers);
-			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
-					"$Select_Subline$4" + containerName + "$Divider*ACTIVE SET 0 \0", print_writers);
-			
-			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side_"+ WhichSide + 
-					"$Select_Subline*FUNCTION*Omo*vis_con SET " + lowerThird.getNumberOfSubLines() + "\0", print_writers);
-			
-			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
-					"$Select_Subline$1$Data$Stat*ACTIVE SET 0 \0", print_writers);
-			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
-					"$Select_Subline$2$Data$Title*ACTIVE SET 0 \0", print_writers);
-			
-			if(lowerThird.getTitlesText() != null) {
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
-					"$Select_Subline$1$Data$Title*ACTIVE SET 1 \0", print_writers);
-				for(int iTitle = 1; iTitle <= lowerThird.getTitlesText().length; iTitle++) {
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
-						"$Select_Subline$1$Data$Title$txt_" + iTitle + "*ACTIVE SET 1 \0", print_writers);
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side_" + WhichSide +
-						"$Select_Subline$1" + containerName + "$Data$Title$txt_" + iTitle + "*TRANSFORMATION*POSITION*X SET " 
-						+ lowerThird.getPosition()[iTitle-1] + "\0",print_writers);
-				}
-				//Hide number of Titles on each strap
-				for(int iTitle = lowerThird.getTitlesText().length + 1; iTitle <= 10; iTitle++) {
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
-							"$Select_Subline$1$Data$Title$txt_" + iTitle + "*ACTIVE SET 0 \0", print_writers);
-				}
-			}else {
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
-						"$Select_Subline$1$Data$Title*ACTIVE SET 0 \0", print_writers);
-			}
-			
-			if(lowerThird.getStatsText() != null) {
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
-						"$Select_Subline$2$Data$Stat*ACTIVE SET 1 \0", print_writers);
-				for(int iStats = 1; iStats <= lowerThird.getStatsText().length; iStats++) {
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
-						"$Select_Subline$2$Data$Stat$txt_" + iStats + "*ACTIVE SET 1 \0", print_writers);
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side_" + WhichSide +
-						"$Select_Subline$2" + containerName + "$Data$Stat$txt_" + iStats + "*TRANSFORMATION*POSITION*X SET " + lowerThird.getPosition()[iStats-1] + "\0",print_writers);
-				}
-				//Hide number of Titles on each strap
-				for(int iStats = lowerThird.getTitlesText().length + 1; iStats <= 10; iStats++) {
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
-							"$Select_Subline$2$Data$Stat$txt_" + iStats + "*ACTIVE SET 0 \0", print_writers);
-				}
-			}else {
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
-						"$Select_Subline$2$Data$Stat*ACTIVE SET 0 \0", print_writers);
-			}
-			
-			for(int iSubLine = 1; iSubLine <= lowerThird.getNumberOfSubLines(); iSubLine++) {
-				//Show Left on each strap
-				if(lowerThird.getLeftText() != null &&  lowerThird.getLeftText().length > 0) {
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
-							"$Select_Subline$"+ iSubLine + "$Data$Left*ACTIVE SET 1 \0", print_writers);
-				} else {
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
-							"$Select_Subline$"+ iSubLine + "$Data$Left*ACTIVE SET 0 \0", print_writers);
-				}
-				//Show Right on each strap
-				if(lowerThird.getRightText() != null && lowerThird.getRightText().length > 0) {
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
-							"$Select_Subline$"+ iSubLine + "$Data$Right*ACTIVE SET 1 \0", print_writers);
-					if(lowerThird.getPosition() != null && lowerThird.getPosition().length > 0) {
-						for(int iTitle = 1; iTitle <= lowerThird.getRightText().length; iTitle++) {
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
-								"$Select_Subline$" + iTitle + "$Data$Right*ACTIVE SET 1 \0", print_writers);
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side_" + WhichSide +
-								"$Select_Subline$" + iTitle + "" + containerName + "$Data$Right*TRANSFORMATION*POSITION*X SET " 
-								+ lowerThird.getPosition()[0] + "\0",print_writers);
-						}
-					}
-					
-					
-				} else {
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
-							"$Select_Subline$"+ iSubLine + "$Data$Right*ACTIVE SET 0 \0", print_writers);
-				}
-			}
-			
-			break;
-		}
-	}
-	
-	public void setPositionOfLT(String whatToProcess,int WhichSide,Configuration config)
-	{
-		String LT_Position_1 = "",LT_Position_2 = "",LT_Position_3 = "",LT_Position_4 = "",
-				LT_Flag_Keys="",LT_Flag_Object="",slave_Flag_Keys = "",slave_Flag_Object="";
-		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023:
-			switch (lowerThird.getNumberOfSubLines()) {
-			case 0:
-				LT_Position_1 = "0.0";
-				LT_Position_2 = "0.0 -33.0 0.0";
-				LT_Position_3 = "0.0 -8.0 0.0";
-				LT_Position_4 = "16.0";
-				break;
-			case 1:
-				LT_Position_1 = "25.0";
-				LT_Position_2 = "0.0 0.0 0.0";
-				LT_Position_3 = "0.0 -25.0 0.0";
-				LT_Position_4 = "50.0";
-				break;
-			case 2:
-				LT_Position_1 = "50.0";
-				LT_Position_2 = "0.0 50.0 0.0";
-				LT_Position_3 = "0.0 -50.0 0.0";
-				LT_Position_4 = "100.0";
-				break;
-			case 3:
-				LT_Position_1 = "75.0";
-				LT_Position_2 = "0.0 100.0 0.0";
-				LT_Position_3 = "0.0 -75.0 0.0";
-				LT_Position_4 = "150.0";
-				break;
-			}
-			
-			switch (whatToProcess.split(",")[0]) {
-			case "F8": case "F10": case "j":
-				
-				ltWhichContainer = "$All_NameSupers";
-				if(lowerThird.getWhichTeamFlag().isEmpty() && lowerThird.getWhichSponsor().isEmpty()) {
-					LT_Flag_Keys = "50.0";
-					LT_Flag_Object = "990";
-					
-					slave_Flag_Keys = "50.0";
-					slave_Flag_Object = "990";
-				} else if(!lowerThird.getWhichTeamFlag().isEmpty() && !lowerThird.getWhichSponsor().isEmpty() && 
-						!lowerThird.getWhichSponsor().equalsIgnoreCase("HASHTAG")) {
-					LT_Flag_Keys = "20.0";
-					LT_Flag_Object = "700";
-					if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
-						slave_Flag_Keys = "40.0";
-						slave_Flag_Object = "900";
-					}
-				} else if(!lowerThird.getWhichTeamFlag().isEmpty() &&
-						!lowerThird.getWhichSponsor().equalsIgnoreCase("HASHTAG")) {
-					LT_Flag_Keys = "40.0";
-					LT_Flag_Object = "900";
-					
-					slave_Flag_Keys = "40.0";
-					slave_Flag_Object = "900";
-				} else if(!lowerThird.getWhichSponsor().isEmpty()) {
-					switch (lowerThird.getWhichSponsor()) {
-					case "HASHTAG":
-						LT_Flag_Keys = "19.0";
-						LT_Flag_Object = "680";
-						
-						slave_Flag_Keys = "40.0";
-						slave_Flag_Object = "900";
-						break;
-					default:
-						if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
-							slave_Flag_Keys = "50.0";
-							slave_Flag_Object = "990";
-						}
-						LT_Flag_Keys = "31.0";
-						LT_Flag_Object = "810";
-						break;
-					}
-				}
-				
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Side_" + WhichSide + "$Set_Rows_Side_" + WhichSide + 
-						"_Position_Y*TRANSFORMATION*POSITION*Y SET 2.0 \0",print_writers);
-				break;
-
-			default:
-				if(lowerThird.getWhichTeamFlag().trim().isEmpty() && lowerThird.getWhichSponsor().trim().isEmpty()) {
-					LT_Flag_Keys = "57.0";
-					LT_Flag_Object = "1110";
-					
-					slave_Flag_Keys = "57.0";
-					slave_Flag_Object = "1110";
-				} else if(!lowerThird.getWhichTeamFlag().trim().isEmpty() && !lowerThird.getWhichSponsor().trim().isEmpty() && 
-						!lowerThird.getWhichSponsor().equalsIgnoreCase("HASHTAG")) {
-					LT_Flag_Keys = "36.0";
-					LT_Flag_Object = "840";
-					if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
-						slave_Flag_Keys = "47.0";
-						slave_Flag_Object = "1020";
-					}
-				} else if(!lowerThird.getWhichTeamFlag().trim().isEmpty() &&
-						!lowerThird.getWhichSponsor().equalsIgnoreCase("HASHTAG")) {
-					LT_Flag_Keys = "47.0";
-					LT_Flag_Object = "1020";
-					
-					slave_Flag_Keys = "47.0";
-					slave_Flag_Object = "1020";
-				} else if(!lowerThird.getWhichSponsor().trim().isEmpty()) {
-					switch (lowerThird.getWhichSponsor()) {
-					case "HASHTAG":
-						LT_Flag_Keys = "25.0";
-						LT_Flag_Object = "810";
-						
-						slave_Flag_Keys = "47.0";
-						slave_Flag_Object = "1020";
-						break;
-					case "FLAG":
-						LT_Flag_Keys = "37.0";
-						LT_Flag_Object = "940";
-						
-						slave_Flag_Keys = "37.0";
-						slave_Flag_Object = "940";
-						break;	
-					default:
-						if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
-							slave_Flag_Keys = "57.0";
-							slave_Flag_Object = "1110";
-						}
-						LT_Flag_Keys = "37.0";
-						LT_Flag_Object = "940";
-						break;
-					}
-				}
-				
-				switch (whatToProcess.split(",")[0]) {
-				case "q": case "Control_q":
-					if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
-						slave_Flag_Keys = "47.0";
-						slave_Flag_Object = "1020";
-					}
-					LT_Flag_Keys = "36.0";
-					LT_Flag_Object = "840";
-					ltWhichContainer = "$BoundaryLowerthird";
-					break;
-				default :
-					ltWhichContainer = "$All_LowerThirds";
-					
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Side_" + WhichSide + "$Set_Rows_Side_" + WhichSide + 
-							"_Position_Y*TRANSFORMATION*POSITION*Y SET " + LT_Position_1 + "\0",print_writers);
-					break;
-				}
-				break;
-			}
-			
-			if(!whatToProcess.split(",")[0].equalsIgnoreCase("q") && !whatToProcess.split(",")[0].equalsIgnoreCase("Control_q")) {
-				if(WhichSide == 1) {
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj_SublineBase*ANIMATION*KEY*$Change_In_1*VALUE SET "
-							+ LT_Position_4 + "\0",print_writers);
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj__Mask_6_*ANIMATION*KEY*$Change_In_1*VALUE SET "
-							+ LT_Position_4 + "\0",print_writers);
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Overall_Position_Y_In_Out*ANIMATION*KEY*$Change_In_1*VALUE SET " 
-							+ LT_Position_2 + "\0",print_writers);
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Sublines_Position_Y*ANIMATION*KEY*$Change_In_1*VALUE SET "
-							+ LT_Position_3 + "\0",print_writers);
-				}else if(WhichSide == 2) {
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj_SublineBase*ANIMATION*KEY*$Change_In_2*VALUE SET "
-							+ LT_Position_4 + "\0",print_writers);
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj__Mask_6_*ANIMATION*KEY*$Change_In_2*VALUE SET "
-							+ LT_Position_4 + "\0",print_writers);
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Overall_Position_Y_In_Out*ANIMATION*KEY*$Change_In_2*VALUE SET " 
-							+ LT_Position_2 + "\0",print_writers);
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Sublines_Position_Y*ANIMATION*KEY*$Change_In_2*VALUE SET "
-							+ LT_Position_3 + "\0",print_writers);
-				}
-				
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj_SublineBase*ANIMATION*KEY*$In_2*VALUE SET "
-					+ LT_Position_4 + "\0",print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj_SublineBase*ANIMATION*KEY*$Out_1*VALUE SET "
-					+ LT_Position_4 + "\0",print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj__Mask_6_*ANIMATION*KEY*$In_2*VALUE SET "
-					+ LT_Position_4 + "\0",print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj__Mask_6_*ANIMATION*KEY*$Out_1*VALUE SET "
-					+ LT_Position_4 + "\0",print_writers);
-				
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Overall_Position_Y_In_Out*ANIMATION*KEY*$In_2*VALUE SET " 
-					+ LT_Position_2 + "\0",print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Overall_Position_Y_In_Out*ANIMATION*KEY*$Out_1*VALUE SET "
-					+ LT_Position_2 + "\0",print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Sublines_Position_Y*ANIMATION*KEY*$In_2*VALUE SET "
-					+ LT_Position_3 + "\0",print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Sublines_Position_Y*ANIMATION*KEY*$Out_1*VALUE SET "
-					+ LT_Position_3 + "\0",print_writers);
-				
-			}
-			
-			if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
-				CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H1*VALUE SET "
-					+ slave_Flag_Keys + "\0", print_writers);
-				CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H2*VALUE SET "
-					+ slave_Flag_Keys + "\0", print_writers);
-				CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H_In*VALUE SET "
-						+ slave_Flag_Keys + "\0", print_writers);
-				CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H_Out*VALUE SET "
-						+ slave_Flag_Keys + "\0", print_writers);
-				CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$Side_" + WhichSide + "$obj_WidthX"
-					+ "*FUNCTION*Maxsize*WIDTH_X SET " + slave_Flag_Object + "\0", print_writers);
-				CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$Side_" + WhichSide + "$obj_WidthX"
-						+ "*FUNCTION*Maxsize*WIDTH_X SET " + slave_Flag_Object + "\0", print_writers);
-			}
-			
-			CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H1*VALUE SET "
-				+ LT_Flag_Keys + "\0", print_writers);
-			CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H_In*VALUE SET "
-					+ LT_Flag_Keys + "\0", print_writers);
-			CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H_Out*VALUE SET "
-					+ LT_Flag_Keys + "\0", print_writers);
-			CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H2*VALUE SET "
-				+ LT_Flag_Keys + "\0", print_writers);
-			CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$Side_" + WhichSide + "$obj_WidthX"
-				+ "*FUNCTION*Maxsize*WIDTH_X SET " + LT_Flag_Object + "\0", print_writers);
-			CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$Side_" + WhichSide + "$obj_WidthX"
-					+ "*FUNCTION*Maxsize*WIDTH_X SET " + LT_Flag_Object + "\0", print_writers);
-			break;
-		}
-	}
 	
 	public String PopulateL3rdBody(int WhichSide, String whatToProcess) 
 	{
@@ -2749,22 +2527,55 @@ public class LowerThirdGfx
 					+ "$Select_Subline$2$Data$Left$txt_1*GEOM*TEXT SET " + lowerThird.getLeftText()[1] + "\0", print_writers);
 				
 				break;
+			
+			case "l":
+				
+				for(int i=0; i<lowerThird.getTitlesText().length; i++) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+						"$Select_Subline$1" + containerName + "$Data$Title$txt_"+(i+1)+"*GEOM*TEXT SET " + lowerThird.getTitlesText()[i] + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+						"$Select_Subline$2" + containerName + "$Data$Stat$txt_"+(i+1)+"*GEOM*TEXT SET " + lowerThird.getStatsText()[i] + "\0", print_writers);
+				}
+				break;
+			
+			case "n":
+				
+				for(int i=0; i<lowerThird.getTitlesText().length; i++) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+						"$Select_Subline$1" + containerName + "$Data$Title$txt_" + (i+1) + "*GEOM*TEXT SET " + lowerThird.getTitlesText()[i] + "\0", print_writers);
+				}
+				
+				for(int i=0; i<lowerThird.getStatsText().length; i++) {
+					if(i == 0 && i<=3) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+								"$Select_Subline$2" + containerName + "$Data$Stat$txt_" + (i+1) + "*GEOM*TEXT SET " + lowerThird.getStatsText()[i] + "\0", print_writers);
+					}else if(i == 4 && i<=7) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+								"$Select_Subline$3" + containerName + "$Data$Stat$txt_" + ((i-4)+1) + "*GEOM*TEXT SET " + lowerThird.getStatsText()[i] + "\0", print_writers);
+					}else if(i == 8 && i<=11) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+								"$Select_Subline$4" + containerName + "$Data$Stat$txt_" + ((i-8)+1) + "*GEOM*TEXT SET " + lowerThird.getStatsText()[i] + "\0", print_writers);
+					}
+				}
+				break;
 				
 			case "Control_F3":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide 
-					+ "$Select_Subline$1$Data$Left$txt_1*GEOM*TEXT SET " + 
-					lowerThird.getLeftText()[0]+" "+lowerThird.getLeftText()[1]+" "+lowerThird.getLeftText()[2]+ "\0", print_writers);
+					+ "$Select_Subline$1$Data$Left$txt_1*GEOM*TEXT SET " + lowerThird.getLeftText()[0] + " " + lowerThird.getLeftText()[1] 
+					+ " " + lowerThird.getLeftText()[2] + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide 
 					+ "$Select_Subline$1$Data$Right$txt_1*GEOM*TEXT SET " + lowerThird.getRightText()[0] + " " + lowerThird.getRightText()[2]
-					+"        "+lowerThird.getRightText()[1]+lowerThird.getRightText()[3] + "\0", print_writers);
+					+ "        " + lowerThird.getRightText()[1] + lowerThird.getRightText()[3] + "\0", print_writers);
+				
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide 
-					+ "$Select_Subline$2$Data$Left$txt_1*GEOM*TEXT SET " +lowerThird.getLeftText()[3]+" "+lowerThird.getLeftText()[4]+" "+lowerThird.getLeftText()[5]+ "\0", print_writers);
+					+ "$Select_Subline$2$Data$Left$txt_1*GEOM*TEXT SET " +lowerThird.getLeftText()[3] + " " + lowerThird.getLeftText()[4]
+					+ " " + lowerThird.getLeftText()[5] + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide 
 					+ "$Select_Subline$2$Data$Right$txt_1*GEOM*TEXT SET " +lowerThird.getRightText()[0] + " " + lowerThird.getRightText()[4]
-							+"        "+lowerThird.getRightText()[1]+lowerThird.getRightText()[5]+ "\0", print_writers);
+					+ "        " + lowerThird.getRightText()[1] + lowerThird.getRightText()[5] + "\0", print_writers);
 				break;
 				
 			case "Control_p":
@@ -2791,7 +2602,7 @@ public class LowerThirdGfx
 					lowerThird.getRightText()[2] + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide 
 					+ "$Select_Subline$2$Data$Left$txt_1*GEOM*TEXT SET " + "PARTNERSHIP " + lowerThird.getScoreText() + " RUNS FROM " + 
-					lowerThird.getBallsFacedText() + " BALLS"  + "\0", print_writers);
+					lowerThird.getBallsFacedText() + " BALL" + CricketFunctions.Plural(Integer.valueOf(lowerThird.getBallsFacedText())).toUpperCase()  + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide 
 					+ "$Select_Subline$2$Data$Right$txt_1*GEOM*TEXT SET " + "" + "\0", print_writers);
 				break;
@@ -2937,13 +2748,346 @@ public class LowerThirdGfx
 				
 			case "d":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide 
-					+ "$Select_Subline$1$Data$Left$txt_1*GEOM*TEXT SET " + " " + lowerThird.getLeftText()[2] + 
-					lowerThird.getLeftText()[3] + "\0", print_writers);
+					+ "$Select_Subline$1$Data$Left$txt_1*GEOM*TEXT SET " + " " + lowerThird.getLeftText()[0] + 
+					lowerThird.getLeftText()[1] + "\0", print_writers);
 				
 				break;	
 			}
 			break;
 		}
 		return Constants.OK;
+	}
+	public void HideAndShowL3rdSubStrapContainers(int WhichSide)
+	{
+		switch (config.getBroadcaster().toUpperCase()) {
+		case Constants.ICC_U19_2023:
+			//Show number of sublines
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+					"$Select_Subline$1" + containerName + "$Divider*ACTIVE SET 0 \0", print_writers);
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+					"$Select_Subline$2" + containerName + "$Divider*ACTIVE SET 0 \0", print_writers);
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+					"$Select_Subline$3" + containerName + "$Divider*ACTIVE SET 0 \0", print_writers);
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+					"$Select_Subline$4" + containerName + "$Divider*ACTIVE SET 0 \0", print_writers);
+			
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side_"+ WhichSide + 
+					"$Select_Subline*FUNCTION*Omo*vis_con SET " + lowerThird.getNumberOfSubLines() + "\0", print_writers);
+			
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+					"$Select_Subline$1$Data$Stat*ACTIVE SET 0 \0", print_writers);
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+					"$Select_Subline$2$Data$Title*ACTIVE SET 0 \0", print_writers);
+			
+			if(lowerThird.getTitlesText() != null) {
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+					"$Select_Subline$1$Data$Title*ACTIVE SET 1 \0", print_writers);
+				for(int iTitle = 1; iTitle <= lowerThird.getTitlesText().length; iTitle++) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+						"$Select_Subline$1$Data$Title$txt_" + iTitle + "*ACTIVE SET 1 \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side_" + WhichSide +
+						"$Select_Subline$1" + containerName + "$Data$Title$txt_" + iTitle + "*TRANSFORMATION*POSITION*X SET " 
+						+ lowerThird.getPosition()[iTitle-1] + "\0",print_writers);
+				}
+				//Hide number of Titles on each strap
+				for(int iTitle = lowerThird.getTitlesText().length + 1; iTitle <= 10; iTitle++) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+							"$Select_Subline$1$Data$Title$txt_" + iTitle + "*ACTIVE SET 0 \0", print_writers);
+				}
+			}else {
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+						"$Select_Subline$1$Data$Title*ACTIVE SET 0 \0", print_writers);
+			}
+			
+			if(lowerThird.getStatsText() != null) {
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+						"$Select_Subline$2$Data$Stat*ACTIVE SET 1 \0", print_writers);
+				for(int iStats = 1; iStats <= lowerThird.getStatsText().length; iStats++) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+						"$Select_Subline$2$Data$Stat$txt_" + iStats + "*ACTIVE SET 1 \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side_" + WhichSide +
+						"$Select_Subline$2" + containerName + "$Data$Stat$txt_" + iStats + "*TRANSFORMATION*POSITION*X SET " + lowerThird.getPosition()[iStats-1] + "\0",print_writers);
+				}
+				//Hide number of Titles on each strap
+				for(int iStats = lowerThird.getTitlesText().length + 1; iStats <= 10; iStats++) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+							"$Select_Subline$2$Data$Stat$txt_" + iStats + "*ACTIVE SET 0 \0", print_writers);
+				}
+			}else {
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+						"$Select_Subline$2$Data$Stat*ACTIVE SET 0 \0", print_writers);
+			}
+			
+			for(int iSubLine = 1; iSubLine <= lowerThird.getNumberOfSubLines(); iSubLine++) {
+				//Show Left on each strap
+				if(lowerThird.getLeftText() != null &&  lowerThird.getLeftText().length > 0) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+							"$Select_Subline$"+ iSubLine + "$Data$Left*ACTIVE SET 1 \0", print_writers);
+				} else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+							"$Select_Subline$"+ iSubLine + "$Data$Left*ACTIVE SET 0 \0", print_writers);
+				}
+				//Show Right on each strap
+				if(lowerThird.getRightText() != null && lowerThird.getRightText().length > 0) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+							"$Select_Subline$"+ iSubLine + "$Data$Right*ACTIVE SET 1 \0", print_writers);
+					if(lowerThird.getPosition() != null && lowerThird.getPosition().length > 0) {
+						for(int iTitle = 1; iTitle <= lowerThird.getRightText().length; iTitle++) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+								"$Select_Subline$" + iTitle + "$Data$Right*ACTIVE SET 1 \0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side_" + WhichSide +
+								"$Select_Subline$" + iTitle + "" + containerName + "$Data$Right*TRANSFORMATION*POSITION*X SET " 
+								+ lowerThird.getPosition()[0] + "\0",print_writers);
+						}
+					}
+					
+					
+				} else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+							"$Select_Subline$"+ iSubLine + "$Data$Right*ACTIVE SET 0 \0", print_writers);
+				}
+			}
+			
+			break;
+		}
+	}
+	
+	public void setPositionOfLT(String whatToProcess,int WhichSide,Configuration config)
+	{
+		String LT_Position_1 = "",LT_Position_2 = "",LT_Position_3 = "",LT_Position_4 = "",
+				LT_Flag_Keys="",LT_Flag_Object="",slave_Flag_Keys = "",slave_Flag_Object="";
+		switch (config.getBroadcaster().toUpperCase()) {
+		case Constants.ICC_U19_2023:
+			switch (lowerThird.getNumberOfSubLines()) {
+			case 0:
+				LT_Position_1 = "0.0";
+				LT_Position_2 = "0.0 -33.0 0.0";
+				LT_Position_3 = "0.0 -8.0 0.0";
+				LT_Position_4 = "16.0";
+				break;
+			case 1:
+				LT_Position_1 = "25.0";
+				LT_Position_2 = "0.0 0.0 0.0";
+				LT_Position_3 = "0.0 -25.0 0.0";
+				LT_Position_4 = "50.0";
+				break;
+			case 2:
+				LT_Position_1 = "50.0";
+				LT_Position_2 = "0.0 50.0 0.0";
+				LT_Position_3 = "0.0 -50.0 0.0";
+				LT_Position_4 = "100.0";
+				break;
+			case 3:
+				LT_Position_1 = "75.0";
+				LT_Position_2 = "0.0 100.0 0.0";
+				LT_Position_3 = "0.0 -75.0 0.0";
+				LT_Position_4 = "150.0";
+				break;
+			case 4:
+				LT_Position_1 = "100.0";
+				LT_Position_2 = "0.0 150.0 0.0";
+				LT_Position_3 = "0.0 -100.0 0.0";
+				LT_Position_4 = "200.0";
+				break;	
+			}
+			
+			switch (whatToProcess.split(",")[0]) {
+			case "F8": case "F10": case "j":
+				
+				ltWhichContainer = "$All_NameSupers";
+				if(lowerThird.getWhichTeamFlag().isEmpty() && lowerThird.getWhichSponsor().isEmpty()) {
+					LT_Flag_Keys = "50.0";
+					LT_Flag_Object = "990";
+					
+					slave_Flag_Keys = "50.0";
+					slave_Flag_Object = "990";
+				} else if(!lowerThird.getWhichTeamFlag().isEmpty() && !lowerThird.getWhichSponsor().isEmpty() && 
+						!lowerThird.getWhichSponsor().equalsIgnoreCase("HASHTAG")) {
+					LT_Flag_Keys = "20.0";
+					LT_Flag_Object = "700";
+					if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
+						slave_Flag_Keys = "40.0";
+						slave_Flag_Object = "900";
+					}
+				} else if(!lowerThird.getWhichTeamFlag().isEmpty() &&
+						!lowerThird.getWhichSponsor().equalsIgnoreCase("HASHTAG")) {
+					LT_Flag_Keys = "40.0";
+					LT_Flag_Object = "900";
+					
+					slave_Flag_Keys = "40.0";
+					slave_Flag_Object = "900";
+				} else if(!lowerThird.getWhichSponsor().isEmpty()) {
+					switch (lowerThird.getWhichSponsor()) {
+					case "HASHTAG":
+						LT_Flag_Keys = "19.0";
+						LT_Flag_Object = "680";
+						
+						slave_Flag_Keys = "40.0";
+						slave_Flag_Object = "900";
+						break;
+					case "FLAG":
+						LT_Flag_Keys = "37.0";
+						LT_Flag_Object = "940";
+						
+						slave_Flag_Keys = "37.0";
+						slave_Flag_Object = "940";
+						break;
+					default:
+						if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
+							slave_Flag_Keys = "50.0";
+							slave_Flag_Object = "990";
+						}
+						LT_Flag_Keys = "31.0";
+						LT_Flag_Object = "810";
+						break;
+					}
+				}
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Side_" + WhichSide + "$Set_Rows_Side_" + WhichSide + 
+						"_Position_Y*TRANSFORMATION*POSITION*Y SET 2.0 \0",print_writers);
+				break;
+
+			default:
+				if(lowerThird.getWhichTeamFlag().trim().isEmpty() && lowerThird.getWhichSponsor().trim().isEmpty()) {
+					LT_Flag_Keys = "57.0";
+					LT_Flag_Object = "1110";
+					
+					slave_Flag_Keys = "57.0";
+					slave_Flag_Object = "1110";
+				} else if(!lowerThird.getWhichTeamFlag().trim().isEmpty() && !lowerThird.getWhichSponsor().trim().isEmpty() && 
+						!lowerThird.getWhichSponsor().equalsIgnoreCase("HASHTAG")) {
+					LT_Flag_Keys = "36.0";
+					LT_Flag_Object = "840";
+					if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
+						slave_Flag_Keys = "47.0";
+						slave_Flag_Object = "1020";
+					}
+				} else if(!lowerThird.getWhichTeamFlag().trim().isEmpty() &&
+						!lowerThird.getWhichSponsor().equalsIgnoreCase("HASHTAG")) {
+					LT_Flag_Keys = "47.0";
+					LT_Flag_Object = "1020";
+					
+					slave_Flag_Keys = "47.0";
+					slave_Flag_Object = "1020";
+				} else if(!lowerThird.getWhichSponsor().trim().isEmpty()) {
+					switch (lowerThird.getWhichSponsor()) {
+					case "HASHTAG":
+						LT_Flag_Keys = "25.0";
+						LT_Flag_Object = "810";
+						
+						slave_Flag_Keys = "47.0";
+						slave_Flag_Object = "1020";
+						break;
+					case "FLAG":
+						LT_Flag_Keys = "37.0";
+						LT_Flag_Object = "940";
+						
+						slave_Flag_Keys = "37.0";
+						slave_Flag_Object = "940";
+						break;	
+					default:
+						if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
+							slave_Flag_Keys = "57.0";
+							slave_Flag_Object = "1110";
+						}
+						LT_Flag_Keys = "37.0";
+						LT_Flag_Object = "940";
+						break;
+					}
+				}
+				
+				switch (whatToProcess.split(",")[0]) {
+				case "q": case "Control_q":
+					if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
+						slave_Flag_Keys = "47.0";
+						slave_Flag_Object = "1020";
+					}
+					LT_Flag_Keys = "36.0";
+					LT_Flag_Object = "840";
+					ltWhichContainer = "$BoundaryLowerthird";
+					break;
+				default :
+					ltWhichContainer = "$All_LowerThirds";
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Side_" + WhichSide + "$Set_Rows_Side_" + WhichSide + 
+							"_Position_Y*TRANSFORMATION*POSITION*Y SET " + LT_Position_1 + "\0",print_writers);
+					break;
+				}
+				break;
+			}
+			
+			if(!whatToProcess.split(",")[0].equalsIgnoreCase("q") && !whatToProcess.split(",")[0].equalsIgnoreCase("Control_q")) {
+				if(!whatToProcess.split(",")[0].equalsIgnoreCase("F8") && !whatToProcess.split(",")[0].equalsIgnoreCase("F10") && 
+						!whatToProcess.split(",")[0].equalsIgnoreCase("j")) {
+					if(WhichSide == 1) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj_SublineBase*ANIMATION*KEY*$Change_In_1*VALUE SET "
+								+ LT_Position_4 + "\0",print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj__Mask_6_*ANIMATION*KEY*$Change_In_1*VALUE SET "
+								+ LT_Position_4 + "\0",print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Overall_Position_Y_In_Out*ANIMATION*KEY*$Change_In_1*VALUE SET " 
+								+ LT_Position_2 + "\0",print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Sublines_Position_Y*ANIMATION*KEY*$Change_In_1*VALUE SET "
+								+ LT_Position_3 + "\0",print_writers);
+					}else if(WhichSide == 2) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj_SublineBase*ANIMATION*KEY*$Change_In_2*VALUE SET "
+								+ LT_Position_4 + "\0",print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj__Mask_6_*ANIMATION*KEY*$Change_In_2*VALUE SET "
+								+ LT_Position_4 + "\0",print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Overall_Position_Y_In_Out*ANIMATION*KEY*$Change_In_2*VALUE SET " 
+								+ LT_Position_2 + "\0",print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Sublines_Position_Y*ANIMATION*KEY*$Change_In_2*VALUE SET "
+								+ LT_Position_3 + "\0",print_writers);
+					}
+				}
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj_SublineBase*ANIMATION*KEY*$In_2*VALUE SET "
+					+ LT_Position_4 + "\0",print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj_SublineBase*ANIMATION*KEY*$Out_1*VALUE SET "
+					+ LT_Position_4 + "\0",print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj__Mask_6_*ANIMATION*KEY*$In_2*VALUE SET "
+					+ LT_Position_4 + "\0",print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj__Mask_6_*ANIMATION*KEY*$Out_1*VALUE SET "
+					+ LT_Position_4 + "\0",print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Overall_Position_Y_In_Out*ANIMATION*KEY*$In_2*VALUE SET " 
+					+ LT_Position_2 + "\0",print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Overall_Position_Y_In_Out*ANIMATION*KEY*$Out_1*VALUE SET "
+					+ LT_Position_2 + "\0",print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Sublines_Position_Y*ANIMATION*KEY*$In_2*VALUE SET "
+					+ LT_Position_3 + "\0",print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Sublines_Position_Y*ANIMATION*KEY*$Out_1*VALUE SET "
+					+ LT_Position_3 + "\0",print_writers);
+				
+			}
+			
+			if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
+				CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H1*VALUE SET "
+					+ slave_Flag_Keys + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H2*VALUE SET "
+					+ slave_Flag_Keys + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H_In*VALUE SET "
+						+ slave_Flag_Keys + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H_Out*VALUE SET "
+						+ slave_Flag_Keys + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$Side_" + WhichSide + "$obj_WidthX"
+					+ "*FUNCTION*Maxsize*WIDTH_X SET " + slave_Flag_Object + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$Side_" + WhichSide + "$obj_WidthX"
+						+ "*FUNCTION*Maxsize*WIDTH_X SET " + slave_Flag_Object + "\0", print_writers);
+			}
+			
+			CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H1*VALUE SET "
+				+ LT_Flag_Keys + "\0", print_writers);
+			CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H_In*VALUE SET "
+					+ LT_Flag_Keys + "\0", print_writers);
+			CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H_Out*VALUE SET "
+					+ LT_Flag_Keys + "\0", print_writers);
+			CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H2*VALUE SET "
+				+ LT_Flag_Keys + "\0", print_writers);
+			CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$Side_" + WhichSide + "$obj_WidthX"
+				+ "*FUNCTION*Maxsize*WIDTH_X SET " + LT_Flag_Object + "\0", print_writers);
+			CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$Side_" + WhichSide + "$obj_WidthX"
+					+ "*FUNCTION*Maxsize*WIDTH_X SET " + LT_Flag_Object + "\0", print_writers);
+			break;
+		}
 	}
 }

@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import com.cricket.containers.LowerThird;
+
 import com.cricket.model.BattingCard;
 import com.cricket.model.BowlingCard;
 import com.cricket.model.Configuration;
@@ -41,13 +41,13 @@ public class FullFramesGfx
 	public Configuration config;
 	public List<Statistics> statistics;
 	public List<StatsType> statsTypes;
+	public List<Tournament> tournaments;
 	public List<MatchAllData> tournament_matches;
 	public List<NameSuper> nameSupers;
 	public List<Fixture> fixTures;
 	public List<Team> Teams;
 	public List<Ground> Grounds;
 	public List<VariousText> VariousText;
-	public List<Tournament> tournaments;
 	public List<Tournament> addPastDataToCurr;
 	
 	public List<Player> PlayingXI;
@@ -57,11 +57,9 @@ public class FullFramesGfx
 	public Player player;
 	public Statistics stat;
 	public StatsType statsType;
-	public LowerThird lowerThird;
 	public VariousText variousText;
 	public Tournament tournament;
 	
-	public NameSuper namesuper;
 	public Fixture fixture;
 	public Team team;
 	public Ground ground;
@@ -70,6 +68,7 @@ public class FullFramesGfx
 	public List<BattingCard> battingCardList = new ArrayList<BattingCard>();
 	public List<OverByOverData> manhattan = new ArrayList<OverByOverData>();
 	public List<Statistics> statisticsList = new ArrayList<Statistics>();
+	public List<Tournament> addCurrDataToPast = new ArrayList<Tournament>();
 	
 	public FullFramesGfx() {
 		super();
@@ -88,6 +87,7 @@ public class FullFramesGfx
 		this.fixTures = fixTures;
 		this.Teams = Teams;
 		this.Grounds = Grounds;
+		this.tournaments = tournaments;
 		this.VariousText = VariousText;
 	}
 		
@@ -459,10 +459,12 @@ public class FullFramesGfx
 		}
 
 		for(Statistics stat : statistics) {
-			if(stat.getStats_type_id() == statsType.getStats_id()) {
-				statisticsList.add(stat);
-			}
+//			stat.setStats_type(statsType);
+//			stat = CricketFunctions.updateTournamentDataWithStats(stat, tournament_matches, matchAllData);
+//			stat = CricketFunctions.updateStatisticsWithMatchData(stat, matchAllData);
+			statisticsList.add(stat);
 		}
+		
 		if(statisticsList == null && statisticsList.isEmpty()) {
 			return "populateSingleTeams: Stats List is null";
 		}
@@ -1676,15 +1678,16 @@ public class FullFramesGfx
 					}
 				}
 				
-				if(!new File("\\\\"+config.getPrimaryIpAddress()+"\\"+Constants.LOCAL_ICC_U19_2023_PHOTOS_PATH + Constants.RIGHT_2048 +  player.getPhoto() + CricketUtil.PNG_EXTENSION).exists()) {
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Profile$PhotoPart"
+						+ "$Flag$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + team.getTeamName4() + "\0", print_writers);
+				
+				if(!new File("\\\\"+config.getPrimaryIpAddress()+"\\"+Constants.LOCAL_ICC_U19_2023_PHOTOS_PATH + Constants.RIGHT_2048 + 
+						player.getPhoto() + CricketUtil.PNG_EXTENSION).exists()) {
 					return "Photo not found";
 				}
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Profile$PhotoPart"
 						+ "$Photo$img_PlayerPhoto*TEXTURE*IMAGE SET "+"\\\\"+config.getPrimaryIpAddress()+"\\"+ Constants.LOCAL_ICC_U19_2023_PHOTOS_PATH + Constants.RIGHT_2048 
 						+ player.getPhoto()+ CricketUtil.PNG_EXTENSION + "\0", print_writers);
-
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Profile$PhotoPart"
-						+ "$Flag$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + team.getTeamName4() + "\0", print_writers);
 				break;
 			}
 			break;
@@ -1809,6 +1812,8 @@ public class FullFramesGfx
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Profile$PhotoPart"
 							+ "$Photo$img_PlayerPhoto*TEXTURE*IMAGE SET "+"\\\\"+config.getPrimaryIpAddress()+"\\"+ Constants.LOCAL_ICC_U19_2023_PHOTOS_PATH + Constants.RIGHT_2048 
 							+ player.getPhoto()+ CricketUtil.PNG_EXTENSION + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Profile$PhotoPart"
+							+ "$Flag$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + team.getTeamName4() + "\0", print_writers);
 					
 				break;
 			}
@@ -2219,11 +2224,11 @@ public class FullFramesGfx
 				
 				for(int i=1;i<=PlayingXI.size();i++) {
 					rowId = i-1;
-					stat = statistics.stream().filter(stat -> stat.getPlayer_id() == PlayingXI.get(rowId).getPlayerId()).findAny().orElse(null);
+					
+					stat = statisticsList.stream().filter(stat -> stat.getPlayer_id() == PlayingXI.get(rowId).getPlayerId()).findAny().orElse(null);
 					if(stat == null) {
 						return "populatePlayerProfile: No stats found for player id [" + player.getPlayerId() + "] from database is returning NULL";
 					}
-					
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
 						+ "$TeamSingle$"+i+"$txt_Name*GEOM*TEXT SET " + PlayingXI.get(i-1).getFull_name() + "\0", print_writers);
