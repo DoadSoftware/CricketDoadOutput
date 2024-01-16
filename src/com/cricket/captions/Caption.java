@@ -216,6 +216,9 @@ public class Caption
 				break;
 			case "Control_q"://Boundaries
 				status = this_lowerThirdGfx.populateTeamsBoundaries(whatToProcess,whichSide,matchAllData);
+				break;
+			case "l"://All-rounderStats
+				status = this_lowerThirdGfx.populateL3rdAllRounderStats(whatToProcess,whichSide,matchAllData);
 				break;	
 			case "Shift_F5"://Bat 012
 				status = this_lowerThirdGfx.populateBatSummary(whatToProcess,whichSide,matchAllData);

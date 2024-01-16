@@ -1099,14 +1099,14 @@ public class LowerThirdGfx
 			surName = bowlingCard.getPlayer().getSurname();
 		}
 		
-		if(inning.getTotalOvers() == 0 || inning.getTotalOvers() > 1) {
-			over_text = "OVER" + CricketFunctions.Plural(inning.getTotalOvers()).toUpperCase();
+		if(bowlingCard.getOvers() == 0 || bowlingCard.getOvers() > 1) {
+			over_text = "OVER" + CricketFunctions.Plural(bowlingCard.getOvers()).toUpperCase();
 		}else {
-			if(inning.getTotalBalls() == 1) {
+			if(bowlingCard.getBalls() == 1) {
 				over_text = "OVERS";
 			}
-			else if(inning.getTotalBalls() > 0) {
-				over_text = "OVER" + CricketFunctions.Plural(inning.getTotalBalls()).toUpperCase();
+			else if(bowlingCard.getBalls() > 0) {
+				over_text = "OVER" + CricketFunctions.Plural(bowlingCard.getBalls()).toUpperCase();
 			}
 			else {
 				over_text = "OVER";
@@ -1194,6 +1194,135 @@ public class LowerThirdGfx
 		} else {
 			return status;
 		}
+	}
+	
+	public String populateL3rdAllRounderStats(String whatToProcess, int WhichSide, MatchAllData matchAllData) throws InterruptedException {
+		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
+			return status;
+		} else {
+			//inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
+			if( matchAllData.getMatch().getInning() == null) {
+				return status;
+			}
+			
+			String runs="",overs="",matches="",balls="",strike="",wickets="",economy="",player="",team="",flag="",type="";
+			if(whatToProcess.split(",")[2].equalsIgnoreCase("Economy")||whatToProcess.split(",")[2].equalsIgnoreCase("Catches")) {
+				if( matchAllData.getMatch().getInning().get(0).getBowlingCard()
+						.stream().filter(boc->boc.getPlayerId()==Integer.valueOf(whatToProcess.split(",")[3]))
+						.findAny().orElse(null) != null) {
+					for(BowlingCard bowlingCard: matchAllData.getMatch().getInning().get(0).getBowlingCard()) {
+						if(bowlingCard.getPlayerId()==Integer.valueOf(whatToProcess.split(",")[3])) {
+							player=bowlingCard.getPlayer().getFull_name();
+							team=matchAllData.getMatch().getInning().get(0).getBowling_team().getTeamName1();
+							flag=matchAllData.getMatch().getInning().get(0).getBowling_team().getTeamName4();
+							runs=String.valueOf(bowlingCard.getRuns());
+							balls=String.valueOf(Integer.valueOf((bowlingCard.getOvers()*6)+bowlingCard.getBalls()));
+							if(bowlingCard.getWickets()==0) {
+								strike="-";
+							}else {
+								strike=String.valueOf(String.format("%.2f", Double.valueOf((bowlingCard.getBalls())+bowlingCard.getOvers())/Integer.valueOf(bowlingCard.getWickets())));
+							}if(bowlingCard.getBalls()!=0)	{
+								overs=String.valueOf(bowlingCard.getOvers()+"."+bowlingCard.getBalls());
+							}else {
+								overs=String.valueOf(bowlingCard.getOvers());
+							}
+							overs=String.valueOf(bowlingCard.getOvers());
+							wickets=String.valueOf(bowlingCard.getWickets());
+							if(whatToProcess.split(",")[2].equalsIgnoreCase("Economy")) {
+								type="ECONOMY";
+								economy=String.valueOf(bowlingCard.getEconomyRate());
+							}else if(whatToProcess.split(",")[2].equalsIgnoreCase("Catches")) {
+								type="CATCHES";
+								economy=String.valueOf(bowlingCard.getCatchAsBowler()+bowlingCard.getCatchAsFielder());
+							}
+						}
+					}
+				}else if( matchAllData.getMatch().getInning().get(1).getBowlingCard()
+						.stream().filter(boc->boc.getPlayerId()==Integer.valueOf(whatToProcess.split(",")[3]))
+						.findAny().orElse(null) != null) {
+					for(BowlingCard bowlingCard: matchAllData.getMatch().getInning().get(1).getBowlingCard()) {
+						if(bowlingCard.getPlayerId()==Integer.valueOf(whatToProcess.split(",")[3])) {
+							player=bowlingCard.getPlayer().getFull_name();
+							team=matchAllData.getMatch().getInning().get(1).getBowling_team().getTeamName1();
+							flag=matchAllData.getMatch().getInning().get(1).getBowling_team().getTeamName4();
+							runs=String.valueOf(bowlingCard.getRuns());
+							balls=String.valueOf(Integer.valueOf((bowlingCard.getOvers()*6)+bowlingCard.getBalls()));
+							if(bowlingCard.getWickets()==0) {
+								strike="-";
+							}else {
+								strike=String.valueOf(String.format("%.2f", Double.valueOf((bowlingCard.getBalls())+bowlingCard.getOvers())/Integer.valueOf(bowlingCard.getWickets())));
+							}
+							if(bowlingCard.getBalls()!=0)	{
+								overs=String.valueOf(bowlingCard.getOvers()+"."+bowlingCard.getBalls());
+							}else {
+								overs=String.valueOf(bowlingCard.getOvers());
+							}						
+							wickets=String.valueOf(bowlingCard.getWickets());
+							
+							if(whatToProcess.split(",")[2].equalsIgnoreCase("Economy")) {
+								type="ECONOMY";
+								economy=String.valueOf(bowlingCard.getEconomyRate());
+							}else if(whatToProcess.split(",")[2].equalsIgnoreCase("Catches")) {
+								type="CATCHES";
+								economy=String.valueOf(bowlingCard.getCatchAsBowler()+bowlingCard.getCatchAsFielder());
+							}
+						}
+						}
+					}
+					lowerThird = new LowerThird(player,team, "","", "","", 
+						2, "" ,flag,new String[]{"RUNS","BALLS","STRIKE RATE","OVERS","WICKETS",type},
+						new String[]{String.valueOf(runs),
+								balls,strike,overs,wickets,economy},null,
+						null,new String[] {"-517.0","-328.0","-122.0","115.0","344.0","560.0"});
+					
+			}else if(whatToProcess.split(",")[2].equalsIgnoreCase("Tournament")) {
+				stat = statistics.stream().filter(st -> st.getPlayer_id() == Integer.valueOf(whatToProcess.split(",")[3])).findAny().orElse(null);
+				statsType = statsTypes.stream().filter(st -> st.getStats_short_name().equalsIgnoreCase("U19ODI")).findAny().orElse(null);
+				if(statsType==null) {
+					return "Player stats not found";
+				}
+				if(Integer.valueOf(stat.getStats_type_id())==Integer.valueOf(statsType.getStats_id())
+						&&stat.getPlayer_id()!=0) {
+					if( matchAllData.getMatch().getInning().get(0).getBowlingCard()
+							.stream().filter(boc->boc.getPlayerId()==Integer.valueOf(whatToProcess.split(",")[3]))
+							.findAny().orElse(null) != null) {
+						player= matchAllData.getMatch().getInning().get(0).getBowlingCard()
+								.stream().filter(boc->boc.getPlayerId()==Integer.valueOf(stat.getPlayer_id()))
+								.findAny().orElse(null).getPlayer().getFull_name();
+						team=matchAllData.getMatch().getInning().get(0).getBowling_team().getTeamName1();
+						flag=matchAllData.getMatch().getInning().get(0).getBowling_team().getTeamName4();
+						
+					}else if( matchAllData.getMatch().getInning().get(1).getBowlingCard()
+							.stream().filter(boc->boc.getPlayerId()==Integer.valueOf(whatToProcess.split(",")[3]))
+							.findAny().orElse(null) != null) {
+						
+						player= matchAllData.getMatch().getInning().get(1).getBowlingCard()
+								.stream().filter(boc->boc.getPlayerId()==Integer.valueOf(stat.getPlayer_id()))
+								.findAny().orElse(null).getPlayer().getFull_name();
+						team=matchAllData.getMatch().getInning().get(1).getBowling_team().getTeamName1();
+						flag=matchAllData.getMatch().getInning().get(1).getBowling_team().getTeamName4();
+					}
+					lowerThird = new LowerThird(player,team, "","", "","", 
+							2, "" ,flag,new String[]{"MATCHES","RUNS","AVERAGE","WICKETS","ECONOMY"},
+							new String[]{String.valueOf(stat.getMatches()),
+									String.valueOf(stat.getRuns()),
+									String.valueOf(CricketFunctions.getAverage(stat.getInnings(), stat.getNot_out(), stat.getRuns(), 2, "-")),
+									String.valueOf(stat.getWickets())
+									,String.valueOf(CricketFunctions.getEconomy(stat.getRuns(), stat.getBalls_bowled(), 2, "-"))},null,
+							null,new String[] {"-530.0","-250.0","0.0","250.0","510.0"}
+					);
+				}
+				
+			}			
+				status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);
+				if(status == Constants.OK) {
+					HideAndShowL3rdSubStrapContainers(WhichSide);
+					setPositionOfLT(whatToProcess,WhichSide,config);
+					return PopulateL3rdBody(WhichSide, whatToProcess.split(",")[0]);
+				} else {
+					return status;
+				}
+			}
 	}
 	
 	public String populateL3rdPowerPlay(String whatToProcess, int WhichSide, MatchAllData matchAllData) throws InterruptedException {
