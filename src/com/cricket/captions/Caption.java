@@ -239,9 +239,6 @@ public class Caption
 				break;
 			case "l"://All-rounderStats
 				status = this_lowerThirdGfx.populateL3rdAllRounderStats(whatToProcess,whichSide,matchAllData);
-				break;
-			case "n": // POWERPLAY COMPARISON 
-				status = this_lowerThirdGfx.populateL3rdAllPowerPlay(whatToProcess,whichSide,matchAllData);
 				break;	
 			case "Shift_F5"://Bat 012
 				status = this_lowerThirdGfx.populateBatSummary(whatToProcess,whichSide,matchAllData);
@@ -255,11 +252,17 @@ public class Caption
 			case "Alt_d":// DLS Target
 				status = this_lowerThirdGfx.populateDlsTarget(whatToProcess,whichSide,matchAllData);
 				break;	
-			case "Control_g"://powerplay
+			case "Control_g"://powerplay Description
 				status = this_lowerThirdGfx.populatePowerplay(whatToProcess,whichSide,matchAllData);
 				break;
 			case "Control_h"://powerplay Summary
 				status = this_lowerThirdGfx.populateL3rdPowerPlay(whatToProcess,whichSide,matchAllData);
+				break;
+			case "a": // All Powerplay Summary 
+				status = this_lowerThirdGfx.populateL3rdInningPowerPlay(whatToProcess,whichSide,matchAllData);
+				break;	
+			case "n": // POWERPLAY COMPARISON 
+				status = this_lowerThirdGfx.populateL3rdAllPowerPlay(whatToProcess,whichSide,matchAllData);
 				break;	
 			case "Control_a"://Projected
 				status = this_lowerThirdGfx.populateL3rdProjected(whatToProcess,whichSide,matchAllData);
@@ -294,7 +297,6 @@ public class Caption
 				status = this_lowerThirdGfx.populateHowOutWithOutFielder(whatToProcess,whichSide,matchAllData);
 				break;	
 			case "Alt_F9": // Single Teams
-				System.out.println("whatToProcess : " + whatToProcess);
 				status = this_fullFramesGfx.populateSingleTeams(whichSide, whatToProcess, matchAllData, 0);
 				break;
 			case "Alt_k"://Curr Part

@@ -136,7 +136,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				break;
 			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'Control_F1': case 'Control_a':
 			case 'Alt_k':  case 'Shift_F3': case 'd': case 'e': case 'Control_F7': case 'Control_F6':
-			case 'Control_k': case 'Control_F10': case 'Control_F3': case 'Alt_d': case 'n':
+			case 'Control_k': case 'Control_F10': case 'Control_F3': case 'Alt_d': case 'n': case 'a':
 			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q': case 'Control_b':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
