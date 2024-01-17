@@ -131,7 +131,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Control_F5': case 'Control_F8': case 'Control_F9': case 'F4': case 'F5': case 'F6' : case 'F7': 
 			case 'F8': case 'F9': case 'F11': case 's': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6':
 			case 'Shift_K': case 'Shift_O': case 'Alt_F9': case 'g': case 'f': case 'Control_g': case 'Control_s': case 'Control_f':
-			case 'Control_h': case 'Alt_F12': case 'l':
+			case 'Control_h': case 'Alt_F12': case 'l': case 'p':
 				addItemsToList(dataToProcess,null);
 				break;
 			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'Control_F1': case 'Control_a':
@@ -304,7 +304,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 		break;*/
 		
 	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11':
-	case 'Control_F5': case 'Control_F9': case 'Control_F8': case 'Control_d': case 'Control_e': case 's':
+	case 'Control_F5': case 'Control_F9': case 'Control_F8': case 'Control_d': case 'Control_e': case 's': case 'p':
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q':
 	case 'Alt_F9': case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l':
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9':
@@ -1067,6 +1067,37 @@ function addItemsToList(whatToProcess,dataToProcess)
 			});
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			cellCount = cellCount + 1;
+			break;
+			
+		case 'p':
+			select = document.createElement('select');
+			select.id = 'selectGroups';
+			select.name = select.id;
+			
+			option = document.createElement('option');
+			option.value = 'GroupA';
+			option.text = 'Group A';	
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'GroupB';
+			option.text = 'Group B';	
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'GroupC';
+			option.text = 'Group C';	
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'GroupD';
+			option.text = 'Group D';	
+			select.appendChild(option);
+			
+			select.setAttribute('onchange','setDropdownOptionToSelectOptionArray(this, 0)');
 			row.insertCell(cellCount).appendChild(select);
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;

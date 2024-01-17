@@ -48,7 +48,7 @@ public class Animation
 			switch (whatToProcess.split(",")[0]) {
 			case "F1": case "F2": case "F4": case "Shift_F10": case "Shift_F11": case "m": case "Control_m": 
 			case "Control_F8": case "Control_d": case "Control_e": case "Control_F7": case "Control_F10":
-			case "Shift_K": case "Alt_F9": case "Shift_D":
+			case "Shift_K": case "Alt_F9": case "Shift_D": case "p":
 				return Constants.FULL_FRAMER;
 			case "F5": case "F6": case "F7": case "F8": case "F9": case "F10": case "F11":
 			case "Control_F1": case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
@@ -93,7 +93,7 @@ public class Animation
 			
 			case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Shift_F11": case "m": case "Control_m": 
 			case "Control_F8": case "Control_d": case "Control_e": case "Control_F7": case "Control_F10":
-			case "Shift_K": case "Alt_F9":
+			case "Shift_K": case "Alt_F9": case "p":
 				
 				setVariousAnimationsKeys("ANIMATE-IN", print_writers, config);
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
@@ -149,10 +149,13 @@ public class Animation
 				case "Alt_F9":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Team_Single", "START");
 					break;
+				case "p":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Group_Standings", "START");
+					break;
 				}
 				
 				switch (whatToProcess.split(",")[0]) {
-				case "m": case "Control_m": case "Shift_F11": case "Control_F7":
+				case "m": case "Control_m": case "Shift_F11": case "Control_F7": case "p":
 					processAnimation(Constants.BACK, print_writers, "Header_Shrink", "START");
 					break;
 				case "Shift_K": case "F4":
@@ -331,11 +334,11 @@ public class Animation
 				this.whichGraphicOnScreen = "";
 				break;
 			
-			case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Shift_F11": case "m": case "Control_m": 
+			case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Shift_F11": case "m": case "Control_m": case "p":
 			case "Control_F8": case "Control_d": case "Control_e": case "Control_F7": case "Control_F10": case "Shift_K": case "Alt_F9":
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out", "CONTINUE");
 				switch (whatToProcess.split(",")[0]) {
-				case "m": case "Control_m": case "Shift_F11": case "Control_F7":
+				case "m": case "Control_m": case "Shift_F11": case "Control_F7": case "p":
 					processAnimation(Constants.BACK, print_writers, "Header_Shrink", "CONTINUE");
 					break;
 				case "Shift_K": case "F4":
@@ -416,7 +419,7 @@ public class Animation
 				return CricketUtil.NO;
 			}	
 			switch(whatToProcess.split(",")[0]) {
-			case "F1": case "F2": case "F4": case "Shift_F11": case "Control_F8":
+			case "F1": case "F2": case "F4": case "Shift_F11": case "Control_F8": case "p":
 				setVariousAnimationsKeys("CHANGE-ON", print_writers, config);
 				processAnimation(Constants.BACK, print_writers, "Change$Header", "START");
 				processAnimation(Constants.BACK, print_writers, "Change$Footer", "START");
@@ -438,6 +441,16 @@ public class Animation
 						processAnimation(Constants.BACK, print_writers, "Change$Summary", "START");
 						switch(whatToProcess.split(",")[0]) {
 						case "Shift_F11":
+							break;
+						default:
+							processAnimation(Constants.BACK, print_writers, "Header_Shrink", "CONTINUE REVERSE");
+							break;
+						}
+						break;
+					case "p":
+						processAnimation(Constants.BACK, print_writers, "Change$Group_Standings", "START");
+						switch(whatToProcess.split(",")[0]) {
+						case "p":
 							break;
 						default:
 							processAnimation(Constants.BACK, print_writers, "Header_Shrink", "CONTINUE REVERSE");
@@ -467,6 +480,10 @@ public class Animation
 					case "Shift_F11":
 						processAnimation(Constants.BACK, print_writers, "Header_Shrink", "START");
 						processAnimation(Constants.BACK, print_writers, "Change$Summary", "START");
+						break;
+					case "p":
+						processAnimation(Constants.BACK, print_writers, "Header_Shrink", "START");
+						processAnimation(Constants.BACK, print_writers, "Change$Group_Standings", "START");
 						break;
 					}
 				}
@@ -802,7 +819,7 @@ public class Animation
 		case Constants.ICC_U19_2023:
 			if(whatToProcess.contains(",")) {
 				switch(whatToProcess.split(",")[0]) {
-				case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Shift_F11": case "m": case "Control_m": 
+				case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Shift_F11": case "m": case "Control_m": case "p":
 				case "Control_F8": case "Control_d": case "Control_e": case "Control_F7": case "Control_F10": case "Alt_F9": case "Shift_K":
 					previewCommand = "Anim_FullFrames$In_Out$Essentials$In 2.140 Anim_FullFrames$In_Out$Header$In 1.800 "
 						+ "Anim_FullFrames$In_Out$Footer$In 1.800";
@@ -836,6 +853,9 @@ public class Animation
 				case "Shift_F11":  //MATCH SUMMARY
 					previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Summary$In 1.820";
 					break;
+				case "p":
+					previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Group_Standings$In 1.540";
+					break;
 				case "m"://Match id	
 					previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Ident$In 1.920 Base_Gradient 0.500";
 					break;
@@ -861,7 +881,7 @@ public class Animation
 				}
 			    if(whichside == 2) {
 					switch(whatToProcess.split(",")[0]) {
-					case "F1": case "F2": case "F4": case "Shift_F11": case "Control_F8":
+					case "F1": case "F2": case "F4": case "Shift_F11": case "Control_F8": case "p":
 						previewCommand = previewCommand + " Change$Header 1.320 Change$Header$Change_Out 0.420 Change$Header$Change_In 1.320";
 						if(whichGraphicOnScreen.contains(",")) {
 							switch(whichGraphicOnScreen.split(",")[0]) {
@@ -880,6 +900,9 @@ public class Animation
 							case "Control_F8":
 								previewCommand = previewCommand + " Change$LineUp_Image 1.560 Change$LineUp_Image$Change_Out 0.500 Change$LineUp_Image$Change_In 1.560";
 								break;
+							case "p":
+								previewCommand = previewCommand + " Change$Group_Standings 1.040 Change$Group_Standings$Change_Out 0.624 Change$Group_Standings$Change_In 1.040";
+								break;
 							}
 						}
 						if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase(whatToProcess.split(",")[0])) {
@@ -892,7 +915,7 @@ public class Animation
 									break;
 								}
 								break;
-							case "Shift_F11": 
+							case "Shift_F11": case "p":
 								previewCommand = previewCommand + " Header_Shrink 0.500 Header_Shrink$In 0.500";
 								break;
 							}
@@ -910,6 +933,9 @@ public class Animation
 							case "Shift_F11":
 								previewCommand = previewCommand + " Change$Summary 1.340 Change$Summary$Change_Out 0.720 Change$Summary$Change_In 1.340";
 								break;
+							case "p":
+								previewCommand = previewCommand + " Change$Group_Standings 1.040 Change$Group_Standings$Change_Out 0.624 Change$Group_Standings$Change_In 1.040";
+								break;
 							}
 						}
 						previewCommand = previewCommand + " Change$Footer 1.700 Change$Footer$Chnage_Out 0.580 Change$Footer$Change_In 1.700";
@@ -919,7 +945,7 @@ public class Animation
 						break;
 				    }
 			    }
-			    System.out.println("previewCommand = " + previewCommand);
+			    //System.out.println("previewCommand = " + previewCommand);
 			    CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/FullFrames "
 			    	+ "C:/Temp/Preview.png " + previewCommand + " \0", print_writer);
 			}

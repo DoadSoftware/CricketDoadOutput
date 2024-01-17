@@ -1289,15 +1289,34 @@ public class InfobarGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Last_Wicket_Wide$Top$"
 					+ "txt_Balls*GEOM*TEXT SET " + battingCardList.get(battingCardList.size()-1).getBalls() + "\0", print_writers);
 				
-				if(!battingCardList.get(battingCardList.size()-1).getHowOutPartOne().isEmpty()) {
-					how_out_txt = battingCardList.get(battingCardList.size()-1).getHowOutPartOne();
+				if(battingCardList.get(battingCardList.size()-1).getHowOut().equalsIgnoreCase(CricketUtil.RUN_OUT)) {
+					if(battingCardList.get(battingCardList.size()-1).getWasHowOutFielderSubstitute() != null && 
+							battingCardList.get(battingCardList.size()-1).getWasHowOutFielderSubstitute().equalsIgnoreCase(CricketUtil.YES)) {
+						how_out_txt = "run out " + "sub (" + battingCardList.get(battingCardList.size()-1).getHowOutFielder().getTicker_name() + ")";
+					} else {
+						return "run out (" + battingCardList.get(battingCardList.size()-1).getHowOutFielder().getTicker_name() + ")";
+					}
 				}
-				
-				if(!battingCardList.get(battingCardList.size()-1).getHowOutPartTwo().isEmpty()) {
-					if(!how_out_txt.trim().isEmpty()) {
-						how_out_txt = how_out_txt + "  " + battingCardList.get(battingCardList.size()-1).getHowOutPartTwo();
-					}else {
-						how_out_txt = battingCardList.get(battingCardList.size()-1).getHowOutPartTwo();
+				else if(battingCardList.get(battingCardList.size()-1).getHowOut().equalsIgnoreCase(CricketUtil.CAUGHT)) {
+					if(battingCardList.get(battingCardList.size()-1).getWasHowOutFielderSubstitute() != null && 
+							battingCardList.get(battingCardList.size()-1).getWasHowOutFielderSubstitute().equalsIgnoreCase(CricketUtil.YES)) {
+						how_out_txt = "c" +  " sub (" + battingCardList.get(battingCardList.size()-1).getHowOutFielder().getTicker_name() + ")  b" + 
+								battingCardList.get(battingCardList.size()-1).getHowOutBowler().getTicker_name();
+					} else {
+						how_out_txt = "c " + battingCardList.get(battingCardList.size()-1).getHowOutFielder().getTicker_name() + "  b" + 
+								battingCardList.get(battingCardList.size()-1).getHowOutBowler().getTicker_name();
+					}
+				}else {
+					if(!battingCardList.get(battingCardList.size()-1).getHowOutPartOne().isEmpty()) {
+						how_out_txt = battingCardList.get(battingCardList.size()-1).getHowOutPartOne();
+					}
+					
+					if(!battingCardList.get(battingCardList.size()-1).getHowOutPartTwo().isEmpty()) {
+						if(!how_out_txt.trim().isEmpty()) {
+							how_out_txt = how_out_txt + "  " + battingCardList.get(battingCardList.size()-1).getHowOutPartTwo();
+						}else {
+							how_out_txt = battingCardList.get(battingCardList.size()-1).getHowOutPartTwo();
+						}
 					}
 				}
 				

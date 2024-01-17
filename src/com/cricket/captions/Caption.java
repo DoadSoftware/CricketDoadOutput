@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.List;
 
+import javax.xml.bind.JAXBException;
+
 import com.cricket.containers.LowerThird;
 import com.cricket.model.BattingCard;
 import com.cricket.model.Bugs;
@@ -104,7 +106,7 @@ public class Caption
 		this.status = status;
 	}
 
-	public void PopulateGraphics(String whatToProcess, MatchAllData matchAllData) throws InterruptedException, NumberFormatException, ParseException, CloneNotSupportedException, IOException
+	public void PopulateGraphics(String whatToProcess, MatchAllData matchAllData) throws InterruptedException, NumberFormatException, ParseException, CloneNotSupportedException, IOException, JAXBException
 	{
 		if(whatToProcess.contains(",")) {
 			switch (whatToProcess.split(",")[0]) {
@@ -208,6 +210,10 @@ public class Caption
 				break;
 			case "m": //Match id
 				status = this_fullFramesGfx.populateFFMatchId(whichSide,whatToProcess.split(",")[0], matchAllData);
+				break;
+			case "p":
+				this_fullFramesGfx.WhichGroup = whatToProcess.split(",")[2];
+				status = this_fullFramesGfx.populateFFPointsTable(whichSide,whatToProcess.split(",")[0], matchAllData, 0);
 				break;
 			case "s": //30-50
 				status = this_lowerThirdGfx.populate30_50Split(whatToProcess, whichSide, matchAllData);
