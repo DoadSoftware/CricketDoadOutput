@@ -54,7 +54,7 @@ public class Animation
 			case "Control_F1": case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
 			case "Shift_F3": case "s": case "d": case "e": case "q": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "Control_g": case "Control_h": case "Control_p": case "j": case "Control_F6": case "Shift_F6": 
-			case "Control_s": case "Alt_d": case "Control_f": case "Control_q": case "l": case "n": 
+			case "Control_s": case "Alt_d": case "Control_f": case "Control_q": case "l": case "n": case "a":
 				
 				switch (whatToProcess.split(",")[0]) {
 				case "F8": case "F10": case "j": // Name super L3rd
@@ -197,7 +197,7 @@ public class Animation
 			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
 			case "Shift_F3": case "s": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "Control_g": case "Control_h": case "Control_p": case "Control_F6": case "Shift_F6": case "Control_s":
-			case "Alt_d": case "Control_f": case "l": case "n":
+			case "Alt_d": case "Control_f": case "l": case "n": case "a":
 				if(this.infobar.isInfobar_on_screen() == true) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Overall_Position_Y*"
 						+ "TRANSFORMATION*POSITION*Y SET 40.0 \0",print_writers);
@@ -391,7 +391,7 @@ public class Animation
 			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
 			case "Shift_F3": case "s": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "Control_g": case "Control_h": case "Control_p": case "Control_F6": case "Shift_F6": case "Control_s":
-			case "Alt_d": case "Control_f": case "l": case "n":
+			case "Alt_d": case "Control_f": case "l": case "n": case "a":
 				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "CONTINUE");
 				TimeUnit.MILLISECONDS.sleep(1000);
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
@@ -520,7 +520,7 @@ public class Animation
 					lastNumberOfRows = caption.this_fullFramesGfx.numberOfRows;
 				}
 				break;
-			case "F5": case "F6": case "F7": case "F9": case "F11": case "l": case "n":
+			case "F5": case "F6": case "F7": case "F9": case "F11": case "l": case "n": case "a":
 			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
 			case "Shift_F3": case "s": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "Control_g": case "Control_h": case "Control_p": case "Control_F6": case "Shift_F6": case "Control_s": case "Control_f":
@@ -592,7 +592,7 @@ public class Animation
 				break;
 			case "F5": case "F6": case "F7": case "F9": case "F11": case "Control_g": case "Control_h": case "Control_p":
 			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
-			case "Control_F6": case "Shift_F6": case "Control_s": case "Control_f": case "l": case "n":
+			case "Control_F6": case "Shift_F6": case "Control_s": case "Control_f": case "l": case "n": case "a":
 				processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "SHOW 0.0");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
@@ -1000,9 +1000,9 @@ public class Animation
 				switch(whatToProcess.split(",")[0]) {
 				case "F5": case "F6": case "F7": case "F9": case "F11":
 				case "Control_F5": case "Control_F9": case "Control_a":  case "Control_c":
-				case "Shift_F3": case "s": case "d": case "e":case "Shift_F5": case "Shift_f9": 
-				case "Alt_F12": case "Control_F3": case "Control_F6": case "Shift_f6": case "Control_s": 
-				case "Control_f": case "Control_g": case "Control_h":
+				case "Shift_F3": case "s": case "d": case "e":case "Shift_F5": case "Shift_F9": 
+				case "Alt_F12": case "Control_F3": case "Control_F6": case "Shift_F6": case "Control_s": 
+				case "Control_f": case "Control_g": case "Control_h": case "a":
 				case "p": case "Control_p": case "Alt_k": case "l": case "n":
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
 						+ "/Default/Overlays C:/Temp/Preview.png Anim_Infobar$Small 1.00 anim_Lower_Third$Essentials 2.200 "
@@ -1023,9 +1023,9 @@ public class Animation
 					case "F5": case "F6": case "F7": case "F9": case "F11":
 					case "Control_F5": case "Control_F9": case "Control_a":  case "Control_c":
 					case "Shift_F3": case "s": case "d": case "e": 
-					case "Shift_F5": case "Shift_f9": case "Alt_F12": case "Control_F3": case "Control_F6": 
-					case "Shift_f6": case "Control_s": case "Control_f": case "Control_g": case "Control_h": 
-					case "Control_p": case "Alt_k": case "l"://Anim_LtChange 1.300 
+					case "Shift_F5": case "Shift_F9": case "Alt_F12": case "Control_F3": case "Control_F6": 
+					case "Shift_F6": case "Control_s": case "Control_f": case "Control_g": case "Control_h": 
+					case "Control_p": case "Alt_k": case "l": case "a"://Anim_LtChange 1.300 
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
 								+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_LtChange$Flag 1.300 Anim_LtChange$Sublines 1.240 "
 								+ "Anim_LtChange$Topline 0.900 Anim_LtChange$Lt_Position 0.940 Anim_LtChange$HeaderDynamic 1.220 \0", print_writer);
