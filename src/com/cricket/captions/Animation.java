@@ -953,7 +953,7 @@ public class Animation
 					previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Manhattan$In 2.900";
 					break;
 				case "Shift_F10"://WORMS
-					previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Worm$In 3.000";
+					previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Worm$In 2.440 Anim_FullFrames$In_Out$Main$Worm$In$Runs 2.440";
 					break;
 				case "Shift_F11":  //MATCH SUMMARY
 					previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Summary$In 1.820";
