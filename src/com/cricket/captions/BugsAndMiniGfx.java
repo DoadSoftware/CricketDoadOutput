@@ -442,7 +442,6 @@ public class BugsAndMiniGfx
 						+ "$Bowling$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + inning.getBowling_team().getTeamName4() + " \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$minis$Side" + WhichSide 
 						+ "$Bowling$txt_FirstName*GEOM*TEXT SET " + inning.getBowling_team().getTeamName1() + " \0", print_writers);
-				Collections.sort(inning.getBattingCard());
 				
 				for (BowlingCard boc : inning.getBowlingCard()) {
 					if(boc.getRuns() > 0 || ((boc.getOvers()*6)+boc.getBalls()) > 0) {

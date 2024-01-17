@@ -182,6 +182,15 @@ public class Caption
 			case "Shift_D":
 				status = this_fullFramesGfx.populateTarget(whichSide, whatToProcess.split(",")[0], matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
+			case "Control_b":
+				status = this_fullFramesGfx.populateInAt(whichSide, whatToProcess.split(",")[0], matchAllData);
+				break;
+			case "Alt_m":
+				status = this_fullFramesGfx.populateBatMileStone(whichSide, whatToProcess, matchAllData);
+				break;
+			case "Alt_n":
+				status = this_fullFramesGfx.populateBowlMileStone(whichSide, whatToProcess, matchAllData);
+				break;
 			case "Shift_F10": //MATCH SUMMARY
 				status = this_fullFramesGfx.populateWorms(whichSide, whatToProcess.split(",")[0], matchAllData, 
 					Integer.valueOf(whatToProcess.split(",")[1]));

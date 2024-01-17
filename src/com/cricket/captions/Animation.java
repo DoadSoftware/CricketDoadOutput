@@ -48,13 +48,13 @@ public class Animation
 			switch (whatToProcess.split(",")[0]) {
 			case "F1": case "F2": case "F4": case "Shift_F10": case "Shift_F11": case "m": case "Control_m": 
 			case "Control_F8": case "Control_d": case "Control_e": case "Control_F7": case "Control_F10":
-			case "Shift_K": case "Alt_F9": case "Shift_D": case "p":
+			case "Shift_K": case "Alt_F9": case "Shift_D": case "p": case "Control_b": case "Alt_m": case "Alt_n":
 				return Constants.FULL_FRAMER;
 			case "F5": case "F6": case "F7": case "F8": case "F9": case "F10": case "F11":
 			case "Control_F1": case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
 			case "Shift_F3": case "s": case "d": case "e": case "q": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "Control_g": case "Control_h": case "Control_p": case "j": case "Control_F6": case "Shift_F6": 
-			case "Control_s": case "Alt_d": case "Control_f": case "Control_q": case "l": case "n":
+			case "Control_s": case "Alt_d": case "Control_f": case "Control_q": case "l": case "n": 
 				
 				switch (whatToProcess.split(",")[0]) {
 				case "F8": case "F10": case "j": // Name super L3rd
@@ -88,6 +88,20 @@ public class Animation
 				TimeUnit.MILLISECONDS.sleep(500);
 				processAnimation(Constants.BACK, print_writers, "Target", "START");
 				processAnimation(Constants.BACK, print_writers, "TargetLoop", "START");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;
+			case "Control_b":
+				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Push infobar
+				TimeUnit.MILLISECONDS.sleep(500);
+				processAnimation(Constants.BACK, print_writers, "In_At", "START");
+				processAnimation(Constants.BACK, print_writers, "In_At_Loop", "START");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;
+			case "Alt_m": case "Alt_n":
+				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
+				TimeUnit.MILLISECONDS.sleep(500);
+				processAnimation(Constants.BACK, print_writers, "Milestone", "START");
+				processAnimation(Constants.BACK, print_writers, "MilestoneLoop", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			
@@ -329,6 +343,20 @@ public class Animation
 				processAnimation(Constants.BACK, print_writers, "Target", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "TargetLoop", "CONTINUE");
 
+				TimeUnit.MILLISECONDS.sleep(1000);
+				AnimateIn("ArrowUp,", print_writers, config); // Restore infobar
+				this.whichGraphicOnScreen = "";
+				break;
+			case "Control_b":
+				processAnimation(Constants.BACK, print_writers, "In_At", "CONTINUE");
+				processAnimation(Constants.BACK, print_writers, "In_At_Loop", "CONTINUE");
+				TimeUnit.MILLISECONDS.sleep(1000);
+				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
+				this.whichGraphicOnScreen = "";
+				break;
+			case "Alt_m": case "Alt_n":
+				processAnimation(Constants.BACK, print_writers, "Milestone", "CONTINUE");
+				processAnimation(Constants.BACK, print_writers, "MilestoneLoop", "CONTINUE");
 				TimeUnit.MILLISECONDS.sleep(1000);
 				AnimateIn("ArrowUp,", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
@@ -644,6 +672,10 @@ public class Animation
 			processAnimation(Constants.BACK, print_writers, "Base_Gradient", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Target", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "TargetLoop", "SHOW 0.0");
+			processAnimation(Constants.BACK, print_writers, "In_At", "SHOW 0.0");
+			processAnimation(Constants.BACK, print_writers, "In_At_Loop", "SHOW 0.0");
+			processAnimation(Constants.BACK, print_writers, "Milestone", "SHOW 0.0");
+			processAnimation(Constants.BACK, print_writers, "MilestoneLoop", "SHOW 0.0");
 
 			processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
 			processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "SHOW 0.0");
@@ -876,6 +908,12 @@ public class Animation
 					break;
 				case "Shift_D": // target
 					previewCommand = previewCommand + " Target 2.100 Target$In 2.100 Target$In$Data 2.100";
+					break;
+				case "Control_b": // target
+					previewCommand = previewCommand + " In_At 2.140 In_At$In 2.140 In_At$In$Data 2.140";
+					break;
+				case "Alt_m": case "Alt_n":// target
+					previewCommand = previewCommand + " Milestone 2.140 Milestone$In 2.140 Milestone$In$Data 2.140";
 					break;
 				
 				}

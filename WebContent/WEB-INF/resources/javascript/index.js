@@ -131,13 +131,13 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Control_F5': case 'Control_F8': case 'Control_F9': case 'F4': case 'F5': case 'F6' : case 'F7': 
 			case 'F8': case 'F9': case 'F11': case 's': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6':
 			case 'Shift_K': case 'Shift_O': case 'Alt_F9': case 'g': case 'f': case 'Control_g': case 'Control_s': case 'Control_f':
-			case 'Control_h': case 'Alt_F12': case 'l': case 'p':
+			case 'Control_h': case 'Alt_F12': case 'l': case 'p': case 'Alt_m': case 'Alt_n':
 				addItemsToList(dataToProcess,null);
 				break;
 			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'Control_F1': case 'Control_a':
 			case 'Alt_k':  case 'Shift_F3': case 'd': case 'e': case 'Control_F7': case 'Control_F6':
 			case 'Control_k': case 'Control_F10': case 'Control_F3': case 'Alt_d': case 'n':
-			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q':
+			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q': case 'Control_b':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 				break;
@@ -308,6 +308,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q':
 	case 'Alt_F9': case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l':
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9':
+	case 'Alt_m': case 'Alt_n':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 	
 		$("#captions_div").hide();
@@ -749,7 +750,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1
 			break;
 			
-		case 'Control_F5': case 'Control_s'://Batsman Style
+		case 'Control_F5': case 'Control_s': case 'Alt_m'://Batsman Style
 			switch(whatToProcess) {
 			case 'Control_F5':
 				header_text.innerHTML = 'BAT STYLE';
@@ -757,6 +758,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 			case 'Control_s':
 				header_text.innerHTML = 'LT THIS SERIES BAT';
 				break;		
+			case 'Alt_m':
+				header_text.innerHTML = 'BATSMAN MILESTONE';
+				break;	
 			}
 			select = document.createElement('select');
 			select.id = 'selectPlayerName';
@@ -906,7 +910,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			}
 			break;
 			
-		case 'Control_F9':  case 'Control_f'://BowlerStyle
+		case 'Control_F9':  case 'Control_f': case 'Alt_n'://BowlerStyle
 			
 			switch(whatToProcess) {
 			case 'Control_F9':
@@ -914,7 +918,10 @@ function addItemsToList(whatToProcess,dataToProcess)
 				break;
 			case 'Control_f':
 				header_text.innerHTML = 'LT BALL THIS SERIES';
-				break;			
+				break;	
+			case 'Alt_n':
+				header_text.innerHTML = 'BOWLER MILESTONE';
+				break;		
 			}
 			
 			select = document.createElement('select');
