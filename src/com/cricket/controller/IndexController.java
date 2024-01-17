@@ -328,6 +328,10 @@ public class IndexController
 					this_animation.processBugsPreview(valueToProcess, print_writers, this_caption.whichSide, 
 						session_configuration, this_animation.whichGraphicOnScreen);
 					break;
+				case Constants.MINIS:
+					this_animation.processMiniPreview(valueToProcess, print_writers, this_caption.whichSide, 
+							session_configuration, this_animation.whichGraphicOnScreen);
+						break;
 				}
 				return JSONObject.fromObject(this_caption).toString();
 			}

@@ -664,7 +664,7 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "Anim_NameSuperChange", "SHOW 0.0");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
-			case "F1": case "F2": case "F4": case "Shift_F11": case "Control_F8":
+			case "F1": case "F2": case "F4": case "Shift_F11": case "Control_F8": case "p":
 				processAnimation(Constants.BACK, print_writers, "Change$Header", "SHOW 0.0");
 				processAnimation(Constants.BACK, print_writers, "Change$Footer", "SHOW 0.0");
 				switch(whichGraphicOnScreen.split(",")[0]) {
@@ -688,6 +688,10 @@ public class Animation
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$LineUp_Image", "SHOW 3.000");
 					processAnimation(Constants.BACK, print_writers, "Change$LineUp_Image", "SHOW 0.0");
 					break;
+				case "p":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Group_Standings", "SHOW 0.0");
+					processAnimation(Constants.BACK, print_writers, "Change$Group_Standings", "SHOW 0.0");
+					break;
 				}
 				if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase(whatToProcess.split(",")[0])) {
 					switch(whatToProcess.split(",")[0]) {
@@ -709,6 +713,10 @@ public class Animation
 					case "Shift_F11":
 						processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Summary", "SHOW 3.000");
 						processAnimation(Constants.BACK, print_writers, "Change$Summary", "SHOW 0.0");
+						break;
+					case "p":
+						processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Group_Standings", "SHOW 3.000");
+						processAnimation(Constants.BACK, print_writers, "Change$Group_Standings", "SHOW 0.0");
 						break;
 					}
 				}
@@ -1143,7 +1151,28 @@ public class Animation
 			break;
 		}
 	}
-
+	public void processMiniPreview(String whatToProcess, List<PrintWriter> print_writer, int whichside, Configuration config, String whichGraphicOnScreen) {
+		switch (config.getBroadcaster().toUpperCase()) {
+		case Constants.ICC_U19_2023:
+			if(whatToProcess.contains(",")) {
+				switch(whatToProcess.split(",")[0]) {
+				case "Shift_F1": case "Shift_F2":
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+							+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Mini$In_Out 1.260 Anim_Mini$In_Out$In 1.240 \0", print_writer);
+					break;
+				}
+				if(whichside == 2) {
+					switch(whatToProcess.split(",")[0]) {
+					case "Shift_F1": case "Shift_F2":
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+								+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_MiniChange 1.860 Anim_MiniChange$Change_In 1.860 \0", print_writer);
+						break;
+					}
+				}
+			}
+			break;
+		}
+	}
 	public String getWhichGraphicOnScreen() {
 		return whichGraphicOnScreen;
 	}
