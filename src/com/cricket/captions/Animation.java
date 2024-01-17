@@ -212,9 +212,7 @@ public class Animation
 				
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
 				TimeUnit.MILLISECONDS.sleep(1000);
-				processAnimation(Constants.FRONT, print_writers, "Essentials", "START");
-				processAnimation(Constants.FRONT, print_writers, "Row", "START");
-				processAnimation(Constants.FRONT, print_writers, "HeaderDynamic", "START");
+				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "F8": case "F10": case "j": // Name super L3rd
@@ -223,7 +221,6 @@ public class Animation
 				AnimateIn(Constants.MIDDLE + Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
 				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "anim_NameSupers", "START");
-				processAnimation(Constants.FRONT, print_writers, "HeaderDynamic", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 				
@@ -239,7 +236,6 @@ public class Animation
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
 				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "anim_Boundary_LT", "START");
-				processAnimation(Constants.FRONT, print_writers, "HeaderDynamic", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 				
@@ -1083,11 +1079,11 @@ public class Animation
 						+ "anim_Lower_Third$Row 2.160 anim_Lower_Third$Row$In 0.620";
 					break;
 				case "F8": case "F10": case "j": // Name super L3rd
-					previewCommands = "Anim_Infobar$Push 0.500 anim_NameSupers$In 1.400 Anim_LtChange$HeaderDynamic 1.200";
+					previewCommands = "Anim_Infobar$Push 0.500 anim_NameSupers$In 1.400";
 					break;
 				case "q": case "Control_q":// Boundary L3rd
 					previewCommands = "Anim_Infobar$Push 0.500 anim_Boundary_LT$Essentials 2.200 anim_Boundary_LT$Essentials$In 1.400 "
-						+ "anim_Boundary_LT$Row 2.160 anim_Boundary_LT$Row$In 0.620 Anim_LtChange$HeaderDynamic 1.200";
+						+ "anim_Boundary_LT$Row 2.160 anim_Boundary_LT$Row$In 0.620";
 					break;
 				}
 				if(whichside == 2) {
@@ -1097,15 +1093,18 @@ public class Animation
 					case "Shift_F3": case "s": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 					case "Control_g": case "Control_h": case "Control_p": case "Control_F6": case "Shift_F6": case "Control_s": case "Control_f":
 						previewCommands = previewCommands + " Anim_LtChange$Flag 1.300 Anim_LtChange$Sublines 1.240 "
-							+ "Anim_LtChange$Topline 0.900 Anim_LtChange$Lt_Position 0.940";
+							+ "Anim_LtChange$Topline 0.900 Anim_LtChange$Lt_Position 0.940 Anim_LtChange$HeaderDynamic 1.180 "
+							+ "Anim_LtChange$HeaderDynamic$Change_In 1.180 Anim_LtChange$HeaderDynamic$Change_Out 0.560";
 						break;
 					case "F8": case "F10": case "j":
 						previewCommands = previewCommands + " Anim_NameSuperChange$Flag 1.300 Anim_NameSuperChange$Sublines 0.700 "
-							+ "Anim_NameSuperChange$Topline 0.900";
+							+ "Anim_NameSuperChange$Topline 0.900 Anim_NameSuperChange$HeaderDynamic 1.220 "
+							+ "Anim_NameSuperChange$HeaderDynamic$Change_In 1.220 Anim_NameSuperChange$HeaderDynamic$Change_Out 0.600";
 						break;
 					case "q": case "Control_q":
 						previewCommands = previewCommands + " Anim_Boundary_LtChange$Flag 1.300 Anim_Boundary_LtChange$Sublines 1.200 "
-							+ "Anim_Boundary_LtChange$Topline 0.900 Anim_Boundary_LtChange$Lt_Position 0.940";
+							+ "Anim_Boundary_LtChange$Topline 0.900 Anim_Boundary_LtChange$Lt_Position 0.940 Anim_Boundary_LtChange$HeaderDynamic 1.223 "
+							+ "Anim_Boundary_LtChange$HeaderDynamic$Change_In 1.223 Anim_Boundary_LtChange$HeaderDynamic$Change_Out 0.600";
 						break;
 					}
 				}

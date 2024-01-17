@@ -300,8 +300,8 @@ public class IndexController
 								!= this_animation.getTypeOfGraphicsOnScreen(session_configuration,this_animation.whichGraphicOnScreen)) {
 								this_caption.setStatus(this_animation.getTypeOfGraphicsOnScreen(session_configuration,
 									this_animation.whichGraphicOnScreen).replace("_", " ") + " is on screen. "
-									+ this_animation.getTypeOfGraphicsOnScreen(session_configuration,valueToProcess).replace("_", " ")
-									+ " not allowed" );
+									+ this_animation.getTypeOfGraphicsOnScreen(session_configuration,valueToProcess).replace(
+									"_", " ") + " not allowed" );
 								return JSONObject.fromObject(this_caption).toString();
 							}
 							break;
@@ -329,7 +329,7 @@ public class IndexController
 					break;
 				case Constants.MINIS:
 					this_animation.processMiniPreview(valueToProcess, print_writers, this_caption.whichSide, 
-							session_configuration, this_animation.whichGraphicOnScreen);
+						session_configuration, this_animation.whichGraphicOnScreen);
 						break;
 				}
 				return JSONObject.fromObject(this_caption).toString();

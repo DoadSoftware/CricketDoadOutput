@@ -1253,6 +1253,7 @@ public class FullFramesGfx
 			break;
 		
 		case "Control_F1":
+			
 			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
 					+ "$Select_GraphicsType*FUNCTION*Omo*vis_con SET 13 \0", print_writers);
 			rowId = 0;
@@ -1290,7 +1291,8 @@ public class FullFramesGfx
 							containerName + "$Photo_" + rowId + "$Gradient$img_Flag*TEXTURE*IMAGE SET " +Constants.ICC_U19_2023_FLAG_PATH + 
 							inning.getBatting_team().getTeamName4() + "\0", print_writers);
 						
-						if(!new File("\\\\"+config.getPrimaryIpAddress()+"\\"+Constants.LOCAL_ICC_U19_2023_PHOTOS_PATH + Constants.CENTRE_512 +  inning.getBattingCard().get(iRow-1).getPlayer().getPhoto() + CricketUtil.PNG_EXTENSION).exists()) {
+						if(!new File("\\\\"+config.getPrimaryIpAddress()+"\\"+Constants.LOCAL_ICC_U19_2023_PHOTOS_PATH + Constants.CENTRE_512 
+							+ inning.getBattingCard().get(iRow-1).getPlayer().getPhoto() + CricketUtil.PNG_EXTENSION).exists()) {
 							return "Photo not found";
 						}
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Batting_Card_Image"
@@ -2986,9 +2988,9 @@ public class FullFramesGfx
 				
 				switch (whatToProcess.split(",")[0]) {
 				case "Shift_F10":
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Top_Align$Side" + WhichSide + "$Select_FooterType"
-							+ "$Info_Text$Data$txt_Info_1*GEOM*TEXT SET " + CricketFunctions.
-							generateMatchSummaryStatus(WhichInning, matchAllData, CricketUtil.FULL, CricketUtil.BEAT).toUpperCase() + "\0", print_writers);
+//					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Top_Align$Side" + WhichSide + "$Select_FooterType"
+//							+ "$Info_Text$Data$txt_Info_1*GEOM*TEXT SET " + CricketFunctions.
+//							generateMatchSummaryStatus(WhichInning, matchAllData, CricketUtil.FULL, CricketUtil.BEAT).toUpperCase() + "\0", print_writers);
 					break;
 				case "Shift_F11":
 					for(VariousText vt : VariousText) {
@@ -2996,9 +2998,9 @@ public class FullFramesGfx
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Top_Align$Side" + WhichSide + "$Select_FooterType"
 									+ "$Info_Text$Data$txt_Info_1*GEOM*TEXT SET " + vt.getVariousText() + "\0", print_writers);
 						}else if(vt.getVariousType().equalsIgnoreCase("MATCHSUMMARYFOOTER") && vt.getUseThis().toUpperCase().equalsIgnoreCase(CricketUtil.NO)) {
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Top_Align$Side" + WhichSide + "$Select_FooterType"
-									+ "$Info_Text$Data$txt_Info_1*GEOM*TEXT SET " + CricketFunctions.
-									generateMatchSummaryStatus(WhichInning, matchAllData, CricketUtil.FULL, CricketUtil.BEAT).toUpperCase() + "\0", print_writers);
+//							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Top_Align$Side" + WhichSide + "$Select_FooterType"
+//								+ "$Info_Text$Data$txt_Info_1*GEOM*TEXT SET " + CricketFunctions.
+//								generateMatchSummaryStatus(WhichInning, matchAllData, CricketUtil.FULL, CricketUtil.BEAT).toUpperCase() + "\0", print_writers);
 						}
 					}
 					break;

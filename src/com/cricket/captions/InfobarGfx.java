@@ -2,6 +2,7 @@ package com.cricket.captions;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -26,7 +27,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 public class InfobarGfx 
 {
 	public Configuration config;
-	public String slashOrDash = "-", WhichProfile, containerName = "", status = "";
+	public String slashOrDash = "-", WhichProfile = "", containerName = "", status = "", previous_sixes = "", stats_text = "";
 	
 	public int FirstPlayerId,lastXballs,sponsor_omo,infobarStatsId;
 
@@ -34,8 +35,6 @@ public class InfobarGfx
 	public Team team = new Team();
 	public Infobar infobar = new Infobar();
 	public Animation this_animation = new Animation();
-	
-	public String previous_sixes;
 	
 	public List<Statistics> statistics;
 	public List<StatsType> statsTypes;
@@ -90,9 +89,16 @@ public class InfobarGfx
 			
 			if(infobar.getMiddle_section().equalsIgnoreCase("RESULT")) {
 			} else {
-				if(CricketFunctions.generateMatchSummaryStatus(inning.getInningNumber(), 
-					matchAllData, CricketUtil.FULL, CricketUtil.BEAT).contains(CricketUtil.BEAT)) {
+				stats_text = CricketFunctions.generateMatchSummaryStatus(inning.getInningNumber(), matchAllData, 
+					CricketUtil.FULL, "|", config.getBroadcaster()).toUpperCase();
+				if(stats_text.contains(" " + CricketUtil.BEAT + " ")) {
+					this.infobar.setMiddle_section("RESULT");
+					this.infobar.setFreeText(Arrays.asList(stats_text.split("|")));
+					populateVizInfobarMiddleSection(print_writers, matchAllData, 2);
 					this_animation.ChangeOn("Alt_2,", print_writers, config);
+					TimeUnit.MILLISECONDS.sleep(2000);
+					populateVizInfobarMiddleSection(print_writers, matchAllData, 1);
+					this_animation.CutBack("Alt+2,", print_writers, config);
 				} else {
 					populateCurrentBatsmen(print_writers, matchAllData, 1);
 					populateVizInfobarBowler(print_writers, matchAllData, 1);
@@ -108,27 +114,27 @@ public class InfobarGfx
 		return Constants.OK;
 	}
 	
-	public String showWinner(List<PrintWriter> print_writers,MatchAllData matchAllData,int WhichSide) throws InterruptedException
-	{
-		if(CricketFunctions.getRequiredRuns(matchAllData) == 0 
-			|| matchAllData.getMatch().getInning().get(1).getTotalWickets() >= 10 || 
-			CricketFunctions.getRequiredBalls(matchAllData) == 0) {
-			
-			if(infobar.getMiddle_section() != null && !infobar.getMiddle_section().trim().isEmpty()) {
-				
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
-						+ "$Select_Type*FUNCTION*Omo*vis_con SET 3 \0", print_writers);
-				
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Top*GEOM*TEXT SET " + 
-					CricketFunctions.generateMatchSummaryStatus(2, matchAllData, CricketUtil.FULL, CricketUtil.BEAT).split("by")[0].toUpperCase() + "\0", print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + 
-					"BY" + CricketFunctions.generateMatchSummaryStatus(2, matchAllData, CricketUtil.FULL, CricketUtil.BEAT).split("by")[1].toUpperCase() + "\0", print_writers);
-				
-				infobar.setMiddle_section("RESULT");
-			}
-		}
-		return null;
-	}
+//	public String showWinner(List<PrintWriter> print_writers,MatchAllData matchAllData,int WhichSide) throws InterruptedException
+//	{
+//		if(CricketFunctions.getRequiredRuns(matchAllData) == 0 
+//			|| matchAllData.getMatch().getInning().get(1).getTotalWickets() >= 10 || 
+//			CricketFunctions.getRequiredBalls(matchAllData) == 0) {
+//			
+//			if(infobar.getMiddle_section() != null && !infobar.getMiddle_section().trim().isEmpty()) {
+//				
+//				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
+//						+ "$Select_Type*FUNCTION*Omo*vis_con SET 3 \0", print_writers);
+//				
+//				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Top*GEOM*TEXT SET " + 
+//					CricketFunctions.generateMatchSummaryStatus(2, matchAllData, CricketUtil.FULL, CricketUtil.BEAT).split("by")[0].toUpperCase() + "\0", print_writers);
+//				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + 
+//					"BY" + CricketFunctions.generateMatchSummaryStatus(2, matchAllData, CricketUtil.FULL, CricketUtil.BEAT).split("by")[1].toUpperCase() + "\0", print_writers);
+//				
+//				infobar.setMiddle_section("RESULT");
+//			}
+//		}
+//		return null;
+//	}
 
 	public String populateInfobar(List<PrintWriter> print_writers,String whatToProcess, MatchAllData matchAllData) throws InterruptedException, CloneNotSupportedException, JsonMappingException, JsonProcessingException {
 		
@@ -1453,14 +1459,29 @@ public class InfobarGfx
 				
 				break;
 				
-			case "Analytics_1_Wide":
+			case "Analytics_1_Wide": case "RESULT":
 				
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
+				switch(infobar.getMiddle_section().toUpperCase()) {
+				case "RESULT":
+					if(this.infobar.getFreeText() != null && this.infobar.getFreeText().size() <= 2) {
+						return "populateVizInfobarMiddleSection: Unable to process RESULT";
+					}
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
 						+ "$Select_Type*FUNCTION*Omo*vis_con SET 3 \0",print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Top*GEOM*TEXT SET " + 
-						"DOAD" + "\0", print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + 
-						"DOAD" + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
+						+ "$Analytics_1_Wide$txt_Top*GEOM*TEXT SET " + this.infobar.getFreeText().get(0) + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
+						+ "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + this.infobar.getFreeText().get(1) + "\0", print_writers);
+					break;
+				case "Analytics_1_Wide":
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
+							+ "$Select_Type*FUNCTION*Omo*vis_con SET 3 \0",print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Top*GEOM*TEXT SET " + 
+							"DOAD" + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + 
+							"DOAD" + "\0", print_writers);
+					break;
+				}
 				break;
 				
 			case "Analytics_2_Wide":
