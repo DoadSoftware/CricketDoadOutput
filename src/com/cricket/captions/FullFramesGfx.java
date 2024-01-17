@@ -63,7 +63,7 @@ public class FullFramesGfx
 	public Statistics stat;
 	public StatsType statsType;
 	public VariousText variousText;
-	public Tournament tournament;
+	public List<Tournament> tournament_stats;
 	
 	public Fixture fixture;
 	public Team team;
@@ -465,7 +465,7 @@ public class FullFramesGfx
 		}
 
 		for(Statistics stat : statistics) {
-//			stat.setStats_type(statsType);
+			stat.setStats_type(statsType);
 //			stat = CricketFunctions.updateTournamentDataWithStats(stat, tournament_matches, matchAllData);
 //			stat = CricketFunctions.updateStatisticsWithMatchData(stat, matchAllData);
 			statisticsList.add(stat);
@@ -523,7 +523,6 @@ public class FullFramesGfx
 			return status;
 		}
 	}
-	
 	public String populateInAt(int WhichSide, String whatToProcess, MatchAllData matchAllData) throws ParseException
 	{
 		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES))
@@ -553,7 +552,6 @@ public class FullFramesGfx
 		
 		return PopulateFfBody(WhichSide, whatToProcess.split(",")[0], matchAllData, 0);
 	}
-	
 	public String populateBowlMileStone(int WhichSide, String whatToProcess, MatchAllData matchAllData) throws ParseException
 	{
 		FirstPlayerId = Integer.valueOf(whatToProcess.split(",")[2]);
@@ -572,6 +570,31 @@ public class FullFramesGfx
 		}
 		
 		return PopulateFfBody(WhichSide, whatToProcess.split(",")[0], matchAllData, 0);
+	}
+	public String populateLeaderBoard(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException, JAXBException, IOException
+	{
+		if(FirstPlayerId <= 0) {
+			return "populateLeaderBoard: Player Id NOT found [" + FirstPlayerId + "]";
+		}
+		
+		tournament_stats = CricketFunctions.extractTournamentStats("CURRENT_MATCH_DATA", false, tournament_matches, null, matchAllData, tournaments);
+		if(tournament_stats == null) {
+			return "populateLeaderBoard : Tournament Stats is Null";
+		}
+		
+		status = PopulateFfHeader(WhichSide, whatToProcess.split(",")[0], matchAllData, WhichInning);
+		if(status == Constants.OK) {
+			status = PopulateFfBody(WhichSide, whatToProcess.split(",")[0], matchAllData, WhichInning);
+			if(status == Constants.OK) {
+				setFullFrameFooterPosition(WhichSide, 4);
+				this.numberOfRows = 11;
+				return PopulateFfFooter(WhichSide, whatToProcess.split(",")[0], matchAllData, WhichInning);
+			} else {
+				return status;
+			}
+		} else {
+			return status;
+		}
 	}
 	
 	public void setFullFrameFooterPosition(int whichside,int footer_omo) 
@@ -919,7 +942,7 @@ public class FullFramesGfx
 						"$Flag$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + inning.getBatting_team().getTeamName4() + "\0", print_writers);
 				break;
 				
-			case "m": case "Control_m": case "Shift_F11": case "Control_F7": case "p":
+			case "m": case "Control_m": case "Shift_F11": case "Control_F7": case "p": case "z": case "x": case "c": case "v":
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide +
 					"$Flag*ACTIVE SET 0 \0", print_writers);
@@ -970,6 +993,33 @@ public class FullFramesGfx
 							+ ground.getCity() + "\0", print_writers);
 					break;
 				
+				case "z": case "x": case "c": case "v":
+					switch(whatToProcess.split(",")[0]) {
+					case "z":
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
+								"$Select_HeaderTop$Title$txt_Title*GEOM*TEXT SET " + "MOST RUNS" + "\0", print_writers);
+						break;
+					case "x":
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
+								"$Select_HeaderTop$Title$txt_Title*GEOM*TEXT SET " + "MOST WICKETS" + "\0", print_writers);
+						break;
+					case "c":
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
+								"$Select_HeaderTop$Title$txt_Title*GEOM*TEXT SET " + "MOST FOURS" + "\0", print_writers);
+						break;
+					case "v":
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
+								"$Select_HeaderTop$Title$txt_Title*GEOM*TEXT SET " + "MOST SIXES" + "\0", print_writers);
+						break;
+					}
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
+							"$Change$Bottom$Select_SubHeaderType*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
+							"$Change$Bottom$ICC_Wordmark*GEOM*TEXT SET " + "ICC U19 MEN’S CWC 2024" + "\0", print_writers);
+					
+					break;
+					
 				case "p":
 					
 					if(WhichGroup.contains("A")) {
@@ -1669,6 +1719,72 @@ public class FullFramesGfx
 							 + rowId + containerName + "$txt_NRR*GEOM*TEXT SET " + leagueTable.getLeagueTeams().get(i).getNetRunRate() + "\0", print_writers);
 					
 					
+				}
+				
+				break;
+			}
+			break;
+			
+		case "z": case "x": case "c": case "v":
+			switch (config.getBroadcaster().toUpperCase()) {
+			case Constants.ICC_U19_2023:
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
+						"$Select_GraphicsType*FUNCTION*Omo*vis_con SET 14 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
+						"$Leader_Board$SubTitle$txt_SubTitle*GEOM*TEXT SET " + "" + "\0", print_writers);
+				
+				switch (whatToProcess) {
+				case "z": 
+					Collections.sort(tournament_stats,new CricketFunctions.BatsmenMostRunComparator());
+					break;
+				case "x": 
+					Collections.sort(tournament_stats,new CricketFunctions.BowlerWicketsComparator());
+					break;
+				case "c": 
+					Collections.sort(tournament_stats,new CricketFunctions.BatsmanFoursComparator());
+					break;
+				case "v":
+					Collections.sort(tournament_stats,new CricketFunctions.BatsmanSixesComparator());
+					break;
+				}
+				
+				for(int i = 0; i <= tournament_stats.size() - 1 ; i++) {
+					rowId = rowId + 1;
+					if(rowId <= 5) {
+						if(tournament_stats.get(i).getPlayerId() == FirstPlayerId) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$PhotoPart"
+									+ "$Flag$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + Teams.get(tournament_stats.get(i).getPlayer().
+											getTeamId() - 1).getTeamName4() + "\0", print_writers);
+							
+//							if(!new File("\\\\"+config.getPrimaryIpAddress()+"\\"+Constants.LOCAL_ICC_U19_2023_PHOTOS_PATH + Constants.RIGHT_2048 + 
+//									player.getPhoto() + CricketUtil.PNG_EXTENSION).exists()) {
+//								return "Photo not found";
+//							}
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$PhotoPart"
+								+ "$Photo$img_PlayerPhoto*TEXTURE*IMAGE SET "+"\\\\"+config.getPrimaryIpAddress()+"\\"+ Constants.LOCAL_ICC_U19_2023_PHOTOS_PATH + 
+									Constants.RIGHT_2048 + tournament_stats.get(i).getPlayer().getPhoto()+ CricketUtil.PNG_EXTENSION + "\0", print_writers);
+							
+						}
+						
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$Stats$" 
+								+ rowId + "$txt_Name*GEOM*TEXT SET " + tournament_stats.get(i).getPlayer().getFull_name() + "\0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$Stats$" 
+								+ rowId + "$txt_Country*GEOM*TEXT SET " + Teams.get(tournament_stats.get(i).getPlayer().getTeamId() - 1).getTeamName1() + "\0", print_writers);
+						
+						if(whatToProcess.equalsIgnoreCase("z")) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$Stats$" 
+									+ rowId + "$txt_Fig*GEOM*TEXT SET " + tournament_stats.get(i).getRuns() + "\0", print_writers);
+						}else if(whatToProcess.equalsIgnoreCase("x")) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$Stats$" 
+									+ rowId + "$txt_Fig*GEOM*TEXT SET " + tournament_stats.get(i).getWickets() + "\0", print_writers);
+						}else if(whatToProcess.equalsIgnoreCase("c")) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$Stats$" 
+									+ rowId + "$txt_Fig*GEOM*TEXT SET " + tournament_stats.get(i).getFours() + "\0", print_writers);
+						}else if(whatToProcess.equalsIgnoreCase("v")) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$Stats$" 
+									+ rowId + "$txt_Fig*GEOM*TEXT SET " + tournament_stats.get(i).getSixes() + "\0", print_writers);
+						}
+					}
 				}
 				
 				break;
@@ -2402,7 +2518,7 @@ public class FullFramesGfx
 					
 					stat = statisticsList.stream().filter(stat -> stat.getPlayer_id() == PlayingXI.get(rowId).getPlayerId()).findAny().orElse(null);
 					if(stat == null) {
-						return "populatePlayerProfile: No stats found for player id [" + player.getPlayerId() + "] from database is returning NULL";
+						return "populatePlayerProfile: No stats found for player id [" + PlayingXI.get(rowId).getPlayerId() + "] from database is returning NULL";
 					}
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
@@ -2846,8 +2962,8 @@ public class FullFramesGfx
 				switch (whatToProcess.split(",")[0]) {
 				case "Shift_F10":
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Top_Align$Side" + WhichSide + "$Select_FooterType"
-							+ "$Info_Text$Data$txt_Info_1*GEOM*TEXT SET " +CricketFunctions.
-							generateMatchSummaryStatus(inning.getInningNumber(), matchAllData,CricketUtil.FULL).toUpperCase() + "\0", print_writers);
+							+ "$Info_Text$Data$txt_Info_1*GEOM*TEXT SET " + CricketFunctions.
+							generateMatchSummaryStatus(WhichInning, matchAllData, CricketUtil.FULL, CricketUtil.BEAT).toUpperCase() + "\0", print_writers);
 					break;
 				case "Shift_F11":
 					for(VariousText vt : VariousText) {
@@ -2856,8 +2972,8 @@ public class FullFramesGfx
 									+ "$Info_Text$Data$txt_Info_1*GEOM*TEXT SET " + vt.getVariousText() + "\0", print_writers);
 						}else if(vt.getVariousType().equalsIgnoreCase("MATCHSUMMARYFOOTER") && vt.getUseThis().toUpperCase().equalsIgnoreCase(CricketUtil.NO)) {
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Top_Align$Side" + WhichSide + "$Select_FooterType"
-									+ "$Info_Text$Data$txt_Info_1*GEOM*TEXT SET " +CricketFunctions.
-									generateMatchSummaryStatus(WhichInning, matchAllData,CricketUtil.FULL).toUpperCase() + "\0", print_writers);
+									+ "$Info_Text$Data$txt_Info_1*GEOM*TEXT SET " + CricketFunctions.
+									generateMatchSummaryStatus(WhichInning, matchAllData, CricketUtil.FULL, CricketUtil.BEAT).toUpperCase() + "\0", print_writers);
 						}
 					}
 					break;
@@ -2873,7 +2989,7 @@ public class FullFramesGfx
 				}
 				break;
 
-			case "Control_d": case "Control_e":
+			case "Control_d": case "Control_e": case "z": case "x": case "c": case "v":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer*ACTIVE SET 0 \0", print_writers);
 				break;
 

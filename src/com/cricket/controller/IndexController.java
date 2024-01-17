@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -350,7 +351,6 @@ public class IndexController
 							TimeUnit.MILLISECONDS.sleep(2000);
 							this_caption.whichSide = 1;
 							this_caption.PopulateGraphics(valueToProcess, session_match);
-							//TimeUnit.MILLISECONDS.sleep(1000);
 							this_animation.CutBack(valueToProcess, print_writers, session_configuration);
 						}
 						break;
@@ -385,7 +385,7 @@ public class IndexController
 		return new Configuration();
 	}
 	@SuppressWarnings("unchecked")
-	public <T> List<T> GetGraphicOption(String whatToProcess) {
+	public <T> List<T> GetGraphicOption(String whatToProcess) throws IOException {
 		switch (whatToProcess) {
 		case "F10": case "j":
 		    return (List<T>) session_name_super;
@@ -395,6 +395,25 @@ public class IndexController
 			return (List<T>) CricketFunctions.processAllFixtures(cricketService);
 		case "Alt_9":
 			return (List<T>) session_infoBarStats;
+		case "z": case "x": case "c": case "v":
+			List<Tournament> tournament_stats = CricketFunctions.extractTournamentStats("COMBINED_PAST_CURRENT_MATCH_DATA",false, cricket_matches, 
+					cricketService, session_match,null);
+			switch (whatToProcess) {
+			case "z": 
+				Collections.sort(tournament_stats,new CricketFunctions.BatsmenMostRunComparator());
+				break;
+			case "x": 
+				Collections.sort(tournament_stats,new CricketFunctions.BowlerWicketsComparator());
+				break;
+			case "c": 
+				Collections.sort(tournament_stats,new CricketFunctions.BatsmanFoursComparator());
+				break;
+			case "v":
+				Collections.sort(tournament_stats,new CricketFunctions.BatsmanSixesComparator());
+				break;
+			}
+			return (List<T>) tournament_stats;
+			
 		}
 		return null;
 	}
@@ -412,7 +431,10 @@ public class IndexController
 			        return name.endsWith(".json") && pathname.isFile();
 			    }
 			}), cricketService);
+
+			
 			session_statistics = cricketService.getAllStats();
+			
 			past_tournament_stats = CricketFunctions.extractTournamentStats("PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
 			session_name_super =  cricketService.getNameSupers();
 			session_team =  cricketService.getTeams();

@@ -224,6 +224,10 @@ public class Caption
 				this_fullFramesGfx.WhichGroup = whatToProcess.split(",")[2];
 				status = this_fullFramesGfx.populateFFPointsTable(whichSide,whatToProcess.split(",")[0], matchAllData, 0);
 				break;
+			case "z": case "x": case "c": case "v":
+				this_fullFramesGfx.FirstPlayerId = Integer.valueOf(whatToProcess.split(",")[2]);
+				status = this_fullFramesGfx.populateLeaderBoard(whichSide, whatToProcess.split(",")[0], matchAllData, 0);
+				break;
 			case "s": //30-50
 				status = this_lowerThirdGfx.populate30_50Split(whatToProcess, whichSide, matchAllData);
 				break;

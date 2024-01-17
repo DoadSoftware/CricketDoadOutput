@@ -305,6 +305,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 		
 	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11':
 	case 'Control_F5': case 'Control_F9': case 'Control_F8': case 'Control_d': case 'Control_e': case 's': case 'p':
+	case 'z': case 'x': case 'c': case 'v':
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q':
 	case 'Alt_F9': case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l':
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9':
@@ -908,6 +909,40 @@ function addItemsToList(whatToProcess,dataToProcess)
 				setDropdownOptionToSelectOptionArray($(select),3);
 				cellCount = cellCount + 1
 			}
+			break;
+			
+		case 'z': case 'x': case 'c': case 'v':
+			switch(whatToProcess) {
+			case 'z':
+				header_text.innerHTML = 'LEADERBOARD - MOST RUNS';
+				break;
+			case 'x':
+				header_text.innerHTML = 'LEADERBOARD - MOST WICKETS';
+				break;	
+			case 'c':
+				header_text.innerHTML = 'LEADERBOARD - MOST FOURS';
+				break;	
+			case 'v':
+				header_text.innerHTML = 'LEADERBOARD - MOST SIXES';
+				break;		
+			}
+		
+			select = document.createElement('select');
+			select.id = 'selectPlayerName';
+			select.name = select.id;
+			
+			for(i=0;i<dataToProcess.length;i++){
+				if(i<5){
+					option = document.createElement('option');
+		            option.value = dataToProcess[i].playerId;
+		            option.text = dataToProcess[i].player.full_name;
+		            select.appendChild(option);
+				}
+			}
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			cellCount = cellCount + 1
 			break;
 			
 		case 'Control_F9':  case 'Control_f': case 'Alt_n'://BowlerStyle
