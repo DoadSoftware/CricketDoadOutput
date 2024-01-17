@@ -11,7 +11,6 @@ public class Infobar {
 	private boolean powerplay_on_screen = false;
 	private boolean powerplay_end = false;
 	private boolean infobar_pushed = false;
-	private boolean show_winner = false;
 	private boolean thisOvers_Title_Fade = false;
 	
 	private int player_id;
@@ -38,6 +37,14 @@ public class Infobar {
 	private BowlingCard last_bowler;
 	private String last_this_over;
 	
+	private List<String> freeText;
+	
+	public List<String> getFreeText() {
+		return freeText;
+	}
+	public void setFreeText(List<String> freeText) {
+		this.freeText = freeText;
+	}
 	public boolean isInfobar_pushed() {
 		return infobar_pushed;
 	}
@@ -164,11 +171,4 @@ public class Infobar {
 	public void setPowerplay_end(boolean powerplay_end) {
 		this.powerplay_end = powerplay_end;
 	}
-	public boolean isShow_winner() {
-		return show_winner;
-	}
-	public void setShow_winner(boolean show_winner) {
-		this.show_winner = show_winner;
-	}
-	
 }

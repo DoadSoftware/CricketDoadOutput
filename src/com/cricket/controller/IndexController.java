@@ -321,8 +321,7 @@ public class IndexController
 				case Constants.LOWER_THIRD: 
 				case Constants.NAME_SUPERS + Constants.LOWER_THIRD:
 				case Constants.BOUNDARIES + Constants.LOWER_THIRD:
-					this_animation.processL3Preview(valueToProcess, print_writers, this_caption.whichSide, 
-						session_configuration, this_animation.whichGraphicOnScreen);
+					this_animation.processL3Preview(valueToProcess, print_writers, this_caption.whichSide, session_configuration);
 					break;
 				case Constants.BUGS:
 					this_animation.processBugsPreview(valueToProcess, print_writers, this_caption.whichSide, 

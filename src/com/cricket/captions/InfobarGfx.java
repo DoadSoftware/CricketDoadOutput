@@ -79,19 +79,30 @@ public class InfobarGfx
 		switch (config.getBroadcaster()) {
 		case Constants.ICC_U19_2023:
 			
-			populateInfobarTeamNameScore(true,print_writers,matchAllData);
-			populateCurrentBatsmen(print_writers, matchAllData, 1);
-			populateVizInfobarBowler(print_writers, matchAllData, 1);
-			populateVizInfobarLeftBottom(print_writers, matchAllData, 1);
-			if(!infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
-				populateVizInfobarMiddleSection(print_writers, matchAllData, 1);
+			inning = matchAllData.getMatch().getInning().stream().filter(
+				inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
+			if(inning == null) {
+				return "updateInfobar: Inning return is NULL";
 			}
-			populateVizInfobarRightBottom(print_writers, matchAllData, 1, 1);
-			populateVizInfobarRightSection(print_writers, matchAllData, 1, 1);
+
+			populateInfobarTeamNameScore(true,print_writers,matchAllData);
+			populateVizInfobarLeftBottom(print_writers, matchAllData, 1);
 			
-//			if(infobar.isShow_winner() == false) {
-//				showWinner(print_writers, matchAllData, 2);
-//			}
+			if(infobar.getMiddle_section().equalsIgnoreCase("RESULT")) {
+			} else {
+				if(CricketFunctions.generateMatchSummaryStatus(inning.getInningNumber(), 
+					matchAllData, CricketUtil.FULL, CricketUtil.BEAT).contains(CricketUtil.BEAT)) {
+					this_animation.ChangeOn("Alt_2,", print_writers, config);
+				} else {
+					populateCurrentBatsmen(print_writers, matchAllData, 1);
+					populateVizInfobarBowler(print_writers, matchAllData, 1);
+					if(!infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
+						populateVizInfobarMiddleSection(print_writers, matchAllData, 1);
+					}
+					populateVizInfobarRightBottom(print_writers, matchAllData, 1, 1);
+					populateVizInfobarRightSection(print_writers, matchAllData, 1, 1);
+				}
+			}
 			break;
 		}
 		return Constants.OK;
@@ -99,8 +110,9 @@ public class InfobarGfx
 	
 	public String showWinner(List<PrintWriter> print_writers,MatchAllData matchAllData,int WhichSide) throws InterruptedException
 	{
-		if(CricketFunctions.getRequiredRuns(matchAllData) == 0 || matchAllData.getMatch().getInning().get(1).getTotalWickets() >= 10 || 
-				CricketFunctions.getRequiredBalls(matchAllData) == 0) {
+		if(CricketFunctions.getRequiredRuns(matchAllData) == 0 
+			|| matchAllData.getMatch().getInning().get(1).getTotalWickets() >= 10 || 
+			CricketFunctions.getRequiredBalls(matchAllData) == 0) {
 			
 			if(infobar.getMiddle_section() != null && !infobar.getMiddle_section().trim().isEmpty()) {
 				
@@ -108,11 +120,10 @@ public class InfobarGfx
 						+ "$Select_Type*FUNCTION*Omo*vis_con SET 3 \0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Top*GEOM*TEXT SET " + 
-						CricketFunctions.generateMatchSummaryStatus(2, matchAllData, CricketUtil.FULL, CricketUtil.BEAT).split("by")[0].toUpperCase() + "\0", print_writers);
+					CricketFunctions.generateMatchSummaryStatus(2, matchAllData, CricketUtil.FULL, CricketUtil.BEAT).split("by")[0].toUpperCase() + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + 
-						"BY" + CricketFunctions.generateMatchSummaryStatus(2, matchAllData, CricketUtil.FULL, CricketUtil.BEAT).split("by")[1].toUpperCase() + "\0", print_writers);
+					"BY" + CricketFunctions.generateMatchSummaryStatus(2, matchAllData, CricketUtil.FULL, CricketUtil.BEAT).split("by")[1].toUpperCase() + "\0", print_writers);
 				
-				infobar.setShow_winner(true);
 				infobar.setMiddle_section("RESULT");
 			}
 		}
