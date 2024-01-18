@@ -85,7 +85,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 		case 'Alt_r':
 			processCricketProcedures('RE_READ_DATA');
 			break;
-		case 'Alt_ ':
+		case 'Control_ ':
 			processCricketProcedures('CLEAR-ALL-WITH-INFOBAR');
 			break;
 		case ' ':
@@ -131,7 +131,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Control_F5': case 'Control_F8': case 'Control_F9': case 'F4': case 'F5': case 'F6' : case 'F7': 
 			case 'F8': case 'F9': case 'F11': case 's': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6':
 			case 'Shift_K': case 'Shift_O': case 'Alt_F9': case 'g': case 'f': case 'Control_g': case 'Control_s': case 'Control_f':
-			case 'Control_h': case 'Alt_F12': case 'l': case 'p': case 'Alt_m': case 'Alt_n': case 'Control_b':
+			case 'Control_h': case 'Alt_F12': case 'l': case 'p': case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_F10':
 				addItemsToList(dataToProcess,null);
 				break;
 			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'Control_F1': case 'Control_a':
@@ -310,7 +310,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q':
 	case 'Alt_F9': case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l':
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9':
-	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p':
+	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		
 		$("#captions_div").hide();
@@ -504,6 +504,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 			option = document.createElement('option');
 			option.value = 'ARAMCO_POTD';
 			option.text = 'Aramco POTD';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'CRICTOS';
+			option.text = 'Crictos';
 			select.appendChild(option);
 			
 			option = document.createElement('option');
@@ -840,7 +845,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
 			break;	
-		case 'Control_F8': case 'Alt_F9': case 'Alt_F12':
+			
+		case 'Control_F8': case 'Alt_F9': case 'Alt_F12': case 'Alt_F10':
 			switch(whatToProcess) {
 			case 'Alt_F12':
 				header_text.innerHTML = 'TEAM 0,1,2';
@@ -866,25 +872,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			
 			switch(whatToProcess){
-			case 'Alt_F9':
-				select = document.createElement('select');
-				select.id = 'selectProfile';
-				select.name = select.id;
-				
-				option = document.createElement('option');
-				option.value = 'U19ODI';
-				option.text = 'U19 ODI';
-				select.appendChild(option);
-				
-				/*option = document.createElement('option');
-				option.value = 'TS';
-				option.text = 'U19 CWC 2024';
-				select.appendChild(option);*/
-				
-				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
-				row.insertCell(cellCount).appendChild(select);
-				setDropdownOptionToSelectOptionArray($(select),1);
-				cellCount = cellCount + 1
+			case 'Alt_F9': case 'Alt_F10':
 				
 				select = document.createElement('select');
 				select.id = 'selectStyle';
@@ -905,9 +893,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 				option.text = 'Bowling';
 				select.appendChild(option);
 				
-				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 2)");
+				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
 				row.insertCell(cellCount).appendChild(select);
-				setDropdownOptionToSelectOptionArray($(select),2);
+				setDropdownOptionToSelectOptionArray($(select),1);
 				cellCount = cellCount + 1
 				
 				select = document.createElement('select');
@@ -939,9 +927,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 				option.text = 'Economy';
 				select.appendChild(option);
 				
-				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 3)");
+				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 2)");
 				row.insertCell(cellCount).appendChild(select);
-				setDropdownOptionToSelectOptionArray($(select),3);
+				setDropdownOptionToSelectOptionArray($(select),2);
 				cellCount = cellCount + 1
 			}
 			break;

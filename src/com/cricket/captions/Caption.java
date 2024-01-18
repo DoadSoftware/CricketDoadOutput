@@ -302,8 +302,11 @@ public class Caption
 			case "Shift_F6":
 				status = this_lowerThirdGfx.populateHowOutWithOutFielder(whatToProcess,whichSide,matchAllData);
 				break;	
-			case "Alt_F9": // Single Teams
-				status = this_fullFramesGfx.populateSingleTeams(whichSide, whatToProcess, matchAllData, 0);
+			case "Alt_F9": // Single Teams Career
+				status = this_fullFramesGfx.populateSingleTeamsCareer(whichSide, whatToProcess, matchAllData, 0);
+				break;
+			case "Alt_F10"://Single Teams This Series
+				status = this_fullFramesGfx.populateSingleTeamsThisSeries(whichSide, whatToProcess, matchAllData, 0);
 				break;
 			case "Alt_k"://Curr Part
 				status = this_lowerThirdGfx.populateL3rdCurrentPartnership(whatToProcess,whichSide,matchAllData);
