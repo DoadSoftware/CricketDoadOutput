@@ -183,7 +183,7 @@ public class Caption
 				status = this_fullFramesGfx.populateTarget(whichSide, whatToProcess.split(",")[0], matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
 			case "Control_b":
-				status = this_fullFramesGfx.populateInAt(whichSide, whatToProcess.split(",")[0], matchAllData);
+				status = this_fullFramesGfx.populateInAt(whichSide, whatToProcess.split(",")[0],Integer.valueOf( whatToProcess.split(",")[2]), matchAllData);
 				break;
 			case "Alt_m":
 				status = this_fullFramesGfx.populateBatMileStone(whichSide, whatToProcess, matchAllData);
