@@ -464,8 +464,8 @@ public class FullFramesGfx
 
 		for(Statistics stat : statistics) {
 			stat.setStats_type(statsType);
-//			stat = CricketFunctions.updateTournamentDataWithStats(stat, tournament_matches, matchAllData);
-//			stat = CricketFunctions.updateStatisticsWithMatchData(stat, matchAllData);
+			stat = CricketFunctions.updateTournamentDataWithStats(stat, tournament_matches, matchAllData);
+			stat = CricketFunctions.updateStatisticsWithMatchData(stat, matchAllData);
 			statisticsList.add(stat);
 		}
 		
@@ -1004,7 +1004,7 @@ public class FullFramesGfx
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
 							"$Change$Bottom$Select_SubHeaderType*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
-							"$Change$Bottom$ICC_Wordmark*GEOM*TEXT SET " + "ICC U19 MEN’S CRICKET WORLD CUP 2024" + "\0", print_writers);
+							"$Change$Bottom$ICC_Wordmark*GEOM*TEXT SET " + "ICC U19 MEN'S CRICKET WORLD CUP 2024" + "\0", print_writers);
 					break;
 				
 				case "Control_m":
@@ -1014,7 +1014,7 @@ public class FullFramesGfx
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
 							"$Change$Bottom$Select_SubHeaderType*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
-							"$Change$Bottom$ICC_Wordmark*GEOM*TEXT SET " + "ICC U19 MEN’S CRICKET WORLD CUP 2024" + "\0", print_writers);
+							"$Change$Bottom$ICC_Wordmark*GEOM*TEXT SET " + "ICC U19 MEN'S CRICKET WORLD CUP 2024" + "\0", print_writers);
 					break;
 					
 				case "Shift_F11":
@@ -1062,7 +1062,7 @@ public class FullFramesGfx
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
 							"$Change$Bottom$Select_SubHeaderType*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
-							"$Change$Bottom$ICC_Wordmark*GEOM*TEXT SET " + "ICC U19 MEN’S CWC 2024" + "\0", print_writers);
+							"$Change$Bottom$ICC_Wordmark*GEOM*TEXT SET " + "ICC U19 MEN'S CWC 2024" + "\0", print_writers);
 					
 					break;
 					
@@ -1085,7 +1085,7 @@ public class FullFramesGfx
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
 							"$Change$Bottom$Select_SubHeaderType*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
-							"$Change$Bottom$ICC_Wordmark*GEOM*TEXT SET " + "ICC U19 MEN’S CRICKET WORLD CUP 2024" + "\0", print_writers);
+							"$Change$Bottom$ICC_Wordmark*GEOM*TEXT SET " + "ICC U19 MEN'S CRICKET WORLD CUP 2024" + "\0", print_writers);
 					break;
 					
 				}
@@ -2354,7 +2354,7 @@ public class FullFramesGfx
 					
 					if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
 						if(!new File("\\\\"+config.getSecondaryIpAddress()+"\\"+Constants.LOCAL_ICC_U19_2023_PHOTOS_PATH + Constants.CENTRE_512 +  PlayingXI.get(i-1).getPhoto() + CricketUtil.PNG_EXTENSION).exists()) {
-							return "Photo not found in "+config.getSecondaryIpAddress();
+							return "Photo not found in " + config.getSecondaryIpAddress();
 						}
 						CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$LineUp_Image" + containerName
 							+ "$Photo_" + rowId + "$img_Photo*TEXTURE*IMAGE SET " + "\\\\"+config.getSecondaryIpAddress()+"\\"+Constants.LOCAL_ICC_U19_2023_PHOTOS_PATH + Constants.CENTRE_512 
@@ -2756,7 +2756,7 @@ public class FullFramesGfx
 							case "AVERAGE":
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
 										+ "$TeamSingle$" + i + "$fig_2*GEOM*TEXT SET " + CricketFunctions.getAverage(stat.getInnings(), stat.getNot_out(), 
-												stat.getRuns(), 1, "-") + "\0", print_writers);
+												stat.getRuns(), 2, "-") + "\0", print_writers);
 								break;
 							case "STRIKERATE":
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
@@ -2836,9 +2836,9 @@ public class FullFramesGfx
 										+ "$TeamSingle$" + i + "$fig_2*GEOM*TEXT SET " + tournament.getRuns() + "\0", print_writers);
 								break;
 							case "AVERAGE":
-//								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
-//										+ "$TeamSingle$" + i + "$fig_2*GEOM*TEXT SET " + CricketFunctions.getAverage(stat.getInnings(), stat.getNot_out(), 
-//												stat.getRuns(), 1, "-") + "\0", print_writers);
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+										+ "$TeamSingle$" + i + "$fig_2*GEOM*TEXT SET " + CricketFunctions.getAverage(tournament.getInnings(), 
+												tournament.getNot_out(), tournament.getRuns(), 2, "-") + "\0", print_writers);
 								break;
 							case "STRIKERATE":
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 

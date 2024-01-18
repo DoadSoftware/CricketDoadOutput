@@ -506,10 +506,10 @@ function addItemsToList(whatToProcess,dataToProcess)
 			option.text = 'Aramco POTD';
 			select.appendChild(option);
 			
-			option = document.createElement('option');
+			/*option = document.createElement('option');
 			option.value = 'CRICTOS';
 			option.text = 'Crictos';
-			select.appendChild(option);
+			select.appendChild(option);*/
 			
 			option = document.createElement('option');
 			option.value = 'THIS_MATCH_SIXES';
@@ -1214,14 +1214,19 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select.appendChild(option);
 			
 			option = document.createElement('option');
-			option.value = 'Tournament';
-			option.text = 'Career / Tournament';
+			option.value = 'Career';
+			option.text = 'Career';
 			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'Tournament';
+			option.text = 'Tournament';
+			select.appendChild(option);
+			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
 			row.insertCell(cellCount).appendChild(select);
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
-			
 			
 			select = document.createElement('select');
 			select.id = 'selectPlayerName';
@@ -1230,38 +1235,38 @@ function addItemsToList(whatToProcess,dataToProcess)
 			session_match.match.inning.forEach(function(inn,index,arr){
 				if(inn.isCurrentInning == 'YES'){
 					session_match.setup.homeSquad.forEach(function(hs,index,arr){
-							if(hs.role == 'All-rounder'){
-								option = document.createElement('option');
-								option.value = hs.playerId;
-								option.text = hs.full_name+' -('+session_match.setup.homeTeam.teamName4+')';
-								select.appendChild(option);	
-							}
-						});
-
-						session_match.setup.homeOtherSquad.forEach(function(hos,index,arr){
-							if(hos.role == 'All-rounder'){
+						if(hs.role == 'All-rounder'){
 							option = document.createElement('option');
-							option.value = hos.playerId;
-							option.text = hos.full_name  + ' (OTHER)'+' -('+session_match.setup.homeTeam.teamName4+')';
-							select.appendChild(option);
+							option.value = hs.playerId;
+							option.text = hs.full_name+' -('+session_match.setup.homeTeam.teamName4+')';
+							select.appendChild(option);	
 						}
-						});
-							session_match.setup.awaySquad.forEach(function(as,index,arr){
-							if(as.role == 'All-rounder'){
-							option = document.createElement('option');
-							option.value = as.playerId;
-							option.text = as.full_name+' -('+session_match.setup.awayTeam.teamName4+')';
-							select.appendChild(option);
-							}
-						});
-						session_match.setup.awayOtherSquad.forEach(function(aos,index,arr){
-							if(aos.role == 'All-rounder'){
-							option = document.createElement('option');
-							option.value = aos.playerId;
-							option.text = aos.full_name  + ' (OTHER)'+' -('+session_match.setup.awayTeam.teamName4+')';
-							select.appendChild(option);
-							}
-						});
+					});
+
+					session_match.setup.homeOtherSquad.forEach(function(hos,index,arr){
+						if(hos.role == 'All-rounder'){
+						option = document.createElement('option');
+						option.value = hos.playerId;
+						option.text = hos.full_name  + ' (OTHER)'+' -('+session_match.setup.homeTeam.teamName4+')';
+						select.appendChild(option);
+					}
+					});
+						session_match.setup.awaySquad.forEach(function(as,index,arr){
+						if(as.role == 'All-rounder'){
+						option = document.createElement('option');
+						option.value = as.playerId;
+						option.text = as.full_name+' -('+session_match.setup.awayTeam.teamName4+')';
+						select.appendChild(option);
+						}
+					});
+					session_match.setup.awayOtherSquad.forEach(function(aos,index,arr){
+						if(aos.role == 'All-rounder'){
+						option = document.createElement('option');
+						option.value = aos.playerId;
+						option.text = aos.full_name  + ' (OTHER)'+' -('+session_match.setup.awayTeam.teamName4+')';
+						select.appendChild(option);
+						}
+					});
 				}
 			});
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
