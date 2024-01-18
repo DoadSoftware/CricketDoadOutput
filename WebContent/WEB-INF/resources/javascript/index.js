@@ -136,18 +136,19 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				break;
 			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'Control_F1': case 'Control_a':
 			case 'Alt_k':  case 'Shift_F3': case 'd': case 'e': case 'Control_F7': case 'Control_F6':
-			case 'Control_k': case 'Control_F10': case 'Control_F3': case 'Alt_d': case 'n': case 'a':
-			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q': 
+			case 'Control_k': case 'Control_F10': case 'Control_F3': case 'Alt_d': case 'n': case 'a': case 't':
+			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q': case 'Control_b': case 'o':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 				break;
 			//These buttons will animate in & animate out graphics
 			case 'Alt_p':
-				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
+				//dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				if(session_animation != null && session_animation.specialBugOnScreen == 'TOSS') {
 					processCricketProcedures("ANIMATE-OUT-GRAPHICS", dataToProcess);
 				} else {
-					processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
+					addItemsToList(dataToProcess,null);
+					//processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 				}
 				break;
 			//All key presses which doesn't require graphics population will come here
@@ -309,9 +310,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q':
 	case 'Alt_F9': case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l':
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9':
-	case 'Alt_m': case 'Alt_n': case 'Control_b':
+	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
-	
+		
 		$("#captions_div").hide();
 		$('#select_graphic_options_div').empty();
 	
@@ -807,7 +808,38 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
 			break;
+		case 'Alt_p':
+			header_text.innerHTML = 'BUG TOSS';
 			
+			select = document.createElement('select');
+			select.id = 'selectTeams';
+			select.name = select.id;
+			
+			option = document.createElement('option');
+			option.value = session_match.setup.homeTeam.teamName1 + '-' + 'BAT';
+			option.text = session_match.setup.homeTeam.teamName1 + '-' + 'BAT';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = session_match.setup.homeTeam.teamName1 + '-' + 'FIELD';
+			option.text = session_match.setup.homeTeam.teamName1 + '-' + 'FIELD';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = session_match.setup.awayTeam.teamName1 + '-' + 'BAT';
+			option.text = session_match.setup.awayTeam.teamName1 + '-' + 'BAT';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = session_match.setup.awayTeam.teamName1 + '-' + 'FIELD';
+			option.text = session_match.setup.awayTeam.teamName1 + '-' + 'FIELD';
+			select.appendChild(option);
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			cellCount = cellCount + 1;
+			break;	
 		case 'Control_F8': case 'Alt_F9': case 'Alt_F12':
 			switch(whatToProcess) {
 			case 'Alt_F12':

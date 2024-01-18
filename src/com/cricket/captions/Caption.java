@@ -96,7 +96,7 @@ public class Caption
 		this.whichSide = whichSide;
 		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers, statistics, statsTypes, infobarStats, Grounds, 
 				tournament_matches, dls);
-		this.this_bugsAndMiniGfx = new BugsAndMiniGfx(print_writers, config, tournament_matches, bugs, Teams, Grounds);
+		this.this_bugsAndMiniGfx = new BugsAndMiniGfx(print_writers, config, tournament_matches, bugs, Teams, Grounds,VariousText);
 		this.status = "";
 	}
 	public String getStatus() {
@@ -290,6 +290,12 @@ public class Caption
 			case "Shift_O":
 				status = this_bugsAndMiniGfx.bugsDismissal(whatToProcess,matchAllData,whichSide);
 				break;
+			case "o":
+				status = this_bugsAndMiniGfx.bugsPlayerOfMatch(whatToProcess,matchAllData,whichSide);
+				break;
+			case "t":
+				status = this_bugsAndMiniGfx.bugsThirdUmpire(whatToProcess,matchAllData,whichSide);
+				break;	
 			case "Control_F6":
 				status = this_lowerThirdGfx.populateQuickHowOut(whatToProcess,whichSide,matchAllData);
 				break;

@@ -67,7 +67,7 @@ public class Animation
 				}
 			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": case "Alt_9":
 				return Constants.INFO_BAR;
-			case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Alt_p":
+			case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Alt_p": case "o": case "t":
 				return Constants.BUGS;
 			case "Shift_F1": case "Shift_F2":
 				return Constants.MINIS;
@@ -244,7 +244,10 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "START");
 				this.specialBugOnScreen = CricketUtil.TOSS;
 				break;
-				
+			case "o": case "t":
+				processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "START");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;
 			case "Shift_O": case "Control_k": case "k": case "g": case "f":
 				
 				processAnimation(Constants.FRONT, print_writers, "Anim_Bugs$Essentials", "START");
@@ -470,7 +473,10 @@ public class Animation
 					this.specialBugOnScreen = "";
 				}
 				break;
-				
+			case "o": case "t":
+				processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "CONTINUE");
+				this.whichGraphicOnScreen = "";
+				break;
 			case "q": case "Control_q":
 				processAnimation(Constants.FRONT, print_writers, "anim_Boundary_LT", "CONTINUE");
 				TimeUnit.MILLISECONDS.sleep(1000);
@@ -1184,7 +1190,7 @@ public class Animation
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
 						+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Bugs$Essentials 2.940 Anim_Bugs$Essentials$In 2.200 \0", print_writer);
 					break;
-				 case "Alt_p":
+				 case "Alt_p": case "o": case "t":
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
 						+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Center_Bug$In 0.800 \0", print_writer);
 					break;
