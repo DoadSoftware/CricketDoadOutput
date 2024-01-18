@@ -21,14 +21,14 @@
   $(document).on("keydown", function(e){
 
       var evtobj = window.event? event : e;
-
-	  e.preventDefault();
+	  
       
       switch(e.target.tagName.toLowerCase())
       {
       case "input": case "textarea":
     	 break;
       default:
+    	e.preventDefault();
 	      var whichKey = '';
 		  var validKeyFound = false;
 	    

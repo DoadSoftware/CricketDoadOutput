@@ -49,11 +49,11 @@ public class Animation
 			case "F1": case "F2": case "F4": case "Shift_F10": case "Shift_F11": case "m": case "Control_m": 
 			case "Control_F8": case "Control_d": case "Control_e": case "Control_F7": case "Control_F10":
 			case "Shift_K": case "Alt_F9": case "Shift_D": case "p": case "Control_b": case "Alt_m": case "Alt_n":
-			case "Alt_F10":
+			case "Alt_F10": case "Control_F1":
 			case "z": case "x": case "c": case "v":
 				return Constants.FULL_FRAMER;
 			case "F5": case "F6": case "F7": case "F8": case "F9": case "F10": case "F11":
-			case "Control_F1": case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
+			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
 			case "Shift_F3": case "s": case "d": case "e": case "q": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "Control_g": case "Control_h": case "Control_p": case "j": case "Control_F6": case "Shift_F6": 
 			case "Control_s": case "Alt_d": case "Control_f": case "Control_q": case "l": case "n": case "a":
@@ -925,6 +925,7 @@ public class Animation
 		String previewCommand = "";
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.ICC_U19_2023:
+			System.out.println("What to process : "+whatToProcess);
 			if(whatToProcess.contains(",")) {
 				switch(whatToProcess.split(",")[0]) {
 				case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Shift_F11": case "m": case "Control_m": case "p":
@@ -1000,14 +1001,14 @@ public class Animation
 			    if(whichside == 2) {
 					switch(whatToProcess.split(",")[0]) {
 					case "F1": case "F2": case "F4": case "Shift_F11": case "Control_F8": case "p":
-						previewCommand = previewCommand + " Change$Header 1.320 Change$Header$Change_Out 0.420 Change$Header$Change_In 1.320";
+						previewCommand = previewCommand + " Change$Header 1.320  Change$Header$Change_In 1.320 Change$Header$Change_Out 0.420";
 						if(whichGraphicOnScreen.contains(",")) {
 							switch(whichGraphicOnScreen.split(",")[0]) {
 							case "F1":  
-								previewCommand = previewCommand + " Change$Batting_Card 1.380 Change$Batting_Card$Change_Out 0.880 Change$Batting_Card$Change_In 1.380";
+								previewCommand = previewCommand + " Change$Batting_Card 1.380 Change$Batting_Card$Change_In 1.380 Change$Batting_Card$Change_Out 0.880";
 								break;
 							case "F2":  
-								previewCommand = previewCommand + " Change$Bowling_Card 1.300 Change$Bowling_Card$Change_Out 0.840 Change$Bowling_Card$Change_In 1.300";
+								previewCommand = previewCommand + " Change$Bowling_Card 1.300 Change$Bowling_Card$Change_In 1.300 Change$Bowling_Card$Change_Out 0.840";
 								break;
 							case "F4":
 								previewCommand = previewCommand + " Change$Partnership_List 1.360 Change$Partnership_List$Change_Out 0.880 Change$Partnership_List$Change_In 1.360 Sponsor 0.000";
@@ -1057,9 +1058,11 @@ public class Animation
 							}
 						}
 						previewCommand = previewCommand + " Change$Footer 1.700 Change$Footer$Change_In 1.700 Change$Footer$Chnage_Out 0.580";
-						if(caption.this_fullFramesGfx.numberOfRows != lastNumberOfRows) {
-							previewCommand = previewCommand + " ConcussExtend_Y 1.000 ConcussExtend_Y$In 0.500";
-						}
+						System.out.println("Number of rows : "+caption.this_fullFramesGfx.numberOfRows);
+						System.out.println("L Number of rows : "+lastNumberOfRows);
+//						if(caption.this_fullFramesGfx.numberOfRows != lastNumberOfRows) {
+//							previewCommand = previewCommand + " ConcussExtend_Y 1.000 ConcussExtend_Y$In 0.500";
+//						}
 						break;
 				    }
 			    }
