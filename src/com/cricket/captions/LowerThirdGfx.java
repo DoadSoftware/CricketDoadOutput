@@ -1630,13 +1630,11 @@ public class LowerThirdGfx
 		
 		for(int i = 0; i<= dls.size() -1;i++) {
 			if(dls.get(i).getOver_left().split("\\.")[0].equalsIgnoreCase(String.valueOf(inning.getTotalOvers()))) {
-				for(int j=1;j<=6;j++) {
+				for(int j=0;j<6;j++) {
 					if(inning.getTotalBalls() == j) {
-//						this_data_str.add(CricketFunctions.populateDuckWorthLewis(matchAllData).get(i+j).getOver_left());
 						this_data_str.add(CricketFunctions.populateDuckWorthLewis(matchAllData).get(i+j).getWkts_down());
 						break;
 					}
-					
 				}
 				break;
 			}

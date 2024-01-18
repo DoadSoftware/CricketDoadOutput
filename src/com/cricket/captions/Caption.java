@@ -195,6 +195,10 @@ public class Caption
 				status = this_fullFramesGfx.populateWorms(whichSide, whatToProcess.split(",")[0], matchAllData, 
 					Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
+			case "Control_F11":
+				System.out.println("whatToProcess : " + whatToProcess);
+				status = this_fullFramesGfx.populatePreviousMatchSummary(whichSide, whatToProcess, matchAllData, 0);
+				break;
 			case "Shift_F11": //MATCH SUMMARY
 				status = this_fullFramesGfx.populateMatchSummary(whichSide, whatToProcess.split(",")[0], matchAllData, 
 					Integer.valueOf(whatToProcess.split(",")[1]));
@@ -220,7 +224,7 @@ public class Caption
 			case "m": //Match id
 				status = this_fullFramesGfx.populateFFMatchId(whichSide,whatToProcess.split(",")[0], matchAllData);
 				break;
-			case "p":
+			case "p": // Points Table
 				this_fullFramesGfx.WhichGroup = whatToProcess.split(",")[2];
 				status = this_fullFramesGfx.populateFFPointsTable(whichSide,whatToProcess.split(",")[0], matchAllData, 0);
 				break;

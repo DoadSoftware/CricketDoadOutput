@@ -306,7 +306,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 		
 	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11':
 	case 'Control_F5': case 'Control_F9': case 'Control_F8': case 'Control_d': case 'Control_e': case 's': case 'p':
-	case 'z': case 'x': case 'c': case 'v':
+	case 'z': case 'x': case 'c': case 'v': case 'Control_F11':
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q':
 	case 'Alt_F9': case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l':
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9':
@@ -1053,7 +1053,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			break;
 			
-		case 'Control_m': //MATCH-PROMO
+		case 'Control_m': case 'Control_F11': //MATCH-PROMO - PreviousMatchSummary 
 		
 			select = document.createElement('select');
 			select.id = 'selectMatchPromo';
