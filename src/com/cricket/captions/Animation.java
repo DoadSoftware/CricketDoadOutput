@@ -1032,9 +1032,9 @@ public class Animation
 								previewCommand = previewCommand + " Header_Shrink 0.000 Header_Shrink$In 0.000";
 								switch(whatToProcess.split(",")[0]) {
 								case "F4":
-									if(caption.this_fullFramesGfx.whichSponsor != null || !caption.this_fullFramesGfx.whichSponsor.isEmpty()) {
-										previewCommand = previewCommand + " Sponsor 0.900 Sponsor$In 0.900";
-									}
+//									if(caption.this_fullFramesGfx.whichSponsor != null || !caption.this_fullFramesGfx.whichSponsor.isEmpty()) {
+//										previewCommand = previewCommand + " Sponsor 0.900 Sponsor$In 0.900";
+//									}
 									break;
 								}
 								break;
