@@ -531,9 +531,7 @@ public class Animation
 						break;
 					case "F4":
 						processAnimation(Constants.BACK, print_writers, "Change$Partnership_List", "START");
-						if(caption.this_fullFramesGfx.whichSponsor != null || !caption.this_fullFramesGfx.whichSponsor.isEmpty()) {
-							processAnimation(Constants.BACK, print_writers, "Sponsor", "CONTINUE REVERSE");
-						}
+						processAnimation(Constants.BACK, print_writers, "Sponsor", "CONTINUE REVERSE");
 						break;
 					case "Shift_F11":
 						processAnimation(Constants.BACK, print_writers, "Change$Summary", "START");
@@ -863,8 +861,10 @@ public class Animation
 			}
 //			System.out.println("setVariousAnimationsKeys -> whatToProcess = " + whatToProcess + ": Sponsor = " + Sponsor 
 //				+ ": numberOfRows = " + caption.this_fullFramesGfx.numberOfRows);
+			System.out.println("setVariousAnimationsKeys: whatToProcess = " + whatToProcess);
 			switch (whatToProcess) {
 			case "ANIMATE-IN":
+				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$MoveForExtraData"
 					+ "*ANIMATION*KEY*$ED_In_1*VALUE SET 0.0 " + MoveForExtraData + " 0.0 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$MoveForExtraData"
@@ -885,8 +885,18 @@ public class Animation
 					+ "*ANIMATION*KEY*$F_In_1*VALUE SET 0.0 " + PositionY + " 0.0 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$FooterAll$Footer$PositionY"
 					+ "*ANIMATION*KEY*$F_Out_1*VALUE SET 0.0 " + PositionY + " 0.0 \0", print_writers);
+
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
 					+ "*ANIMATION*KEY*$S_In_1*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
+					+ "*ANIMATION*KEY*$In_1*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
+					+ "*ANIMATION*KEY*$In_2*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
+					+ "*ANIMATION*KEY*$Out_1*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
+					+ "*ANIMATION*KEY*$Out_2*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);
+				
 				break;
 			case "CHANGE-ON":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$MoveForExtraData"
@@ -899,8 +909,12 @@ public class Animation
 					+ "*ANIMATION*KEY*$In_2*VALUE SET " + obj__Mask_6_ + " \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$FooterAll$Footer$PositionY"
 					+ "*ANIMATION*KEY*$In_2*VALUE SET 0.0 " + PositionY + " 0.0 \0", print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
-					+ "*ANIMATION*KEY*$In_2*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);				
+				if(caption.this_fullFramesGfx.numberOfRows != lastNumberOfRows) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
+						+ "*ANIMATION*KEY*$Out_1*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
+						+ "*ANIMATION*KEY*$In_2*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);
+				}
 				break;
 			case "CUT-BACK":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$MoveForExtraData"
@@ -914,7 +928,15 @@ public class Animation
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$FooterAll$Footer$PositionY"
 					+ "*ANIMATION*KEY*$In_1*VALUE SET 0.0 " + PositionY + " 0.0 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
-					+ "*ANIMATION*KEY*$In_1*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);				
+					+ "*ANIMATION*KEY*$S_In_1*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
+					+ "*ANIMATION*KEY*$In_1*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
+					+ "*ANIMATION*KEY*$In_2*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
+					+ "*ANIMATION*KEY*$Out_1*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
+					+ "*ANIMATION*KEY*$Out_2*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);
 				break;
 			}
 			break;
@@ -927,7 +949,6 @@ public class Animation
 		String previewCommand = "";
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.ICC_U19_2023:
-			System.out.println("What to process : "+whatToProcess);
 			if(whatToProcess.contains(",")) {
 				switch(whatToProcess.split(",")[0]) {
 				case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Shift_F11": case "Control_F11": case "m": case "Control_m": case "p":
@@ -945,7 +966,10 @@ public class Animation
 					previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Bowling_Card$In 1.780";
 					break;
 				case "F4": //All Partnership
-					previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Partnership_List$In 1.820 Sponsor 0.900 Sponsor$In 0.900 Sponsor$Out 1.200";
+					previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Partnership_List$In 1.820";
+					if(whichside == 1 && caption.this_fullFramesGfx.whichSponsor != null && !caption.this_fullFramesGfx.whichSponsor.isEmpty()) {
+						previewCommand = previewCommand + " Sponsor 0.900 Sponsor$In 0.900";
+					}
 					break;
 				case "Control_F7":// Double Teams
 					previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Teams$In 1.860";
@@ -1032,9 +1056,9 @@ public class Animation
 								previewCommand = previewCommand + " Header_Shrink 0.000 Header_Shrink$In 0.000";
 								switch(whatToProcess.split(",")[0]) {
 								case "F4":
-//									if(caption.this_fullFramesGfx.whichSponsor != null || !caption.this_fullFramesGfx.whichSponsor.isEmpty()) {
-//										previewCommand = previewCommand + " Sponsor 0.900 Sponsor$In 0.900";
-//									}
+									if(caption.this_fullFramesGfx.whichSponsor != null && !caption.this_fullFramesGfx.whichSponsor.isEmpty()) {
+										previewCommand = previewCommand + " Change_Sponsor 1.000 Change_Sponsor$Change_Our 0.500 Change_Sponsor$Change_In 1.000";
+									}
 									break;
 								}
 								break;
@@ -1042,7 +1066,6 @@ public class Animation
 								previewCommand = previewCommand + " Header_Shrink 0.500 Header_Shrink$In 0.500";
 								break;
 							}
-
 							switch(whatToProcess.split(",")[0]) {
 							case "F1": 
 								previewCommand = previewCommand + " Change$Batting_Card 1.380 Change$Batting_Card$Change_Out 0.880 Change$Batting_Card$Change_In 1.380";
@@ -1051,7 +1074,7 @@ public class Animation
 								previewCommand = previewCommand + " Change$Bowling_Card 1.300 Change$Bowling_Card$Change_Out 0.840 Change$Bowling_Card$Change_In 1.300";
 								break;
 							case "F4":
-								previewCommand = previewCommand + " Change$Partnership_List 1.360 Change$Partnership_List$Change_Out 0.880 Change$Partnership_List$Change_In 1.360 Sponsor 0.000";
+								previewCommand = previewCommand + " Change$Partnership_List 1.360 Change$Partnership_List$Change_Out 0.880 Change$Partnership_List$Change_In 1.360";
 								break;
 							case "Shift_F11":
 								previewCommand = previewCommand + " Change$Summary 1.340 Change$Summary$Change_Out 0.720 Change$Summary$Change_In 1.340";
@@ -1062,15 +1085,15 @@ public class Animation
 							}
 						}
 						previewCommand = previewCommand + " Change$Footer 1.700 Change$Footer$Change_In 1.700 Change$Footer$Chnage_Out 0.580";
-						System.out.println("Number of rows : "+caption.this_fullFramesGfx.numberOfRows);
-						System.out.println("L Number of rows : "+lastNumberOfRows);
+						System.out.println("Number of rows : " + caption.this_fullFramesGfx.numberOfRows);
+						System.out.println("L Number of rows : " + lastNumberOfRows);
 //						if(caption.this_fullFramesGfx.numberOfRows != lastNumberOfRows) {
-//							previewCommand = previewCommand + " ConcussExtend_Y 1.000 ConcussExtend_Y$In 0.500";
+//							previewCommand = previewCommand + " ConcussExtend_Y 0.500 ConcussExtend_Y$In 0.500";
 //						}
 						break;
 				    }
 			    }
-			    //System.out.println("previewCommand = " + previewCommand);
+			    System.out.println("previewCommand = " + previewCommand);
 			    CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/FullFrames "
 			    	+ "C:/Temp/Preview.png " + previewCommand + " \0", print_writer);
 			}
