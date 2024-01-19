@@ -861,7 +861,7 @@ public class Animation
 			}
 //			System.out.println("setVariousAnimationsKeys -> whatToProcess = " + whatToProcess + ": Sponsor = " + Sponsor 
 //				+ ": numberOfRows = " + caption.this_fullFramesGfx.numberOfRows);
-			System.out.println("setVariousAnimationsKeys: whatToProcess = " + whatToProcess);
+//			System.out.println("setVariousAnimationsKeys: whatToProcess = " + whatToProcess);
 			switch (whatToProcess) {
 			case "ANIMATE-IN":
 				
@@ -1085,15 +1085,15 @@ public class Animation
 							}
 						}
 						previewCommand = previewCommand + " Change$Footer 1.700 Change$Footer$Change_In 1.700 Change$Footer$Chnage_Out 0.580";
-						System.out.println("Number of rows : " + caption.this_fullFramesGfx.numberOfRows);
-						System.out.println("L Number of rows : " + lastNumberOfRows);
+//						System.out.println("Number of rows : " + caption.this_fullFramesGfx.numberOfRows);
+//						System.out.println("L Number of rows : " + lastNumberOfRows);
 //						if(caption.this_fullFramesGfx.numberOfRows != lastNumberOfRows) {
 //							previewCommand = previewCommand + " ConcussExtend_Y 0.500 ConcussExtend_Y$In 0.500";
 //						}
 						break;
 				    }
 			    }
-			    System.out.println("previewCommand = " + previewCommand);
+//			    System.out.println("previewCommand = " + previewCommand);
 			    CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/FullFrames "
 			    	+ "C:/Temp/Preview.png " + previewCommand + " \0", print_writer);
 			}

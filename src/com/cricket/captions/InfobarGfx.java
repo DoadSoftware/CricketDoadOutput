@@ -807,7 +807,6 @@ public class InfobarGfx
 				break;
 				
 			case CricketUtil.BATSMAN:
-				System.out.println("HELLO");
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
 					+ "$Select_Type*FUNCTION*Omo*vis_con SET 0 \0",print_writers);
 				
@@ -876,11 +875,11 @@ public class InfobarGfx
 					}
 				}
 				
-				if(CricketFunctions.populateDls(matchAllData,dls).trim().isEmpty()) {
+				if(CricketFunctions.populateDls(matchAllData, CricketUtil.FULL, dls).trim().isEmpty()) {
 					return "populateVizInfobarMiddleSection: populateDls Function is Empty";
 				}
 				
-				this_data_str.add(CricketFunctions.populateDls(matchAllData,dls));
+				this_data_str.add(CricketFunctions.populateDls(matchAllData, CricketUtil.FULL, dls));
 				
 				if(this_data_str == null) {
 					return "populateVizInfobarMiddleSection this_data_str is null";
@@ -889,7 +888,7 @@ public class InfobarGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
 						+ "$Select_Type*FUNCTION*Omo*vis_con SET 3 \0",print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Top"
-						+ "*GEOM*TEXT SET " + "PAR SCORE AFTER " + CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls()) + " OVERS : " 
+						+ "*GEOM*TEXT SET " + "DLS PAR SCORE AFTER " + CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls()) + " OVERS : " 
 						+ this_data_str.get(0) + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + 
 						this_data_str.get(1).toUpperCase() + "\0", print_writers);
@@ -992,7 +991,7 @@ public class InfobarGfx
 				if(inning == null) {
 					return "populateVizInfobarMiddleSection: Inning returned is NULL";
 				}
-				
+				//System.out.println(lastXballs);
 				this_data_str = new ArrayList<String>();
 				this_data_str.add(CricketFunctions.getlastthirtyballsdata(matchAllData, slashOrDash, matchAllData.getEventFile().getEvents(), lastXballs));
 				

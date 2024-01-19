@@ -74,7 +74,7 @@ public class FullFramesGfx
 	public List<OverByOverData> manhattan = new ArrayList<OverByOverData>();
 	public List<Statistics> statisticsList = new ArrayList<Statistics>();
 	public List<Tournament> tournament_stats = new ArrayList<Tournament>();
-	List<MatchAllData> previous_match = new ArrayList<MatchAllData>();
+	public List<MatchAllData> previous_match = new ArrayList<MatchAllData>();
 	
 	public FullFramesGfx() {
 		super();
@@ -97,7 +97,7 @@ public class FullFramesGfx
 		this.VariousText = VariousText;
 	}
 		
-	public String PopulateScorecardFF(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException
+	public String PopulateScorecardFF(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException, InterruptedException
 	{
 		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == WhichInning)
 			.findAny().orElse(null);
@@ -118,7 +118,7 @@ public class FullFramesGfx
 			return status;
 		}
 	}
-	public String PopulatePhotoScorecardFF(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException
+	public String PopulatePhotoScorecardFF(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException, InterruptedException
 	{
 		
 		if(matchAllData.getMatch().getInning().get(WhichInning-1).getBattingTeamId() == matchAllData.getSetup().getHomeTeamId()) {
@@ -141,7 +141,7 @@ public class FullFramesGfx
 			return status;
 		}
 	}
-	public String PopulateBowlingCardFF(int WhichSide,String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException
+	public String PopulateBowlingCardFF(int WhichSide,String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException, InterruptedException
 	{
 		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == WhichInning)
 				.findAny().orElse(null);
@@ -162,7 +162,7 @@ public class FullFramesGfx
 			return status;
 		}
 	}
-	public String populateFFMatchId(int WhichSide, String whatToProcess, MatchAllData matchAllData) throws ParseException
+	public String populateFFMatchId(int WhichSide, String whatToProcess, MatchAllData matchAllData) throws ParseException, InterruptedException
 	{
 		status = PopulateFfHeader(WhichSide, whatToProcess, matchAllData, 0);
 		if(status == Constants.OK) {
@@ -178,7 +178,7 @@ public class FullFramesGfx
 			return status;
 		}
 	}
-	public String populateMatchSummary(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException
+	public String populateMatchSummary(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException, InterruptedException
 	{
 		ground = Grounds.stream().filter(grnd -> grnd.getFullname().contains(matchAllData.getSetup().getVenueName())).findAny().orElse(null);
 		if(ground == null) {
@@ -204,7 +204,7 @@ public class FullFramesGfx
 			return status;
 		}
 	}
-	public String populatePreviousMatchSummary(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException
+	public String populatePreviousMatchSummary(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException, InterruptedException
 	{
 		previous_match.clear();
 		fixture = fixTures.stream().filter(fix -> fix.getMatchnumber() == Integer.valueOf(whatToProcess.split(",")[2])).findAny().orElse(null);
@@ -222,9 +222,15 @@ public class FullFramesGfx
 			}
 		}
 		
-		ground = Grounds.stream().filter(grnd -> grnd.getFullname().contains(previous_match.get(0).getSetup().getVenueName())).findAny().orElse(null);
+		ground = Grounds.stream().filter(grnd -> grnd.getFullname().contains(previous_match.get(previous_match.size()-1).getSetup().getVenueName())).findAny().orElse(null);
 		if(ground == null) {
-			return "populatePreviousMatchSummary: Ground Name [" + matchAllData.getSetup().getVenueName() + "] from database is returning NULL";
+			return "populatePreviousMatchSummary: Ground Name [" + previous_match.get(previous_match.size()-1).getSetup().getVenueName() + 
+					"] from database is returning NULL";
+		}
+		
+		inning = previous_match.get(previous_match.size()-1).getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == 2).findAny().orElse(null);
+		if(inning == null) {
+			return "populatePreviousMatchSummary: current inning is NULL";
 		}
 		
 		status = PopulateFfHeader(WhichSide, whatToProcess.split(",")[0], matchAllData, WhichInning);
@@ -241,7 +247,7 @@ public class FullFramesGfx
 			return status;
 		}
 	}
-	public String populateFFMatchPromo(int WhichSide, String whatToProcess, MatchAllData matchAllData) throws NumberFormatException, ParseException
+	public String populateFFMatchPromo(int WhichSide, String whatToProcess, MatchAllData matchAllData) throws NumberFormatException, ParseException, InterruptedException
 	{
 		fixture = fixTures.stream().filter(fix -> fix.getMatchnumber() == 
 			Integer.valueOf(whatToProcess.split(",")[2])).findAny().orElse(null);
@@ -262,7 +268,7 @@ public class FullFramesGfx
 			return status;
 		}
 	}
-	public String populatePlayingXI(int WhichSide, String whatToProcess,int teamId,MatchAllData matchAllData, int WhichInning) throws ParseException
+	public String populatePlayingXI(int WhichSide, String whatToProcess,int teamId,MatchAllData matchAllData, int WhichInning) throws ParseException, InterruptedException
 	{
 		if(teamId == matchAllData.getSetup().getHomeTeamId()) {
 			PlayingXI = matchAllData.getSetup().getHomeSquad();
@@ -293,7 +299,7 @@ public class FullFramesGfx
 			return status;
 		}
 	}
-	public String populatePartnership(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException 
+	public String populatePartnership(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException, InterruptedException 
 	{
 		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == WhichInning)
 				.findAny().orElse(null);
@@ -367,7 +373,7 @@ public class FullFramesGfx
 			return status;
 		}
 	}
-	public String PopulateDoubleTeams(int WhichSide, String whatToProcess,MatchAllData matchAllData) throws ParseException
+	public String PopulateDoubleTeams(int WhichSide, String whatToProcess,MatchAllData matchAllData) throws ParseException, InterruptedException
 	{
 		ground = Grounds.stream().filter(grnd -> grnd.getFullname().contains(matchAllData.getSetup().getVenueName())).findAny().orElse(null);
 		if(ground == null) {
@@ -388,7 +394,7 @@ public class FullFramesGfx
 			return status;
 		}
 	}
-	public String populateCurrPartnership(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException
+	public String populateCurrPartnership(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException, InterruptedException
 	{
 		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES))
 			.findAny().orElse(null);
@@ -430,7 +436,7 @@ public class FullFramesGfx
 		}
 		
 	}
-	public String populateManhattan(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException
+	public String populateManhattan(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException, InterruptedException
 	{
 		manhattan = new ArrayList<OverByOverData>();
 		manhattan = CricketFunctions.getOverByOverData(matchAllData, WhichInning,"MANHATTAN" ,matchAllData.getEventFile().getEvents());
@@ -452,7 +458,7 @@ public class FullFramesGfx
 			return status;
 		}
 	}
-	public String populateWorms(int WhichSide, String whatToProcess, MatchAllData matchAllData,int WhichInning) throws ParseException
+	public String populateWorms(int WhichSide, String whatToProcess, MatchAllData matchAllData,int WhichInning) throws ParseException, InterruptedException
 	{
 		ground = Grounds.stream().filter(grnd -> grnd.getFullname().contains(matchAllData.getSetup().getVenueName())).findAny().orElse(null);
 		if(ground == null) {
@@ -569,7 +575,7 @@ public class FullFramesGfx
 			return status;
 		}
 	}
-	public String populateTarget(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException
+	public String populateTarget(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException, InterruptedException
 	{
 		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == WhichInning)
 			.findAny().orElse(null);
@@ -579,7 +585,7 @@ public class FullFramesGfx
 		
 		return PopulateFfBody(WhichSide, whatToProcess.split(",")[0], matchAllData, WhichInning);
 	}
-	public String populateFFPointsTable(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException, JAXBException
+	public String populateFFPointsTable(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException, JAXBException, InterruptedException
 	{
 		if(new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.LEAGUE_TABLE_DIRECTORY + WhichGroup + CricketUtil.XML_EXTENSION).exists()) {
 			leagueTable = (LeagueTable)JAXBContext.newInstance(LeagueTable.class).createUnmarshaller().unmarshal(
@@ -603,7 +609,7 @@ public class FullFramesGfx
 			return status;
 		}
 	}
-	public String populateInAt(int WhichSide, String whatToProcess, int playerId, MatchAllData matchAllData) throws ParseException
+	public String populateInAt(int WhichSide, String whatToProcess, int playerId, MatchAllData matchAllData) throws ParseException, InterruptedException
 	{
 		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES))
 			.findAny().orElse(null);
@@ -617,7 +623,7 @@ public class FullFramesGfx
 		
 		return PopulateFfBody(WhichSide, whatToProcess.split(",")[0], matchAllData, 0);
 	}
-	public String populateBatMileStone(int WhichSide, String whatToProcess, MatchAllData matchAllData) throws ParseException
+	public String populateBatMileStone(int WhichSide, String whatToProcess, MatchAllData matchAllData) throws ParseException, InterruptedException
 	{
 		FirstPlayerId = Integer.valueOf(whatToProcess.split(",")[2]);
 		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES))
@@ -636,7 +642,7 @@ public class FullFramesGfx
 		
 		return PopulateFfBody(WhichSide, whatToProcess.split(",")[0], matchAllData, 0);
 	}
-	public String populateBowlMileStone(int WhichSide, String whatToProcess, MatchAllData matchAllData) throws ParseException
+	public String populateBowlMileStone(int WhichSide, String whatToProcess, MatchAllData matchAllData) throws ParseException, InterruptedException
 	{
 		FirstPlayerId = Integer.valueOf(whatToProcess.split(",")[2]);
 		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES))
@@ -655,12 +661,12 @@ public class FullFramesGfx
 		
 		return PopulateFfBody(WhichSide, whatToProcess.split(",")[0], matchAllData, 0);
 	}
-	public String populateLeaderBoard(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException, JAXBException, IOException
+	public String populateLeaderBoard(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException, JAXBException, IOException, InterruptedException
 	{
 		if(FirstPlayerId <= 0) {
 			return "populateLeaderBoard: Player Id NOT found [" + FirstPlayerId + "]";
 		}
-		
+		tournament_stats = new ArrayList<Tournament>();
 		tournament_stats = CricketFunctions.extractTournamentStats("CURRENT_MATCH_DATA", false, tournament_matches, null, matchAllData, tournaments);
 		if(tournament_stats == null) {
 			return "populateLeaderBoard : Tournament Stats is Null";
@@ -1072,9 +1078,8 @@ public class FullFramesGfx
 							"$Change$Bottom$Select_SubHeaderType*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
-							"$Change$Bottom$txt_Subheader*GEOM*TEXT SET " + previous_match.get(0).getSetup().getHomeTeam().getTeamGroup() + " - " 
-							+ ground.getCity() + "\0", print_writers);
-					
+							"$Change$Bottom$txt_Subheader*GEOM*TEXT SET " + previous_match.get(previous_match.size()-1).getSetup().
+							getHomeTeam().getTeamGroup() + " - " + ground.getCity() + "\0", print_writers);
 					break;
 					
 				case "Control_F7":
@@ -1152,7 +1157,7 @@ public class FullFramesGfx
 		}
 		return Constants.OK;
 	}
-	public String PopulateFfBody(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException 
+	public String PopulateFfBody(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException, InterruptedException 
 	{
 		String how_out_txt = "";
 		switch (whatToProcess) {
@@ -1676,6 +1681,193 @@ public class FullFramesGfx
 				}
 			}
 			break;
+		
+		case "Control_F11":
+			
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
+					"$Select_GraphicsType*FUNCTION*Omo*vis_con SET 5 \0", print_writers);
+			
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_1" 
+					+ "$Tittle$Data$Overs$txt_DLS_Value*ACTIVE SET 0 \0", print_writers);
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_2" 
+					+ "$Tittle$Data$Overs$txt_DLS_Value*ACTIVE SET 0 \0", print_writers);
+			
+			for(int i=1; i<=2; i++ ) {
+				for(int j=1; j<=4; j++) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_"
+							+ i + "$Row_" + j + "*ACTIVE SET 0 \0", print_writers);
+				}
+			}
+			
+			for(int i = 1; i <= 2 ; i++) {
+				if(i == 1) {
+					rowId=0;
+					if(previous_match.get(previous_match.size()-1).getSetup().getTargetOvers() != null && 
+							!previous_match.get(previous_match.size()-1).getSetup().getTargetOvers().isEmpty()) {
+						
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_1" 
+								+ "$Tittle$Data$Overs$txt_DLS_Value*ACTIVE SET 1 \0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_1" 
+								+ "$Tittle$Data$Overs$txt_DLS_Value*GEOM*TEXT SET " + "("+matchAllData.getSetup().getTargetOvers()+")" + " \0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_2" 
+								+ "$Tittle$Data$Overs$txt_DLS_Value*ACTIVE SET 0 \0", print_writers);
+					}
+					if(previous_match.get(previous_match.size()-1).getMatch().getInning().get(i-1).getBattingTeamId() == 
+							previous_match.get(previous_match.size()-1).getSetup().getTossWinningTeam()) {
+						
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" 
+								+ i +"$Tittle$Data$Select_Toss*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" 
+								+ i +"$Tittle$Data$Select_Toss*FUNCTION*Omo*vis_con SET 0 \0", print_writers);							}
+					
+				} else {
+					rowId=0;
+					if(previous_match.get(previous_match.size()-1).getSetup().getTargetOvers() != null && 
+							!previous_match.get(previous_match.size()-1).getSetup().getTargetOvers().isEmpty()) {
+						if(Integer.valueOf(previous_match.get(previous_match.size()-1).getSetup().getTargetOvers()) != 
+								Integer.valueOf(previous_match.get(previous_match.size()-1).getMatch().getInning().get(0).getTotalOvers())) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_2" 
+									+ "$Tittle$Data$Overs$txt_DLS_Value*ACTIVE SET 1 \0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_2" 
+									+ "$Tittle$Data$Overs$txt_DLS_Value*GEOM*TEXT SET " + "(" + previous_match.get(previous_match.size()-1).getSetup().getTargetOvers() 
+									+ ")" + " \0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_1" 
+									+ "$Tittle$Data$Overs$txt_DLS_Value*ACTIVE SET 0 \0", print_writers);
+						}else {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_1" 
+									+ "$Tittle$Data$Overs$txt_DLS_Value*ACTIVE SET 1 \0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" 
+									+ i + "$Tittle$Data$Overs$txt_DLS_Value*GEOM*TEXT SET " + "(" + previous_match.get(previous_match.size()-1).getSetup().getTargetOvers()
+									+ ")" + " \0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_2" 
+									+ "$Tittle$Data$Overs$txt_DLS_Value*ACTIVE SET 1 \0", print_writers);
+						}
+					}
+					if(previous_match.get(previous_match.size()-1).getMatch().getInning().get(i-1).getBattingTeamId() == 
+							previous_match.get(previous_match.size()-1).getSetup().getTossWinningTeam()) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" 
+								+ i +"$Tittle$Data$Select_Toss*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" 
+								+ i +"$Tittle$Data$Select_Toss*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+					}
+				}
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" 
+						+ i +"$Tittle$Data$txt_Team*GEOM*TEXT SET " + previous_match.get(previous_match.size()-1).getMatch().getInning().get(i-1).
+						getBatting_team().getTeamName1() + " \0", print_writers);
+				
+				if(previous_match.get(previous_match.size()-1).getMatch().getInning().get(i-1).getBatting_team().getTeamName4().equalsIgnoreCase("NEP")) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" 
+							+ i +"$Tittle$FlagGrp$img_Shadow*ACTIVE SET 0 \0", print_writers);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" 
+							+ i +"$Tittle$FlagGrp$img_Shadow*ACTIVE SET 1 \0", print_writers);
+				}
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" 
+						+ i +"$Tittle$FlagGrp$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + previous_match.get(previous_match.size()-1).
+						getMatch().getInning().get(i-1).getBatting_team().getTeamName4() + " \0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" 
+						+ i + "$Tittle$Data$Overs$txt_Overs_Value*GEOM*TEXT SET " + CricketFunctions.OverBalls(previous_match.get(previous_match.size()-1).
+						getMatch().getInning().get(i-1).getTotalOvers(),previous_match.get(previous_match.size()-1).getMatch().getInning().get(i-1).
+						getTotalBalls()) + " \0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" 
+						+ i +"$Tittle$Data$txt_Score*GEOM*TEXT SET " + CricketFunctions.getTeamScore(previous_match.get(previous_match.size()-1).getMatch().
+								getInning().get(i-1), "-", false) + " \0", print_writers);
+				
+				if(i==1) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
+							"$Summary$Team_2*ACTIVE SET 0 \0", print_writers);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
+							"$Summary$Team_2*ACTIVE SET 1 \0", print_writers);
+				}
+				
+				if(previous_match.get(previous_match.size()-1).getMatch().getInning().get(i-1).getBattingCard() != null) {
+					Collections.sort(previous_match.get(previous_match.size()-1).getMatch().getInning().get(i-1).getBattingCard(),
+							new CricketFunctions.BatsmenScoreComparator());
+					
+					for(BattingCard bc : previous_match.get(previous_match.size()-1).getMatch().getInning().get(i-1).getBattingCard()) {
+						if(bc.getRuns() > 0) {
+							rowId++;
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i +
+									"$Row_" + rowId + "*ACTIVE SET 1 \0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i + 
+									"$Row_" + rowId + "$Batsman*ACTIVE SET 1 \0", print_writers);
+							
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i + 
+									"$Row_" + rowId + "$Batsman$txt_Name*GEOM*TEXT SET " + bc.getPlayer().getTicker_name() + "\0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i + 
+									"$Row_" + rowId + "$Batsman$txt_Runs*GEOM*TEXT SET " + bc.getRuns() + "\0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i + 
+									"$Row_" + rowId + "$Batsman$txt_Balls*GEOM*TEXT SET " + String.valueOf(bc.getBalls()) + "\0", print_writers);
+
+							if(bc.getStatus().toUpperCase().equalsIgnoreCase(CricketUtil.NOT_OUT)) {
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i + 
+										"$Row_" + rowId + "$Batsman$txt_Not-Out*GEOM*TEXT SET " + "*" + "\0", print_writers);
+							} else {
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i + 
+										"$Row_" + rowId + "$Batsman$txt_Not-Out*GEOM*TEXT SET " + "" + "\0", print_writers);
+							}
+							if(i == 1 && rowId >= 4) {
+								break;
+							}else if(i == 2 && rowId >= 4) {
+								break;
+							}
+						}
+					}
+				}
+				
+				for(int j = rowId+1; j <= 4; j++) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i + 
+							"$Row_" + j + "$Batsman*ACTIVE SET 0 \0", print_writers);
+				}
+				
+				if(i == 1) {
+					rowId = 0;
+				}
+				else {
+					rowId = 0;
+				}
+				
+				if(previous_match.get(previous_match.size()-1).getMatch().getInning().get(i-1).getBowlingCard() != null) {
+					Collections.sort(previous_match.get(previous_match.size()-1).getMatch().getInning().get(i-1).getBowlingCard(),
+							new CricketFunctions.BowlerFiguresComparator());
+					for(BowlingCard boc : previous_match.get(previous_match.size()-1).getMatch().getInning().get(i-1).getBowlingCard()) {
+						
+						if(boc.getWickets() > 0) {
+							rowId++;
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i + 
+									"$Row_" + rowId + "*ACTIVE SET 1 \0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i + 
+									"$Row_" + rowId + "$Bowler*ACTIVE SET 1 \0", print_writers);
+							
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i + 
+									"$Row_" + rowId + "$Bowler$txt_Name*GEOM*TEXT SET " + boc.getPlayer().getTicker_name() + "\0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i + 
+									"$Row_" + rowId + "$Bowler$txt_Figs*GEOM*TEXT SET " + boc.getWickets() + "-" + boc.getRuns() + "\0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i + 
+									"$Row_" + rowId + "$Bowler$txt_Overs*GEOM*TEXT SET " + CricketFunctions.OverBalls(boc.getOvers(), boc.getBalls()) + "\0", print_writers);
+							
+							if(i == 1 && rowId >= 4) {
+								break;
+							}
+							else if(i == 2 && rowId >= 4) {
+								break;
+							}
+						}
+					}
+				}
+				for(int j = rowId+1; j <= 4; j++) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team_" + i + 
+							"$Row_" + j + "$Bowler*ACTIVE SET 0 \0", print_writers);
+				}
+			}
+			
+			break;
 			
 		case "F4":
 			
@@ -1908,7 +2100,7 @@ public class FullFramesGfx
 					Collections.sort(tournament_stats,new CricketFunctions.BatsmanSixesComparator());
 					break;
 				}
-				
+				rowId = 0;
 				for(int i = 0; i <= tournament_stats.size() - 1 ; i++) {
 					rowId = rowId + 1;
 					if(rowId <= 5) {
@@ -1932,7 +2124,8 @@ public class FullFramesGfx
 //								return "Photo not found";
 //							}
 							CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$PhotoPart"
-									+ "$Photo$img_PlayerPhoto*TEXTURE*IMAGE SET "+Constants.ICC_U19_2023_PHOTOS_PATH + Constants.RIGHT_2048 + tournament_stats.get(i).getPlayer().getPhoto()+ CricketUtil.PNG_EXTENSION + "\0", print_writers);
+									+ "$Photo$img_PlayerPhoto*TEXTURE*IMAGE SET "+Constants.ICC_U19_2023_PHOTOS_PATH + Constants.RIGHT_2048 + 
+									tournament_stats.get(i).getPlayer().getPhoto()+ CricketUtil.PNG_EXTENSION + "\0", print_writers);
 							
 						}
 						
@@ -3126,8 +3319,10 @@ public class FullFramesGfx
 			switch (config.getBroadcaster().toUpperCase()) {
 			case Constants.ICC_U19_2023:
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Milestone$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH +  team.getTeamName4() + "\0", print_writers);
+				rowId = 0;
 				for(BowlingCard boc : inning.getBowlingCard()) {
 					if(boc.getPlayerId() == FirstPlayerId) {
+						rowId = 1;
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Milestone$txt_Name*GEOM*TEXT SET  " + boc.getPlayer().getFull_name() + "\0", print_writers);
 //						if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
 //							if(!new File("\\\\"+config.getSecondaryIpAddress()+"\\"+Constants.LOCAL_ICC_U19_2023_PHOTOS_PATH + Constants.RIGHT_1024 + boc.getPlayer().getPhoto() + CricketUtil.PNG_EXTENSION).exists()) {
@@ -3153,6 +3348,9 @@ public class FullFramesGfx
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Milestone$txt_text1*GEOM*TEXT SET  " + CricketFunctions.OverBalls(boc.getOvers(), boc.getBalls())+" OVERS" + "\0", print_writers);
 						break;
 					}
+				}
+				if(rowId == 0) {
+					return FirstPlayerId + " Nnt In Bowling Card";
 				}
 				break;
 			}
@@ -3315,7 +3513,7 @@ public class FullFramesGfx
 				}
 				break;
 				
-			case "Shift_F11": case "Shift_F10": case "Alt_F9": case "Alt_F10": //MATCH SUMMARY
+			case "Shift_F11": case "Control_F11": case "Shift_F10": case "Alt_F9": case "Alt_F10": //MATCH SUMMARY
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer*ACTIVE SET 1 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Side" + WhichSide + "$Select_FooterType"
 						+ "*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
@@ -3338,13 +3536,27 @@ public class FullFramesGfx
 						}
 					}
 					break;
-				case "Alt_F9": case "Alt_F10":
+				case "Control_F11":
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Top_Align$Side" + WhichSide + "$Select_FooterType"
+							+ "$Info_Text$Data$txt_Info_1*GEOM*TEXT SET " + CricketFunctions.generateMatchSummaryStatus(2, previous_match.get(previous_match.size()-1), 
+							CricketUtil.FULL, "", config.getBroadcaster()).toUpperCase() + "\0", print_writers);
+					break;
+				case "Alt_F9":
 					if(WhichStyle.equalsIgnoreCase("Age")) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Top_Align$Side" + WhichSide + "$Select_FooterType"
 								+ "$Info_Text$Data$txt_Info_1*GEOM*TEXT SET " + statsType.getStats_full_name() + "\0", print_writers);
 					}else {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Top_Align$Side" + WhichSide + "$Select_FooterType"
 								+ "$Info_Text$Data$txt_Info_1*GEOM*TEXT SET " + statsType.getStats_full_name() + " - " + WhichStyle.toUpperCase() +"\0", print_writers);
+					}
+					break;
+				case "Alt_F10":
+					if(WhichStyle.equalsIgnoreCase("Age")) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Top_Align$Side" + WhichSide + "$Select_FooterType"
+								+ "$Info_Text$Data$txt_Info_1*GEOM*TEXT SET " + "U19 MEN'S CWC 2024" + "\0", print_writers);
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Top_Align$Side" + WhichSide + "$Select_FooterType"
+								+ "$Info_Text$Data$txt_Info_1*GEOM*TEXT SET " + "U19 MEN'S CWC 2024" + " - " + WhichStyle.toUpperCase() +"\0", print_writers);
 					}
 					break;
 				}

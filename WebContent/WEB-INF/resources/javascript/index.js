@@ -560,14 +560,39 @@ function addItemsToList(whatToProcess,dataToProcess)
 		case 'Alt_5':
 			header_text.innerHTML = 'MIDDLE INFOBAR SECTION - LAST x BALLS';
 		
-			select = document.createElement('input');
+			/*select = document.createElement('input');
 			select.type = "text";
 			select.id = 'selectFreeText';
 			select.value = '10';
 			
 			row.insertCell(cellCount).appendChild(select);
 			setTextBoxOptionToSelectOptionArray(0);
-			cellCount = cellCount + 1;
+			cellCount = cellCount + 1;*/
+			
+			select = document.createElement('select');
+			select.id = 'selectWhichSponsor';
+			select.name = select.id;
+			
+			option = document.createElement('option');
+			option.value = '10';
+			option.text = '10';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = '30';
+			option.text = '30';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = '60';
+			option.text = '60';
+			select.appendChild(option);
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			cellCount = cellCount + 1
+			
 			break;
 			
 		case 'Alt_6':

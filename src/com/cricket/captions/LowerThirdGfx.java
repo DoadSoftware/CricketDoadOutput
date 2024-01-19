@@ -1640,11 +1640,11 @@ public class LowerThirdGfx
 			}
 		}
 		
-		if(CricketFunctions.populateDls(matchAllData,dls).trim().isEmpty()) {
+		if(CricketFunctions.populateDls(matchAllData, CricketUtil.FULL, dls).trim().isEmpty()) {
 			return "error";
 		}
 		
-		this_data_str.add(CricketFunctions.populateDls(matchAllData,dls));
+		this_data_str.add(CricketFunctions.populateDls(matchAllData, CricketUtil.FULL, dls));
 		
 		if(this_data_str == null) {
 			return "error";
