@@ -196,7 +196,6 @@ public class Caption
 					Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
 			case "Control_F11":
-				System.out.println("whatToProcess : " + whatToProcess);
 				status = this_fullFramesGfx.populatePreviousMatchSummary(whichSide, whatToProcess, matchAllData, 0);
 				break;
 			case "Shift_F11": //MATCH SUMMARY
