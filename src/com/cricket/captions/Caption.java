@@ -359,7 +359,6 @@ public class Caption
 				if(this_infobarGfx.infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
 					if(this_infobarGfx.infobar.getRight_section() != null && !this_infobarGfx.infobar.getRight_section().isEmpty()) {
 						if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
-							this_infobarGfx.infobar.setRight_top(whatToProcess.split(",")[2]);
 							this_infobarGfx.infobar.setRight_bottom("BOWLING_END");
 							
 							status = this_infobarGfx.populateVizInfobarBowler(print_writers, matchAllData, 1);
@@ -372,9 +371,6 @@ public class Caption
 					}else {
 						this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
 						status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 1);
-						
-						//this_infobarGfx.infobar.setRight_top("");this_infobarGfx.infobar.setRight_bottom("");
-						//this_infobarGfx.infobar.setLast_right_top("");this_infobarGfx.infobar.setLast_right_bottom("");
 					}
 				}else {
 					status = "IN Alt+2 Section BASTMAN/BOWLER NOT SELECTED";

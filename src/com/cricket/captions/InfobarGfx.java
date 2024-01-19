@@ -404,34 +404,27 @@ public class InfobarGfx
 		
 		switch(config.getBroadcaster()) {
 		case Constants.ICC_U19_2023:
-			if(infobar.getRight_top() != null && !infobar.getRight_top().isEmpty()) {
-				switch(infobar.getRight_top().toUpperCase()) {
-				case CricketUtil.BOWLER:
-					if(infobar.getLast_bowler() != null) {
-						if(infobar.getLast_bowler().getPlayerId() != bowlingCardList.get(bowlingCardList.size()-1).getPlayerId()) {
-							populateTwoBatsmenBowler(print_writers, matchAllData, WhichSide, 2, bowlingCardList);
-							populateVizInfobarRightBottom(print_writers, matchAllData, WhichSide, 2);
-							this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_Change", "START");
-							this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo_BottomRightPart", "START");
-							TimeUnit.MILLISECONDS.sleep(800);
-							populateTwoBatsmenBowler(print_writers, matchAllData, WhichSide, 1, bowlingCardList);
-							populateVizInfobarRightBottom(print_writers, matchAllData, WhichSide, 1);
-							this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_Change", "SHOW 0.0");
-							this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo_BottomRightPart", "SHOW 0.0");
-						} else {
-							populateTwoBatsmenBowler(print_writers, matchAllData, WhichSide, 1, bowlingCardList);
-							populateVizInfobarRightBottom(print_writers, matchAllData, WhichSide, 1);
-						}
-					} else {
-						populateTwoBatsmenBowler(print_writers, matchAllData, WhichSide, 1, bowlingCardList);
-						populateVizInfobarRightBottom(print_writers, matchAllData, WhichSide, 1);
-					}
-					
-					infobar.setLast_bowler(bowlingCardList.get(bowlingCardList.size()-1));
-					break;
+			if(infobar.getLast_bowler() != null) {
+				if(infobar.getLast_bowler().getPlayerId() != bowlingCardList.get(bowlingCardList.size()-1).getPlayerId()) {
+					populateTwoBatsmenBowler(print_writers, matchAllData, WhichSide, 2, bowlingCardList);
+					populateVizInfobarRightBottom(print_writers, matchAllData, WhichSide, 2);
+					this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_Change", "START");
+					this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo_BottomRightPart", "START");
+					TimeUnit.MILLISECONDS.sleep(800);
+					populateTwoBatsmenBowler(print_writers, matchAllData, WhichSide, 1, bowlingCardList);
+					populateVizInfobarRightBottom(print_writers, matchAllData, WhichSide, 1);
+					this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_Change", "SHOW 0.0");
+					this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo_BottomRightPart", "SHOW 0.0");
+				} else {
+					populateTwoBatsmenBowler(print_writers, matchAllData, WhichSide, 1, bowlingCardList);
+					populateVizInfobarRightBottom(print_writers, matchAllData, WhichSide, 1);
 				}
-				infobar.setLast_right_top(infobar.getRight_top());
+			} else {
+				populateTwoBatsmenBowler(print_writers, matchAllData, WhichSide, 1, bowlingCardList);
+				populateVizInfobarRightBottom(print_writers, matchAllData, WhichSide, 1);
 			}
+			
+			infobar.setLast_bowler(bowlingCardList.get(bowlingCardList.size()-1));
 			break;
 		}
 		
@@ -676,7 +669,16 @@ public class InfobarGfx
 					+ WhichSide + "$Choose_Type*FUNCTION*Omo*vis_con SET 1 \0",print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Bottom$Side_" + WhichSide + "$Free_Text$txt_Text*GEOM*TEXT SET " 
 					+ matchAllData.getSetup().getHomeTeam().getTeamGroup() + "\0", print_writers);
-				break;	
+				break;
+				
+			case "INNINGS_SCORE":
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Bottom$Side_" 
+						+ WhichSide + "$Choose_Type*FUNCTION*Omo*vis_con SET 1 \0",print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Bottom$Side_" + WhichSide + "$Free_Text$txt_Text*GEOM*TEXT SET " 
+						+ "FIRST INNINGS SCORE " + matchAllData.getMatch().getInning().get(0).getBatting_team().getTeamName1() + " : "
+						+  CricketFunctions.getTeamScore(matchAllData.getMatch().getInning().get(0), "-", false) + " (" + CricketFunctions.OverBalls(
+						matchAllData.getMatch().getInning().get(0).getTotalOvers(), matchAllData.getMatch().getInning().get(0).getTotalBalls()) + ")" + "\0", print_writers);
+					break;
 				
 			case "RRR":
 
@@ -824,7 +826,6 @@ public class InfobarGfx
 				if(infobar.getRight_section() != null && !infobar.getRight_section().isEmpty()) {
 					populateVizInfobarRightSection(print_writers, matchAllData, WhichSide, 1);
 				}else {
-					this.infobar.setRight_top(CricketUtil.BOWLER);
 					this.infobar.setRight_bottom("BOWLING_END");
 					populateVizInfobarBowler(print_writers, matchAllData, WhichSide);
 				}

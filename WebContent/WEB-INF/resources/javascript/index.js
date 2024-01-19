@@ -405,15 +405,15 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select = document.createElement('select');
 			select.id = 'selectLeftBottom';
 			select.name = select.id;
+	
+			option = document.createElement('option');
+			option.value = 'VENUE';
+			option.text = 'Venue Name';
+			select.appendChild(option);
 
 			option = document.createElement('option');
 			option.value = 'CRR';
 			option.text = 'Run Rate';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'VENUE';
-			option.text = 'Venue Name';
 			select.appendChild(option);
 
 			option = document.createElement('option');
@@ -439,6 +439,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 						option = document.createElement('option');
 						option.value = 'TARGET';
 						option.text = 'Target';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = 'INNINGS_SCORE';
+						option.text = '1st Inning Score';
 						select.appendChild(option);
 						
 						/*option = document.createElement('option');
@@ -547,6 +552,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 						option.text = 'Equation';
 						select.appendChild(option);
 						
+						/*option = document.createElement('option');
+						option.value = 'RESULT';
+						option.text = 'Result';
+						select.appendChild(option);*/
+						
 						option = document.createElement('option');
 						option.value = 'DLS_PAR_SCORE';
 						option.text = 'D/L Par Score';
@@ -623,13 +633,13 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select.name = select.id;
 			
 			option = document.createElement('option');
-			option.value = 'BOWLING_END';
-			option.text = 'Bowling End';
+			option.value = 'OVER';
+			option.text = 'This Over';
 			select.appendChild(option);
 			
 			option = document.createElement('option');
-			option.value = 'OVER';
-			option.text = 'This Over';
+			option.value = 'BOWLING_END';
+			option.text = 'Bowling End';
 			select.appendChild(option);
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
