@@ -469,7 +469,7 @@ public class InfobarGfx
 					this_data_str.add(CricketFunctions.getEventsText(CricketUtil.OVER,infobar.getLast_bowler().getPlayerId() ,
 							",", matchAllData.getEventFile().getEvents(),0));
 					
-					if(this_data_str.get(this_data_str.size()-1) == null || this_data_str.get(this_data_str.size()-1).split(",").length > 8) {
+					if(this_data_str.get(this_data_str.size()-1) == null || this_data_str.get(this_data_str.size()-1).split(",").length > 11) {
 						return "populateVizInfobarRightBottom: This over data returned invalid";
 					}
 					

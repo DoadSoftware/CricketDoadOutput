@@ -956,7 +956,7 @@ public class LowerThirdGfx
 				hundred = String.valueOf(tournament.getHundreds());
 			}
 			
-			lowerThird = new LowerThird("", tournament.getPlayer().getFirstname(), surName,"ICC U19 MEN’S CWC 2024", "", "", 2,"",teamName,
+			lowerThird = new LowerThird("", tournament.getPlayer().getFirstname(), surName,"ICC U19 MEN'S CWC 2024", "", "", 2,"",teamName,
 					new String[]{"MATCHES", "RUNS", "FIFTIES", "HUNDREDS", "STRIKE RATE", "BEST"},new String[]{String.valueOf(tournament.getMatches()), 
 					String.format("%,d\n", tournament.getRuns()), fifties,hundred,bat_sr,best},null,null,
 					new String[] {"-503.0","-315.0","-116.0","115.0","350.0","560.0"});
@@ -997,7 +997,7 @@ public class LowerThirdGfx
 				Data = df_bo.format(average);
 			}
 			
-			lowerThird = new LowerThird("", tournament.getPlayer().getFirstname(), surName,"ICC U19 MEN’S CWC 2024", "", "", 2,"",teamName,
+			lowerThird = new LowerThird("", tournament.getPlayer().getFirstname(), surName,"ICC U19 MEN'S CWC 2024", "", "", 2,"",teamName,
 					new String[]{"MATCHES", "WICKETS", "AVERAGE", "ECONOMY", "BEST"},new String[]{String.valueOf(tournament.getMatches()),
 					String.valueOf(tournament.getWickets()),Data,economy,best},null,null,new String[] {"-503.0","-231.0","56.0","319.0","563.0"});
 			
