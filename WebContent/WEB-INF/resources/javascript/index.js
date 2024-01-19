@@ -542,10 +542,10 @@ function addItemsToList(whatToProcess,dataToProcess)
 						
 					}
 					else{
-						option = document.createElement('option');
+						/*option = document.createElement('option');
 						option.value = 'TARGET';
 						option.text = 'Target';
-						select.appendChild(option);
+						select.appendChild(option);*/
 						
 						option = document.createElement('option');
 						option.value = 'EQUATION';
