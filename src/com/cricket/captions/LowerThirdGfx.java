@@ -691,8 +691,8 @@ public class LowerThirdGfx
 			if(battingCard.getWasHowOutFielderSubstitute() != null && 
 					battingCard.getWasHowOutFielderSubstitute().equalsIgnoreCase(CricketUtil.YES)) {
 				howOut = "run out " + "sub (" + battingCard.getHowOutFielder().getTicker_name() + ")";
-			} else {
-				return "run out (" + battingCard.getHowOutFielder().getTicker_name() + ")";
+			}else {
+				howOut = "run out (" + battingCard.getHowOutFielder().getTicker_name() + ")";
 			}
 		}
 		else if(battingCard.getHowOut().equalsIgnoreCase(CricketUtil.CAUGHT)) {
@@ -831,7 +831,7 @@ public class LowerThirdGfx
 					battingCardList.get(battingCardList.size()-1).getWasHowOutFielderSubstitute().equalsIgnoreCase(CricketUtil.YES)) {
 				howOut = "run out " + "sub (" + battingCardList.get(battingCardList.size()-1).getHowOutFielder().getTicker_name() + ")";
 			} else {
-				return "run out (" + battingCardList.get(battingCardList.size()-1).getHowOutFielder().getTicker_name() + ")";
+				howOut = "run out (" + battingCardList.get(battingCardList.size()-1).getHowOutFielder().getTicker_name() + ")";
 			}
 		}
 		else if(battingCardList.get(battingCardList.size()-1).getHowOut().equalsIgnoreCase(CricketUtil.CAUGHT)) {
@@ -1635,6 +1635,7 @@ public class LowerThirdGfx
 	
 	public String populateDlsTarget(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws InterruptedException
 	{
+		int balls = 0, overs = 0;
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
 			return status;
 		} else {
@@ -1650,10 +1651,22 @@ public class LowerThirdGfx
 			return "populateTeamSummary: dls is Null";
 		}
 		
+		if(whatToProcess.split(",")[2].equalsIgnoreCase("currentOver")) {
+			overs = inning.getTotalOvers();
+			balls = inning.getTotalBalls();
+		}else if(whatToProcess.split(",")[2].equalsIgnoreCase("nextBall")) {
+			overs = inning.getTotalOvers();
+			balls = inning.getTotalBalls() + 1;
+		}else if(whatToProcess.split(",")[2].equalsIgnoreCase("nextOver")) {
+			overs = inning.getTotalOvers() + 1;
+			balls = 0;
+		}
+		
+		
 		for(int i = 0; i<= dls.size() -1;i++) {
-			if(dls.get(i).getOver_left().split("\\.")[0].equalsIgnoreCase(String.valueOf(inning.getTotalOvers()))) {
+			if(dls.get(i).getOver_left().split("\\.")[0].equalsIgnoreCase(String.valueOf(overs))) {
 				for(int j=0;j<6;j++) {
-					if(inning.getTotalBalls() == j) {
+					if(balls == j) {
 						this_data_str.add(CricketFunctions.populateDuckWorthLewis(matchAllData).get(i+j).getWkts_down());
 						break;
 					}
@@ -1662,17 +1675,17 @@ public class LowerThirdGfx
 			}
 		}
 		
-		if(CricketFunctions.populateDls(matchAllData, CricketUtil.FULL, dls).trim().isEmpty()) {
+		if(CricketFunctions.populateDls(matchAllData, CricketUtil.FULL, Integer.valueOf(this_data_str.get(0))).trim().isEmpty()) {
 			return "error";
 		}
 		
-		this_data_str.add(CricketFunctions.populateDls(matchAllData, CricketUtil.FULL, dls));
+		this_data_str.add(CricketFunctions.populateDls(matchAllData, CricketUtil.FULL, Integer.valueOf(this_data_str.get(0))));
 		
 		if(this_data_str == null) {
 			return "error";
 		}
 		
-		lowerThird = new LowerThird("DLS PAR SCORE", "", "","AFTER ", String.valueOf(CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls())), 
+		lowerThird = new LowerThird("DLS PAR SCORE", "", "","AFTER ", String.valueOf(CricketFunctions.OverBalls(overs, balls)), 
 				"",2,"","", null,null,new String[]{this_data_str.get(0),this_data_str.get(1)},null,null);
 		
 		status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);

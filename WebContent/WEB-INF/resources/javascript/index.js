@@ -131,12 +131,12 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Control_F5': case 'Control_F8': case 'Control_F9': case 'F4': case 'F5': case 'F6' : case 'F7': 
 			case 'F8': case 'F9': case 'F11': case 's': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6':
 			case 'Shift_K': case 'Shift_O': case 'Alt_F9': case 'g': case 'f': case 'Control_g': case 'Control_s': case 'Control_f':
-			case 'Control_h': case 'Alt_F12': case 'l': case 'p': case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_F10':
+			case 'Control_h': case 'Alt_F12': case 'l': case 'p': case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_F10': case 'Alt_d':
 				addItemsToList(dataToProcess,null);
 				break;
 			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'Control_F1': case 'Control_a':
 			case 'Alt_k':  case 'Shift_F3': case 'd': case 'e': case 'Control_F7': case 'Control_F6':
-			case 'Control_k': case 'Control_F10': case 'Control_F3': case 'Alt_d': case 'n': case 'a': case 't':
+			case 'Control_k': case 'Control_F10': case 'Control_F3': case 'n': case 'a': case 't':
 			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q': case 'Control_b': case 'o':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
@@ -310,7 +310,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q':
 	case 'Alt_F9': case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l':
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9':
-	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10':
+	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10': case 'Alt_d':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		
 		$("#captions_div").hide();
@@ -416,6 +416,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 			option.text = 'Venue Name';
 			select.appendChild(option);
 
+			option = document.createElement('option');
+			option.value = 'GROUP';
+			option.text = 'Group';
+			select.appendChild(option);
+			
 			session_match.match.inning.forEach(function(inn,index,arr){
 				if(inn.isCurrentInning == 'YES'){
 					if(inn.inningNumber == 1){
@@ -560,38 +565,15 @@ function addItemsToList(whatToProcess,dataToProcess)
 		case 'Alt_5':
 			header_text.innerHTML = 'MIDDLE INFOBAR SECTION - LAST x BALLS';
 		
-			/*select = document.createElement('input');
+			select = document.createElement('input');
 			select.type = "text";
 			select.id = 'selectFreeText';
 			select.value = '10';
 			
+			select.setAttribute('onchange',"setTextBoxOptionToSelectOptionArray(0)");
 			row.insertCell(cellCount).appendChild(select);
 			setTextBoxOptionToSelectOptionArray(0);
-			cellCount = cellCount + 1;*/
-			
-			select = document.createElement('select');
-			select.id = 'selectWhichSponsor';
-			select.name = select.id;
-			
-			option = document.createElement('option');
-			option.value = '10';
-			option.text = '10';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = '30';
-			option.text = '30';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = '60';
-			option.text = '60';
-			select.appendChild(option);
-			
-			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
-			row.insertCell(cellCount).appendChild(select);
-			setDropdownOptionToSelectOptionArray($(select),0);
-			cellCount = cellCount + 1
+			cellCount = cellCount + 1;
 			
 			break;
 			
@@ -703,6 +685,32 @@ function addItemsToList(whatToProcess,dataToProcess)
 				option.text = pro.order + '-' + pro.prompt ;
 				select.appendChild(option);
 			});
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			cellCount = cellCount + 1
+			break;
+		
+		case 'Alt_d':
+			select = document.createElement('select');
+			select.id = 'selectSponsor';
+			select.name = select.id;
+			
+			option = document.createElement('option');
+			option.value = 'currentOver';
+			option.text = 'Current Over';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'nextBall';
+			option.text = 'Next Ball';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'nextOver';
+			option.text = 'Next Over';
+			select.appendChild(option);
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
 			row.insertCell(cellCount).appendChild(select);

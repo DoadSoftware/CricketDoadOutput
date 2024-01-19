@@ -467,6 +467,7 @@ public class Animation
 			case "F8": case "F10": case "j":
 				processAnimation(Constants.FRONT, print_writers, "anim_NameSupers", "CONTINUE");
 				TimeUnit.MILLISECONDS.sleep(1000);
+				processAnimation(Constants.FRONT, print_writers, "anim_NameSupers", "SHOW 0.0");
 				AnimateIn(Constants.MIDDLE + Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;
@@ -1146,6 +1147,7 @@ public class Animation
 						break;
 					}
 				}
+				
 			    CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/Overlays "
 			    	+ "C:/Temp/Preview.png " + previewCommands + " \0", print_writer);
 			}
@@ -1246,7 +1248,7 @@ public class Animation
 				switch(whatToProcess.split(",")[0]) {
 				case "Shift_F1": case "Shift_F2":
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-							+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Mini$In_Out 1.260 Anim_Mini$In_Out$In 1.240 \0", print_writer);
+							+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$Small 1.00 Anim_Mini$In_Out 1.260 Anim_Mini$In_Out$In 1.240 \0", print_writer);
 					break;
 				}
 				if(whichside == 2) {

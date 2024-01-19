@@ -373,8 +373,8 @@ public class Caption
 						this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
 						status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 1);
 						
-						this_infobarGfx.infobar.setRight_top("");this_infobarGfx.infobar.setRight_bottom("");
-						this_infobarGfx.infobar.setLast_right_top("");this_infobarGfx.infobar.setLast_right_bottom("");
+						//this_infobarGfx.infobar.setRight_top("");this_infobarGfx.infobar.setRight_bottom("");
+						//this_infobarGfx.infobar.setLast_right_top("");this_infobarGfx.infobar.setLast_right_bottom("");
 					}
 				}else {
 					status = "IN Alt+2 Section BASTMAN/BOWLER NOT SELECTED";

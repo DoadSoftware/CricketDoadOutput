@@ -669,6 +669,14 @@ public class InfobarGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Bottom$Side_" + WhichSide + "$Free_Text$txt_Text*GEOM*TEXT SET " 
 					+ "LIVE FROM " + ground.getCity() + "\0", print_writers);
 				break;
+			
+			case "GROUP":
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Bottom$Side_" 
+					+ WhichSide + "$Choose_Type*FUNCTION*Omo*vis_con SET 1 \0",print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Bottom$Side_" + WhichSide + "$Free_Text$txt_Text*GEOM*TEXT SET " 
+					+ matchAllData.getSetup().getHomeTeam().getTeamGroup() + "\0", print_writers);
+				break;	
 				
 			case "RRR":
 
@@ -875,11 +883,11 @@ public class InfobarGfx
 					}
 				}
 				
-				if(CricketFunctions.populateDls(matchAllData, CricketUtil.FULL, dls).trim().isEmpty()) {
+				if(CricketFunctions.populateDls(matchAllData, CricketUtil.FULL, Integer.valueOf(this_data_str.get(0))).trim().isEmpty()) {
 					return "populateVizInfobarMiddleSection: populateDls Function is Empty";
 				}
 				
-				this_data_str.add(CricketFunctions.populateDls(matchAllData, CricketUtil.FULL, dls));
+				this_data_str.add(CricketFunctions.populateDls(matchAllData, CricketUtil.FULL, Integer.valueOf(this_data_str.get(0))));
 				
 				if(this_data_str == null) {
 					return "populateVizInfobarMiddleSection this_data_str is null";
@@ -1271,7 +1279,7 @@ public class InfobarGfx
 							battingCardList.get(battingCardList.size()-1).getWasHowOutFielderSubstitute().equalsIgnoreCase(CricketUtil.YES)) {
 						how_out_txt = "run out " + "sub (" + battingCardList.get(battingCardList.size()-1).getHowOutFielder().getTicker_name() + ")";
 					} else {
-						return "run out (" + battingCardList.get(battingCardList.size()-1).getHowOutFielder().getTicker_name() + ")";
+						how_out_txt = "run out (" + battingCardList.get(battingCardList.size()-1).getHowOutFielder().getTicker_name() + ")";
 					}
 				}
 				else if(battingCardList.get(battingCardList.size()-1).getHowOut().equalsIgnoreCase(CricketUtil.CAUGHT)) {
