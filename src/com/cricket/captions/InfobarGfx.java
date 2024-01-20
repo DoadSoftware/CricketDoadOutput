@@ -591,6 +591,7 @@ public class InfobarGfx
 										+ "SIXES" + "\0", print_writers);
 						}
 						
+						TimeUnit.MILLISECONDS.sleep(1000);
 						break;
 					case "COMPARE":
 						inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)
@@ -1404,6 +1405,11 @@ public class InfobarGfx
 				if(CricketFunctions.extracttournamentFoursAndSixes("CURRENT_MATCH_DATA",tournament_matches, matchAllData, null).getTournament_sixes() > 99) {
 					this_data_str.add(CricketFunctions.hundredsTensUnits(String.valueOf(CricketFunctions.extracttournamentFoursAndSixes("CURRENT_MATCH_DATA", 
 							tournament_matches, matchAllData, null).getTournament_sixes())));
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
+							+ "$Tournament_Sixes$Side_1$txt_Hundread*ACTIVE SET 1 \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
+							+ "$Tournament_Sixes$Side_1$txt_Ten*ACTIVE SET 1 \0", print_writers);
+					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Tournament_Sixes$Side_1$txt_Hundread"
 							+ "*GEOM*TEXT SET " + this_data_str.get(this_data_str.size()-1).split(",")[0] + "\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Tournament_Sixes$Side_1$txt_Ten"
@@ -1415,6 +1421,9 @@ public class InfobarGfx
 							tournament_matches, matchAllData, null).getTournament_sixes())));
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
 							+ "$Tournament_Sixes$Side_1$txt_Hundread*ACTIVE SET 0 \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
+							+ "$Tournament_Sixes$Side_1$txt_Ten*ACTIVE SET 1 \0", print_writers);
+					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Tournament_Sixes$Side_1$txt_Ten"
 							+ "*GEOM*TEXT SET " + this_data_str.get(this_data_str.size()-1).split(",")[1] + "\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Tournament_Sixes$Side_1$txt_Unit"
