@@ -405,7 +405,12 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select = document.createElement('select');
 			select.id = 'selectLeftBottom';
 			select.name = select.id;
-	
+			
+			option = document.createElement('option');
+			option.value = 'GROUP';
+			option.text = 'Group';
+			select.appendChild(option);
+			
 			option = document.createElement('option');
 			option.value = 'VENUE';
 			option.text = 'Venue Name';
@@ -416,11 +421,6 @@ function addItemsToList(whatToProcess,dataToProcess)
 			option.text = 'Run Rate';
 			select.appendChild(option);
 
-			option = document.createElement('option');
-			option.value = 'GROUP';
-			option.text = 'Group';
-			select.appendChild(option);
-			
 			session_match.match.inning.forEach(function(inn,index,arr){
 				if(inn.isCurrentInning == 'YES'){
 					if(inn.inningNumber == 1){

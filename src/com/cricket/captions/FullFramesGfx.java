@@ -3593,7 +3593,7 @@ public class FullFramesGfx
 						+ "*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Top_Align$Side"+WhichSide+"$Select_FooterType$Info_Text$Data"
-						+ "$txt_Info_1*GEOM*TEXT SET " + "THE TOP THREE TEAMS WILL QUALIFY TO THE SUPER LEAGUE" + "\0", print_writers);
+						+ "$txt_Info_1*GEOM*TEXT SET " + "TOP 3 TEAMS PROGRESS TO THE SUPER SIX STAGE" + "\0", print_writers);
 				
 				break;
 			
