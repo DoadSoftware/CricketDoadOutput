@@ -132,9 +132,9 @@ public class Caption
 			case "F7": case "F11": // L3rd BAT and BALL Profile
 				status = this_lowerThirdGfx.PopulateL3rdPlayerProfile(whatToProcess,whichSide, matchAllData);
 				break;
-			case "F8": //NAMESUPER PLAYER
+			case "F8": case "Alt_F8": //HOME NAMESUPER PLAYER
 				status = this_lowerThirdGfx.populateLTNameSuperPlayer(whatToProcess,whichSide,matchAllData);
-				break;
+				break;	
 			case "F9": //BOWL THIS MATCH
 				status = this_lowerThirdGfx.populateBowlThisMatch(whatToProcess, whichSide, matchAllData);
 				break;

@@ -2306,7 +2306,7 @@ public class LowerThirdGfx
 				
 				break;
 				
-			case "F8":
+			case "F8": case "Alt_F8":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Overall_Position_Y$Sublines$Side_" + WhichSide + "$Select_Subline"
 						+ "*FUNCTION*Omo*vis_con SET 1  \0", print_writers);
 				if(lowerThird.getWhichTeamFlag() != null) {
@@ -3227,7 +3227,7 @@ public class LowerThirdGfx
 				}
 				break;
 				
-			case "F8":
+			case "F8": case "Alt_F8":
 				if(lowerThird.getLeftText()[0].equalsIgnoreCase("Captain") || lowerThird.getLeftText()[0].equalsIgnoreCase("Captain Wicket-Keeper") ||
 						lowerThird.getLeftText()[0].equalsIgnoreCase("Wicket-Keeper")) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Position_With_Graphics$Sublines$Side_" + WhichSide 
@@ -3460,7 +3460,7 @@ public class LowerThirdGfx
 			}
 			
 			switch (whatToProcess.split(",")[0]) {
-			case "F8": case "F10": case "j":
+			case "Alt_F8": case "F8": case "F10": case "j":
 				
 				ltWhichContainer = "$All_NameSupers";
 				if(lowerThird.getWhichTeamFlag().isEmpty() && lowerThird.getWhichSponsor().isEmpty()) {
@@ -3585,8 +3585,8 @@ public class LowerThirdGfx
 			}
 			
 			if(!whatToProcess.split(",")[0].equalsIgnoreCase("q") && !whatToProcess.split(",")[0].equalsIgnoreCase("Control_q")) {
-				if(!whatToProcess.split(",")[0].equalsIgnoreCase("F8") && !whatToProcess.split(",")[0].equalsIgnoreCase("F10") && 
-						!whatToProcess.split(",")[0].equalsIgnoreCase("j")) {
+				if(!whatToProcess.split(",")[0].equalsIgnoreCase("F8") && !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_F8")
+						&& !whatToProcess.split(",")[0].equalsIgnoreCase("F10") && !whatToProcess.split(",")[0].equalsIgnoreCase("j")) {
 					if(WhichSide == 1) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj_SublineBase*ANIMATION*KEY*$Change_In_1*VALUE SET "
 								+ LT_Position_4 + "\0",print_writers);

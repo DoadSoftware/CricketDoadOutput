@@ -62,7 +62,7 @@ public class BugsAndMiniGfx
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
 			return "bugsDismissal match is null Or Inning is null";
 		} else {
-			inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
+			inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == Integer.valueOf(whatToProcess.split(",")[1])).findAny().orElse(null);
 			if(inning == null) {
 				return "bugsDismissal Inning is null";
 			}
@@ -144,7 +144,7 @@ public class BugsAndMiniGfx
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
 			status = "populateBowlScore match is null Or Inning is null";
 		} else {
-			inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
+			inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == Integer.valueOf(whatToProcess.split(",")[1])).findAny().orElse(null);
 			if(inning == null) {
 				return "populateBowlScore Inning is null";
 			}
@@ -167,7 +167,7 @@ public class BugsAndMiniGfx
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
 			status = "populateBatScore match is null Or Inning is null";
 		} else {
-			inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
+			inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == Integer.valueOf(whatToProcess.split(",")[1])).findAny().orElse(null);
 			if(inning == null) {
 				return "populateBatScore Inning is null";
 			}

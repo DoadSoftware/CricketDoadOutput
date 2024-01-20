@@ -52,14 +52,14 @@ public class Animation
 			case "Alt_F10": case "Control_F1":
 			case "z": case "x": case "c": case "v":
 				return Constants.FULL_FRAMER;
-			case "F5": case "F6": case "F7": case "F8": case "F9": case "F10": case "F11":
+			case "F5": case "F6": case "F7": case "F8": case "F9": case "F10": case "F11": case "Alt_F8":
 			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
 			case "Shift_F3": case "s": case "d": case "e": case "q": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "Control_g": case "Control_h": case "Control_p": case "j": case "Control_F6": case "Shift_F6": 
 			case "Control_s": case "Alt_d": case "Control_f": case "Control_q": case "l": case "n": case "a":
 				
 				switch (whatToProcess.split(",")[0]) {
-				case "F8": case "F10": case "j": // Name super L3rd
+				 case "Alt_F8": case "F8": case "F10": case "j": // Name super L3rd
 					return Constants.NAME_SUPERS + Constants.LOWER_THIRD;
 				case "q": case "Control_q":// Boundary L3rd
 					return Constants.BOUNDARIES + Constants.LOWER_THIRD;
@@ -217,7 +217,7 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
-			case "F8": case "F10": case "j": // Name super L3rd
+			 case "Alt_F8": case "F8": case "F10": case "j": // Name super L3rd
 				
 				setPositionOfLowerThirds(config, print_writers);
 				AnimateIn(Constants.MIDDLE + Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
@@ -464,7 +464,7 @@ public class Animation
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;
-			case "F8": case "F10": case "j":
+			 case "Alt_F8": case "F8": case "F10": case "j":
 				processAnimation(Constants.FRONT, print_writers, "anim_NameSupers", "CONTINUE");
 				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "anim_NameSupers", "SHOW 0.0");
@@ -595,7 +595,7 @@ public class Animation
 			case "Control_g": case "Control_h": case "Control_p": case "Control_F6": case "Shift_F6": case "Control_s": case "Control_f":
 				processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "START");
 				break;
-			case "F8": case "F10": case "j":
+			 case "Alt_F8": case "F8": case "F10": case "j":
 				processAnimation(Constants.FRONT, print_writers, "Anim_NameSuperChange", "START");
 				break;
 			case "q": case "Control_q":
@@ -665,7 +665,7 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "SHOW 0.0");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
-			case "F8": case "F10": case "j":
+			 case "Alt_F8": case "F8": case "F10": case "j":
 				processAnimation(Constants.FRONT, print_writers, "Anim_NameSuperChange", "SHOW 0.0");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
@@ -1117,7 +1117,7 @@ public class Animation
 					previewCommands = "Anim_Infobar$Small 1.00 Anim_LtChange$HeaderDynamic 1.200 anim_Lower_Third$Essentials 2.200 anim_Lower_Third$Essentials$In 1.400 "
 						+ "anim_Lower_Third$Row 2.160 anim_Lower_Third$Row$In 0.620";
 					break;
-				case "F8": case "F10": case "j": // Name super L3rd
+				 case "Alt_F8": case "F8": case "F10": case "j": // Name super L3rd
 					previewCommands = "Anim_Infobar$Push 0.500 anim_NameSupers$In 1.400";
 					break;
 				case "q": case "Control_q":// Boundary L3rd
@@ -1135,7 +1135,7 @@ public class Animation
 							+ "Anim_LtChange$Topline 0.900 Anim_LtChange$Lt_Position 0.940 Anim_LtChange$HeaderDynamic 1.180 "
 							+ "Anim_LtChange$HeaderDynamic$Change_In 1.180 Anim_LtChange$HeaderDynamic$Change_Out 0.560";
 						break;
-					case "F8": case "F10": case "j":
+					 case "Alt_F8": case "F8": case "F10": case "j":
 						previewCommands = previewCommands + " Anim_NameSuperChange$Flag 1.300 Anim_NameSuperChange$Sublines 0.700 "
 							+ "Anim_NameSuperChange$Topline 0.900 Anim_NameSuperChange$HeaderDynamic 1.220 "
 							+ "Anim_NameSuperChange$HeaderDynamic$Change_In 1.220 Anim_NameSuperChange$HeaderDynamic$Change_Out 0.600";
@@ -1224,7 +1224,7 @@ public class Animation
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.png Anim_Bugs 2.200 "
 							+ "Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In 2.200 Anim_Bugs$Essentials$In$Anim_Bugs 2.200 "
 							+ "Anim_Bugs$Essentials$In$Anim_Bugs$Essentials 2.200 \0", print_writer);
-					break;
+					break;	
 				 case "Alt_p": case "o": case "t":
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
 						+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Center_Bug$In 0.800 \0", print_writer);
