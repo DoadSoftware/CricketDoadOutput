@@ -363,20 +363,26 @@ public class Caption
 				break;
 			case "Alt_8":
 				if(this_infobarGfx.infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
-					if(this_infobarGfx.infobar.getRight_section() != null && !this_infobarGfx.infobar.getRight_section().isEmpty()) {
-						if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
-							this_infobarGfx.infobar.setRight_bottom("BOWLING_END");
-							
-							status = this_infobarGfx.populateVizInfobarBowler(print_writers, matchAllData, 1);
-							
-							this_infobarGfx.infobar.setRight_section("");this_infobarGfx.infobar.setLast_right_section("");
-						}else {
-							this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
-							status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, whichSide);
-						}
+					if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
+						this_infobarGfx.infobar.setRight_section(CricketUtil.BOWLER);
+						this_infobarGfx.infobar.setRight_bottom("BOWLING_END");
+						
+						status = this_infobarGfx.populateVizInfobarBowler(print_writers, matchAllData, 1);
 					}else {
-						this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
-						status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 1);
+						if(this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(CricketUtil.BOWLER)) { 
+							// When Goes Bowler to Boundary/Compare Section
+							this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
+							status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 1);
+						}else {
+							if(!this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(whatToProcess.split(",")[2])) {
+								// Add Data in Main Side1 -> SubSide2 between Boundary and Comparison and vice-versa
+								this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
+								status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 2);
+							}else {
+								// Add Data in Main Side1 -> SubSide1  between Boundary and Comparison and vice-versa
+								status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 1);
+							}
+						}
 					}
 				}else {
 					status = "IN Alt+2 Section BASTMAN/BOWLER NOT SELECTED";

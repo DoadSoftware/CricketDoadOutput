@@ -620,9 +620,9 @@ public class Animation
 						if(infobar.getRight_section()!= null && !infobar.getRight_section().isEmpty()) {
 							processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_All$Change", "START");
 						}else {
-							infobar.setRight_section(whatToProcess.split(",")[2]);
 							processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_All$In_Out", "START");
 						}
+						infobar.setRight_section(whatToProcess.split(",")[2]);
 					}
 					break;
 				}
