@@ -2123,7 +2123,7 @@ public class FullFramesGfx
 //									tournament_stats.get(i).getPlayer().getPhoto() + CricketUtil.PNG_EXTENSION).exists()) {
 //								return "Photo not found";
 //							}
-							CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$PhotoPart"
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$PhotoPart"
 									+ "$Photo$img_PlayerPhoto*TEXTURE*IMAGE SET "+Constants.ICC_U19_2023_PHOTOS_PATH + Constants.RIGHT_2048 + 
 									tournament_stats.get(i).getPlayer().getPhoto()+ CricketUtil.PNG_EXTENSION + "\0", print_writers);
 							

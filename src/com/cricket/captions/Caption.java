@@ -169,6 +169,9 @@ public class Caption
 				break;
 			case "Control_f":
 				status = this_lowerThirdGfx.populateL3rdThisSeries(whatToProcess,whichSide,matchAllData);
+				break;
+			case "Control_y":
+				status = this_bugsAndMiniGfx.populatebugPowerplay(whatToProcess,whichSide ,matchAllData);
 				break;	
 			case "Shift_F1":
 				status = this_bugsAndMiniGfx.populateMiniScorecard(whichSide, whatToProcess,matchAllData);
