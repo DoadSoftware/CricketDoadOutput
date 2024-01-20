@@ -626,7 +626,7 @@ public class FullFramesGfx
 	public String populateBatMileStone(int WhichSide, String whatToProcess, MatchAllData matchAllData) throws ParseException, InterruptedException
 	{
 		FirstPlayerId = Integer.valueOf(whatToProcess.split(",")[2]);
-		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES))
+		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == Integer.valueOf(whatToProcess.split(",")[1]))
 			.findAny().orElse(null);
 		if(inning == null ) {
 			return "populateBatMileStone: inning is null";
@@ -645,7 +645,7 @@ public class FullFramesGfx
 	public String populateBowlMileStone(int WhichSide, String whatToProcess, MatchAllData matchAllData) throws ParseException, InterruptedException
 	{
 		FirstPlayerId = Integer.valueOf(whatToProcess.split(",")[2]);
-		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES))
+		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == Integer.valueOf(whatToProcess.split(",")[1]))
 			.findAny().orElse(null);
 		if(inning == null ) {
 			return "populateTarget: inning is null";
@@ -3428,7 +3428,7 @@ public class FullFramesGfx
 					}
 				}
 				if(rowId == 0) {
-					return FirstPlayerId + " Nnt In Bowling Card";
+					return player.getFull_name() + " Not In Bowling Card";
 				}
 				break;
 			}
@@ -3504,7 +3504,7 @@ public class FullFramesGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$MatchIdent$Text"
 					+ "$Data$Select_DataForPromo$ExtraInfo$txt_Info1*GEOM*TEXT SET " + new SimpleDateFormat("EEEE").format(new SimpleDateFormat("dd-MM-yyyy").
 						parse(fixture.getDate())).toUpperCase() + ", " + CricketFunctions.ordinal(Integer.valueOf(Integer.valueOf(fixture.getDate().split("-")[0]))) + 
-							" " + new SimpleDateFormat("MMM").format(new SimpleDateFormat("dd-MM-yyyy").parse(fixture.getDate())).toUpperCase() + " " +
+							" " + new SimpleDateFormat("MMMM").format(new SimpleDateFormat("dd-MM-yyyy").parse(fixture.getDate())).toUpperCase() + " " +
 								fixture.getDate().split("-")[2] + "\0", print_writers);
 
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$MatchIdent$Text"
