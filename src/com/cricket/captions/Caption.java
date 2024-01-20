@@ -320,6 +320,9 @@ public class Caption
 			case "Alt_p":
 				status = this_bugsAndMiniGfx.bugsToss(whatToProcess,matchAllData,whichSide);
 				break;
+			case "h":
+				status = this_bugsAndMiniGfx.populateBugHighlight(whatToProcess,matchAllData,whichSide, Integer.valueOf(whatToProcess.split(",")[1]));
+				break;
 			case "Alt_1": // Infobar Left Bottom
 				this_infobarGfx.infobar.setLeft_bottom(whatToProcess.split(",")[2]);
 				status = this_infobarGfx.populateVizInfobarLeftBottom(print_writers, matchAllData, whichSide);
