@@ -576,10 +576,10 @@ public class BugsAndMiniGfx
 						+ "*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
 				if(inning.getBatting_team().getTeamName4().equalsIgnoreCase("NEP")) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$minis$Side" + WhichSide 
-							+ "$Bowling$img_Flag1*ACTIVE SET 0 \0", print_writers);
+							+ "$Batting$img_Flag1*ACTIVE SET 0 \0", print_writers);
 				}else {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$minis$Side" + WhichSide 
-							+ "$Bowling$img_Flag1*ACTIVE SET 1 \0", print_writers);
+							+ "$Batting$img_Flag1*ACTIVE SET 1 \0", print_writers);
 				}
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$minis$Side" + WhichSide 
 						+ "$Batting$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + inning.getBatting_team().getTeamName4() + " \0", print_writers);

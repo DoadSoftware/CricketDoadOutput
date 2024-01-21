@@ -674,11 +674,11 @@ public class Animation
 				processAnimation(Constants.BACK, print_writers, "Change$Footer", "SHOW 0.0");
 				switch(whichGraphicOnScreen.split(",")[0]) {
 				case "F1":  
-					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Batting_Card", "SHOW 0.0");
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Batting_Card", "SHOW 3.000");
 					processAnimation(Constants.BACK, print_writers, "Change$Batting_Card", "SHOW 0.0");
 					break;
 				case "F2":  
-					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Bowling_Card", "SHOW 0.0");
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Bowling_Card", "SHOW 3.000");
 					processAnimation(Constants.BACK, print_writers, "Change$Bowling_Card", "SHOW 0.0");
 					break;
 				case "F4":
@@ -694,7 +694,7 @@ public class Animation
 					processAnimation(Constants.BACK, print_writers, "Change$LineUp_Image", "SHOW 0.0");
 					break;
 				case "p":
-					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Group_Standings", "SHOW 0.0");
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Group_Standings", "SHOW 3.000");
 					processAnimation(Constants.BACK, print_writers, "Change$Group_Standings", "SHOW 0.0");
 					break;
 				}
