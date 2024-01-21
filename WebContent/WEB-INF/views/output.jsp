@@ -108,7 +108,11 @@
 					    <label class="col-sm-4 col-form-label text-left">Broadcaster: ${session_configuration.broadcaster.replace("_"," ")} </label>
 					    <label class="col-sm-4 col-form-label text-left">2nd Broadcaster: ${session_configuration.secondaryBroadcaster.replace("_"," ")} </label>
 					    <label id="selected_inning" class="col-sm-4 col-form-label text-left">Selected Inning: </label>
-					    <label id="speed_lbl" class="col-sm-4 col-form-label text-left">Show Speed: YES</label>
+						<label id="inning1_teamScore_lbl" class="col-sm-4 col-form-label text-left">-</label>
+						<label id="inning2_teamScore_lbl" class="col-sm-4 col-form-label text-left">-</label>
+				    	<label id="inning1_battingcard1_lbl" class="col-sm-4 col-form-label text-left">-</label>
+				    	<label id="inning1_battingcard2_lbl" class="col-sm-4 col-form-label text-left">-</label>
+				      	<label id="inning1_bowlingcard_lbl" class="col-sm-4 col-form-label text-left">-</label>
 					  </div>
 				
 <!-- 				    <div id="output_sub_menu" class="panel-collapse collapse" role="tabpanel" aria-labelledby="output_heading">

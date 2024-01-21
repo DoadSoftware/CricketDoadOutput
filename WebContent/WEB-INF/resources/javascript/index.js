@@ -50,7 +50,59 @@ function initialiseForm(whatToProcess,dataToProcess)
 		document.getElementById('vizTertiaryPortNumber').value = dataToProcess.tertiaryPortNumber;
 		processUserSelection($('#select_second_broadcaster'));
 		break;
+	case 'UPDATE-MATCH-ON-OUTPUT-FORM':
 	
+		dataToProcess.match.inning.forEach(function(inn,index,arr){
+			document.getElementById('inning1_teamScore_lbl').innerHTML = dataToProcess.match.inning[0].batting_team.teamName4 + ' : ' + 
+				parseInt(dataToProcess.match.inning[0].totalRuns) + '-' + parseInt(dataToProcess.match.inning[0].totalWickets) + ' (' + 
+				parseInt(dataToProcess.match.inning[0].totalOvers) + '.' + parseInt(dataToProcess.match.inning[0].totalBalls) + ')';
+				
+			document.getElementById('inning2_teamScore_lbl').innerHTML = dataToProcess.match.inning[1].batting_team.teamName4 + ' : ' + 
+				parseInt(dataToProcess.match.inning[1].totalRuns) + '-' + parseInt(dataToProcess.match.inning[1].totalWickets) + ' (' + 
+				parseInt(dataToProcess.match.inning[1].totalOvers) + '.' + parseInt(dataToProcess.match.inning[1].totalBalls) + ')';
+			
+			if(inn.isCurrentInning == 'YES'){
+				inn.battingCard.forEach(function(bc,index,arr){
+					if(inn.partnerships != null && inn.partnerships.length > 0) {
+						inn.partnerships.forEach(function(par,index,arr){
+							if(bc.playerId == par.firstBatterNo) {
+								if(bc.status == 'OUT'){
+									document.getElementById('inning1_battingcard1_lbl').innerHTML = bc.player.surname + ' ' + bc.runs + '(' + bc.balls + ')' ;
+									document.getElementById('inning1_battingcard1_lbl').style.color = 'red';
+								}else{
+									if(bc.onStrike == 'YES'){
+										document.getElementById('inning1_battingcard1_lbl').innerHTML = bc.player.surname + '*' + ' ' + bc.runs + '(' + bc.balls + ')' ;
+									}else{
+										document.getElementById('inning1_battingcard1_lbl').innerHTML = bc.player.surname + ' ' + bc.runs + '(' + bc.balls + ')' ;
+									}
+									document.getElementById('inning1_battingcard1_lbl').style.color = 'green';
+								}
+							}
+							else if(bc.playerId == par.secondBatterNo) {
+								if(bc.status == 'OUT'){
+									document.getElementById('inning1_battingcard2_lbl').innerHTML = bc.player.surname + ' ' + bc.runs + '(' + bc.balls + ')' ;
+									document.getElementById('inning1_battingcard2_lbl').style.color = 'red';
+								}else{
+									if(bc.onStrike == 'YES'){
+										document.getElementById('inning1_battingcard2_lbl').innerHTML = bc.player.surname + '*' + ' ' + bc.runs + '(' + bc.balls + ')' ;
+									}else{
+										document.getElementById('inning1_battingcard2_lbl').innerHTML = bc.player.surname + ' ' + bc.runs + '(' + bc.balls + ')' ;
+									}
+									document.getElementById('inning1_battingcard2_lbl').style.color = 'green';
+								}
+							}
+						});
+					}
+				});
+				inn.bowlingCard.forEach(function(boc,index,arr){
+					if(boc.status == 'CURRENTBOWLER' || boc.status == 'LASTBOWLER'){
+						document.getElementById('inning1_bowlingcard_lbl').innerHTML = boc.player.surname + ' ' + boc.wickets 
+									+ '-' + boc.runs + '(' + boc.overs + '.' + boc.balls + ')';
+					}
+				});	
+			}
+		});
+		break;
 	}
 }
 function processUserSelection(whichInput)
