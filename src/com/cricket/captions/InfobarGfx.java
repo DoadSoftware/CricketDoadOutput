@@ -1292,7 +1292,7 @@ public class InfobarGfx
 				else if(battingCardList.get(battingCardList.size()-1).getHowOut().equalsIgnoreCase(CricketUtil.CAUGHT)) {
 					if(battingCardList.get(battingCardList.size()-1).getWasHowOutFielderSubstitute() != null && 
 							battingCardList.get(battingCardList.size()-1).getWasHowOutFielderSubstitute().equalsIgnoreCase(CricketUtil.YES)) {
-						how_out_txt = "c" +  " sub (" + battingCardList.get(battingCardList.size()-1).getHowOutFielder().getTicker_name() + ")  b" + 
+						how_out_txt = "c" +  " sub (" + battingCardList.get(battingCardList.size()-1).getHowOutFielder().getTicker_name() + ")  b " + 
 								battingCardList.get(battingCardList.size()-1).getHowOutBowler().getTicker_name();
 					} else {
 						how_out_txt = "c " + battingCardList.get(battingCardList.size()-1).getHowOutFielder().getTicker_name() + "  b " + 
