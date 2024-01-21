@@ -28,8 +28,8 @@ import com.cricket.util.CricketUtil;
 
 public class Caption 
 {
-	public InfobarGfx this_infobarGfx = new InfobarGfx();
-	public BugsAndMiniGfx this_bugsAndMiniGfx = new BugsAndMiniGfx();
+	public InfobarGfx this_infobarGfx;
+	public BugsAndMiniGfx this_bugsAndMiniGfx;
 	public LowerThirdGfx this_lowerThirdGfx;
 	public FullFramesGfx this_fullFramesGfx;
 	public Animation this_anim = new Animation();
@@ -71,7 +71,7 @@ public class Caption
 	public Caption(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics,
 		List<StatsType> statsTypes, List<MatchAllData> tournament_matches, List<NameSuper> nameSupers,List<Bugs> bugs,
 		List<InfobarStats> infobarStats,List<Fixture> fixTures, List<Team> Teams, List<Ground> Grounds, List<VariousText> varioustText,FullFramesGfx this_fullFramesGfx,
-		LowerThirdGfx this_lowerThirdGfx, int whichSide, String whichGraphhicsOnScreen, String slashOrDash, List<Tournament> tournament,
+		LowerThirdGfx this_lowerThirdGfx, InfobarGfx this_infobarGfx, BugsAndMiniGfx this_bugsAndMiniGfx, int whichSide, String whichGraphhicsOnScreen, String slashOrDash, List<Tournament> tournament,
 		List<DuckWorthLewis> dls) {
 	
 		super();

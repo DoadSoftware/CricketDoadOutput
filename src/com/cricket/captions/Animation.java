@@ -93,8 +93,8 @@ public class Animation
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "Control_b":
-				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Push infobar
-				TimeUnit.MILLISECONDS.sleep(500);
+				//AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Push infobar
+				//TimeUnit.MILLISECONDS.sleep(500);
 				processAnimation(Constants.BACK, print_writers, "In_At", "START");
 				processAnimation(Constants.BACK, print_writers, "In_At_Loop", "START");
 				this.whichGraphicOnScreen = whatToProcess;
@@ -355,8 +355,8 @@ public class Animation
 			case "Control_b":
 				processAnimation(Constants.BACK, print_writers, "In_At", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "In_At_Loop", "CONTINUE");
-				TimeUnit.MILLISECONDS.sleep(1000);
-				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
+				//TimeUnit.MILLISECONDS.sleep(1000);
+				//AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;
 			case "Alt_m": case "Alt_n":
@@ -615,14 +615,14 @@ public class Animation
 				case "Alt_8":
 					if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
 						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_All$In_Out", "CONTINUE");
-						infobar.setRight_section("");
+						//infobar.setRight_section("");
 					}else {
 						if(infobar.getRight_section()!= null && !infobar.getRight_section().isEmpty()) {
 							processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_All$Change", "START");
 						}else {
 							processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_All$In_Out", "START");
 						}
-						infobar.setRight_section(whatToProcess.split(",")[2]);
+						//infobar.setRight_section(whatToProcess.split(",")[2]);
 					}
 					break;
 				}
@@ -674,11 +674,11 @@ public class Animation
 				processAnimation(Constants.BACK, print_writers, "Change$Footer", "SHOW 0.0");
 				switch(whichGraphicOnScreen.split(",")[0]) {
 				case "F1":  
-					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Batting_Card", "SHOW 3.000");
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Batting_Card", "SHOW 0.0");
 					processAnimation(Constants.BACK, print_writers, "Change$Batting_Card", "SHOW 0.0");
 					break;
 				case "F2":  
-					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Bowling_Card", "SHOW 3.000");
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Bowling_Card", "SHOW 0.0");
 					processAnimation(Constants.BACK, print_writers, "Change$Bowling_Card", "SHOW 0.0");
 					break;
 				case "F4":

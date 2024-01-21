@@ -359,7 +359,7 @@ public class InfobarGfx
 		}
 		return Constants.OK;
 	}
-	public void populateTwoBatsmenBowler(List<PrintWriter> print_writers, MatchAllData matchAllData,
+	public void populateRightTopBowler(List<PrintWriter> print_writers, MatchAllData matchAllData,
 			int WhichSide, int WhichSubSide) throws InterruptedException {
 	
 		switch(config.getBroadcaster()) {
@@ -394,27 +394,25 @@ public class InfobarGfx
 		case Constants.ICC_U19_2023:
 			if(infobar.getLast_bowler() != null) {
 				if(infobar.getLast_bowler().getPlayerId() != bowlingCard.getPlayerId()) {
-					populateTwoBatsmenBowler(print_writers, matchAllData, WhichSide, 2);
+					populateRightTopBowler(print_writers, matchAllData, WhichSide, 2);
 					populateVizInfobarRightBottom(print_writers, matchAllData, WhichSide, 2);
 					this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_Change", "START");
 					this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo_BottomRightPart", "START");
 					TimeUnit.MILLISECONDS.sleep(800);
-					populateTwoBatsmenBowler(print_writers, matchAllData, WhichSide, 1);
+					populateRightTopBowler(print_writers, matchAllData, WhichSide, 1);
 					populateVizInfobarRightBottom(print_writers, matchAllData, WhichSide, 1);
 					this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_Change", "SHOW 0.0");
 					this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo_BottomRightPart", "SHOW 0.0");
 				} else {
-					populateTwoBatsmenBowler(print_writers, matchAllData, 1, 1);
-					populateTwoBatsmenBowler(print_writers, matchAllData, 1, 2);
-					populateTwoBatsmenBowler(print_writers, matchAllData, 2, 1);
-					populateTwoBatsmenBowler(print_writers, matchAllData, 2, 2);
+					populateRightTopBowler(print_writers, matchAllData, 1, 1);
+					populateRightTopBowler(print_writers, matchAllData, 1, 2);
+					populateRightTopBowler(print_writers, matchAllData, 2, 1);
 					populateVizInfobarRightBottom(print_writers, matchAllData, WhichSide, 1);
 				}
 			} else {
-				populateTwoBatsmenBowler(print_writers, matchAllData, 1, 1);
-				populateTwoBatsmenBowler(print_writers, matchAllData, 1, 2);
-				populateTwoBatsmenBowler(print_writers, matchAllData, 2, 1);
-				populateTwoBatsmenBowler(print_writers, matchAllData, 2, 2);
+				populateRightTopBowler(print_writers, matchAllData, 1, 1);
+				populateRightTopBowler(print_writers, matchAllData, 1, 2);
+				populateRightTopBowler(print_writers, matchAllData, 2, 1);
 				populateVizInfobarRightBottom(print_writers, matchAllData, WhichSide, 1);
 			}
 			
@@ -1391,7 +1389,7 @@ public class InfobarGfx
 				
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Tournament_Sixes$txt_Title"
-						+ "*GEOM*TEXT SET " + "THIS MATCH SIXES" + "\0", print_writers);
+						+ "*GEOM*TEXT SET " + "MATCH SIXES" + "\0", print_writers);
 				
 				
 				if(CricketFunctions.extracttournamentFoursAndSixes("CURRENT_MATCH_DATA",tournament_matches, matchAllData, null).getTournament_sixes() > 99) {

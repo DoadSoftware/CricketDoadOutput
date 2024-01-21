@@ -38,7 +38,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 public class FullFramesGfx 
 {
-	public int FirstPlayerId, rowId = 0, numberOfRows = 0;
+	public int FirstPlayerId, rowId = 0, plyr_count=0, numberOfRows = 0;
 	public String WhichProfile, WhichStyle, WhichType, WhichGroup,
 		status = "", containerName = "",containerName_2 = "";
 	
@@ -1357,6 +1357,7 @@ public class FullFramesGfx
 			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
 					+ "$Select_GraphicsType*FUNCTION*Omo*vis_con SET 13 \0", print_writers);
 			rowId = 0;
+			plyr_count = 0;
 			for(int iRow = 1; iRow <= inning.getBattingCard().size(); iRow++) {
 				switch(iRow) {
 				case 1: case 2: case 3: case 4: case 5: case 6:
@@ -1369,8 +1370,12 @@ public class FullFramesGfx
 					break;
 				}
 				
-				if(PlayingXI.get(iRow-1).getCaptainWicketKeeper().equalsIgnoreCase(CricketUtil.CAPTAIN) || 
-						PlayingXI.get(iRow-1).getCaptainWicketKeeper().equalsIgnoreCase("CAPTAIN_WICKET_KEEPER")){
+				plyr_count = plyr_count + 1;
+				
+				player = PlayingXI.stream().filter(plyr -> plyr.getPlayerId() == inning.getBattingCard().get(plyr_count-1).getPlayerId()).findAny().orElse(null);
+				
+				if(player.getCaptainWicketKeeper().equalsIgnoreCase(CricketUtil.CAPTAIN) || 
+						player.getCaptainWicketKeeper().equalsIgnoreCase("CAPTAIN_WICKET_KEEPER")){
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Batting_Card_Image" + 
 							containerName + "$Photo_" + rowId + "$Select_Captain*FUNCTION*Omo*vis_con SET 1 \0", print_writers);

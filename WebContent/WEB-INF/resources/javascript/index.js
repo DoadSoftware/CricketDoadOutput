@@ -516,10 +516,10 @@ function addItemsToList(whatToProcess,dataToProcess)
 			option.text = 'Aramco POTD';
 			select.appendChild(option);
 			
-			/*option = document.createElement('option');
+			option = document.createElement('option');
 			option.value = 'CRICTOS';
 			option.text = 'Crictos';
-			select.appendChild(option);*/
+			select.appendChild(option);
 			
 			option = document.createElement('option');
 			option.value = 'THIS_MATCH_SIXES';
@@ -703,6 +703,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 			break;
 		
 		case 'Alt_d':
+			header_text.innerHTML = 'LT - DLS PAR SCORE';
+		
 			select = document.createElement('select');
 			select.id = 'selectSponsor';
 			select.name = select.id;
@@ -729,6 +731,15 @@ function addItemsToList(whatToProcess,dataToProcess)
 			break;
 			
 		case 'Shift_K': case 'F4':
+			switch(whatToProcess) {
+			case 'F4':
+				header_text.innerHTML = 'FF ALL PARTNERSHIP';
+				break;
+			case 'Shift_K':
+				header_text.innerHTML = 'FF CURRENT PARTNERSHIP';
+				break;
+			}
+		
 			select = document.createElement('select');
 			select.id = 'selectSponsor';
 			select.name = select.id;
@@ -751,7 +762,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 
 		case 'Control_h': case 'Control_g': case 'Control_y':
 			header_text.innerHTML = 'POWERPLAY';
-			
+
 			select = document.createElement('select');
 			select.id = 'selectPowerplay';
 			select.name = select.id;
@@ -776,6 +787,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1
 			break;	
+			
 		case 's':
 			
 			header_text.innerHTML = '50-100 SPLIT';
@@ -935,9 +947,15 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 		case 'Control_F8': case 'Alt_F9': case 'Alt_F12': case 'Alt_F10':
 			switch(whatToProcess) {
+			case 'Control_F8':
+				header_text.innerHTML = 'FF PLAYING XI';
+				break;
 			case 'Alt_F12':
 				header_text.innerHTML = 'TEAM 0,1,2';
-				break;		
+				break;	
+			case 'Alt_F10':
+				header_text.innerHTML = 'SINGLE TEAM (THIS SERIES)';
+				break;
 			}
 			select = document.createElement('select');
 			select.id = 'selectTeams';
@@ -1236,7 +1254,16 @@ function addItemsToList(whatToProcess,dataToProcess)
 			break;
 			
 		case 'Control_m': case 'Control_F11': //MATCH-PROMO - PreviousMatchSummary 
-		
+			
+			switch(whatToProcess) {
+			case 'Control_m':
+				header_text.innerHTML = 'FF MATCH PROMO';
+				break;
+			case 'Control_F11':
+				header_text.innerHTML = 'FF PREVIOUS MATCH SUMMARY';
+				break;
+			}
+			
 			select = document.createElement('select');
 			select.id = 'selectMatchPromo';
 			select.name = select.id;
@@ -1778,7 +1805,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 		case 'F8': case 'Alt_F8'://NameSuper Player
 			switch(whatToProcess){
 				case 'F8':
-					header_text.innerHTML = 'NAMESUPER PLAYER';
+					header_text.innerHTML = 'HOME TEAM NAMESUPER PLAYER';
 					
 					select = document.createElement('select');
 					select.style = 'width:100px';
@@ -1804,7 +1831,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 					cellCount = cellCount + 1;
 					break;
 				case 'Alt_F8':
-					header_text.innerHTML = 'NAMESUPER PLAYER';
+					header_text.innerHTML = 'AWAY TEAM NAMESUPER PLAYER';
 					
 					select = document.createElement('select');
 					select.style = 'width:100px';

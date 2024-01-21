@@ -27,9 +27,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import com.cricket.captions.Animation;
+import com.cricket.captions.BugsAndMiniGfx;
 import com.cricket.captions.Caption;
 import com.cricket.captions.Constants;
 import com.cricket.captions.FullFramesGfx;
+import com.cricket.captions.InfobarGfx;
 import com.cricket.captions.LowerThirdGfx;
 import com.cricket.captions.Scene;
 import com.cricket.containers.Infobar;
@@ -200,6 +202,11 @@ public class IndexController
 			session_match.getSetup().setMatchFileTimeStamp(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
 			
 			GetVariousDBData(session_configuration);
+			this_caption = new Caption(print_writers, session_configuration, session_statistics,cricketService.getAllStatsType(), 
+					cricket_matches, session_name_super,session_bugs,session_infoBarStats,session_fixture, session_team, session_ground,session_variousText,
+					new FullFramesGfx(),new LowerThirdGfx(), new InfobarGfx(), new BugsAndMiniGfx(), 1, "", "-",past_tournament_stats,session_dls);
+			this_caption.this_infobarGfx.previous_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixes("COMBINED_PAST_CURRENT_MATCH_DATA", 
+					cricket_matches, session_match, null).getTournament_sixes());
 			
 			show_speed = true;
 			
@@ -233,7 +240,6 @@ public class IndexController
 			return JSONObject.fromObject(session_configuration).toString();
 			
 		case "RE_READ_DATA":
-
 			GetVariousDBData(session_configuration);
 			return JSONObject.fromObject(session_match).toString();
 			
@@ -447,19 +453,9 @@ public class IndexController
 			session_bugs = cricketService.getBugs();
 			session_infoBarStats = cricketService.getInfobarStats();
 			session_variousText = cricketService.getVariousTexts();
+			session_fixture =  CricketFunctions.processAllFixtures(cricketService);
 			if(new File(CricketUtil.CRICKET_DIRECTORY + "ParScores BB.html").exists()) {
 				session_dls = CricketFunctions.populateDuckWorthLewis(session_match);
-			}
-			
-			switch (config.getBroadcaster()) {
-			case Constants.ICC_U19_2023:
-				session_fixture =  CricketFunctions.processAllFixtures(cricketService);
-				this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), 
-					cricket_matches, session_name_super,session_bugs,session_infoBarStats,session_fixture, session_team, session_ground,session_variousText,
-					new FullFramesGfx(),new LowerThirdGfx(), 1, "", "-",past_tournament_stats,session_dls);
-				this_caption.this_infobarGfx.previous_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixes("COMBINED_PAST_CURRENT_MATCH_DATA", 
-					cricket_matches, session_match, null).getTournament_sixes());
-				break;
 			}
 			break;
 		}
