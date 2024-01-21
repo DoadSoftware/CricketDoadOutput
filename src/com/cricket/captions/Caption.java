@@ -70,9 +70,9 @@ public class Caption
 	
 	public Caption(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics,
 		List<StatsType> statsTypes, List<MatchAllData> tournament_matches, List<NameSuper> nameSupers,List<Bugs> bugs,
-		List<InfobarStats> infobarStats,List<Fixture> fixTures, List<Team> Teams, List<Ground> Grounds, List<VariousText> varioustText,FullFramesGfx this_fullFramesGfx,
-		LowerThirdGfx this_lowerThirdGfx, InfobarGfx this_infobarGfx, BugsAndMiniGfx this_bugsAndMiniGfx, int whichSide, String whichGraphhicsOnScreen, String slashOrDash, List<Tournament> tournament,
-		List<DuckWorthLewis> dls) {
+		List<InfobarStats> infobarStats,List<Fixture> fixTures, List<Team> Teams, List<Ground> Grounds, List<VariousText> varioustText,
+		FullFramesGfx this_fullFramesGfx,LowerThirdGfx this_lowerThirdGfx, InfobarGfx this_infobarGfx, BugsAndMiniGfx this_bugsAndMiniGfx, 
+		int whichSide, String whichGraphhicsOnScreen, String slashOrDash, List<Tournament> tournament,List<DuckWorthLewis> dls) {
 	
 		super();
 		this.print_writers = print_writers;

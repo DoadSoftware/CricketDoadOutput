@@ -201,12 +201,7 @@ public class IndexController
 				CricketUtil.MATCH + "," + CricketUtil.EVENT, session_match));			
 			session_match.getSetup().setMatchFileTimeStamp(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
 			
-			GetVariousDBData(session_configuration);
-			this_caption = new Caption(print_writers, session_configuration, session_statistics,cricketService.getAllStatsType(), 
-					cricket_matches, session_name_super,session_bugs,session_infoBarStats,session_fixture, session_team, session_ground,session_variousText,
-					new FullFramesGfx(),new LowerThirdGfx(), new InfobarGfx(), new BugsAndMiniGfx(), 1, "", "-",past_tournament_stats,session_dls);
-			this_caption.this_infobarGfx.previous_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixes("COMBINED_PAST_CURRENT_MATCH_DATA", 
-					cricket_matches, session_match, null).getTournament_sixes());
+			GetVariousDBData("NEW", session_configuration);
 			
 			show_speed = true;
 			
@@ -240,7 +235,8 @@ public class IndexController
 			return JSONObject.fromObject(session_configuration).toString();
 			
 		case "RE_READ_DATA":
-			GetVariousDBData(session_configuration);
+			
+			GetVariousDBData("UPDATE", session_configuration);
 			return JSONObject.fromObject(session_match).toString();
 			
 		case "SHOW_SPEED":
@@ -282,6 +278,13 @@ public class IndexController
 					} else {
 						this_caption.whichSide = 1;
 					}
+					this_caption.PopulateGraphics(valueToProcess, session_match);
+					this_animation.caption = this_caption;
+					if(this_caption.status.equalsIgnoreCase(Constants.OK)) {
+						processAnimations("ANIMATE-IN-GRAPHICS", session_configuration, valueToProcess, print_writers);
+					} else {
+						return JSONObject.fromObject(this_caption).toString();
+					}
 					break;
 				default:
 					switch (session_configuration.getBroadcaster()) {
@@ -316,57 +319,36 @@ public class IndexController
 						}
 						this_caption.whichSide = 2;
 					}
-					break;
-				}
-				this_caption.PopulateGraphics(valueToProcess, session_match);
-				this_animation.caption = this_caption;
-				//Previews
-				switch (this_animation.getTypeOfGraphicsOnScreen(session_configuration, valueToProcess)) {
-				case Constants.FULL_FRAMER:
-					this_animation.processFullFramesPreview(valueToProcess, print_writers, this_caption.whichSide, 
-						session_configuration, this_animation.whichGraphicOnScreen);
-					break;
-				case Constants.LOWER_THIRD: 
-				case Constants.NAME_SUPERS + Constants.LOWER_THIRD:
-				case Constants.BOUNDARIES + Constants.LOWER_THIRD:
-					this_animation.processL3Preview(valueToProcess, print_writers, this_caption.whichSide, session_configuration);
-					break;
-				case Constants.BUGS:
-					this_animation.processBugsPreview(valueToProcess, print_writers, this_caption.whichSide, 
-						session_configuration, this_animation.whichGraphicOnScreen);
-					break;
-				case Constants.MINIS:
-					this_animation.processMiniPreview(valueToProcess, print_writers, this_caption.whichSide, 
-						session_configuration, this_animation.whichGraphicOnScreen);
+					this_caption.PopulateGraphics(valueToProcess, session_match);
+					this_animation.caption = this_caption;
+					//Previews
+					switch (this_animation.getTypeOfGraphicsOnScreen(session_configuration, valueToProcess)) {
+					case Constants.FULL_FRAMER:
+						this_animation.processFullFramesPreview(valueToProcess, print_writers, this_caption.whichSide, 
+							session_configuration, this_animation.whichGraphicOnScreen);
 						break;
+					case Constants.LOWER_THIRD: 
+					case Constants.NAME_SUPERS + Constants.LOWER_THIRD:
+					case Constants.BOUNDARIES + Constants.LOWER_THIRD:
+						this_animation.processL3Preview(valueToProcess, print_writers, this_caption.whichSide, session_configuration);
+						break;
+					case Constants.BUGS:
+						this_animation.processBugsPreview(valueToProcess, print_writers, this_caption.whichSide, 
+							session_configuration, this_animation.whichGraphicOnScreen);
+						break;
+					case Constants.MINIS:
+						this_animation.processMiniPreview(valueToProcess, print_writers, this_caption.whichSide, 
+							session_configuration, this_animation.whichGraphicOnScreen);
+							break;
+					}
+					break;
 				}
 				return JSONObject.fromObject(this_caption).toString();
 			}
 			else if(whatToProcess.contains("ANIMATE-IN-GRAPHICS") || whatToProcess.contains("ANIMATE-OUT-GRAPHICS")
 				|| whatToProcess.contains("ANIMATE-OUT-INFOBAR") || whatToProcess.contains("QUIDICH-COMMANDS")) {
-				
-				if(whatToProcess.contains("ANIMATE-IN-GRAPHICS")) {
-					switch(this_animation.getTypeOfGraphicsOnScreen(session_configuration,valueToProcess)){
-					case Constants.INFO_BAR:
-						this_animation.ChangeOn(valueToProcess, print_writers, session_configuration);
-						TimeUnit.MILLISECONDS.sleep(2000);
-						this_caption.whichSide = 1;
-						this_caption.PopulateGraphics(valueToProcess, session_match);
-						this_animation.CutBack(valueToProcess, print_writers, session_configuration);
-						break;
-					default:
-						if(this_animation.whichGraphicOnScreen.isEmpty()) {
-							this_animation.AnimateIn(valueToProcess, print_writers, session_configuration);
-						} else { // Change on
-							this_animation.ChangeOn(valueToProcess, print_writers, session_configuration);
-							TimeUnit.MILLISECONDS.sleep(2000);
-							this_caption.whichSide = 1;
-							this_caption.PopulateGraphics(valueToProcess, session_match);
-							this_animation.CutBack(valueToProcess, print_writers, session_configuration);
-						}
-						break;
-					}
-				} else if(whatToProcess.contains("ANIMATE-OUT-GRAPHICS")) {
+
+				if(whatToProcess.contains("ANIMATE-OUT-GRAPHICS")) {
 					switch (valueToProcess.split(",")[0]) {
 					case "Alt_p":
 						if(!this_animation.whichGraphicOnScreen.isEmpty()) {
@@ -374,21 +356,96 @@ public class IndexController
 								this_animation.whichGraphicOnScreen + " is on screen";
 							return JSONObject.fromObject(this_animation).toString();
 						}
-						this_animation.AnimateOut(valueToProcess, print_writers, session_configuration);
-						break;
-					default:
-						this_animation.AnimateOut(this_animation.whichGraphicOnScreen, print_writers, session_configuration);
 						break;
 					}
-				}else if(whatToProcess.contains("ANIMATE-OUT-INFOBAR")) {
-					this_animation.AnimateOut("F12,", print_writers, session_configuration);
-				}else if(whatToProcess.contains("QUIDICH-COMMANDS")) {
-					this_animation.processQuidichCommands(valueToProcess, print_writers, session_configuration);
 				}
+				
+				processAnimations(whatToProcess, session_configuration, valueToProcess, print_writers);
+				
+//				if(whatToProcess.contains("ANIMATE-IN-GRAPHICS")) {
+//					switch(this_animation.getTypeOfGraphicsOnScreen(session_configuration,valueToProcess)){
+//					case Constants.INFO_BAR:
+//						this_animation.ChangeOn(valueToProcess, print_writers, session_configuration);
+//						TimeUnit.MILLISECONDS.sleep(2000);
+//						this_caption.whichSide = 1;
+//						this_caption.PopulateGraphics(valueToProcess, session_match);
+//						this_animation.CutBack(valueToProcess, print_writers, session_configuration);
+//						break;
+//					default:
+//						if(this_animation.whichGraphicOnScreen.isEmpty()) {
+//							this_animation.AnimateIn(valueToProcess, print_writers, session_configuration);
+//						} else { // Change on
+//							this_animation.ChangeOn(valueToProcess, print_writers, session_configuration);
+//							TimeUnit.MILLISECONDS.sleep(2000);
+//							this_caption.whichSide = 1;
+//							this_caption.PopulateGraphics(valueToProcess, session_match);
+//							this_animation.CutBack(valueToProcess, print_writers, session_configuration);
+//						}
+//						break;
+//					}
+//				} else if(whatToProcess.contains("ANIMATE-OUT-GRAPHICS")) {
+//					switch (valueToProcess.split(",")[0]) {
+//					case "Alt_p":
+//						if(!this_animation.whichGraphicOnScreen.isEmpty()) {
+//							this_animation.status = "Cannot animate out bugs while " + 
+//								this_animation.whichGraphicOnScreen + " is on screen";
+//							return JSONObject.fromObject(this_animation).toString();
+//						}
+//						this_animation.AnimateOut(valueToProcess, print_writers, session_configuration);
+//						break;
+//					default:
+//						this_animation.AnimateOut(this_animation.whichGraphicOnScreen, print_writers, session_configuration);
+//						break;
+//					}
+//				}else if(whatToProcess.contains("ANIMATE-OUT-INFOBAR")) {
+//					this_animation.AnimateOut("F12,", print_writers, session_configuration);
+//				}else if(whatToProcess.contains("QUIDICH-COMMANDS")) {
+//					this_animation.processQuidichCommands(valueToProcess, print_writers, session_configuration);
+//				}
 			} else if(whatToProcess.contains("CLEAR-ALL") || whatToProcess.contains("CLEAR-ALL-WITH-INFOBAR")) {
 				this_animation.ResetAnimation(whatToProcess, print_writers, session_configuration);
 			}
 			return JSONObject.fromObject(this_animation).toString();
+		}
+	}
+	public void processAnimations(String whatToProcess, Configuration session_configuration, String valueToProcess, 
+		List<PrintWriter> print_writers) throws InterruptedException, NumberFormatException, ParseException, 
+		CloneNotSupportedException, IOException, JAXBException
+	{
+		if(whatToProcess.contains("ANIMATE-IN-GRAPHICS")) {
+			switch(this_animation.getTypeOfGraphicsOnScreen(session_configuration,valueToProcess)){
+			case Constants.INFO_BAR:
+				this_animation.ChangeOn(valueToProcess, print_writers, session_configuration);
+				TimeUnit.MILLISECONDS.sleep(2000);
+				this_caption.whichSide = 1;
+				this_caption.PopulateGraphics(valueToProcess, session_match);
+				this_animation.CutBack(valueToProcess, print_writers, session_configuration);
+				break;
+			default:
+				if(this_animation.whichGraphicOnScreen.isEmpty()) {
+					this_animation.AnimateIn(valueToProcess, print_writers, session_configuration);
+				} else { // Change on
+					this_animation.ChangeOn(valueToProcess, print_writers, session_configuration);
+					TimeUnit.MILLISECONDS.sleep(2000);
+					this_caption.whichSide = 1;
+					this_caption.PopulateGraphics(valueToProcess, session_match);
+					this_animation.CutBack(valueToProcess, print_writers, session_configuration);
+				}
+				break;
+			}
+		} else if(whatToProcess.contains("ANIMATE-OUT-GRAPHICS")) {
+			switch (valueToProcess.split(",")[0]) {
+			case "Alt_p":
+				this_animation.AnimateOut(valueToProcess, print_writers, session_configuration);
+				break;
+			default:
+				this_animation.AnimateOut(this_animation.whichGraphicOnScreen, print_writers, session_configuration);
+				break;
+			}
+		}else if(whatToProcess.contains("ANIMATE-OUT-INFOBAR")) {
+			this_animation.AnimateOut("F12,", print_writers, session_configuration);
+		}else if(whatToProcess.contains("QUIDICH-COMMANDS")) {
+			this_animation.processQuidichCommands(valueToProcess, print_writers, session_configuration);
 		}
 	}
 	@ModelAttribute("session_configuration")
@@ -429,7 +486,7 @@ public class IndexController
 		return null;
 	}
 	
-	public void GetVariousDBData(Configuration config) throws StreamReadException, DatabindException, 
+	public void GetVariousDBData(String typeOfUpdate, Configuration config) throws StreamReadException, DatabindException, 
 		IllegalAccessException, InvocationTargetException, JAXBException, IOException, CloneNotSupportedException, InterruptedException
 	{
 		switch (config.getBroadcaster()) {
@@ -457,6 +514,21 @@ public class IndexController
 			if(new File(CricketUtil.CRICKET_DIRECTORY + "ParScores BB.html").exists()) {
 				session_dls = CricketFunctions.populateDuckWorthLewis(session_match);
 			}
+			
+			switch (typeOfUpdate) {
+			case "NEW":
+				this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), 
+					cricket_matches, session_name_super,session_bugs,session_infoBarStats,session_fixture, session_team, session_ground,session_variousText,
+					new FullFramesGfx(),new LowerThirdGfx(), new InfobarGfx(), new BugsAndMiniGfx(), 1, "", "-",past_tournament_stats,session_dls);
+				this_caption.this_infobarGfx.previous_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixes("COMBINED_PAST_CURRENT_MATCH_DATA", 
+					cricket_matches, session_match, null).getTournament_sixes());
+				break;
+			case "UPDATE":
+				//DJ to update FF, L3rd, Infobar name supers, ground, bugs, various text, etc..
+				this_caption.this_lowerThirdGfx.namesuper = (NameSuper) session_name_super;
+				break;
+			}
+			
 			break;
 		}
 	}

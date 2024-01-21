@@ -612,7 +612,6 @@ public class LowerThirdGfx
 
 	public String populateLTNameSuperPlayer(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws InterruptedException
 	{
-		
 		player =  CricketFunctions.getPlayerFromMatchData(Integer.valueOf(whatToProcess.split(",")[2]), matchAllData);
 		team = Teams.stream().filter(tm -> tm.getTeamId() == player.getTeamId()).findAny().orElse(null);
 		
@@ -641,7 +640,7 @@ public class LowerThirdGfx
 	public String populateLTNameSuper(String whatToProcess,int WhichSide) throws InterruptedException
 	{
 		namesuper = this.nameSupers.stream().filter(ns -> ns.getNamesuperId() == Integer.valueOf(whatToProcess.split(",")[2]))
-				.findAny().orElse(null);
+			.findAny().orElse(null);
 		
 		if(namesuper.getSurname() == null) {
 			surName = "";
