@@ -229,7 +229,7 @@ public class Caption
 			case "m": //Match id
 				status = this_fullFramesGfx.populateFFMatchId(whichSide,whatToProcess.split(",")[0], matchAllData);
 				break;
-			case "p": // Points Table
+			case "p": case "Control_p":// Points Table
 				this_fullFramesGfx.WhichGroup = whatToProcess.split(",")[2];
 				status = this_fullFramesGfx.populateFFPointsTable(whichSide,whatToProcess.split(",")[0], matchAllData, 0);
 				break;
@@ -284,6 +284,9 @@ public class Caption
 				break;
 			case "Control_k": //Curr Partnership
 				status = this_bugsAndMiniGfx.bugsCurrPartnership(whatToProcess,matchAllData,whichSide);
+				break;
+			case "Shift_F4": //Curr Partnership
+				status = this_bugsAndMiniGfx.bugMultiPartnership(whatToProcess,matchAllData,whichSide);
 				break;
 			case "Control_m": //MATCH PROMO
 				status = this_fullFramesGfx.populateFFMatchPromo(whichSide, whatToProcess,matchAllData);
