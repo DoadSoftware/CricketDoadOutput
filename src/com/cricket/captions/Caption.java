@@ -118,6 +118,9 @@ public class Caption
 				status = this_fullFramesGfx.PopulateBowlingCardFF(whichSide, whatToProcess.split(",")[0], matchAllData, 
 					Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
+			case "Control_F2": // Bowling FF
+				status = this_lowerThirdGfx.PopulateLTBowlingCard(whatToProcess,whichSide, matchAllData);
+				break;	
 			case "F4": //All Partnership
 				this_fullFramesGfx.whichSponsor = whatToProcess.split(",")[2];
 				status = this_fullFramesGfx.populatePartnership(whichSide, whatToProcess.split(",")[0], matchAllData, 

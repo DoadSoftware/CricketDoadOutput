@@ -56,7 +56,7 @@ public class Animation
 			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
 			case "Shift_F3": case "s": case "d": case "e": case "q": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "Control_g": case "Control_h": case "Control_p": case "j": case "Control_F6": case "Shift_F6": 
-			case "Control_s": case "Alt_d": case "Control_f": case "Control_q": case "l": case "n": case "a":
+			case "Control_s": case "Alt_d": case "Control_f": case "Control_q": case "l": case "n": case "a": case "Control_F2":
 				
 				switch (whatToProcess.split(",")[0]) {
 				 case "Alt_F8": case "F8": case "F10": case "j": // Name super L3rd
@@ -199,7 +199,7 @@ public class Animation
 				break;
 			
 			//NameSuperDB, HOWOUT, LTBatProfile, NameSuperPlayer, LtBallProfile, BatThisMatch, BallThisMatch
-			case "F5": case "F6": case "F7": case "F9": case "F11":
+			case "F5": case "F6": case "F7": case "F9": case "F11": case "Control_F2":
 			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
 			case "Shift_F3": case "s": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "Control_g": case "Control_h": case "Control_p": case "Control_F6": case "Shift_F6": case "Control_s":
@@ -454,7 +454,7 @@ public class Animation
 				AnimateIn("ArrowUp,", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;
-			case "F5": case "F6": case "F7": case "F9": case "F11":
+			case "F5": case "F6": case "F7": case "F9": case "F11": case "Control_F2":
 			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
 			case "Shift_F3": case "s": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "Control_g": case "Control_h": case "Control_p": case "Control_F6": case "Shift_F6": case "Control_s":
@@ -589,7 +589,7 @@ public class Animation
 					lastNumberOfRows = caption.this_fullFramesGfx.numberOfRows;
 				}
 				break;
-			case "F5": case "F6": case "F7": case "F9": case "F11": case "l": case "n": case "a":
+			case "F5": case "F6": case "F7": case "F9": case "F11": case "l": case "n": case "a": case "Control_F2":
 			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
 			case "Shift_F3": case "s": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "Control_g": case "Control_h": case "Control_p": case "Control_F6": case "Shift_F6": case "Control_s": case "Control_f":
@@ -660,7 +660,7 @@ public class Animation
 				}
 				break;
 			case "F5": case "F6": case "F7": case "F9": case "F11": case "Control_g": case "Control_h": case "Control_p":
-			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
+			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k": case "Control_F2":
 			case "Control_F6": case "Shift_F6": case "Control_s": case "Control_f": case "l": case "n": case "a":
 				processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "SHOW 0.0");
 				this.whichGraphicOnScreen = whatToProcess;
@@ -1109,7 +1109,7 @@ public class Animation
 		case Constants.ICC_U19_2023:
 			if(whatToProcess.contains(",")) {
 				switch(whatToProcess.split(",")[0]) {
-				case "F5": case "F6": case "F7": case "F9": case "F11":
+				case "F5": case "F6": case "F7": case "F9": case "F11": case "Control_F2":
 				case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
 				case "Shift_F3": case "s": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 				case "Control_g": case "Control_h": case "Control_p": case "Control_F6": case "Shift_F6": case "Control_s":
@@ -1127,7 +1127,7 @@ public class Animation
 				}
 				if(whichside == 2) {
 					switch (whatToProcess.split(",")[0]) {
-					case "F5": case "F6": case "F7": case "F9": case "F11": case "l": case "n": case "a":
+					case "F5": case "F6": case "F7": case "F9": case "F11": case "l": case "n": case "a": case "Control_F2":
 					case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
 					case "Shift_F3": case "s": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 					case "Control_g": case "Control_h": case "Control_p": case "Control_F6": case "Shift_F6": case "Control_s": case "Control_f":
