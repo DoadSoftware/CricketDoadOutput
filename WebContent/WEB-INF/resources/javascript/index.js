@@ -272,7 +272,9 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 							$("#captions_div").show();
 						}
 					} else {
-						alert(data.status);
+						if(data.status != 'YES'){
+							alert(data.status);
+						}	
 						$("#select_graphic_options_div").empty();
 						document.getElementById('select_graphic_options_div').style.display = 'none';
 						$("#captions_div").show();

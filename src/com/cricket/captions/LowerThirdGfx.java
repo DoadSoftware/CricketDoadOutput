@@ -43,7 +43,6 @@ public class LowerThirdGfx
 	public List<Tournament> tournaments;
 	public List<MatchAllData> tournament_matches;
 	public List<NameSuper> nameSupers;
-	public List<Fixture> fixTures;
 	public List<Team> Teams;
 	public List<Partnership> partnershipList;
 	public List<Ground> Grounds;
@@ -79,7 +78,7 @@ public class LowerThirdGfx
 	}
 	
 	public LowerThirdGfx(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics,
-			List<StatsType> statsTypes, List<MatchAllData> tournament_matches, List<NameSuper> nameSupers,List<Fixture> fixTures, 
+			List<StatsType> statsTypes, List<MatchAllData> tournament_matches, List<NameSuper> nameSupers, 
 			List<Team> Teams, List<Ground> Grounds, List<Tournament> tournaments,List<DuckWorthLewis> dls) {
 		super();
 		this.print_writers = print_writers;
@@ -88,7 +87,6 @@ public class LowerThirdGfx
 		this.statsTypes = statsTypes;
 		this.tournament_matches = tournament_matches;
 		this.nameSupers = nameSupers;
-		this.fixTures = fixTures;
 		this.Teams = Teams;
 		this.Grounds = Grounds;
 		this.tournaments = tournaments;
@@ -1506,8 +1504,8 @@ public class LowerThirdGfx
 			String pp2="P2"+","+pp_ovrs.split(",")[1]+","+this_data_str.get(2)+","+this_data_str.get(3);
 			String pp3="P3"+","+pp_ovrs.split(",")[2]+","+this_data_str.get(4)+","+this_data_str.get(5);
 			
-			lowerThird = new LowerThird("POWERPLAY COMPARISON","", "",matchAllData.getSetup().getHomeTeam().getTeamName4(), "","", 
-				4, matchAllData.getSetup().getAwayTeam().getTeamName4(),"",new String[]{"   ","OVERS",inning.getBowling_team().getTeamName1(),inning.getBatting_team().getTeamName1()},
+			lowerThird = new LowerThird("POWERPLAY COMPARISON","", "",matchAllData.getSetup().getHomeTeam().getTeamName4(), matchAllData.getSetup().getAwayTeam().getTeamName4(),"", 
+				4, "FLAG","",new String[]{"   ","OVERS",inning.getBowling_team().getTeamName1(),inning.getBatting_team().getTeamName1()},
 				new String[]{"",pp1,pp2,pp3},
 				null,null,
 				new String[] {"-542.0","-328.0","4.0","409.0"});
@@ -2154,7 +2152,7 @@ public class LowerThirdGfx
 							"$Select_Flags$Flag_Flag" + containerName + "$img_Shadow*ACTIVE SET 1 \0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide +
 							"$Select_Flags$Flag_Flag" + containerName + "$img_Shadow2*ACTIVE SET 0 \0", print_writers);
-				}else if(lowerThird.getWhichSponsor().equalsIgnoreCase("NEP")) {
+				}else if(lowerThird.getScoreText().equalsIgnoreCase("NEP")) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide +
 							"$Select_Flags$Flag_Flag" + containerName + "$img_Shadow*ACTIVE SET 0 \0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide +
@@ -2169,7 +2167,7 @@ public class LowerThirdGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide + 
 						"$Select_Flags$Flag_Flag" + containerName + "$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + lowerThird.getSubTitle() + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide + 
-						"$Select_Flags$Flag_Flag" + containerName + "$img_Flag2*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + lowerThird.getWhichSponsor() + "\0", print_writers);
+						"$Select_Flags$Flag_Flag" + containerName + "$img_Flag2*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + lowerThird.getScoreText() + "\0", print_writers);
 				
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Top_Line$Data$Side_" + WhichSide 
@@ -3602,11 +3600,11 @@ public class LowerThirdGfx
 				
 				ltWhichContainer = "$All_NameSupers";
 				if(lowerThird.getWhichTeamFlag().isEmpty() && lowerThird.getWhichSponsor().isEmpty()) {
-					LT_Flag_Keys = "50.0";
-					LT_Flag_Object = "990";
+					LT_Flag_Keys = "58.0";
+					LT_Flag_Object = "1040";
 					
-					slave_Flag_Keys = "50.0";
-					slave_Flag_Object = "990";
+					slave_Flag_Keys = "58.0";
+					slave_Flag_Object = "1040";
 				} else if(!lowerThird.getWhichTeamFlag().isEmpty() && !lowerThird.getWhichSponsor().isEmpty() && 
 						!lowerThird.getWhichSponsor().equalsIgnoreCase("HASHTAG")) {
 					LT_Flag_Keys = "20.0";
@@ -3640,8 +3638,8 @@ public class LowerThirdGfx
 						break;
 					default:
 						if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
-							slave_Flag_Keys = "50.0";
-							slave_Flag_Object = "990";
+							slave_Flag_Keys = "58.0";
+							slave_Flag_Object = "1040";
 						}
 						LT_Flag_Keys = "31.0";
 						LT_Flag_Object = "810";

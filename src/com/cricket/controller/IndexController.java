@@ -282,10 +282,11 @@ public class IndexController
 					this_animation.caption = this_caption;
 					if(this_caption.status.equalsIgnoreCase(Constants.OK)) {
 						processAnimations("ANIMATE-IN-GRAPHICS", session_configuration, valueToProcess, print_writers);
+						this_caption.status = CricketUtil.YES;
+						return JSONObject.fromObject(this_caption).toString();
 					} else {
 						return JSONObject.fromObject(this_caption).toString();
 					}
-					break;
 				default:
 					switch (session_configuration.getBroadcaster()) {
 					case Constants.ICC_U19_2023:
@@ -361,47 +362,6 @@ public class IndexController
 				}
 				
 				processAnimations(whatToProcess, session_configuration, valueToProcess, print_writers);
-				
-//				if(whatToProcess.contains("ANIMATE-IN-GRAPHICS")) {
-//					switch(this_animation.getTypeOfGraphicsOnScreen(session_configuration,valueToProcess)){
-//					case Constants.INFO_BAR:
-//						this_animation.ChangeOn(valueToProcess, print_writers, session_configuration);
-//						TimeUnit.MILLISECONDS.sleep(2000);
-//						this_caption.whichSide = 1;
-//						this_caption.PopulateGraphics(valueToProcess, session_match);
-//						this_animation.CutBack(valueToProcess, print_writers, session_configuration);
-//						break;
-//					default:
-//						if(this_animation.whichGraphicOnScreen.isEmpty()) {
-//							this_animation.AnimateIn(valueToProcess, print_writers, session_configuration);
-//						} else { // Change on
-//							this_animation.ChangeOn(valueToProcess, print_writers, session_configuration);
-//							TimeUnit.MILLISECONDS.sleep(2000);
-//							this_caption.whichSide = 1;
-//							this_caption.PopulateGraphics(valueToProcess, session_match);
-//							this_animation.CutBack(valueToProcess, print_writers, session_configuration);
-//						}
-//						break;
-//					}
-//				} else if(whatToProcess.contains("ANIMATE-OUT-GRAPHICS")) {
-//					switch (valueToProcess.split(",")[0]) {
-//					case "Alt_p":
-//						if(!this_animation.whichGraphicOnScreen.isEmpty()) {
-//							this_animation.status = "Cannot animate out bugs while " + 
-//								this_animation.whichGraphicOnScreen + " is on screen";
-//							return JSONObject.fromObject(this_animation).toString();
-//						}
-//						this_animation.AnimateOut(valueToProcess, print_writers, session_configuration);
-//						break;
-//					default:
-//						this_animation.AnimateOut(this_animation.whichGraphicOnScreen, print_writers, session_configuration);
-//						break;
-//					}
-//				}else if(whatToProcess.contains("ANIMATE-OUT-INFOBAR")) {
-//					this_animation.AnimateOut("F12,", print_writers, session_configuration);
-//				}else if(whatToProcess.contains("QUIDICH-COMMANDS")) {
-//					this_animation.processQuidichCommands(valueToProcess, print_writers, session_configuration);
-//				}
 			} else if(whatToProcess.contains("CLEAR-ALL") || whatToProcess.contains("CLEAR-ALL-WITH-INFOBAR")) {
 				this_animation.ResetAnimation(whatToProcess, print_writers, session_configuration);
 			}
@@ -524,11 +484,41 @@ public class IndexController
 					cricket_matches, session_match, null).getTournament_sixes());
 				break;
 			case "UPDATE":
-				//DJ to update FF, L3rd, Infobar name supers, ground, bugs, various text, etc..
-				this_caption.this_lowerThirdGfx.namesuper = (NameSuper) session_name_super;
+				//Bug and Mini
+				this_caption.this_bugsAndMiniGfx.bugs = session_bugs;
+				this_caption.this_bugsAndMiniGfx.Teams = session_team;
+				this_caption.this_bugsAndMiniGfx.VariousText = session_variousText;
+				
+				//InfoBar
+				this_caption.this_infobarGfx.statistics = session_statistics;
+				this_caption.this_infobarGfx.statsTypes = cricketService.getAllStatsType();
+				this_caption.this_infobarGfx.infobarStats  = session_infoBarStats;
+				this_caption.this_infobarGfx.Grounds = session_ground;
+				this_caption.this_infobarGfx.tournament_matches = cricket_matches;
+				this_caption.this_infobarGfx.dls  = session_dls;
+				
+				//LowerThird
+				this_caption.this_lowerThirdGfx.statistics = session_statistics;
+				this_caption.this_lowerThirdGfx.statsTypes = cricketService.getAllStatsType();
+				this_caption.this_lowerThirdGfx.tournament_matches = cricket_matches;
+				this_caption.this_lowerThirdGfx.nameSupers = session_name_super;
+				this_caption.this_lowerThirdGfx.Teams = session_team;
+				this_caption.this_lowerThirdGfx.Grounds = session_ground;
+				this_caption.this_lowerThirdGfx.tournaments = past_tournament_stats;
+				this_caption.this_lowerThirdGfx.dls = session_dls;
+				
+				//FullFrames
+				this_caption.this_fullFramesGfx.statistics = session_statistics;
+				this_caption.this_fullFramesGfx.statsTypes = cricketService.getAllStatsType();
+				this_caption.this_fullFramesGfx.tournament_matches = cricket_matches;
+				this_caption.this_fullFramesGfx.fixTures = session_fixture;
+				this_caption.this_fullFramesGfx.Teams = session_team;
+				this_caption.this_fullFramesGfx.Grounds = session_ground;
+				this_caption.this_fullFramesGfx.tournaments = past_tournament_stats;
+				this_caption.this_fullFramesGfx.VariousText = session_variousText;
+				
 				break;
 			}
-			
 			break;
 		}
 	}

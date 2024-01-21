@@ -22,7 +22,6 @@ import com.cricket.model.Ground;
 import com.cricket.model.Inning;
 import com.cricket.model.LeagueTable;
 import com.cricket.model.MatchAllData;
-import com.cricket.model.NameSuper;
 import com.cricket.model.OverByOverData;
 import com.cricket.model.Partnership;
 import com.cricket.model.Player;
@@ -48,7 +47,6 @@ public class FullFramesGfx
 	public List<StatsType> statsTypes;
 	public List<Tournament> tournaments;
 	public List<MatchAllData> tournament_matches;
-	public List<NameSuper> nameSupers;
 	public List<Fixture> fixTures;
 	public List<Team> Teams;
 	public List<Ground> Grounds;
@@ -81,7 +79,7 @@ public class FullFramesGfx
 	}
 	
 	public FullFramesGfx(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics,
-			List<StatsType> statsTypes, List<MatchAllData> tournament_matches, List<NameSuper> nameSupers,List<Fixture> fixTures, 
+			List<StatsType> statsTypes, List<MatchAllData> tournament_matches,List<Fixture> fixTures, 
 			List<Team> Teams, List<Ground> Grounds,List<Tournament> tournaments, List<VariousText> VariousText) {
 		super();
 		this.print_writers = print_writers;
@@ -89,7 +87,6 @@ public class FullFramesGfx
 		this.statistics = statistics;
 		this.statsTypes = statsTypes;
 		this.tournament_matches = tournament_matches;
-		this.nameSupers = nameSupers;
 		this.fixTures = fixTures;
 		this.Teams = Teams;
 		this.Grounds = Grounds;

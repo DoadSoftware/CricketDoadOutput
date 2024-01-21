@@ -38,7 +38,6 @@ public class Caption
 	public Configuration config;
 	public List<Statistics> statistics;
 	public List<StatsType> statsTypes;
-	public List<Tournament> tournaments;
 	public List<MatchAllData> tournament_matches;
 	public List<Tournament> tournament;
 	public List<NameSuper> nameSupers;
@@ -48,6 +47,7 @@ public class Caption
 	public List<Bugs> bugs;
 	public List<InfobarStats> infobarStats;
 	public List<VariousText> VariousText;
+	public List<DuckWorthLewis> dls;
 	
 	public BattingCard battingCard;
 	public Inning inning;
@@ -59,8 +59,6 @@ public class Caption
 	public Fixture fixture;
 	public Team team;
 
-	public List<DuckWorthLewis> dls;
-	
 	public int FirstPlayerId, SecondPlayerId, whichSide;
 	public String WhichProfile, status;
 	
@@ -89,16 +87,17 @@ public class Caption
 		this.tournament = tournament;
 		this.VariousText = varioustText;
 		this.dls = dls;
-		this.this_fullFramesGfx = new FullFramesGfx(print_writers, config, statistics, statsTypes, tournament_matches,
-				nameSupers, fixTures, Teams, Grounds,tournament, VariousText);
+		this.this_fullFramesGfx = new FullFramesGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
+				fixTures, Teams, Grounds,tournament, VariousText);
 		this.this_lowerThirdGfx = new LowerThirdGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
-				nameSupers, fixTures, Teams, Grounds, tournament, dls);
+				nameSupers, Teams, Grounds, tournament, dls);
 		this.whichSide = whichSide;
 		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers, statistics, statsTypes, infobarStats, Grounds, 
 				tournament_matches, dls);
-		this.this_bugsAndMiniGfx = new BugsAndMiniGfx(print_writers, config, tournament_matches, bugs, Teams, Grounds,VariousText);
+		this.this_bugsAndMiniGfx = new BugsAndMiniGfx(print_writers, config, bugs, Teams, VariousText);
 		this.status = "";
 	}
+
 	public String getStatus() {
 		return status;
 	}

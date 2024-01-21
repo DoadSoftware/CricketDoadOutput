@@ -7,7 +7,6 @@ import com.cricket.model.BattingCard;
 import com.cricket.model.BowlingCard;
 import com.cricket.model.Bugs;
 import com.cricket.model.Configuration;
-import com.cricket.model.Ground;
 import com.cricket.model.Inning;
 import com.cricket.model.MatchAllData;
 import com.cricket.model.Partnership;
@@ -25,10 +24,8 @@ public class BugsAndMiniGfx
 	String cont_name = "";
 	public List<PrintWriter> print_writers; 
 	public Configuration config;
-	public List<MatchAllData> tournament_matches;
 	public List<Bugs> bugs;
 	public List<Team> Teams;
-	public List<Ground> Grounds;
 	public List<VariousText> VariousText;
 	
 	public BattingCard battingCard;
@@ -45,15 +42,12 @@ public class BugsAndMiniGfx
 		super();
 	}
 	
-	public BugsAndMiniGfx(List<PrintWriter> print_writers, Configuration config, List<MatchAllData> tournament_matches,
-			List<Bugs> bugs, List<Team> teams, List<Ground> grounds,List<VariousText> VariousText) {
+	public BugsAndMiniGfx(List<PrintWriter> print_writers, Configuration config, List<Bugs> bugs, List<Team> teams, List<VariousText> VariousText) {
 		super();
 		this.print_writers = print_writers;
 		this.config = config;
-		this.tournament_matches = tournament_matches;
 		this.bugs = bugs;
 		this.Teams = teams;
-		this.Grounds = grounds;
 		this.VariousText = VariousText;
 	}
 	
