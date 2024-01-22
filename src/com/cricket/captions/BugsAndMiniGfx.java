@@ -81,7 +81,6 @@ public class BugsAndMiniGfx
 		}
 		return status;
 	}
-	
 	public String bugsThirdUmpire(String whatToProcess,MatchAllData matchAllData,int WhichSide) {
 		
 		if(PopulateBugBody(WhichSide, whatToProcess,matchAllData) == Constants.OK) {
@@ -89,7 +88,6 @@ public class BugsAndMiniGfx
 		}
 		return status;
 	}
-
 	public String bugsCurrPartnership(String whatToProcess,MatchAllData matchAllData,int WhichSide) {
 		
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
@@ -114,7 +112,6 @@ public class BugsAndMiniGfx
 		}
 		return status;
 	}
-	
 	public String bugMultiPartnership(String whatToProcess,MatchAllData matchAllData,int WhichSide) {
 		
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
@@ -139,8 +136,6 @@ public class BugsAndMiniGfx
 		}
 		return status;
 	}
-	
-	
 	public String bugsDB(String whatToProcess,int WhichSide,MatchAllData matchAllData) {
 		
 		bug = this.bugs.stream().filter(bug -> bug.getBugId() == Integer.valueOf(whatToProcess.split(",")[2])).findAny().orElse(null);
@@ -235,7 +230,6 @@ public class BugsAndMiniGfx
 		}
 		return status;
 	}
-	
 	public String populatebugPowerplay(String whatToProcess,int WhichSide, MatchAllData matchAllData) {
 		if (matchAllData == null || matchAllData.getMatch() == null ||
 			matchAllData.getMatch().getInning() == null|| matchAllData.getSetup() == null) {
@@ -436,7 +430,7 @@ public class BugsAndMiniGfx
 							+ "$txt_Runs*GEOM*TEXT SET "  + battingCard.getRuns()+ "\0", print_writers);
 				}
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
-						+ "$txt_Balls*GEOM*TEXT SET " + " (" + battingCard.getBalls() + ")" + "\0", print_writers);
+						+ "$txt_Balls*GEOM*TEXT SET " + battingCard.getBalls() + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$SubText$Side" + WhichSide 
 						+ "$txt_Sub*GEOM*TEXT SET " + battingCard.getFours() +" FOURS    " + battingCard.getSixes() + " SIXES"+ "\0", print_writers);
@@ -455,7 +449,7 @@ public class BugsAndMiniGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
 						+ "$txt_Runs*GEOM*TEXT SET " + battingCard.getRuns() + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
-						+ "$txt_Balls*GEOM*TEXT SET " + "(" + battingCard.getBalls() + ")" + "\0", print_writers);
+						+ "$txt_Balls*GEOM*TEXT SET " + battingCard.getBalls() + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
 						+ "$txt_Sub*GEOM*TEXT SET " + battingCard.getHowOutText() + "\0", print_writers);
 				
@@ -474,7 +468,7 @@ public class BugsAndMiniGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
 						+ "$txt_Runs*GEOM*TEXT SET " + partnership.getTotalRuns() + "*" + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
-						+ "$txt_Balls*GEOM*TEXT SET " + "(" + partnership.getTotalBalls() + ")" + "\0", print_writers);
+						+ "$txt_Balls*GEOM*TEXT SET " + partnership.getTotalBalls() + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
 						+ "$txt_Sub*GEOM*TEXT SET " + "" + "\0", print_writers);
 				
@@ -505,7 +499,7 @@ public class BugsAndMiniGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
 						+ "$txt_Runs*GEOM*TEXT SET " + partnership.getTotalRuns() + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
-						+ "$txt_Balls*GEOM*TEXT SET " + "(" + partnership.getTotalBalls() + ")" + "\0", print_writers);
+						+ "$txt_Balls*GEOM*TEXT SET " + partnership.getTotalBalls() + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
 						+ "$txt_Sub*GEOM*TEXT SET " + "" + "\0", print_writers);
 				
@@ -598,7 +592,6 @@ public class BugsAndMiniGfx
 		}
 		return status;
 	}
-	
 	public String populateMiniBowlingcard(int WhichSide, String whatToProcess, MatchAllData matchAllData) {
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
 			status = "populateMiniBowlingcard match is null Or Inning is null";

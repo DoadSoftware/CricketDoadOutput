@@ -10,6 +10,7 @@ import javax.xml.bind.JAXBException;
 import com.cricket.containers.LowerThird;
 import com.cricket.model.BattingCard;
 import com.cricket.model.Bugs;
+import com.cricket.model.Commentator;
 import com.cricket.model.Configuration;
 import com.cricket.model.DuckWorthLewis;
 import com.cricket.model.Fixture;
@@ -24,6 +25,7 @@ import com.cricket.model.StatsType;
 import com.cricket.model.Team;
 import com.cricket.model.Tournament;
 import com.cricket.model.VariousText;
+import com.cricket.model.Staff;
 import com.cricket.util.CricketUtil;
 
 public class Caption 
@@ -48,6 +50,8 @@ public class Caption
 	public List<InfobarStats> infobarStats;
 	public List<VariousText> VariousText;
 	public List<DuckWorthLewis> dls;
+	public List<Commentator> Commentators;
+	public List<Staff> Staff;
 	
 	public BattingCard battingCard;
 	public Inning inning;
@@ -66,9 +70,9 @@ public class Caption
 		super();
 	}
 	
-	public Caption(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics,
-		List<StatsType> statsTypes, List<MatchAllData> tournament_matches, List<NameSuper> nameSupers,List<Bugs> bugs,
-		List<InfobarStats> infobarStats,List<Fixture> fixTures, List<Team> Teams, List<Ground> Grounds, List<VariousText> varioustText,
+	public Caption(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics, List<StatsType> statsTypes, 
+		List<MatchAllData> tournament_matches, List<NameSuper> nameSupers,List<Bugs> bugs, List<InfobarStats> infobarStats, List<Fixture> fixTures,
+		List<Team> Teams, List<Ground> Grounds, List<VariousText> varioustText, List<Commentator> commentators, List<Staff> staff,
 		FullFramesGfx this_fullFramesGfx,LowerThirdGfx this_lowerThirdGfx, InfobarGfx this_infobarGfx, BugsAndMiniGfx this_bugsAndMiniGfx, 
 		int whichSide, String whichGraphhicsOnScreen, String slashOrDash, List<Tournament> tournament,List<DuckWorthLewis> dls) {
 	
@@ -86,14 +90,16 @@ public class Caption
 		this.Grounds = Grounds;
 		this.tournament = tournament;
 		this.VariousText = varioustText;
+		this.Commentators = commentators;
+		this.Staff = staff;
 		this.dls = dls;
 		this.this_fullFramesGfx = new FullFramesGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
 				fixTures, Teams, Grounds,tournament, VariousText);
 		this.this_lowerThirdGfx = new LowerThirdGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
-				nameSupers, Teams, Grounds, tournament, dls);
+				nameSupers, Teams, Grounds, tournament, dls, staff);
 		this.whichSide = whichSide;
-		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers, statistics, statsTypes, infobarStats, Grounds, 
-				tournament_matches, dls);
+		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers, statistics, statsTypes, infobarStats, 
+				Grounds, Commentators, tournament_matches, dls);
 		this.this_bugsAndMiniGfx = new BugsAndMiniGfx(print_writers, config, bugs, Teams, VariousText);
 		this.status = "";
 	}
@@ -142,6 +148,9 @@ public class Caption
 				break;
 			case "F10": //NameSuper DB
 				status = this_lowerThirdGfx.populateLTNameSuper(whatToProcess,whichSide);
+				break;
+			case "Alt_a": case "Alt_s":
+				status = this_lowerThirdGfx.populateLTStaff(whatToProcess,whichSide);
 				break;
 			case "F12":// InfoBar
 				status = this_infobarGfx.populateInfobar(print_writers,whatToProcess,matchAllData);
@@ -368,24 +377,30 @@ public class Caption
 				break;
 			case "Alt_8":
 				if(this_infobarGfx.infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
-					if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
-						this_infobarGfx.infobar.setRight_section(CricketUtil.BOWLER);
-						this_infobarGfx.infobar.setRight_bottom("BOWLING_END");
+					if(this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(CricketUtil.BOWLER) && 
+							whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
 						
-						status = this_infobarGfx.populateVizInfobarBowler(print_writers, matchAllData, 1);
+						status = "IN Alt+8 Section BOWLER IS ALREADY SELECTED";
 					}else {
-						if(this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(CricketUtil.BOWLER)) { 
-							// When Goes Bowler to Boundary/Compare Section
-							this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
-							status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 1);
+						if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
+							this_infobarGfx.infobar.setRight_section(CricketUtil.BOWLER);
+							this_infobarGfx.infobar.setRight_bottom("BOWLING_END");
+							
+							status = this_infobarGfx.populateVizInfobarBowler(print_writers, matchAllData, 1);
 						}else {
-							if(!this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(whatToProcess.split(",")[2])) {
-								// Add Data in Main Side1 -> SubSide2 between Boundary and Comparison and vice-versa
+							if(this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(CricketUtil.BOWLER)) { 
+								// When Goes Bowler to Boundary/Compare Section
 								this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
-								status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 2);
-							}else {
-								// Add Data in Main Side1 -> SubSide1  between Boundary and Comparison and vice-versa
 								status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 1);
+							}else {
+								if(!this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(whatToProcess.split(",")[2])) {
+									// Add Data in Main Side1 -> SubSide2 between Boundary and Comparison and vice-versa
+									this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
+									status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 2);
+								}else {
+									// Add Data in Main Side1 -> SubSide1  between Boundary and Comparison and vice-versa
+									status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 1);
+								}
 							}
 						}
 					}
@@ -396,6 +411,11 @@ public class Caption
 			case "Alt_9":
 				this_infobarGfx.infobar.setMiddle_section("FREE_TEXT");
 				this_infobarGfx.infobarStatsId = Integer.valueOf(whatToProcess.split(",")[2]);
+				status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
+				break;
+			case "Alt_0":
+				this_infobarGfx.infobar.setMiddle_section("COMMENTATORS");
+				this_infobarGfx.Comms_Name = whatToProcess;
 				status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
 				break;
 			}

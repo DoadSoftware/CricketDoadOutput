@@ -36,6 +36,7 @@ import com.cricket.captions.LowerThirdGfx;
 import com.cricket.captions.Scene;
 import com.cricket.containers.Infobar;
 import com.cricket.model.Bugs;
+import com.cricket.model.Commentator;
 import com.cricket.model.Configuration;
 import com.cricket.model.DuckWorthLewis;
 import com.cricket.model.EventFile;
@@ -46,6 +47,7 @@ import com.cricket.model.Match;
 import com.cricket.model.MatchAllData;
 import com.cricket.model.NameSuper;
 import com.cricket.model.Setup;
+import com.cricket.model.Staff;
 import com.cricket.model.Statistics;
 import com.cricket.model.Team;
 import com.cricket.model.Tournament;
@@ -88,6 +90,8 @@ public class IndexController
 	public static List<Team> session_team = new ArrayList<Team>(); 
 	public static List<Ground> session_ground = new ArrayList<Ground>();
 	public static List<VariousText> session_variousText = new ArrayList<VariousText>();
+	public static List<Commentator> session_commentator = new ArrayList<Commentator>();
+	public static List<Staff> session_staff = new ArrayList<Staff>();
 	
 	List<DuckWorthLewis> session_dls = new ArrayList<DuckWorthLewis>();
 	
@@ -423,6 +427,13 @@ public class IndexController
 			return (List<T>) CricketFunctions.processAllFixtures(cricketService);
 		case "Alt_9":
 			return (List<T>) session_infoBarStats;
+		case "Alt_0":
+			return (List<T>) session_commentator;
+		case "Alt_a":
+			return (List<T>) CricketFunctions.processAllStaff(cricketService, session_match.getSetup().getHomeTeamId());
+		case "Alt_s":
+			return (List<T>) CricketFunctions.processAllStaff(cricketService, session_match.getSetup().getAwayTeamId());
+			
 		case "z": case "x": case "c": case "v":
 			List<Tournament> tournament_stats = CricketFunctions.extractTournamentStats("COMBINED_PAST_CURRENT_MATCH_DATA",false, cricket_matches, 
 					cricketService, session_match,null);
@@ -470,6 +481,8 @@ public class IndexController
 			session_bugs = cricketService.getBugs();
 			session_infoBarStats = cricketService.getInfobarStats();
 			session_variousText = cricketService.getVariousTexts();
+			session_commentator = cricketService.getCommentator();
+			session_staff = cricketService.getStaff();
 			session_fixture =  CricketFunctions.processAllFixtures(cricketService);
 			if(new File(CricketUtil.CRICKET_DIRECTORY + "ParScores BB.html").exists()) {
 				session_dls = CricketFunctions.populateDuckWorthLewis(session_match);
@@ -477,8 +490,8 @@ public class IndexController
 			
 			switch (typeOfUpdate) {
 			case "NEW":
-				this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), 
-					cricket_matches, session_name_super,session_bugs,session_infoBarStats,session_fixture, session_team, session_ground,session_variousText,
+				this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), cricket_matches, session_name_super,
+					session_bugs,session_infoBarStats,session_fixture, session_team, session_ground,session_variousText, session_commentator, session_staff,
 					new FullFramesGfx(),new LowerThirdGfx(), new InfobarGfx(), new BugsAndMiniGfx(), 1, "", "-",past_tournament_stats,session_dls);
 				this_caption.this_infobarGfx.previous_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixes("COMBINED_PAST_CURRENT_MATCH_DATA", 
 					cricket_matches, session_match, null).getTournament_sixes());
@@ -496,6 +509,7 @@ public class IndexController
 				this_caption.this_infobarGfx.Grounds = session_ground;
 				this_caption.this_infobarGfx.tournament_matches = cricket_matches;
 				this_caption.this_infobarGfx.dls  = session_dls;
+				this_caption.this_infobarGfx.Commentators = session_commentator;
 				
 				//LowerThird
 				this_caption.this_lowerThirdGfx.statistics = session_statistics;
@@ -506,6 +520,7 @@ public class IndexController
 				this_caption.this_lowerThirdGfx.Grounds = session_ground;
 				this_caption.this_lowerThirdGfx.tournaments = past_tournament_stats;
 				this_caption.this_lowerThirdGfx.dls = session_dls;
+				this_caption.this_lowerThirdGfx.Staff = session_staff;
 				
 				//FullFrames
 				this_caption.this_fullFramesGfx.statistics = session_statistics;

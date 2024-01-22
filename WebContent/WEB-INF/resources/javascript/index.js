@@ -208,7 +208,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case '5': case '6': case '7': case '8': case '9':
 				processCricketProcedures("QUIDICH-COMMANDS", dataToProcess);
 				break;
-			case 'Alt_f': case 'Alt_g': case 'ArrowDown': case 'ArrowUp':
+			case 'Alt_f': case 'Alt_g': case 'ArrowDown': case 'ArrowUp': case 'w': case 'i': case 'y': case 'u':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("ANIMATE-IN-GRAPHICS", dataToProcess);
 				break;
@@ -364,8 +364,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'z': case 'x': case 'c': case 'v': case 'Control_F11': case 'Control_y': case 'Alt_F8':
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q':
 	case 'Alt_F9': case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l':
-	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9':
-	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10': case 'Alt_d': case 'Shift_F4':
+	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9': case 'Alt_0':
+	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10': case 'Alt_d': case 'Shift_F4': case 'Alt_a': case 'Alt_s':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		
 		$("#captions_div").hide();
@@ -776,6 +776,79 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1
 			break;
+			
+		case 'Alt_0':
+			header_text.innerHTML = 'MIDDLE INFOBAR SECTION - COMMANTATORS';
+		
+			select = document.createElement('select');
+			select.id = 'selectInfoBarComm1';
+			select.name = select.id;
+			
+			option = document.createElement('option');
+			option.value = '0';
+			option.text = "";
+			select.appendChild(option);
+			
+			dataToProcess.forEach(function(comm,index,arr1){
+				if(comm.useThis == 'Yes'){
+					option = document.createElement('option');
+					option.value = comm.commentatorId;
+					option.text = comm.commentatorName;
+					select.appendChild(option);
+				}
+			});
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			cellCount = cellCount + 1
+			
+			select = document.createElement('select');
+			select.id = 'selectInfoBarComm2';
+			select.name = select.id;
+			
+			option = document.createElement('option');
+			option.value = '0';
+			option.text = "";
+			select.appendChild(option);
+			
+			dataToProcess.forEach(function(comm,index,arr1){
+				if(comm.useThis == 'Yes'){
+					option = document.createElement('option');
+					option.value = comm.commentatorId;
+					option.text = comm.commentatorName;
+					select.appendChild(option);
+				}
+			});
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),1);
+			cellCount = cellCount + 1
+			
+			select = document.createElement('select');
+			select.id = 'selectInfoBarComm3';
+			select.name = select.id;
+			
+			option = document.createElement('option');
+			option.value = '0';
+			option.text = "";
+			select.appendChild(option);
+			
+			dataToProcess.forEach(function(comm,index,arr1){
+				if(comm.useThis == 'Yes'){
+					option = document.createElement('option');
+					option.value = comm.commentatorId;
+					option.text = comm.commentatorName;
+					select.appendChild(option);
+				}
+			});
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 2)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),2);
+			cellCount = cellCount + 1
+			break;
 		
 		case 'Alt_d':
 			header_text.innerHTML = 'LT - DLS PAR SCORE';
@@ -1018,6 +1091,34 @@ function addItemsToList(whatToProcess,dataToProcess)
 			row.insertCell(cellCount).appendChild(select);
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
+			break;
+			
+		case 'Alt_a': case 'Alt_s':
+			switch(whatToProcess) {
+			case 'Alt_a':
+				header_text.innerHTML = 'LT HOME TEAM STAFF';
+				break;
+			case 'Alt_s':
+				header_text.innerHTML = 'LT AWAY TEAM STAFF';
+				break;
+			}
+			
+			select = document.createElement('select');
+			select.id = 'selectTeams';
+			select.name = select.id;
+			
+			dataToProcess.forEach(function(st,index,arr1){
+				option = document.createElement('option');
+				option.value = st.staffId;
+				option.text = st.staffName + ' - ' + st.role + ' (' + st.team.teamName1 + ')';
+				select.appendChild(option);
+			});
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			cellCount = cellCount + 1;
+			
 			break;	
 			
 		case 'Control_F8': case 'Alt_F9': case 'Alt_F12': case 'Alt_F10':

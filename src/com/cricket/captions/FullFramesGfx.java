@@ -2108,7 +2108,8 @@ public class FullFramesGfx
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + fourOrSix +"$Rows$"
 							 + rowId + containerName + "$txt_Points*GEOM*TEXT SET " + leagueTable.getLeagueTeams().get(i).getPoints() + "\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + fourOrSix +"$Rows$"
-							 + rowId + containerName + "$txt_NRR*GEOM*TEXT SET " + leagueTable.getLeagueTeams().get(i).getNetRunRate() + "\0", print_writers);
+							 + rowId + containerName + "$txt_NRR*GEOM*TEXT SET " + String.format("%.2f", leagueTable.getLeagueTeams().get(i).getNetRunRate()) 
+							 + "\0", print_writers);
 					
 				}
 				
@@ -3672,7 +3673,7 @@ public class FullFramesGfx
 								+ "$Info_Text$Data$txt_Info_1*GEOM*TEXT SET " + "U19 MEN'S CWC 2024" + "\0", print_writers);
 					}else {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Top_Align$Side" + WhichSide + "$Select_FooterType"
-								+ "$Info_Text$Data$txt_Info_1*GEOM*TEXT SET " + "U19 MEN'S CWC 2024" + " - " + WhichStyle.toUpperCase() +"\0", print_writers);
+								+ "$Info_Text$Data$txt_Info_1*GEOM*TEXT SET " + "ICC U19 MEN'S CWC 2024" + " - " + WhichStyle.toUpperCase() +"\0", print_writers);
 					}
 					break;
 				}

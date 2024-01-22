@@ -21,6 +21,7 @@ import com.cricket.model.MatchAllData;
 import com.cricket.model.NameSuper;
 import com.cricket.model.Partnership;
 import com.cricket.model.Player;
+import com.cricket.model.Staff;
 import com.cricket.model.Statistics;
 import com.cricket.model.StatsType;
 import com.cricket.model.Team;
@@ -46,6 +47,7 @@ public class LowerThirdGfx
 	public List<Team> Teams;
 	public List<Partnership> partnershipList;
 	public List<Ground> Grounds;
+	public List<Staff> Staff;
 	
 	public BattingCard battingCard;
 	public Partnership partnership;
@@ -56,7 +58,7 @@ public class LowerThirdGfx
 	public StatsType statsType;
 	public Tournament tournament;
 	public LowerThird lowerThird;
-	
+	public Staff staff;
 	public NameSuper namesuper;
 	public Fixture fixture;
 	public Ground ground;
@@ -77,9 +79,9 @@ public class LowerThirdGfx
 		super();
 	}
 	
-	public LowerThirdGfx(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics,
-			List<StatsType> statsTypes, List<MatchAllData> tournament_matches, List<NameSuper> nameSupers, 
-			List<Team> Teams, List<Ground> Grounds, List<Tournament> tournaments,List<DuckWorthLewis> dls) {
+	public LowerThirdGfx(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics, List<StatsType> statsTypes, 
+			List<MatchAllData> tournament_matches, List<NameSuper> nameSupers, List<Team> Teams, List<Ground> Grounds, 
+			List<Tournament> tournaments,List<DuckWorthLewis> dls, List<Staff> staff) {
 		super();
 		this.print_writers = print_writers;
 		this.config = config;
@@ -91,6 +93,7 @@ public class LowerThirdGfx
 		this.Grounds = Grounds;
 		this.tournaments = tournaments;
 		this.dls = dls;
+		this.Staff = staff;
 	}
 	
 	public String populateL3rdCurrentPartnership(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws InterruptedException
@@ -702,6 +705,31 @@ public class LowerThirdGfx
 			setPositionOfLT(whatToProcess,WhichSide,config);
 			return Constants.OK;
 //			return PopulateL3rdBody(WhichSide,whatToProcess.split(",")[0]);
+		} else {
+			return status;
+		}
+	}
+	
+	public String populateLTStaff(String whatToProcess,int WhichSide) throws InterruptedException
+	{
+		staff =  Staff.stream().filter(tm -> tm.getStaffId() == Integer.valueOf(whatToProcess.split(",")[2])).findAny().orElse(null);
+		if(staff == null) {
+			return "populateLTStaff: Staff From Database returning Null";
+		}
+		
+		team = Teams.stream().filter(tm -> tm.getTeamId() == staff.getClubId()).findAny().orElse(null);
+		if(team == null) {
+			return "populateLTStaff: Team From Database returning Null";
+		}
+		
+		lowerThird = new LowerThird("", staff.getStaffName(), "",team.getTeamName1(), "", "", 1, "",team.getTeamName4(),
+				null,null,new String[]{staff.getRole()},null,null);
+		
+		status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);
+		if(status == Constants.OK) {
+//			HideAndShowL3rdSubStrapContainers(WhichSide);
+			setPositionOfLT(whatToProcess,WhichSide,config);
+			return PopulateL3rdBody(WhichSide, whatToProcess.split(",")[0]);
 		} else {
 			return status;
 		}
@@ -2490,6 +2518,36 @@ public class LowerThirdGfx
 						+ WhichSide + "$Name" + containerName + "$Score*ACTIVE SET 0 \0", print_writers);
 				break;
 				
+			case "Alt_a": case "Alt_s":
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Overall_Position_Y$Sublines$Side_" + WhichSide + "$Select_Subline"
+						+ "*FUNCTION*Omo*vis_con SET 1  \0", print_writers);
+				if(config.getSecondaryIpAddress()!= null && !config.getSecondaryIpAddress().isEmpty()) {
+					CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Top_Line$Data$Side_"+ WhichSide + 
+							"$Select_Flags*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+				}
+				CricketFunctions.DoadWriteCommandToSelectedViz(1,"-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Top_Line$Side_"+ WhichSide + 
+						"$Select_Flags*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+				
+				if(lowerThird.getWhichTeamFlag().equalsIgnoreCase("NEP")) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Top_Line$Side_" + WhichSide +
+							"$Select_Flags$Flag" + containerName + "$img_Shadow*ACTIVE SET 0 \0", print_writers);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Top_Line$Side_" + WhichSide +
+							"$Select_Flags$Flag" + containerName + "$img_Shadow*ACTIVE SET 1 \0", print_writers);
+				}
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Top_Line$Side_" + WhichSide + "$Select_Flags$Flag" 
+						+ containerName + "$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + lowerThird.getWhichTeamFlag() + "\0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Top_Line$Data$Side_" + WhichSide 
+						+ "$Name" + containerName + "$txt_Name*GEOM*TEXT SET " + lowerThird.getFirstName() + " " + lowerThird.getSurName() + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Top_Line$Data$Side_" + WhichSide 
+						+ "$Name" + containerName + "$txt_Designation*GEOM*TEXT SET " + "" + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"
+						+ WhichSide + "$Name" + containerName + "$Score*ACTIVE SET 0 \0", print_writers);
+				
+				break;
+				
 			case "F10":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Overall_Position_Y$Sublines$Side_" + WhichSide + "$Select_Subline"
 						+ "*FUNCTION*Omo*vis_con SET 1  \0", print_writers);
@@ -3381,6 +3439,10 @@ public class LowerThirdGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Position_With_Graphics$Sublines$Side_" + WhichSide 
 						+ "$txt_1*GEOM*TEXT SET " + lowerThird.getLeftText()[0] + "\0", print_writers);
 				break;
+			case "Alt_a": case "Alt_s":
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Position_With_Graphics$Sublines$Side_" + WhichSide 
+						+ "$txt_1*GEOM*TEXT SET " + lowerThird.getSubTitle() + " " + lowerThird.getLeftText()[0].toUpperCase() + "\0", print_writers);
+				break;
 				
 			case "Control_g":
 				
@@ -3596,7 +3658,7 @@ public class LowerThirdGfx
 			}
 			
 			switch (whatToProcess.split(",")[0]) {
-			case "Alt_F8": case "F8": case "F10": case "j":
+			case "Alt_F8": case "F8": case "F10": case "j": case "Alt_a": case "Alt_s":
 				
 				ltWhichContainer = "$All_NameSupers";
 				if(lowerThird.getWhichTeamFlag().isEmpty() && lowerThird.getWhichSponsor().isEmpty()) {
@@ -3722,7 +3784,8 @@ public class LowerThirdGfx
 			
 			if(!whatToProcess.split(",")[0].equalsIgnoreCase("q") && !whatToProcess.split(",")[0].equalsIgnoreCase("Control_q")) {
 				if(!whatToProcess.split(",")[0].equalsIgnoreCase("F8") && !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_F8")
-						&& !whatToProcess.split(",")[0].equalsIgnoreCase("F10") && !whatToProcess.split(",")[0].equalsIgnoreCase("j")) {
+						&& !whatToProcess.split(",")[0].equalsIgnoreCase("F10") && !whatToProcess.split(",")[0].equalsIgnoreCase("j")
+						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_a") && !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_s")) {
 					if(WhichSide == 1) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj_SublineBase*ANIMATION*KEY*$Change_In_1*VALUE SET "
 								+ LT_Position_4 + "\0",print_writers);

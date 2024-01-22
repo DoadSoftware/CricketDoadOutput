@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import com.cricket.containers.Infobar;
 import com.cricket.model.BattingCard;
 import com.cricket.model.BowlingCard;
+import com.cricket.model.Commentator;
 import com.cricket.model.Configuration;
 import com.cricket.model.DuckWorthLewis;
 import com.cricket.model.Ground;
@@ -27,9 +28,10 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 public class InfobarGfx 
 {
 	public Configuration config;
-	public String slashOrDash = "-", WhichProfile = "", containerName = "", status = "", previous_sixes = "", stats_text = "", par_Overs="";
+	public String slashOrDash = "-", WhichProfile = "", containerName = "", status = "", previous_sixes = "", 
+			stats_text = "", par_Overs="", Comms_Name;
 	
-	public int FirstPlayerId,lastXballs,sponsor_omo,infobarStatsId;
+	public int FirstPlayerId,lastXballs,sponsor_omo,infobarStatsId,rowId=0;
 
 	public Inning inning = new Inning();
 	public Team team = new Team();
@@ -42,6 +44,7 @@ public class InfobarGfx
 	public List<InfobarStats> infobarStats;
 	public List<Ground> Grounds;
 	public List<DuckWorthLewis> dls;
+	public List<Commentator> Commentators;
 
 	public List<PrintWriter> print_writers; 
 	public List<BattingCard> battingCardList = new ArrayList<BattingCard>();
@@ -59,8 +62,8 @@ public class InfobarGfx
 	}
 
 	public InfobarGfx(Configuration config, String slashOrDash, List<PrintWriter> print_writers, List<Statistics> statistics,
-			List<StatsType> statsTypes, List<InfobarStats> infobarStats, List<Ground> Grounds, List<MatchAllData> tournament_matches,
-			List<DuckWorthLewis> dls) {
+			List<StatsType> statsTypes, List<InfobarStats> infobarStats, List<Ground> Grounds, List<Commentator> commentators,
+			List<MatchAllData> tournament_matches, List<DuckWorthLewis> dls) {
 		super();
 		this.config = config;
 		this.slashOrDash = slashOrDash;
@@ -69,6 +72,7 @@ public class InfobarGfx
 		this.statsTypes = statsTypes;
 		this.infobarStats = infobarStats;
 		this.Grounds = Grounds;
+		this.Commentators = commentators;
 		this.tournament_matches = tournament_matches;
 		this.dls = dls;
 	}
@@ -192,6 +196,8 @@ public class InfobarGfx
 						inning.getBatting_team().getTeamName4() + "\0", print_writers);
 				
 			}
+			
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Wipes$Select*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
 			
 			if(matchAllData.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.SUPER_OVER)) {
 				if(infobar.isPowerplay_on_screen() == false) {
@@ -757,6 +763,44 @@ public class InfobarGfx
 				
 				break;
 			
+			case "COMMENTATORS":
+				
+				this_data_str = new ArrayList<String>();
+				for(Commentator comm : Commentators) {
+					if(comm.getCommentatorId() == Integer.valueOf(Comms_Name.split(",")[2])) {
+						this_data_str.add(comm.getCommentatorName());
+					}else if(comm.getCommentatorId() == Integer.valueOf(Comms_Name.split(",")[3])) {
+						this_data_str.add(comm.getCommentatorName());
+					}else if(comm.getCommentatorId() == Integer.valueOf(Comms_Name.split(",")[4])) {
+						this_data_str.add(comm.getCommentatorName());
+					}
+				}
+				if(this_data_str == null && this_data_str.isEmpty()) {
+					return "Commentator not selected in dataBase";
+				}
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
+						+ "$Select_Type*FUNCTION*Omo*vis_con SET 3 \0",print_writers);
+				
+				if(this_data_str.size() == 1) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Top*GEOM*TEXT SET " + 
+							"COMMENTATOR" + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + 
+							this_data_str.get(this_data_str.size()-1) + "\0", print_writers);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Top*GEOM*TEXT SET " + 
+							"COMMENTATORS" + "\0", print_writers);
+					
+					if(this_data_str.size() == 2) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + 
+								this_data_str.get(0) + " & " + this_data_str.get(1) + "\0", print_writers);
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + 
+								this_data_str.get(0) + ", " + this_data_str.get(1) + " & " + this_data_str.get(2) + "\0", print_writers);
+					}
+				}
+				break;
+				
 			case "FREE_TEXT":
 				infoBarStats = infobarStats.stream().filter(infostats -> infostats.getOrder() == infobarStatsId).findAny().orElse(null);
 				if(infoBarStats == null) {
