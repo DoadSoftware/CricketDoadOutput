@@ -184,11 +184,11 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'F8': case 'F9': case 'F11': case 's': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6': case 'Control_y':
 			case 'Shift_K': case 'Shift_O': case 'g': case 'f': case 'Control_g': case 'Control_s': case 'Control_f': //case 'Alt_F9':
 			case 'Control_h': case 'Alt_F12': case 'l': case 'p': case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_F10': case 'Alt_d':
-			case 'Control_p': case 'Shift_F4':
+			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2':
 				addItemsToList(dataToProcess,null);
 				break;
 			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'Control_F1': case 'Control_a':
-			case 'Alt_k':  case 'Shift_F3': case 'd': case 'e': case 'Control_F6': //case 'Control_F7':
+			case 'Alt_k':  case 'Shift_F3': case 'd': case 'e': case 'Control_F6': //case 'Control_F7': 
 			case 'Control_k': case 'Control_F10': case 'Control_F3': case 'n': case 'a': case 't': case 'h':
 			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q': case 'Control_b': case 'o': case 'Control_F2':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
@@ -361,7 +361,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 		
 	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11':
 	case 'Control_F5': case 'Control_F9': case 'Control_F8': case 'Control_d': case 'Control_e': case 's': case 'p': case 'Control_p':
-	case 'z': case 'x': case 'c': case 'v': case 'Control_F11': case 'Control_y': case 'Alt_F8':
+	case 'z': case 'x': case 'c': case 'v': case 'Control_F11': case 'Control_y': case 'Alt_F8': case 'Alt_F1': case 'Alt_F2':
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q':
 	case 'Alt_F9': case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l':
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9': case 'Alt_0':
@@ -1477,11 +1477,40 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
 			break;
-		case 'F5': 
+		case 'Alt_F2':
+			switch(whatToProcess) {
+			case 'Alt_F2':
+				header_text.innerHTML = 'BALL GRIFF';
+				break;						
+			}
+			select = document.createElement('select');
+			select.id = 'selectBatsmanThisMatch';
+			select.name = select.id;
+			
+			session_match.match.inning.forEach(function(inn,index,arr){
+				if(inn.inningNumber == document.getElementById('which_inning').value){
+					inn.bowlingCard.forEach(function(boc,boc_index,boc_arr){
+						option = document.createElement('option');
+						option.value = boc.playerId;
+						option.text = boc.player.full_name;	
+						select.appendChild(option);
+					});
+				}
+			});
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			cellCount = cellCount + 1;
+			break;	
+		case 'F5': case 'Alt_F1':
 			switch(whatToProcess) {
 			case 'F5':
 				header_text.innerHTML = 'BAT THIS MATCH';
-				break;				
+				break;
+			case 'Alt_F1':
+				header_text.innerHTML = 'BAT GRIFF';
+				break;					
 			}
 			select = document.createElement('select');
 			select.id = 'selectBatsmanThisMatch';

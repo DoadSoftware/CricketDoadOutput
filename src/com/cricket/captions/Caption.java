@@ -131,6 +131,12 @@ public class Caption
 				status = this_fullFramesGfx.populatePartnership(whichSide, whatToProcess.split(",")[0], matchAllData, 
 					Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
+			case "Alt_F1": // BatGriff
+				status = this_lowerThirdGfx.PopulateBatBallGriff(whatToProcess,whichSide, matchAllData);
+				break;
+			case "Alt_F2": // BallGriff
+				status = this_lowerThirdGfx.PopulateBatBallGriff(whatToProcess,whichSide, matchAllData);
+				break;	
 			case "F5": //BAT THIS MATCH
 				status = this_lowerThirdGfx.populateBatThisMatch(whatToProcess, whichSide, matchAllData);
 				break;
