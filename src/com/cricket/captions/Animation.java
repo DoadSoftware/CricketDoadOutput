@@ -631,7 +631,7 @@ public class Animation
 			case "Control_g": case "Control_h": case "Control_F6": case "Shift_F6": case "Control_s": case "Control_f":
 				processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "START");
 				break;
-			 case "Alt_F8": case "F8": case "F10": case "j":
+			 case "Alt_F8": case "F8": case "F10": case "j": case "Alt_a": case "Alt_s":
 				processAnimation(Constants.FRONT, print_writers, "Anim_NameSuperChange", "START");
 				break;
 			case "q": case "Control_q":
@@ -701,7 +701,7 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "SHOW 0.0");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
-			 case "Alt_F8": case "F8": case "F10": case "j":
+			 case "Alt_F8": case "F8": case "F10": case "j": case "Alt_a": case "Alt_s":
 				processAnimation(Constants.FRONT, print_writers, "Anim_NameSuperChange", "SHOW 0.0");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
@@ -1170,7 +1170,7 @@ public class Animation
 					previewCommands = "Anim_Infobar$Small 1.00 Anim_LtChange$HeaderDynamic 1.200 anim_Lower_Third$Essentials 2.200 anim_Lower_Third$Essentials$In 1.400 "
 						+ "anim_Lower_Third$Row 2.160 anim_Lower_Third$Row$In 0.620";
 					break;
-				 case "Alt_F8": case "F8": case "F10": case "j": // Name super L3rd
+				 case "Alt_F8": case "F8": case "F10": case "j": case "Alt_a": case "Alt_s": // Name super L3rd
 					previewCommands = "Anim_Infobar$Push 0.500 anim_NameSupers$In 1.400";
 					break;
 				case "q": case "Control_q":// Boundary L3rd
@@ -1188,7 +1188,7 @@ public class Animation
 							+ "Anim_LtChange$Topline 0.900 Anim_LtChange$Lt_Position 0.940 Anim_LtChange$HeaderDynamic 1.180 "
 							+ "Anim_LtChange$HeaderDynamic$Change_In 1.180 Anim_LtChange$HeaderDynamic$Change_Out 0.560";
 						break;
-					 case "Alt_F8": case "F8": case "F10": case "j":
+					 case "Alt_F8": case "F8": case "F10": case "j": case "Alt_a": case "Alt_s":
 						previewCommands = previewCommands + " Anim_NameSuperChange$Flag 1.300 Anim_NameSuperChange$Sublines 0.700 "
 							+ "Anim_NameSuperChange$Topline 0.900 Anim_NameSuperChange$HeaderDynamic 1.220 "
 							+ "Anim_NameSuperChange$HeaderDynamic$Change_In 1.220 Anim_NameSuperChange$HeaderDynamic$Change_Out 0.600";
