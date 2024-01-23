@@ -765,39 +765,35 @@ public class InfobarGfx
 			
 			case "COMMENTATORS":
 				
-				this_data_str = new ArrayList<String>();
-				for(Commentator comm : Commentators) {
-					if(comm.getCommentatorId() == Integer.valueOf(Comms_Name.split(",")[2])) {
-						this_data_str.add(comm.getCommentatorName());
-					}else if(comm.getCommentatorId() == Integer.valueOf(Comms_Name.split(",")[3])) {
-						this_data_str.add(comm.getCommentatorName());
-					}else if(comm.getCommentatorId() == Integer.valueOf(Comms_Name.split(",")[4])) {
-						this_data_str.add(comm.getCommentatorName());
-					}
-				}
-				if(this_data_str == null && this_data_str.isEmpty()) {
-					return "Commentator not selected in dataBase";
-				}
-				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
 						+ "$Select_Type*FUNCTION*Omo*vis_con SET 3 \0",print_writers);
 				
-				if(this_data_str.size() == 1) {
+				if(Integer.valueOf(Comms_Name.split(",")[4]) > 0 && Integer.valueOf(Comms_Name.split(",")[3]) > 0 
+						&& Integer.valueOf(Comms_Name.split(",")[2]) > 0) {
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Top*GEOM*TEXT SET " + 
+							"COMMENTATORS" + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " 
+							+ Commentators.get(Integer.valueOf(Comms_Name.split(",")[2])-1).getCommentatorName() + ", " 
+							+ Commentators.get(Integer.valueOf(Comms_Name.split(",")[3])-1).getCommentatorName() + " & " 
+							+ Commentators.get(Integer.valueOf(Comms_Name.split(",")[4])-1).getCommentatorName() + "\0", print_writers);
+					
+				}else if(Integer.valueOf(Comms_Name.split(",")[4]) == 0 && Integer.valueOf(Comms_Name.split(",")[3]) > 0 
+						&& Integer.valueOf(Comms_Name.split(",")[2]) > 0) {
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Top*GEOM*TEXT SET " + 
+							"COMMENTATORS" + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + 
+							Commentators.get(Integer.valueOf(Comms_Name.split(",")[2])-1).getCommentatorName() + " & " + 
+							Commentators.get(Integer.valueOf(Comms_Name.split(",")[3])-1).getCommentatorName() + "\0", print_writers);
+					
+				}else if(Integer.valueOf(Comms_Name.split(",")[4]) == 0 && Integer.valueOf(Comms_Name.split(",")[3]) == 0 
+						&& Integer.valueOf(Comms_Name.split(",")[2]) > 0) {
+					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Top*GEOM*TEXT SET " + 
 							"COMMENTATOR" + "\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + 
-							this_data_str.get(this_data_str.size()-1) + "\0", print_writers);
-				}else {
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Top*GEOM*TEXT SET " + 
-							"COMMENTATORS" + "\0", print_writers);
-					
-					if(this_data_str.size() == 2) {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + 
-								this_data_str.get(0) + " & " + this_data_str.get(1) + "\0", print_writers);
-					}else {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + 
-								this_data_str.get(0) + ", " + this_data_str.get(1) + " & " + this_data_str.get(2) + "\0", print_writers);
-					}
+							Commentators.get(Integer.valueOf(Comms_Name.split(",")[2])-1).getCommentatorName() + "\0", print_writers);
 				}
 				break;
 				
