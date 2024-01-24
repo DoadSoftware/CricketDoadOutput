@@ -1,5 +1,6 @@
 package com.cricket.captions;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -79,7 +80,7 @@ public class Animation
 		return "";
 	}
 	
-	public String AnimateIn(String whatToProcess, List<PrintWriter> print_writers, Configuration config) throws InterruptedException 
+	public String AnimateIn(String whatToProcess, List<PrintWriter> print_writers, Configuration config) throws InterruptedException, IOException 
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.ICC_U19_2023:
@@ -356,9 +357,10 @@ public class Animation
 			}
 			break;
 		}
+		CricketFunctions.deletePreview();
 		return CricketUtil.YES;
 	}	
-	public String AnimateOut(String whatToProcess, List<PrintWriter> print_writers, Configuration config) throws InterruptedException
+	public String AnimateOut(String whatToProcess, List<PrintWriter> print_writers, Configuration config) throws InterruptedException, IOException
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.ICC_U19_2023:
@@ -668,7 +670,7 @@ public class Animation
 		}
 		return CricketUtil.YES;
 	}
-	public String CutBack(String whatToProcess,List<PrintWriter> print_writers, Configuration config) throws InterruptedException
+	public String CutBack(String whatToProcess,List<PrintWriter> print_writers, Configuration config) throws InterruptedException, IOException
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.ICC_U19_2023:
@@ -776,6 +778,7 @@ public class Animation
 			}
 			break;
 		}
+		CricketFunctions.deletePreview();
 		return CricketUtil.YES;
 	}	
 	public String ResetAnimation(String whatToProcess, List<PrintWriter> print_writers, Configuration config)
@@ -1208,64 +1211,7 @@ public class Animation
 		}
 		
 	}
-	
-//	public void processL3Preview(String whatToProcess, List<PrintWriter> print_writer, int whichside, 
-//		Configuration config,String whichGraphicOnScreen) 
-//	{
-//		switch (config.getBroadcaster().toUpperCase()) {
-//		case Constants.ICC_U19_2023:
-//			if(whatToProcess.contains(",")) {
-//				switch(whatToProcess.split(",")[0]) {
-//				case "F5": case "F6": case "F7": case "F9": case "F11":
-//				case "Control_F5": case "Control_F9": case "Control_a":  case "Control_c":
-//				case "Shift_F3": case "s": case "d": case "e":case "Shift_F5": case "Shift_F9": 
-//				case "Alt_F12": case "Control_F3": case "Control_F6": case "Shift_F6": case "Control_s": 
-//				case "Control_f": case "Control_g": case "Control_h": case "a":
-//				case "p": case "Control_p": case "Alt_k": case "l": case "n":
-//					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-//						+ "/Default/Overlays C:/Temp/Preview.png Anim_Infobar$Small 1.00 anim_Lower_Third$Essentials 2.200 "
-//						+ "anim_Lower_Third$Essentials$In 1.400 anim_Lower_Third$Row 2.160 anim_Lower_Third$Row$In 0.620 \0", print_writer);
-//					break;
-//				case "F8": case "F10": case "j":
-//					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-//						+ "/Default/Overlays C:/Temp/Preview.png Anim_Infobar$Push 0.500 anim_NameSupers$In 1.400 \0", print_writer);
-//					break;
-//				case "q": case "Control_q":
-//					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-//						+ "/Default/Overlays C:/Temp/Preview.png Anim_Infobar$Push 0.500 anim_Boundary_LT$Essentials 2.200 "
-//						+ "anim_Boundary_LT$Essentials$In 1.400 anim_Boundary_LT$Row 2.160 anim_Boundary_LT$Row$In 0.620 \0", print_writer);
-//					break;
-//				}
-//				if(whichside == 2) {
-//					switch(whatToProcess.split(",")[0]) {
-//					case "F5": case "F6": case "F7": case "F9": case "F11":
-//					case "Control_F5": case "Control_F9": case "Control_a":  case "Control_c":
-//					case "Shift_F3": case "s": case "d": case "e": 
-//					case "Shift_F5": case "Shift_F9": case "Alt_F12": case "Control_F3": case "Control_F6": 
-//					case "Shift_F6": case "Control_s": case "Control_f": case "Control_g": case "Control_h": 
-//					case "Control_p": case "Alt_k": case "l": case "a"://Anim_LtChange 1.300 
-//						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-//								+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_LtChange$Flag 1.300 Anim_LtChange$Sublines 1.240 "
-//								+ "Anim_LtChange$Topline 0.900 Anim_LtChange$Lt_Position 0.940 Anim_LtChange$HeaderDynamic 1.220 \0", print_writer);
-//						break;
-//					case "F8": case "F10": case "j":
-//						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-//							+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_NameSuperChange$Flag 1.300 "
-//							+ "Anim_NameSuperChange$Sublines 0.700 Anim_NameSuperChange$Topline 0.900 Anim_NameSuperChange$HeaderDynamic 1.220 \0", print_writer);
-//						break;
-//					case "q": case "Control_q":
-//						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-//							+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Boundary_LtChange$Flag 1.300 "
-//							+ "Anim_Boundary_LtChange$Sublines 1.200 Anim_Boundary_LtChange$Topline 0.900 Anim_Boundary_LtChange$Lt_Position 0.940 "
-//							+ "Anim_Boundary_LtChange$HeaderDynamic 1.220 \0", print_writer);
-//						break;
-//					}
-//				}
-//			}
-//			break;
-//		}		
-//	}
-	
+
 	public void processBugsPreview(String whatToProcess, List<PrintWriter> print_writer, int whichside, 
 		Configuration config,String whichGraphicOnScreen) 
 	{

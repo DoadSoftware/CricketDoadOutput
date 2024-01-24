@@ -1,5 +1,6 @@
 package com.cricket.captions;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,7 +78,7 @@ public class InfobarGfx
 		this.dls = dls;
 	}
 
-	public String updateInfobar(List<PrintWriter> print_writers,MatchAllData matchAllData) throws InterruptedException, CloneNotSupportedException, JsonMappingException, JsonProcessingException {
+	public String updateInfobar(List<PrintWriter> print_writers,MatchAllData matchAllData) throws InterruptedException, CloneNotSupportedException, IOException {
 
 		switch (config.getBroadcaster()) {
 		case Constants.ICC_U19_2023:

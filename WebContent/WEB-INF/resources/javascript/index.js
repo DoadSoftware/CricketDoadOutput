@@ -116,6 +116,7 @@ function processUserSelection(whichInput)
 	case 'cancel_graphics_btn':
 		$("#select_graphic_options_div").empty();
 		document.getElementById('select_graphic_options_div').style.display = 'none';
+		document.getElementById('which_keypress').value = '';
 		$("#captions_div").show();
 		break;
 	case 'populate_btn':
@@ -129,19 +130,27 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 	switch (whatToProcess) {
 	case 'LOGGER_FORM_KEYPRESS':
 		initialiseSelectedOptionsList();
-		document.getElementById('which_keypress').value = dataToProcess;
+		if(document.getElementById('which_keypress').value != ''){
+			alert('Came Out to OutPut Page')
+			return false;
+		}else{
+			document.getElementById('which_keypress').value = dataToProcess;
+		}
 		switch(dataToProcess) {
 		case 'SPEED':
 			processCricketProcedures('SHOW_SPEED');
 			break;
 		case 'Alt_r':
 			processCricketProcedures('RE_READ_DATA');
+			document.getElementById('which_keypress').value = '';
 			break;
 		case 'Control_ ':
 			processCricketProcedures('CLEAR-ALL-WITH-INFOBAR');
+			document.getElementById('which_keypress').value = '';
 			break;
 		case ' ':
 			processCricketProcedures('CLEAR-ALL');
+			document.getElementById('which_keypress').value = '';
 			break;
 		case '1': case '2': case '3': case '4':
 			if(session_match.setup.maxOvers > 0){
@@ -159,6 +168,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			
 			if(confirm('It will Also Delete Your Preview from Directory...\r\n \r\nAre You Sure To Animate Out? ') == true){
 				processCricketProcedures('ANIMATE-OUT-GRAPHICS');
+				document.getElementById('which_keypress').value = '';
 			}
 			break;
 			
@@ -166,6 +176,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			
 			if(confirm('Animate Out Infobar? ') == true){
 				processCricketProcedures('ANIMATE-OUT-INFOBAR');
+				document.getElementById('which_keypress').value = '';
 			}
 			break;
 		
@@ -199,6 +210,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				//dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				if(session_animation != null && session_animation.specialBugOnScreen == 'TOSS') {
 					processCricketProcedures("ANIMATE-OUT-GRAPHICS", dataToProcess);
+					document.getElementById('which_keypress').value = '';
 				} else {
 					addItemsToList(dataToProcess,null);
 					//processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
@@ -207,10 +219,12 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			//All key presses which doesn't require graphics population will come here
 			case '5': case '6': case '7': case '8': case '9':
 				processCricketProcedures("QUIDICH-COMMANDS", dataToProcess);
+				document.getElementById('which_keypress').value = '';
 				break;
 			case 'Alt_f': case 'Alt_g': case 'ArrowDown': case 'ArrowUp': case 'w': case 'i': case 'y': case 'u':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("ANIMATE-IN-GRAPHICS", dataToProcess);
+				document.getElementById('which_keypress').value = '';
 				break;
 			default:
 				processCricketProcedures("GRAPHICS-OPTIONS", dataToProcess);
@@ -269,6 +283,7 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 							processCricketProcedures(whatToProcess.replace('POPULATE-', 'ANIMATE-IN-'),dataToProcess);
 							$("#select_graphic_options_div").empty();
 							document.getElementById('select_graphic_options_div').style.display = 'none';
+							document.getElementById('which_keypress').value = '';
 							$("#captions_div").show();
 						}
 					} else {
@@ -277,6 +292,7 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 						}	
 						$("#select_graphic_options_div").empty();
 						document.getElementById('select_graphic_options_div').style.display = 'none';
+						document.getElementById('which_keypress').value = '';
 						$("#captions_div").show();
 					}
 					break;
