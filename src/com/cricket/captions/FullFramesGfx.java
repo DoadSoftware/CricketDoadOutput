@@ -1369,6 +1369,7 @@ public class FullFramesGfx
 					+ "$Select_GraphicsType*FUNCTION*Omo*vis_con SET 13 \0", print_writers);
 			rowId = 0;
 			plyr_count = 0;
+			Collections.sort(inning.getBattingCard());
 			for(int iRow = 1; iRow <= inning.getBattingCard().size(); iRow++) {
 				switch(iRow) {
 				case 1: case 2: case 3: case 4: case 5: case 6:

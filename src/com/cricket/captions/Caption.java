@@ -228,6 +228,9 @@ public class Caption
 			case "e": //Equation
 				status = this_lowerThirdGfx.populateL3rdEquation(whatToProcess, whichSide, matchAllData);	
 				break;
+			case "Shift_E": //Extras
+				status = this_lowerThirdGfx.populateL3rdExtras(whatToProcess, whichSide, matchAllData);
+				break;	
 			case "f": // Bug Batsman Score
 				status = this_bugsAndMiniGfx.populateBatScore(whatToProcess, matchAllData, whichSide);
 				break;

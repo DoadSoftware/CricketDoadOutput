@@ -195,7 +195,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'F8': case 'F9': case 'F11': case 's': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6': case 'Control_y':
 			case 'Shift_K': case 'Shift_O': case 'g': case 'f': case 'Control_g': case 'Control_s': case 'Control_f': //case 'Alt_F9':
 			case 'Control_h': case 'Alt_F12': case 'l': case 'p': case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_F10': case 'Alt_d':
-			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2':
+			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2': case 'Shift_E':
 				addItemsToList(dataToProcess,null);
 				break;
 			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'Control_F1': case 'Control_a':
@@ -379,7 +379,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Control_F5': case 'Control_F9': case 'Control_F8': case 'Control_d': case 'Control_e': case 's': case 'p': case 'Control_p':
 	case 'z': case 'x': case 'c': case 'v': case 'Control_F11': case 'Control_y': case 'Alt_F8': case 'Alt_F1': case 'Alt_F2':
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q':
-	case 'Alt_F9': case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l':
+	case 'Alt_F9': case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l': case 'Shift_E':
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9': case 'Alt_0':
 	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10': case 'Alt_d': case 'Shift_F4': case 'Alt_a': case 'Alt_s':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
@@ -453,6 +453,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select.id = 'selectLeftBottom';
 			select.name = select.id;
 
+			option = document.createElement('option');
+			option.value = 'GROUP';
+			option.text = 'Group';
+			select.appendChild(option);
+			
 			option = document.createElement('option');
 			option.value = 'VENUE';
 			option.text = 'Venue Name';
@@ -865,7 +870,33 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),2);
 			cellCount = cellCount + 1
 			break;
+		case 'Shift_E':
+		 	header_text.innerHTML = 'LT - EXTRAS';
 		
+			select = document.createElement('select');
+			select.id = 'selectExtras';
+			select.name = select.id;
+			
+			option = document.createElement('option');
+			option.value = '1';
+			option.text = '1st Inning';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = '2';
+			option.text = '2nd Inning';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'totalExtras';
+			option.text = 'Total Extras';
+			select.appendChild(option);
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			cellCount = cellCount + 1
+			break;
 		case 'Alt_d':
 			header_text.innerHTML = 'LT - DLS PAR SCORE';
 		
