@@ -679,7 +679,7 @@ public class InfobarGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Bottom$Side_" 
 						+ WhichSide + "$Choose_Type*FUNCTION*Omo*vis_con SET 1 \0",print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Bottom$Side_" + WhichSide + "$Free_Text$txt_Text*GEOM*TEXT SET " 
-						+ "FIRST INNINGS SCORE " + matchAllData.getMatch().getInning().get(0).getBatting_team().getTeamName1() + " : "
+						+ "1st INNS - " + matchAllData.getMatch().getInning().get(0).getBatting_team().getTeamName1() + " "
 						+  CricketFunctions.getTeamScore(matchAllData.getMatch().getInning().get(0), "-", false) + " (" + CricketFunctions.OverBalls(
 						matchAllData.getMatch().getInning().get(0).getTotalOvers(), matchAllData.getMatch().getInning().get(0).getTotalBalls()) + ")" + "\0", print_writers);
 					break;
