@@ -393,10 +393,12 @@ public class IndexController
 					this_animation.AnimateIn(valueToProcess, print_writers, session_configuration);
 				} else { // Change on
 					this_animation.ChangeOn(valueToProcess, print_writers, session_configuration);
-					TimeUnit.MILLISECONDS.sleep(2000);
+					TimeUnit.MILLISECONDS.sleep(2500);
 					this_caption.whichSide = 1;
 					this_caption.PopulateGraphics(valueToProcess, session_match);
+					TimeUnit.MILLISECONDS.sleep(3000);
 					this_animation.CutBack(valueToProcess, print_writers, session_configuration);
+					
 				}
 				break;
 			}
