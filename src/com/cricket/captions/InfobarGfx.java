@@ -1561,10 +1561,9 @@ public class InfobarGfx
 							+ "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + this.infobar.getFreeText().get(1) + "\0", print_writers);
 					}else {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
-							+ "$Analytics_1_Wide$txt_Top*GEOM*TEXT SET " + this.infobar.getFreeText().get(0) + " " + 
-								this.infobar.getFreeText().get(1) + "\0", print_writers);
+								+ "$Analytics_1_Wide$txt_Top*GEOM*TEXT SET " + this.infobar.getFreeText().get(0) + "\0", print_writers);
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
-							+ "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + "WINNER WILL BE DECIDED BY SUPER OVER" + "\0", print_writers);
+							+ "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + this.infobar.getFreeText().get(1) + "\0", print_writers);
 					}
 					break;
 				case "Analytics_1_Wide":
