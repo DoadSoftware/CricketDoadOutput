@@ -14,6 +14,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -374,7 +377,7 @@ public class IndexController
 	}
 	public void processAnimations(String whatToProcess, Configuration session_configuration, String valueToProcess, 
 		List<PrintWriter> print_writers) throws InterruptedException, NumberFormatException, ParseException, 
-		CloneNotSupportedException, IOException, JAXBException
+		CloneNotSupportedException, IOException, JAXBException, UnsupportedAudioFileException, LineUnavailableException
 	{
 		if(whatToProcess.contains("ANIMATE-IN-GRAPHICS")) {
 			switch(this_animation.getTypeOfGraphicsOnScreen(session_configuration,valueToProcess)){

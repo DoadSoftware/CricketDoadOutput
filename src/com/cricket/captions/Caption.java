@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.List;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.xml.bind.JAXBException;
 
 import com.cricket.containers.LowerThird;
@@ -111,7 +113,7 @@ public class Caption
 		this.status = status;
 	}
 
-	public void PopulateGraphics(String whatToProcess, MatchAllData matchAllData) throws InterruptedException, NumberFormatException, ParseException, CloneNotSupportedException, IOException, JAXBException
+	public void PopulateGraphics(String whatToProcess, MatchAllData matchAllData) throws InterruptedException, NumberFormatException, ParseException, CloneNotSupportedException, IOException, JAXBException, UnsupportedAudioFileException, LineUnavailableException
 	{
 		if(whatToProcess.contains(",")) {
 			switch (whatToProcess.split(",")[0]) {
@@ -298,6 +300,9 @@ public class Caption
 				break;	
 			case "Control_d": case "Control_e":
 				status = this_fullFramesGfx.populatePlayerProfile(whichSide, whatToProcess, matchAllData, 0);
+				break;
+			case "Shift_P": case "Shift_Q":
+				status = this_fullFramesGfx.populateThisSeries(whichSide, whatToProcess, matchAllData, 0);
 				break;
 			case "Control_k": //Curr Partnership
 				status = this_bugsAndMiniGfx.bugsCurrPartnership(whatToProcess,matchAllData,whichSide);

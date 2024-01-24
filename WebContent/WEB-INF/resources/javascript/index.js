@@ -195,13 +195,15 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'F8': case 'F9': case 'F11': case 's': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6': case 'Control_y':
 			case 'Shift_K': case 'Shift_O': case 'g': case 'f': case 'Control_g': case 'Control_s': case 'Control_f': //case 'Alt_F9':
 			case 'Control_h': case 'Alt_F12': case 'l': case 'p': case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_F10': case 'Alt_d':
-			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2': case 'Shift_E':
+
+			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2': case 'Shift_E': case 'Shift_P': case 'Shift_Q':
+
 				addItemsToList(dataToProcess,null);
 				break;
 			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'Control_F1': case 'Control_a':
 			case 'Alt_k':  case 'Shift_F3': case 'd': case 'e': case 'Control_F6': //case 'Control_F7': 
 			case 'Control_k': case 'Control_F10': case 'Control_F3': case 'n': case 'a': case 't': case 'h':
-			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q': case 'Control_b': case 'o': case 'Control_F2':
+			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q': case 'Control_b': case 'o': case 'Control_F2': case 'b':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 				break;
@@ -381,7 +383,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q':
 	case 'Alt_F9': case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l': case 'Shift_E':
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9': case 'Alt_0':
-	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10': case 'Alt_d': case 'Shift_F4': case 'Alt_a': case 'Alt_s':
+	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10': case 'Alt_d': case 'Shift_F4': case 'Alt_a': case 'Alt_s': 
+	case 'Shift_P': case 'Shift_Q':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		
 		$("#captions_div").hide();
@@ -1102,10 +1105,13 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
 			break;
-		 case 'Alt_m':
+		 case 'Alt_m':  case 'Shift_P':
 			switch(whatToProcess) {	
 			case 'Alt_m':
 				header_text.innerHTML = 'BATSMAN MILESTONE';
+				break;
+			case 'Shift_P':
+				header_text.innerHTML = 'BATSMAN THIS SERIES';
 				break;
 			}
 			select = document.createElement('select');
@@ -1148,6 +1154,59 @@ function addItemsToList(whatToProcess,dataToProcess)
 			row.insertCell(cellCount).appendChild(select);
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
+			
+			switch(whatToProcess){
+				case 'Shift_P':
+					select = document.createElement('select');
+					select.id = 'selectStatType';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = '0';
+					option.text = '';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '1';
+					option.text = 'Matches';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '2';
+					option.text = 'Runs';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '3';
+					option.text = 'Fifties';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '4';
+					option.text = 'Hundreds';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '5';
+					option.text = 'Average';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '6';
+					option.text = 'Strike Rate';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '7';
+					option.text = 'Best';
+					select.appendChild(option);
+					
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 2)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),2);
+					cellCount = cellCount + 1
+				break;
+			}
 			break;	
 		case 'Alt_p':
 			header_text.innerHTML = 'BUG TOSS';
@@ -1467,11 +1526,14 @@ function addItemsToList(whatToProcess,dataToProcess)
 			}
 			
 			break;
-		case 'Alt_n'://BowlerStyle
+		case 'Alt_n': case 'Shift_Q'://Bowler milestone
 			
 			switch(whatToProcess) {
 			case 'Alt_n':
 				header_text.innerHTML = 'BOWLER MILESTONE';
+				break;	
+			case 'Shift_Q':
+				header_text.innerHTML = 'BOWLER THIS SERIES';
 				break;		
 			}
 			
@@ -1515,6 +1577,58 @@ function addItemsToList(whatToProcess,dataToProcess)
 			row.insertCell(cellCount).appendChild(select);
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
+			switch(whatToProcess){
+				case 'Shift_Q':
+					select = document.createElement('select');
+					select.id = 'selectStatType';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = '0';
+					option.text = '';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '1';
+					option.text = 'Matches';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '2';
+					option.text = 'Wickets';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '3';
+					option.text = '3WI';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '4';
+					option.text = '5WI';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '5';
+					option.text = 'Average';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '6';
+					option.text = 'Economy';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '7';
+					option.text = 'Best Fig';
+					select.appendChild(option);
+					
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 2)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),2);
+					cellCount = cellCount + 1
+					break;
+			}
 			
 			break;
 			
@@ -1901,7 +2015,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),1);
 			cellCount = cellCount + 1;
 			break;
-		case 'F7': case 'Control_d': //Lt Bat Profile
+		case 'F7': case 'Control_d'://Lt Bat Profile
 		
 			switch(whatToProcess){
 				case 'F7':
@@ -2465,6 +2579,15 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			break;
 		}
+		
+		/*document.addEventListener("keydown", function (event) {
+			event.preventDefault();
+		});
+
+		document.addEventListener("keypress", function (event) {
+	       event.preventDefault();
+	 	});*/
+		
 		option = document.createElement('input');
 		option.type = 'button';
 		option.name = 'populate_btn';

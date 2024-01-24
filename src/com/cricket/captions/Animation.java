@@ -50,8 +50,8 @@ public class Animation
 			case "F1": case "F2": case "F4": case "Shift_F10": case "Shift_F11": case "Control_F11": case "m": case "Control_m": 
 			case "Control_F8": case "Control_d": case "Control_e": case "Control_F7": case "Control_F10":
 			case "Shift_K": case "Alt_F9": case "Shift_D": case "p": case "Control_b": case "Alt_m": case "Alt_n":
-			case "Alt_F10": case "Control_F1": case "Control_p":
-			case "z": case "x": case "c": case "v":
+			case "Alt_F10": case "Control_F1": case "Control_p": case "Shift_P": case "Shift_Q":
+			case "z": case "x": case "c": case "v": 
 				return Constants.FULL_FRAMER;
 			case "F5": case "F6": case "F7": case "F8": case "F9": case "F10": case "F11": case "Alt_F8":
 			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
@@ -112,6 +112,7 @@ public class Animation
 			case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Shift_F11": case "Control_F11": case "m": case "Control_m": 
 			case "Control_F8": case "Control_d": case "Control_e": case "Control_F7": case "Control_F10":
 			case "Shift_K": case "Alt_F9": case "Alt_F10": case "p": case "z": case "x": case "c": case "v": case "Control_p":
+			case "Shift_P": case "Shift_Q":
 				
 				setVariousAnimationsKeys("ANIMATE-IN", print_writers, config);
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
@@ -149,10 +150,7 @@ public class Animation
 				case "Control_F8":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$LineUp_Image", "START");
 					break;
-				case "Control_d":
-					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Profile", "START");
-					break;
-				case "Control_e":
+				case "Control_d": case "Shift_P": case "Control_e": case "Shift_Q":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Profile", "START");
 					break;
 				case "Control_F7":
@@ -187,7 +185,7 @@ public class Animation
 					TimeUnit.MILLISECONDS.sleep(1500);
 					processAnimation(Constants.BACK, print_writers, "Sponsor", "START");
 					break;
-				case "Control_d": case "Control_e":
+				case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q":
 					if(Integer.valueOf(whatToProcess.split(",")[4]) > 0) {
 						processAnimation(Constants.BACK, print_writers, "Profile_Highlight$Side1$"+whatToProcess.split(",")[4], "START");
 					}
@@ -390,7 +388,7 @@ public class Animation
 			
 			case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Shift_F11": case "Control_F11": case "m": case "Control_m": case "p":
 			case "Control_F8": case "Control_d": case "Control_e": case "Control_F7": case "Control_F10": case "Shift_K": case "Alt_F9":
-			case "Alt_F10": case "Control_p":
+			case "Alt_F10": case "Control_p": case "Shift_P": case "Shift_Q":
 			case "z": case "x": case "c": case "v":
 				
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$Flare_Loop", "CONTINUE");
@@ -426,10 +424,8 @@ public class Animation
 				case "Control_F8":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$LineUp_Image", "CONTINUE");
 					break;
-				case "Control_d":
-					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Profile", "CONTINUE");
-					break;
-				case "Control_e":
+				
+				case "Control_d": case "Shift_P": case "Control_e": case "Shift_Q":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Profile", "CONTINUE");
 					break;
 				case "Control_F7":
@@ -463,7 +459,7 @@ public class Animation
 //				case "Shift_K": case "F4":
 //					processAnimation(Constants.BACK, print_writers, "Sponsor", "CONTINUE");
 //					break;
-				case "Control_d": case "Control_e":
+				case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q":
 					if(Integer.valueOf(whatToProcess.split(",")[4]) > 0) {
 						processAnimation(Constants.BACK, print_writers, "Profile_Highlight$Side1$"+whatToProcess.split(",")[4], "CONTINUE");
 					}
@@ -556,7 +552,6 @@ public class Animation
 						break;
 					case "F4":
 						processAnimation(Constants.BACK, print_writers, "Change$Partnership_List", "START");
-						//processAnimation(Constants.BACK, print_writers, "Sponsor", "CONTINUE REVERSE");
 						break;
 					case "Shift_F11":
 						processAnimation(Constants.BACK, print_writers, "Change$Summary", "START");
@@ -959,6 +954,8 @@ public class Animation
 					+ "*ANIMATION*KEY*$In_2*VALUE SET 0.0 " + PositionY + " 0.0 \0", print_writers);
 				if(caption.this_fullFramesGfx.numberOfRows != lastNumberOfRows) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
+							+ "*ANIMATION*KEY*$S_In_1*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
 						+ "*ANIMATION*KEY*$Out_1*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
 						+ "*ANIMATION*KEY*$In_2*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);
@@ -1001,7 +998,7 @@ public class Animation
 				switch(whatToProcess.split(",")[0]) {
 				case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Shift_F11": case "Control_F11": case "m": case "Control_m": case "p": case "Control_p":
 				case "Control_F8": case "Control_d": case "Control_e": case "Control_F7": case "Control_F10": case "Alt_F9": case "Shift_K":
-				case "z": case "x": case "c": case "v": case "Alt_F10":
+				case "z": case "x": case "c": case "v": case "Alt_F10": case "Shift_P": case "Shift_Q":
 					previewCommand = "Anim_FullFrames$In_Out$Essentials$In 2.140 Anim_FullFrames$In_Out$Header$In 1.800 "
 						+ "Anim_FullFrames$In_Out$Footer$In 1.800";
 					break;
@@ -1052,7 +1049,7 @@ public class Animation
 				case "Control_m": //MATCH PROMO
 					previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Ident$In 1.920";
 					break;
-				case "Control_d": case "Control_e"://PlayerProfile
+				case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q"://PlayerProfile
 					previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Profile$In 2.300";
 					if(Integer.valueOf(whatToProcess.split(",")[4]) > 0) {
 						previewCommand = previewCommand + " Profile_Highlight$Side1$" + whatToProcess.split(",")[4] + " 1.000";
@@ -1089,6 +1086,8 @@ public class Animation
 								break;
 							case "F4":
 								previewCommand = previewCommand + " Change$Partnership_List 1.360 Change$Partnership_List$Change_Out 0.880 Change$Partnership_List$Change_In 1.360";
+								previewCommand = previewCommand + " ConcussExtend_Y 0.500 ConcussExtend_Y$In 0.500";
+								
 								break;
 							case "Shift_F11":
 								previewCommand = previewCommand + " Change$Summary 1.340 Change$Summary$Change_Out 0.720 Change$Summary$Change_In 1.340";
