@@ -297,8 +297,8 @@ public class Animation
 				
 				if(this.infobar.isInfobar_on_screen() == true && !this.infobar.isInfobar_pushed()) {
 					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Wipes", "START");
-					TimeUnit.MILLISECONDS.sleep(800);
 				}
+				break;
 			case "Alt_f": case "Alt_g": case Constants.SHRUNK_INFOBAR: case Constants.MIDDLE + Constants.SHRUNK_INFOBAR:
 //				System.out.println("this.infobar.isInfobar_on_screen() = " + this.infobar.isInfobar_on_screen());
 //				System.out.println("whatToProcess = " + whatToProcess);
@@ -552,6 +552,10 @@ public class Animation
 						break;
 					case "F4":
 						processAnimation(Constants.BACK, print_writers, "Change$Partnership_List", "START");
+						if(whichGraphicOnScreen.split(",")[0].equalsIgnoreCase(whatToProcess.split(",")[0]) && 
+								(caption.this_fullFramesGfx.whichSponsor != null || !caption.this_fullFramesGfx.whichSponsor.isEmpty())) {
+							processAnimation(Constants.BACK, print_writers, "Sponsor", "START");
+						}
 						break;
 					case "Shift_F11":
 						processAnimation(Constants.BACK, print_writers, "Change$Summary", "START");
@@ -707,19 +711,19 @@ public class Animation
 				processAnimation(Constants.BACK, print_writers, "Change$Footer", "SHOW 0.0");
 				switch(whichGraphicOnScreen.split(",")[0]) {
 				case "F1":  
-					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Batting_Card", "SHOW 0.0");
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Batting_Card", "SHOW 3.000");
 					processAnimation(Constants.BACK, print_writers, "Change$Batting_Card", "SHOW 0.0");
 					break;
 				case "F2":  
-					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Bowling_Card", "SHOW 0.0");
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Bowling_Card", "SHOW 3.000");
 					processAnimation(Constants.BACK, print_writers, "Change$Bowling_Card", "SHOW 0.0");
 					break;
 				case "F4":
-					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Partnership_List", "SHOW 0.0");
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Partnership_List", "SHOW 3.000");
 					processAnimation(Constants.BACK, print_writers, "Change$Partnership_List", "SHOW 0.0");
 					break;
 				case "Shift_F11":
-					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Summary", "SHOW 0.0");
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Summary", "SHOW 3.000");
 					processAnimation(Constants.BACK, print_writers, "Change$Summary", "SHOW 0.0");
 					break;
 				case "Control_F8":
@@ -902,9 +906,9 @@ public class Animation
 				PositionY = 0f;
 				Sponsor = -380f;
 			}
-//			System.out.println("setVariousAnimationsKeys -> whatToProcess = " + whatToProcess + ": Sponsor = " + Sponsor 
-//				+ ": numberOfRows = " + caption.this_fullFramesGfx.numberOfRows);
-//			System.out.println("setVariousAnimationsKeys: whatToProcess = " + whatToProcess);
+			System.out.println("setVariousAnimationsKeys -> whatToProcess = " + whatToProcess + ": Sponsor = " + Sponsor 
+				+ ": numberOfRows = " + caption.this_fullFramesGfx.numberOfRows);
+			System.out.println("setVariousAnimationsKeys: whatToProcess = " + whatToProcess);
 			switch (whatToProcess) {
 			case "ANIMATE-IN":
 				
@@ -940,6 +944,24 @@ public class Animation
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
 					+ "*ANIMATION*KEY*$Out_2*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);
 				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$MoveForExtraData"
+					+ "*ANIMATION*KEY*$In_1*VALUE SET 0.0 " + MoveForExtraData + " 0.0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$BasePositionY"
+					+ "*ANIMATION*KEY*$In_1*VALUE SET 0.0 " + BasePositionY + " 0.0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$obj_BiggerBase"
+					+ "*ANIMATION*KEY*$In_1*VALUE SET " + obj_BiggerBase + " \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$obj__Mask_6_"
+					+ "*ANIMATION*KEY*$In_1*VALUE SET " + obj__Mask_6_ + " \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$FooterAll$Footer$PositionY"
+					+ "*ANIMATION*KEY*$In_1*VALUE SET 0.0 " + PositionY + " 0.0 \0", print_writers);
+				
+//				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
+//					+ "*ANIMATION*KEY*$In_1*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);
+//				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
+//					+ "*ANIMATION*KEY*$Out_1*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);
+//				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Sponsor"
+//					+ "*ANIMATION*KEY*$In_2*VALUE SET 0.0 " + Sponsor + " 0.0 \0", print_writers);
+			
 				break;
 			case "CHANGE-ON":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$MoveForExtraData"

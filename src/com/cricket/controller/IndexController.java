@@ -315,6 +315,20 @@ public class IndexController
 						case Constants.FULL_FRAMER: case Constants.LOWER_THIRD: 
 						case Constants.NAME_SUPERS + Constants.LOWER_THIRD:
 						case Constants.BOUNDARIES + Constants.LOWER_THIRD:
+							
+							//Make a preview of lowerThird when FullFrames is on Screen and vice-verca
+//							switch (this_animation.getTypeOfGraphicsOnScreen(session_configuration, valueToProcess)) {
+//							case Constants.LOWER_THIRD: case Constants.NAME_SUPERS + Constants.LOWER_THIRD: case Constants.BOUNDARIES + Constants.LOWER_THIRD:
+//								this_caption.PopulateGraphics(valueToProcess, session_match);
+//								this_animation.processL3Preview(valueToProcess, print_writers, this_caption.whichSide, session_configuration);
+//								break;
+//							case Constants.FULL_FRAMER:
+//								this_caption.PopulateGraphics(valueToProcess, session_match);
+//								this_animation.processFullFramesPreview(valueToProcess, print_writers, this_caption.whichSide, 
+//										session_configuration, this_animation.whichGraphicOnScreen);
+//								break;
+//							}
+							
 							if(this_animation.getTypeOfGraphicsOnScreen(session_configuration,valueToProcess) 
 								!= this_animation.getTypeOfGraphicsOnScreen(session_configuration,this_animation.whichGraphicOnScreen)) {
 								this_caption.setStatus(this_animation.getTypeOfGraphicsOnScreen(session_configuration,

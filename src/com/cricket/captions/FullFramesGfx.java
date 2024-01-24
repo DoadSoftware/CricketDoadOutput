@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -366,7 +365,7 @@ public class FullFramesGfx
 			status = PopulateFfBody(WhichSide, whatToProcess.split(",")[0], matchAllData, WhichInning);
 			if(status == Constants.OK) {
 				setFullFrameFooterPosition(WhichSide, 1);
-				if(inning.getPartnerships().size()>=10) {
+				if(inning.getPartnerships().size() >= 10) {
 					this.numberOfRows = inning.getPartnerships().size();
 				}else {
 					this.numberOfRows = inning.getBattingCard().size();
@@ -2026,8 +2025,8 @@ public class FullFramesGfx
 				rowId = rowId + 1;
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Partnership_List$Rows$"
 						+ rowId+  "$Select_Row_Type*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
-//				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Partnership_List$Rows$"
-//						+ rowId+  "$Select_Row_Type$Title$Data$txt_Title*GEOM*TEXT SET " + "DID NOT BAT" + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Partnership_List$Rows$"
+						+ rowId+  "$Select_Row_Type$Title$Data$txt_Title*GEOM*TEXT SET " + "" + "\0", print_writers);
 			}else {
 				for (BattingCard bc : inning.getBattingCard()) {
 					if(rowId < inning.getBattingCard().size()) {
