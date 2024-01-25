@@ -1104,10 +1104,10 @@ public class Animation
 							if(whichGraphicOnScreen.contains(",")) {
 								switch(whichGraphicOnScreen.split(",")[0]) {
 								case "F1":  
-									previewCommand = previewCommand + " Change$Batting_Card 1.380 Change$Batting_Card$Change_In 1.380 Change$Batting_Card$Change_Out 0.880";
+									previewCommand = previewCommand + " Change$Batting_Card 1.380 Change$Batting_Card$Change_Out 0.880 Change$Batting_Card$Change_In 1.380";
 									break;
 								case "F2":  
-									previewCommand = previewCommand + " Change$Bowling_Card 1.300 Change$Bowling_Card$Change_In 1.300 Change$Bowling_Card$Change_Out 0.840";
+									previewCommand = previewCommand + " Change$Bowling_Card 1.300 Change$Bowling_Card$Change_Out 0.840 Change$Bowling_Card$Change_In 1.300";
 									break;
 								case "F4":
 									previewCommand = previewCommand + " Change$Partnership_List 1.360 Change$Partnership_List$Change_Out 0.880 "
@@ -1165,11 +1165,11 @@ public class Animation
 								}
 							}
 							previewCommand = previewCommand + " Change$Footer 1.700 Change$Footer$Change_In 1.700 Change$Footer$Chnage_Out 0.580";
-							System.out.println("Number of rows : " + caption.this_fullFramesGfx.numberOfRows);
-							System.out.println("L Number of rows : " + lastNumberOfRows);
-							if(caption.this_fullFramesGfx.numberOfRows != lastNumberOfRows) {
-								previewCommand = previewCommand + " ConcussExtend_Y 0.500 ConcussExtend_Y$In 0.500";
-							}
+//							System.out.println("Number of rows : " + caption.this_fullFramesGfx.numberOfRows);
+//							System.out.println("L Number of rows : " + lastNumberOfRows);
+//							if(caption.this_fullFramesGfx.numberOfRows != lastNumberOfRows) {
+//								previewCommand = previewCommand + " ConcussExtend_Y 0.500 ConcussExtend_Y$In 0.500";
+//							}
 							break;
 						}
 					}

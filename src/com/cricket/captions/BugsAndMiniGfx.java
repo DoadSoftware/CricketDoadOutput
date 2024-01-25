@@ -698,6 +698,11 @@ public class BugsAndMiniGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$minis$Side" + WhichSide 
 						+ "$Bowling$txt_FirstName*GEOM*TEXT SET " + inning.getBowling_team().getTeamName1() + " \0", print_writers);
 				
+				for(int i=1; i<=inning.getBowlingCard().size(); i++) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$minis$Side" + WhichSide 
+							+ "$Bowling$Row"+(i+1)+"*ACTIVE SET 1 \0", print_writers);
+				}
+				
 				for (BowlingCard boc : inning.getBowlingCard()) {
 					if(boc.getRuns() > 0 || ((boc.getOvers()*6)+boc.getBalls()) > 0) {
 						bowling_size=bowling_size + 1;

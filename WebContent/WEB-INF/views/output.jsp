@@ -16,6 +16,86 @@
   <link rel="stylesheet" href="<c:url value="/webjars/bootstrap/5.1.3/css/bootstrap.min.css"/>"/>  
   <link href="<c:url value="/webjars/font-awesome/6.0.0/css/all.css"/>" rel="stylesheet">
   
+ <!--   <script type="text/javascript">
+  
+  var stopAllKeyPress = false;
+  
+  $(document).on("keydown", function(e){
+
+      // if keyboard is locked: exit keydown handler
+      if(stopAllKeyPress){
+         return; 
+      }	  
+	  
+      var evtobj = window.event? event : e;
+
+      switch(e.target.tagName.toLowerCase())
+      {
+      case "input": case "textarea":
+    	 break;
+      default:
+    	  e.preventDefault();
+	      var whichKey = '';
+		  var validKeyFound = false;
+		  
+		  stopAllKeyPress = true;
+		  
+	      if(evtobj.ctrlKey) {
+	    	  whichKey = 'Control';
+	      }
+	      if(evtobj.altKey) {
+	    	  if(whichKey) {
+	        	  whichKey = whichKey + '_Alt';
+	    	  } else {
+	        	  whichKey = 'Alt';
+	    	  }
+	      }
+	      if(evtobj.shiftKey) {
+	    	  if(whichKey) {
+	        	  whichKey = whichKey + '_Shift';
+	    	  } else {
+	        	  whichKey = 'Shift';
+	    	  }
+	      }
+	      
+		  if(evtobj.keyCode) {
+	    	  if(whichKey) {
+	    		  if(!whichKey.includes(evtobj.key)) {
+	            	  whichKey = whichKey + '_' + evtobj.key;
+	    		  }
+	    	  } else {
+	        	  whichKey = evtobj.key;
+	    	  }
+		  }
+		  validKeyFound = false;
+		  if (whichKey.includes('_')) {
+			  whichKey.split("_").forEach(function (this_key) {
+				  switch (this_key) {
+				  case 'Control': case 'Shift': case 'Alt':
+					break;
+				  default:
+					validKeyFound = true;
+					break;
+				  }
+			  });
+		   } else {
+			  if(whichKey != 'Control' && whichKey != 'Alt' && whichKey != 'Shift') {
+				  validKeyFound = true;
+			  }
+		   }
+		   if(validKeyFound == true) {
+			   console.log('whichKey = ' + whichKey);
+			  processUserSelectionData('LOGGER_FORM_KEYPRESS',whichKey);
+		   }
+	      }
+      
+	      // unlock keyboard input after 4 seconds
+	      setTimeout(function(){stopAllKeyPress = false;},4000);
+
+	  }); 
+   	  setInterval(() => {processCricketProcedures('READ-MATCH-AND-POPULATE');}, 1000);
+  </script>   -->
+  
   <script type="text/javascript">
     
   $(document).on("keydown", function(e){
@@ -83,7 +163,7 @@
 	  }); 
 	  //document.onkeydown = KeyPress;  
    	  setInterval(() => {processCricketProcedures('READ-MATCH-AND-POPULATE');}, 1000);
-  </script>
+  </script> 
     
 </head>
 <body onload="onPageLoadEvent('OUTPUT')">
