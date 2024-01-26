@@ -1689,16 +1689,21 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select.id = 'selectBatsmanThisMatch';
 			select.name = select.id;
 			
-			session_match.match.inning.forEach(function(inn,index,arr){
-				if(inn.inningNumber == document.getElementById('which_inning').value){
-					inn.bowlingCard.forEach(function(boc,boc_index,boc_arr){
-						option = document.createElement('option');
-						option.value = boc.playerId;
-						option.text = boc.player.full_name;	
-						select.appendChild(option);
-					});
-				}
-			});
+			if(document.getElementById('which_inning').value == 1){
+				session_match.match.inning[1].battingCard.forEach(function(bc,index,arr){
+					option = document.createElement('option');
+					option.value = bc.playerId;
+					option.text = bc.player.full_name;	
+					select.appendChild(option);
+				});
+			}else{
+				session_match.match.inning[0].battingCard.forEach(function(bc,index,arr){
+					option = document.createElement('option');
+					option.value = bc.playerId;
+					option.text = bc.player.full_name;	
+					select.appendChild(option);
+				});
+			}
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
 			row.insertCell(cellCount).appendChild(select);
