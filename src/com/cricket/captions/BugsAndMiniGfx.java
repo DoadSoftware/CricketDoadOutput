@@ -272,6 +272,10 @@ public class BugsAndMiniGfx
 			case "o":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Center_Bug$Select"
 						+ "*FUNCTION*Omo*vis_con SET 0  \0", print_writers);
+				CricketFunctions.DoadWriteCommandToSelectedViz(1,"-1 RENDERER*FRONT_LAYER*TREE*$Center_Bug$Select$PlayerOftheMatch$Data$Select_Sponsor"
+						+ "*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToSelectedViz(2,"-1 RENDERER*FRONT_LAYER*TREE*$Center_Bug$Select$PlayerOftheMatch$Data$Select_Sponsor"
+						+ "*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
 				break;
 			case "t":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Center_Bug$Select"

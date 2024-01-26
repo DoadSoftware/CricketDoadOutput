@@ -130,12 +130,21 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 	switch (whatToProcess) {
 	case 'LOGGER_FORM_KEYPRESS':
 		initialiseSelectedOptionsList();
+		/*if(dataToProcess == 'Escape'){
+			$("#select_graphic_options_div").empty();
+			document.getElementById('select_graphic_options_div').style.display = 'none';
+			$("#captions_div").show();
+			break;
+		}else */
 		if(!$('#select_graphic_options_div').is(':empty')) {
 			alert('All keypress are disabled while SELECTION part is on screen');
 			return false;
 		}else{
 			document.getElementById('which_keypress').value = dataToProcess;
 		}
+		
+		
+		
 		switch(dataToProcess) {
 		case 'SPEED':
 			processCricketProcedures('SHOW_SPEED');

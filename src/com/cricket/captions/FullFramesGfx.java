@@ -1362,7 +1362,7 @@ public class FullFramesGfx
 					
 					
 				}
-				
+				Collections.sort(inning.getBowlingCard());
 				if(inning.getBowlingCard() != null && inning.getBowlingCard().size() > 0) {
 					for(int iRow = 1; iRow <= inning.getBowlingCard().size(); iRow++) {
 						if(inning.getBowlingCard().get(iRow-1).getRuns() > 0 || 
