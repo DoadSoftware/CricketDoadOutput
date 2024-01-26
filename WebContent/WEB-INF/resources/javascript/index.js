@@ -1068,7 +1068,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select.name = select.id;
 			
 			session_match.match.inning.forEach(function(inn,index,arr){
-				if(inn.isCurrentInning == 'YES'){
+				if(inn.inningNumber == document.getElementById('which_inning').value){
 					if(inn.battingTeamId == session_match.setup.homeTeamId){
 						session_match.setup.homeSquad.forEach(function(hs,index,arr){
 							option = document.createElement('option');
@@ -1460,7 +1460,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select.name = select.id;
 			
 			session_match.match.inning.forEach(function(inn,index,arr){
-				if(inn.isCurrentInning == 'YES'){
+				if(inn.inningNumber == document.getElementById('which_inning').value){
 					if(inn.bowlingTeamId == session_match.setup.homeTeamId){
 						session_match.setup.homeSquad.forEach(function(hs,index,arr){
 							option = document.createElement('option');
