@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -1641,47 +1640,47 @@ public class LowerThirdGfx
 			}
 			String pp_ovrs="";
 			if(matchAllData.getMatch().getInning().get(0).getTotalOvers()>= matchAllData.getMatch().getInning().get(0).getFirstPowerplayStartOver()-1) {
-				this_data_str.set(0, CricketFunctions.getFirstPowerPlayScores(matchAllData, Arrays.asList(1,2), matchAllData.getEventFile().getEvents()).get(0));
+				this_data_str.set(0, CricketFunctions.getFirstPowerPlayScore(matchAllData, 1, matchAllData.getEventFile().getEvents()).split(",")[0]);
 			}else {
 				this_data_str.set(0,"-");
 			}
 			if(matchAllData.getMatch().getInning().get(0).getTotalOvers() > matchAllData.getMatch().getInning().get(0).getSecondPowerplayStartOver()-1) {
-				this_data_str.set(2, CricketFunctions.getSecPowerPlayScores(matchAllData, Arrays.asList(1,2), matchAllData.getEventFile().getEvents()).get(0));
+				this_data_str.set(2, CricketFunctions.getSecPowerPlayScore(matchAllData, 1, matchAllData.getEventFile().getEvents()).split(",")[0]);
 			}else if(matchAllData.getMatch().getInning().get(0).getTotalOvers() == matchAllData.getMatch().getInning().get(0).getSecondPowerplayStartOver()-1 && matchAllData.getMatch().getInning().get(0).getTotalBalls() > 0) {
-				this_data_str.set(2, CricketFunctions.getSecPowerPlayScores(matchAllData, Arrays.asList(1,2), matchAllData.getEventFile().getEvents()).get(0));
+				this_data_str.set(2, CricketFunctions.getSecPowerPlayScore(matchAllData,1, matchAllData.getEventFile().getEvents()).split(",")[0]);
 			}else {
 				this_data_str.set(2, "-");
 			}
 			if(matchAllData.getMatch().getInning().get(0).getTotalOvers() > matchAllData.getMatch().getInning().get(0).getThirdPowerplayStartOver()-1) {
-				this_data_str.set(4, CricketFunctions.getThirdPowerPlayScore(matchAllData, Arrays.asList(1,2), matchAllData.getEventFile().getEvents()).get(0));
+				this_data_str.set(4, CricketFunctions.getThirdPowerPlayScore(matchAllData, 1, matchAllData.getEventFile().getEvents()).split(",")[0]);
 			}else if(matchAllData.getMatch().getInning().get(0).getTotalOvers() == matchAllData.getMatch().getInning().get(0).getThirdPowerplayStartOver()-1 && matchAllData.getMatch().getInning().get(0).getTotalBalls() > 0) {
-				this_data_str.set(4, CricketFunctions.getThirdPowerPlayScore(matchAllData, Arrays.asList(1,2), matchAllData.getEventFile().getEvents()).get(0));
+				this_data_str.set(4, CricketFunctions.getThirdPowerPlayScore(matchAllData,1, matchAllData.getEventFile().getEvents()).split(",")[0]);
 			}else {
 				this_data_str.set(4, "-");
 			}
 			
 			if(inning.getTotalOvers() >= inning.getFirstPowerplayStartOver()-1) {
-				this_data_str.set(1, CricketFunctions.getFirstPowerPlayScores(matchAllData, Arrays.asList(1,2), matchAllData.getEventFile().getEvents()).get(1));
+				this_data_str.set(1, CricketFunctions.getFirstPowerPlayScore(matchAllData, 2, matchAllData.getEventFile().getEvents()).split(",")[0]);
 
 			}else {
 				this_data_str.set(1,"-");	
 			}
 			
 			if(inning.getTotalOvers() > inning.getSecondPowerplayStartOver()-1) {
-				this_data_str.set(3, CricketFunctions.getSecPowerPlayScores(matchAllData, Arrays.asList(1,2), matchAllData.getEventFile().getEvents()).get(1));
+				this_data_str.set(3, CricketFunctions.getSecPowerPlayScore(matchAllData,2, matchAllData.getEventFile().getEvents()).split(",")[0]);
 				
 			}else if(inning.getTotalOvers() == inning.getSecondPowerplayStartOver()-1 && inning.getTotalBalls() > 0) {
-				this_data_str.set(3, CricketFunctions.getSecPowerPlayScores(matchAllData, Arrays.asList(1,2), matchAllData.getEventFile().getEvents()).get(1));
+				this_data_str.set(3, CricketFunctions.getSecPowerPlayScore(matchAllData,2, matchAllData.getEventFile().getEvents()).split(",")[0]);
 				
 			}else {
 				this_data_str.set(3,"-");	
 			}
 			
 			if(inning.getTotalOvers() > inning.getThirdPowerplayStartOver()-1) {
-				this_data_str.set(5, CricketFunctions.getThirdPowerPlayScore(matchAllData, Arrays.asList(1,2), matchAllData.getEventFile().getEvents()).get(1));
+				this_data_str.set(5, CricketFunctions.getThirdPowerPlayScore(matchAllData, 2, matchAllData.getEventFile().getEvents()).split(",")[0]);
 
 			}else if(inning.getTotalOvers() == inning.getThirdPowerplayStartOver()-1 && inning.getTotalBalls() > 0) {
-				this_data_str.set(5, CricketFunctions.getThirdPowerPlayScore(matchAllData, Arrays.asList(1,2), matchAllData.getEventFile().getEvents()).get(1));
+				this_data_str.set(5, CricketFunctions.getThirdPowerPlayScore(matchAllData,2, matchAllData.getEventFile().getEvents()).split(",")[0]);
 
 			}else {
 				this_data_str.set(5,"-");	
@@ -2280,9 +2279,15 @@ public class LowerThirdGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Top_Line$Data$Side_" + WhichSide 
 						+ "$Name" + containerName + "$txt_Name*GEOM*TEXT SET " + inning.getBowling_team().getTeamName1() + "\0", print_writers);
 				
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Top_Line$Data$Side_" + WhichSide 
-						+ "$Name" + containerName + "$txt_Designation*GEOM*TEXT SET " + inning.getBowling_team().getTeamGroup() + " - " +
-						ground.getCity() + "\0", print_writers);
+				if(inning.getBowling_team().getTeamGroup() != null) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Top_Line$Data$Side_" + WhichSide 
+							+ "$Name" + containerName + "$txt_Designation*GEOM*TEXT SET " + inning.getBowling_team().getTeamGroup() + " - " +
+							ground.getCity() + "\0", print_writers);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
+							"$Bottom$txt_Subheader*GEOM*TEXT SET " + "13th TO 16th PLACE PLAY-OFF - " + ground.getCity() + "\0", print_writers);
+				}
+				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"
 						+ WhichSide + "$Name" + containerName + "$Score*ACTIVE SET 1 \0", print_writers);
 				

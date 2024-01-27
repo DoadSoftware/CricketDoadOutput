@@ -1683,6 +1683,54 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
 			break;
+		case 'Alt_F1':
+			switch(whatToProcess) {
+			case 'Alt_F1':
+				header_text.innerHTML = 'BAT GRIFF';
+				break;						
+			}
+			select = document.createElement('select');
+			select.id = 'selectBatsmanThisMatch';
+			select.name = select.id;
+			
+			session_match.match.inning.forEach(function(inn,index,arr){
+				if(inn.inningNumber == document.getElementById('which_inning').value){
+					if(inn.battingTeamId == session_match.setup.homeTeamId){
+						session_match.setup.homeSquad.forEach(function(hs,index,arr){
+							option = document.createElement('option');
+							option.value = hs.playerId;
+							option.text = hs.full_name;
+							select.appendChild(option);
+						});
+						session_match.setup.homeOtherSquad.forEach(function(hos,index,arr){
+							option = document.createElement('option');
+							option.value = hos.playerId;
+							option.text = hos.full_name  + ' (OTHER)';
+							select.appendChild(option);
+						});
+					}else {
+						session_match.setup.awaySquad.forEach(function(as,index,arr){
+							option = document.createElement('option');
+							option.value = as.playerId;
+							option.text = as.full_name;
+							select.appendChild(option);
+						});
+						session_match.setup.awayOtherSquad.forEach(function(aos,index,arr){
+							option = document.createElement('option');
+							option.value = aos.playerId;
+							option.text = aos.full_name  + ' (OTHER)';
+							select.appendChild(option);
+						});
+					}
+				}
+			});
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			cellCount = cellCount + 1;
+			break;
+			
 		case 'Alt_F2':
 			switch(whatToProcess) {
 			case 'Alt_F2':
@@ -1730,14 +1778,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
 			break;	
-		case 'F5': case 'Alt_F1':
+		case 'F5':
 			switch(whatToProcess) {
 			case 'F5':
 				header_text.innerHTML = 'BAT THIS MATCH';
-				break;
-			case 'Alt_F1':
-				header_text.innerHTML = 'BAT GRIFF';
-				break;					
+				break;			
 			}
 			select = document.createElement('select');
 			select.id = 'selectBatsmanThisMatch';
