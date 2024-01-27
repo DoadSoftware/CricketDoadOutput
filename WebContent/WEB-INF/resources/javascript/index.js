@@ -1689,21 +1689,37 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select.id = 'selectBatsmanThisMatch';
 			select.name = select.id;
 			
-			if(document.getElementById('which_inning').value == 1){
-				session_match.match.inning[1].battingCard.forEach(function(bc,index,arr){
-					option = document.createElement('option');
-					option.value = bc.playerId;
-					option.text = bc.player.full_name;	
-					select.appendChild(option);
-				});
-			}else{
-				session_match.match.inning[0].battingCard.forEach(function(bc,index,arr){
-					option = document.createElement('option');
-					option.value = bc.playerId;
-					option.text = bc.player.full_name;	
-					select.appendChild(option);
-				});
-			}
+			session_match.match.inning.forEach(function(inn,index,arr){
+				if(inn.inningNumber == document.getElementById('which_inning').value){
+					if(inn.bowlingTeamId == session_match.setup.homeTeamId){
+						session_match.setup.homeSquad.forEach(function(hs,index,arr){
+							option = document.createElement('option');
+							option.value = hs.playerId;
+							option.text = hs.full_name;
+							select.appendChild(option);
+						});
+						session_match.setup.homeOtherSquad.forEach(function(hos,index,arr){
+							option = document.createElement('option');
+							option.value = hos.playerId;
+							option.text = hos.full_name  + ' (OTHER)';
+							select.appendChild(option);
+						});
+					}else {
+						session_match.setup.awaySquad.forEach(function(as,index,arr){
+							option = document.createElement('option');
+							option.value = as.playerId;
+							option.text = as.full_name;
+							select.appendChild(option);
+						});
+						session_match.setup.awayOtherSquad.forEach(function(aos,index,arr){
+							option = document.createElement('option');
+							option.value = aos.playerId;
+							option.text = aos.full_name  + ' (OTHER)';
+							select.appendChild(option);
+						});
+					}
+				}
+			});
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
 			row.insertCell(cellCount).appendChild(select);

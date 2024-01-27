@@ -1082,6 +1082,8 @@ public class LowerThirdGfx
 					return "griff is Null";
 				}
 				
+				System.out.println("SIZE : " + griff.size());
+				
 				if(griff.size() > 7) {
 					return "griff size is greater than 7 we cannot display data";
 				}
@@ -4421,7 +4423,7 @@ public class LowerThirdGfx
 				}
 			}
 			
-			if(WhichSide == 1) {
+			if(WhichSide == 1 && !whatToProcess.split(",")[0].equalsIgnoreCase("q") && !whatToProcess.split(",")[0].equalsIgnoreCase("Control_q") ) {
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj_SublineBase*ANIMATION*KEY*$In_2*VALUE SET "
 						+ LT_Position_4 + "\0",print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj_SublineBase*ANIMATION*KEY*$Out_1*VALUE SET "
