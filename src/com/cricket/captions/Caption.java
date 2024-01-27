@@ -133,6 +133,9 @@ public class Caption
 				status = this_fullFramesGfx.populatePartnership(whichSide, whatToProcess.split(",")[0], matchAllData, 
 					Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
+			case "Alt_F11":
+				status = this_fullFramesGfx.populateDoubleManhattan(whichSide, whatToProcess.split(",")[0],matchAllData,Integer.valueOf(whatToProcess.split(",")[1]));
+				break;
 			case "Alt_F1": // BatGriff
 				status = this_lowerThirdGfx.PopulateBatBallGriff(whatToProcess,whichSide, matchAllData);
 				break;
@@ -175,6 +178,10 @@ public class Caption
 				break;
 			case "Control_F8": //Playing XI
 				status = this_fullFramesGfx.populatePlayingXI(whichSide, whatToProcess.split(",")[0],
+					Integer.valueOf(whatToProcess.split(",")[2]), matchAllData, 0);
+				break;
+			case "Control_z": //Squad
+				status = this_fullFramesGfx.populateSquad(whichSide, whatToProcess.split(",")[0],
 					Integer.valueOf(whatToProcess.split(",")[2]), matchAllData, 0);
 				break;
 			case "Control_F9"://Bowler Style
