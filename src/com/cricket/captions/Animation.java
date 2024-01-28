@@ -930,9 +930,9 @@ public class Animation
 				PositionY = 0f;
 				Sponsor = -380f;
 			}
-			System.out.println("setVariousAnimationsKeys -> whatToProcess = " + whatToProcess + ": Sponsor = " + Sponsor 
-				+ ": numberOfRows = " + caption.this_fullFramesGfx.numberOfRows);
-			System.out.println("setVariousAnimationsKeys: whatToProcess = " + whatToProcess);
+//			System.out.println("setVariousAnimationsKeys -> whatToProcess = " + whatToProcess + ": Sponsor = " + Sponsor 
+//				+ ": numberOfRows = " + caption.this_fullFramesGfx.numberOfRows);
+//			System.out.println("setVariousAnimationsKeys: whatToProcess = " + whatToProcess);
 			switch (whatToProcess) {
 			case "ANIMATE-IN":
 				
@@ -1204,7 +1204,7 @@ public class Animation
 						}
 					}
 				}
-				System.out.println("previewCommand = " + previewCommand);
+//				System.out.println("previewCommand = " + previewCommand);
 			    CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/FullFrames "
 				    	+ "C:/Temp/Preview.png " + previewCommand + " \0", print_writer);
 				break;

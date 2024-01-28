@@ -13,102 +13,29 @@
   <script type="text/javascript" src="<c:url value="/webjars/bootstrap/5.1.3/js/bootstrap.min.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/resources/javascript/index.js"/>"></script>
   
+  <link rel="stylesheet" href="<c:url value="/resources/css/index.css"/>">
   <link rel="stylesheet" href="<c:url value="/webjars/bootstrap/5.1.3/css/bootstrap.min.css"/>"/>  
   <link href="<c:url value="/webjars/font-awesome/6.0.0/css/all.css"/>" rel="stylesheet">
   
- <!--   <script type="text/javascript">
-  
-  var stopAllKeyPress = false;
-  
+  <script type="text/javascript">
+    
   $(document).on("keydown", function(e){
-
-      // if keyboard is locked: exit keydown handler
-      if(stopAllKeyPress){
-         return; 
-      }	  
+	  
+	  if($('#waiting_modal').hasClass('show')) {
+		  e.cancelBubble = true;
+		  e.stopImmediatePropagation();
+    	  e.preventDefault();
+		  return false;
+	  }
 	  
       var evtobj = window.event? event : e;
-
+      
       switch(e.target.tagName.toLowerCase())
       {
       case "input": case "textarea":
     	 break;
       default:
     	  e.preventDefault();
-	      var whichKey = '';
-		  var validKeyFound = false;
-		  
-		  stopAllKeyPress = true;
-		  
-	      if(evtobj.ctrlKey) {
-	    	  whichKey = 'Control';
-	      }
-	      if(evtobj.altKey) {
-	    	  if(whichKey) {
-	        	  whichKey = whichKey + '_Alt';
-	    	  } else {
-	        	  whichKey = 'Alt';
-	    	  }
-	      }
-	      if(evtobj.shiftKey) {
-	    	  if(whichKey) {
-	        	  whichKey = whichKey + '_Shift';
-	    	  } else {
-	        	  whichKey = 'Shift';
-	    	  }
-	      }
-	      
-		  if(evtobj.keyCode) {
-	    	  if(whichKey) {
-	    		  if(!whichKey.includes(evtobj.key)) {
-	            	  whichKey = whichKey + '_' + evtobj.key;
-	    		  }
-	    	  } else {
-	        	  whichKey = evtobj.key;
-	    	  }
-		  }
-		  validKeyFound = false;
-		  if (whichKey.includes('_')) {
-			  whichKey.split("_").forEach(function (this_key) {
-				  switch (this_key) {
-				  case 'Control': case 'Shift': case 'Alt':
-					break;
-				  default:
-					validKeyFound = true;
-					break;
-				  }
-			  });
-		   } else {
-			  if(whichKey != 'Control' && whichKey != 'Alt' && whichKey != 'Shift') {
-				  validKeyFound = true;
-			  }
-		   }
-		   if(validKeyFound == true) {
-			   console.log('whichKey = ' + whichKey);
-			  processUserSelectionData('LOGGER_FORM_KEYPRESS',whichKey);
-		   }
-	      }
-      
-	      // unlock keyboard input after 4 seconds
-	      setTimeout(function(){stopAllKeyPress = false;},4000);
-
-	  }); 
-   	  setInterval(() => {processCricketProcedures('READ-MATCH-AND-POPULATE');}, 1000);
-  </script>   -->
-  
-  <script type="text/javascript">
-    
-  $(document).on("keydown", function(e){
-
-      var evtobj = window.event? event : e;
-	  
-      
-      switch(e.target.tagName.toLowerCase())
-      {
-      case "input": case "textarea":
-    	 break;
-      default:
-    	e.preventDefault();
 	      var whichKey = '';
 		  var validKeyFound = false;
 	    
@@ -157,17 +84,26 @@
 		   }
 			  
 		   if(validKeyFound == true) {
-			   console.log('whichKey = ' + whichKey);
-			  processUserSelectionData('LOGGER_FORM_KEYPRESS',whichKey);
+			   //console.log('whichKey = ' + whichKey);
+			   processUserSelectionData('LOGGER_FORM_KEYPRESS',whichKey);
 		   }
 	      }
 	  }); 
-	  //document.onkeydown = KeyPress;  
    	  setInterval(() => {processCricketProcedures('READ-MATCH-AND-POPULATE');}, 1000);
   </script> 
     
 </head>
 <body onload="onPageLoadEvent('OUTPUT')">
+<div id="waiting_modal" class="modal my_waiting_modal fade bd-example-modal-lg" data-backdrop="static" 
+	data-keyboard="false" data-bs-backdrop="static" tabindex="-1">
+    <div id="waiting_modal_body" class="modal-dialog modal-sm">
+        <div class="modal-content" style="width: 48px">
+	    	<h5 style="color:white">Processing...</h5>
+	    	<br>
+            <span class="fa fa-spinner fa-spin fa-4x" style="color:white"></span>
+        </div>
+    </div>
+</div>
 <form:form name="output_form" method="POST" action="output" enctype="multipart/form-data">
 <div class="content py-5" style="background-color: #EAE8FF; color: #2E008B">
   <div class="container">
@@ -182,65 +118,19 @@
           <div class="card-body">
 			<div class="content py-5" style="background-color:#EAE8FF;color:#2E008B;">
 				<div class="container">
-					  <div id="select_graphic_options_div" style="display:none;">
-					  </div>
-					  <div id="captions_div" class="form-group row row-bottom-margin ml-2" style="margin-bottom:5px;">
-					    <label class="col-sm-4 col-form-label text-left">Match: ${session_match.match.matchFileName} </label>
-					    <label class="col-sm-4 col-form-label text-left">Broadcaster: ${session_configuration.broadcaster.replace("_"," ")} </label>
-					    <label class="col-sm-4 col-form-label text-left">2nd Broadcaster: ${session_configuration.secondaryBroadcaster.replace("_"," ")} </label>
-					    <label id="selected_inning" class="col-sm-4 col-form-label text-left">Selected Inning: </label>
-						<label id="inning1_teamScore_lbl" class="col-sm-4 col-form-label text-left">-</label>
-						<label id="inning2_teamScore_lbl" class="col-sm-4 col-form-label text-left">-</label>
-				    	<label id="inning1_battingcard1_lbl" class="col-sm-4 col-form-label text-left">-</label>
-				    	<label id="inning1_battingcard2_lbl" class="col-sm-4 col-form-label text-left">-</label>
-				      	<label id="inning1_bowlingcard_lbl" class="col-sm-4 col-form-label text-left">-</label>
-					  </div>
-				
-<!-- 				    <div id="output_sub_menu" class="panel-collapse collapse" role="tabpanel" aria-labelledby="output_heading">
-				      <div class="panel-body">
-				      </div> -->
-<%-- 					<div class="panel-group" id="output_tab_menu" role="tablist" aria-multiselectable="true">
-
-					  <div class="panel panel-default" id="output-panel">
-					    <div class="panel-heading" role="tab" id="output_heading" style="border-style:solid;border-width:medium;border-radius:25px;">
-					      <h5 class="panel-title" style="position:relative;left:10px;">
-					        <a data-toggle="collapse" data-parent="#output_tab_menu" href="#output_sub_menu" aria-expanded="true"  
-					        	aria-controls="output_sub_menu"> Output 
-					        </a>
-					      </h5>
-					    </div>
-					    <div id="output_sub_menu" class="panel-collapse collapse" role="tabpanel" aria-labelledby="output_heading">
-					      <div class="panel-body">
-							  <div id="select_graphic_options_div" style="display:none;">
-							  </div>
-							  <div id="captions_div" class="form-group row row-bottom-margin ml-2" style="margin-bottom:5px;">
-							    <label class="col-sm-4 col-form-label text-left">Match: ${session_match.match.matchFileName} </label>
-							    <label class="col-sm-4 col-form-label text-left">Broadcaster: ${session_configuration.broadcaster.replace("_"," ")} </label>
-							    <label class="col-sm-4 col-form-label text-left">2nd Broadcaster: ${session_configuration.secondaryBroadcaster.replace("_"," ")} </label>
-							    <label id="selected_inning" class="col-sm-4 col-form-label text-left">Selected Inning: </label>
-							    <label id="speed_lbl" class="col-sm-4 col-form-label text-left">Show Speed: YES</label>
-							  </div>
-					      </div>
-					    </div>
-					  </div>
-
-					  <div class="panel panel-default" id="help-file-panel" style="margin-top:5px;display:none;">
-					    <div class="panel-heading" role="tab" id="help_file_heading" style="border-style:solid;border-width:medium;border-radius:25px;">
-					      <h5 class="panel-title" style="position:relative;left:10px;">
-					        <a class="collapsed" data-toggle="collapse" data-parent="#output_tab_menu" href="#help_file_sub_menu" aria-expanded="false" 
-					        	aria-controls="help_file_sub_menu">Help 
-					        </a>
-					      </h5>
-					    </div>
-					    <div id="help_file_sub_menu" class="panel-collapse collapse" role="tabpanel" aria-labelledby="help_file_heading">
-					      <div class="panel-body">
-							  <div id="help_file_div" style="display:none;">
-							  </div>
-					      </div>
-					    </div>
-					  </div>
-				  </div> --%>
-				  
+				  <div id="select_graphic_options_div" style="display:none;">
+				  </div>
+				  <div id="captions_div" class="form-group row row-bottom-margin ml-2" style="margin-bottom:5px;">
+				    <label class="col-sm-4 col-form-label text-left">Match: ${session_match.match.matchFileName} </label>
+				    <label class="col-sm-4 col-form-label text-left">Broadcaster: ${session_configuration.broadcaster.replace("_"," ")} </label>
+				    <label class="col-sm-4 col-form-label text-left">2nd Broadcaster: ${session_configuration.secondaryBroadcaster.replace("_"," ")} </label>
+				    <label id="selected_inning" class="col-sm-4 col-form-label text-left">Selected Inning: </label>
+					<label id="inning1_teamScore_lbl" class="col-sm-4 col-form-label text-left">-</label>
+					<label id="inning2_teamScore_lbl" class="col-sm-4 col-form-label text-left">-</label>
+			    	<label id="inning1_battingcard1_lbl" class="col-sm-4 col-form-label text-left">-</label>
+			    	<label id="inning1_battingcard2_lbl" class="col-sm-4 col-form-label text-left">-</label>
+			      	<label id="inning1_bowlingcard_lbl" class="col-sm-4 col-form-label text-left">-</label>
+				  </div>
 			  </div>
 		  </div>
 	     </div>

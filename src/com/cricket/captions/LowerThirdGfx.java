@@ -1081,7 +1081,7 @@ public class LowerThirdGfx
 					return "griff is Null";
 				}
 				
-				System.out.println("SIZE : " + griff.size());
+//				System.out.println("SIZE : " + griff.size());
 				
 				if(griff.size() > 7) {
 					return "griff size is greater than 7 we cannot display data";
@@ -1733,7 +1733,7 @@ public class LowerThirdGfx
 				Subheader = "(OVERS " + inning.getSecondPowerplayStartOver() + " TO " + inning.getSecondPowerplayEndOver() + ")";
 				pp_ovrs= CricketFunctions.PowerPlayMatchOvers(inning.getInningNumber(),matchAllData,",");
 				pp=CricketFunctions.getSecPowerPlayScore(matchAllData, inning.getInningNumber(), matchAllData.getEventFile().getEvents());
-				System.out.println("pp_ovrs = " + pp_ovrs);
+//				System.out.println("pp_ovrs = " + pp_ovrs);
 				run_rate = CricketFunctions.generateRunRates(Integer.valueOf(pp.split(",")[0].split("-")[0]),Integer.valueOf(pp_ovrs.split(",")[1].split("-")[0]),
 						Integer.valueOf(pp_ovrs.split(",")[1].split("-")[1]),2,matchAllData);
 

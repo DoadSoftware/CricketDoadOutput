@@ -901,8 +901,8 @@ public class FullFramesGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide +
 						"$Flag*ACTIVE SET 1 \0", print_writers);
 				
-				System.out.println(matchAllData.getSetup().getHomeTeam().getTeamGroup());
-				System.out.println(matchAllData.getSetup().getAwayTeam().getTeamGroup());
+//				System.out.println(matchAllData.getSetup().getHomeTeam().getTeamGroup());
+//				System.out.println(matchAllData.getSetup().getAwayTeam().getTeamGroup());
 				
 				if(matchAllData.getSetup().getHomeTeam().getTeamGroup() != null) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 

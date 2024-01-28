@@ -316,26 +316,41 @@ public class IndexController
 						case Constants.NAME_SUPERS + Constants.LOWER_THIRD:
 						case Constants.BOUNDARIES + Constants.LOWER_THIRD:
 							
-							//Make a preview of lowerThird when FullFrames is on Screen and vice-verca
-//							switch (this_animation.getTypeOfGraphicsOnScreen(session_configuration, valueToProcess)) {
-//							case Constants.LOWER_THIRD: case Constants.NAME_SUPERS + Constants.LOWER_THIRD: case Constants.BOUNDARIES + Constants.LOWER_THIRD:
-//								this_caption.PopulateGraphics(valueToProcess, session_match);
-//								this_animation.processL3Preview(valueToProcess, print_writers, this_caption.whichSide, session_configuration);
-//								break;
-//							case Constants.FULL_FRAMER:
-//								this_caption.PopulateGraphics(valueToProcess, session_match);
-//								this_animation.processFullFramesPreview(valueToProcess, print_writers, this_caption.whichSide, 
-//										session_configuration, this_animation.whichGraphicOnScreen);
-//								break;
-//							}
-							
 							if(this_animation.getTypeOfGraphicsOnScreen(session_configuration,valueToProcess) 
 								!= this_animation.getTypeOfGraphicsOnScreen(session_configuration,this_animation.whichGraphicOnScreen)) {
+
+								//Make a preview of lowerThird when FullFrames is on Screen and vice-verca
+								switch (this_animation.getTypeOfGraphicsOnScreen(session_configuration, this_animation.whichGraphicOnScreen)) {
+								case Constants.FULL_FRAMER: 
+									switch (this_animation.getTypeOfGraphicsOnScreen(session_configuration, valueToProcess)) {
+									case Constants.LOWER_THIRD: case Constants.NAME_SUPERS + Constants.LOWER_THIRD: 
+									case Constants.BOUNDARIES + Constants.LOWER_THIRD:
+										this_caption.whichSide = 1;
+										this_caption.PopulateGraphics(valueToProcess, session_match);
+										this_animation.processL3Preview(valueToProcess, print_writers, this_caption.whichSide, session_configuration);
+										break;
+									}
+									break;
+								case Constants.LOWER_THIRD: case Constants.NAME_SUPERS + Constants.LOWER_THIRD: 
+								case Constants.BOUNDARIES + Constants.LOWER_THIRD:
+									switch (this_animation.getTypeOfGraphicsOnScreen(session_configuration, valueToProcess)) {
+									case Constants.FULL_FRAMER:
+										this_caption.whichSide = 1;
+										this_caption.PopulateGraphics(valueToProcess, session_match);
+										this_animation.processFullFramesPreview(valueToProcess, print_writers, this_caption.whichSide, 
+											session_configuration, this_animation.whichGraphicOnScreen);
+										break;
+									}
+									break;
+								}
+								
 								this_caption.setStatus(this_animation.getTypeOfGraphicsOnScreen(session_configuration,
 									this_animation.whichGraphicOnScreen).replace("_", " ") + " is on screen. "
 									+ this_animation.getTypeOfGraphicsOnScreen(session_configuration,valueToProcess).replace(
 									"_", " ") + " not allowed" );
+								
 								return JSONObject.fromObject(this_caption).toString();
+
 							}
 							break;
 						}
@@ -361,7 +376,7 @@ public class IndexController
 					case Constants.MINIS:
 						this_animation.processMiniPreview(valueToProcess, print_writers, this_caption.whichSide, 
 							session_configuration, this_animation.whichGraphicOnScreen);
-							break;
+						break;
 					}
 					break;
 				}
