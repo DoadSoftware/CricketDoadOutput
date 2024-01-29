@@ -54,6 +54,7 @@ public class LowerThirdGfx
 	public BattingCard battingCard;
 	public Partnership partnership;
 	public BowlingCard bowlingCard;
+	public MatchAllData match;
 	public Inning inning;
 	public Player player;
 	public Statistics stat;
@@ -345,6 +346,11 @@ public class LowerThirdGfx
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
 			return status;
 		} else {
+			match = matchAllData;
+			if(match == null) {
+				return "PopulateFfHeader: match is NULL";
+			}
+			
 			ground = Grounds.stream().filter(grnd -> grnd.getFullname().contains(matchAllData.getSetup().getVenueName())).findAny().orElse(null);
 			if(ground == null) {
 				return "PopulateFfHeader: ground name is NULL";
@@ -2279,14 +2285,8 @@ public class LowerThirdGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Top_Line$Data$Side_" + WhichSide 
 						+ "$Name" + containerName + "$txt_Name*GEOM*TEXT SET " + inning.getBowling_team().getTeamName1() + "\0", print_writers);
 				
-				if(inning.getBowling_team().getTeamGroup() != null) {
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Top_Line$Data$Side_" + WhichSide 
-							+ "$Name" + containerName + "$txt_Designation*GEOM*TEXT SET " + inning.getBowling_team().getTeamGroup() + " - " +
-							ground.getCity() + "\0", print_writers);
-				}else {
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
-							"$Bottom$txt_Subheader*GEOM*TEXT SET " + "13th TO 16th PLACE PLAY-OFF - " + ground.getCity() + "\0", print_writers);
-				}
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Top_Line$Data$Side_" + WhichSide + "$Name" + containerName + 
+						"$txt_Designation*GEOM*TEXT SET " + match.getSetup().getMatchIdent() + " - " + ground.getCity() + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"
 						+ WhichSide + "$Name" + containerName + "$Score*ACTIVE SET 1 \0", print_writers);

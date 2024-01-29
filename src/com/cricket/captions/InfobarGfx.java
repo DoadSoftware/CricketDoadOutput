@@ -673,7 +673,7 @@ public class InfobarGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Bottom$Side_" 
 					+ WhichSide + "$Choose_Type*FUNCTION*Omo*vis_con SET 1 \0",print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Bottom$Side_" + WhichSide + "$Free_Text$txt_Text*GEOM*TEXT SET " 
-					+ matchAllData.getSetup().getHomeTeam().getTeamGroup() + "\0", print_writers);
+					+ matchAllData.getSetup().getMatchIdent() + "\0", print_writers);
 				break;
 				
 			case "INNINGS_SCORE":
