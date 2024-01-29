@@ -38,6 +38,7 @@ import com.cricket.captions.InfobarGfx;
 import com.cricket.captions.LowerThirdGfx;
 import com.cricket.captions.Scene;
 import com.cricket.containers.Infobar;
+import com.cricket.model.BestStats;
 import com.cricket.model.Bugs;
 import com.cricket.model.Commentator;
 import com.cricket.model.Configuration;
@@ -467,7 +468,7 @@ public class IndexController
 		case "Alt_s":
 			return (List<T>) CricketFunctions.processAllStaff(cricketService, session_match.getSetup().getAwayTeamId());
 			
-		case "z": case "x": case "c": case "v":
+		case "z": case "x": case "c": case "v": 
 			List<Tournament> tournament_stats = CricketFunctions.extractTournamentStats("COMBINED_PAST_CURRENT_MATCH_DATA",false, cricket_matches, 
 					cricketService, session_match,null);
 			switch (whatToProcess) {
@@ -485,7 +486,29 @@ public class IndexController
 				break;
 			}
 			return (List<T>) tournament_stats;
-			
+		case "Control_z": case "Control_x":
+			List<BestStats> top_ten_beststat = new ArrayList<BestStats>();
+			switch (whatToProcess) {
+			case "Control_z":
+				for(Tournament tourn : CricketFunctions.extractTournamentStats("COMBINED_PAST_CURRENT_MATCH_DATA",false, cricket_matches, 
+						cricketService, session_match,null)) {
+					for(BestStats bs : tourn.getBatsman_best_Stats()) {
+						top_ten_beststat.add(bs);
+					}
+				}
+				break;
+
+			case "Control_x":
+				for(Tournament tourn : CricketFunctions.extractTournamentStats("COMBINED_PAST_CURRENT_MATCH_DATA",false, cricket_matches, 
+						cricketService, session_match,null)) {
+					for(BestStats bs : tourn.getBowler_best_Stats()) {
+						top_ten_beststat.add(bs);
+					}
+				}
+				break;
+			}
+			Collections.sort(top_ten_beststat,new CricketFunctions.PlayerBestStatsComparator());
+			return (List<T>) top_ten_beststat;
 		}
 		return null;
 	}

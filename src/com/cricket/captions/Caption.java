@@ -180,10 +180,11 @@ public class Caption
 				status = this_fullFramesGfx.populatePlayingXI(whichSide, whatToProcess.split(",")[0],
 					Integer.valueOf(whatToProcess.split(",")[2]), matchAllData, 0);
 				break;
-			case "Control_z": //Squad
+
+			case "Shift_S": //Squad
 				this_fullFramesGfx.WhichType = whatToProcess.split(",")[3];
-				status = this_fullFramesGfx.populateSquad(whichSide, whatToProcess.split(",")[0], 
-						Integer.valueOf(whatToProcess.split(",")[2]), matchAllData, 0);
+				status = this_fullFramesGfx.populateSquad(whichSide, whatToProcess.split(",")[0],
+					Integer.valueOf(whatToProcess.split(",")[2]), matchAllData, 0);
 				break;
 			case "Control_F9"://Bowler Style
 				status = this_lowerThirdGfx.populateBowlingStyle(whatToProcess,whichSide,matchAllData);
@@ -260,8 +261,8 @@ public class Caption
 				this_fullFramesGfx.WhichGroup = whatToProcess.split(",")[2];
 				status = this_fullFramesGfx.populateFFPointsTable(whichSide,whatToProcess.split(",")[0], matchAllData, 0);
 				break;
-			case "z": case "x": case "c": case "v":
-				this_fullFramesGfx.FirstPlayerId = Integer.valueOf(whatToProcess.split(",")[2]);
+			case "z": case "x": case "c": case "v": case "Control_z": case "Control_x":
+				this_fullFramesGfx.FirstPlayerId = Integer.valueOf((whatToProcess.split(",")[2]).split("_")[1]);
 				status = this_fullFramesGfx.populateLeaderBoard(whichSide, whatToProcess.split(",")[0], matchAllData, 0);
 				break;
 			case "s": //30-50
