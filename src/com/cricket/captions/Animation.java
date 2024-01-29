@@ -91,6 +91,9 @@ public class Animation
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
 				TimeUnit.MILLISECONDS.sleep(500);
 				processAnimation(Constants.BACK, print_writers, "Anim_Squad", "START");
+				if(!caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("role")) {
+					processAnimation(Constants.BACK, print_writers, "Anim_SquadDataChange", "START");
+				}
 				processAnimation(Constants.BACK, print_writers, "SquadFlare_Loop", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
@@ -375,6 +378,9 @@ public class Animation
 			switch (whatToProcess.split(",")[0]) {
 			case "Control_z":
 				processAnimation(Constants.BACK, print_writers, "Anim_Squad", "CONTINUE");
+				if(!caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("role")) {
+					processAnimation(Constants.BACK, print_writers, "Anim_SquadDataChange", "CONTINUE");
+				}
 				processAnimation(Constants.BACK, print_writers, "SquadFlare_Loop", "CONTINUE");
 				TimeUnit.MILLISECONDS.sleep(1000);
 				AnimateIn("ArrowUp,", print_writers, config); // Restore infobar
@@ -1122,6 +1128,9 @@ public class Animation
 							break;
 						case "Control_z":
 							previewCommand = previewCommand + " Anim_Squad$In_Out 2.200 Anim_Squad$In_Out$In 2.200";
+							if(!caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("role")) {
+								previewCommand = previewCommand + " Anim_SquadDataChange 0.500";
+							}
 							break;
 						
 						}

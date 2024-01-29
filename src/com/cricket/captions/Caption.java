@@ -181,8 +181,9 @@ public class Caption
 					Integer.valueOf(whatToProcess.split(",")[2]), matchAllData, 0);
 				break;
 			case "Control_z": //Squad
-				status = this_fullFramesGfx.populateSquad(whichSide, whatToProcess.split(",")[0],
-					Integer.valueOf(whatToProcess.split(",")[2]), matchAllData, 0);
+				this_fullFramesGfx.WhichType = whatToProcess.split(",")[3];
+				status = this_fullFramesGfx.populateSquad(whichSide, whatToProcess.split(",")[0], 
+						Integer.valueOf(whatToProcess.split(",")[2]), matchAllData, 0);
 				break;
 			case "Control_F9"://Bowler Style
 				status = this_lowerThirdGfx.populateBowlingStyle(whatToProcess,whichSide,matchAllData);

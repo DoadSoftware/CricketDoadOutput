@@ -203,9 +203,8 @@ public class IndexController
 			}
 			
 			session_match.getMatch().setMatchFileName(selectedMatch);
-			session_match = CricketFunctions.populateMatchVariables(cricketService, 
-				CricketFunctions.readOrSaveMatchFile(CricketUtil.READ,CricketUtil.SETUP + "," + 
-				CricketUtil.MATCH + "," + CricketUtil.EVENT, session_match));			
+			session_match = CricketFunctions.populateMatchVariables(cricketService, CricketFunctions.readOrSaveMatchFile(CricketUtil.READ, 
+					CricketUtil.SETUP + "," + CricketUtil.MATCH + "," + CricketUtil.EVENT, session_match));			
 			session_match.getSetup().setMatchFileTimeStamp(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
 			
 			GetVariousDBData("NEW", session_configuration);

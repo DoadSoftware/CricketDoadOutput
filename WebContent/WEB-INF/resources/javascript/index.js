@@ -1307,6 +1307,36 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			
 			switch(whatToProcess){
+			case 'Control_z':
+				select = document.createElement('select');
+				select.id = 'selectType';
+				select.name = select.id;
+				
+				option = document.createElement('option');
+				option.value = 'role';
+				option.text = 'Role';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'matches';
+				option.text = 'Matches';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'runs';
+				option.text = 'Runs';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'wickets';
+				option.text = 'Wickets';
+				select.appendChild(option);
+				
+				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+				row.insertCell(cellCount).appendChild(select);
+				setDropdownOptionToSelectOptionArray($(select),1);
+				cellCount = cellCount + 1
+				break;
 			case 'Alt_F9': case 'Alt_F10':
 				
 				select = document.createElement('select');
