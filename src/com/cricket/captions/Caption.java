@@ -181,7 +181,7 @@ public class Caption
 					Integer.valueOf(whatToProcess.split(",")[2]), matchAllData, 0);
 				break;
 
-			case "Shift_S": //Squad
+			case "Alt_z": //Squad
 				this_fullFramesGfx.WhichType = whatToProcess.split(",")[3];
 				status = this_fullFramesGfx.populateSquad(whichSide, whatToProcess.split(",")[0],
 					Integer.valueOf(whatToProcess.split(",")[2]), matchAllData, 0);

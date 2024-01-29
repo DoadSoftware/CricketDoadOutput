@@ -51,7 +51,7 @@ public class Animation
 			case "Control_F8": case "Control_d": case "Control_e": case "Control_F7": case "Control_F10":
 			case "Shift_K": case "Alt_F9": case "Shift_D": case "p": case "Control_b": case "Alt_m": case "Alt_n":
 			case "Alt_F10": case "Control_F1": case "Control_p": case "Shift_P": case "Shift_Q":
-			case "z": case "x": case "c": case "v": case "Alt_F11": case "Shift_S": case "Control_z": case "Control_x":
+			case "z": case "x": case "c": case "v": case "Alt_F11": case "Alt_z": case "Control_z": case "Control_x":
 				return Constants.FULL_FRAMER;
 			case "F5": case "F6": case "F7": case "F8": case "F9": case "F10": case "F11": case "Alt_F8":
 			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
@@ -88,7 +88,7 @@ public class Animation
 			//Full framers
 			System.out.println("what to process "+whatToProcess.split(",")[0]);
 			switch (whatToProcess.split(",")[0]) {
-			case "Shift_S":
+			case "Alt_z":
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
 				TimeUnit.MILLISECONDS.sleep(500);
 				processAnimation(Constants.BACK, print_writers, "Anim_Squad", "START");
@@ -384,7 +384,7 @@ public class Animation
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.ICC_U19_2023:
 			switch (whatToProcess.split(",")[0]) {
-			case "Shift_S":
+			case "Alt_z":
 				processAnimation(Constants.BACK, print_writers, "Anim_Squad", "CONTINUE");
 				if(!caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("role")) {
 					processAnimation(Constants.BACK, print_writers, "Anim_SquadDataChange", "CONTINUE");
@@ -584,9 +584,9 @@ public class Animation
 				if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase(whatToProcess.split(",")[0])) {
 					processAnimation(Constants.BACK, print_writers, "Change$Header", "START");
 				}
+				processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player" + prevWhichPlayer, "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "Change$Leader_Board" , "START");
 				processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side2$Player" + whatToProcess.split(",")[2].split("_")[0], "START");
-				processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player" + prevWhichPlayer, "SHOW 0.0");
 				prevWhichPlayer = whatToProcess.split(",")[2].split("_")[0];
 				break;
 			}
@@ -869,6 +869,7 @@ public class Animation
 			processAnimation(Constants.BACK, print_writers, "Anim_Squad", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "SquadFlare_Loop", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Anim_SquadDataChange", "SHOW 0.0");
+			processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight", "SHOW 0.0");
 
 			processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
 			processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "SHOW 0.0");
@@ -1167,7 +1168,7 @@ public class Animation
 						case "Alt_F11":
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Manhattan_Comparison$In 3.000";
 							break;
-						case "Shift_S":
+						case "Alt_z":
 							previewCommand = previewCommand + " Anim_Squad$In_Out 2.200 Anim_Squad$In_Out$In 2.200";
 							if(!caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("role")) {
 								previewCommand = previewCommand + " Anim_SquadDataChange 0.500";

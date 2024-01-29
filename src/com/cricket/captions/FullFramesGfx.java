@@ -1145,7 +1145,7 @@ public class FullFramesGfx
 					
 				break;
 			
-			case "Shift_S":
+			case "Alt_z":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Squad$Select_Flag*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
 				if(team.getTeamName4().equalsIgnoreCase("NEP")) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Squad$img_Shadow*ACTIVE SET 0 \0", print_writers);
@@ -2382,8 +2382,8 @@ public class FullFramesGfx
 							containerName ="$ProfileDataGrp";
 						}
 						for(int i = 0; i <= top_ten_beststat.size() - 1 ; i++) {
-							rowId = rowId + 1;
 							if(rowId <= 5) {
+								rowId = rowId + 1;
 								if(top_ten_beststat.get(i).getPlayerId() == FirstPlayerId) {
 									CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$PlayerGrp"
 											+ rowId + "$Flag$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + Teams.get(top_ten_beststat.get(i).getPlayer().
@@ -2401,6 +2401,7 @@ public class FullFramesGfx
 										+ rowId + containerName + "$txt_Name*GEOM*TEXT SET " + top_ten_beststat.get(i).getPlayer().getFull_name() + "\0", print_writers);
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$Stats$" 
 										+ rowId + containerName + "$txt_Country*GEOM*TEXT SET " + Teams.get(top_ten_beststat.get(i).getPlayer().getTeamId() - 1).getTeamName1() + "\0", print_writers);
+								
 								if(whatToProcess.equalsIgnoreCase("Control_z")) {
 									if(top_ten_beststat.get(i).getBestEquation() % 2 == 0) {
 										CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$Stats$" 
@@ -2427,15 +2428,15 @@ public class FullFramesGfx
 				}else {
 					rowId = 0;
 					for(int i = 0; i <= tournament_stats.size() - 1 ; i++) {
-						rowId = rowId + 1;
 						if(rowId <= 5) {
+							rowId = rowId + 1;
 							if(tournament_stats.get(i).getPlayerId() == FirstPlayerId) {
-								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$PhotoPart"
-										+ "$Flag$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + Teams.get(tournament_stats.get(i).getPlayer().
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$PlayerGrp"
+										+ rowId + "$Flag$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + Teams.get(tournament_stats.get(i).getPlayer().
 												getTeamId() - 1).getTeamName4() + "\0", print_writers);
 		
-								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$PhotoPart"
-										+ "$Photo$img_PlayerPhoto*TEXTURE*IMAGE SET "+Constants.ICC_U19_2023_PHOTOS_PATH + Constants.RIGHT_2048 + 
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$PlayerGrp"
+										+ rowId + "$Photo$img_PlayerPhoto*TEXTURE*IMAGE SET "+Constants.ICC_U19_2023_PHOTOS_PATH + Constants.RIGHT_2048 + 
 										tournament_stats.get(i).getPlayer().getPhoto()+ CricketUtil.PNG_EXTENSION + "\0", print_writers);
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$Stats$" 
 										+ rowId + "$Select*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
@@ -3326,7 +3327,7 @@ public class FullFramesGfx
 			}
 			break;
 		
-		case "Shift_S":
+		case "Alt_z":
 			switch (config.getBroadcaster().toUpperCase()) {
 			case Constants.ICC_U19_2023:
 				String highlight = "$Dehighlight";
@@ -4482,7 +4483,7 @@ public class FullFramesGfx
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.ICC_U19_2023:
 			switch (whatToProcess) {
-			case "Shift_S":
+			case "Alt_z":
 				if(!WhichType.equalsIgnoreCase("role")) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Squad$FooterAll$txt_Info_1*GEOM*TEXT SET " + WhichType.toUpperCase() + "\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Squad$FooterAll$txt_Info_2*GEOM*TEXT SET " + WhichType.toUpperCase() + "\0", print_writers);
@@ -4532,13 +4533,13 @@ public class FullFramesGfx
 				}
 				break;
 				
-			case "Shift_F11": case "Control_F11": case "Shift_F10": case "Alt_F9": case "Alt_F10": //MATCH SUMMARY
+			case "Shift_F11": case "Control_F11": case "Shift_F10": case "Alt_F9": case "Alt_F10": case "Alt_F11": //MATCH SUMMARY
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer*ACTIVE SET 1 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Side" + WhichSide + "$Select_FooterType"
 						+ "*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
 				
 				switch (whatToProcess.split(",")[0]) {
-				case "Shift_F10":
+				case "Shift_F10": case "Alt_F11":
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Top_Align$Side" + WhichSide + "$Select_FooterType"
 							+ "$Info_Text$Data$txt_Info_1*GEOM*TEXT SET " + CricketFunctions.
 							generateMatchSummaryStatus(WhichInning, matchAllData, CricketUtil.FULL, "", config.getBroadcaster()).toUpperCase() + "\0", print_writers);
@@ -4628,13 +4629,7 @@ public class FullFramesGfx
 							+ "Ident$Data$txt_Info_1*GEOM*TEXT SET " + "LIVE FROM " + fixture.getVenue() + "\0", print_writers);
 					break;
 				}
-				break;
-			
-			case "Alt_F11":
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer*ACTIVE SET 1 \0", print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Side" + WhichSide + "$Select_FooterType"
-						+ "*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
-				break;
+				break;	
 			}
 			break;
 		}

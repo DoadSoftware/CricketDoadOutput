@@ -198,7 +198,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'F8': case 'F9': case 'F11': case 's': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6': case 'Control_y':
 			case 'Shift_K': case 'Shift_O': case 'g': case 'f': case 'Control_g': case 'Control_s': case 'Control_f': //case 'Alt_F9':
 			case 'Control_h': case 'Alt_F12': case 'l': case 'p': case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_F10': case 'Alt_d':
-			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2': case 'Shift_E': case 'Shift_P': case 'Shift_Q': case 'Shift_S':
+			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2': case 'Shift_E': case 'Shift_P': case 'Shift_Q': case 'Alt_z':
 				addItemsToList(dataToProcess,null);
 				break;
 			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'Control_F1': case 'Control_a':
@@ -386,7 +386,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Alt_F9': case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l': case 'Shift_E':
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9': case 'Alt_0':
 	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10': case 'Alt_d': case 'Shift_F4': case 'Alt_a': case 'Alt_s': 
-	case 'Shift_P': case 'Shift_Q': case 'Shift_S':  case 'Control_z': case 'Control_x':
+	case 'Shift_P': case 'Shift_Q': case 'Alt_z':  case 'Control_z': case 'Control_x':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		
 		$("#captions_div").hide();
@@ -1272,7 +1272,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			break;	
 			
-		case 'Control_F8': case 'Alt_F9': case 'Alt_F12': case 'Alt_F10': case 'Shift_S':
+		case 'Control_F8': case 'Alt_F9': case 'Alt_F12': case 'Alt_F10': case 'Alt_z':
 			switch(whatToProcess) {
 			case 'Control_F8':
 				header_text.innerHTML = 'FF PLAYING XI';
@@ -1283,7 +1283,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			case 'Alt_F10':
 				header_text.innerHTML = 'SINGLE TEAM (THIS SERIES)';
 				break;
-			case 'Shift_S':
+			case 'Alt_z':
 				header_text.innerHTML = 'SQUAD';
 				break;
 			}
@@ -1307,7 +1307,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			
 			switch(whatToProcess){
-			case 'Control_z':
+			case 'Alt_z':
 				select = document.createElement('select');
 				select.id = 'selectType';
 				select.name = select.id;
