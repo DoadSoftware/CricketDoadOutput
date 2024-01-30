@@ -198,7 +198,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'F8': case 'F9': case 'F11': case 's': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6': case 'Control_y':
 			case 'Shift_K': case 'Shift_O': case 'g': case 'f': case 'Control_g': case 'Control_s': case 'Control_f': //case 'Alt_F9':
 			case 'Control_h': case 'Alt_F12': case 'l': case 'p': case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_F10': case 'Alt_d':
-			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2': case 'Shift_E': case 'Shift_P': case 'Shift_Q': case 'Alt_z':
+			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2': case 'Shift_E': case 'Shift_P': case 'Shift_Q': //case 'Alt_z':
 				addItemsToList(dataToProcess,null);
 				break;
 			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'Control_F1': case 'Control_a':
@@ -379,14 +379,14 @@ function addItemsToList(whatToProcess,dataToProcess)
 		}
 		break;*/
 		
-	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'F7': case 'F8': case 'F9': case 'F10': case 'F11':
-	case 'Control_F5': case 'Control_F9': case 'Control_F8': case 'Control_d': case 'Control_e': case 's': case 'p': case 'Control_p':
+	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'F8': case 'F9': case 'F10': //case 'F7': case 'F11':
+	case 'Control_F5': case 'Control_F9': case 'Control_F8': case 's': case 'p': case 'Control_p': //case 'Control_d': case 'Control_e':
 	case 'z': case 'x': case 'c': case 'v': case 'Control_F11': case 'Control_y': case 'Alt_F8': case 'Alt_F1': case 'Alt_F2':
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q':
-	case 'Alt_F9': case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l': case 'Shift_E':
+	case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l': case 'Shift_E': //case 'Alt_F9':
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9': case 'Alt_0':
 	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10': case 'Alt_d': case 'Shift_F4': case 'Alt_a': case 'Alt_s': 
-	case 'Shift_P': case 'Shift_Q': case 'Alt_z':  case 'Control_z': case 'Control_x':
+	case 'Shift_P': case 'Shift_Q': case 'Alt_z':  //case 'Control_z': case 'Control_x':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		
 		$("#captions_div").hide();
@@ -1641,22 +1641,22 @@ function addItemsToList(whatToProcess,dataToProcess)
 				
 				option = document.createElement('option');
 				option.value = '3';
-				option.text = '3WI';
+				option.text = 'Economy';
 				select.appendChild(option);
 				
 				option = document.createElement('option');
 				option.value = '4';
-				option.text = '5WI';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = '5';
 				option.text = 'Average';
 				select.appendChild(option);
 				
 				option = document.createElement('option');
+				option.value = '5';
+				option.text = 'Strike Rate';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
 				option.value = '6';
-				option.text = 'Economy';
+				option.text = '5WI';
 				select.appendChild(option);
 				
 				option = document.createElement('option');
