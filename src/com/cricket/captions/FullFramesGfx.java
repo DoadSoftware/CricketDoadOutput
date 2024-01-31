@@ -2332,6 +2332,7 @@ public class FullFramesGfx
 			break;
 			
 		case "z": case "x": case "c": case "v": case "Control_z": case "Control_x":
+			
 			switch (config.getBroadcaster().toUpperCase()) {
 			case Constants.ICC_U19_2023:
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
@@ -2344,14 +2345,13 @@ public class FullFramesGfx
 					for(int i = 0; i <= top_batsman_beststats.size() - 1 ; i++) {
 						rowId = rowId + 1;
 						if(rowId <= 5) {
-							if(top_batsman_beststats.get(i).getPlayerId() == FirstPlayerId) {
+							if(top_batsman_beststats.get(i).getPlayerId() == this.FirstPlayerId) {
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$PlayerGrp"
-										+ rowId + "$Flag$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + Teams.get(top_batsman_beststats.get(i).getPlayer().
-												getTeamId() - 1).getTeamName4() + "\0", print_writers);
-		
+									+ rowId + "$Flag$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + Teams.get(top_batsman_beststats.get(i).getPlayer().
+									getTeamId() - 1).getTeamName4() + "\0", print_writers);
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$PlayerGrp"
-										+ rowId + "$Photo$img_PlayerPhoto*TEXTURE*IMAGE SET "+Constants.ICC_U19_2023_PHOTOS_PATH + Constants.RIGHT_2048 + 
-										top_batsman_beststats.get(i).getPlayer().getPhoto()+ CricketUtil.PNG_EXTENSION + "\0", print_writers);
+									+ rowId + "$Photo$img_PlayerPhoto*TEXTURE*IMAGE SET "+Constants.ICC_U19_2023_PHOTOS_PATH + Constants.RIGHT_2048 + 
+									top_batsman_beststats.get(i).getPlayer().getPhoto()+ CricketUtil.PNG_EXTENSION + "\0", print_writers);
 								
 							}
 							for(int j=0; j<2; j++) {
@@ -2428,12 +2428,14 @@ public class FullFramesGfx
 							
 							if(tournament_stats.get(i).getPlayerId() == FirstPlayerId) {
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$PlayerGrp"
-										+ rowId + "$Flag$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + Teams.get(tournament_stats.get(i).getPlayer().
-												getTeamId() - 1).getTeamName4() + "\0", print_writers);
+									+ rowId + "$Flag$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + Teams.get(tournament_stats.get(i).getPlayer().
+									getTeamId() - 1).getTeamName4() + "\0", print_writers);
 		
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$PlayerGrp"
-										+ rowId + "$Photo$img_PlayerPhoto*TEXTURE*IMAGE SET "+Constants.ICC_U19_2023_PHOTOS_PATH + Constants.RIGHT_2048 + 
-										tournament_stats.get(i).getPlayer().getPhoto()+ CricketUtil.PNG_EXTENSION + "\0", print_writers);
+									+ rowId + "$Photo$img_PlayerPhoto*TEXTURE*IMAGE SET "+Constants.ICC_U19_2023_PHOTOS_PATH + Constants.RIGHT_2048 + 
+									tournament_stats.get(i).getPlayer().getPhoto()+ CricketUtil.PNG_EXTENSION + "\0", print_writers);
+								System.out.println("FirstPlayerId = " + FirstPlayerId + ", WhichSide = " + WhichSide + ", Player photo = "
+									+ tournament_stats.get(i).getPlayer().getPhoto());
 								
 							}
 							for(int j=0; j<2; j++) {
