@@ -3335,6 +3335,12 @@ public class FullFramesGfx
 							containerName = "$Bottom";
 						}
 						
+//						if(PlayingXI.get(i-1).getSquad().equalsIgnoreCase("IN_PLAYINGXI")){
+//							System.out.println("NAME : " + PlayingXI.get(i-1).getTicker_name() + " IN YES");
+//						}else {
+//							System.out.println("NAME : " + PlayingXI.get(i-1).getTicker_name() + " NO CHANGE");
+//						}
+						
 						if(PlayingXI.get(i-1).getRole().equalsIgnoreCase(CricketUtil.BATSMAN) || PlayingXI.get(i-1).getRole().equalsIgnoreCase("BAT/KEEPER")) {
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Squad$AllGraphics" + containerName + "$Photo_" + rowId + 
 									"$Select_Role*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
@@ -3427,10 +3433,14 @@ public class FullFramesGfx
 					if(otherSquad.get(j-1).getSquad() != null) {
 						rowId = rowId + 1;
 						containerName = "$Bottom";
-						if(rowId>3) {
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Squad$AllGraphics" + containerName + "$Photo_" + rowId + 
-									"$Name$Select_Dropped*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
-						}
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Squad$AllGraphics" + containerName + "$Photo_" + rowId + 
+								"$Name$Select_Dropped*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+						
+//						if(otherSquad.get(j-1).getSquad().equalsIgnoreCase("OUT_PLAYINGXI")){
+//							System.out.println("NAME : " + PlayingXI.get(j-1).getTicker_name() + " OUT YES");
+//						}else {
+//							System.out.println("NAME : " + PlayingXI.get(j-1).getTicker_name() + " NO CHANGE");
+//						}
 						
 						if(otherSquad.get(j-1).getRole().equalsIgnoreCase(CricketUtil.BATSMAN) || otherSquad.get(j-1).getRole().equalsIgnoreCase("BAT/KEEPER")) {
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Squad$AllGraphics" + containerName + "$Photo_" + rowId + 

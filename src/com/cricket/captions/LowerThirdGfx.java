@@ -978,14 +978,6 @@ public class LowerThirdGfx
 			if(battingCardList.get(battingCardList.size()-1) == null) {
 				return "populateVizInfobarLeftBottom: Last wicket returned is invalid";
 			}
-			
-			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Last_Wicket_Wide$Top$"
-				+ "txt_Score*GEOM*TEXT SET " + battingCardList.get(battingCardList.size()-1).getRuns() + "\0", print_writers);
-			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Last_Wicket_Wide$Top$"
-				+ "txt_Balls*GEOM*TEXT SET " + "(" + battingCardList.get(battingCardList.size()-1).getBalls() + ")" + "\0", print_writers);
-			
-			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
-				+ "$Last_Wicket_Wide$txt_HowOut*GEOM*TEXT SET " + battingCardList.get(battingCardList.size()-1).getHowOutText() + "\0", print_writers);
 		}
 		
 		if(battingCardList.get(battingCardList.size()-1).getStrikeRate().equalsIgnoreCase("0.0")) {
@@ -1031,8 +1023,8 @@ public class LowerThirdGfx
 			}
 		}
 		
-		String[] Count = CricketFunctions.getScoreTypeData(CricketUtil.BATSMAN,matchAllData, inning.getInningNumber(), battingCardList.get(battingCardList.size()-1).getPlayerId(),
-				"-", matchAllData.getEventFile().getEvents()).split("-");
+		String[] Count = CricketFunctions.getScoreTypeData(CricketUtil.BATSMAN,matchAllData, inning.getInningNumber(), 
+				battingCardList.get(battingCardList.size()-1).getPlayerId(),"-", matchAllData.getEventFile().getEvents()).split("-");
 		
 		
 		lowerThird = new LowerThird("", battingCardList.get(battingCardList.size()-1).getPlayer().getFirstname(), surName,"", 
