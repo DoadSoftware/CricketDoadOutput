@@ -584,11 +584,13 @@ public class Animation
 				if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase(whatToProcess.split(",")[0])) {
 					processAnimation(Constants.BACK, print_writers, "Change$Header", "START");
 				}
-				System.out.println("Previous Player = " + prevWhichPlayer);
+				//System.out.println("Previous Player = " + prevWhichPlayer);
 				processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player" + prevWhichPlayer, "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "Change$Leader_Board" , "START");
-				processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side2$Player" + whatToProcess.split(",")[2].split("_")[0], "START");
-				System.out.println("Current Player = " + whatToProcess.split(",")[2].split("_")[0]);
+//				processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side2$Player" + whatToProcess.split(",")[2].split("_")[0], "START");
+				processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side2$Player" + whatToProcess.split(",")[2].split("_")[0], "SHOW 0.800");
+				processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side2$Player" + whatToProcess.split(",")[2].split("_")[0], "CONTINUE");
+				//System.out.println("Current Player = " + whatToProcess.split(",")[2].split("_")[0]);
 				prevWhichPlayer = whatToProcess.split(",")[2].split("_")[0];
 				break;
 			}
@@ -768,14 +770,16 @@ public class Animation
 				 }
 				 processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Leader_Board", "SHOW 3.000");
 				 processAnimation(Constants.BACK, print_writers, "Change$Leader_Board", "SHOW 0.0");
+				
 				 for(int iPlyr = 1; iPlyr <= 5; iPlyr++) {
 					 if(iPlyr == Integer.valueOf(prevWhichPlayer)) {
-						 processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player" + iPlyr, "SHOW 1.900");
+						 processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player" + iPlyr, "SHOW 2.700");
 					 } else {
-						 processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player" + iPlyr, "SHOW 0.000");
+						 processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player" + iPlyr, "SHOW 0.00");
 					 }
 				 }
-				 processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side2", "SHOW 0.0");
+				processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side2", "SHOW 0.0");
+				 
 				 setVariousAnimationsKeys("CUT-BACK", print_writers, config);
 				 this.whichGraphicOnScreen = whatToProcess;
 				 break;
@@ -861,10 +865,8 @@ public class Animation
 
 			processAnimation(Constants.BACK, print_writers, "Anim_FullFrames", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Change", "SHOW 0.0");
-			processAnimation(Constants.BACK, print_writers, "Sponsor_5sec", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "ConcussExtend_Y", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Header_Shrink", "SHOW 0.0");
-			processAnimation(Constants.BACK, print_writers, "Header_Extra_Loop", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Profile_Highlight", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Base_Gradient", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Target", "SHOW 0.0");
@@ -1144,7 +1146,7 @@ public class Animation
 							break;
 						case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": //LeaderBoard Most - Runs,Wickets,Fours,Sixes 
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Leader_Board$In 2.300";
-							previewCommand = previewCommand + " LeaderBoardHighlight$Side1$Player"+whatToProcess.split(",")[2].split("_")[0] + " 1.900";
+							previewCommand = previewCommand + " LeaderBoardHighlight$Side1$Player"+whatToProcess.split(",")[2].split("_")[0] + " 2.700";
 							break;
 						case "m"://Match id	
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Ident$In 1.920 Base_Gradient 0.500";
@@ -1217,7 +1219,7 @@ public class Animation
 									break;
 								case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": //LeaderBoard Most - Runs,Wickets,Fours,Sixes 
 									previewCommand = previewCommand + " Change$Leader_Board 2.800 Change$Leader_Board$Change_Out 0.600 Change$Leader_Board$Change_In 2.800";
-									previewCommand = previewCommand + " LeaderBoardHighlight$Side2$Player"+whatToProcess.split(",")[2].split("_")[0] + " 1.900";
+									previewCommand = previewCommand + " LeaderBoardHighlight$Side2$Player"+whatToProcess.split(",")[2].split("_")[0] + " 2.700";
 									break;
 								}
 							}
