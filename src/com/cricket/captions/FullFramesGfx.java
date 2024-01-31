@@ -2472,11 +2472,11 @@ public class FullFramesGfx
 						"$Select_GraphicsType*FUNCTION*Omo*vis_con SET 17 \0", print_writers);
 				for(int i=0; i<2; i++) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Manhattan_Comparison"
-							+ "$Team"+(i+1)+ "$txt_Team*GEOM*TEXT SET "+matchAllData.getMatch().getInning().get(i).getBatting_team().getTeamName1()+"\0", print_writers);
+							+ "$Team"+(i+1)+ "$txt_Team*GEOM*TEXT SET " + matchAllData.getMatch().getInning().get(i).getBatting_team().getTeamName1()+"\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Manhattan_Comparison"
 							+ "$Team"+(i+1)+ "$txt_Overs_Value*GEOM*TEXT SET "+CricketFunctions.OverBalls(matchAllData.getMatch().getInning().get(i).getTotalOvers(),matchAllData.getMatch().getInning().get(i).getTotalBalls())+"\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Manhattan_Comparison$"
-							+ "$Team"+(i+1)+ "$txt_Score*GEOM*TEXT SET "+CricketFunctions.getTeamScore(matchAllData.getMatch().getInning().get(i), "-", false)+"\0", print_writers);
+							+ "$Team"+(i+1)+ "$txt_Score*GEOM*TEXT SET " + CricketFunctions.getTeamScore(matchAllData.getMatch().getInning().get(i), "-", false)+"\0", print_writers);
 					
 					if(matchAllData.getMatch().getInning().get(i).getBatting_team().getTeamName4().equalsIgnoreCase("NEP")) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Manhattan_Comparison"
@@ -2504,8 +2504,8 @@ public class FullFramesGfx
 						}
 						for(int k = 0; k < 3; k++) {
 							runsIncr = maxRuns / 3; 
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Manhattan_Comparison$Team1$Runs_Axis$"
-									+ "$Runs_Data$txt_" + (k+1) + "*GEOM*TEXT SET " + runsIncr*(k+1) + "\0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
+									"$Manhattan_Comparison$Team1$Runs_Axis$" + "$Runs_Data$txt_" + (k+1) + "*GEOM*TEXT SET " + runsIncr*(k+1) + "\0", print_writers);
 						}
 						
 						for(int j = 1; j <= matchAllData.getSetup().getMaxOvers(); j++) {
@@ -2592,10 +2592,10 @@ public class FullFramesGfx
 								powerPlay = "$PowerPlay_3";
 							}
 							
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Manhattan_Comparison$Team2$Bar$"
-									+ j + "$Select_PowerPlay*FUNCTION*Omo*vis_con SET " + powerplay_omo + "\0", print_writers);
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Manhattan_Comparison$Team2$Wickets_Axis"
-									+ "$Out$Wkt_" + j + "$Select_PowerPlay*FUNCTION*Omo*vis_con SET " + powerplay_omo + "\0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
+									"$Manhattan_Comparison$Team2$Bar$" + j + "$Select_PowerPlay*FUNCTION*Omo*vis_con SET " + powerplay_omo + "\0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
+									"$Manhattan_Comparison$Team2$Wickets_Axis$Out$Wkt_" + j + "$Select_PowerPlay*FUNCTION*Omo*vis_con SET " + powerplay_omo + "\0", print_writers);
 							
 							if(j < manhattan2.size()) {
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Manhattan_Comparison$Team2$Bar$"
@@ -2650,7 +2650,6 @@ public class FullFramesGfx
 				int maxRuns = 0,runsIncr = 0,powerplay_omo=0;
 				double lngth = 0;
 				String powerPlay = "";
-				
 				for (int j = 0; j < manhattan.size(); j++) {
 					if(manhattan.get(j).getInningNumber() == WhichInning) {
 						if(Integer.valueOf(manhattan.get(j).getOverTotalRuns()) > maxRuns){
@@ -2690,6 +2689,8 @@ public class FullFramesGfx
 							+ "$Out$Wkt_" + j + "$Select_PowerPlay*FUNCTION*Omo*vis_con SET " + powerplay_omo + "\0", print_writers);
 					
 					if(j < manhattan.size()) {
+//						System.out.println("OVERS : " + j + " RUNS/WICKETS : " + manhattan.get(j).getOverTotalRuns() + "/" + manhattan.get(j).getOverTotalWickets() 
+//								+ " Over - " + manhattan.get(j).getOverNumber());
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Manhattan$Bar$"
 								+ "$Position*FUNCTION*Grid*num_row SET 1\0", print_writers);
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Manhattan$Bar$"

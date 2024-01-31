@@ -878,6 +878,8 @@ public class LowerThirdGfx
 				howOut = "c " + battingCard.getHowOutFielder().getTicker_name() + "  b " + 
 						battingCard.getHowOutBowler().getTicker_name();
 			}
+		}else if(battingCard.getHowOut().equalsIgnoreCase(CricketUtil.RETIRED_HURT)) {
+			howOut = "RETIRED HURT";
 		}else {
 			if(!battingCard.getHowOutPartOne().isEmpty()) {
 				howOut = battingCard.getHowOutPartOne();
