@@ -386,7 +386,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l': case 'Shift_E': //case 'Alt_F9':
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9': case 'Alt_0':
 	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10': case 'Alt_d': case 'Shift_F4': case 'Alt_a': case 'Alt_s': 
-	case 'Shift_P': case 'Shift_Q': case 'Alt_z':  //case 'Control_z': case 'Control_x':
+	case 'Shift_P': case 'Shift_Q': case 'Alt_z':  case 'Control_z': case 'Control_x':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		
 		$("#captions_div").hide();
