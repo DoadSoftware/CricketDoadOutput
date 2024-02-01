@@ -2493,13 +2493,11 @@ public class FullFramesGfx
 						lngth = 0;
 						powerPlay = "";
 						for (int j = 0; j < manhattan.size(); j++) {
-							if(manhattan.get(j).getInningNumber() == 1) {
-								if(Integer.valueOf(manhattan.get(j).getOverTotalRuns()) > maxRuns){
-									maxRuns = Integer.valueOf(manhattan.get(j).getOverTotalRuns()); // 33 runs came off 34th over
-								}
-							 	while (maxRuns % 3 != 0) {     // 3 label in y-axis
-							 		maxRuns = maxRuns + 1;    // keep incrementing till max runs is divisible by 3. maxRuns = 35
-								}
+							if(Integer.valueOf(manhattan.get(j).getOverTotalRuns()) > maxRuns){
+								maxRuns = Integer.valueOf(manhattan.get(j).getOverTotalRuns()); // 33 runs came off 34th over
+							}
+						 	while (maxRuns % 3 != 0) {     // 3 label in y-axis
+						 		maxRuns = maxRuns + 1;    // keep incrementing till max runs is divisible by 3. maxRuns = 35
 							}
 						}
 						for(int k = 0; k < 3; k++) {
@@ -2560,13 +2558,11 @@ public class FullFramesGfx
 						lngth = 0;
 						powerPlay = "";
 						for (int j = 0; j < manhattan2.size(); j++) {
-							if(manhattan2.get(j).getInningNumber() == 2) {
-								if(Integer.valueOf(manhattan2.get(j).getOverTotalRuns()) > maxRuns){
-									maxRuns = Integer.valueOf(manhattan2.get(j).getOverTotalRuns()); // 33 runs came off 34th over
-								}
-							 	while (maxRuns % 3 != 0) {     // 3 label in y-axis
-							 		maxRuns = maxRuns + 1;    // keep incrementing till max runs is divisible by 3. maxRuns = 35
-								}
+							if(Integer.valueOf(manhattan2.get(j).getOverTotalRuns()) > maxRuns){
+								maxRuns = Integer.valueOf(manhattan2.get(j).getOverTotalRuns()); // 33 runs came off 34th over
+							}
+						 	while (maxRuns % 3 != 0) {     // 3 label in y-axis
+						 		maxRuns = maxRuns + 1;    // keep incrementing till max runs is divisible by 3. maxRuns = 35
 							}
 						}
 						for(int k = 0; k < 3; k++) {
@@ -2650,7 +2646,9 @@ public class FullFramesGfx
 				int maxRuns = 0,runsIncr = 0,powerplay_omo=0;
 				double lngth = 0;
 				String powerPlay = "";
-				for (int j = 0; j < manhattan.size(); j++) {
+				System.out.println("manhattan size "+manhattan.size());
+				for (int j = 0; j <= manhattan.size(); j++) {
+					System.out.println("Inn number : "+manhattan.get(j).getInningNumber() +" RUNS "+Integer.valueOf(manhattan.get(j).getOverTotalRuns()));
 					if(manhattan.get(j).getInningNumber() == WhichInning) {
 						if(Integer.valueOf(manhattan.get(j).getOverTotalRuns()) > maxRuns){
 							maxRuns = Integer.valueOf(manhattan.get(j).getOverTotalRuns()); // 33 runs came off 34th over
