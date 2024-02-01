@@ -1926,7 +1926,7 @@ public class LowerThirdGfx
 		}
 		
 		lowerThird = new LowerThird("DUCKWORTH LEWIS STERN", matchAllData.getSetup().getHomeTeam().getTeamName4(), 
-				matchAllData.getSetup().getAwayTeam().getTeamName4(),"AFTER ", String.valueOf(CricketFunctions.OverBalls(overs, balls)), 
+				matchAllData.getSetup().getAwayTeam().getTeamName4(),"", String.valueOf(CricketFunctions.OverBalls(overs, balls)), 
 				"",2,"FLAG","", null,null,new String[]{this_data_str.get(0),this_data_str.get(1)},null,null);
 		
 		status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);
@@ -3670,8 +3670,8 @@ public class LowerThirdGfx
 						"$Select_Subline$4$Data$Title*ACTIVE SET 0 \0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide 
-					+ "$Select_Subline$1$Data$Left$txt_1*GEOM*TEXT SET " + "DLS PAR SCORE " + lowerThird.getLeftText()[0] + " " + lowerThird.getSubTitle() + 
-					" " + lowerThird.getScoreText() + " OVERS" + "\0", print_writers);
+					+ "$Select_Subline$1$Data$Left$txt_1*GEOM*TEXT SET " + "DLS PAR SCORE AFTER " + lowerThird.getScoreText() + " OVERS - "
+					+ lowerThird.getLeftText()[0] + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide 
 					+ "$Select_Subline$2$Data$Left$txt_1*GEOM*TEXT SET " + lowerThird.getLeftText()[1].toUpperCase() + " PAR SCORE"  + "\0", print_writers);
 				break;

@@ -493,22 +493,23 @@ public class IndexController
 				for(Tournament tourn : CricketFunctions.extractTournamentStats("COMBINED_PAST_CURRENT_MATCH_DATA",false, cricket_matches, 
 						cricketService, session_match,null)) {
 					for(BestStats bs : tourn.getBatsman_best_Stats()) {
-						top_ten_beststat.add(bs);
+						top_ten_beststat.add(CricketFunctions.getProcessedBatsmanBestStats(bs));
 					}
 				}
-				break;
-
+				Collections.sort(top_ten_beststat,new CricketFunctions.BatsmanBestStatsComparator());
+				return (List<T>) top_ten_beststat;
+				
 			case "Control_x":
 				for(Tournament tourn : CricketFunctions.extractTournamentStats("COMBINED_PAST_CURRENT_MATCH_DATA",false, cricket_matches, 
 						cricketService, session_match,null)) {
 					for(BestStats bs : tourn.getBowler_best_Stats()) {
-						top_ten_beststat.add(bs);
+						top_ten_beststat.add(CricketFunctions.getProcessedBowlerBestStats(bs));
 					}
 				}
-				break;
+				Collections.sort(top_ten_beststat,new CricketFunctions.BowlerBestStatsComparator());
+				return (List<T>) top_ten_beststat;
 			}
-			Collections.sort(top_ten_beststat,new CricketFunctions.PlayerBestStatsComparator());
-			return (List<T>) top_ten_beststat;
+			return null;
 		}
 		return null;
 	}

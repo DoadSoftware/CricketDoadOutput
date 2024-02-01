@@ -772,19 +772,19 @@ public class FullFramesGfx
 			top_batsman_beststats = new ArrayList<BestStats>();
 			for(Tournament tourn : tournament_stats) {
 				for(BestStats bs : tourn.getBatsman_best_Stats()) {
-					top_batsman_beststats.add(bs);
+					top_batsman_beststats.add(CricketFunctions.getProcessedBatsmanBestStats(bs));
 				}
 			}
-			Collections.sort(top_batsman_beststats,new CricketFunctions.PlayerBestStatsComparator());
+			Collections.sort(top_batsman_beststats,new CricketFunctions.BatsmanBestStatsComparator());
 			break;
 		 case "Control_x":
 			top_bowler_beststats = new ArrayList<BestStats>();
 			for(Tournament tourn : tournament_stats) {
 				for(BestStats bs : tourn.getBowler_best_Stats()) {
-					top_bowler_beststats.add(bs);
+					top_bowler_beststats.add(CricketFunctions.getProcessedBowlerBestStats(bs));
 				}
 			}
-			Collections.sort(top_bowler_beststats,new CricketFunctions.PlayerBestStatsComparator());
+			Collections.sort(top_bowler_beststats,new CricketFunctions.BowlerBestStatsComparator());
 			break;
 		}
 		

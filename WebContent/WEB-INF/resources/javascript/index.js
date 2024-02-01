@@ -1317,10 +1317,10 @@ function addItemsToList(whatToProcess,dataToProcess)
 				option.text = 'Role';
 				select.appendChild(option);
 				
-				option = document.createElement('option');
+				/*option = document.createElement('option');
 				option.value = 'matches';
 				option.text = 'Matches';
-				select.appendChild(option);
+				select.appendChild(option);*/
 				
 				option = document.createElement('option');
 				option.value = 'runs';
