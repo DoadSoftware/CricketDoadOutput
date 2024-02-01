@@ -1285,7 +1285,7 @@ public class FullFramesGfx
 							"$Change$Bottom$Select_SubHeaderType*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
-							"$Change$Bottom$txt_Subheader*GEOM*TEXT SET " + matchAllData.getSetup().getHomeTeam().getTeamGroup() + " - " 
+							"$Change$Bottom$txt_Subheader*GEOM*TEXT SET " + matchAllData.getSetup().getMatchIdent() + " - " 
 							+ ground.getCity() + "\0", print_writers);
 					break;
 				

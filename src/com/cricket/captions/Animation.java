@@ -577,20 +577,19 @@ public class Animation
 			
 			if(!whatToProcess.contains(",")) {
 				return CricketUtil.NO;
-			}	
+			}
+			
 			switch (whatToProcess.split(",")[0]) {
 			case "Control_x": case "Control_z": case "z": case "x": case "c": case "v":
 				setVariousAnimationsKeys("CHANGE-ON", print_writers, config);
 				if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase(whatToProcess.split(",")[0])) {
 					processAnimation(Constants.BACK, print_writers, "Change$Header", "START");
 				}
-				//System.out.println("Previous Player = " + prevWhichPlayer);
 				processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player" + prevWhichPlayer, "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "Change$Leader_Board" , "START");
 //				processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side2$Player" + whatToProcess.split(",")[2].split("_")[0], "START");
 				processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side2$Player" + whatToProcess.split(",")[2].split("_")[0], "SHOW 0.800");
 				processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side2$Player" + whatToProcess.split(",")[2].split("_")[0], "CONTINUE");
-				//System.out.println("Current Player = " + whatToProcess.split(",")[2].split("_")[0]);
 				prevWhichPlayer = whatToProcess.split(",")[2].split("_")[0];
 				break;
 			}
