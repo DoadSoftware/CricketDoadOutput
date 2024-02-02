@@ -198,7 +198,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'F8': case 'F9': case 'F11': case 's': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6': case 'Control_y':
 			case 'Shift_K': case 'Shift_O': case 'g': case 'f': case 'Control_g': case 'Control_s': case 'Control_f': //case 'Alt_F9':
 			case 'Control_h': case 'Alt_F12': case 'l': case 'p': case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_F10': case 'Alt_d':
-			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2': case 'Shift_E': case 'Shift_P': case 'Shift_Q': case 'Alt_z':
+			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2': case 'Shift_E': case 'Shift_P': case 'Shift_Q': case 'Alt_z': 
 				addItemsToList(dataToProcess,null);
 				break;
 			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'Control_F1': case 'Control_a':
@@ -386,7 +386,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l': case 'Shift_E': //case 'Alt_F9':
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9': case 'Alt_0':
 	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10': case 'Alt_d': case 'Shift_F4': case 'Alt_a': case 'Alt_s': 
-	case 'Shift_P': case 'Shift_Q': case 'Alt_z':  case 'Control_z': case 'Control_x':
+	case 'Shift_P': case 'Shift_Q': case 'Alt_z':  case 'Control_z': case 'Control_x': case 'Alt_q':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		
 		$("#captions_div").hide();
@@ -408,6 +408,39 @@ function addItemsToList(whatToProcess,dataToProcess)
 		row = tbody.insertRow(tbody.rows.length);
 		
 		switch(whatToProcess) {
+		case 'Alt_q':
+			header_text.innerHTML = 'POTT';
+			select = document.createElement('select');
+			select.id = 'selectPott';
+			select.name = select.id;
+			dataToProcess.forEach(function(pott,index,arr1){	
+				option = document.createElement('option');
+	            option.value = pott.playerId1;
+	            option.text = pott.player1.full_name;
+	            select.appendChild(option);
+	            
+	            option = document.createElement('option');
+	            option.value = pott.playerId2;
+	            option.text = pott.player2.full_name;
+	            select.appendChild(option);
+	            
+	            option = document.createElement('option');
+	            option.value = pott.playerId3;
+	            option.text = pott.player3.full_name;
+	            select.appendChild(option);
+	            
+	            option = document.createElement('option');
+	            option.value = pott.playerId4;
+	            option.text = pott.player4.full_name;
+	            select.appendChild(option);
+	        });
+	        
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			
+			cellCount = cellCount + 1;
+			break;
 		case 'Shift_F4':
 			header_text.innerHTML = 'BUG MULTI PARTNERSHIP';
 			select = document.createElement('select');

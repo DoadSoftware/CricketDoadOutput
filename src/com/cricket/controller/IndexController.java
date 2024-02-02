@@ -471,7 +471,8 @@ public class IndexController
 			return (List<T>) CricketFunctions.processAllStaff(cricketService, session_match.getSetup().getHomeTeamId());
 		case "Alt_s":
 			return (List<T>) CricketFunctions.processAllStaff(cricketService, session_match.getSetup().getAwayTeamId());
-			
+		case "Alt_q":
+			return (List<T>) CricketFunctions.processAllPott(cricketService);	
 		case "z": case "x": case "c": case "v": 
 			List<Tournament> tournament_stats = CricketFunctions.extractTournamentStats("COMBINED_PAST_CURRENT_MATCH_DATA",false, cricket_matches, 
 					cricketService, session_match,null);
@@ -585,6 +586,7 @@ public class IndexController
 				this_caption.this_lowerThirdGfx.tournaments = past_tournament_stats;
 				this_caption.this_lowerThirdGfx.dls = session_dls;
 				this_caption.this_lowerThirdGfx.Staff = session_staff;
+				this_caption.this_lowerThirdGfx.VariousText = session_variousText;
 				
 				//FullFrames
 				this_caption.this_fullFramesGfx.statistics = session_statistics;

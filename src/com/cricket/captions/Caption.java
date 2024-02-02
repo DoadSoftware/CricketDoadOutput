@@ -100,11 +100,12 @@ public class Caption
 		this.Staff = staff;
 		this.Players = players;
 		this.Pott = pott;
+		
 		this.dls = dls;
 		this.this_fullFramesGfx = new FullFramesGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
 				fixTures, Teams, Grounds,tournament, VariousText, players, pott);
 		this.this_lowerThirdGfx = new LowerThirdGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
-				nameSupers, Teams, Grounds, tournament, dls, staff);
+				nameSupers, Teams, Grounds, tournament, dls, staff, players, pott, varioustText);
 		this.whichSide = whichSide;
 		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers, statistics, statsTypes, infobarStats, 
 				Grounds, Commentators, tournament_matches, dls);
@@ -123,6 +124,9 @@ public class Caption
 	{
 		if(whatToProcess.contains(",")) {
 			switch (whatToProcess.split(",")[0]) {
+			case "Alt_q":
+				status = this_lowerThirdGfx.populatePOTT(whatToProcess,whichSide, matchAllData);
+				break;
 			case "r":
 				status = this_fullFramesGfx.populatePOTT(whichSide, whatToProcess.split(",")[0], matchAllData, 0);
 				break;

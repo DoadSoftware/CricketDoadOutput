@@ -58,12 +58,12 @@ public class Animation
 			case "Shift_F3": case "s": case "d": case "e": case "q": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "Control_g": case "Control_h": case "j": case "Control_F6": case "Shift_F6": case "Alt_F1": case "Alt_F2":
 			case "Control_s": case "Alt_d": case "Control_f": case "Control_q": case "l": case "n": case "a": case "Control_F2":
-			case "Alt_a": case "Alt_s":case "Shift_E":
+			case "Alt_a": case "Alt_s":case "Shift_E": case "Alt_q":
 				
 				switch (whatToProcess.split(",")[0]) {
 				case "Alt_F8": case "F8": case "F10": case "j": case "Alt_a": case "Alt_s": // Name super L3rd
 					return Constants.NAME_SUPERS + Constants.LOWER_THIRD;
-				case "q": case "Control_q":// Boundary L3rd
+				case "q": case "Control_q": case "Alt_q":// Boundary L3rd
 					return Constants.BOUNDARIES + Constants.LOWER_THIRD;
 				default:
 					return Constants.LOWER_THIRD;
@@ -246,6 +246,20 @@ public class Animation
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
 				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "START");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;
+			case "Alt_q":
+				if(this.infobar.isInfobar_on_screen() == true) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_POTT_Aramco$Overall_Position_Y*"
+						+ "TRANSFORMATION*POSITION*Y SET 40.0 \0",print_writers);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_POTT_Aramco$Overall_Position_Y*"
+						+ "TRANSFORMATION*POSITION*Y SET 3.0 \0",print_writers);
+				}
+				
+				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
+				TimeUnit.MILLISECONDS.sleep(1000);
+				processAnimation(Constants.FRONT, print_writers, "anim_POTT", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			 case "Alt_F8": case "F8": case "F10": case "j": case "Alt_a": case "Alt_s": // Name super L3rd
@@ -544,6 +558,13 @@ public class Animation
 				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "anim_NameSupers", "SHOW 0.0");
 				AnimateIn(Constants.MIDDLE + Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
+				this.whichGraphicOnScreen = "";
+				break;
+			 
+			 case "Alt_q":
+				 processAnimation(Constants.FRONT, print_writers, "anim_POTT", "CONTINUE");
+				 TimeUnit.MILLISECONDS.sleep(1000);
+				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;
 				
@@ -906,6 +927,7 @@ public class Animation
 			processAnimation(Constants.FRONT, print_writers, "Anim_Boundary_LTChange", "SHOW 0.0");
 			processAnimation(Constants.FRONT, print_writers, "Anim_Bugs", "SHOW 0.0");
 			
+			processAnimation(Constants.FRONT, print_writers, "anim_POTT", "SHOW 0.0");
 			processAnimation(Constants.FRONT, print_writers, "anim_NameSupers", "SHOW 0.0");
 			processAnimation(Constants.FRONT, print_writers, "Anim_NameSuperChange", "SHOW 0.0");
 			processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "SHOW 0.0");
@@ -1316,6 +1338,9 @@ public class Animation
 					break;
 				 case "Alt_F8": case "F8": case "F10": case "j": case "Alt_a": case "Alt_s": // Name super L3rd
 					previewCommands = "Anim_Infobar$Push 0.500 anim_NameSupers$In 1.400";
+					break;
+				 case "Alt_q":
+					 previewCommands = "Anim_Infobar$Push 0.500 anim_POTT$In 1.400";
 					break;
 				case "q": case "Control_q":// Boundary L3rd
 					previewCommands = "Anim_Infobar$Push 0.500 anim_Boundary_LT$Essentials 2.200 anim_Boundary_LT$Essentials$In 1.400 "
