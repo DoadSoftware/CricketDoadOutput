@@ -700,6 +700,10 @@ public class Animation
 					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_Bottom_Left", "START");
 					break;
 				case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_9": case "Alt_0":
+					if(infobar.getRight_section()!= null && !infobar.getRight_section().isEmpty()) {
+						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_All$In_Out", "CONTINUE");
+						infobar.setRight_section("");
+					}
 					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo", "START");
 					break;
 				case "Alt_7":

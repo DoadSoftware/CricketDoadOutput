@@ -668,6 +668,16 @@ public class InfobarGfx
 					+ "LIVE FROM " + ground.getCity() + "\0", print_writers);
 				break;
 			
+			case "EQUATION":
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Bottom$Side_" 
+					+ WhichSide + "$Choose_Type*FUNCTION*Omo*vis_con SET 1 \0",print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Bottom$Side_" + WhichSide + "$Free_Text$txt_Text"
+					+ "*GEOM*TEXT SET " + "TO WIN " + CricketFunctions.getRequiredRuns(matchAllData) + " RUN" + CricketFunctions.Plural(
+						CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " OFF " + CricketFunctions.getRequiredBalls(matchAllData) 
+							+ " BALL" + CricketFunctions.Plural(CricketFunctions.getRequiredBalls(matchAllData)).toUpperCase() + "\0", print_writers);
+				break;
+			
 			case "GROUP":
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Bottom$Side_" 

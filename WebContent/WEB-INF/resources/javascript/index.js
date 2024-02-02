@@ -548,10 +548,10 @@ function addItemsToList(whatToProcess,dataToProcess)
 						option.text = '1st Inning Score';
 						select.appendChild(option);
 						
-						/*option = document.createElement('option');
-						option.value = 'DLSTARGET';
-						option.text = 'D/L Target';
-						select.appendChild(option);*/
+						option = document.createElement('option');
+						option.value = 'EQUATION';
+						option.text = 'Equation';
+						select.appendChild(option);
 					}
 				}
 			});
