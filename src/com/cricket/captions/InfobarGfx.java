@@ -675,24 +675,47 @@ public class InfobarGfx
 				
 				if(matchAllData.getSetup().getTargetType() != null) {
 					if(matchAllData.getSetup().getTargetType().equalsIgnoreCase(CricketUtil.DLS)) {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Bottom$Side_" + WhichSide + "$Free_Text$txt_Text"
-							+ "*GEOM*TEXT SET " + "NEED " + CricketFunctions.getRequiredRuns(matchAllData) + " RUN" + CricketFunctions.Plural(
-								CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " FROM " + CricketFunctions.getRequiredBalls(matchAllData) 
-									+ " BALL" + CricketFunctions.Plural(CricketFunctions.getRequiredBalls(matchAllData)).toUpperCase() + " (" + 
-									 CricketUtil.DLS + ")" + "\0", print_writers);
+						if(CricketFunctions.getRequiredRuns(matchAllData) <= 1) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Bottom$Side_" + WhichSide + "$Free_Text$txt_Text"
+									+ "*GEOM*TEXT SET " + "NEED " + CricketFunctions.getRequiredRuns(matchAllData) + " RUN" + CricketFunctions.Plural(
+										CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " FROM " + CricketFunctions.getRequiredBalls(matchAllData) 
+											+ " BALL" + CricketFunctions.Plural(CricketFunctions.getRequiredBalls(matchAllData)).toUpperCase() + " (" + 
+													CricketUtil.DLS + ")"+ "\0", print_writers);
+						}else {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Bottom$Side_" + WhichSide + "$Free_Text$txt_Text"
+									+ "*GEOM*TEXT SET " + "NEED " + CricketFunctions.getRequiredRuns(matchAllData) + " MORE RUN" + CricketFunctions.Plural(
+										CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " FROM " + CricketFunctions.getRequiredBalls(matchAllData) 
+											+ " BALL" + CricketFunctions.Plural(CricketFunctions.getRequiredBalls(matchAllData)).toUpperCase() + " (" + 
+											CricketUtil.DLS + ")" + "\0", print_writers);
+						}
 					}
 					else if(matchAllData.getSetup().getTargetType().equalsIgnoreCase(CricketUtil.VJD)) {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Bottom$Side_" + WhichSide + "$Free_Text$txt_Text"
-							+ "*GEOM*TEXT SET " + "NEED " + CricketFunctions.getRequiredRuns(matchAllData) + " RUN" + CricketFunctions.Plural(
-								CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " FROM " + CricketFunctions.getRequiredBalls(matchAllData) 
-									+ " BALL" + CricketFunctions.Plural(CricketFunctions.getRequiredBalls(matchAllData)).toUpperCase() + " (" + 
-										CricketUtil.VJD + ")" + "\0", print_writers);
+						if(CricketFunctions.getRequiredRuns(matchAllData) <= 1) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Bottom$Side_" + WhichSide + "$Free_Text$txt_Text"
+									+ "*GEOM*TEXT SET " + "NEED " + CricketFunctions.getRequiredRuns(matchAllData) + " RUN" + CricketFunctions.Plural(
+										CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " FROM " + CricketFunctions.getRequiredBalls(matchAllData) 
+											+ " BALL" + CricketFunctions.Plural(CricketFunctions.getRequiredBalls(matchAllData)).toUpperCase() + " (" + 
+													CricketUtil.VJD + ")"+ "\0", print_writers);
+						}else {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Bottom$Side_" + WhichSide + "$Free_Text$txt_Text"
+									+ "*GEOM*TEXT SET " + "NEED " + CricketFunctions.getRequiredRuns(matchAllData) + " MORE RUN" + CricketFunctions.Plural(
+										CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " FROM " + CricketFunctions.getRequiredBalls(matchAllData) 
+											+ " BALL" + CricketFunctions.Plural(CricketFunctions.getRequiredBalls(matchAllData)).toUpperCase() + " (" + 
+											CricketUtil.VJD + ")" + "\0", print_writers);
+						}
 					}
 				}else {
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Bottom$Side_" + WhichSide + "$Free_Text$txt_Text"
-						+ "*GEOM*TEXT SET " + "NEED " + CricketFunctions.getRequiredRuns(matchAllData) + " RUN" + CricketFunctions.Plural(
-							CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " FROM " + CricketFunctions.getRequiredBalls(matchAllData) 
-								+ " BALL" + CricketFunctions.Plural(CricketFunctions.getRequiredBalls(matchAllData)).toUpperCase() + "\0", print_writers);
+					if(CricketFunctions.getRequiredRuns(matchAllData) <= 1) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Bottom$Side_" + WhichSide + "$Free_Text$txt_Text"
+								+ "*GEOM*TEXT SET " + "NEED " + CricketFunctions.getRequiredRuns(matchAllData) + " RUN" + CricketFunctions.Plural(
+									CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " FROM " + CricketFunctions.getRequiredBalls(matchAllData) 
+										+ " BALL" + CricketFunctions.Plural(CricketFunctions.getRequiredBalls(matchAllData)).toUpperCase() + "\0", print_writers);
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Bottom$Side_" + WhichSide + "$Free_Text$txt_Text"
+								+ "*GEOM*TEXT SET " + "NEED " + CricketFunctions.getRequiredRuns(matchAllData) + " MORE RUN" + CricketFunctions.Plural(
+									CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " FROM " + CricketFunctions.getRequiredBalls(matchAllData) 
+										+ " BALL" + CricketFunctions.Plural(CricketFunctions.getRequiredBalls(matchAllData)).toUpperCase() + "\0", print_writers);
+					}
 				}
 				break;
 			
@@ -1028,8 +1051,14 @@ public class InfobarGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Target$txt_Balls_Value*GEOM*TEXT SET " + 
 						CricketFunctions.getRequiredBalls(matchAllData) + "\0", print_writers);
 				
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Target$txt_From*GEOM*TEXT SET " + 
-						"MORE RUN" + CricketFunctions.Plural(CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + "\nFROM" + "\0", print_writers);
+				if(CricketFunctions.getRequiredRuns(matchAllData) <= 1) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Target$txt_From*GEOM*TEXT SET " + 
+							" RUN" + CricketFunctions.Plural(CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + "\nFROM" + "\0", print_writers);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Target$txt_From*GEOM*TEXT SET " + 
+							"MORE RUN" + CricketFunctions.Plural(CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + "\nFROM" + "\0", print_writers);
+				}
+				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Target$txt_Balls*GEOM*TEXT SET " + 
 						"BALL" + CricketFunctions.Plural(CricketFunctions.getRequiredBalls(matchAllData)).toUpperCase() + "\0", print_writers);
 				break;
