@@ -1,5 +1,6 @@
 package com.cricket.captions;
 
+import java.awt.Point;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -21,6 +22,7 @@ import com.cricket.model.InfobarStats;
 import com.cricket.model.Inning;
 import com.cricket.model.MatchAllData;
 import com.cricket.model.NameSuper;
+import com.cricket.model.POTT;
 import com.cricket.model.Player;
 import com.cricket.model.Statistics;
 import com.cricket.model.StatsType;
@@ -54,6 +56,8 @@ public class Caption
 	public List<DuckWorthLewis> dls;
 	public List<Commentator> Commentators;
 	public List<Staff> Staff;
+	public List<Player> Players;
+	public List<POTT> Pott;
 	
 	public BattingCard battingCard;
 	public Inning inning;
@@ -74,7 +78,7 @@ public class Caption
 	
 	public Caption(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics, List<StatsType> statsTypes, 
 		List<MatchAllData> tournament_matches, List<NameSuper> nameSupers,List<Bugs> bugs, List<InfobarStats> infobarStats, List<Fixture> fixTures,
-		List<Team> Teams, List<Ground> Grounds, List<VariousText> varioustText, List<Commentator> commentators, List<Staff> staff,
+		List<Team> Teams, List<Ground> Grounds, List<VariousText> varioustText, List<Commentator> commentators, List<Staff> staff, List<Player> players, List<POTT> pott,
 		FullFramesGfx this_fullFramesGfx,LowerThirdGfx this_lowerThirdGfx, InfobarGfx this_infobarGfx, BugsAndMiniGfx this_bugsAndMiniGfx, 
 		int whichSide, String whichGraphhicsOnScreen, String slashOrDash, List<Tournament> tournament,List<DuckWorthLewis> dls) {
 	
@@ -94,9 +98,11 @@ public class Caption
 		this.VariousText = varioustText;
 		this.Commentators = commentators;
 		this.Staff = staff;
+		this.Players = players;
+		this.Pott = pott;
 		this.dls = dls;
 		this.this_fullFramesGfx = new FullFramesGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
-				fixTures, Teams, Grounds,tournament, VariousText);
+				fixTures, Teams, Grounds,tournament, VariousText, players, pott);
 		this.this_lowerThirdGfx = new LowerThirdGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
 				nameSupers, Teams, Grounds, tournament, dls, staff);
 		this.whichSide = whichSide;
@@ -117,6 +123,9 @@ public class Caption
 	{
 		if(whatToProcess.contains(",")) {
 			switch (whatToProcess.split(",")[0]) {
+			case "r":
+				status = this_fullFramesGfx.populatePOTT(whichSide, whatToProcess.split(",")[0], matchAllData, 0);
+				break;
 			case "F1": // Scorecard FF
 				status = this_fullFramesGfx.PopulateScorecardFF(whichSide, whatToProcess.split(",")[0], matchAllData, 
 					Integer.valueOf(whatToProcess.split(",")[1]));

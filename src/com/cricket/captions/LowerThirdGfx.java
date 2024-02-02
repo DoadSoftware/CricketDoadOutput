@@ -3585,8 +3585,8 @@ public class LowerThirdGfx
 //						"$Select_Subline$2$Data$Title*ACTIVE SET 1 \0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide 
-					+ "$Select_Subline$1$Data$Left$txt_1*GEOM*TEXT SET " + lowerThird.getLeftText()[0] + " " + lowerThird.getLeftText()[1] 
-					+ " " + lowerThird.getLeftText()[2] + "\0", print_writers);
+					+ "$Select_Subline$1$Data$Left$txt_1*GEOM*TEXT SET " + lowerThird.getLeftText()[0] + lowerThird.getLeftText()[1] 
+					+ lowerThird.getLeftText()[2] + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
 						"$Select_Subline$1" + containerName + "$Data$Title$txt_1*GEOM*TEXT SET " + lowerThird.getTitlesText()[0].split(",")[0] + "\0", print_writers);

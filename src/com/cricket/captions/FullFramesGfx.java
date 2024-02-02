@@ -25,6 +25,7 @@ import com.cricket.model.Inning;
 import com.cricket.model.LeagueTable;
 import com.cricket.model.MatchAllData;
 import com.cricket.model.OverByOverData;
+import com.cricket.model.POTT;
 import com.cricket.model.Partnership;
 import com.cricket.model.Player;
 import com.cricket.model.Statistics;
@@ -53,6 +54,8 @@ public class FullFramesGfx
 	public List<Team> Teams;
 	public List<Ground> Grounds;
 	public List<VariousText> VariousText;
+	public List<Player> Players;
+	public List<POTT> Potts;
 	
 	public List<Tournament> addPastDataToCurr = new ArrayList<Tournament>();
 	public List<BestStats> top_batsman_beststats,top_bowler_beststats = new ArrayList<BestStats>();
@@ -84,7 +87,7 @@ public class FullFramesGfx
 	
 	public FullFramesGfx(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics,
 			List<StatsType> statsTypes, List<MatchAllData> tournament_matches,List<Fixture> fixTures, 
-			List<Team> Teams, List<Ground> Grounds,List<Tournament> tournaments, List<VariousText> VariousText) {
+			List<Team> Teams, List<Ground> Grounds,List<Tournament> tournaments, List<VariousText> VariousText, List<Player> players, List<POTT> pott) {
 		super();
 		this.print_writers = print_writers;
 		this.config = config;
@@ -96,7 +99,26 @@ public class FullFramesGfx
 		this.Grounds = Grounds;
 		this.tournaments = tournaments;
 		this.VariousText = VariousText;
+		this.Players = players;
+		this.Potts = pott;
 	}
+	
+	public String populatePOTT(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException, JsonMappingException, JsonProcessingException, InterruptedException 
+	{
+		status = PopulateFfHeader(WhichSide, whatToProcess.split(",")[0], matchAllData, WhichInning);
+		if(status == Constants.OK) {
+			status = PopulateFfBody(WhichSide, whatToProcess.split(",")[0], matchAllData, WhichInning);
+			if(status == Constants.OK) {
+				this.numberOfRows = 11;
+				return PopulateFfFooter(WhichSide, whatToProcess.split(",")[0], matchAllData, WhichInning);
+			} else {
+				return status;
+			}
+		} else {
+			return status;
+		}
+	}
+
 	
 	public String populatePlayerProfile(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException, JsonMappingException, JsonProcessingException, InterruptedException 
 	{
@@ -4356,6 +4378,65 @@ public class FullFramesGfx
 				}
 				break;
 			}
+			break;
+		
+		case "r":
+			switch (config.getBroadcaster().toUpperCase()) {
+			case Constants.ICC_U19_2023:
+				for(Player plyr : Players) {
+					if(plyr.getPlayerId() == Potts.get(0).getPlayerId1()) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_POTT_Aramco$Photo1$txt_PlayerName*GEOM*TEXT SET  " + plyr.getTicker_name() + "\0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_POTT_Aramco$Photo1$img_Photo*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_PHOTOS_PATH + Constants.CENTRE_512 +
+								plyr.getPhoto() + CricketUtil.PNG_EXTENSION + "\0", print_writers);
+						for(Team team : Teams) {
+							if(plyr.getTeamId() == team.getTeamId()) {
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_POTT_Aramco$Photo1$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_POTT_FLAG_PATH +
+										team.getTeamName4()+"\0", print_writers);
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_POTT_Aramco$Photo1$txt_StatHead*GEOM*TEXT SET  " + team.getTeamName1() + "\0", print_writers);
+							}
+						}
+					}
+					if(plyr.getPlayerId() == Potts.get(0).getPlayerId2()) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_POTT_Aramco$Photo2$txt_PlayerName*GEOM*TEXT SET  " + plyr.getTicker_name() + "\0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_POTT_Aramco$Photo2$img_Photo*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_PHOTOS_PATH + Constants.CENTRE_512 +
+								plyr.getPhoto() + CricketUtil.PNG_EXTENSION + "\0", print_writers);
+						for(Team team : Teams) {
+							if(plyr.getTeamId() == team.getTeamId()) {
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_POTT_Aramco$Photo2$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_POTT_FLAG_PATH +
+										team.getTeamName4()+"\0", print_writers);
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_POTT_Aramco$Photo2$txt_StatHead*GEOM*TEXT SET  " + team.getTeamName1() + "\0", print_writers);
+							}
+						}
+					}
+					if(plyr.getPlayerId() == Potts.get(0).getPlayerId3()) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_POTT_Aramco$Photo3$txt_PlayerName*GEOM*TEXT SET  " + plyr.getTicker_name() + "\0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_POTT_Aramco$Photo3$img_Photo*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_PHOTOS_PATH + Constants.CENTRE_512 +
+								plyr.getPhoto() + CricketUtil.PNG_EXTENSION + "\0", print_writers);
+						for(Team team : Teams) {
+							if(plyr.getTeamId() == team.getTeamId()) {
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_POTT_Aramco$Photo3$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_POTT_FLAG_PATH +
+										team.getTeamName4()+"\0", print_writers);
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_POTT_Aramco$Photo3$txt_StatHead*GEOM*TEXT SET  " + team.getTeamName1() + "\0", print_writers);
+							}
+						}
+					}
+					if(plyr.getPlayerId() == Potts.get(0).getPlayerId4()) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_POTT_Aramco$Photo4$txt_PlayerName*GEOM*TEXT SET  " + plyr.getTicker_name() + "\0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_POTT_Aramco$Photo4$img_Photo*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_PHOTOS_PATH + Constants.CENTRE_512 +
+								plyr.getPhoto() + CricketUtil.PNG_EXTENSION + "\0", print_writers);
+						for(Team team : Teams) {
+							if(plyr.getTeamId() == team.getTeamId()) {
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_POTT_Aramco$Photo4$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_POTT_FLAG_PATH +
+										team.getTeamName4()+"\0", print_writers);
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_POTT_Aramco$Photo4$txt_StatHead*GEOM*TEXT SET  " + team.getTeamName1() + "\0", print_writers);
+							}
+						}
+					}
+					
+				}
+				break;
+			}
+			
 			break;
 		
 		case "m": //MATCH Ident

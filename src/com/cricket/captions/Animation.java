@@ -51,7 +51,7 @@ public class Animation
 			case "Control_F8": case "Control_d": case "Control_e": case "Control_F7": case "Control_F10":
 			case "Shift_K": case "Alt_F9": case "Shift_D": case "p": case "Control_b": case "Alt_m": case "Alt_n":
 			case "Alt_F10": case "Control_F1": case "Control_p": case "Shift_P": case "Shift_Q":
-			case "z": case "x": case "c": case "v": case "Alt_F11": case "Alt_z": case "Control_z": case "Control_x":
+			case "z": case "x": case "c": case "v": case "Alt_F11": case "Alt_z": case "Control_z": case "Control_x": case "r":
 				return Constants.FULL_FRAMER;
 			case "F5": case "F6": case "F7": case "F8": case "F9": case "F10": case "F11": case "Alt_F8":
 			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
@@ -117,6 +117,13 @@ public class Animation
 				TimeUnit.MILLISECONDS.sleep(500);
 				processAnimation(Constants.BACK, print_writers, "Milestone", "START");
 				processAnimation(Constants.BACK, print_writers, "MilestoneLoop", "START");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;
+			case "r":
+				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
+				TimeUnit.MILLISECONDS.sleep(500);
+				processAnimation(Constants.BACK, print_writers, "Anim_POTT", "START");
+				processAnimation(Constants.BACK, print_writers, "POTT_Loop", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			
@@ -412,6 +419,13 @@ public class Animation
 			case "Alt_m": case "Alt_n":
 				processAnimation(Constants.BACK, print_writers, "Milestone", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "MilestoneLoop", "CONTINUE");
+				TimeUnit.MILLISECONDS.sleep(1000);
+				AnimateIn("ArrowUp,", print_writers, config); // Restore infobar
+				this.whichGraphicOnScreen = "";
+				break;
+			case "r":
+				processAnimation(Constants.BACK, print_writers, "Anim_POTT", "CONTINUE");
+				processAnimation(Constants.BACK, print_writers, "POTT_Loop", "CONTINUE");
 				TimeUnit.MILLISECONDS.sleep(1000);
 				AnimateIn("ArrowUp,", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
@@ -883,6 +897,8 @@ public class Animation
 			processAnimation(Constants.BACK, print_writers, "SquadFlare_Loop", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Anim_SquadDataChange", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight", "SHOW 0.0");
+			processAnimation(Constants.BACK, print_writers, "Anim_POTT", "SHOW 0.0");
+			processAnimation(Constants.BACK, print_writers, "POTT_Loop", "SHOW 0.0");
 
 			processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
 			processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "SHOW 0.0");
@@ -1187,7 +1203,10 @@ public class Animation
 								previewCommand = previewCommand + " Anim_SquadDataChange 0.500";
 							}
 							break;
-						
+						case "r":
+							previewCommand = previewCommand + " Anim_POTT$In_Out$In 2.140";
+							break;
+							
 						}
 					}
 				} else if(whichside == 2) {

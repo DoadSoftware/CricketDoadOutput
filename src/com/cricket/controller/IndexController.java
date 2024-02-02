@@ -50,6 +50,8 @@ import com.cricket.model.InfobarStats;
 import com.cricket.model.Match;
 import com.cricket.model.MatchAllData;
 import com.cricket.model.NameSuper;
+import com.cricket.model.POTT;
+import com.cricket.model.Player;
 import com.cricket.model.Setup;
 import com.cricket.model.Staff;
 import com.cricket.model.Statistics;
@@ -96,6 +98,8 @@ public class IndexController
 	public static List<VariousText> session_variousText = new ArrayList<VariousText>();
 	public static List<Commentator> session_commentator = new ArrayList<Commentator>();
 	public static List<Staff> session_staff = new ArrayList<Staff>();
+	public static List<Player> session_players = new ArrayList<Player>();
+	public static List<POTT> session_pott = new ArrayList<POTT>();
 	
 	List<DuckWorthLewis> session_dls = new ArrayList<DuckWorthLewis>();
 	
@@ -541,6 +545,9 @@ public class IndexController
 			session_commentator = cricketService.getCommentator();
 			session_staff = cricketService.getStaff();
 			session_fixture =  CricketFunctions.processAllFixtures(cricketService);
+			session_players = cricketService.getAllPlayer();
+			session_pott = cricketService.getPott();
+			
 			if(new File(CricketUtil.CRICKET_DIRECTORY + "ParScores BB.html").exists()) {
 				session_dls = CricketFunctions.populateDuckWorthLewis(session_match);
 			}
@@ -548,7 +555,7 @@ public class IndexController
 			switch (typeOfUpdate) {
 			case "NEW":
 				this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), cricket_matches, session_name_super,
-					session_bugs,session_infoBarStats,session_fixture, session_team, session_ground,session_variousText, session_commentator, session_staff,
+					session_bugs,session_infoBarStats,session_fixture, session_team, session_ground,session_variousText, session_commentator, session_staff,session_players,session_pott,
 					new FullFramesGfx(),new LowerThirdGfx(), new InfobarGfx(), new BugsAndMiniGfx(), 1, "", "-",past_tournament_stats,session_dls);
 				this_caption.this_infobarGfx.previous_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixes("COMBINED_PAST_CURRENT_MATCH_DATA", 
 					cricket_matches, session_match, null).getTournament_sixes());
