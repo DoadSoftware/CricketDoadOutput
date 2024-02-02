@@ -672,10 +672,28 @@ public class InfobarGfx
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Bottom$Side_" 
 					+ WhichSide + "$Choose_Type*FUNCTION*Omo*vis_con SET 1 \0",print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Bottom$Side_" + WhichSide + "$Free_Text$txt_Text"
-					+ "*GEOM*TEXT SET " + "NEED " + CricketFunctions.getRequiredRuns(matchAllData) + " RUN" + CricketFunctions.Plural(
-						CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " FROM " + CricketFunctions.getRequiredBalls(matchAllData) 
-							+ " BALL" + CricketFunctions.Plural(CricketFunctions.getRequiredBalls(matchAllData)).toUpperCase() + "\0", print_writers);
+				
+				if(matchAllData.getSetup().getTargetType() != null) {
+					if(matchAllData.getSetup().getTargetType().equalsIgnoreCase(CricketUtil.DLS)) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Bottom$Side_" + WhichSide + "$Free_Text$txt_Text"
+							+ "*GEOM*TEXT SET " + "NEED " + CricketFunctions.getRequiredRuns(matchAllData) + " RUN" + CricketFunctions.Plural(
+								CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " FROM " + CricketFunctions.getRequiredBalls(matchAllData) 
+									+ " BALL" + CricketFunctions.Plural(CricketFunctions.getRequiredBalls(matchAllData)).toUpperCase() + " (" + 
+									 CricketUtil.DLS + ")" + "\0", print_writers);
+					}
+					else if(matchAllData.getSetup().getTargetType().equalsIgnoreCase(CricketUtil.VJD)) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Bottom$Side_" + WhichSide + "$Free_Text$txt_Text"
+							+ "*GEOM*TEXT SET " + "NEED " + CricketFunctions.getRequiredRuns(matchAllData) + " RUN" + CricketFunctions.Plural(
+								CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " FROM " + CricketFunctions.getRequiredBalls(matchAllData) 
+									+ " BALL" + CricketFunctions.Plural(CricketFunctions.getRequiredBalls(matchAllData)).toUpperCase() + " (" + 
+										CricketUtil.VJD + ")" + "\0", print_writers);
+					}
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Bottom$Side_" + WhichSide + "$Free_Text$txt_Text"
+						+ "*GEOM*TEXT SET " + "NEED " + CricketFunctions.getRequiredRuns(matchAllData) + " RUN" + CricketFunctions.Plural(
+							CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " FROM " + CricketFunctions.getRequiredBalls(matchAllData) 
+								+ " BALL" + CricketFunctions.Plural(CricketFunctions.getRequiredBalls(matchAllData)).toUpperCase() + "\0", print_writers);
+				}
 				break;
 			
 			case "GROUP":
