@@ -459,6 +459,9 @@ public class FullFramesGfx
 		Collections.sort(top_bowler_beststats, new CricketFunctions.PlayerBestStatsComparator());
 		
 		tournament = addPastDataToCurr.stream().filter(tourn -> tourn.getPlayerId() == player.getPlayerId()).findAny().orElse(null);
+		if(tournament == null) {
+			return "ThisSeries : Tournament Stats is Null";
+		}
 		
 		team = Teams.stream().filter(tm -> tm.getTeamId() == player.getTeamId()).findAny().orElse(null);
 		if(team == null) {
@@ -937,6 +940,14 @@ public class FullFramesGfx
 		case Constants.ICC_U19_2023:
 			
 			switch (whatToProcess) {
+			case "r":
+				CricketFunctions.DoadWriteCommandToSelectedViz(1,"-1 RENDERER*BACK_LAYER*TREE*$gfx_POTT_Aramco$tLogoMark"
+						+ "*ACTIVE SET 1 \0", print_writers);
+				if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
+					CricketFunctions.DoadWriteCommandToSelectedViz(2,"-1 RENDERER*BACK_LAYER*TREE*$gfx_POTT_Aramco$tLogoMark"
+							+ "*ACTIVE SET 0 \0", print_writers);
+				}
+				break;
 			case "F1": case "F2": case "F4": case "Control_F1": case "Control_F10":
 				ground = Grounds.stream().filter(grnd -> grnd.getFullname().contains(matchAllData.getSetup().getVenueName())).findAny().orElse(null);
 				if(ground == null) {
@@ -1136,8 +1147,10 @@ public class FullFramesGfx
 							"$Select_HeaderTop$Player_Name$txt_SecondName*ACTIVE SET 0 \0", print_writers);
 					
 				}
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
-						"$Change$Bottom*ACTIVE SET 0 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + "$Bottom$txt_Subheader"
+						+ "*GEOM*TEXT SET " + "" + "\0", print_writers);
+//				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
+//						"$Change$Bottom*ACTIVE SET 0 \0", print_writers);
 					
 				break;
 			
