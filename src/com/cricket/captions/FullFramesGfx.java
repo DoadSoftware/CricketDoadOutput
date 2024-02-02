@@ -2647,7 +2647,7 @@ public class FullFramesGfx
 				double lngth = 0;
 				String powerPlay = "";
 				System.out.println("manhattan size "+manhattan.size());
-				for (int j = 0; j <= manhattan.size(); j++) {
+				for (int j = 0; j < manhattan.size(); j++) {
 					System.out.println("Inn number : "+manhattan.get(j).getInningNumber() +" RUNS "+Integer.valueOf(manhattan.get(j).getOverTotalRuns()));
 					if(manhattan.get(j).getInningNumber() == WhichInning) {
 						if(Integer.valueOf(manhattan.get(j).getOverTotalRuns()) > maxRuns){
