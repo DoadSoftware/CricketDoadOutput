@@ -1,7 +1,9 @@
 package com.cricket.controller;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
@@ -100,6 +102,7 @@ public class IndexController
 	public static List<Staff> session_staff = new ArrayList<Staff>();
 	public static List<Player> session_players = new ArrayList<Player>();
 	public static List<POTT> session_pott = new ArrayList<POTT>();
+	public static List<String> session_teamChanges = new ArrayList<String>();
 	
 	List<DuckWorthLewis> session_dls = new ArrayList<DuckWorthLewis>();
 	
@@ -553,11 +556,27 @@ public class IndexController
 				session_dls = CricketFunctions.populateDuckWorthLewis(session_match);
 			}
 			
+			if(new File(CricketUtil.CRICKET_DIRECTORY + "TeamChanges.txt").exists()) {
+				String text_to_return = "";
+				try (BufferedReader br = new BufferedReader(new FileReader(CricketUtil.CRICKET_DIRECTORY + "TeamChanges.txt"))) {
+					while((text_to_return = br.readLine()) != null) {
+						if(text_to_return.contains("|")) {
+							
+						}else {
+							if(text_to_return.contains("H") || text_to_return.contains("A")) {
+								session_teamChanges.add(text_to_return);
+							}
+						}
+					}
+				}
+			}
+			
 			switch (typeOfUpdate) {
 			case "NEW":
 				this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), cricket_matches, session_name_super,
-					session_bugs,session_infoBarStats,session_fixture, session_team, session_ground,session_variousText, session_commentator, session_staff,session_players,session_pott,
-					new FullFramesGfx(),new LowerThirdGfx(), new InfobarGfx(), new BugsAndMiniGfx(), 1, "", "-",past_tournament_stats,session_dls);
+					session_bugs,session_infoBarStats,session_fixture, session_team, session_ground,session_variousText, session_commentator, session_staff, 
+					session_players, session_pott, session_teamChanges, new FullFramesGfx(),new LowerThirdGfx(), new InfobarGfx(), new BugsAndMiniGfx(), 1, "", "-", 
+					past_tournament_stats,session_dls);
 				this_caption.this_infobarGfx.previous_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixes("COMBINED_PAST_CURRENT_MATCH_DATA", 
 					cricket_matches, session_match, null).getTournament_sixes());
 				break;
@@ -597,6 +616,20 @@ public class IndexController
 				this_caption.this_fullFramesGfx.Grounds = session_ground;
 				this_caption.this_fullFramesGfx.tournaments = past_tournament_stats;
 				this_caption.this_fullFramesGfx.VariousText = session_variousText;
+				if(new File(CricketUtil.CRICKET_DIRECTORY + "TeamChanges.txt").exists()) {
+					String text_to_return = "";
+					try (BufferedReader br = new BufferedReader(new FileReader(CricketUtil.CRICKET_DIRECTORY + "TeamChanges.txt"))) {
+						while((text_to_return = br.readLine()) != null) {
+							if(text_to_return.contains("|")) {
+								
+							}else {
+								if(text_to_return.contains("H") || text_to_return.contains("A")) {
+									this_caption.this_fullFramesGfx.TeamChanges.add(text_to_return);
+								}
+							}
+						}
+					}
+				}
 				
 				break;
 			}

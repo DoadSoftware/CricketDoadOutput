@@ -56,6 +56,7 @@ public class FullFramesGfx
 	public List<VariousText> VariousText;
 	public List<Player> Players;
 	public List<POTT> Potts;
+	public List<String> TeamChanges;
 	
 	public List<Tournament> addPastDataToCurr = new ArrayList<Tournament>();
 	public List<BestStats> top_batsman_beststats,top_bowler_beststats = new ArrayList<BestStats>();
@@ -80,14 +81,15 @@ public class FullFramesGfx
 	public List<Statistics> statisticsList = new ArrayList<Statistics>();
 	public List<Tournament> tournament_stats = new ArrayList<Tournament>();
 	public List<MatchAllData> previous_match = new ArrayList<MatchAllData>();
+	public List<String> team_change = new ArrayList<String>();
 	
 	public FullFramesGfx() {
 		super();
 	}	
 	
-	public FullFramesGfx(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics,
-			List<StatsType> statsTypes, List<MatchAllData> tournament_matches,List<Fixture> fixTures, 
-			List<Team> Teams, List<Ground> Grounds,List<Tournament> tournaments, List<VariousText> VariousText, List<Player> players, List<POTT> pott) {
+	public FullFramesGfx(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics, List<StatsType> statsTypes, 
+			List<MatchAllData> tournament_matches,List<Fixture> fixTures, List<Team> Teams, List<Ground> Grounds,List<Tournament> tournaments, 
+			List<VariousText> VariousText, List<Player> players, List<POTT> pott, List<String> teamChanges) {
 		super();
 		this.print_writers = print_writers;
 		this.config = config;
@@ -101,6 +103,7 @@ public class FullFramesGfx
 		this.VariousText = VariousText;
 		this.Players = players;
 		this.Potts = pott;
+		this.TeamChanges = teamChanges;
 	}
 	
 	public String populatePOTT(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException, JsonMappingException, JsonProcessingException, InterruptedException 
@@ -119,7 +122,6 @@ public class FullFramesGfx
 		}
 	}
 
-	
 	public String populatePlayerProfile(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException, JsonMappingException, JsonProcessingException, InterruptedException 
 	{
 		
@@ -833,10 +835,20 @@ public class FullFramesGfx
 			PlayingXI = matchAllData.getSetup().getHomeSquad();
 			otherSquad = matchAllData.getSetup().getHomeOtherSquad();
 			team = matchAllData.getSetup().getHomeTeam();
+			for(int i=0;i<TeamChanges.size();i++) {
+				if(TeamChanges.get(i).contains("H")) {
+					team_change.add(TeamChanges.get(i));
+				}
+			}
 		}else {
 			PlayingXI = matchAllData.getSetup().getAwaySquad();
 			otherSquad = matchAllData.getSetup().getAwayOtherSquad();
 			team = matchAllData.getSetup().getAwayTeam();
+			for(int i=0;i<TeamChanges.size();i++) {
+				if(TeamChanges.get(i).contains("A")) {
+					team_change.add(TeamChanges.get(i));
+				}
+			}
 		}
 		
 		ground = Grounds.stream().filter(grnd -> grnd.getFullname().contains(matchAllData.getSetup().getVenueName())).findAny().orElse(null);
@@ -851,16 +863,6 @@ public class FullFramesGfx
 			if(tournament_stats == null) {
 				return "populateSquad : Tournament Stats is Null";
 			}
-			
-//			switch (dataType) {
-//			case "runs": 
-//				Collections.sort(tournament_stats,new CricketFunctions.BatsmenMostRunComparator());
-//				break;
-//			case "wickets": 
-//				Collections.sort(tournament_stats,new CricketFunctions.BowlerWicketsComparator());
-//				break;
-//			}
-			
 		}
 		
 		status = PopulateFfHeader(WhichSide, whatToProcess, matchAllData, WhichInning);
@@ -3354,10 +3356,12 @@ public class FullFramesGfx
 							containerName = "$Bottom";
 						}
 						
-//						if(PlayingXI.get(i-1).getSquad().equalsIgnoreCase("IN_PLAYINGXI")){
-//							System.out.println("NAME : " + PlayingXI.get(i-1).getTicker_name() + " IN YES");
-//						}else {
-//							System.out.println("NAME : " + PlayingXI.get(i-1).getTicker_name() + " NO CHANGE");
+//						for(int r=0;r<team_change.size();r++) {
+//							if(team_change.get(r).contains("IN")) {
+//								if(Integer.valueOf(team_change.get(r).split(" ")[1]) == PlayingXI.get(i-1).getPlayerId()) {
+//									System.out.println("NAME : " + PlayingXI.get(i-1).getTicker_name());
+//								}
+//							}
 //						}
 						
 						if(PlayingXI.get(i-1).getRole().equalsIgnoreCase(CricketUtil.BATSMAN) || PlayingXI.get(i-1).getRole().equalsIgnoreCase("BAT/KEEPER")) {
@@ -3455,10 +3459,12 @@ public class FullFramesGfx
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Squad$AllGraphics" + containerName + "$Photo_" + rowId + 
 								"$Name$Select_Dropped*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
 						
-//						if(otherSquad.get(j-1).getSquad().equalsIgnoreCase("OUT_PLAYINGXI")){
-//							System.out.println("NAME : " + PlayingXI.get(j-1).getTicker_name() + " OUT YES");
-//						}else {
-//							System.out.println("NAME : " + PlayingXI.get(j-1).getTicker_name() + " NO CHANGE");
+//						for(int r=0;r<team_change.size();r++) {
+//							if(team_change.get(r).contains("OUT")) {
+//								if(Integer.valueOf(team_change.get(r).split(" ")[1]) == otherSquad.get(j-1).getPlayerId()) {
+//									System.out.println("NAME : " + otherSquad.get(j-1).getTicker_name());
+//								}
+//							}
 //						}
 						
 						if(otherSquad.get(j-1).getRole().equalsIgnoreCase(CricketUtil.BATSMAN) || otherSquad.get(j-1).getRole().equalsIgnoreCase("BAT/KEEPER")) {

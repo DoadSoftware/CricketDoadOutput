@@ -705,7 +705,7 @@ public class LowerThirdGfx
 			return "populateEquation: current inning is 1";
 		}
 		
-		String line_1 = "";
+		String line_1 = "",summary="";
 		
 		if(CricketFunctions.getRequiredBalls(matchAllData) < 100) {
 			line_1 = "FROM " + CricketFunctions.getRequiredBalls(matchAllData) + " BALL" + CricketFunctions.Plural(CricketFunctions.getRequiredBalls(matchAllData)).toUpperCase();
@@ -727,8 +727,13 @@ public class LowerThirdGfx
 			}
 		}
 		
-		String summary = inning.getBatting_team().getTeamName1() + " NEED " + CricketFunctions.getRequiredRuns(matchAllData) + 
-				" MORE " + "RUN" + CricketFunctions.Plural(CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " TO WIN ";
+		summary = inning.getBatting_team().getTeamName1() + " NEED " + CricketFunctions.getRequiredRuns(matchAllData);
+		
+		if(CricketFunctions.getRequiredRuns(matchAllData) <= 1) {
+			summary = summary + " RUN" + CricketFunctions.Plural(CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " TO WIN ";
+		}else {
+			summary = summary + " MORE RUN" + CricketFunctions.Plural(CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " TO WIN ";
+		}
 		
 		line_1 = line_1 + " AT " + CricketFunctions.generateRunRate(CricketFunctions.getRequiredRuns(matchAllData), 0, 
 				CricketFunctions.getRequiredBalls(matchAllData), 2,matchAllData) + " RUNS PER OVER ";
