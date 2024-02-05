@@ -606,6 +606,8 @@ public class IndexController
 				this_caption.this_lowerThirdGfx.dls = session_dls;
 				this_caption.this_lowerThirdGfx.Staff = session_staff;
 				this_caption.this_lowerThirdGfx.VariousText = session_variousText;
+				this_caption.this_lowerThirdGfx.Potts = session_pott;
+				
 				
 				//FullFrames
 				this_caption.this_fullFramesGfx.statistics = session_statistics;
@@ -616,6 +618,7 @@ public class IndexController
 				this_caption.this_fullFramesGfx.Grounds = session_ground;
 				this_caption.this_fullFramesGfx.tournaments = past_tournament_stats;
 				this_caption.this_fullFramesGfx.VariousText = session_variousText;
+				this_caption.this_fullFramesGfx.Potts = session_pott;
 				if(new File(CricketUtil.CRICKET_DIRECTORY + "TeamChanges.txt").exists()) {
 					String text_to_return = "";
 					try (BufferedReader br = new BufferedReader(new FileReader(CricketUtil.CRICKET_DIRECTORY + "TeamChanges.txt"))) {
