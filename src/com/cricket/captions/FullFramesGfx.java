@@ -4119,9 +4119,14 @@ public class FullFramesGfx
 												tournament.getNot_out(), tournament.getRuns(), 2, "-") + "\0", print_writers);
 								break;
 							case "STRIKERATE":
-								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
-										+ "$TeamSingle$" + i + "$fig_2*GEOM*TEXT SET " + CricketFunctions.generateStrikeRate(tournament.getRuns(), 
-												tournament.getBallsFaced(), 1) + "\0", print_writers);
+								if(tournament.getBallsFaced()<=0) {
+									CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+											+ "$TeamSingle$" + i + "$fig_2*GEOM*TEXT SET " + "-" + "\0", print_writers);
+								}else {
+									CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+											+ "$TeamSingle$" + i + "$fig_2*GEOM*TEXT SET " + CricketFunctions.generateStrikeRate(tournament.getRuns(), 
+													tournament.getBallsFaced(), 1) + "\0", print_writers);
+								}
 								break;
 							case "WICKETS":
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
