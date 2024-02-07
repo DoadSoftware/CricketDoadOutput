@@ -157,7 +157,8 @@ public class IndexController
 			@RequestParam(value = "vizTertiaryIPAddress", required = false, defaultValue = "") String vizTertiaryIPAddress,
 			@RequestParam(value = "vizTertiaryPortNumber", required = false, defaultValue = "") int vizTertiaryPortNumber,
 			@RequestParam(value = "vizTertiaryScene", required = false, defaultValue = "") String vizTertiaryScene,
-			@RequestParam(value = "vizTertiaryLanguage", required = false, defaultValue = "") String vizTertiaryLanguage) 
+			@RequestParam(value = "vizTertiaryLanguage", required = false, defaultValue = "") String vizTertiaryLanguage,
+			@RequestParam(value = "previewOnOrOff", required = false, defaultValue = "") String previewOnOrOff) 
 				throws StreamWriteException, DatabindException, IllegalAccessException, InvocationTargetException, 
 				JAXBException, IOException, URISyntaxException, ParseException, InterruptedException, CloneNotSupportedException 
 	{
@@ -178,7 +179,7 @@ public class IndexController
 			
 			session_configuration = new Configuration(selectedMatch, select_broadcaster, select_second_broadcaster,
 				vizIPAddress, vizPortNumber, vizLanguage, qtIPAddress, qtPortNumber, primaryVariousOptions, vizSecondaryIPAddress,
-				vizSecondaryPortNumber, vizSecondaryLanguage);
+				vizSecondaryPortNumber, vizSecondaryLanguage, previewOnOrOff);
 			
 			JAXBContext.newInstance(Configuration.class).createMarshaller().marshal(session_configuration, 
 					new File(CricketUtil.CRICKET_SERVER_DIRECTORY + CricketUtil.CONFIGURATIONS_DIRECTORY + configuration_file_name));

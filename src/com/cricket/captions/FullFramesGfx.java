@@ -3364,13 +3364,8 @@ public class FullFramesGfx
 							containerName = "$Bottom";
 						}
 						
-//						for(int r=0;r<team_change.size();r++) {
-//							if(team_change.get(r).contains("IN")) {
-//								if(Integer.valueOf(team_change.get(r).split(" ")[1]) == PlayingXI.get(i-1).getPlayerId()) {
-//									System.out.println("NAME : " + PlayingXI.get(i-1).getTicker_name());
-//								}
-//							}
-//						}
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Squad$AllGraphics" + containerName + "$Photo_" + rowId + 
+								"$Select_In_Out*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
 						
 						if(PlayingXI.get(i-1).getRole().equalsIgnoreCase(CricketUtil.BATSMAN) || PlayingXI.get(i-1).getRole().equalsIgnoreCase("BAT/KEEPER")) {
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Squad$AllGraphics" + containerName + "$Photo_" + rowId + 
@@ -3435,6 +3430,14 @@ public class FullFramesGfx
 								"$StatGrp$txt_StatValue*GEOM*TEXT SET " + "-" + "\0", print_writers);
 						
 						if(!WhichType.equalsIgnoreCase("role")) {
+							for(int r=0;r<team_change.size();r++) {
+								if(team_change.get(r).contains("IN")) {
+									if(Integer.valueOf(team_change.get(r).split(" ")[1]) == PlayingXI.get(i-1).getPlayerId()) {
+										CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Squad$AllGraphics" + containerName + "$Photo_" + rowId + 
+												"$Select_In_Out*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+									}
+								}
+							}
 							for(Tournament ts : tournament_stats) {
 								if(ts.getPlayerId() == PlayingXI.get(i-1).getPlayerId()) {
 									if(WhichType.equalsIgnoreCase("runs")) {
@@ -3467,13 +3470,8 @@ public class FullFramesGfx
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Squad$AllGraphics" + containerName + "$Photo_" + rowId + 
 								"$Name$Select_Dropped*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
 						
-//						for(int r=0;r<team_change.size();r++) {
-//							if(team_change.get(r).contains("OUT")) {
-//								if(Integer.valueOf(team_change.get(r).split(" ")[1]) == otherSquad.get(j-1).getPlayerId()) {
-//									System.out.println("NAME : " + otherSquad.get(j-1).getTicker_name());
-//								}
-//							}
-//						}
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Squad$AllGraphics" + containerName + "$Photo_" + rowId + 
+								"$Select_In_Out*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
 						
 						if(otherSquad.get(j-1).getRole().equalsIgnoreCase(CricketUtil.BATSMAN) || otherSquad.get(j-1).getRole().equalsIgnoreCase("BAT/KEEPER")) {
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Squad$AllGraphics" + containerName + "$Photo_" + rowId + 
@@ -3513,6 +3511,14 @@ public class FullFramesGfx
 								"$StatGrp$txt_StatValue*GEOM*TEXT SET " + "-" + "\0", print_writers);
 						
 						if(!WhichType.equalsIgnoreCase("role")) {
+							for(int r=0;r<team_change.size();r++) {
+								if(team_change.get(r).contains("OUT")) {
+									if(Integer.valueOf(team_change.get(r).split(" ")[1]) == otherSquad.get(j-1).getPlayerId()) {
+										CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Squad$AllGraphics" + containerName + "$Photo_" + rowId + 
+												"$Select_In_Out*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
+									}
+								}
+							}
 							for(Tournament ts : tournament_stats) {
 								if(ts.getPlayerId() == otherSquad.get(j-1).getPlayerId()) {
 									if(WhichType.equalsIgnoreCase("runs")) {

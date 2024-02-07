@@ -78,6 +78,17 @@
 			      </select>
 			    </div>
 			  </div>
+			  <div class="form-group row row-bottom-margin ml-2" style="margin-bottom:5px;">
+			  	<label for="previewOnOrOff" class="col-sm-4 col-form-label text-left">PREVIEW</label>	
+			  	<div class="col-sm-6 col-md-6">
+				  	<select id="previewOnOrOff" name="previewOnOrOff" 
+				      		class="browser-default custom-select custom-select-sm">
+			          <option value="WITH_PREVIEW">PREVIEW</option>
+			          <option value="WITHOUT_PREVIEW">NO PREVIEW</option>
+				     </select>
+			  	</div>	
+			  </div>
+			  
 			<div class="row">
 			<table class="table table-bordered table-responsive">
 			  <tbody>

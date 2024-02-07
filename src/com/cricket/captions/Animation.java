@@ -1135,6 +1135,8 @@ public class Animation
 	public void processFullFramesPreview(String whatToProcess, List<PrintWriter> print_writer, int whichside, 
 			Configuration config,String whichGraphicOnScreen) 
 		{
+		
+		if(config.getPreview().equalsIgnoreCase("WITH_PREVIEW")) {
 			String previewCommand = "";
 			switch (config.getBroadcaster().toUpperCase()) {
 			case Constants.ICC_U19_2023:
@@ -1144,7 +1146,7 @@ public class Animation
 						case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Shift_F11": case "Control_F11": case "m": case "Control_m": case "p": case "Control_p":
 						case "Control_F8": case "Control_d": case "Control_e": case "Control_F7": case "Control_F10": case "Alt_F9": case "Shift_K":
 						case "z": case "x": case "c": case "v": case "Alt_F10": case "Shift_P": case "Shift_Q": case "Alt_F11": case "Control_z": case "Control_x":
-							previewCommand = "Anim_FullFrames$In_Out$Essentials$In 2.140 Anim_FullFrames$In_Out$Header$In 1.800 "
+							previewCommand = "Anim_Infobar$Push 0.500 Anim_FullFrames$In_Out$Essentials$In 2.140 Anim_FullFrames$In_Out$Header$In 1.800 "
 								+ "Anim_FullFrames$In_Out$Footer$In 1.800";
 							break;
 						}
@@ -1320,111 +1322,118 @@ public class Animation
 				break;
 			}
 		}
+		
+	}
 
 	public void processL3Preview(String whatToProcess, List<PrintWriter> print_writer, int whichside, Configuration config)
 	{
-		String previewCommands = "";
-		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023:
-			if(whichside == 1) {
-				switch(whatToProcess.split(",")[0]) {
-				case "F5": case "F6": case "F7": case "F9": case "F11": case "Control_F2":
-				case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
-				case "Shift_F3": case "s": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":
-				case "Control_g": case "Control_h": case "Control_p": case "Control_F6": case "Shift_F6": case "Control_s":
-				case "Alt_d": case "Control_f": case "l": case "n": case "a": case "Alt_F1": case "Alt_F2":case "Shift_E":
-					previewCommands = "Anim_Infobar$Small 1.00 Anim_LtChange$HeaderDynamic 1.200 anim_Lower_Third$Essentials 2.200 anim_Lower_Third$Essentials$In 1.400 "
-						+ "anim_Lower_Third$Row 2.160 anim_Lower_Third$Row$In 0.620";
-					break;
-				 case "Alt_F8": case "F8": case "F10": case "j": case "Alt_a": case "Alt_s": // Name super L3rd
-					previewCommands = "Anim_Infobar$Push 0.500 anim_NameSupers$In 1.400";
-					break;
-				 case "Alt_q":
-					 previewCommands = "Anim_Infobar$Push 0.500 anim_POTT$In 1.400";
-					break;
-				case "q": case "Control_q":// Boundary L3rd
-					previewCommands = "Anim_Infobar$Push 0.500 anim_Boundary_LT$Essentials 2.200 anim_Boundary_LT$Essentials$In 1.400 "
-						+ "anim_Boundary_LT$Row 2.160 anim_Boundary_LT$Row$In 0.620";
-					break;
+		if(config.getPreview().equalsIgnoreCase("WITH_PREVIEW")) {
+			String previewCommands = "";
+			switch (config.getBroadcaster().toUpperCase()) {
+			case Constants.ICC_U19_2023:
+				if(whichside == 1) {
+					switch(whatToProcess.split(",")[0]) {
+					case "F5": case "F6": case "F7": case "F9": case "F11": case "Control_F2":
+					case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
+					case "Shift_F3": case "s": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":
+					case "Control_g": case "Control_h": case "Control_p": case "Control_F6": case "Shift_F6": case "Control_s":
+					case "Alt_d": case "Control_f": case "l": case "n": case "a": case "Alt_F1": case "Alt_F2":case "Shift_E":
+						previewCommands = "Anim_Infobar$Push 0.500 Anim_LtChange$HeaderDynamic 1.200 anim_Lower_Third$Essentials 2.200 anim_Lower_Third$Essentials$In 1.400 "
+							+ "anim_Lower_Third$Row 2.160 anim_Lower_Third$Row$In 0.620";
+						break;
+					 case "Alt_F8": case "F8": case "F10": case "j": case "Alt_a": case "Alt_s": // Name super L3rd
+						previewCommands = "Anim_Infobar$Push 0.500 anim_NameSupers$In 1.400";
+						break;
+					 case "Alt_q":
+						 previewCommands = "Anim_Infobar$Push 0.500 anim_POTT$In 1.400";
+						break;
+					case "q": case "Control_q":// Boundary L3rd
+						previewCommands = "Anim_Infobar$Push 0.500 anim_Boundary_LT$Essentials 2.200 anim_Boundary_LT$Essentials$In 1.400 "
+							+ "anim_Boundary_LT$Row 2.160 anim_Boundary_LT$Row$In 0.620";
+						break;
+					}
+				}else if(whichside == 2) {
+					switch (whatToProcess.split(",")[0]) {
+					case "F5": case "F6": case "F7": case "F9": case "F11": case "l": case "n": case "a": case "Control_F2":
+					case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k": case "Alt_F1": case "Alt_F2":
+					case "Shift_F3": case "s": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":case "Shift_E":
+					case "Control_g": case "Control_h": case "Control_p": case "Control_F6": case "Shift_F6": case "Control_s": case "Control_f":
+						previewCommands = previewCommands + " Anim_LtChange$Flag 1.300 Anim_LtChange$Sublines 1.240 "
+							+ "Anim_LtChange$Topline 0.900 Anim_LtChange$Lt_Position 0.940 Anim_LtChange$HeaderDynamic 1.180 "
+							+ "Anim_LtChange$HeaderDynamic$Change_In 1.180 Anim_LtChange$HeaderDynamic$Change_Out 0.560";
+						break;
+					 case "Alt_F8": case "F8": case "F10": case "j": case "Alt_a": case "Alt_s":
+						previewCommands = previewCommands + " Anim_NameSuperChange$Flag 1.300 Anim_NameSuperChange$Sublines 0.700 "
+							+ "Anim_NameSuperChange$Topline 0.900 Anim_NameSuperChange$HeaderDynamic 1.220 "
+							+ "Anim_NameSuperChange$HeaderDynamic$Change_In 1.220 Anim_NameSuperChange$HeaderDynamic$Change_Out 0.600";
+						break;
+					case "q": case "Control_q":
+						previewCommands = previewCommands + " Anim_Boundary_LtChange$Flag 1.300 Anim_Boundary_LtChange$Sublines 1.200 "
+							+ "Anim_Boundary_LtChange$Topline 0.900 Anim_Boundary_LtChange$Lt_Position 0.940 Anim_Boundary_LtChange$HeaderDynamic 1.223 "
+							+ "Anim_Boundary_LtChange$HeaderDynamic$Change_In 1.223 Anim_Boundary_LtChange$HeaderDynamic$Change_Out 0.600";
+						break;
+					}
 				}
-			}else if(whichside == 2) {
-				switch (whatToProcess.split(",")[0]) {
-				case "F5": case "F6": case "F7": case "F9": case "F11": case "l": case "n": case "a": case "Control_F2":
-				case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k": case "Alt_F1": case "Alt_F2":
-				case "Shift_F3": case "s": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":case "Shift_E":
-				case "Control_g": case "Control_h": case "Control_p": case "Control_F6": case "Shift_F6": case "Control_s": case "Control_f":
-					previewCommands = previewCommands + " Anim_LtChange$Flag 1.300 Anim_LtChange$Sublines 1.240 "
-						+ "Anim_LtChange$Topline 0.900 Anim_LtChange$Lt_Position 0.940 Anim_LtChange$HeaderDynamic 1.180 "
-						+ "Anim_LtChange$HeaderDynamic$Change_In 1.180 Anim_LtChange$HeaderDynamic$Change_Out 0.560";
-					break;
-				 case "Alt_F8": case "F8": case "F10": case "j": case "Alt_a": case "Alt_s":
-					previewCommands = previewCommands + " Anim_NameSuperChange$Flag 1.300 Anim_NameSuperChange$Sublines 0.700 "
-						+ "Anim_NameSuperChange$Topline 0.900 Anim_NameSuperChange$HeaderDynamic 1.220 "
-						+ "Anim_NameSuperChange$HeaderDynamic$Change_In 1.220 Anim_NameSuperChange$HeaderDynamic$Change_Out 0.600";
-					break;
-				case "q": case "Control_q":
-					previewCommands = previewCommands + " Anim_Boundary_LtChange$Flag 1.300 Anim_Boundary_LtChange$Sublines 1.200 "
-						+ "Anim_Boundary_LtChange$Topline 0.900 Anim_Boundary_LtChange$Lt_Position 0.940 Anim_Boundary_LtChange$HeaderDynamic 1.223 "
-						+ "Anim_Boundary_LtChange$HeaderDynamic$Change_In 1.223 Anim_Boundary_LtChange$HeaderDynamic$Change_Out 0.600";
-					break;
-				}
+			    CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/Overlays "
+			    	+ "C:/Temp/Preview.png " + previewCommands + " \0", print_writer);
+				break;
 			}
-		    CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/Overlays "
-		    	+ "C:/Temp/Preview.png " + previewCommands + " \0", print_writer);
-			break;
 		}
-		
 	}
 
 	public void processBugsPreview(String whatToProcess, List<PrintWriter> print_writer, int whichside, 
 		Configuration config,String whichGraphicOnScreen) 
 	{
-		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023:
-			if(whatToProcess.contains(",")) {
-				switch(whatToProcess.split(",")[0]) {
-				case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Control_y": case "h": case "Shift_F4":
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.png Anim_Bugs 2.200 "
-							+ "Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In 2.200 Anim_Bugs$Essentials$In$Anim_Bugs 2.200 "
-							+ "Anim_Bugs$Essentials$In$Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In$Anim_Bugs$Essentials$Out 2.200 \0", print_writer);
-					break;	
-				 case "Alt_p": case "o": case "t":
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-						+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Center_Bug$In 0.800 \0", print_writer);
-					break;
-				}
-				if(whichside == 2) {
+		if(config.getPreview().equalsIgnoreCase("WITH_PREVIEW")) {
+			switch (config.getBroadcaster().toUpperCase()) {
+			case Constants.ICC_U19_2023:
+				if(whatToProcess.contains(",")) {
 					switch(whatToProcess.split(",")[0]) {
 					case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Control_y": case "h": case "Shift_F4":
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.png Anim_Bugs 2.200 "
+								+ "Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In 2.200 Anim_Bugs$Essentials$In$Anim_Bugs 2.200 "
+								+ "Anim_Bugs$Essentials$In$Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In$Anim_Bugs$Essentials$Out 2.200 \0", print_writer);
+						break;	
+					 case "Alt_p": case "o": case "t":
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-							+ "/Default/Overlays C:/Temp/Preview.png Anim_BugsChange 1.360 \0", print_writer);
+							+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Center_Bug$In 0.800 \0", print_writer);
 						break;
 					}
+					if(whichside == 2) {
+						switch(whatToProcess.split(",")[0]) {
+						case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Control_y": case "h": case "Shift_F4":
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+								+ "/Default/Overlays C:/Temp/Preview.png Anim_BugsChange 1.360 \0", print_writer);
+							break;
+						}
+					}
 				}
+				break;
 			}
-			break;
 		}
 	}
 	public void processMiniPreview(String whatToProcess, List<PrintWriter> print_writer, int whichside, Configuration config, String whichGraphicOnScreen) {
-		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023:
-			if(whatToProcess.contains(",")) {
-				switch(whatToProcess.split(",")[0]) {
-				case "Shift_F1": case "Shift_F2":
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-							+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$Small 1.00 Anim_Mini$In_Out 1.260 Anim_Mini$In_Out$In 1.240 \0", print_writer);
-					break;
-				}
-				if(whichside == 2) {
+		if(config.getPreview().equalsIgnoreCase("WITH_PREVIEW")) {
+			switch (config.getBroadcaster().toUpperCase()) {
+			case Constants.ICC_U19_2023:
+				if(whatToProcess.contains(",")) {
 					switch(whatToProcess.split(",")[0]) {
 					case "Shift_F1": case "Shift_F2":
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-								+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_MiniChange 1.860 Anim_MiniChange$Change_In 1.860 \0", print_writer);
+								+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$Push 0.500 Anim_Mini$In_Out 1.260 Anim_Mini$In_Out$In 1.240 \0", print_writer);
 						break;
 					}
+					if(whichside == 2) {
+						switch(whatToProcess.split(",")[0]) {
+						case "Shift_F1": case "Shift_F2":
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+									+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_MiniChange 1.860 Anim_MiniChange$Change_In 1.860 \0", print_writer);
+							break;
+						}
+					}
 				}
+				break;
 			}
-			break;
 		}
 	}
 	public String getWhichGraphicOnScreen() {
