@@ -622,6 +622,7 @@ public class IndexController
 				this_caption.this_fullFramesGfx.Potts = session_pott;
 				if(new File(CricketUtil.CRICKET_DIRECTORY + "TeamChanges.txt").exists()) {
 					String text_to_return = "";
+					this_caption.this_fullFramesGfx.TeamChanges.clear();
 					try (BufferedReader br = new BufferedReader(new FileReader(CricketUtil.CRICKET_DIRECTORY + "TeamChanges.txt"))) {
 						while((text_to_return = br.readLine()) != null) {
 							if(text_to_return.contains("|")) {

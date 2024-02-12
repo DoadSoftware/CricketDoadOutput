@@ -831,6 +831,8 @@ public class FullFramesGfx
 	}
 	public String populateSquad(int WhichSide, String whatToProcess,int teamId, MatchAllData matchAllData, int WhichInning) throws ParseException, InterruptedException, IOException
 	{
+		team_change.clear();
+		
 		if(teamId == matchAllData.getSetup().getHomeTeamId()) {
 			PlayingXI = matchAllData.getSetup().getHomeSquad();
 			otherSquad = matchAllData.getSetup().getHomeOtherSquad();
@@ -1356,7 +1358,7 @@ public class FullFramesGfx
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
 							"$Change$Bottom$Select_SubHeaderType*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
-							"$Change$Bottom$ICC_Wordmark*GEOM*TEXT SET " + "" + "\0", print_writers);
+							"$Change$Bottom$ICC_Wordmark*GEOM*TEXT SET " + "ICC U19 MEN'S CWC 2024" + "\0", print_writers);
 					
 					break;
 					
@@ -2364,8 +2366,10 @@ public class FullFramesGfx
 			case Constants.ICC_U19_2023:
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
 						"$Select_GraphicsType*FUNCTION*Omo*vis_con SET 14 \0", print_writers);
+//				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
+//						"$Leader_Board$SubTitle$txt_SubTitle*GEOM*TEXT SET " + "ICC U19 MEN'S CWC 2024" + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
-						"$Leader_Board$SubTitle$txt_SubTitle*GEOM*TEXT SET " + "ICC U19 MEN'S CWC 2024" + "\0", print_writers);
+						"$Leader_Board$SubTitle$txt_SubTitle*GEOM*TEXT SET " + "" + "\0", print_writers);
 				
 				if(whatToProcess.equalsIgnoreCase("Control_z")) {
 					rowId = 0;

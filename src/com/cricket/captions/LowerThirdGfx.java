@@ -4974,13 +4974,13 @@ public class LowerThirdGfx
 							TopStats[i] = "DNP";
 						}
 					}else {
-						BottomTitle[i] = griff.get(i).getOpponentTeam();
+						BottomTitle[i-4] = griff.get(i).getOpponentTeam();
 						if(griff.get(i).getStatus().equalsIgnoreCase("DNB")) {
-							BottomStats[i] = "DNB";
+							BottomStats[i-4] = "DNB";
 						}else if(griff.get(i).getStatus().equalsIgnoreCase("BALL")) {
-							BottomStats[i] = griff.get(i).getWickets() + "-" + griff.get(i).getRunsConceded() + "," + griff.get(i).getOversBowled();
+							BottomStats[i-4] = griff.get(i).getWickets() + "-" + griff.get(i).getRunsConceded() + "," + griff.get(i).getOversBowled();
 						}else {
-							BottomStats[i] = "DNP";
+							BottomStats[i-4] = "DNP";
 						}
 					}
 				}
