@@ -255,7 +255,10 @@ public class Caption
 				break;
 			case "Shift_E": //Extras
 				status = this_lowerThirdGfx.populateL3rdExtras(whatToProcess, whichSide, matchAllData);
-				break;	
+				break;
+			case "Shift_F": //wicket sequencing
+				status = this_bugsAndMiniGfx.populateWicketSequencing(whatToProcess, matchAllData, whichSide);
+				break;
 			case "f": // Bug Batsman Score
 				status = this_bugsAndMiniGfx.populateBatScore(whatToProcess, matchAllData, whichSide);
 				break;

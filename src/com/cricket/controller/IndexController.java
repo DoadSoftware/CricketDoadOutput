@@ -104,6 +104,8 @@ public class IndexController
 	public static List<POTT> session_pott = new ArrayList<POTT>();
 	public static List<String> session_teamChanges = new ArrayList<String>();
 	
+	BugsAndMiniGfx this_bugs_mini = new BugsAndMiniGfx();
+	
 	List<DuckWorthLewis> session_dls = new ArrayList<DuckWorthLewis>();
 	
 	@RequestMapping(value = {"/","/initialise"}, method={RequestMethod.GET,RequestMethod.POST}) 
@@ -426,6 +428,7 @@ public class IndexController
 				this_animation.CutBack(valueToProcess, print_writers, session_configuration);
 				break;
 			default:
+				System.out.println("which graphic "+this_animation.whichGraphicOnScreen);
 				if(this_animation.whichGraphicOnScreen.isEmpty()) {
 					this_animation.AnimateIn(valueToProcess, print_writers, session_configuration);
 				} else { // Change on

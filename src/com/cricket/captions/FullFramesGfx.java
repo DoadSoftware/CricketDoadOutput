@@ -974,9 +974,18 @@ public class FullFramesGfx
 //				System.out.println(matchAllData.getSetup().getHomeTeam().getTeamGroup());
 //				System.out.println(matchAllData.getSetup().getAwayTeam().getTeamGroup());
 				
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + "$Bottom$txt_Subheader"
-						+ "*GEOM*TEXT SET " + matchAllData.getSetup().getMatchIdent() + " - " + ground.getCity() + "\0", print_writers);
-				
+				if(matchAllData.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.TEST)) {
+					if(WhichInning == 1 || WhichInning == 2) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + "$Bottom$txt_Subheader"
+								+ "*GEOM*TEXT SET " + "1st INNINGS" + "\0", print_writers);
+					}else if(WhichInning == 3 || WhichInning == 4) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + "$Bottom$txt_Subheader"
+								+ "*GEOM*TEXT SET " + "2nd INNINGS" + "\0", print_writers);
+					}
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + "$Bottom$txt_Subheader"
+							+ "*GEOM*TEXT SET " + matchAllData.getSetup().getMatchIdent() + " - " + ground.getCity() + "\0", print_writers);
+				}
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
 					"$Change$Bottom*ACTIVE SET 1 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 

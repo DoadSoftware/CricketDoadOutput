@@ -1,5 +1,6 @@
 var session_match, session_caption, session_animation;
 var selected_options = [];
+let count = 0;
 function processWaitingButtonSpinner(whatToProcess) 
 {
 	switch (whatToProcess) {
@@ -119,7 +120,7 @@ function processUserSelection(whichInput)
 		document.getElementById('select_graphic_options_div').style.display = 'none';
 		$("#captions_div").show();
 		break;
-	case 'populate_btn':
+	case 'populate_btn': 
 		//processCricketProcedures("POPULATE-GRAPHICS", $('#which_keypress').val() + ',' + selected_options.toString());
 		if($(key_press_hidden_input)) {
 			processCricketProcedures("POPULATE-GRAPHICS", $('#key_press_hidden_input').val() + ',' + selected_options.toString());
@@ -175,6 +176,11 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				processCricketProcedures('ANIMATE-OUT-GRAPHICS');
 			}
 			break;
+		case '=':
+			if(confirm('Do you want to reset wicket sequence?') == true){
+				count = 0;
+			}
+		break;
 			
 		case 'Alt_-':
 			
@@ -198,14 +204,22 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'F8': case 'F9':  case 's': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6': case 'Control_y':
 			case 'Shift_K': case 'Shift_O': case 'g': case 'f': case 'Control_g': case 'Control_s': case 'Control_f': //case 'Alt_F9':
 			case 'Control_h': case 'Alt_F12': case 'l': case 'p': case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_F10': case 'Alt_d':
-			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2': case 'Shift_E': case 'Shift_P': case 'Shift_Q': case 'Alt_z': 
+			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2': case 'Shift_E': case 'Shift_P': case 'Shift_Q': case 'Alt_z': case 'Shift_F':
 				addItemsToList(dataToProcess,null);
 				break;
 			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'Control_F1': case 'Control_a':
 			case 'Alt_k':  case 'Shift_F3': case 'd': case 'e': case 'Control_F6': //case 'Control_F7': 
 			case 'Control_k': case 'Control_F10': case 'Control_F3': case 'n': case 'a': case 't': case 'h':
 			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q': case 'Control_b': case 'o': case 'Control_F2': case 'b':
-			case 'Alt_F11': case 'r':
+			case 'Alt_F11': case 'r': //case 'Shift_F':
+				/*switch(dataToProcess){
+				case 'Shift_F':
+					count++;
+					dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value + ',' + count;
+				break;
+				default:
+					dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
+				}*/
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 				break;
@@ -285,7 +299,7 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 							processCricketProcedures(whatToProcess.replace('POPULATE-', 'ANIMATE-IN-'),dataToProcess);
 							//alert(dataToProcess);
 							if(dataToProcess.split(',')[0] != 'Control_F9' && 
-							dataToProcess.split(',')[0] != 'Control_F5'){
+							dataToProcess.split(',')[0] != 'Control_F5' && dataToProcess.split(',')[0] != 'Shift_F'){
 								$("#select_graphic_options_div").empty();
 								document.getElementById('select_graphic_options_div').style.display = 'none';
 								$("#captions_div").show();
@@ -386,7 +400,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l': case 'Shift_E': //case 'Alt_F9':
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9': case 'Alt_0':
 	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10': case 'Alt_d': case 'Shift_F4': case 'Alt_a': case 'Alt_s': 
-	case 'Shift_P': case 'Shift_Q': case 'Alt_z':  case 'Control_z': case 'Control_x': case 'Alt_q':
+	case 'Shift_P': case 'Shift_Q': case 'Alt_z':  case 'Control_z': case 'Control_x': case 'Alt_q': case 'Shift_F':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		
 		$("#captions_div").hide();
@@ -408,6 +422,32 @@ function addItemsToList(whatToProcess,dataToProcess)
 		row = tbody.insertRow(tbody.rows.length);
 		
 		switch(whatToProcess) {
+		case 'Shift_F':
+			header_text.innerHTML = 'WICKET SEQUENCE';
+			select = document.createElement('select');
+			select.id = 'selectWicketSequence';
+			select.name = select.id;
+			
+			session_match.match.inning.forEach(function(inn,index,arr){
+				if(inn.inningNumber == document.getElementById('which_inning').value){
+					inn.fallsOfWickets.forEach(function(fow,fow_index,fow_arr){
+						inn.battingCard.forEach(function(bc,bc_index,bc_arr){
+							if(fow.fowPlayerID == bc.playerId){
+								option = document.createElement('option');
+								option.value = fow_index;
+								option.text = bc.player.full_name + " - " + bc.status;	
+								select.appendChild(option);
+							}
+						});
+					});
+				}
+			});
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			cellCount = cellCount + 1;
+		break;
 		case 'Alt_q':
 			header_text.innerHTML = 'POTT';
 			select = document.createElement('select');
@@ -2766,7 +2806,6 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			break;
 		}
-		
 		option = document.createElement('input');
 		option.type = 'button';
 		option.name = 'populate_btn';
@@ -2776,6 +2815,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	    
 	    div = document.createElement('div');
 	    div.append(option);
+	    
 
 		option = document.createElement('input');
 		option.type = 'button';

@@ -16,6 +16,8 @@ public class Animation
 	public Caption caption;
 	public int lastNumberOfRows = 0;
 	
+	BugsAndMiniGfx this_bugs = new BugsAndMiniGfx();
+	
 	public Animation(Infobar infobar) {
 		super();
 		this.infobar = infobar;
@@ -70,7 +72,7 @@ public class Animation
 				}
 			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": case "Alt_9": case "Alt_0":
 				return Constants.INFO_BAR;
-			case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Alt_p": case "o": case "t": case "Control_y": case "h": case "Shift_F4":
+			case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Alt_p": case "o": case "t": case "Control_y": case "h": case "Shift_F4": case "Shift_F":
 				return Constants.BUGS;
 			case "Shift_F1": case "Shift_F2":
 				return Constants.MINIS;
@@ -295,8 +297,7 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
-			case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Control_y": case "h": case "Shift_F4":
-				
+			case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Control_y": case "h": case "Shift_F4": case "Shift_F":
 				processAnimation(Constants.FRONT, print_writers, "Anim_Bugs$Essentials", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
@@ -584,7 +585,7 @@ public class Animation
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;
-			case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Control_y": case "h": case "Shift_F4":
+			case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Control_y": case "h": case "Shift_F4": case "Shift_F":
 				processAnimation(Constants.FRONT, print_writers, "Anim_Bugs$Essentials", "CONTINUE");
 				this.whichGraphicOnScreen = "";
 				break;
@@ -759,6 +760,9 @@ public class Animation
 					break;
 				}
 				break;
+			case "Shift_F": case "f": case "Shift_O":
+				processAnimation(Constants.FRONT, print_writers, "Anim_BugsChange", "START");
+				break;
 			}
 			break;
 		}
@@ -774,6 +778,10 @@ public class Animation
 			}
 			
 			switch(whatToProcess.split(",")[0]) {
+			case "Shift_F": case "f": case "Shift_O":
+				processAnimation(Constants.FRONT, print_writers, "Anim_BugsChange", "SHOW 0.0");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;
 			case "Alt_1":
 				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_Bottom_Left", "SHOW 0.0");
 				break;
@@ -1389,7 +1397,7 @@ public class Animation
 			case Constants.ICC_U19_2023:
 				if(whatToProcess.contains(",")) {
 					switch(whatToProcess.split(",")[0]) {
-					case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Control_y": case "h": case "Shift_F4":
+					case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Control_y": case "h": case "Shift_F4": case "Shift_F":
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.png Anim_Bugs 2.200 "
 								+ "Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In 2.200 Anim_Bugs$Essentials$In$Anim_Bugs 2.200 "
 								+ "Anim_Bugs$Essentials$In$Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In$Anim_Bugs$Essentials$Out 2.200 \0", print_writer);
@@ -1401,7 +1409,7 @@ public class Animation
 					}
 					if(whichside == 2) {
 						switch(whatToProcess.split(",")[0]) {
-						case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Control_y": case "h": case "Shift_F4":
+						case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Control_y": case "h": case "Shift_F4": case "Shift_F":
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
 								+ "/Default/Overlays C:/Temp/Preview.png Anim_BugsChange 1.360 \0", print_writer);
 							break;
