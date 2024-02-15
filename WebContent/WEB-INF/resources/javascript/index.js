@@ -1,6 +1,5 @@
 var session_match, session_caption, session_animation;
 var selected_options = [];
-let count = 0;
 function processWaitingButtonSpinner(whatToProcess) 
 {
 	switch (whatToProcess) {
@@ -121,7 +120,6 @@ function processUserSelection(whichInput)
 		$("#captions_div").show();
 		break;
 	case 'populate_btn': 
-		//processCricketProcedures("POPULATE-GRAPHICS", $('#which_keypress').val() + ',' + selected_options.toString());
 		if($(key_press_hidden_input)) {
 			processCricketProcedures("POPULATE-GRAPHICS", $('#key_press_hidden_input').val() + ',' + selected_options.toString());
 		} else {
@@ -173,11 +171,6 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				processCricketProcedures('ANIMATE-OUT-GRAPHICS');
 			}
 			break;
-		case '=':
-			if(confirm('Do you want to reset wicket sequence?') == true){
-				count = 0;
-			}
-		break;
 			
 		case 'Alt_-':
 			
@@ -197,18 +190,19 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			
 			switch(dataToProcess) {
 			case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_5': case 'Alt_7':  //case 'Alt_6': case 'Alt_8': case 'Alt_3': case 'Alt_4': case 'F7': case 'F11':
-			case 'Control_F5': case 'Control_F8': case 'Control_F9': case 'F4': case 'F5': case 'F6' :  case 'Alt_F8':
+			case 'Control_F5': case 'Control_F8': case 'Control_F9': case 'F4': case 'F5': case 'F6':  case 'Alt_F8':
 			case 'F8': case 'F9':  case 's': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6': case 'Control_y':
 			case 'Shift_K': case 'Shift_O': case 'g': case 'f': case 'Control_g': case 'Control_s': case 'Control_f': //case 'Alt_F9':
 			case 'Control_h': case 'Alt_F12': case 'l': case 'p': case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_F10': case 'Alt_d':
 			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2': case 'Shift_E': case 'Shift_P': case 'Shift_Q': case 'Alt_z': case 'Shift_F':
+			case 'Alt_F6': case 'Shift_L': case 'Shift_A':
 				addItemsToList(dataToProcess,null);
 				break;
 			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'Control_F1': case 'Control_a':
 			case 'Alt_k':  case 'Shift_F3': case 'd': case 'e': case 'Control_F6': //case 'Control_F7': 
 			case 'Control_k': case 'Control_F10': case 'Control_F3': case 'n': case 'a': case 't': case 'h':
 			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q': case 'Control_b': case 'o': case 'Control_F2': case 'b':
-			case 'Alt_F11': case 'r': //case 'Shift_F':
+			case 'Alt_F11': case 'r': case 'Shift_J'://case 'Shift_F':
 				/*switch(dataToProcess){
 				case 'Shift_F':
 					count++;
@@ -294,12 +288,21 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 							$('.my_waiting_modal').modal('hide');
 							//setTimeout(function(){$('.my_waiting_modal').modal('hide');},3000);
 							processCricketProcedures(whatToProcess.replace('POPULATE-', 'ANIMATE-IN-'),dataToProcess);
-							//alert(dataToProcess);
 							if(dataToProcess.split(',')[0] != 'Control_F9' && 
-							dataToProcess.split(',')[0] != 'Control_F5' && dataToProcess.split(',')[0] != 'Shift_F'){
+								dataToProcess.split(',')[0] != 'Control_F5' && 
+								dataToProcess.split(',')[0] != 'Shift_F'){
 								$("#select_graphic_options_div").empty();
 								document.getElementById('select_graphic_options_div').style.display = 'none';
 								$("#captions_div").show();
+							}else {
+								if(dataToProcess.split(',')[0] == 'Shift_F') {
+									if($('#selectWicketSequence option:last').val()){
+										
+									}
+									$('#selectWicketSequence option:selected').next().prop('selected', true);
+									document.getElementById('selectWicketSequence').setAttribute('onchange','setDropdownOptionForWicketSequence(0)');
+									setDropdownOptionForWicketSequence(0);
+								}
 							}
 						}
 					} else {
@@ -345,6 +348,11 @@ function setTextBoxOptionToSelectOptionArray(whichIndex)
 {
 	selected_options[0] = document.getElementById('which_inning').value;
 	selected_options[whichIndex+1] = $('#selectFreeText').val();
+}
+function setDropdownOptionForWicketSequence(whichIndex)
+{
+	selected_options[0] = document.getElementById('which_inning').value;
+	selected_options[whichIndex+1] = $('#selectWicketSequence option:selected').val();
 }
 function addItemsToList(whatToProcess,dataToProcess)
 {
@@ -408,7 +416,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l': case 'Shift_E': //case 'Alt_F9':
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9': case 'Alt_0':
 	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10': case 'Alt_d': case 'Shift_F4': case 'Alt_a': case 'Alt_s': 
-	case 'Shift_P': case 'Shift_Q': case 'Alt_z':  case 'Control_z': case 'Control_x': case 'Alt_q': case 'Shift_F':
+	case 'Shift_P': case 'Shift_Q': case 'Alt_z':  case 'Control_z': case 'Control_x': case 'Alt_q': case 'Shift_F': case 'Alt_F6': case 'Shift_A': case 'Shift_L':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		
 		$("#captions_div").hide();
@@ -442,7 +450,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 						inn.battingCard.forEach(function(bc,bc_index,bc_arr){
 							if(fow.fowPlayerID == bc.playerId){
 								option = document.createElement('option');
-								option.value = fow_index;
+								option.value = bc.playerId;
 								option.text = bc.player.full_name + " - " + bc.status;	
 								select.appendChild(option);
 							}
@@ -451,9 +459,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 				}
 			});
 			
-			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			select.setAttribute('onchange',"setDropdownOptionForWicketSequence(this, 0)");
 			row.insertCell(cellCount).appendChild(select);
-			setDropdownOptionToSelectOptionArray($(select),0);
+			setDropdownOptionForWicketSequence(0);
 			cellCount = cellCount + 1;
 		break;
 		case 'Alt_q':
@@ -1963,9 +1971,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
 			break;	
-		case 'F5':
+		case 'F5': case 'Shift_A':
 			switch(whatToProcess) {
-			case 'F5':
+			case 'F5': case 'Shift_A':
 				header_text.innerHTML = 'BAT THIS MATCH';
 				break;
 			}
@@ -2085,9 +2093,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			break;
 		
-		case 'F9': 
+		case 'F9': case 'Shift_L':
 			switch(whatToProcess) {
-			case 'F9':
+			case 'F9': case 'Shift_L':
 				header_text.innerHTML = 'BALL THIS MATCH';
 				break;				
 			}
@@ -2231,14 +2239,17 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
 			break;
-		case 'F6': case 'Shift_F6': //HowOut
+		case 'F6': case 'Shift_F6': case 'Alt_F6'://HowOut //how out w/o fielder // how out both
 			switch(whatToProcess) {
 			case 'F6':
 				header_text.innerHTML = 'HOW OUT';
 				break;
 			case 'Shift_F6':
 				header_text.innerHTML = 'HOW OUT WITHOUT FIELDER';
-				break;					
+				break;	
+			case 'Alt_F6':
+				header_text.innerHTML = 'HOW OUT BOTH';
+				break;				
 			}
 			select = document.createElement('select');
 			select.id = 'selectHowoutPlayers';
@@ -2963,7 +2974,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 		option.name = 'populate_btn';
 		option.value = 'Populate Data';
 	    option.id = option.name;
-	    option.setAttribute('onclick',"processUserSelection(this)");
+	    option.setAttribute('onclick','processUserSelection(this)');
 	    
 	    div = document.createElement('div');
 	    div.append(option);

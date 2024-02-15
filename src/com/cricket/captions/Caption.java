@@ -159,8 +159,20 @@ public class Caption
 			case "F5": //BAT THIS MATCH
 				status = this_lowerThirdGfx.populateBatThisMatch(whatToProcess, whichSide, matchAllData);
 				break;
+			case "Shift_A": //BAT THIS MATCH BOTH INNING
+				status = this_lowerThirdGfx.populateBatThisMatchBoth(whatToProcess, whichSide, matchAllData);
+				break;
+			case "Shift_L": //BALL THIS MATCH BOTH INNING
+				status = this_lowerThirdGfx.populateBallThisMatchBoth(whatToProcess, whichSide, matchAllData);
+				break;
+			case "Shift_J": //THIS SESSION
+				status = this_lowerThirdGfx.populateThisSession(whatToProcess, whichSide, matchAllData);
+				break;
 			case "F6"://HowOut
 				status = this_lowerThirdGfx.populateHowOut(whatToProcess,whichSide,matchAllData);
+				break;
+			case "Alt_F6"://HowOut both
+				status = this_lowerThirdGfx.populateHowOutBoth(whatToProcess,whichSide,matchAllData);
 				break;
 			case "F7": case "F11": // L3rd BAT and BALL Profile
 				status = this_lowerThirdGfx.PopulateL3rdPlayerProfile(whatToProcess,whichSide, matchAllData);

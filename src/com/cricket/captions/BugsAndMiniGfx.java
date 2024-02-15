@@ -56,6 +56,7 @@ public class BugsAndMiniGfx
 	
 	public String populateWicketSequencing(String whatToProcess,MatchAllData matchAllData,int WhichSide)
 	{
+		System.out.println("What to process : "+whatToProcess.split(",")[2]);
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
 			status = "populateWicketSequencing match is null Or Inning is null";
 		} else {
@@ -63,9 +64,8 @@ public class BugsAndMiniGfx
 			if(inning == null) {
 				return "populateWicketSequencing Inning is null";
 			}
-			fallOfWickets = inning.getFallsOfWickets().get(Integer.valueOf(whatToProcess.split(",")[2])).getFowPlayerID();
 			
-			player = CricketFunctions.getPlayerFromMatchData(fallOfWickets, matchAllData);
+			player = CricketFunctions.getPlayerFromMatchData(Integer.valueOf(whatToProcess.split(",")[2]), matchAllData);
 			battingCard = inning.getBattingCard().stream().filter(bc->bc.getPlayerId() == player.getPlayerId()).findAny().orElse(null);
 			team = Teams.stream().filter(tm -> tm.getTeamId() == player.getTeamId()).findAny().orElse(null);
 			if(team == null) {
