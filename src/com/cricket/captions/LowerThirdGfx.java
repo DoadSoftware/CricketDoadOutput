@@ -2465,7 +2465,7 @@ public class LowerThirdGfx
 		}
 		
 		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 			switch(whatToProcess) {
 			case "Alt_F6":
 				if(lowerThird.getWhichTeamFlag() != null) {
@@ -3590,7 +3590,7 @@ public class LowerThirdGfx
 		}
 		
 		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 			switch (whatToProcess) {
 			
 			case "Alt_F6": 
@@ -4431,7 +4431,7 @@ public class LowerThirdGfx
 	public void HideAndShowL3rdSubStrapContainers(int WhichSide)
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 			//Show number of sublines
 			for(int i=1; i<=10; i++) {
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
@@ -4565,7 +4565,7 @@ public class LowerThirdGfx
 	public void HideAndShowGriffSubStrapContainers(int WhichSide)
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 			//Show number of sublines
 			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side_"+ WhichSide + 
 					"$Select_Subline$1$Select_Base*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
@@ -4702,6 +4702,217 @@ public class LowerThirdGfx
 		String LT_Position_1 = "",LT_Position_2 = "",LT_Position_3 = "",LT_Position_4 = "",
 				LT_Flag_Keys="",LT_Flag_Object="",slave_Flag_Keys = "",slave_Flag_Object="";
 		switch (config.getBroadcaster().toUpperCase()) {
+		case Constants.ISPL:
+			switch (subline) {
+			case 0:
+				LT_Position_1 = "0.0";
+				LT_Position_2 = "0.0 -33.0 0.0";
+				LT_Position_3 = "0.0 -8.0 0.0";
+				LT_Position_4 = "16.0";
+				break;
+			case 1:
+				LT_Position_1 = "25.0";
+				LT_Position_2 = "0.0 0.0 0.0";
+				LT_Position_3 = "0.0 -25.0 0.0";
+				LT_Position_4 = "50.0";
+				break;
+			case 2:
+				LT_Position_1 = "50.0";
+				LT_Position_2 = "0.0 50.0 0.0";
+				LT_Position_3 = "0.0 -50.0 0.0";
+				LT_Position_4 = "100.0";
+				break;
+			case 3:
+				LT_Position_1 = "75.0";
+				LT_Position_2 = "0.0 100.0 0.0";
+				LT_Position_3 = "0.0 -75.0 0.0";
+				LT_Position_4 = "150.0";
+				break;
+			case 4:
+				LT_Position_1 = "100.0";
+				LT_Position_2 = "0.0 150.0 0.0";
+				LT_Position_3 = "0.0 -100.0 0.0";
+				LT_Position_4 = "200.0";
+				break;	
+			}
+			switch (whatToProcess.split(",")[0]) {
+			case "Alt_F1": case "Alt_F2":
+				ltWhichContainer = "$All_LowerThirds";
+				
+				if(l3griff.getWhichTeamFlag().trim().isEmpty() && l3griff.getWhichSponsor().trim().isEmpty()) {
+					LT_Flag_Keys = "57.0";
+					LT_Flag_Object = "1110";
+					
+					slave_Flag_Keys = "57.0";
+					slave_Flag_Object = "1110";
+				} else if(!l3griff.getWhichTeamFlag().trim().isEmpty() && !l3griff.getWhichSponsor().trim().isEmpty() && 
+						!l3griff.getWhichSponsor().equalsIgnoreCase("HASHTAG")) {
+					LT_Flag_Keys = "36.0";
+					LT_Flag_Object = "840";
+					if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
+						slave_Flag_Keys = "47.0";
+						slave_Flag_Object = "1020";
+					}
+				} else if(!l3griff.getWhichTeamFlag().trim().isEmpty() &&
+						!l3griff.getWhichSponsor().equalsIgnoreCase("HASHTAG")) {
+					LT_Flag_Keys = "47.0";
+					LT_Flag_Object = "1020";
+					
+					slave_Flag_Keys = "47.0";
+					slave_Flag_Object = "1020";
+				} else if(!l3griff.getWhichSponsor().trim().isEmpty()) {
+					switch (l3griff.getWhichSponsor()) {
+					case "HASHTAG":
+						LT_Flag_Keys = "25.0";
+						LT_Flag_Object = "810";
+						
+						slave_Flag_Keys = "47.0";
+						slave_Flag_Object = "1020";
+						break;
+					case "FLAG":
+						LT_Flag_Keys = "37.0";
+						LT_Flag_Object = "940";
+						
+						slave_Flag_Keys = "37.0";
+						slave_Flag_Object = "940";
+						break;	
+					default:
+						if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
+							slave_Flag_Keys = "57.0";
+							slave_Flag_Object = "1110";
+						}
+						LT_Flag_Keys = "37.0";
+						LT_Flag_Object = "940";
+						break;
+					}
+				}
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Side_" + WhichSide + "$Set_Rows_Side_" + WhichSide + 
+						"_Position_Y*TRANSFORMATION*POSITION*Y SET " + LT_Position_1 + "\0",print_writers);
+				break;
+			case "Alt_F8": case "F8": case "F10": case "j": case "Alt_a": case "Alt_s":
+				
+				ltWhichContainer = "$All_NameSupers";
+				if(lowerThird.getWhichTeamFlag().isEmpty() && lowerThird.getWhichSponsor().isEmpty()) {
+					LT_Flag_Keys = "58.0";
+					LT_Flag_Object = "1040";
+					
+					slave_Flag_Keys = "58.0";
+					slave_Flag_Object = "1040";
+				} else if(!lowerThird.getWhichTeamFlag().isEmpty() && !lowerThird.getWhichSponsor().isEmpty() && 
+						!lowerThird.getWhichSponsor().equalsIgnoreCase("HASHTAG")) {
+					LT_Flag_Keys = "20.0";
+					LT_Flag_Object = "700";
+					if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
+						slave_Flag_Keys = "40.0";
+						slave_Flag_Object = "900";
+					}
+				} else if(!lowerThird.getWhichTeamFlag().isEmpty() &&
+						!lowerThird.getWhichSponsor().equalsIgnoreCase("HASHTAG")) {
+					LT_Flag_Keys = "40.0";
+					LT_Flag_Object = "900";
+					
+					slave_Flag_Keys = "40.0";
+					slave_Flag_Object = "900";
+				} else if(!lowerThird.getWhichSponsor().isEmpty()) {
+					switch (lowerThird.getWhichSponsor()) {
+					case "HASHTAG":
+						LT_Flag_Keys = "19.0";
+						LT_Flag_Object = "680";
+						
+						slave_Flag_Keys = "40.0";
+						slave_Flag_Object = "900";
+						break;
+					case "FLAG":
+						LT_Flag_Keys = "37.0";
+						LT_Flag_Object = "940";
+						
+						slave_Flag_Keys = "37.0";
+						slave_Flag_Object = "940";
+						break;
+					default:
+						if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
+							slave_Flag_Keys = "58.0";
+							slave_Flag_Object = "1040";
+						}
+						LT_Flag_Keys = "31.0";
+						LT_Flag_Object = "810";
+						break;
+					}
+				}
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Side_" + WhichSide + "$Set_Rows_Side_" + WhichSide + 
+						"_Position_Y*TRANSFORMATION*POSITION*Y SET 2.0 \0",print_writers);
+				break;
+
+			default:
+				if(lowerThird.getWhichTeamFlag().trim().isEmpty() && lowerThird.getWhichSponsor().trim().isEmpty()) {
+					LT_Flag_Keys = "57.0";
+					LT_Flag_Object = "1110";
+					
+					slave_Flag_Keys = "57.0";
+					slave_Flag_Object = "1110";
+				} else if(!lowerThird.getWhichTeamFlag().trim().isEmpty() && !lowerThird.getWhichSponsor().trim().isEmpty() && 
+						!lowerThird.getWhichSponsor().equalsIgnoreCase("HASHTAG")) {
+					LT_Flag_Keys = "36.0";
+					LT_Flag_Object = "840";
+					if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
+						slave_Flag_Keys = "47.0";
+						slave_Flag_Object = "1020";
+					}
+				} else if(!lowerThird.getWhichTeamFlag().trim().isEmpty() &&
+						!lowerThird.getWhichSponsor().equalsIgnoreCase("HASHTAG")) {
+					LT_Flag_Keys = "47.0";
+					LT_Flag_Object = "1020";
+					
+					slave_Flag_Keys = "47.0";
+					slave_Flag_Object = "1020";
+				} else if(!lowerThird.getWhichSponsor().trim().isEmpty()) {
+					switch (lowerThird.getWhichSponsor()) {
+					case "HASHTAG":
+						LT_Flag_Keys = "25.0";
+						LT_Flag_Object = "810";
+						
+						slave_Flag_Keys = "47.0";
+						slave_Flag_Object = "1020";
+						break;
+					case "FLAG":
+						LT_Flag_Keys = "37.0";
+						LT_Flag_Object = "940";
+						
+						slave_Flag_Keys = "37.0";
+						slave_Flag_Object = "940";
+						break;	
+					default:
+						if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
+							slave_Flag_Keys = "57.0";
+							slave_Flag_Object = "1110";
+						}
+						LT_Flag_Keys = "37.0";
+						LT_Flag_Object = "940";
+						break;
+					}
+				}
+				
+				switch (whatToProcess.split(",")[0]) {
+				case "q": case "Control_q":
+					if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
+						slave_Flag_Keys = "47.0";
+						slave_Flag_Object = "1020";
+					}
+					LT_Flag_Keys = "36.0";
+					LT_Flag_Object = "840";
+					ltWhichContainer = "$BoundaryLowerthird";
+					break;
+				default :
+					ltWhichContainer = "$All_LowerThirds";
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Side_" + WhichSide + "$Set_Rows_Side_" + WhichSide + 
+							"_Position_Y*TRANSFORMATION*POSITION*Y SET " + LT_Position_1 + "\0",print_writers);
+					break;
+				}
+				break;
+			}
+			break;
 		case Constants.ICC_U19_2023:
 			switch (subline) {
 			case 0:
@@ -4913,97 +5124,97 @@ public class LowerThirdGfx
 				}
 				break;
 			}
+			break;
 			
-			if(!whatToProcess.split(",")[0].equalsIgnoreCase("q") && !whatToProcess.split(",")[0].equalsIgnoreCase("Control_q") && !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_q")) {
-				if(!whatToProcess.split(",")[0].equalsIgnoreCase("F8") && !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_F8")
-						&& !whatToProcess.split(",")[0].equalsIgnoreCase("F10") && !whatToProcess.split(",")[0].equalsIgnoreCase("j")
-						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_a") && !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_s")) {
-					if(WhichSide == 1) {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj_SublineBase*ANIMATION*KEY*$Change_In_1*VALUE SET "
-								+ LT_Position_4 + "\0",print_writers);
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj__Mask_6_*ANIMATION*KEY*$Change_In_1*VALUE SET "
-								+ LT_Position_4 + "\0",print_writers);
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Overall_Position_Y_In_Out*ANIMATION*KEY*$Change_In_1*VALUE SET " 
-								+ LT_Position_2 + "\0",print_writers);
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Sublines_Position_Y*ANIMATION*KEY*$Change_In_1*VALUE SET "
-								+ LT_Position_3 + "\0",print_writers);
-						
-					}else if(WhichSide == 2) {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj_SublineBase*ANIMATION*KEY*$Change_In_2*VALUE SET "
-								+ LT_Position_4 + "\0",print_writers);
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj__Mask_6_*ANIMATION*KEY*$Change_In_2*VALUE SET "
-								+ LT_Position_4 + "\0",print_writers);
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Overall_Position_Y_In_Out*ANIMATION*KEY*$Change_In_2*VALUE SET " 
-								+ LT_Position_2 + "\0",print_writers);
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Sublines_Position_Y*ANIMATION*KEY*$Change_In_2*VALUE SET "
-								+ LT_Position_3 + "\0",print_writers);
-					}
-				}
-			}
-			
-			if(WhichSide == 1 && !whatToProcess.split(",")[0].equalsIgnoreCase("q") && !whatToProcess.split(",")[0].equalsIgnoreCase("Control_q") && !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_q") ) {
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj_SublineBase*ANIMATION*KEY*$In_2*VALUE SET "
-						+ LT_Position_4 + "\0",print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj_SublineBase*ANIMATION*KEY*$Out_1*VALUE SET "
-					+ LT_Position_4 + "\0",print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj__Mask_6_*ANIMATION*KEY*$In_2*VALUE SET "
-					+ LT_Position_4 + "\0",print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj__Mask_6_*ANIMATION*KEY*$Out_1*VALUE SET "
-					+ LT_Position_4 + "\0",print_writers);
-				
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Overall_Position_Y_In_Out*ANIMATION*KEY*$In_2*VALUE SET " 
-					+ LT_Position_2 + "\0",print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Overall_Position_Y_In_Out*ANIMATION*KEY*$Out_1*VALUE SET "
-					+ LT_Position_2 + "\0",print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Sublines_Position_Y*ANIMATION*KEY*$In_2*VALUE SET "
-					+ LT_Position_3 + "\0",print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Sublines_Position_Y*ANIMATION*KEY*$Out_1*VALUE SET "
-					+ LT_Position_3 + "\0",print_writers);
-			}
-			
-			if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
-				
+		}
+		if(!whatToProcess.split(",")[0].equalsIgnoreCase("q") && !whatToProcess.split(",")[0].equalsIgnoreCase("Control_q") && !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_q")) {
+			if(!whatToProcess.split(",")[0].equalsIgnoreCase("F8") && !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_F8")
+					&& !whatToProcess.split(",")[0].equalsIgnoreCase("F10") && !whatToProcess.split(",")[0].equalsIgnoreCase("j")
+					&& !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_a") && !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_s")) {
 				if(WhichSide == 1) {
-					CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H1*VALUE SET "
-							+ slave_Flag_Keys + "\0", print_writers);
-					CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H_In*VALUE SET "
-							+ slave_Flag_Keys + "\0", print_writers);
-					CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H_Out*VALUE SET "
-							+ slave_Flag_Keys + "\0", print_writers);
-//					CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H2*VALUE SET "
-//							+ slave_Flag_Keys + "\0", print_writers);
-				}else if(WhichSide == 2) {
-					CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H2*VALUE SET "
-							+ slave_Flag_Keys + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj_SublineBase*ANIMATION*KEY*$Change_In_1*VALUE SET "
+							+ LT_Position_4 + "\0",print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj__Mask_6_*ANIMATION*KEY*$Change_In_1*VALUE SET "
+							+ LT_Position_4 + "\0",print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Overall_Position_Y_In_Out*ANIMATION*KEY*$Change_In_1*VALUE SET " 
+							+ LT_Position_2 + "\0",print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Sublines_Position_Y*ANIMATION*KEY*$Change_In_1*VALUE SET "
+							+ LT_Position_3 + "\0",print_writers);
 					
+				}else if(WhichSide == 2) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj_SublineBase*ANIMATION*KEY*$Change_In_2*VALUE SET "
+							+ LT_Position_4 + "\0",print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj__Mask_6_*ANIMATION*KEY*$Change_In_2*VALUE SET "
+							+ LT_Position_4 + "\0",print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Overall_Position_Y_In_Out*ANIMATION*KEY*$Change_In_2*VALUE SET " 
+							+ LT_Position_2 + "\0",print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Sublines_Position_Y*ANIMATION*KEY*$Change_In_2*VALUE SET "
+							+ LT_Position_3 + "\0",print_writers);
 				}
-				
-				CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$Side_" + WhichSide + "$obj_WidthX"
-					+ "*FUNCTION*Maxsize*WIDTH_X SET " + slave_Flag_Object + "\0", print_writers);
-				CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$Side_" + WhichSide + "$obj_WidthX"
-						+ "*FUNCTION*Maxsize*WIDTH_X SET " + slave_Flag_Object + "\0", print_writers);
 			}
+		}
+		
+		if(WhichSide == 1 && !whatToProcess.split(",")[0].equalsIgnoreCase("q") && !whatToProcess.split(",")[0].equalsIgnoreCase("Control_q") && !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_q") ) {
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj_SublineBase*ANIMATION*KEY*$In_2*VALUE SET "
+					+ LT_Position_4 + "\0",print_writers);
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj_SublineBase*ANIMATION*KEY*$Out_1*VALUE SET "
+				+ LT_Position_4 + "\0",print_writers);
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj__Mask_6_*ANIMATION*KEY*$In_2*VALUE SET "
+				+ LT_Position_4 + "\0",print_writers);
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$obj__Mask_6_*ANIMATION*KEY*$Out_1*VALUE SET "
+				+ LT_Position_4 + "\0",print_writers);
+			
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Overall_Position_Y_In_Out*ANIMATION*KEY*$In_2*VALUE SET " 
+				+ LT_Position_2 + "\0",print_writers);
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Overall_Position_Y_In_Out*ANIMATION*KEY*$Out_1*VALUE SET "
+				+ LT_Position_2 + "\0",print_writers);
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Sublines_Position_Y*ANIMATION*KEY*$In_2*VALUE SET "
+				+ LT_Position_3 + "\0",print_writers);
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Sublines_Position_Y*ANIMATION*KEY*$Out_1*VALUE SET "
+				+ LT_Position_3 + "\0",print_writers);
+		}
+		
+		if(config.getSecondaryIpAddress() != null && !config.getSecondaryIpAddress().isEmpty()) {
 			
 			if(WhichSide == 1) {
-				CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H1*VALUE SET "
-						+ LT_Flag_Keys + "\0", print_writers);
-				CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H_In*VALUE SET "
-						+ LT_Flag_Keys + "\0", print_writers);
-				CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H_Out*VALUE SET "
-						+ LT_Flag_Keys + "\0", print_writers);
-//				CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H2*VALUE SET "
-//						+ LT_Flag_Keys + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H1*VALUE SET "
+						+ slave_Flag_Keys + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H_In*VALUE SET "
+						+ slave_Flag_Keys + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H_Out*VALUE SET "
+						+ slave_Flag_Keys + "\0", print_writers);
+//				CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H2*VALUE SET "
+//						+ slave_Flag_Keys + "\0", print_writers);
 			}else if(WhichSide == 2) {
-				CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H2*VALUE SET "
-						+ LT_Flag_Keys + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H2*VALUE SET "
+						+ slave_Flag_Keys + "\0", print_writers);
 				
 			}
-			CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$Side_" + WhichSide + "$obj_WidthX"
-				+ "*FUNCTION*Maxsize*WIDTH_X SET " + LT_Flag_Object + "\0", print_writers);
-			CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$Side_" + WhichSide + "$obj_WidthX"
-					+ "*FUNCTION*Maxsize*WIDTH_X SET " + LT_Flag_Object + "\0", print_writers);
-			break;
+			
+			CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$Side_" + WhichSide + "$obj_WidthX"
+				+ "*FUNCTION*Maxsize*WIDTH_X SET " + slave_Flag_Object + "\0", print_writers);
+			CricketFunctions.DoadWriteCommandToSelectedViz(2, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$Side_" + WhichSide + "$obj_WidthX"
+					+ "*FUNCTION*Maxsize*WIDTH_X SET " + slave_Flag_Object + "\0", print_writers);
 		}
+		
+		if(WhichSide == 1) {
+			CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H1*VALUE SET "
+					+ LT_Flag_Keys + "\0", print_writers);
+			CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H_In*VALUE SET "
+					+ LT_Flag_Keys + "\0", print_writers);
+			CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H_Out*VALUE SET "
+					+ LT_Flag_Keys + "\0", print_writers);
+//			CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H2*VALUE SET "
+//					+ LT_Flag_Keys + "\0", print_writers);
+		}else if(WhichSide == 2) {
+			CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$RightPartSize*ANIMATION*KEY*$H2*VALUE SET "
+					+ LT_Flag_Keys + "\0", print_writers);
+			
+		}
+		CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$Side_" + WhichSide + "$obj_WidthX"
+			+ "*FUNCTION*Maxsize*WIDTH_X SET " + LT_Flag_Object + "\0", print_writers);
+		CricketFunctions.DoadWriteCommandToSelectedViz(1, "-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Top_Line$Side_" + WhichSide + "$obj_WidthX"
+				+ "*FUNCTION*Maxsize*WIDTH_X SET " + LT_Flag_Object + "\0", print_writers);
 	}
 	
 	public void setGriff(int griffSize,String whatToProcess,int WhichSide,Configuration config)

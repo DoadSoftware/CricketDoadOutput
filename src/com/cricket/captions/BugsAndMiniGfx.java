@@ -276,7 +276,7 @@ public class BugsAndMiniGfx
 	public String PopulateBugBody(int WhichSide, String whatToProcess,MatchAllData matchAllData) {
 		
 		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 			switch (whatToProcess.split(",")[0]) {
 			case "Control_y":
 				if(inning.getBatting_team().getTeamName4().equalsIgnoreCase("NEP")) {
@@ -661,7 +661,7 @@ public class BugsAndMiniGfx
 	
 	public String populateMiniBody(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) {
 		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 			switch(whatToProcess) {
 			case "Shift_F1":
 				int battingSize=0;

@@ -192,7 +192,13 @@ public class IndexController
 			this_animation = new Animation(new Infobar());
 			
 			switch (select_broadcaster) {
-			case Constants.ICC_U19_2023:
+			case Constants.ISPL:
+				if(session_configuration.getPrimaryVariousOptions().contains(Constants.FULL_FRAMER)) {
+					this_scene.LoadScene("FULL-FRAMERS", print_writers, session_configuration);
+				}
+				this_scene.LoadScene("OVERLAYS", print_writers, session_configuration);
+				break;
+			case Constants.ICC_U19_2023: 
 				if(session_configuration.getPrimaryVariousOptions().contains(Constants.FULL_FRAMER)) {
 					this_scene.LoadScene("FULL-FRAMERS", print_writers, session_configuration);
 				}
@@ -306,7 +312,7 @@ public class IndexController
 					}
 				default:
 					switch (session_configuration.getBroadcaster()) {
-					case Constants.ICC_U19_2023:
+					case Constants.ICC_U19_2023: case Constants.ISPL:
 						if(!session_configuration.getPrimaryVariousOptions().contains(Constants.FULL_FRAMER)
 							&& this_animation.getTypeOfGraphicsOnScreen(session_configuration, valueToProcess).contains(Constants.FULL_FRAMER)) {
 							this_caption.setStatus("Error: Full framers captions NOT selected on start-up");
@@ -530,7 +536,7 @@ public class IndexController
 		IllegalAccessException, InvocationTargetException, JAXBException, IOException, CloneNotSupportedException, InterruptedException
 	{
 		switch (config.getBroadcaster()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 			
 			cricket_matches = CricketFunctions.getTournamentMatches(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + CricketUtil.MATCHES_DIRECTORY).listFiles(new FileFilter() {
 				@Override

@@ -81,7 +81,7 @@ public class InfobarGfx
 	public String updateInfobar(List<PrintWriter> print_writers,MatchAllData matchAllData) throws InterruptedException, CloneNotSupportedException, IOException {
 
 		switch (config.getBroadcaster()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 			
 			inning = matchAllData.getMatch().getInning().stream().filter(
 				inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
@@ -132,7 +132,7 @@ public class InfobarGfx
 	public String populateInfobar(List<PrintWriter> print_writers,String whatToProcess, MatchAllData matchAllData) throws InterruptedException, CloneNotSupportedException, JsonMappingException, JsonProcessingException {
 		
 		switch (config.getBroadcaster()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 			
 			this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar", "SHOW 0.0");
 			infobar.setPowerplay_on_screen(false);
@@ -164,7 +164,7 @@ public class InfobarGfx
 	public String populateInfobarTeamNameScore(boolean is_this_updating,List<PrintWriter> print_writers,MatchAllData matchAllData) {
 		
 		switch(config.getBroadcaster()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 
 			inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
 			if(inning == null) {
@@ -287,7 +287,7 @@ public class InfobarGfx
 			int WhichSide, int WhichSubSide, int WhichBatsman, List<BattingCard> battingCardList) throws InterruptedException {
 	
 		switch(config.getBroadcaster()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 			
 			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
 				+ infobar.getBatsmanAndBowlOrSponsor() + "$Bat_" + WhichBatsman + "$Side" + WhichSubSide + "$Batsman*GEOM*TEXT SET " 
@@ -342,7 +342,7 @@ public class InfobarGfx
 		}
 
 		switch(config.getBroadcaster()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 			if(infobar.getLast_batsmen() != null && infobar.getLast_batsmen().size() >= 2) {
 				if(infobar.getLast_batsmen().get(0).getPlayerId() != battingCardList.get(0).getPlayerId()) {
 					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 2, 1, battingCardList);
@@ -375,7 +375,7 @@ public class InfobarGfx
 			int WhichSide, int WhichSubSide) throws InterruptedException {
 	
 		switch(config.getBroadcaster()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 			
 			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Bowl_Part$Side" + 
 					WhichSubSide + "$txt_Bowler*GEOM*TEXT SET " + bowlingCard.getPlayer().getTicker_name() + "\0", print_writers);
@@ -403,7 +403,7 @@ public class InfobarGfx
 		}
 		
 		switch(config.getBroadcaster()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 			if(infobar.getLast_bowler() != null) {
 				if(infobar.getLast_bowler().getPlayerId() != bowlingCard.getPlayerId()) {
 					populateRightTopBowler(print_writers, matchAllData, WhichSide, 2);
@@ -445,7 +445,7 @@ public class InfobarGfx
 		}
 		
 		switch(config.getBroadcaster()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 			if(infobar.getRight_bottom() != null && !infobar.getRight_bottom().isEmpty()) {
 				switch(infobar.getRight_bottom().toUpperCase()) {
 				case "BOWLING_END":
@@ -556,7 +556,7 @@ public class InfobarGfx
 			int WhichSide,int WhichSubSide) throws InterruptedException 
 		{	
 			switch(config.getBroadcaster()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				if(infobar.getRight_section() != null && !infobar.getRight_section().isEmpty()) {
 					switch(infobar.getRight_section().toUpperCase()) {
 					case CricketUtil.BOUNDARY:
@@ -627,7 +627,7 @@ public class InfobarGfx
 	{
 		
 		switch(config.getBroadcaster()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 			switch(infobar.getLeft_bottom().toUpperCase()) {
 			case "CRR":
 				
@@ -801,7 +801,7 @@ public class InfobarGfx
 	public String populateVizInfobarMiddleSection(List<PrintWriter> print_writers, MatchAllData matchAllData, int WhichSide) throws InterruptedException, CloneNotSupportedException, JsonMappingException, JsonProcessingException 
 	{
 		switch(config.getBroadcaster()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 
 			switch(infobar.getMiddle_section().toUpperCase()) {
 			case "RESULTS":

@@ -941,7 +941,7 @@ public class FullFramesGfx
 	public String PopulateFfHeader(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) 
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 			
 			switch (whatToProcess) {
 			case "r":
@@ -1415,7 +1415,7 @@ public class FullFramesGfx
 		switch (whatToProcess) {
 		case "F1": // Scorecard
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
 					+ "$Select_GraphicsType*FUNCTION*Omo*vis_con SET 3 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Batting_Card$Rows"
@@ -1532,7 +1532,7 @@ public class FullFramesGfx
 		case "F2": //Bowling Card
 			
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
 						"$Select_GraphicsType*FUNCTION*Omo*vis_con SET 4 \0", print_writers);
@@ -2276,7 +2276,7 @@ public class FullFramesGfx
 			
 		case "p": case "Control_p":
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				String fourOrSix = "";
 				if(whatToProcess.equalsIgnoreCase("p")) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
@@ -2372,7 +2372,7 @@ public class FullFramesGfx
 		case "z": case "x": case "c": case "v": case "Control_z": case "Control_x":
 			
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
 						"$Select_GraphicsType*FUNCTION*Omo*vis_con SET 14 \0", print_writers);
 //				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
@@ -2515,7 +2515,7 @@ public class FullFramesGfx
 		
 		case "Alt_F11":
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 
 				int maxRuns = 0,runsIncr = 0,powerplay_omo=0;
 				double lngth = 0;
@@ -2697,7 +2697,7 @@ public class FullFramesGfx
 			
 		case "Control_F10":
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
 						"$Select_GraphicsType*FUNCTION*Omo*vis_con SET 11 \0", print_writers);
 				
@@ -2769,7 +2769,7 @@ public class FullFramesGfx
 		case "Shift_P":  
 			
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
 						"$Select_GraphicsType*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
@@ -2894,7 +2894,7 @@ public class FullFramesGfx
 		case "Control_d":  
 			
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
 						"$Select_GraphicsType*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
@@ -3028,7 +3028,7 @@ public class FullFramesGfx
 		case "Shift_Q":
 			
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
 							"$Select_GraphicsType*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
 					
@@ -3154,7 +3154,7 @@ public class FullFramesGfx
 		case "Control_e":
 			
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				double average = (double) stat.getRuns_conceded()/stat.getWickets();
 				DecimalFormat df = new DecimalFormat("0.00");
 
@@ -3291,7 +3291,7 @@ public class FullFramesGfx
 		case "Control_F7": //Double Teams
 
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
 						"$Select_GraphicsType*FUNCTION*Omo*vis_con SET 9 \0", print_writers);
@@ -3363,7 +3363,7 @@ public class FullFramesGfx
 		
 		case "Alt_z":
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				String highlight = "$Highlight";
 				String dehighlight = "$Dehighlight";
 				rowId=0;
@@ -3562,7 +3562,7 @@ public class FullFramesGfx
 		case "Control_F8":
 			
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main$AllGraphics$Side" + WhichSide + 
 						"$Select_GraphicsType*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
@@ -3657,7 +3657,7 @@ public class FullFramesGfx
 		
 		case "Shift_F10":
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				
 				int maxRuns = 0,runsIncr = 0,wkt_count=0;
 				
@@ -3882,7 +3882,7 @@ public class FullFramesGfx
 			
 		case "Alt_F9": case "Alt_F10":
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
 						+ "$Select_GraphicsType*FUNCTION*Omo*vis_con SET 8 \0", print_writers);
 				
@@ -4167,7 +4167,7 @@ public class FullFramesGfx
 			
 		case "Shift_D":
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				if(inning.getBatting_team().getTeamName4().equalsIgnoreCase("NEP")) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Target$InfoGrp$FlagGrp1$img_Shadow*ACTIVE SET 0 \0", print_writers);
 				}else if(inning.getBowling_team().getTeamName4().equalsIgnoreCase("NEP")) {
@@ -4324,7 +4324,7 @@ public class FullFramesGfx
 			
 		case "Control_b":
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_In_At$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH +  inning.getBatting_team().getTeamName4() + "\0", print_writers);
 				for(BattingCard bc : inning.getBattingCard()) {
 					if(bc.getPlayerId() == player.getPlayerId()) {
@@ -4355,7 +4355,7 @@ public class FullFramesGfx
 			
 		case "Alt_m":
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Milestone$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH +  team.getTeamName4() + "\0", print_writers);
 				Collections.sort(inning.getBattingCard());
 				for(BattingCard bc : inning.getBattingCard()) {
@@ -4397,7 +4397,7 @@ public class FullFramesGfx
 			break;
 		case "Alt_n":
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Milestone$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH +  team.getTeamName4() + "\0", print_writers);
 				rowId = 0;
 				for(BowlingCard boc : inning.getBowlingCard()) {
@@ -4438,7 +4438,7 @@ public class FullFramesGfx
 		
 		case "r":
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				for(Player plyr : Players) {
 					if(plyr.getPlayerId() == Potts.get(0).getPlayerId1()) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_POTT_Aramco$Photo1$txt_PlayerName*GEOM*TEXT SET  " + plyr.getTicker_name() + "\0", print_writers);
@@ -4498,7 +4498,7 @@ public class FullFramesGfx
 		case "m": //MATCH Ident
 			
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
 						+ "$Select_GraphicsType*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
@@ -4548,7 +4548,7 @@ public class FullFramesGfx
 		case "Control_m": //MATCH PROMO
 			
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				
 				if(fixture.getLocalTime() == null || fixture.getGmtTime() == null) {
 					return "Fixture local time and GMT time cannot be NULL";
@@ -4609,7 +4609,7 @@ public class FullFramesGfx
 	public String PopulateFfFooter(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) 
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 			switch (whatToProcess) {
 			case "Alt_z":
 				if(WhichType.equalsIgnoreCase("RUNS")) {

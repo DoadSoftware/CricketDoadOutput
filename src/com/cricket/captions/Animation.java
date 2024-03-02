@@ -29,7 +29,19 @@ public class Animation
 	public void setPositionOfLowerThirds(Configuration config, List<PrintWriter> print_writers) 
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: 
+			if(this.infobar.isInfobar_on_screen() == true) {
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Overall_Position_Y*"
+					+ "TRANSFORMATION*POSITION*Y SET 40.0 \0",print_writers);
+			}else if(this.specialBugOnScreen.equalsIgnoreCase(CricketUtil.TOSS)) {
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Overall_Position_Y*"
+					+ "TRANSFORMATION*POSITION*Y SET 56.0 \0",print_writers);
+			}else {
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Overall_Position_Y*"
+					+ "TRANSFORMATION*POSITION*Y SET 3.0 \0",print_writers);
+			}
+			break;
+		case Constants.ISPL:
 			if(this.infobar.isInfobar_on_screen() == true) {
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Overall_Position_Y*"
 					+ "TRANSFORMATION*POSITION*Y SET 40.0 \0",print_writers);
@@ -47,7 +59,7 @@ public class Animation
 	public String getTypeOfGraphicsOnScreen(Configuration config,String whatToProcess)
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 			switch (whatToProcess.split(",")[0]) {
 			case "F1": case "F2": case "F4": case "Shift_F10": case "Shift_F11": case "Control_F11": case "m": case "Control_m": 
 			case "Control_F8": case "Control_d": case "Control_e": case "Control_F7": case "Control_F10":
@@ -85,7 +97,7 @@ public class Animation
 	public String AnimateIn(String whatToProcess, List<PrintWriter> print_writers, Configuration config) throws InterruptedException, IOException 
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 
 			//Full framers
 			switch (whatToProcess.split(",")[0]) {
@@ -403,7 +415,7 @@ public class Animation
 	public String AnimateOut(String whatToProcess, List<PrintWriter> print_writers, Configuration config) throws InterruptedException, IOException
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 			switch (whatToProcess.split(",")[0]) {
 			case "Alt_z":
 				processAnimation(Constants.BACK, print_writers, "Anim_Squad", "CONTINUE");
@@ -608,7 +620,7 @@ public class Animation
 	public String ChangeOn(String whatToProcess,List<PrintWriter> print_writers,Configuration config) throws InterruptedException
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 			
 			if(!whatToProcess.contains(",")) {
 				return CricketUtil.NO;
@@ -775,7 +787,7 @@ public class Animation
 	public String CutBack(String whatToProcess,List<PrintWriter> print_writers, Configuration config) throws InterruptedException, IOException
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 
 			if(!whatToProcess.contains(",")) {
 				return CricketUtil.NO;
@@ -915,7 +927,7 @@ public class Animation
 	public String ResetAnimation(String whatToProcess, List<PrintWriter> print_writers, Configuration config)
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 
 			processAnimation(Constants.BACK, print_writers, "Anim_FullFrames", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Change", "SHOW 0.0");
@@ -1007,7 +1019,7 @@ public class Animation
 	public void setVariousAnimationsKeys(String whatToProcess, List<PrintWriter> print_writers, Configuration config) 
 	{
 		switch (config.getBroadcaster()) {
-		case Constants.ICC_U19_2023:
+		case Constants.ICC_U19_2023: case Constants.ISPL:
 			
 			float MoveForExtraData, BasePositionY = 0f, obj_BiggerBase = 0f, obj__Mask_6_ = 0f, PositionY = 0f, Sponsor = 0f;
 			
@@ -1155,7 +1167,7 @@ public class Animation
 		if(config.getPreview().equalsIgnoreCase("WITH_PREVIEW")) {
 			String previewCommand = "";
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				if(whichside == 1) {
 					if(whatToProcess.contains(",")) {
 						switch(whatToProcess.split(",")[0]) {
@@ -1346,7 +1358,7 @@ public class Animation
 		if(config.getPreview().equalsIgnoreCase("WITH_PREVIEW")) {
 			String previewCommands = "";
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				if(whichside == 1) {
 					switch(whatToProcess.split(",")[0]) {
 					case "F5": case "F6": case "F7": case "F9": case "F11": case "Control_F2":
@@ -1404,7 +1416,7 @@ public class Animation
 	{
 		if(config.getPreview().equalsIgnoreCase("WITH_PREVIEW")) {
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				if(whatToProcess.contains(",")) {
 					switch(whatToProcess.split(",")[0]) {
 					case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Control_y": case "h": case "Shift_F4": case "Shift_F":
@@ -1433,7 +1445,7 @@ public class Animation
 	public void processMiniPreview(String whatToProcess, List<PrintWriter> print_writer, int whichside, Configuration config, String whichGraphicOnScreen) {
 		if(config.getPreview().equalsIgnoreCase("WITH_PREVIEW")) {
 			switch (config.getBroadcaster().toUpperCase()) {
-			case Constants.ICC_U19_2023:
+			case Constants.ICC_U19_2023: case Constants.ISPL:
 				if(whatToProcess.contains(",")) {
 					switch(whatToProcess.split(",")[0]) {
 					case "Shift_F1": case "Shift_F2":
