@@ -2433,12 +2433,15 @@ function addItemsToList(whatToProcess,dataToProcess)
 			session_match.match.inning.forEach(function(inn,index,arr){
 				if(inn.inningNumber == document.getElementById('which_inning').value){
 					inn.battingCard.forEach(function(bc,bc_index,bc_arr){
-						if(bc.playerId == inn.fallsOfWickets[inn.fallsOfWickets.length-1].fowPlayerID){
-							option = document.createElement('option');
-							option.value = bc.playerId;
-							option.text = bc.player.full_name + " - " + bc.status;	
-							select.appendChild(option);
+						if(inn.fallsOfWickets.length > 0){
+							if(bc.playerId == inn.fallsOfWickets[inn.fallsOfWickets.length-1].fowPlayerID){
+								option = document.createElement('option');
+								option.value = bc.playerId;
+								option.text = bc.player.full_name + " - " + bc.status;	
+								select.appendChild(option);
+							}
 						}
+						
 					});
 					
 					inn.battingCard.forEach(function(bc,bc_index,bc_arr){

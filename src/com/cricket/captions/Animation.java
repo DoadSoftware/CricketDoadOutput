@@ -59,7 +59,7 @@ public class Animation
 	public String getTypeOfGraphicsOnScreen(Configuration config,String whatToProcess)
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023: case Constants.ISPL:
+		case Constants.ICC_U19_2023:
 			switch (whatToProcess.split(",")[0]) {
 			case "F1": case "F2": case "F4": case "Shift_F10": case "Shift_F11": case "Control_F11": case "m": case "Control_m": 
 			case "Control_F8": case "Control_d": case "Control_e": case "Control_F7": case "Control_F10":
@@ -82,14 +82,47 @@ public class Animation
 				default:
 					return Constants.LOWER_THIRD;
 				}
+				
 			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": case "Alt_9": case "Alt_0": case "Alt_c":
+
 				return Constants.INFO_BAR;
-			case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Alt_p": case "o": case "t": case "Control_y": case "h": case "Shift_F4": case "Shift_F":
+			case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Alt_p": case "o": case "t": 
+			case "Control_y": case "h": case "Shift_F4": case "Shift_F":
 				return Constants.BUGS;
 			case "Shift_F1": case "Shift_F2":
 				return Constants.MINIS;
 			}
 			break;
+		case Constants.ISPL:
+			switch (whatToProcess.split(",")[0]) {
+			case "F1": case "F2": case "F4": case "Shift_F10": case "Shift_F11": case "Control_F11": case "m": case "Control_m": 
+			case "Control_F8": case "Control_d": case "Control_e": case "Control_F7": case "Control_F10":
+			case "Shift_K": case "Alt_F9": case "Shift_D": case "p": case "Control_b": case "Alt_m": case "Alt_n":
+			case "Alt_F10": case "Control_F1": case "Control_p": case "Shift_P": case "Shift_Q":
+			case "z": case "x": case "c": case "v": case "Alt_F11": case "Alt_z": case "Control_z": case "Control_x": case "r":
+				return Constants.FULL_FRAMER;
+			case "F5": case "F6": case "F7": case "F8": case "F9": case "F10": case "F11": case "Alt_F8":
+			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
+			case "Shift_F3": case "s": case "d": case "e": case "q": case "Shift_F5": case "Shift_F9": case "Alt_F12":
+			case "Control_g": case "Control_h": case "j": case "Control_F6": case "Shift_F6": case "Alt_F1": case "Alt_F2":
+			case "Control_s": case "Alt_d": case "Control_f": case "Control_q": case "l": case "n": case "a": case "Control_F2":
+			case "Alt_a": case "Alt_s":case "Shift_E": case "Alt_q": case "Alt_F6": case "Shift_A":  case "Shift_L": case "Shift_J":
+				
+				switch (whatToProcess.split(",")[0]) {
+				case "q": case "Control_q": case "Alt_q":// Boundary L3rd
+					return Constants.BOUNDARIES + Constants.LOWER_THIRD;
+				default:
+					return Constants.LOWER_THIRD;
+				}
+			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": case "Alt_9": case "Alt_0":
+				return Constants.INFO_BAR;
+			case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Alt_p": case "o": case "t": 
+			case "Control_y": case "h": case "Shift_F4": case "Shift_F":
+				return Constants.BUGS;
+			case "Shift_F1": case "Shift_F2":
+				return Constants.MINIS;
+			}
+			break;	
 		}
 		return "";
 	}
@@ -243,11 +276,7 @@ public class Animation
 				break;
 			
 			//NameSuperDB, HOWOUT, LTBatProfile, NameSuperPlayer, LtBallProfile, BatThisMatch, BallThisMatch
-			case "F5": case "F6": case "F7": case "F9": case "F11": case "Control_F2":
-			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
-			case "Shift_F3": case "s": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":
-			case "Control_g": case "Control_h": case "Control_F6": case "Shift_F6": case "Control_s":case "Shift_E":
-			case "Alt_d": case "Control_f": case "l": case "n": case "a":  case "Alt_F1": case "Alt_F2": case "Alt_F6": case "Shift_A":  case "Shift_L": case "Shift_J":
+			case "F7": case "F11":
 				if(this.infobar.isInfobar_on_screen() == true) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Overall_Position_Y*"
 						+ "TRANSFORMATION*POSITION*Y SET 40.0 \0",print_writers);
@@ -261,6 +290,30 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
+			case "F5": case "F6": case "F9": case "Control_F2":
+			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":
+			case "Shift_F3": case "s": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":
+			case "Control_g": case "Control_h": case "Control_F6": case "Shift_F6": case "Control_s":case "Shift_E":
+			case "Alt_d": case "Control_f": case "l": case "n": case "a":  case "Alt_F1": case "Alt_F2": case "Alt_F6": case "Shift_A":  case "Shift_L": case "Shift_J":
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.ICC_U19_2023:
+					if(this.infobar.isInfobar_on_screen() == true) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Overall_Position_Y*"
+							+ "TRANSFORMATION*POSITION*Y SET 40.0 \0",print_writers);
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Overall_Position_Y*"
+							+ "TRANSFORMATION*POSITION*Y SET 3.0 \0",print_writers);
+					}
+					break;
+				}
+				
+				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
+				TimeUnit.MILLISECONDS.sleep(1000);
+				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "START");
+				processAnimation(Constants.FRONT, print_writers, "Anim_LtChange$Lt_X_Position", "START");
+				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third$Top_Header", "SHOW 0.0");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;	
 			case "Alt_q":
 				if(this.infobar.isInfobar_on_screen() == true) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_POTT_Aramco$Overall_Position_Y*"
@@ -276,12 +329,24 @@ public class Animation
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			 case "Alt_F8": case "F8": case "F10": case "j": case "Alt_a": case "Alt_s": // Name super L3rd
-				
-				setPositionOfLowerThirds(config, print_writers);
-				AnimateIn(Constants.MIDDLE + Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
-				TimeUnit.MILLISECONDS.sleep(1000);
-				processAnimation(Constants.FRONT, print_writers, "anim_NameSupers", "START");
-				this.whichGraphicOnScreen = whatToProcess;
+				 switch (config.getBroadcaster().toUpperCase()) {
+					case Constants.ICC_U19_2023:
+						setPositionOfLowerThirds(config, print_writers);
+						AnimateIn(Constants.MIDDLE + Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
+						TimeUnit.MILLISECONDS.sleep(1000);
+						processAnimation(Constants.FRONT, print_writers, "anim_NameSupers", "START");
+						this.whichGraphicOnScreen = whatToProcess;
+						break;
+					case Constants.ISPL:
+						
+						AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
+						TimeUnit.MILLISECONDS.sleep(1000);
+						processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "START");
+						processAnimation(Constants.FRONT, print_writers, "Anim_LtChange$Lt_X_Position", "CONTINUE REVERSE");
+						processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third$Top_Header", "SHOW 0.0");
+						this.whichGraphicOnScreen = whatToProcess;
+						break;
+				 }
 				break;
 				
 			case "q": case "Control_q":// Boundary L3rd
@@ -573,16 +638,29 @@ public class Animation
 			case "Control_g": case "Control_h": case "Control_F6": case "Shift_F6": case "Control_s":case "Shift_E":
 			case "Alt_d": case "Control_f": case "l": case "n": case "a":  case "Alt_F1": case "Alt_F2": case "Alt_F6": case "Shift_A":  case "Shift_L": case "Shift_J":
 				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "CONTINUE");
+				TimeUnit.MILLISECONDS.sleep(2700);
+				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third$Top_Header", "SHOW 2.680");
 				TimeUnit.MILLISECONDS.sleep(1000);
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;
 			 case "Alt_F8": case "F8": case "F10": case "j": case "Alt_a": case "Alt_s":
-				processAnimation(Constants.FRONT, print_writers, "anim_NameSupers", "CONTINUE");
-				TimeUnit.MILLISECONDS.sleep(1000);
-				processAnimation(Constants.FRONT, print_writers, "anim_NameSupers", "SHOW 0.0");
-				AnimateIn(Constants.MIDDLE + Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
-				this.whichGraphicOnScreen = "";
+				 switch (config.getBroadcaster().toUpperCase()) {
+					case Constants.ICC_U19_2023:
+						processAnimation(Constants.FRONT, print_writers, "anim_NameSupers", "CONTINUE");
+						TimeUnit.MILLISECONDS.sleep(1000);
+						processAnimation(Constants.FRONT, print_writers, "anim_NameSupers", "SHOW 0.0");
+						AnimateIn(Constants.MIDDLE + Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
+						this.whichGraphicOnScreen = "";
+						break;
+					case Constants.ISPL:
+						processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "CONTINUE");
+						processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third$Top_Header", "SHOW 2.680");
+						TimeUnit.MILLISECONDS.sleep(1000);
+						AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
+						this.whichGraphicOnScreen = "";
+						break;
+				 }
 				break;
 			 
 			 case "Alt_q":
@@ -754,15 +832,29 @@ public class Animation
 					lastNumberOfRows = caption.this_fullFramesGfx.numberOfRows;
 				}
 				break;
-			case "F5": case "F6": case "F7": case "F9": case "F11": case "l": case "n": case "a": case "Control_F2":
+			case "F7": case "F11": 
+				processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "START");
+				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third$Top_Header", "START");
+				break;
+			case "F5": case "F6": case "F9": case "l": case "n": case "a": case "Control_F2":
 			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k":  case "Alt_F1": case "Alt_F2":
 			case "Shift_F3": case "s": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":case "Shift_E":
 			case "Control_g": case "Control_h": case "Control_F6": case "Shift_F6": case "Control_s": case "Control_f":
 			case "Alt_F6": case "Shift_A":  case "Shift_L": case "Shift_J":
 				processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "START");
-				break;
+				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third$Top_Header", "SHOW 0.0");
+				break;	
 			 case "Alt_F8": case "F8": case "F10": case "j": case "Alt_a": case "Alt_s":
-				processAnimation(Constants.FRONT, print_writers, "Anim_NameSuperChange", "START");
+				 switch (config.getBroadcaster().toUpperCase()) {
+					case Constants.ICC_U19_2023:
+						processAnimation(Constants.FRONT, print_writers, "Anim_NameSuperChange", "START");
+						break;
+					case Constants.ISPL:
+						processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "START");
+						processAnimation(Constants.FRONT, print_writers, "Anim_LtChange$Lt_X_Position", "CONTINUE REVERSE");
+						processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third$Top_Header", "SHOW 0.0");
+						break;
+				 }
 				break;
 			case "q": case "Control_q":
 				processAnimation(Constants.FRONT, print_writers, "Anim_Boundary_LTChange", "START");
@@ -911,12 +1003,29 @@ public class Animation
 			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_k": case "Control_F2":
 			case "Control_F6": case "Shift_F6": case "Control_s": case "Control_f": case "l": case "n": case "a": 
 			case "Alt_F6": case "Shift_A":  case "Shift_L": case "Shift_J":
-				processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "SHOW 0.0");
-				this.whichGraphicOnScreen = whatToProcess;
+				switch (config.getBroadcaster().toUpperCase()) {
+					case Constants.ICC_U19_2023:
+						processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "SHOW 0.0");
+						processAnimation(Constants.FRONT, print_writers, "Anim_LtChange$Lt_X_Position", "SHOW 0.900");
+						this.whichGraphicOnScreen = whatToProcess;
+						break;
+					case Constants.ISPL:
+						processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "SHOW 0.0");
+						this.whichGraphicOnScreen = whatToProcess;
+						break;
+				 }
 				break;
 			 case "Alt_F8": case "F8": case "F10": case "j": case "Alt_a": case "Alt_s":
-				processAnimation(Constants.FRONT, print_writers, "Anim_NameSuperChange", "SHOW 0.0");
-				this.whichGraphicOnScreen = whatToProcess;
+				 switch (config.getBroadcaster().toUpperCase()) {
+					case Constants.ICC_U19_2023:
+						processAnimation(Constants.FRONT, print_writers, "Anim_NameSuperChange", "SHOW 0.0");
+						this.whichGraphicOnScreen = whatToProcess;
+						break;
+					case Constants.ISPL:
+						processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "SHOW 0.0");
+						this.whichGraphicOnScreen = whatToProcess;
+						break;
+				 }
 				break;
 				
 			 case "Control_x": case "Control_z": case "z": case "x": case "c": case "v":
@@ -1016,7 +1125,7 @@ public class Animation
 	public String ResetAnimation(String whatToProcess, List<PrintWriter> print_writers, Configuration config)
 	{
 		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023: case Constants.ISPL:
+		case Constants.ICC_U19_2023:
 
 			processAnimation(Constants.BACK, print_writers, "Anim_FullFrames", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Change", "SHOW 0.0");
@@ -1061,6 +1170,45 @@ public class Animation
 			this.whichGraphicOnScreen = "";
 			this.specialBugOnScreen = "";
 			break;
+		case Constants.ISPL:
+
+//			processAnimation(Constants.BACK, print_writers, "Anim_FullFrames", "SHOW 0.0");
+//			processAnimation(Constants.BACK, print_writers, "Change", "SHOW 0.0");
+//			processAnimation(Constants.BACK, print_writers, "ConcussExtend_Y", "SHOW 0.0");
+//			processAnimation(Constants.BACK, print_writers, "Header_Shrink", "SHOW 0.0");
+//			processAnimation(Constants.BACK, print_writers, "Profile_Highlight", "SHOW 0.0");
+//			processAnimation(Constants.BACK, print_writers, "Base_Gradient", "SHOW 0.0");
+//			processAnimation(Constants.BACK, print_writers, "Target", "SHOW 0.0");
+//			processAnimation(Constants.BACK, print_writers, "TargetLoop", "SHOW 0.0");
+//			processAnimation(Constants.BACK, print_writers, "In_At", "SHOW 0.0");
+//			processAnimation(Constants.BACK, print_writers, "In_At_Loop", "SHOW 0.0");
+//			processAnimation(Constants.BACK, print_writers, "Milestone", "SHOW 0.0");
+//			processAnimation(Constants.BACK, print_writers, "MilestoneLoop", "SHOW 0.0");
+//			processAnimation(Constants.BACK, print_writers, "Manhattan_Comparison", "SHOW 0.0");
+//			processAnimation(Constants.BACK, print_writers, "Anim_Squad", "SHOW 0.0");
+//			processAnimation(Constants.BACK, print_writers, "SquadFlare_Loop", "SHOW 0.0");
+//			processAnimation(Constants.BACK, print_writers, "Anim_SquadDataChange", "SHOW 0.0");
+//			processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight", "SHOW 0.0");
+//			processAnimation(Constants.BACK, print_writers, "Anim_POTT", "SHOW 0.0");
+//			processAnimation(Constants.BACK, print_writers, "POTT_Loop", "SHOW 0.0");
+
+			processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
+			processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "SHOW 0.0");
+			processAnimation(Constants.FRONT, print_writers, "Anim_Bugs", "SHOW 0.0");
+			
+			processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "SHOW 0.0");
+			
+			processAnimation(Constants.FRONT, print_writers, "Anim_BugsChange", "SHOW 0.0");
+//			processAnimation(Constants.FRONT, print_writers, "Anim_Mini", "SHOW 0.0");
+			
+			if(whatToProcess.contains("CLEAR-ALL-WITH-INFOBAR")) {
+				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar", "SHOW 0.0");
+				this.infobar.setInfobar_on_screen(false);
+				this.infobar.setInfobar_status("");
+			}
+			this.whichGraphicOnScreen = "";
+			this.specialBugOnScreen = "";
+			break;	
 		}
 		return CricketUtil.YES;
 	}
