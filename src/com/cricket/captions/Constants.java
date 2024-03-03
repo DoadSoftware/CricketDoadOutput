@@ -22,8 +22,10 @@ public class Constants
 	public final static String MIDDLE = "MIDDLE";
 
 	public final static String ISPL = "ISPL";
-	public final static String ISPL_LOGOS_PATH = "IMAGE*/Default/Essentials/Logos/";
+	public final static String ISPL_LOGOS_PATH = "IMAGE*/Default/Essentials/TeamLogo/";
 	public final static String ISPL_PHOTOS_PATH = "C:\\\\Images\\\\ISPL\\\\PHOTOS\\";
+	public final static String BASE_PATH = "IMAGE*/Default/Essentials/Base";
+	public final static String TEXT_PATH = "IMAGE*/Default/Essentials/Text";
 	
 	public final static String ICC_U19_2023 = "ICC-U19-2023";
 	public final static String ICC_U19_2023_FLAG_PATH = "IMAGE*/Default/Essentials/Flags/";

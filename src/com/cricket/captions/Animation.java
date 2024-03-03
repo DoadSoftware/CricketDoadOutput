@@ -82,7 +82,7 @@ public class Animation
 				default:
 					return Constants.LOWER_THIRD;
 				}
-			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": case "Alt_9": case "Alt_0":
+			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": case "Alt_9": case "Alt_0": case "Alt_c":
 				return Constants.INFO_BAR;
 			case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Alt_p": case "o": case "t": case "Control_y": case "h": case "Shift_F4": case "Shift_F":
 				return Constants.BUGS;
@@ -320,10 +320,22 @@ public class Animation
 				break;
 				
 			case "F12": //Infobar
-				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$In_Out", "START");
-				this.infobar.setInfobar_on_screen(true);
-				this.infobar.setInfobar_pushed(false);
-				this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.ICC_U19_2023:
+					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$In_Out", "START");
+					this.infobar.setInfobar_on_screen(true);
+					this.infobar.setInfobar_pushed(false);
+					this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
+					break;
+				case Constants.ISPL:
+					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Small$In", "SHOW 0.0");
+					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$In", "START");
+					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$Main_In", "START");
+					this.infobar.setInfobar_on_screen(true);
+					this.infobar.setInfobar_pushed(false);
+					this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
+					break;
+				}
 				break;
 			case "ArrowUp":
 				if(this.infobar.isInfobar_on_screen() == true && this.infobar.isInfobar_pushed()) {
@@ -607,10 +619,23 @@ public class Animation
 				this.whichGraphicOnScreen = "";
 				break;
 			case "F12": //Infobar
-				if(infobar.isInfobar_on_screen() == true) {
-					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$In_Out", "CONTINUE");
-					infobar.setInfobar_on_screen(false);
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.ICC_U19_2023:
+					if(infobar.isInfobar_on_screen() == true) {
+						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$In_Out", "CONTINUE");
+						infobar.setInfobar_on_screen(false);
+					}
+					break;
+				case Constants.ISPL:
+					if(infobar.isInfobar_on_screen() == true) {
+						processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Small$In", "SHOW 0.0");
+						processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Out", "START");
+						processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$Main_OUT", "START");
+						this.infobar.setInfobar_on_screen(false);
+					}
+					break;
 				}
+				
 				break;
 			}
 			break;
@@ -742,20 +767,60 @@ public class Animation
 			case "q": case "Control_q":
 				processAnimation(Constants.FRONT, print_writers, "Anim_Boundary_LTChange", "START");
 				break;
+			case "Alt_c":
+				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$TopStage", "START");
+				break;
 			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": case "Alt_9": case "Alt_0":
 				switch(whatToProcess.split(",")[0]) {
 				case "Alt_1":
 					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_Bottom_Left", "START");
 					break;
 				case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_9": case "Alt_0":
-					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo", "START");
-					if(infobar.getRight_section()!= null && !infobar.getRight_section().isEmpty()) {
-						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_All$In_Out", "SHOW 0.0");
-						infobar.setRight_section("");
+					switch (config.getBroadcaster().toUpperCase()) {
+					case Constants.ICC_U19_2023:
+						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo", "START");
+						if(infobar.getRight_section()!= null && !infobar.getRight_section().isEmpty()) {
+							processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_All$In_Out", "SHOW 0.0");
+							infobar.setRight_section("");
+						}
+						break;
+					case Constants.ISPL:
+						if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BATSMAN)) {
+							processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage1_Out", "START");
+							infobar.setMiddle_section("");
+						}else {
+							if(infobar.getMiddle_section() != null && !infobar.getMiddle_section().isEmpty()) {
+								processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage1_Change", "START");
+							}else {
+								processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage1_In", "START");
+							}
+							infobar.setMiddle_section(whatToProcess.split(",")[2]);
+						}
+						break;
 					}
+					
 					break;
 				case "Alt_7":
-					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo_BottomRightPart", "START");
+					switch(config.getBroadcaster().toUpperCase()) {
+					case Constants.ICC_U19_2023: 
+						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo_BottomRightPart", "START");
+						break;
+					case Constants.ISPL:
+						if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
+							processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage2_Out", "START");
+							infobar.setRight_bottom("");
+						}else {
+							if(infobar.getRight_bottom() != null && !infobar.getRight_bottom().isEmpty()) {
+								processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage2_Change", "START");
+							}else {
+								processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage2_In", "START");
+							}
+							infobar.setRight_bottom(whatToProcess.split(",")[2]);
+						}
+						
+						break;
+					}
+					
 					break;
 				case "Alt_8":
 					if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
@@ -806,10 +871,34 @@ public class Animation
 				break;
 			case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_9": case "Alt_0":
 				//TimeUnit.MILLISECONDS.sleep(1000);
-				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo", "SHOW 0.0");
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.ISPL:
+					if(!whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BATSMAN) && 
+							infobar.getMiddle_section() != null && !infobar.getMiddle_section().isEmpty()) {
+						processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage1_Change", "SHOW 0.0");
+					}
+					break;
+
+				case Constants.ICC_U19_2023:
+					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo", "SHOW 0.0");
+					break;
+				}
+				
 				break;
 			case "Alt_7":
-				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo_BottomRightPart", "SHOW 0.0");
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.ISPL:
+					if(!whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER) && 
+							infobar.getRight_bottom() != null && !infobar.getRight_bottom().isEmpty()) {
+						processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage2_Change", "SHOW 0.0");
+					}
+					break;
+
+				case Constants.ICC_U19_2023:
+					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo_BottomRightPart", "SHOW 0.0");
+					break;
+				}
+				
 				break;
 			case "Alt_8":
 				if(!whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {

@@ -394,8 +394,27 @@ public class Caption
 				status = this_infobarGfx.populateVizInfobarLeftBottom(print_writers, matchAllData, whichSide);
 				break;
 			case "Alt_2": // Infobar Middle
-				this_infobarGfx.infobar.setMiddle_section(whatToProcess.split(",")[2]);
-				status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers,matchAllData, whichSide);
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.ICC_U19_2023:
+					this_infobarGfx.infobar.setMiddle_section(whatToProcess.split(",")[2]);
+					status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers,matchAllData, whichSide);
+					break;
+
+				case Constants.ISPL:
+					if(this_infobarGfx.infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
+						this_infobarGfx.infobar.setMiddle_section(whatToProcess.split(",")[2]);
+						status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers,matchAllData, 1);
+					}else {
+						if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BATSMAN)) {
+							this_infobarGfx.infobar.setMiddle_section(whatToProcess.split(",")[2]);
+							status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers,matchAllData, 1);
+						}else {
+							this_infobarGfx.infobar.setMiddle_section(whatToProcess.split(",")[2]);
+							status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers,matchAllData, whichSide);
+						}
+					}
+					break;
+				}
 				break;
 			case "Alt_3": 
 				this_infobarGfx.infobar.setMiddle_section("BAT_PROFILE_CAREER");
@@ -414,18 +433,44 @@ public class Caption
 				this_infobarGfx.lastXballs = Integer.valueOf(whatToProcess.split(",")[2]);
 				status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
 				break;
+			case "Alt_c":
+				this_infobarGfx.challengedRuns = Integer.valueOf(whatToProcess.split(",")[2]);
+				status = this_infobarGfx.populateChallengedSection(true,print_writers, matchAllData, whichSide);
+				break;
 			case "Alt_6":
 				this_infobarGfx.infobar.setMiddle_section("BATSMAN_SPONSOR");
 				this_infobarGfx.sponsor_omo = Integer.valueOf(whatToProcess.split(",")[2]);
 				status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
 				break;
 			case "Alt_7":
-				if(this_infobarGfx.infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
-					this_infobarGfx.infobar.setRight_bottom(whatToProcess.split(",")[2]);
-					status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, 1, whichSide);
-				}else {
-					status = "IN Alt+2 Section BASTMAN/BOWLER NOT SELECTED";
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.ICC_U19_2023:
+					if(this_infobarGfx.infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
+						this_infobarGfx.infobar.setRight_bottom(whatToProcess.split(",")[2]);
+						status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, 1, whichSide);
+					}else {
+						status = "IN Alt+2 Section BASTMAN/BOWLER NOT SELECTED";
+					}
+					break;
+				case Constants.ISPL:
+					if(this_infobarGfx.infobar.getRight_bottom().equalsIgnoreCase(CricketUtil.BOWLER)) {
+						this_infobarGfx.infobar.setRight_bottom(whatToProcess.split(",")[2]);
+						status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, 1, 1);
+					}else {
+						if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
+							this_infobarGfx.infobar.setRight_bottom(whatToProcess.split(",")[2]);
+							status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, 1, 1);
+						}else {
+							this_infobarGfx.infobar.setRight_bottom(whatToProcess.split(",")[2]);
+							status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, whichSide, 1);
+						}
+					}
+					
+//					this_infobarGfx.infobar.setRight_bottom(whatToProcess.split(",")[2]);
+//					status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, 1, whichSide);
+					break;
 				}
+				
 				break;
 			case "Alt_8":
 				if(this_infobarGfx.infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {

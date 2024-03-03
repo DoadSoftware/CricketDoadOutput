@@ -304,6 +304,7 @@ public class IndexController
 					this_caption.PopulateGraphics(valueToProcess, session_match);
 					this_animation.caption = this_caption;
 					if(this_caption.status.equalsIgnoreCase(Constants.OK)) {
+						System.out.println("valueToProcess" + valueToProcess);
 						processAnimations("ANIMATE-IN-GRAPHICS", session_configuration, valueToProcess, print_writers);
 						this_caption.status = CricketUtil.YES;
 						return JSONObject.fromObject(this_caption).toString();
@@ -434,7 +435,6 @@ public class IndexController
 				this_animation.CutBack(valueToProcess, print_writers, session_configuration);
 				break;
 			default:
-				System.out.println("which graphic "+this_animation.whichGraphicOnScreen);
 				if(this_animation.whichGraphicOnScreen.isEmpty()) {
 					this_animation.AnimateIn(valueToProcess, print_writers, session_configuration);
 				} else { // Change on
