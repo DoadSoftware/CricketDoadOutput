@@ -189,6 +189,13 @@ public class Caption
 			case "Alt_a": case "Alt_s":
 				status = this_lowerThirdGfx.populateLTStaff(whatToProcess,whichSide);
 				break;
+			case "Shift_F12":
+				this_infobarGfx.infobar.setInfobar_ident_section(whatToProcess.split(",")[2]);
+				status = this_infobarGfx.infoIdentSection(print_writers, whatToProcess, matchAllData, whichSide);
+				break;
+			case "Control_F12":
+				status = this_infobarGfx.populateInfobarIdent(print_writers,whatToProcess,matchAllData,1);
+				break;
 			case "F12":// InfoBar
 				status = this_infobarGfx.populateInfobar(print_writers,whatToProcess,matchAllData);
 				break;
@@ -390,8 +397,20 @@ public class Caption
 				status = this_bugsAndMiniGfx.populateBugHighlight(whatToProcess,matchAllData,whichSide, Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
 			case "Alt_1": // Infobar Left Bottom
-				this_infobarGfx.infobar.setLeft_bottom(whatToProcess.split(",")[2]);
-				status = this_infobarGfx.populateVizInfobarLeftBottom(print_writers, matchAllData, whichSide);
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.ISPL:
+					this_infobarGfx.infobar.setFull_section(whatToProcess.split(",")[2]);
+					status = this_infobarGfx.populateFullSection(print_writers, matchAllData, whichSide);
+					break;
+
+				case Constants.ICC_U19_2023:
+					this_infobarGfx.infobar.setLeft_bottom(whatToProcess.split(",")[2]);
+					status = this_infobarGfx.populateVizInfobarLeftBottom(print_writers, matchAllData, whichSide);
+					break;
+				}
+				break;
+			case "Shift_T":
+				status = this_infobarGfx.populateTapeBall(print_writers,matchAllData);
 				break;
 			case "Alt_2": // Infobar Middle
 				switch (config.getBroadcaster().toUpperCase()) {
@@ -435,7 +454,7 @@ public class Caption
 				break;
 			case "Alt_c":
 				this_infobarGfx.challengedRuns = Integer.valueOf(whatToProcess.split(",")[2]);
-				status = this_infobarGfx.populateChallengedSection(true,print_writers, matchAllData, whichSide);
+				status = this_infobarGfx.populateChallengedSection(false,print_writers, matchAllData, 1);
 				break;
 			case "Alt_6":
 				this_infobarGfx.infobar.setMiddle_section("BATSMAN_SPONSOR");

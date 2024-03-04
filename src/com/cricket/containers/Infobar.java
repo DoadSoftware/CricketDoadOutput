@@ -12,6 +12,8 @@ public class Infobar {
 	private boolean powerplay_end = false;
 	private boolean infobar_pushed = false;
 	private boolean thisOvers_Title_Fade = false;
+	private boolean challengeRunOnScreen = false;
+	
 	
 	private int player_id;
 	
@@ -33,12 +35,41 @@ public class Infobar {
 	private String Right_section;
 	private String Last_right_section;
 	
+	private String full_section;
+	private String last_full_section;
+	
+	private String infobar_ident_section;
+	
 	private List<BattingCard> last_batsmen;
 	private BowlingCard last_bowler;
 	private String last_this_over;
 	
 	private List<String> freeText;
 	
+	public String getFull_section() {
+		return full_section;
+	}
+	public void setFull_section(String full_section) {
+		this.full_section = full_section;
+	}
+	public String getLast_full_section() {
+		return last_full_section;
+	}
+	public void setLast_full_section(String last_full_section) {
+		this.last_full_section = last_full_section;
+	}
+	public String getInfobar_ident_section() {
+		return infobar_ident_section;
+	}
+	public void setInfobar_ident_section(String infobar_ident_section) {
+		this.infobar_ident_section = infobar_ident_section;
+	}
+	public boolean isChallengeRunOnScreen() {
+		return challengeRunOnScreen;
+	}
+	public void setChallengeRunOnScreen(boolean challengeRunOnScreen) {
+		this.challengeRunOnScreen = challengeRunOnScreen;
+	}
 	public List<String> getFreeText() {
 		return freeText;
 	}
