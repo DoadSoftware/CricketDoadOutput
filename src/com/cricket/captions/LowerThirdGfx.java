@@ -778,7 +778,7 @@ public class LowerThirdGfx
 	    	}
 			
 			if(Integer.valueOf(whatToProcess.split(",")[2]) == 30) {
-				whichSplit = "BALLS PER FIFTY";
+				whichSplit = "BALLS PER THIRTY";
 				switch (config.getBroadcaster().toUpperCase()) {
 				case Constants.ICC_U19_2023:
 					lowerThird = new LowerThird("", matchAllData.getSetup().getAwayTeam().getTeamName1(), "",whichSplit, String.valueOf(inning.getTotalRuns() + "-" + inning.getTotalWickets()), "",
@@ -787,12 +787,12 @@ public class LowerThirdGfx
 					break;
 				case Constants.ISPL:
 					lowerThird = new LowerThird("", matchAllData.getSetup().getAwayTeam().getTeamName1(), "",whichSplit, String.valueOf(inning.getTotalRuns() + "-" + inning.getTotalWickets()), "",
-							2,"",matchAllData.getSetup().getAwayTeam().getTeamName4(),splitNumber,splitData,new String[]{"FIFTIES","BALLS"},null,
-							new String[] {"146.0","323.0","501.0","682.0","832.0","800.0","800.0","800.0","800.0","800.0"});
+							2,"",matchAllData.getSetup().getAwayTeam().getTeamName4(),splitNumber,splitData,new String[]{"THIRTIES","BALLS"},null,
+							new String[] {"136.0","229.0","316.0","415.0","519.0","614.0","712.0","805.0","820.0","840.0"});
 					break;	
 				}
 			}else {
-				whichSplit = "BALLS PER HUNDRED";
+				whichSplit = "BALLS PER FIFTY";
 				switch (config.getBroadcaster().toUpperCase()) {
 				case Constants.ICC_U19_2023:
 					lowerThird = new LowerThird("", matchAllData.getSetup().getAwayTeam().getTeamName1(), "",whichSplit, String.valueOf(inning.getTotalRuns() + "-" + inning.getTotalWickets()), "",
@@ -801,8 +801,8 @@ public class LowerThirdGfx
 					break;
 				case Constants.ISPL:
 					lowerThird = new LowerThird("", matchAllData.getSetup().getAwayTeam().getTeamName1(), "",whichSplit, String.valueOf(inning.getTotalRuns() + "-" + inning.getTotalWickets()), "",
-							2,"",matchAllData.getSetup().getAwayTeam().getTeamName4(),splitNumber,splitData,new String[]{"HUNDREDS","BALLS"},null,
-							new String[] {"197.0","384.0","573.0","764.0","800.0","800.0","800.0","800.0","800.0","800.0"});
+							2,"",matchAllData.getSetup().getAwayTeam().getTeamName4(),splitNumber,splitData,new String[]{"FIFTIES","BALLS"},null,
+							new String[] {"136.0","229.0","316.0","415.0","519.0","614.0","712.0","805.0","820.0","840.0"});
 					break;	
 				}
 			}
@@ -816,7 +816,7 @@ public class LowerThirdGfx
 			}
 			
 			if(Integer.valueOf(whatToProcess.split(",")[2]) == 30) {
-				whichSplit = "BALLS PER FIFTY";
+				whichSplit = "BALLS PER THIRTY";
 				switch (config.getBroadcaster().toUpperCase()) {
 				case Constants.ICC_U19_2023:
 					lowerThird = new LowerThird("", matchAllData.getSetup().getHomeTeam().getTeamName1(), "",whichSplit, String.valueOf(inning.getTotalRuns() + "-" + inning.getTotalWickets()), "",
@@ -825,12 +825,12 @@ public class LowerThirdGfx
 					break;
 				case Constants.ISPL:
 					lowerThird = new LowerThird("", matchAllData.getSetup().getHomeTeam().getTeamName1(), "",whichSplit, String.valueOf(inning.getTotalRuns() + "-" + inning.getTotalWickets()), "",
-							2,"",matchAllData.getSetup().getHomeTeam().getTeamName4(),splitNumber,splitData,new String[]{"FIFTIES","BALLS"},null,
-							new String[] {"146.0","323.0","501.0","682.0","832.0","800.0","800.0","800.0","800.0","800.0"});
+							2,"",matchAllData.getSetup().getHomeTeam().getTeamName4(),splitNumber,splitData,new String[]{"THIRTIES","BALLS"},null,
+							new String[] {"136.0","229.0","316.0","415.0","519.0","614.0","712.0","805.0","820.0","840.0"});
 					break;	
 				}
 			}else {
-				whichSplit = "BALLS PER HUNDRED";
+				whichSplit = "BALLS PER FIFTY";
 				switch (config.getBroadcaster().toUpperCase()) {
 				case Constants.ICC_U19_2023:
 					lowerThird = new LowerThird("", matchAllData.getSetup().getHomeTeam().getTeamName1(), "",whichSplit, String.valueOf(inning.getTotalRuns() + "-" + inning.getTotalWickets()), "",
@@ -839,8 +839,8 @@ public class LowerThirdGfx
 					break;
 				case Constants.ISPL:
 					lowerThird = new LowerThird("", matchAllData.getSetup().getHomeTeam().getTeamName1(), "",whichSplit, String.valueOf(inning.getTotalRuns() + "-" + inning.getTotalWickets()), "",
-							2,"",matchAllData.getSetup().getHomeTeam().getTeamName4(),splitNumber,splitData,new String[]{"HUNDREDS","BALLS"},null,
-							new String[] {"197.0","384.0","573.0","764.0","800.0","800.0","800.0","800.0","800.0","800.0"});
+							2,"",matchAllData.getSetup().getHomeTeam().getTeamName4(),splitNumber,splitData,new String[]{"FIFTIES","BALLS"},null,
+							new String[] {"136.0","229.0","316.0","415.0","519.0","614.0","712.0","805.0","820.0","840.0"});
 					break;	
 				}
 			}
@@ -4671,25 +4671,25 @@ public class LowerThirdGfx
 							"$Select_Subline$4$Data$Title*ACTIVE SET 0 \0", print_writers);
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$SubLines$Side" + WhichSide +
-						"$Select_Subline$1$Data$Title$txt_1*GEOM*TEXT SET FIRST\0", print_writers);
+						"$Select_Subline$1$Data$Title$txt_1*GEOM*TEXT SET 1\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$SubLines$Side" + WhichSide +
-						"$Select_Subline$1$Data$Title$txt_2*GEOM*TEXT SET SECOND\0", print_writers);
+						"$Select_Subline$1$Data$Title$txt_2*GEOM*TEXT SET 2\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$SubLines$Side" + WhichSide +
-						"$Select_Subline$1$Data$Title$txt_3*GEOM*TEXT SET THIRD\0", print_writers);
+						"$Select_Subline$1$Data$Title$txt_3*GEOM*TEXT SET 3\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$SubLines$Side" + WhichSide +
-						"$Select_Subline$1$Data$Title$txt_4*GEOM*TEXT SET FOURTH\0", print_writers);
+						"$Select_Subline$1$Data$Title$txt_4*GEOM*TEXT SET 4\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$SubLines$Side" + WhichSide +
-						"$Select_Subline$1$Data$Title$txt_5*GEOM*TEXT SET FIFTH\0", print_writers);
+						"$Select_Subline$1$Data$Title$txt_5*GEOM*TEXT SET 5\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$SubLines$Side" + WhichSide +
-						"$Select_Subline$1$Data$Title$txt_6*GEOM*TEXT SET SIXTH\0", print_writers);
+						"$Select_Subline$1$Data$Title$txt_6*GEOM*TEXT SET 6\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$SubLines$Side" + WhichSide +
-						"$Select_Subline$1$Data$Title$txt_7*GEOM*TEXT SET SEVENTH\0", print_writers);
+						"$Select_Subline$1$Data$Title$txt_7*GEOM*TEXT SET 7\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$SubLines$Side" + WhichSide +
-						"$Select_Subline$1$Data$Title$txt_8*GEOM*TEXT SET EIGHTH\0", print_writers);
+						"$Select_Subline$1$Data$Title$txt_8*GEOM*TEXT SET 8\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$SubLines$Side" + WhichSide +
-						"$Select_Subline$1$Data$Title$txt_9*GEOM*TEXT SET NINTH\0", print_writers);
+						"$Select_Subline$1$Data$Title$txt_9*GEOM*TEXT SET 9\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$SubLines$Side" + WhichSide +
-						"$Select_Subline$1$Data$Title$txt_10*GEOM*TEXT SET TENTH\0", print_writers);
+						"$Select_Subline$1$Data$Title$txt_10*GEOM*TEXT SET 10\0", print_writers);
 					
 					for(int i=0; i<lowerThird.getTitlesText().length; i++) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$SubLines$Side" + WhichSide +

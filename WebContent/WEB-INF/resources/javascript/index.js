@@ -742,10 +742,10 @@ function addItemsToList(whatToProcess,dataToProcess)
 				select.id = 'selectMiddleStat';
 				select.name = select.id;
 				
-				option = document.createElement('option');
+				/*option = document.createElement('option');
 				option.value = 'CURR_PARTNERSHIP';
 				option.text = 'Current Partnership';
-				select.appendChild(option);
+				select.appendChild(option);*/
 				
 				option = document.createElement('option');
 				option.value = 'EXTRAS';
@@ -877,10 +877,10 @@ function addItemsToList(whatToProcess,dataToProcess)
 					if(inn.isCurrentInning == 'YES'){
 						if(inn.inningNumber == 1){
 							
-							option = document.createElement('option');
+							/*option = document.createElement('option');
 							option.value = 'PROJECTED';
 							option.text = 'Projected Score';
-							select.appendChild(option);
+							select.appendChild(option);*/
 							
 						}
 						else{
@@ -1361,26 +1361,52 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 		case 's':
 			
-			header_text.innerHTML = '50-100 SPLIT';
+			switch($('#selected_broadcaster').val().toUpperCase()){
+				case 'ISPL':
+					header_text.innerHTML = '30-50 SPLIT';
 			
-			select = document.createElement('select');
-			select.id = 'selectSplit';
-			select.name = select.id;
+					select = document.createElement('select');
+					select.id = 'selectSplit';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = '30';
+					option.text = '30-Split';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '50';
+					option.text = '50-Split';
+					select.appendChild(option);
+					
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),0);
+					cellCount = cellCount + 1
+					break;
+				case 'ICC-U19-2023':
+					header_text.innerHTML = '50-100 SPLIT';
 			
-			option = document.createElement('option');
-			option.value = '50';
-			option.text = '50-Split';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = '100';
-			option.text = '100-Split';
-			select.appendChild(option);
-			
-			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
-			row.insertCell(cellCount).appendChild(select);
-			setDropdownOptionToSelectOptionArray($(select),0);
-			cellCount = cellCount + 1
+					select = document.createElement('select');
+					select.id = 'selectSplit';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = '50';
+					option.text = '50-Split';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '100';
+					option.text = '100-Split';
+					select.appendChild(option);
+					
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),0);
+					cellCount = cellCount + 1
+					break;
+			}
 			break;
 			
 		case 'Control_F5': case 'Control_b': case 'Control_s': //Batsman Style

@@ -353,91 +353,46 @@ public class Animation
 				if(this.infobar.isInfobar_on_screen() == true) {
 					switch (whatToProcess.split(",")[0]) {
 					case "Alt_f":
-						switch (config.getBroadcaster().toUpperCase()) {
-						case Constants.ICC_U19_2023:
-							if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.TWO_LINER_INFOBAR)) {
-								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Overall_Transformation*"
-									+ "ANIMATION*KEY*$Shrink_In*VALUE SET 120.0 -436.0 0.0\0",print_writers);
-								processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Small", "START");
-								this.infobar.setInfobar_status(Constants.FORCED + Constants.SHRUNK_INFOBAR);
-							} else if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.FORCED + Constants.SHRUNK_INFOBAR)) {
-								processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Small", "CONTINUE REVERSE");
-								this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
-							}
-							break;
-						case Constants.ISPL:
-							if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.TWO_LINER_INFOBAR)) {
-//								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Overall_Transformation*"
-//									+ "ANIMATION*KEY*$Shrink_In*VALUE SET 120.0 -436.0 0.0\0",print_writers);
-								processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Small", "START");
-								this.infobar.setInfobar_status(Constants.FORCED + Constants.SHRUNK_INFOBAR);
-							} else if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.FORCED + Constants.SHRUNK_INFOBAR)) {
-								processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Small", "CONTINUE REVERSE");
-								this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
-							}
-							break;
+						if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.TWO_LINER_INFOBAR)) {
+//							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Overall_Transformation*"
+//								+ "ANIMATION*KEY*$Shrink_In*VALUE SET 120.0 -436.0 0.0\0",print_writers);
+							processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Small$In", "START");
+							this.infobar.setInfobar_status(Constants.FORCED + Constants.SHRUNK_INFOBAR);
+						} else if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.FORCED + Constants.SHRUNK_INFOBAR)) {
+							processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Small$Out", "START");
+							this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
 						}
 						break;
 					case "Alt_g":
-						switch (config.getBroadcaster().toUpperCase()) {
-						case Constants.ICC_U19_2023:
-							if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.TWO_LINER_INFOBAR)) {
-								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Overall_Transformation*"
-									+ "ANIMATION*KEY*$Shrink_In*VALUE SET 183.0 -436.0 0.0\0",print_writers);
-								processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Small", "START");
-								this.infobar.setInfobar_status(Constants.FORCED + Constants.MIDDLE + Constants.SHRUNK_INFOBAR);
-							} else if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.FORCED + Constants.MIDDLE + Constants.SHRUNK_INFOBAR)) {
-								processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Small", "CONTINUE REVERSE");
-								this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
-							}
-							break;
-						case Constants.ISPL:
-							if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.TWO_LINER_INFOBAR)) {
-//								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Overall_Transformation*"
-//									+ "ANIMATION*KEY*$Shrink_In*VALUE SET 183.0 -436.0 0.0\0",print_writers);
-								processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Small", "START");
-								this.infobar.setInfobar_status(Constants.FORCED + Constants.MIDDLE + Constants.SHRUNK_INFOBAR);
-							} else if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.FORCED + Constants.MIDDLE + Constants.SHRUNK_INFOBAR)) {
-								processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Small", "CONTINUE REVERSE");
-								this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
-							}
-							break;
+						if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.TWO_LINER_INFOBAR)) {
+//							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Overall_Transformation*"
+//								+ "ANIMATION*KEY*$Shrink_In*VALUE SET 183.0 -436.0 0.0\0",print_writers);
+							processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Small$In", "START");
+							this.infobar.setInfobar_status(Constants.FORCED + Constants.MIDDLE + Constants.SHRUNK_INFOBAR);
+						} else if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.FORCED + Constants.MIDDLE + Constants.SHRUNK_INFOBAR)) {
+							processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Small$Out", "START");
+							this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
 						}
 						break;
 					case Constants.SHRUNK_INFOBAR:
-						switch (config.getBroadcaster().toUpperCase()) {
-						case Constants.ICC_U19_2023:
-							if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.TWO_LINER_INFOBAR)) {
-								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Overall_Transformation*"
-									+ "ANIMATION*KEY*$Shrink_In*VALUE SET 120.0 -436.0 0.0\0",print_writers);
-								processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Small", "START");
-								this.infobar.setInfobar_status(Constants.SHRUNK_INFOBAR);
-							} else if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.SHRUNK_INFOBAR)) {
-								processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Small", "CONTINUE REVERSE");
-								this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
-							}
-							break;
-						case Constants.ISPL:
-							if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.TWO_LINER_INFOBAR)) {
-//								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Overall_Transformation*"
-//									+ "ANIMATION*KEY*$Shrink_In*VALUE SET 120.0 -436.0 0.0\0",print_writers);
-								processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Small", "START");
-								this.infobar.setInfobar_status(Constants.SHRUNK_INFOBAR);
-							} else if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.SHRUNK_INFOBAR)) {
-								processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Small", "CONTINUE REVERSE");
-								this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
-							}
-							break;
+						if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.TWO_LINER_INFOBAR)) {
+//							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Overall_Transformation*"
+//								+ "ANIMATION*KEY*$Shrink_In*VALUE SET 120.0 -436.0 0.0\0",print_writers);
+							processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Small$In", "START");
+							this.infobar.setInfobar_status(Constants.SHRUNK_INFOBAR);
+						} else if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.SHRUNK_INFOBAR)) {
+							processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Small$Out", "START");
+							this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
 						}
 						break;
 					case Constants.MIDDLE + Constants.SHRUNK_INFOBAR:
 						if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.TWO_LINER_INFOBAR)) {
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Overall_Transformation*"
 								+ "ANIMATION*KEY*$Shrink_In*VALUE SET 183.0 -436.0 0.0\0",print_writers);
-							processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Small", "START");
+							processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Small$In", "START");
 							this.infobar.setInfobar_status(Constants.MIDDLE + Constants.SHRUNK_INFOBAR);
 						} else if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.MIDDLE + Constants.SHRUNK_INFOBAR)) {
-							processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Small", "CONTINUE REVERSE");
+							processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Small$Out", "START");
 							this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
 						}
 						break;
@@ -888,6 +843,9 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Out", "START");
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Ident_Out", "START");
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$IdentInfo$In_Out", "CONTINUE");
+				TimeUnit.MILLISECONDS.sleep(500);
+				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Ident_In", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$IdentInfo$In_Out", "SHOW 0.0");
 				this.infobar.setInfobar_on_screen(false);
 				break;
 			case "F12": //Infobar
@@ -895,6 +853,8 @@ public class Animation
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Small$In", "SHOW 0.0");
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Out", "START");
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$Main_OUT", "START");
+					TimeUnit.MILLISECONDS.sleep(500);
+					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$Main_In", "SHOW 0.0");
 					this.infobar.setInfobar_on_screen(false);
 				}
 				break;
