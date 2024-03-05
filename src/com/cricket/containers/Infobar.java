@@ -14,7 +14,6 @@ public class Infobar {
 	private boolean thisOvers_Title_Fade = false;
 	private boolean challengeRunOnScreen = false;
 	
-	
 	private int player_id;
 	
 	private String infobar_status;

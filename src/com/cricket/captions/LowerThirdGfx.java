@@ -1156,14 +1156,14 @@ public class LowerThirdGfx
 		String runRate = "",summary = "";
 		
 		if(matchAllData.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.SUPER_OVER) && matchAllData.getSetup().getMaxOvers() == 1) {
-			summary = inning.getBatting_team().getTeamName1() + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN ";
+			summary = inning.getBatting_team().getTeamName4() + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN ";
 			
 			lowerThird = new LowerThird(summary, "", "","", "", "",1,"",inning.getBatting_team().getTeamName4(),null,null,
 					new String[]{String.valueOf("FROM " + matchAllData.getSetup().getMaxOvers()*6)+ " BALLS",""},null,null);
 		}else {
 			if(matchAllData.getSetup().getTargetOvers() == "" || matchAllData.getSetup().getTargetOvers().trim().isEmpty() && matchAllData.getSetup().getTargetRuns() == 0) {
 				
-				summary = inning.getBatting_team().getTeamName1() + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN ";
+				summary = inning.getBatting_team().getTeamName4() + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN ";
 				runRate = " AT " + CricketFunctions.generateRunRate(CricketFunctions.getTargetRuns(matchAllData), 
 						Integer.valueOf(CricketFunctions.getTargetOvers(matchAllData)), 0, 2, matchAllData) + " RUNS PER OVER";
 				
@@ -1171,7 +1171,7 @@ public class LowerThirdGfx
 						new String[]{String.valueOf("FROM " + CricketFunctions.getTargetOvers(matchAllData))+ " OVERS",runRate},null,null);
 
 			}else {
-				summary = inning.getBatting_team().getTeamName1() + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN ";
+				summary = inning.getBatting_team().getTeamName4() + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN ";
 				runRate = " AT " + CricketFunctions.generateRunRate(CricketFunctions.getTargetRuns(matchAllData), 
 						Integer.valueOf(CricketFunctions.getTargetOvers(matchAllData)), 0, 2,matchAllData) + " RUNS PER OVER";
 				
@@ -1227,7 +1227,7 @@ public class LowerThirdGfx
 			}
 		}
 		
-		summary = inning.getBatting_team().getTeamName1() + " NEED " + CricketFunctions.getRequiredRuns(matchAllData);
+		summary = inning.getBatting_team().getTeamName4() + " NEED " + CricketFunctions.getRequiredRuns(matchAllData);
 		
 		if(CricketFunctions.getRequiredRuns(matchAllData) <= 1) {
 			summary = summary + " RUN" + CricketFunctions.Plural(CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " TO WIN ";
@@ -5725,6 +5725,9 @@ public class LowerThirdGfx
 						+ "$Select_Subline$2$Data$Right$txt_1*GEOM*TEXT SET " + "\0", print_writers);
 					break;
 				case Constants.ISPL:
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$TopLine$Side" + WhichSide +
+							"$In$BottomTextGrp$geom_MaxSize*FUNCTION*Maxsize*DEFAULT_SCALE_X SET 1.7\0", print_writers);
+					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$SubLines$Side" + WhichSide +
 							"$Select_Subline$2$Data$Title*ACTIVE SET 0 \0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$SubLines$Side" + WhichSide +
@@ -5760,6 +5763,9 @@ public class LowerThirdGfx
 						lowerThird.getLeftText()[1] + "\0", print_writers);
 					break;
 				case Constants.ISPL:
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$TopLine$Side" + WhichSide +
+							"$In$BottomTextGrp$geom_MaxSize*FUNCTION*Maxsize*DEFAULT_SCALE_X SET 1.7\0", print_writers);
+					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$SubLines$Side" + WhichSide +
 							"$Select_Subline$2$Data$Title*ACTIVE SET 0 \0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$SubLines$Side" + WhichSide +
@@ -5942,6 +5948,9 @@ public class LowerThirdGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$SubLines$Side" + WhichSide +
 						"$Select_Subline$2$Data$Stat$txt_" + (i) + "*FUNCTION*Maxsize*DEFAULT_SCALE_X SET 1.05\0", print_writers);
 			}
+			
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$TopLine$Side" + WhichSide +
+					"$In$BottomTextGrp$geom_MaxSize*FUNCTION*Maxsize*DEFAULT_SCALE_X SET 1.0\0", print_writers);
 			
 //			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side_"+ WhichSide + 
 //					"$Select_Subline$1$Select_Base*FUNCTION*Omo*vis_con SET 0 \0", print_writers);

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import com.cricket.containers.Infobar;
 import com.cricket.model.Configuration;
+import com.cricket.model.MatchAllData;
 import com.cricket.util.CricketFunctions;
 import com.cricket.util.CricketUtil;
 
@@ -134,10 +135,19 @@ public class Animation
 			//Full framers
 			switch (whatToProcess.split(",")[0]) {
 			case "m": case "Control_m":
+				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
+				TimeUnit.MILLISECONDS.sleep(500);
 				processAnimation(Constants.BACK, print_writers, "Anim_MatchId$In_Out", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
-			case "F1": case "F2": case "Shift_F11": case "F4": case "Control_F7":
+			case "Shift_D":
+				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
+				TimeUnit.MILLISECONDS.sleep(500);
+				processAnimation(Constants.BACK, print_writers, "Anim_Target$In_Out", "START");
+				processAnimation(Constants.BACK, print_writers, "Anim_Target$Loop", "START");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;	
+			case "F1": case "F2": case "Shift_F11": case "F4": case "Control_F7": case "Control_F8":
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
 				TimeUnit.MILLISECONDS.sleep(500);
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Essentials", "START");
@@ -157,6 +167,9 @@ public class Animation
 					break;
 				case "Control_F7":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Teams", "START");
+					break;
+				case "Control_F8":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Team_Single", "START");
 					break;	
 				}
 				this.whichGraphicOnScreen = whatToProcess;
@@ -297,7 +310,7 @@ public class Animation
 					this.infobar.setInfobar_pushed(false);
 					this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
 				}else {
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Logos_All$Main$Select*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Logos_All$Main$Select*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
 
 //					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Small$In", "SHOW 0.0");
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$In", "START");
@@ -326,7 +339,7 @@ public class Animation
 					TimeUnit.MILLISECONDS.sleep(800);
 				}
 				break;
-			case "w": case "i": case "y": case "u":
+			case "w": case "i": case "y": case "u": case "0":
 				if(whatToProcess.split(",")[0].equalsIgnoreCase("w")) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$WIPES$Select*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
 				}else if(whatToProcess.split(",")[0].equalsIgnoreCase("i")) {
@@ -335,12 +348,22 @@ public class Animation
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$WIPES$Select*FUNCTION*Omo*vis_con SET 3 \0", print_writers);
 				}else if(whatToProcess.split(",")[0].equalsIgnoreCase("u")) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$WIPES$Select*FUNCTION*Omo*vis_con SET 4 \0", print_writers);
+				}else if(whatToProcess.split(",")[0].equalsIgnoreCase("0")) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$WIPES$Select*FUNCTION*Omo*vis_con SET 5 \0", print_writers);
 				}
 				
 				if(this.infobar.isInfobar_on_screen() == true && !this.infobar.isInfobar_pushed()) {
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Wipes", "START");
 				}
 				break;
+			case "Control_2":
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$PowerPlay$txt_PP*GEOM*TEXT SET " + 
+						"P" + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Anim_InfoBar$Main$PowerPlay_In START \0", print_writers);
+				break;
+			case "Control_3":
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Anim_InfoBar$Main$PowerPlay_In CONTINUE REVERSE \0", print_writers);
+				break;	
 			case "Alt_f": case "Alt_g": case Constants.SHRUNK_INFOBAR: case Constants.MIDDLE + Constants.SHRUNK_INFOBAR:
 //				System.out.println("this.infobar.isInfobar_on_screen() = " + this.infobar.isInfobar_on_screen());
 //				System.out.println("whatToProcess = " + whatToProcess);
@@ -755,9 +778,17 @@ public class Animation
 				processAnimation(Constants.BACK, print_writers, "Anim_MatchId$In_Out", "CONTINUE");
 				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.BACK, print_writers, "Anim_MatchId$In_Out", "SHOW 0.0");
+				AnimateIn("ArrowUp,", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;
-			case "F1": case "F2": case "Shift_F11": case "F4": case "Control_F7":
+			case "Shift_D":
+				processAnimation(Constants.BACK, print_writers, "Anim_Target$In_Out", "CONTINUE");
+
+				TimeUnit.MILLISECONDS.sleep(1000);
+				AnimateIn("ArrowUp,", print_writers, config); // Restore infobar
+				this.whichGraphicOnScreen = "";
+				break;	
+			case "F1": case "F2": case "Shift_F11": case "F4": case "Control_F7": case "Control_F8":
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Essentials", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Header", "CONTINUE");
 				
@@ -776,6 +807,9 @@ public class Animation
 					break;
 				case "Control_F7":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Teams", "CONTINUE");
+					break;
+				case "Control_F8":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Team_Single", "CONTINUE");
 					break;	
 				}
 				TimeUnit.MILLISECONDS.sleep(1000);
@@ -1367,7 +1401,7 @@ public class Animation
 						}
 						break;
 					case "Control_F8":
-						processAnimation(Constants.BACK, print_writers, "Change$LineUp_Image", "START");
+						processAnimation(Constants.BACK, print_writers, "Change$Team_Single", "START");
 						//TimeUnit.MILLISECONDS.sleep(1000);
 						break;
 					}
@@ -1453,6 +1487,7 @@ public class Animation
 						infobar.setRight_bottom("");
 					}
 					infobar.setFull_section(whatToProcess.split(",")[2]);
+					System.out.println("infobar.getFull_section()2 = " + infobar.getFull_section());
 					break;
 				case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_9": case "Alt_0":
 					if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BATSMAN)) {
@@ -1821,8 +1856,8 @@ public class Animation
 						processAnimation(Constants.BACK, print_writers, "Change$Summary", "SHOW 0.0");
 						break;
 					case "Control_F8":
-						processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$LineUp_Image", "SHOW 2.240");
-						processAnimation(Constants.BACK, print_writers, "Change$LineUp_Image", "SHOW 0.0");
+						processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Team_Single", "SHOW 2.240");
+						processAnimation(Constants.BACK, print_writers, "Change$Team_Single", "SHOW 0.0");
 						break;
 					case "p":
 						processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Group_Standings", "SHOW 2.240");
@@ -2360,6 +2395,9 @@ public class Animation
 							break;
 						case "m": case "Control_m":
 							previewCommand = "Anim_MatchId$In_Out$In 1.700";
+							break;
+						case "Shift_D": // target
+							previewCommand = "Anim_Target$In_Out$In 1.500";
 							break;	
 						}
 						switch(whatToProcess.split(",")[0]) {
@@ -2377,6 +2415,9 @@ public class Animation
 							break;
 						case "Control_F7":
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Teams$In 2.220";
+							break;
+						case "Control_F8": //Playing XI
+							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Team_Single$In 2.240";
 							break;	
 						}
 					}
@@ -2399,6 +2440,9 @@ public class Animation
 									break;
 								case "Shift_F11":  
 									previewCommand = previewCommand + " Change$Summary 1.580 Change$Summary$Change_Out 0.760 Change$Summary$Change_In 1.580";
+									break;
+								case "Control_F8":
+									previewCommand = previewCommand + " Change$Team_Single 1.940 Change$Team_Single$Change_Out 0.820 Change$Team_Single$Change_In 1.940";
 									break;	
 								}
 							}
@@ -2422,6 +2466,9 @@ public class Animation
 								case "Shift_F11":  
 									previewCommand = previewCommand + " Change$Summary 1.580 Change$Summary$Change_Out 0.760 Change$Summary$Change_In 1.580";
 									break;
+								case "Control_F8":
+									previewCommand = previewCommand + " Change$Team_Single 1.940 Change$Team_Single$Change_Out 0.820 Change$Team_Single$Change_In 1.940";
+									break;	
 								}
 							}
 //							previewCommand = previewCommand + " Change$Footer 1.700 Change$Footer$Change_In 1.700 Change$Footer$Chnage_Out 0.580";

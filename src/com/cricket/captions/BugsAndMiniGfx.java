@@ -666,7 +666,7 @@ public class BugsAndMiniGfx
 						+ Constants.ISPL_LOGOS_PATH + matchAllData.getSetup().getAwayTeam().getTeamName4() + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Center_Bug$Toss"
-						+ "$txt_Info*GEOM*TEXT SET " + whatToProcess.split(",")[2].split("-")[0] + " WON THE TOSS & ELECTED TO " + 
+						+ "$txt_Info*GEOM*TEXT SET " + whatToProcess.split(",")[2].split("-")[0] + " WON THE TIP-TOP & ELECTED TO " + 
 						whatToProcess.split(",")[2].split("-")[1]+ "\0", print_writers);
 				
 				break;
@@ -731,7 +731,7 @@ public class BugsAndMiniGfx
 					pp = CricketFunctions.getFirstPowerPlayScore(matchAllData,inning.getInningNumber(), matchAllData.getEventFile().getEvents());
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$SubText$Side" + WhichSide 
-							+ "$txt_Sub*GEOM*TEXT SET " + "POWERPLAY 1 " +  "(OVERS " + inning.getFirstPowerplayStartOver() + " TO " + 
+							+ "$txt_Sub*GEOM*TEXT SET " + "POWERPLAY 1 " +  "(OVERS " + inning.getFirstPowerplayStartOver() + " & " + 
 							inning.getFirstPowerplayEndOver() + ") " + "\0", print_writers);
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
@@ -741,8 +741,7 @@ public class BugsAndMiniGfx
 					pp=CricketFunctions.getSecPowerPlayScore(matchAllData, inning.getInningNumber(), matchAllData.getEventFile().getEvents());
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$SubText$Side" + WhichSide 
-							+ "$txt_Sub*GEOM*TEXT SET " + "POWERPLAY 2 " +  "(OVERS " + inning.getSecondPowerplayStartOver() + " TO " + 
-							inning.getSecondPowerplayEndOver() + ") " + "\0", print_writers);
+							+ "$txt_Sub*GEOM*TEXT SET " + "POWERPLAY 2 " +  "(OVER " + inning.getSecondPowerplayStartOver() + ") " + "\0", print_writers);
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
 							+ "$txt_Runs*GEOM*TEXT SET "  + pp.split(",")[0] + "\0", print_writers);
@@ -784,7 +783,7 @@ public class BugsAndMiniGfx
 						+ "$txt_Balls*GEOM*TEXT SET " + "" + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$SubText$Side" + WhichSide 
-						+ "$txt_Sub*GEOM*TEXT SET " + CricketFunctions.OverBalls(bowlingCard.getOvers(), bowlingCard.getBalls()) + " - " + bowlingCard.getMaidens() 
+						+ "$txt_Sub*GEOM*TEXT SET " + CricketFunctions.OverBalls(bowlingCard.getOvers(), bowlingCard.getBalls()) + " - " + bowlingCard.getDots() 
 							+ " - " + bowlingCard.getRuns() + " - " + bowlingCard.getWickets() + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$SubText$Side" + WhichSide 
 						+ "$img_Sponsor*ACTIVE SET 0 \0", print_writers);
@@ -816,10 +815,11 @@ public class BugsAndMiniGfx
 							+ "$txt_Runs*GEOM*TEXT SET "  + battingCard.getRuns()+ "\0", print_writers);
 				}
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
-						+ "$txt_Balls*GEOM*TEXT SET " + battingCard.getBalls() + "\0", print_writers);
+						+ "$txt_Balls*GEOM*TEXT SET " + "(" + battingCard.getBalls() + ")" + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$SubText$Side" + WhichSide 
-						+ "$txt_Sub*GEOM*TEXT SET " + battingCard.getFours() +" FOURS    " + battingCard.getSixes() + " SIXES"+ "\0", print_writers);
+						+ "$txt_Sub*GEOM*TEXT SET " + battingCard.getFours() +"  FOURS   " + battingCard.getSixes() + "  SIXES   " + 
+						battingCard.getNines() + "  NINES" + "\0", print_writers);
 				
 				break;
 			case "Shift_F":
@@ -872,7 +872,7 @@ public class BugsAndMiniGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
 						+ "$txt_Runs*GEOM*TEXT SET " + battingCard.getRuns() + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
-						+ "$txt_Balls*GEOM*TEXT SET " + battingCard.getBalls() + "\0", print_writers);
+						+ "$txt_Balls*GEOM*TEXT SET " + "(" + battingCard.getBalls() + ")" + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
 						+ "$txt_Sub*GEOM*TEXT SET " + battingCard.getHowOutText() + "\0", print_writers);
 				

@@ -29,6 +29,7 @@ import com.cricket.model.Team;
 import com.cricket.model.Tournament;
 import com.cricket.model.VariousText;
 import com.cricket.model.Staff;
+import com.cricket.util.CricketFunctions;
 import com.cricket.util.CricketUtil;
 
 public class Caption 
@@ -125,6 +126,9 @@ public class Caption
 	{
 		if(whatToProcess.contains(",")) {
 			switch (whatToProcess.split(",")[0]) {
+			case "Control_1":
+				status = this_infobarGfx.populatebonus(whatToProcess,whichSide, matchAllData);
+				break;
 			case "Alt_q":
 				status = this_lowerThirdGfx.populatePOTT(whatToProcess,whichSide, matchAllData);
 				break;
@@ -132,6 +136,9 @@ public class Caption
 				status = this_fullFramesGfx.populatePOTT(whichSide, whatToProcess.split(",")[0], matchAllData, 0);
 				break;
 			case "F1": // Scorecard FF
+				if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ISPL)) {
+					this_fullFramesGfx.WhichScoreCard = whatToProcess.split(",")[2];
+				}
 				status = this_fullFramesGfx.PopulateScorecardFF(whichSide, whatToProcess.split(",")[0], matchAllData, 
 					Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
@@ -402,7 +409,11 @@ public class Caption
 				switch (config.getBroadcaster().toUpperCase()) {
 				case Constants.ISPL:
 					if(this_infobarGfx.infobar.getFull_section() != null && !this_infobarGfx.infobar.getFull_section().isEmpty()) {
-						whichSide = 2;
+						if(!this_infobarGfx.infobar.getFull_section().equalsIgnoreCase(whatToProcess.split(",")[2])) {
+							whichSide = 2;
+						}else {
+							whichSide = 1;
+						}
 					}else {
 						whichSide = 1;
 					}

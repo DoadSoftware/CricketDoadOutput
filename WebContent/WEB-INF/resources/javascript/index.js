@@ -207,6 +207,17 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			}
 			
 			switch(dataToProcess) {
+			case 'F1':
+				switch($('#selected_broadcaster').val().toUpperCase()){
+				case 'ISPL':
+					addItemsToList(dataToProcess,null);
+					break;
+				case 'ICC-U19-2023':
+					dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
+					processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
+					break;
+				}
+				break;	
 			case 'F4':
 				switch($('#selected_broadcaster').val().toUpperCase()){
 				case 'ISPL':
@@ -227,7 +238,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Alt_F6': case 'Shift_L': case 'Shift_A': case 'Alt_c': case 'Control_F12': case 'Shift_F12':
 				addItemsToList(dataToProcess,null);
 				break;
-			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F1': case 'F2': case 'Control_F1': case 'Control_a':
+			case 'Shift_F10': case 'Shift_F11': case 'm': case 'F2': case 'Control_F1': case 'Control_a':
 			case 'Alt_k':  case 'Shift_F3': case 'd': case 'e': case 'Control_F6': case 'Control_F7': 
 			case 'Control_k': case 'Control_F10': case 'Control_F3': case 'n': case 'a': case 't': case 'h':
 			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q': case 'Control_b': case 'o': case 'Control_F2': case 'b':
@@ -257,10 +268,15 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case '5': case '6': case '7': case '8': case '9':
 				processCricketProcedures("QUIDICH-COMMANDS", dataToProcess);
 				break;
-			case 'Alt_f': case 'Alt_g': case 'ArrowDown': case 'ArrowUp': case 'w': case 'i': case 'y': case 'u':
+			case 'Alt_f': case 'Alt_g': case 'ArrowDown': case 'ArrowUp': case 'w': case 'i': case 'y': case 'u': case '0':
+			case 'Control_2': case 'Control_3':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("ANIMATE-IN-GRAPHICS", dataToProcess);
 				break;
+			case 'Control_1':
+				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
+				processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
+				break;	
 			default:
 				processCricketProcedures("GRAPHICS-OPTIONS", dataToProcess);
 				break;
@@ -447,7 +463,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9': case 'Alt_0':
 	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10': case 'Alt_d': case 'Shift_F4': case 'Alt_a': case 'Alt_s': 
 	case 'Shift_P': case 'Shift_Q': case 'Alt_z':  case 'Control_z': case 'Control_x': case 'Alt_q': case 'Shift_F': case 'Alt_F6': case 'Shift_A': case 'Shift_L':
-	case 'Alt_c': case 'Control_F12': case 'Shift_F12':
+	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		
 		$("#captions_div").hide();
@@ -469,6 +485,27 @@ function addItemsToList(whatToProcess,dataToProcess)
 		row = tbody.insertRow(tbody.rows.length);
 		
 		switch(whatToProcess) {
+		case 'F1':
+			header_text.innerHTML = 'SCORECARD';
+			select = document.createElement('select');
+			select.id = 'selectScoreCard';
+			select.name = select.id;
+			
+			option = document.createElement('option');
+            option.value = 'NORMAL';
+            option.text = 'NORMAL';
+            select.appendChild(option);
+			
+			option = document.createElement('option');
+            option.value = 'SPLIT';
+            option.text = 'SPLIT';
+            select.appendChild(option);
+            
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			cellCount = cellCount + 1;
+			break;	
 		case 'Alt_c':
 			header_text.innerHTML = 'CHALLENGED RUNS';
 		
