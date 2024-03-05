@@ -143,7 +143,9 @@ public class Caption
 				status = this_lowerThirdGfx.PopulateLTBowlingCard(whatToProcess,whichSide, matchAllData);
 				break;	
 			case "F4": //All Partnership
-				this_fullFramesGfx.whichSponsor = whatToProcess.split(",")[2];
+				if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ICC_U19_2023)) {
+					this_fullFramesGfx.whichSponsor = whatToProcess.split(",")[2];
+				}
 				status = this_fullFramesGfx.populatePartnership(whichSide, whatToProcess.split(",")[0], matchAllData, 
 					Integer.valueOf(whatToProcess.split(",")[1]));
 				break;

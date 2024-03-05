@@ -1253,6 +1253,20 @@ public class BugsAndMiniGfx
 							break;
 						}
 					
+					if(CricketFunctions.checkImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), 
+							bc.getPlayerId()).equalsIgnoreCase(CricketUtil.YES)) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$minis$Side" + WhichSide 
+								+ "$Batting$Row" + rowId + cont_name + "$Impact$Select*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+					}
+					else if(CricketFunctions.checkImpactPlayerBowler(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), 
+							bc.getPlayerId()).equalsIgnoreCase(CricketUtil.YES)) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$minis$Side" + WhichSide 
+								+ "$Batting$Row" + rowId + cont_name + "$Impact$Select*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$minis$Side" + WhichSide 
+								+ "$Batting$Row" + rowId + cont_name + "$Impact$Select*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+					}
+					
 					if(cont_name.equalsIgnoreCase("$Players_Highlight")) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$minis$Side" + WhichSide 
 								+ "$Batting$Row" + rowId + cont_name + "$Base$img2*TEXTURE*IMAGE SET " + Constants.ISPL_BASE2 + 
@@ -1346,6 +1360,20 @@ public class BugsAndMiniGfx
 					}
 					
 					rowId = rowId + 1;
+					
+					if(CricketFunctions.checkImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), 
+							boc.getPlayerId()).equalsIgnoreCase(CricketUtil.YES)) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$minis$Side" + WhichSide 
+								+ "$Bowling$Row" + rowId + cont_name + "$Impact$Select*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+					}
+					else if(CricketFunctions.checkImpactPlayerBowler(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), 
+							boc.getPlayerId()).equalsIgnoreCase(CricketUtil.YES)) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$minis$Side" + WhichSide 
+								+ "$Bowling$Row" + rowId + cont_name + "$Impact$Select*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$minis$Side" + WhichSide 
+								+ "$Bowling$Row" + rowId + cont_name + "$Impact$Select*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+					}
 					
 					if(cont_name.equalsIgnoreCase("$Players_Highlight")) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$minis$Side" + WhichSide 

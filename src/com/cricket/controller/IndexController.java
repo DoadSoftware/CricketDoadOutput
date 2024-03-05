@@ -197,6 +197,7 @@ public class IndexController
 					this_scene.LoadScene("FULL-FRAMERS", print_writers, session_configuration);
 				}
 				this_scene.LoadScene("OVERLAYS", print_writers, session_configuration);
+				this_animation.ResetAnimation("CLEAR-ALL", print_writers, session_configuration);
 				break;
 			case Constants.ICC_U19_2023: 
 				if(session_configuration.getPrimaryVariousOptions().contains(Constants.FULL_FRAMER)) {
@@ -290,12 +291,9 @@ public class IndexController
 			return JSONObject.fromObject(session_match).toString();
 		
 		default:
-			System.out.println("wtp : "+whatToProcess);
-			System.out.println("val : "+valueToProcess);
 			if(whatToProcess.contains("GRAPHICS-OPTIONS")) {
 				return JSONArray.fromObject(GetGraphicOption(valueToProcess)).toString();
 			} else if(whatToProcess.contains("POPULATE-GRAPHICS")) {
-				System.out.println("GFX : "+this_animation.getTypeOfGraphicsOnScreen(session_configuration,valueToProcess));
 				switch(this_animation.getTypeOfGraphicsOnScreen(session_configuration,valueToProcess)){
 				case Constants.INFO_BAR:
 					if(valueToProcess.split(",")[0].equalsIgnoreCase("Control_F12")) {
@@ -418,7 +416,9 @@ public class IndexController
 				return JSONObject.fromObject(this_caption).toString();
 			}
 			else if(whatToProcess.contains("ANIMATE-IN-GRAPHICS") || whatToProcess.contains("ANIMATE-OUT-GRAPHICS")
-				|| whatToProcess.contains("ANIMATE-OUT-INFOBAR") || whatToProcess.contains("QUIDICH-COMMANDS") || whatToProcess.contains("ANIMATE-OUT-TAPE")) {
+				|| whatToProcess.contains("ANIMATE-OUT-INFOBAR") || whatToProcess.contains("QUIDICH-COMMANDS") || 
+				whatToProcess.contains("ANIMATE-OUT-TAPE") || whatToProcess.contains("ANIMATE-OUT-IDENT") || 
+				whatToProcess.contains("ANIMATE-OUT-CR")) {
 
 				if(whatToProcess.contains("ANIMATE-OUT-GRAPHICS")) {
 					switch (valueToProcess.split(",")[0]) {
@@ -443,12 +443,9 @@ public class IndexController
 		List<PrintWriter> print_writers) throws InterruptedException, NumberFormatException, ParseException, 
 		CloneNotSupportedException, IOException, JAXBException, UnsupportedAudioFileException, LineUnavailableException
 	{
-		System.out.println("whatTo : "+whatToProcess);
-		System.out.println("Type of gr : "+this_animation.getTypeOfGraphicsOnScreen(session_configuration,valueToProcess));
 		if(whatToProcess.contains("ANIMATE-IN-GRAPHICS")) {
 			switch(this_animation.getTypeOfGraphicsOnScreen(session_configuration,valueToProcess)){
 			case Constants.INFO_BAR:
-				System.out.println(valueToProcess);
 				if(valueToProcess.split(",")[0].equalsIgnoreCase("Shift_T")){
 					this_animation.AnimateIn(valueToProcess, print_writers, session_configuration);
 				}else if(valueToProcess.split(",")[0].equalsIgnoreCase("Control_F12")) {
@@ -456,7 +453,6 @@ public class IndexController
 				}else if(valueToProcess.split(",")[0].equalsIgnoreCase("alt_c")) {
 					this_animation.AnimateIn(valueToProcess, print_writers, session_configuration);
 				}else {
-					System.out.println("Value to process "+valueToProcess);
 					this_animation.ChangeOn(valueToProcess, print_writers, session_configuration);
 					TimeUnit.MILLISECONDS.sleep(2000);
 					this_caption.whichSide = 1;
@@ -488,20 +484,14 @@ public class IndexController
 				break;
 			}
 		}else if(whatToProcess.contains("ANIMATE-OUT-INFOBAR")) {
-			switch (session_configuration.getBroadcaster().toUpperCase()) {
-			case Constants.ISPL:
-				this_animation.AnimateOut("F12,", print_writers, session_configuration);
-				this_animation.AnimateOut("Control_F12,", print_writers, session_configuration);
-				break;
-			case Constants.ICC_U19_2023:
-				this_animation.AnimateOut("F12,", print_writers, session_configuration);
-				break;
-			}
-			
+			this_animation.AnimateOut("F12,", print_writers, session_configuration);
+		}else if(whatToProcess.contains("ANIMATE-OUT-IDENT")) {
+			this_animation.AnimateOut("Control_F12,", print_writers, session_configuration);
 		}else if(whatToProcess.contains("QUIDICH-COMMANDS")) {
 			this_animation.processQuidichCommands(valueToProcess, print_writers, session_configuration);
 		}else if(whatToProcess.contains("ANIMATE-OUT-TAPE")) {
 			this_animation.AnimateOut("Shift_T,", print_writers, session_configuration);
+		}else if(whatToProcess.contains("ANIMATE-OUT-CR")) {
 			this_animation.AnimateOut("Alt_c,", print_writers, session_configuration);
 		}
 	}
