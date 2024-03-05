@@ -90,22 +90,23 @@ public class InfobarGfx
 			bonus = matchAllData.getEventFile().getEvents().get(matchAllData.getEventFile().getEvents().size()-1).getEventExtraRuns();
 			
 			if((bonus*2) >= challengeRuns) {
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Bonus$BackText$img_txt2*GEOM*TEXT SET " 
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$Bonus$BackText$img_txt2*GEOM*TEXT SET " 
 						+ "+" + bonus + "\0", print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Bonus$FrontText$Bonus*GEOM*TEXT SET " 
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$Bonus$FrontText$Bonus_Green*GEOM*TEXT SET " 
 						+ "+" + bonus + "\0", print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Bonus$Select*FUNCTION*Omo*vis_con SET 1 \0",print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$Bonus$FrontText$Select*FUNCTION*Omo*vis_con SET 1 \0",print_writers);
 			}else {
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Bonus$BackText$img_txt2*GEOM*TEXT SET " 
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$Bonus$BackText$img_txt2*GEOM*TEXT SET " 
 						+ "+" + bonus + "\0", print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Bonus$FrontText$Bonus*GEOM*TEXT SET " 
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$Bonus$FrontText$Bonus_Red*GEOM*TEXT SET " 
 						+ "-" + bonus + "\0", print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Bonus$Select*FUNCTION*Omo*vis_con SET 0 \0",print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$Bonus$FrontText$Select*FUNCTION*Omo*vis_con SET 0 \0",print_writers);
 			}
-			this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Bonus_In", "START");
-			
+			return Constants.OK;
+		}else {
+			return "50-50 is not logged";
 		}
-		return "";
+		
 	}
 	public String updateInfobar(List<PrintWriter> print_writers,MatchAllData matchAllData) throws InterruptedException, CloneNotSupportedException, IOException {
 
@@ -117,13 +118,54 @@ public class InfobarGfx
 					return "updateInfobar: Inning return is NULL";
 				}
 
+				if(CricketFunctions.getRequiredRuns(matchAllData) <= 0 || inning.getTotalWickets() >= 10 ) {
+					System.out.println("inside = " + infobar.getFull_section());
+					if(infobar.isResult_on_screen() == false) {
+						if(infobar.getFull_section() != null && !infobar.getFull_section().isEmpty()) {
+							System.out.println("1");
+							this.infobar.setFull_section(CricketUtil.RESULT);
+							populateFullSection(print_writers, matchAllData, 2);
+							this_animation.ChangeOn("Alt_1", print_writers, config);
+							TimeUnit.MILLISECONDS.sleep(2000);
+							populateFullSection(print_writers, matchAllData, 1);
+							this_animation.CutBack("Alt_1", print_writers, config);
+							
+							infobar.setFull_section(CricketUtil.RESULT);
+							infobar.setResult_on_screen(true);
+						}else{
+							System.out.println("2");
+							infobar.setResult_on_screen(true);
+							
+							this.infobar.setFull_section(CricketUtil.RESULT);
+							populateFullSection(print_writers, matchAllData, 1);
+							this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage3_In", "START");
+							if(infobar.getMiddle_section() != null && !infobar.getMiddle_section().isEmpty()) {
+								this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage1_In", "SHOW 0.0");
+							}
+							if(infobar.getRight_bottom() != null && !infobar.getRight_bottom().isEmpty()) {
+								this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage2_In", "SHOW 0.0");
+							}
+							infobar.setMiddle_section("");
+							infobar.setRight_bottom("");
+							
+							infobar.setFull_section(CricketUtil.RESULT);
+							
+							System.out.println("infobar.getFull_section() = " + infobar.getFull_section());
+						}
+					}
+				}else {
+					if(infobar.getFull_section() != null && !infobar.getFull_section().isEmpty()) {
+						populateFullSection(print_writers, matchAllData, 1);   
+					}
+				}
+				
+				
+				
 				populateInfobarTeamNameScore(true,print_writers,matchAllData);
 				if(infobar.isChallengeRunOnScreen()) {
 					populateChallengedSection(true,print_writers, matchAllData, 1);
 				}
-				if(infobar.getFull_section() != null && !infobar.getFull_section().isEmpty()) {
-					populateFullSection(print_writers, matchAllData, 1);   
-				}
+				
 				
 				if(infobar.getMiddle_section() != null && !infobar.getMiddle_section().isEmpty()) {
 					if(infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.RESULT) || infobar.getMiddle_section().equalsIgnoreCase("RESULTS")) {
@@ -310,6 +352,12 @@ public class InfobarGfx
 						}else if(this_data_str.get(this_data_str.size()-1).split(",")[i].contains("nb")) {
 							if(this_data_str.get(this_data_str.size()-1).split(",")[i].contains(" ")) {
 								BonusRuns = BonusRuns +  (1 + Integer.valueOf(this_data_str.get(this_data_str.size()-1).split(",")[i].replace("nb", "").trim()));
+							}else {
+								BonusRuns = BonusRuns +  1;
+							}
+						}else if(this_data_str.get(this_data_str.size()-1).split(",")[i].contains("wd")) {
+							if(this_data_str.get(this_data_str.size()-1).split(",")[i].contains(" ")) {
+								BonusRuns = BonusRuns +  (1 + Integer.valueOf(this_data_str.get(this_data_str.size()-1).split(",")[i].replace("wd", "").trim()));
 							}else {
 								BonusRuns = BonusRuns +  1;
 							}
@@ -1445,10 +1493,10 @@ public class InfobarGfx
 							CricketFunctions.getTargetRuns(matchAllData) +" (VJD)" + "\0",print_writers);
 				}else if(matchAllData.getSetup().getTargetType().toUpperCase().equalsIgnoreCase("DLS")) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage1$Side" + WhichSide + "$Target$txt_StatValue*GEOM*TEXT SET " + 
-							CricketFunctions.getTargetRuns(matchAllData) + "( DLS)" + "\0",print_writers);
+							CricketFunctions.getTargetRuns(matchAllData) + "(DLS)" + "\0",print_writers);
 				}else {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage1$Side" + WhichSide + "$Target$txt_StatValue*GEOM*TEXT SET " + 
-							CricketFunctions.getTargetRuns(matchAllData) + "( DLS)" + "\0",print_writers);
+							CricketFunctions.getTargetRuns(matchAllData) + "\0",print_writers);
 				}
 				
 				break;
@@ -2734,6 +2782,19 @@ public class InfobarGfx
 			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage3$Side" + WhichSide + "$Projected$Third$txt_Value*GEOM*TEXT SET " + 
 					this_data_str.get(5) + "\0", print_writers);
 		    
+			break;
+		case "RESULT":
+			inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
+			if(inning == null) {
+				return "populateVizInfobarMiddleSection: 1st Inning returned is NULL";
+			}
+			
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage3$Side" + WhichSide 
+					+ "$Select*FUNCTION*Omo*vis_con SET 6 \0", print_writers);
+			
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage3$Side" + WhichSide + "$Free_Text$txt_Header*GEOM*TEXT SET " + 
+					CricketFunctions.generateMatchSummaryStatus(inning.getInningNumber(), matchAllData, CricketUtil.FULL, "", 
+							config.getBroadcaster()).toUpperCase() + "\0", print_writers);
 			break;
 		case "EQUATION":
 			inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);

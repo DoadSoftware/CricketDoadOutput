@@ -134,6 +134,9 @@ public class Animation
 		case Constants.ISPL:
 			//Full framers
 			switch (whatToProcess.split(",")[0]) {
+			case "Control_1":
+				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Bonus_In", "START");
+				break;
 			case "m": case "Control_m":
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
 				TimeUnit.MILLISECONDS.sleep(500);
@@ -282,6 +285,7 @@ public class Animation
 
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$In", "START");
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Ident_In", "START");
+					TimeUnit.MILLISECONDS.sleep(1500);
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$IdentInfo$In_Out", "START");
 					this.infobar.setInfobar_on_screen(true);
 				}
@@ -1486,11 +1490,15 @@ public class Animation
 						infobar.setMiddle_section("");
 						infobar.setRight_bottom("");
 					}
+					System.out.println("whatToProcess = " + whatToProcess);
 					infobar.setFull_section(whatToProcess.split(",")[2]);
 					System.out.println("infobar.getFull_section()2 = " + infobar.getFull_section());
 					break;
 				case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_9": case "Alt_0":
+					System.out.println("whatToProcess = " + whatToProcess.split(",")[2]);
 					if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BATSMAN)) {
+						System.out.println("Full_section = " + infobar.getFull_section());
+						
 						if(infobar.getFull_section() != null && !infobar.getFull_section().isEmpty()) {
 							processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage3_Out", "START");
 							TimeUnit.MILLISECONDS.sleep(500);
@@ -1768,6 +1776,7 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage3_Change", "SHOW 0.0");
 				break;
 			case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_9": case "Alt_0":
+				TimeUnit.MILLISECONDS.sleep(1000);
 				if(!whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BATSMAN) && 
 						infobar.getMiddle_section() != null && !infobar.getMiddle_section().isEmpty()) {
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage1_Change", "SHOW 0.0");

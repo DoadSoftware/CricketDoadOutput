@@ -1900,15 +1900,15 @@ public class FullFramesGfx
 									CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$" + containerName + 
 											+ i + containerName_2 + "$Select_ChallngeRuns*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
 									CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$" + containerName +
-											+ i + containerName_2 + "$Select_ChallngeRuns$NegativeChallenge$txt_ChallengeValue*GEOM*TEXT SET " + "(" + 
-											matchAllData.getEventFile().getEvents().get(j).getEventExtraRuns() + ")" + "\0", print_writers);
+											+ i + containerName_2 + "$Select_ChallngeRuns$NegativeChallenge$txt_ChallengeValue*GEOM*TEXT SET " + "-" + 
+											matchAllData.getEventFile().getEvents().get(j).getEventExtraRuns() + "\0", print_writers);
 								}
 								else if(matchAllData.getEventFile().getEvents().get(j).getEventExtra().equalsIgnoreCase("+")) {
 									CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$" + containerName +
 											+ i + containerName_2 + "$Select_ChallngeRuns*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
 									CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$" + containerName +
-											+ i + containerName_2 + "$Select_ChallngeRuns$PositiveChallenge$txt_ChallengeValue*GEOM*TEXT SET " + "(" + 
-											matchAllData.getEventFile().getEvents().get(j).getEventExtraRuns() + ")" + "\0", print_writers);
+											+ i + containerName_2 + "$Select_ChallngeRuns$PositiveChallenge$txt_ChallengeValue*GEOM*TEXT SET " + "+" +
+											matchAllData.getEventFile().getEvents().get(j).getEventExtraRuns() + "\0", print_writers);
 								}
 							}
 						}
@@ -4828,7 +4828,7 @@ public class FullFramesGfx
 				}
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + containerName_2 + "$InfoGrp"
-						+ "$Select_ChallangeRuns*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+						+ "$Select_ChallngeRuns*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
 				
 				if(whatToProcess.equalsIgnoreCase("F1")) {
 					for(int i= matchAllData.getEventFile().getEvents().size()-1;i >= 0 ; i--) {
@@ -4836,16 +4836,16 @@ public class FullFramesGfx
 							if(matchAllData.getEventFile().getEvents().get(i).getEventType().equalsIgnoreCase(CricketUtil.LOG_50_50)) {
 								if(matchAllData.getEventFile().getEvents().get(i).getEventExtra().equalsIgnoreCase("-")) {
 									CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + containerName_2 +
-											"$InfoGrp$Select_ChallangeRuns*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+											"$InfoGrp$Select_ChallngeRuns*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
 									CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + containerName_2 + 
-											"$InfoGrp$Select_ChallangeRuns$NegativeChallenge$txt_ChallengeValue*GEOM*TEXT SET " + "(" + 
-											matchAllData.getEventFile().getEvents().get(i).getEventExtraRuns() + ")" + "\0", print_writers);
+											"$InfoGrp$Select_ChallngeRuns$NegativeChallenge$txt_ChallengeValue*GEOM*TEXT SET " + "-" + 
+											matchAllData.getEventFile().getEvents().get(i).getEventExtraRuns() + "\0", print_writers);
 								}
 								else if(matchAllData.getEventFile().getEvents().get(i).getEventExtra().equalsIgnoreCase("+")) {
 									CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + containerName_2 +
-											"$InfoGrp$Select_ChallangeRuns*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
+											"$InfoGrp$Select_ChallngeRuns*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
 									CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + containerName_2 +
-											"$InfoGrp$Select_ChallangeRuns$PositiveChallenge$txt_ChallengeValue*GEOM*TEXT SET " + 
+											"$InfoGrp$Select_ChallngeRuns$PositiveChallenge$txt_ChallengeValue*GEOM*TEXT SET " + "+" +
 											matchAllData.getEventFile().getEvents().get(i).getEventExtraRuns() + "\0", print_writers);
 								}
 							}

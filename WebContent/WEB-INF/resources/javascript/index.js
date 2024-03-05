@@ -276,7 +276,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Control_1':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
-				break;	
+				break;
 			default:
 				processCricketProcedures("GRAPHICS-OPTIONS", dataToProcess);
 				break;
@@ -504,7 +504,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
 			row.insertCell(cellCount).appendChild(select);
 			setDropdownOptionToSelectOptionArray($(select),0);
-			cellCount = cellCount + 1;
+			cellCount = cellCount + 1;
 			break;	
 		case 'Alt_c':
 			header_text.innerHTML = 'CHALLENGED RUNS';

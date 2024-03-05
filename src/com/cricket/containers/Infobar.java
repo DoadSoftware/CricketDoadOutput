@@ -13,6 +13,7 @@ public class Infobar {
 	private boolean infobar_pushed = false;
 	private boolean thisOvers_Title_Fade = false;
 	private boolean challengeRunOnScreen = false;
+	private boolean result_on_screen = false;
 	
 	private int player_id;
 	
@@ -201,4 +202,11 @@ public class Infobar {
 	public void setPowerplay_end(boolean powerplay_end) {
 		this.powerplay_end = powerplay_end;
 	}
+	public boolean isResult_on_screen() {
+		return result_on_screen;
+	}
+	public void setResult_on_screen(boolean result_on_screen) {
+		this.result_on_screen = result_on_screen;
+	}
+	
 }
