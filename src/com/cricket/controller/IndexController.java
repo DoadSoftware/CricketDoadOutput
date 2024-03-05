@@ -339,7 +339,11 @@ public class IndexController
 					}
 					if(this_animation.whichGraphicOnScreen.isEmpty()) {
 						if(!this_animation.specialBugOnScreen.equalsIgnoreCase(CricketUtil.TOSS)) {
-							this_animation.ResetAnimation("CLEAR-ALL", print_writers, session_configuration);
+							if(this_animation.infobar.isInfobar_on_screen() == false) {
+								this_animation.ResetAnimation("CLEAR-ALL", print_writers, session_configuration);
+							}else {
+								this_animation.ResetAnimation("", print_writers, session_configuration);
+							}
 						}
 						this_caption.whichSide = 1;
 					} else {

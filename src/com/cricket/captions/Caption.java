@@ -401,6 +401,11 @@ public class Caption
 			case "Alt_1": // Infobar Left Bottom
 				switch (config.getBroadcaster().toUpperCase()) {
 				case Constants.ISPL:
+					if(this_infobarGfx.infobar.getFull_section() != null && !this_infobarGfx.infobar.getFull_section().isEmpty()) {
+						whichSide = 2;
+					}else {
+						whichSide = 1;
+					}
 					this_infobarGfx.infobar.setFull_section(whatToProcess.split(",")[2]);
 					status = this_infobarGfx.populateFullSection(print_writers, matchAllData, whichSide);
 					break;
@@ -434,6 +439,8 @@ public class Caption
 							status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers,matchAllData, whichSide);
 						}
 					}
+					
+					this_infobarGfx.infobar.setFull_section("");
 					break;
 				}
 				break;
@@ -487,6 +494,7 @@ public class Caption
 						}
 					}
 					
+					this_infobarGfx.infobar.setFull_section("");
 //					this_infobarGfx.infobar.setRight_bottom(whatToProcess.split(",")[2]);
 //					status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, 1, whichSide);
 					break;

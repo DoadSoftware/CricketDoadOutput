@@ -555,7 +555,8 @@ public class LowerThirdGfx
 		if(battingCard.getStrikeRate().trim().isEmpty()) {
 			striktRate = "-";
 		}else {
-			striktRate = battingCard.getStrikeRate();
+			striktRate = String.valueOf(Math.round(Float.valueOf(battingCard.getStrikeRate())));
+			
 		}
 		String[] Count = CricketFunctions.getScoreTypeData(CricketUtil.BATSMAN,matchAllData, inning.getInningNumber(), Integer.valueOf(whatToProcess.split(",")[2]),
 				"-", matchAllData.getEventFile().getEvents()).split("-");
@@ -630,8 +631,8 @@ public class LowerThirdGfx
 			break;
 		case Constants.ISPL:
 			lowerThird = new LowerThird("", bowlingCard.getPlayer().getFirstname(), surName,"", "", "", 2, "", inning.getBowling_team().getTeamName4(),
-					new String[] {"OVERS", "MAIDENS", "RUNS", "WICKETS", "ECONOMY"},new String[]{CricketFunctions.OverBalls(bowlingCard.getOvers(), bowlingCard.getBalls()), 
-					String.valueOf(bowlingCard.getMaidens()),String.valueOf(bowlingCard.getRuns()),String.valueOf(bowlingCard.getWickets()), economy}
+					new String[] {"OVERS", "DOTS", "RUNS", "WICKETS", "ECONOMY"},new String[]{CricketFunctions.OverBalls(bowlingCard.getOvers(), bowlingCard.getBalls()), 
+					String.valueOf(bowlingCard.getDots()),String.valueOf(bowlingCard.getRuns()),String.valueOf(bowlingCard.getWickets()), economy}
 					,null,null,new String[] {"0.0","185.0","368.0","539.0","755.0"});
 			break;	
 		}
@@ -1420,7 +1421,8 @@ public class LowerThirdGfx
 		if(battingCard.getStrikeRate().equalsIgnoreCase("0.0")) {
 			striktRate = "-";
 		}else {
-			striktRate = battingCard.getStrikeRate();
+			striktRate = String.valueOf(Math.round(Float.valueOf(battingCard.getStrikeRate())));
+			
 		}
 		
 		if(battingCard.getPlayer().getSurname() == null) {
@@ -1507,7 +1509,7 @@ public class LowerThirdGfx
 		if(battingCard.getStrikeRate().equalsIgnoreCase("0.0")) {
 			striktRate = "-";
 		}else {
-			striktRate = battingCard.getStrikeRate();
+			striktRate = String.valueOf(Math.round(Float.valueOf(battingCard.getStrikeRate())));
 		}
 		
 		if(battingCard.getPlayer().getSurname() == null) {
@@ -1573,7 +1575,7 @@ public class LowerThirdGfx
 		if(battingCardList.get(battingCardList.size()-1).getStrikeRate().equalsIgnoreCase("0.0")) {
 			striktRate = "-";
 		}else {
-			striktRate = battingCardList.get(battingCardList.size()-1).getStrikeRate();
+			striktRate = String.valueOf(Math.round(Float.valueOf(battingCardList.get(battingCardList.size()-1).getStrikeRate())));
 		}
 		
 		if(battingCardList.get(battingCardList.size()-1).getPlayer().getSurname() == null) {
@@ -1763,8 +1765,10 @@ public class LowerThirdGfx
 					tournament.getBallsFaced(), 1).trim().isEmpty()) {
 				bat_sr = "-"; 
 			}else {
-				bat_sr = CricketFunctions.generateStrikeRate(tournament.getRuns(), 
-						tournament.getBallsFaced(), 1);
+				bat_sr = String.valueOf(Math.round(Float.valueOf(CricketFunctions.generateStrikeRate(tournament.getRuns(), 
+						tournament.getBallsFaced(), 1))));
+//				bat_sr = CricketFunctions.generateStrikeRate(tournament.getRuns(), 
+//						tournament.getBallsFaced(), 1);
 			}
 			
 			if(tournament.getFifty() == 0) {
@@ -2734,8 +2738,8 @@ public class LowerThirdGfx
 					stat.getBalls_faced(), 1).trim().isEmpty()) {
 				strikeRate = "-";
 			}else {
-				strikeRate = CricketFunctions.generateStrikeRate(stat.getRuns(), 
-						stat.getBalls_faced(), 1);
+				strikeRate = String.valueOf(Math.round(Float.valueOf(CricketFunctions.generateStrikeRate(stat.getRuns(), 
+						stat.getBalls_faced(), 1))));
 			}
 			
 			if(stat.getRuns() == 0) {

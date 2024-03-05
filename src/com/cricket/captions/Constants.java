@@ -34,6 +34,8 @@ public class Constants
 	public final static String BASE_PATH = "IMAGE*/Default/Essentials/Base";
 	public final static String TEXT_PATH = "IMAGE*/Default/Essentials/Text";
 	
+	public final static String ICONS_PATH = "IMAGE*/Default/Essentials/Icons/";
+	
 	public final static String ICC_U19_2023 = "ICC-U19-2023";
 	public final static String ICC_U19_2023_FLAG_PATH = "IMAGE*/Default/Essentials/Flags/";
 	public final static String ICC_U19_2023_POTT_FLAG_PATH = "IMAGE*/Default/Essentials/POTT_Flags/";

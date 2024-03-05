@@ -137,7 +137,7 @@ public class Animation
 				processAnimation(Constants.BACK, print_writers, "Anim_MatchId$In_Out", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
-			case "F1": case "F2": case "Shift_F11": case "F4":
+			case "F1": case "F2": case "Shift_F11": case "F4": case "Control_F7":
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
 				TimeUnit.MILLISECONDS.sleep(500);
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Essentials", "START");
@@ -154,6 +154,9 @@ public class Animation
 					break;
 				case "F4":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Partnership_List", "START");
+					break;
+				case "Control_F7":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Teams", "START");
 					break;	
 				}
 				this.whichGraphicOnScreen = whatToProcess;
@@ -251,6 +254,8 @@ public class Animation
 				
 			case "Control_F12":
 				if(this.infobar.isInfobar_on_screen() == true) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Logos_All$Main$Select*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Batsman1_Out", "START");
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Batsman2_Out", "START");
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$StrikeOut", "START");
@@ -260,6 +265,8 @@ public class Animation
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$IdentInfo$In_Out", "START");
 					this.infobar.setInfobar_on_screen(true);
 				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Logos_All$Main$Select*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$In", "START");
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Ident_In", "START");
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$IdentInfo$In_Out", "START");
@@ -275,7 +282,8 @@ public class Animation
 				
 			case "F12": //Infobar
 				if(this.infobar.isInfobar_on_screen()) {
-					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Small$In", "SHOW 0.0");
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Logos_All$Main$Select*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+//					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Small$In", "SHOW 0.0");
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Ident_Out", "START");
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$IdentInfo$In_Out", "CONTINUE");
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$Main_In", "START");
@@ -283,12 +291,15 @@ public class Animation
 						processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Batsman1_In", "START");
 						processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Batsman2_In", "START");
 						processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$StrikeIn", "START");
+						processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Bowler_In", "START");
 					}
 					this.infobar.setInfobar_on_screen(true);
 					this.infobar.setInfobar_pushed(false);
 					this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
 				}else {
-					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Small$In", "SHOW 0.0");
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Logos_All$Main$Select*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+
+//					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Small$In", "SHOW 0.0");
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$In", "START");
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$Main_In", "START");
 					if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BATSMAN)) {
@@ -746,7 +757,7 @@ public class Animation
 				processAnimation(Constants.BACK, print_writers, "Anim_MatchId$In_Out", "SHOW 0.0");
 				this.whichGraphicOnScreen = "";
 				break;
-			case "F1": case "F2": case "Shift_F11": case "F4":
+			case "F1": case "F2": case "Shift_F11": case "F4": case "Control_F7":
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Essentials", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Header", "CONTINUE");
 				
@@ -762,6 +773,9 @@ public class Animation
 					break;
 				case "F4":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Partnership_List", "CONTINUE");
+					break;
+				case "Control_F7":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Teams", "CONTINUE");
 					break;	
 				}
 				TimeUnit.MILLISECONDS.sleep(1000);
@@ -1424,6 +1438,7 @@ public class Animation
 			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": case "Alt_9": case "Alt_0":
 				switch(whatToProcess.split(",")[0]) {
 				case "Alt_1":
+					System.out.println("infobar.getFull_section() = " + infobar.getFull_section());
 					if(infobar.getFull_section() != null && !infobar.getFull_section().isEmpty()) {
 						processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage3_Change", "START");
 					}else {
@@ -1446,6 +1461,10 @@ public class Animation
 							TimeUnit.MILLISECONDS.sleep(500);
 							infobar.setFull_section("");
 							infobar.setMiddle_section("");
+						}else {
+							processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage1_Out", "START");
+							infobar.setMiddle_section("");
+							infobar.setFull_section("");
 						}
 					}else {
 						if(infobar.getFull_section()!= null && !infobar.getFull_section().isEmpty()) {
@@ -1467,6 +1486,11 @@ public class Animation
 					if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
 						if(infobar.getFull_section() != null && !infobar.getFull_section().isEmpty()) {
 							processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage3_Out", "START");
+							TimeUnit.MILLISECONDS.sleep(500);
+							infobar.setFull_section("");
+							infobar.setRight_bottom("");
+						}else {
+							processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage2_Out", "START");
 							TimeUnit.MILLISECONDS.sleep(500);
 							infobar.setFull_section("");
 							infobar.setRight_bottom("");
@@ -1931,9 +1955,7 @@ public class Animation
 			processAnimation(Constants.FRONT, print_writers, "Anim_Mini", "SHOW 0.0");
 			
 			if(whatToProcess.contains("CLEAR-ALL")) {
-				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Small$In", "SHOW 0.0");
-				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$In", "SHOW 0.0");
-				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$Main_In", "SHOW 0.0");
+//				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Small$In", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage3_In", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage2_In", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage1_In", "SHOW 0.0");
@@ -1944,6 +1966,9 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Ident_In", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$IdentInfo$In_Out", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$TopStage", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Out", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$In", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$Main_In", "SHOW 0.0");
 				this.infobar.setInfobar_on_screen(false);
 				this.infobar.setInfobar_status("");
 			}
@@ -2330,7 +2355,7 @@ public class Animation
 				if(whichside == 1) {
 					if(whatToProcess.contains(",")) {
 						switch(whatToProcess.split(",")[0]) {
-						case "F1": case "F2": case "F4": case "Shift_F11":
+						case "F1": case "F2": case "F4": case "Shift_F11": case "Control_F7":
 							previewCommand = "Anim_Infobar$Push 0.500 Anim_FullFrames$In_Out$Essentials$In 2.140 Anim_FullFrames$In_Out$Header$In 2.100";
 							break;
 						case "m": case "Control_m":
@@ -2350,6 +2375,9 @@ public class Animation
 						case "Shift_F11":
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Summary$In 1.880";
 							break;
+						case "Control_F7":
+							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Teams$In 2.220";
+							break;	
 						}
 					}
 				}else if(whichside == 2) {
@@ -2526,20 +2554,43 @@ public class Animation
 				if(whatToProcess.contains(",")) {
 					switch(whatToProcess.split(",")[0]) {
 					case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Control_y": case "h": case "Shift_F4": case "Shift_F":
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.png Anim_Bugs 2.200 "
-								+ "Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In 2.200 Anim_Bugs$Essentials$In$Anim_Bugs 2.200 "
-								+ "Anim_Bugs$Essentials$In$Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In$Anim_Bugs$Essentials$Out 2.200 \0", print_writer);
+						if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ICC_U19_2023)) {
+							
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.png Anim_Bugs 2.200 "
+									+ "Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In 2.200 Anim_Bugs$Essentials$In$Anim_Bugs 2.200 "
+									+ "Anim_Bugs$Essentials$In$Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In$Anim_Bugs$Essentials$Out 2.200 \0", print_writer);
+							
+						}else if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ISPL)) {
+							
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.png Anim_Bugs 2.940 "
+									+ "Anim_Bugs$Essentials 2.940 Anim_Bugs$Essentials$In 0.960 Anim_Bugs$Essentials$In$Anim_Bugs 2.940 "
+									+ "Anim_Bugs$Essentials$In$Anim_Bugs$Essentials 2.940 Anim_Bugs$Essentials$In$Anim_Bugs$Essentials$Out 2.940 \0", print_writer);	
+						}
 						break;	
 					 case "Alt_p": case "o": case "t":
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-							+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Center_Bug$In 0.800 \0", print_writer);
+						 if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ICC_U19_2023)) {
+							 CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+										+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Center_Bug$In 0.800 \0", print_writer);
+							 
+						 }else if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ISPL)) {
+							
+							 CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+										+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Center_Bug$In 0.700 \0", print_writer);
+						 }
 						break;
 					}
 					if(whichside == 2) {
 						switch(whatToProcess.split(",")[0]) {
 						case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Control_y": case "h": case "Shift_F4": case "Shift_F":
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-								+ "/Default/Overlays C:/Temp/Preview.png Anim_BugsChange 1.360 \0", print_writer);
+							if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ICC_U19_2023)) {
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+										+ "/Default/Overlays C:/Temp/Preview.png Anim_BugsChange 1.360 \0", print_writer);
+								
+							}else if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ISPL)) {
+								
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+										+ "/Default/Overlays C:/Temp/Preview.png Anim_BugsChange 1.260 \0", print_writer);
+							}
 							break;
 						}
 					}
