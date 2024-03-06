@@ -492,15 +492,15 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select.name = select.id;
 			
 			option = document.createElement('option');
-            option.value = 'NORMAL';
-            option.text = 'NORMAL';
-            select.appendChild(option);
-			
-			option = document.createElement('option');
             option.value = 'SPLIT';
             option.text = 'SPLIT';
             select.appendChild(option);
             
+			option = document.createElement('option');
+            option.value = 'NORMAL';
+            option.text = 'NORMAL';
+            select.appendChild(option);
+			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
 			row.insertCell(cellCount).appendChild(select);
 			setDropdownOptionToSelectOptionArray($(select),0);

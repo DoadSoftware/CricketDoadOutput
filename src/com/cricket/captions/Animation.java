@@ -254,7 +254,7 @@ public class Animation
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Control_y": case "h": case "Shift_F4": case "Shift_F":
-				processAnimation(Constants.FRONT, print_writers, "Anim_Bugs$Essentials", "START");
+				processAnimation(Constants.FRONT, print_writers, "Anim_Bugs$Essentials$In", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "Shift_F1": case "Shift_F2":
@@ -362,7 +362,7 @@ public class Animation
 				break;
 			case "Control_2":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$PowerPlay$txt_PP*GEOM*TEXT SET " + 
-						"P" + "\0", print_writers);
+						"POWERPLAY" + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Anim_InfoBar$Main$PowerPlay_In START \0", print_writers);
 				break;
 			case "Control_3":
@@ -864,7 +864,7 @@ public class Animation
 				this.whichGraphicOnScreen = "";
 				break;
 			case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Control_y": case "h": case "Shift_F4": case "Shift_F":
-				processAnimation(Constants.FRONT, print_writers, "Anim_Bugs$Essentials", "CONTINUE");
+				processAnimation(Constants.FRONT, print_writers, "Anim_Bugs$Essentials$Out", "START");
 				this.whichGraphicOnScreen = "";
 				break;
 			case "Shift_F1": case "Shift_F2":
