@@ -215,10 +215,13 @@ public class Caption
 			case "Control_F5"://Batsman Style
 				status = this_lowerThirdGfx.populateBattingStyle(whatToProcess,whichSide,matchAllData);
 				break;
+			case "Shift_F7"://Batsman Style
+				status = this_lowerThirdGfx.populateBattingStyleWithPhoto(whatToProcess,whichSide,matchAllData);
+				break;	
 			case "Control_F7": // Double Teams
 				status = this_fullFramesGfx.PopulateDoubleTeams(whichSide, whatToProcess.split(",")[0], matchAllData);
 				break;
-			case "Control_F8": //Playing XI
+			case "Control_F8": case "Shift_F8"://Playing XI
 				status = this_fullFramesGfx.populatePlayingXI(whichSide, whatToProcess.split(",")[0],
 					Integer.valueOf(whatToProcess.split(",")[2]), matchAllData, 0);
 				break;
@@ -275,6 +278,11 @@ public class Caption
 				status = this_fullFramesGfx.populateMatchSummary(whichSide, whatToProcess.split(",")[0], matchAllData, 
 					Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
+			case "n": //MATCH SUMMARY
+				status = this_lowerThirdGfx.populateBowlingStyleWithPhoto(whatToProcess,whichSide,matchAllData);
+//				status = this_fullFramesGfx.populateMatchSummary(whichSide, whatToProcess.split(",")[0], matchAllData, 
+//					Integer.valueOf(whatToProcess.split(",")[1]));
+				break;	
 			case "d": //Target
 				status = this_lowerThirdGfx.populateL3rdTarget(whatToProcess, whichSide, matchAllData);
 				break;
@@ -343,9 +351,9 @@ public class Caption
 			case "a": // All Powerplay Summary 
 				status = this_lowerThirdGfx.populateL3rdInningPowerPlay(whatToProcess,whichSide,matchAllData);
 				break;	
-			case "n": // POWERPLAY COMPARISON 
-				status = this_lowerThirdGfx.populateL3rdAllPowerPlay(whatToProcess,whichSide,matchAllData);
-				break;	
+//			case "n": // POWERPLAY COMPARISON 
+//				status = this_lowerThirdGfx.populateL3rdAllPowerPlay(whatToProcess,whichSide,matchAllData);
+//				break;	
 			case "Control_a"://Projected
 				status = this_lowerThirdGfx.populateL3rdProjected(whatToProcess,whichSide,matchAllData);
 				break;
@@ -546,14 +554,34 @@ public class Caption
 				}
 				break;
 			case "Alt_9":
-				this_infobarGfx.infobar.setMiddle_section("FREE_TEXT");
-				this_infobarGfx.infobarStatsId = Integer.valueOf(whatToProcess.split(",")[2]);
-				status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.ICC_U19_2023:
+					this_infobarGfx.infobar.setMiddle_section("FREE_TEXT");
+					this_infobarGfx.infobarStatsId = Integer.valueOf(whatToProcess.split(",")[2]);
+					status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
+					break;
+				case Constants.ISPL:
+					this_infobarGfx.infobar.setFull_section("FREE_TEXT");
+					this_infobarGfx.infobarStatsId = Integer.valueOf(whatToProcess.split(",")[2]);
+					status = this_infobarGfx.populateFullSection(print_writers, matchAllData, whichSide);
+					break;	
+				}
+				
 				break;
 			case "Alt_0":
-				this_infobarGfx.infobar.setMiddle_section("COMMENTATORS");
-				this_infobarGfx.Comms_Name = whatToProcess;
-				status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.ICC_U19_2023:
+					this_infobarGfx.infobar.setMiddle_section("COMMENTATORS");
+					this_infobarGfx.Comms_Name = whatToProcess;
+					status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
+					break;
+				case Constants.ISPL:
+					this_infobarGfx.infobar.setFull_section("COMMENTATORS");
+					this_infobarGfx.Comms_Name = whatToProcess;
+					status = this_infobarGfx.populateFullSection(print_writers, matchAllData, whichSide);
+					break;	
+				}
+				
 				break;
 			}
 		}

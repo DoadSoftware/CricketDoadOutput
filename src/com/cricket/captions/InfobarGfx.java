@@ -117,10 +117,11 @@ public class InfobarGfx
 				if(inning == null) {
 					return "updateInfobar: Inning return is NULL";
 				}
-
-				if(CricketFunctions.getRequiredRuns(matchAllData) <= 0 || inning.getTotalWickets() >= 10 || 
-						(CricketFunctions.getRequiredRuns(matchAllData) > 0 && matchAllData.getMatch().getInning().get(1).getTotalWickets() >= 10 
-						|| matchAllData.getMatch().getInning().get(1).getTotalOvers() >= matchAllData.getSetup().getMaxOvers())) {
+				
+				stats_text = CricketFunctions.generateMatchSummaryStatus(inning.getInningNumber(), matchAllData, 
+						CricketUtil.FULL, "|", config.getBroadcaster()).toUpperCase();
+				System.out.println("stats_text = " + stats_text);
+				if(stats_text.contains(" " + "WIN" + " ") || stats_text.contains(CricketUtil.TIED)) {
 					System.out.println("inside = " + infobar.getFull_section());
 					if(infobar.isResult_on_screen() == false) {
 						if(infobar.getFull_section() != null && !infobar.getFull_section().isEmpty()) {
@@ -133,6 +134,7 @@ public class InfobarGfx
 							this_animation.CutBack("Alt_1", print_writers, config);
 							
 							infobar.setFull_section(CricketUtil.RESULT);
+							this_animation.infobar.setFull_section(CricketUtil.RESULT);
 							infobar.setResult_on_screen(true);
 						}else{
 							System.out.println("2");
@@ -2642,6 +2644,51 @@ public class InfobarGfx
 					inning.getTotalNines() + "\0", print_writers);
 			
 			break;
+		case "COMMENTATORS":
+			
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage3$Side" + WhichSide 
+					+ "$Select*FUNCTION*Omo*vis_con SET 6 \0", print_writers);
+			
+			if(Integer.valueOf(Comms_Name.split(",")[4]) > 0 && Integer.valueOf(Comms_Name.split(",")[3]) > 0 
+					&& Integer.valueOf(Comms_Name.split(",")[2]) > 0) {
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage3$Side" + WhichSide + "$Free_Text$txt_Header*GEOM*TEXT SET " + 
+						"COMMENTATORS: " + Commentators.get(Integer.valueOf(Comms_Name.split(",")[2])-1).getCommentatorName() + ", " 
+						+ Commentators.get(Integer.valueOf(Comms_Name.split(",")[3])-1).getCommentatorName() + " & " 
+						+ Commentators.get(Integer.valueOf(Comms_Name.split(",")[4])-1).getCommentatorName() + "\0", print_writers);
+				
+			}else if(Integer.valueOf(Comms_Name.split(",")[4]) == 0 && Integer.valueOf(Comms_Name.split(",")[3]) > 0 
+					&& Integer.valueOf(Comms_Name.split(",")[2]) > 0) {
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage3$Side" + WhichSide + "$Free_Text$txt_Header*GEOM*TEXT SET " + 
+						"COMMENTATORS: " + Commentators.get(Integer.valueOf(Comms_Name.split(",")[2])-1).getCommentatorName() + " & " + 
+						Commentators.get(Integer.valueOf(Comms_Name.split(",")[3])-1).getCommentatorName() + "\0", print_writers);
+				
+			}else if(Integer.valueOf(Comms_Name.split(",")[4]) == 0 && Integer.valueOf(Comms_Name.split(",")[3]) == 0 
+					&& Integer.valueOf(Comms_Name.split(",")[2]) > 0) {
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage3$Side" + WhichSide + "$Free_Text$txt_Header*GEOM*TEXT SET " + 
+						"COMMENTATORS: " + Commentators.get(Integer.valueOf(Comms_Name.split(",")[2])-1).getCommentatorName() + "\0", print_writers);
+			}
+			break;	
+		case "FREE_TEXT":
+			infoBarStats = infobarStats.stream().filter(infostats -> infostats.getOrder() == infobarStatsId).findAny().orElse(null);
+			if(infoBarStats == null) {
+				return "InfoBarFreeText: Stats  not found for [" + infobarStatsId + "]";
+			}
+			
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage3$Side" + WhichSide 
+					+ "$Select*FUNCTION*Omo*vis_con SET 6 \0", print_writers);
+				
+			if(infoBarStats.getText1() != null && !infoBarStats.getText1().isEmpty() &&
+					infoBarStats.getText2() != null && !infoBarStats.getText2().isEmpty()) {
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage3$Side" + WhichSide + "$Free_Text$txt_Header*GEOM*TEXT SET " + 
+						infoBarStats.getText1() + " " + infoBarStats.getText2() + "\0", print_writers);
+			}else {
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage3$Side" + WhichSide + "$Free_Text$txt_Header*GEOM*TEXT SET " + 
+						infoBarStats.getText1() + "\0", print_writers);
+			}
+			break;	
 		case CricketUtil.EXTRAS:
 			String inn1CR="-",inn2CR = "-";
 			
@@ -2829,7 +2876,7 @@ public class InfobarGfx
 					this_data_str.get(5) + "\0", print_writers);
 		    
 			break;
-		case "RESULT":
+		case CricketUtil.RESULT:
 			inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
 			if(inning == null) {
 				return "populateVizInfobarMiddleSection: 1st Inning returned is NULL";
