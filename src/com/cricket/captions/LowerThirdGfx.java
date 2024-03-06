@@ -1491,7 +1491,11 @@ public class LowerThirdGfx
 		if(battingCard.getStrikeRate().equalsIgnoreCase("0.0")) {
 			striktRate = "-";
 		}else {
-			striktRate = String.valueOf(Math.round(Float.valueOf(battingCard.getStrikeRate())));
+			float sr = Math.round(Double.valueOf(battingCard.getStrikeRate()));
+			
+			striktRate = String.valueOf(sr);
+			
+			System.out.println("battingCard.getStrikeRate() = " + striktRate );
 			
 		}
 		
@@ -5593,7 +5597,7 @@ public class LowerThirdGfx
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$SubLines$Side" + WhichSide +
 							"$Select_Subline$2$Data$Left$txt_1*GEOM*TEXT SET " + "FOURS  " + lowerThird.getLeftText()[1] + "   SIXES  " + 
 							lowerThird.getLeftText()[2] + "   NINES  " + lowerThird.getLeftText()[3] + "   DOTS  " + lowerThird.getLeftText()[4] + "   S/R  " + 
-							lowerThird.getLeftText()[4] + "\0", print_writers);
+							lowerThird.getLeftText()[5].replace(".0", "") + "\0", print_writers);
 					
 					break;
 				}

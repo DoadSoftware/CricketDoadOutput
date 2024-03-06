@@ -379,7 +379,12 @@ public class Caption
 //				status = this_lowerThirdGfx.populateL3rdMatchSummary(whatToProcess,whichSide,matchAllData);
 //				break;
 			case "Shift_K"://FF curr part
-				this_fullFramesGfx.whichSponsor = whatToProcess.split(",")[2];
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.ICC_U19_2023:
+					this_fullFramesGfx.whichSponsor = whatToProcess.split(",")[2];
+					break;
+				}
+				
 				status = this_fullFramesGfx.populateCurrPartnership(whichSide, whatToProcess.split(",")[0], 
 					matchAllData, whichSide);
 				break;
