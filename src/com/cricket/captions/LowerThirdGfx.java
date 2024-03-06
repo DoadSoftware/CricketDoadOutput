@@ -2920,7 +2920,7 @@ public class LowerThirdGfx
 				}
 				
 				switch(whatToProcess) {
-				case "Shift_F7": case "Shift_F12":
+				case "Shift_F7": case "n":
 					ltWhichContainer =  "$Image_LowerThirds";
 					break;
 				default:
