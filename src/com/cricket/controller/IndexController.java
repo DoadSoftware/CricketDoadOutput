@@ -422,7 +422,7 @@ public class IndexController
 			else if(whatToProcess.contains("ANIMATE-IN-GRAPHICS") || whatToProcess.contains("ANIMATE-OUT-GRAPHICS")
 				|| whatToProcess.contains("ANIMATE-OUT-INFOBAR") || whatToProcess.contains("QUIDICH-COMMANDS") || 
 				whatToProcess.contains("ANIMATE-OUT-TAPE") || whatToProcess.contains("ANIMATE-OUT-IDENT") || 
-				whatToProcess.contains("ANIMATE-OUT-CR")) {
+				whatToProcess.contains("ANIMATE-OUT-CR") || whatToProcess.contains("ANIMATE-OUT-TARGET")) {
 
 				if(whatToProcess.contains("ANIMATE-OUT-GRAPHICS")) {
 					switch (valueToProcess.split(",")[0]) {
@@ -455,6 +455,8 @@ public class IndexController
 				}else if(valueToProcess.split(",")[0].equalsIgnoreCase("Control_F12")) {
 					this_animation.AnimateIn(valueToProcess, print_writers, session_configuration);
 				}else if(valueToProcess.split(",")[0].equalsIgnoreCase("alt_c")) {
+					this_animation.AnimateIn(valueToProcess, print_writers, session_configuration);
+				}else if(valueToProcess.split(",")[0].equalsIgnoreCase("Alt_y")){
 					this_animation.AnimateIn(valueToProcess, print_writers, session_configuration);
 				}else {
 					this_animation.ChangeOn(valueToProcess, print_writers, session_configuration);
@@ -495,6 +497,8 @@ public class IndexController
 			this_animation.processQuidichCommands(valueToProcess, print_writers, session_configuration);
 		}else if(whatToProcess.contains("ANIMATE-OUT-TAPE")) {
 			this_animation.AnimateOut("Shift_T,", print_writers, session_configuration);
+		}else if(whatToProcess.contains("ANIMATE-OUT-TARGET")) {
+			this_animation.AnimateOut("Alt_y,", print_writers, session_configuration);
 		}else if(whatToProcess.contains("ANIMATE-OUT-CR")) {
 			this_animation.AnimateOut("Alt_c,", print_writers, session_configuration);
 		}

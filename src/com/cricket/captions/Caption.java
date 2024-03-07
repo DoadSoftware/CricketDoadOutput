@@ -311,7 +311,11 @@ public class Caption
 				status = this_fullFramesGfx.populateFFMatchId(whichSide,whatToProcess.split(",")[0], matchAllData);
 				break;
 			case "p": case "Control_p":// Points Table
-				this_fullFramesGfx.WhichGroup = whatToProcess.split(",")[2];
+				if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ICC_U19_2023)) {
+					this_fullFramesGfx.WhichGroup = whatToProcess.split(",")[2];
+				}else {
+					this_fullFramesGfx.WhichGroup = "LeagueTable";
+				}
 				status = this_fullFramesGfx.populateFFPointsTable(whichSide,whatToProcess.split(",")[0], matchAllData, 0);
 				break;
 			case "z": case "x": case "c": case "v": case "Control_z": case "Control_x":
@@ -394,6 +398,12 @@ public class Caption
 			case "o":
 				status = this_bugsAndMiniGfx.bugsPlayerOfMatch(whatToProcess,matchAllData,whichSide);
 				break;
+			case ".":
+				status = this_bugsAndMiniGfx.bugsover(whatToProcess,matchAllData,whichSide);
+				break;
+			case "/":
+				status = this_bugsAndMiniGfx.bugstape(whatToProcess,matchAllData,whichSide);
+				break;	
 			case "t":
 				status = this_bugsAndMiniGfx.bugsThirdUmpire(whatToProcess,matchAllData,whichSide);
 				break;	
@@ -485,6 +495,9 @@ public class Caption
 				this_infobarGfx.lastXballs = Integer.valueOf(whatToProcess.split(",")[2]);
 				status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
 				break;
+			case "Alt_y":
+				status = this_infobarGfx.populateTarget(print_writers,matchAllData);
+				break;	
 			case "Alt_c":
 				this_infobarGfx.challengedRuns = Integer.valueOf(whatToProcess.split(",")[2]);
 				status = this_infobarGfx.populateChallengedSection(false,print_writers, matchAllData, 1);
@@ -566,6 +579,16 @@ public class Caption
 					status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
 					break;
 				case Constants.ISPL:
+					if(this_infobarGfx.infobar.getFull_section() != null && !this_infobarGfx.infobar.getFull_section().isEmpty()) {
+						if(this_infobarGfx.infobarStatsId != Integer.valueOf(whatToProcess.split(",")[2])) {
+							whichSide = 2;
+						}else {
+							whichSide = 1;
+						}
+					}else {
+						whichSide = 1;
+					}
+					
 					this_infobarGfx.infobar.setFull_section("FREE_TEXT");
 					this_infobarGfx.infobarStatsId = Integer.valueOf(whatToProcess.split(",")[2]);
 					status = this_infobarGfx.populateFullSection(print_writers, matchAllData, whichSide);
@@ -581,6 +604,12 @@ public class Caption
 					status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
 					break;
 				case Constants.ISPL:
+					if(this_infobarGfx.infobar.getFull_section() != null && !this_infobarGfx.infobar.getFull_section().isEmpty()) {
+						whichSide = 2;
+					}else {
+						whichSide = 1;
+					}
+					
 					this_infobarGfx.infobar.setFull_section("COMMENTATORS");
 					this_infobarGfx.Comms_Name = whatToProcess;
 					status = this_infobarGfx.populateFullSection(print_writers, matchAllData, whichSide);

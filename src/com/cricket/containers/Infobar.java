@@ -14,6 +14,7 @@ public class Infobar {
 	private boolean thisOvers_Title_Fade = false;
 	private boolean challengeRunOnScreen = false;
 	private boolean result_on_screen = false;
+	private boolean top_stage = false;
 	
 	private int player_id;
 	
@@ -207,6 +208,12 @@ public class Infobar {
 	}
 	public void setResult_on_screen(boolean result_on_screen) {
 		this.result_on_screen = result_on_screen;
+	}
+	public boolean isTop_stage() {
+		return top_stage;
+	}
+	public void setTop_stage(boolean top_stage) {
+		this.top_stage = top_stage;
 	}
 	
 }

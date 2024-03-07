@@ -1,12 +1,15 @@
 package com.cricket.captions;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import com.cricket.model.BattingCard;
 import com.cricket.model.BowlingCard;
 import com.cricket.model.Bugs;
 import com.cricket.model.Configuration;
+import com.cricket.model.Event;
 import com.cricket.model.FallOfWicket;
 import com.cricket.model.Inning;
 import com.cricket.model.MatchAllData;
@@ -94,6 +97,29 @@ public class BugsAndMiniGfx
 			if(team == null) {
 				return "bugsDismissal: Team id [" + battingCard.getPlayer().getTeamId() + "] from database is returning NULL";
 			}
+		}
+		if(PopulateBugBody(WhichSide, whatToProcess,matchAllData) == Constants.OK) {
+			status = Constants.OK;
+		}
+		return status;
+	}
+	public String bugsover(String whatToProcess,MatchAllData matchAllData,int WhichSide) {
+		
+		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == Integer.valueOf(whatToProcess.split(",")[1])).findAny().orElse(null);
+		if(inning == null) {
+			return "populateBatScore Inning is null";
+		}
+		if(PopulateBugBody(WhichSide, whatToProcess,matchAllData) == Constants.OK) {
+			status = Constants.OK;
+		}
+		return status;
+	}
+	public String bugstape(String whatToProcess,MatchAllData matchAllData,int WhichSide) {
+		
+		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == Integer.valueOf(whatToProcess.split(",")[1])).findAny().orElse(null);
+		
+		if(inning == null) {
+			return "populateBatScore Inning is null";
 		}
 		if(PopulateBugBody(WhichSide, whatToProcess,matchAllData) == Constants.OK) {
 			status = Constants.OK;
@@ -912,6 +938,86 @@ public class BugsAndMiniGfx
 				
 				
 				break;
+			case ".":
+				
+				homecolor = "ISPL";
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Right_Section$img_Base1*TEXTURE*IMAGE SET " 
+						+ Constants.ISPL_BASE1 + homecolor+ "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$HeaderBand$img_Base2*TEXTURE*IMAGE SET " 
+						+ Constants.ISPL_BASE2 + homecolor + "\0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide + "$Data$img_text1*TEXTURE*IMAGE SET " 
+						+ Constants.ISPL_TEXT1 + homecolor + "\0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide + "$Data$img_text1$txt_Sub*"
+						+ "TEXTURE*IMAGE SET " + Constants.ISPL_TEXT1 + homecolor + "\0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+						+ "$img_Logo*ACTIVE SET 1 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
+						+ "$img_Logo*TEXTURE*IMAGE SET " + Constants.ISPL_LOGOS_PATH + homecolor + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
+						+ "$txt_Name*GEOM*TEXT SET " + "50-50 OVER : " + "\0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+						+ "$txt_Sub*GEOM*TEXT SET " + "" + "\0", print_writers);
+				
+				for(Event evnt: matchAllData.getEventFile().getEvents()) {
+					if(evnt.getEventInningNumber() == inning.getInningNumber()) {
+						if(evnt.getEventType().equalsIgnoreCase(CricketUtil.LOG_50_50)) {
+							int bonus = 0;
+							int challengeRuns = 0;
+							challengeRuns = evnt.getEventRuns();
+							bonus = evnt.getEventExtraRuns();
+							
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
+									+ "$txt_Runs*GEOM*TEXT SET "  + challengeRuns + " RUNS" + "\0", print_writers);
+							
+							if((bonus*2) >= challengeRuns) {
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
+										+ "$txt_Balls*GEOM*TEXT SET " + "(+" + bonus + ")" + "\0", print_writers);
+							}else {
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
+										+ "$txt_Balls*GEOM*TEXT SET " + "(-" + bonus + ")" + "\0", print_writers);
+							}
+						}
+					}
+				}
+				break;
+			case "/":
+				
+				String tapeData = getBowlerRunsOverbyOver(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData);
+				
+				homecolor = "ISPL";
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Right_Section$img_Base1*TEXTURE*IMAGE SET " 
+						+ Constants.ISPL_BASE1 + homecolor+ "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$HeaderBand$img_Base2*TEXTURE*IMAGE SET " 
+						+ Constants.ISPL_BASE2 + homecolor + "\0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide + "$Data$img_text1*TEXTURE*IMAGE SET " 
+						+ Constants.ISPL_TEXT1 + homecolor + "\0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide + "$Data$img_text1$txt_Sub*"
+						+ "TEXTURE*IMAGE SET " + Constants.ISPL_TEXT1 + homecolor + "\0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+						+ "$img_Logo*ACTIVE SET 1 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
+						+ "$img_Logo*TEXTURE*IMAGE SET " + Constants.ISPL_LOGOS_PATH + homecolor + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
+						+ "$txt_Name*GEOM*TEXT SET " + tapeData.split(",")[0] + "\0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+						+ "$txt_Sub*GEOM*TEXT SET " + "" + "\0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
+						+ "$txt_Runs*GEOM*TEXT SET "  + " TAPE OVER : " + "\0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
+						+ "$txt_Balls*GEOM*TEXT SET " + tapeData.split(",")[1] + " RUNS" + "\0", print_writers);
+				break;	
 			case "Shift_F":
 				
 				if(team.getTeamName4().contains("KHILADI XI") || team.getTeamName4().contains("MASTER 11")) {
@@ -1578,5 +1684,66 @@ public class BugsAndMiniGfx
 		
 			
 		return Constants.OK;
+	}
+	public String getBowlerRunsOverbyOver(int inning,List<Event> event, MatchAllData matchAllData) {
+		
+		int bowlerId = 0,runs = 0;
+		String name = "";
+		boolean bowler_found = false;
+		
+		if ((matchAllData.getEventFile().getEvents() != null) && (matchAllData.getEventFile().getEvents().size() > 0)) {
+			for(Event evnt: matchAllData.getEventFile().getEvents()) {
+				if(evnt.getEventInningNumber() == inning) {
+					if(evnt.getEventExtra() != null) {
+						if(evnt.getEventExtra().equalsIgnoreCase("TAPE")) {
+							bowlerId = evnt.getEventBowlerNo();
+							bowler_found = true;
+							runs = 0;
+						}
+					}
+					if(bowler_found && evnt.getEventBowlerNo() == bowlerId) {
+						switch(evnt.getEventType()) {
+						case CricketUtil.ONE : case CricketUtil.TWO: case CricketUtil.THREE:  case CricketUtil.FIVE : case CricketUtil.DOT:
+		            	case CricketUtil.FOUR: case CricketUtil.SIX: case CricketUtil.NINE:
+		            		runs += evnt.getEventRuns();
+		                    break;
+		            	case CricketUtil.WIDE: case CricketUtil.NO_BALL: case CricketUtil.BYE: case CricketUtil.LEG_BYE: case CricketUtil.PENALTY:
+		            		runs += evnt.getEventRuns();
+		                    break;
+
+		            	case CricketUtil.LOG_WICKET:
+		                    if (evnt.getEventRuns() > 0)
+		                    {
+		                    	runs += evnt.getEventRuns();
+		                    }
+		                    break;
+
+		            	case CricketUtil.LOG_ANY_BALL:
+		            		runs += evnt.getEventRuns();
+		                    if (evnt.getEventExtra() != null)
+		                    {
+		                    	runs += evnt.getEventExtraRuns();
+		                    }
+		                    if (evnt.getEventSubExtra() != null)
+		                    {
+		                    	runs += evnt.getEventSubExtraRuns();
+		                    }
+		                    break;										
+						}
+					}else if(evnt.getEventBowlerNo() != bowlerId) {
+						bowler_found = false;
+					}
+				}
+			}
+		}
+		
+		for (BowlingCard boc : matchAllData.getMatch().getInning().get(inning - 1).getBowlingCard()) {
+			if(boc.getPlayerId() == bowlerId) {
+				name = boc.getPlayer().getTicker_name();
+			}
+		}
+		
+		return name + "," + runs;
+		
 	}
 }

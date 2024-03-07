@@ -134,7 +134,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 	switch (whatToProcess) {
 	case 'LOGGER_FORM_KEYPRESS':
 		document.getElementById('which_keypress').value = dataToProcess;
-		
+		//alert('dataToProcess = ' + dataToProcess);
 		switch(dataToProcess) {
 		case 'SPEED':
 			processCricketProcedures('SHOW_SPEED');
@@ -176,13 +176,17 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			if(confirm('Animate Out Tape or Challenge Runs? ') == true){
 				processCricketProcedures('ANIMATE-OUT-TAPE');
 			}
-		break;
-		
+			break;
+		case 'Alt_u':
+			if(confirm('Animate Out Target? ') == true){
+				processCricketProcedures('ANIMATE-OUT-TARGET');
+			}
+			break;
 		case 'Control_=':
 			if(confirm('Animate Out Tape or Challenge Runs? ') == true){
 				processCricketProcedures('ANIMATE-OUT-CR');
 			}
-		break;
+			break;
 			
 		case 'Alt_-':
 			
@@ -205,7 +209,6 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 					+ document.getElementById('which_inning').value + ']');
 				return false;
 			}
-			
 			switch(dataToProcess) {
 			case 'F1':
 				switch($('#selected_broadcaster').val().toUpperCase()){
@@ -218,7 +221,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 					break;
 				}
 				break;	
-			case 'F4':
+			case 'F4': case 'Shift_K':
 				switch($('#selected_broadcaster').val().toUpperCase()){
 				case 'ISPL':
 					dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
@@ -228,11 +231,22 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 					addItemsToList(dataToProcess,null);
 					break;
 				}
-				break;	
-			case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_5': case 'Alt_7':  //case 'Alt_6': case 'Alt_8': case 'Alt_3': case 'Alt_4': case 'F7': case 'F11':
+				break;
+			case 'Control_p':
+				switch($('#selected_broadcaster').val().toUpperCase()){
+				case 'ISPL':
+					dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
+					processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
+					break;
+				case 'ICC-U19-2023':
+					addItemsToList(dataToProcess,null);
+					break;
+				}
+				break;		
+			case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_7':  case 'Alt_5': //case 'Alt_6': case 'Alt_8': case 'Alt_3': case 'Alt_4': case 'F7': case 'F11':
 			case 'Control_F5': case 'Control_F8': case 'Shift_F8': case 'Control_F9': case 'F5': case 'F6':  case 'Alt_F8':
 			case 'F8': case 'F9':  case 's': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6': case 'Control_y':
-			case 'Shift_K': case 'Shift_O': case 'g': case 'f': case 'Control_g': case 'Control_s': case 'Control_f': //case 'Alt_F9':
+			case 'Shift_O': case 'g': case 'f': case 'Control_g': case 'Control_s': case 'Control_f': //case 'Alt_F9':
 			case 'Control_h': case 'Alt_F12': case 'l': case 'p': case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_F10': case 'Alt_d':
 			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2': case 'Shift_E': case 'Shift_P': case 'Shift_Q': case 'Alt_z': case 'Shift_F':
 			case 'Alt_F6': case 'Shift_L': case 'Shift_A': case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'Shift_F7': case 'n':
@@ -243,7 +257,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Control_k': case 'Control_F10': case 'Control_F3':  case 'a': case 't': case 'h': //case 'n':
 			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q': case 'Control_b': case 'o': case 'Control_F2': case 'b':
 			case 'Alt_F11': case 'r': case 'Shift_J'://case 'Shift_F': 
-			case 'Shift_T':
+			case 'Shift_T': case 'Alt_y': case '.': case '/':
 				/*switch(dataToProcess){
 				case 'Shift_F':
 					count++;
@@ -264,6 +278,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 					//processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 				}
 				break;
+					
 			//All key presses which doesn't require graphics population will come here
 			case '5': case '6': case '7': case '8': case '9':
 				processCricketProcedures("QUIDICH-COMMANDS", dataToProcess);
@@ -627,6 +642,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 				}
 			});
 			
+			option = document.createElement('option');
+			option.value = 'SUPEROVER';
+			option.text = 'Super Over';
+			select.appendChild(option);
+						
 			option = document.createElement('option');
 			option.value = 'TOURNAMENT';
 			option.text = 'Tournament';
