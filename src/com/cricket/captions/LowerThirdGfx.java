@@ -1780,7 +1780,7 @@ public class LowerThirdGfx
 	public String populateL3rdThisSeries(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws InterruptedException, IOException
 	{
 		String teamName = "",best = "-",economy = "",
-				bat_sr = "",hundred = "", fifties = "",Data = "";
+				bat_sr = "",hundred = "", fifties = "",Data = "",thirty = "";
 		int k =0;
 		double average = 0,economy_rate=0;
 		
@@ -1845,6 +1845,12 @@ public class LowerThirdGfx
 //						tournament.getBallsFaced(), 1);
 			}
 			
+			if(tournament.getThirty() == 0) {
+				thirty = "-";
+			}else {
+				thirty = String.valueOf(tournament.getThirty());
+			}
+			
 			if(tournament.getFifty() == 0) {
 				fifties = "-";
 			}else {
@@ -1866,8 +1872,8 @@ public class LowerThirdGfx
 				break;
 			case Constants.ISPL:
 				lowerThird = new LowerThird("", tournament.getPlayer().getFirstname(), surName,"ISPL 2024", "", "", 2,"",teamName,
-						new String[]{"MATCHES", "RUNS", "FIFTIES", "HUNDREDS", "S/R", "BEST"},new String[]{String.valueOf(tournament.getMatches()), 
-						String.format("%,d\n", tournament.getRuns()), fifties,hundred,bat_sr,best},null,null,
+						new String[]{"MATCHES", "RUNS", "THIRTIES", "FIFTIES", "S/R", "BEST"},new String[]{String.valueOf(tournament.getMatches()), 
+						String.format("%,d\n", tournament.getRuns()), thirty,fifties,bat_sr,best},null,null,
 						new String[] {"0.0","186.0","333.0","516.0","673.0","805.0"});
 				break;	
 			}
