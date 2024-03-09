@@ -190,12 +190,14 @@ public class Animation
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$LeaderBoard", "START");
 					break;
 				}
+				
 				switch (whatToProcess.split(",")[0]) {
 				 case "z": case "x": case "c": case "v": case "Control_z": case "Control_x":
-					 processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player"+whatToProcess.split(",")[2].split("_")[0], "START");
+					 processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player" + whatToProcess.split(",")[2].split("_")[0], "START");
 					 this.prevWhichPlayer = whatToProcess.split(",")[2].split("_")[0];
 					break;
-				}	
+				}
+				
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			
@@ -904,6 +906,15 @@ public class Animation
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$LeaderBoard$Out", "CONTINUE");
 					break;
 				}
+				
+				switch (whatToProcess.split(",")[0]) {
+				 case "z": case "x": case "c": case "v": case "Control_z": case "Control_x":
+					 processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player"+whatToProcess.split(",")[2].split("_")[0], "SHOW 1.574");
+					processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player"+whatToProcess.split(",")[2].split("_")[0], "CONTINUE");
+					this.prevWhichPlayer = "";
+					this.whichPlayer = "";
+					break;
+				}
 				TimeUnit.MILLISECONDS.sleep(1000);
 				AnimateIn("ArrowUp,", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
@@ -1477,10 +1488,11 @@ public class Animation
 				if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase(whatToProcess.split(",")[0])) {
 					processAnimation(Constants.BACK, print_writers, "Change$Header", "START");
 				}
+				processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player" + prevWhichPlayer, "SHOW 1.574");
 				processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player" + prevWhichPlayer, "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "Change$LeaderBoard" , "START");
 //				processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side2$Player" + whatToProcess.split(",")[2].split("_")[0], "START");
-				processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side2$Player" + whatToProcess.split(",")[2].split("_")[0], "SHOW 1.700");
+				processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side2$Player" + whatToProcess.split(",")[2].split("_")[0], "SHOW 0.0");
 				processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side2$Player" + whatToProcess.split(",")[2].split("_")[0], "CONTINUE");
 				prevWhichPlayer = whatToProcess.split(",")[2].split("_")[0];
 				break;
@@ -2042,8 +2054,8 @@ public class Animation
 						processAnimation(Constants.BACK, print_writers, "Change$Group_Standings", "SHOW 0.0");
 						break;
 					case "Control_p":
-						processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Standings", "SHOW 1.843");
-						processAnimation(Constants.BACK, print_writers, "Change$Standings", "SHOW 0.0");
+						processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Standings", "SHOW 2.240");
+						processAnimation(Constants.BACK, print_writers, "Change$Standings", "SHOW 0.0");
 						break;
 					}
 					if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase(whatToProcess.split(",")[0])) {
@@ -2076,8 +2088,8 @@ public class Animation
 							processAnimation(Constants.BACK, print_writers, "Change$Group_Standings", "SHOW 0.0");
 							break;
 						case "Control_p":
-							processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Standings", "SHOW 1.843");
-							processAnimation(Constants.BACK, print_writers, "Change$Standings", "SHOW 0.0");
+							processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Standings", "SHOW 2.240");
+							processAnimation(Constants.BACK, print_writers, "Change$Standings", "SHOW 0.0");
 							break;
 						}
 					}
@@ -2205,10 +2217,10 @@ public class Animation
 	{
 		if(!whichLayer.isEmpty()) {
 			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*" + whichLayer + "_LAYER*STAGE*DIRECTOR*"
-				+ animationDirectorName + " " + animationCommand +" \0", print_writers);
+				+ animationDirectorName + " " + animationCommand +"\0", print_writers);
 		} else {
 			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*STAGE*DIRECTOR*"
-				+ animationDirectorName + " " + animationCommand +" \0", print_writers);
+				+ animationDirectorName + " " + animationCommand +"\0", print_writers);
 		}
 	}
 	
@@ -2618,6 +2630,7 @@ public class Animation
 							break;
 						case "z": case "x": case "c": case "v":	
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$LeaderBoard$In 2.220";
+							previewCommand = previewCommand + " LeaderBoardHighlight$Side1$Player" + whatToProcess.split(",")[2].split("_")[0] + " 1.574";
 							break;
 						}
 					}
@@ -2659,6 +2672,7 @@ public class Animation
 								case "z": case "x": case "c": case "v":	
 									previewCommand = previewCommand + " Change$LeaderBoard 2.200 Change$LeaderBoard$Change_Out 0.760 "
 											+ "Change$LeaderBoard$Change_In 2.200";
+									previewCommand = previewCommand + " LeaderBoardHighlight$Side2$Player" + whatToProcess.split(",")[2].split("_")[0] + " 1.574";
 									break;	
 								}
 							}
@@ -2699,7 +2713,8 @@ public class Animation
 									break;
 								case "z": case "x": case "c": case "v":	
 									previewCommand = previewCommand + " Change$LeaderBoard 2.200 Change$LeaderBoard$Change_Out 0.760 "
-											+ "Change$LeaderBoard$Change_In 2.200";	
+											+ "Change$LeaderBoard$Change_In 2.200";
+									previewCommand = previewCommand + " LeaderBoardHighlight$Side2$Player" + whatToProcess.split(",")[2].split("_")[0] + " 1.574";
 								}
 							}
 //							previewCommand = previewCommand + " Change$Footer 1.700 Change$Footer$Change_In 1.700 Change$Footer$Chnage_Out 0.580";

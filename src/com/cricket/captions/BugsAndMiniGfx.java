@@ -987,7 +987,7 @@ public class BugsAndMiniGfx
 				break;
 			case "/":
 				
-				String tapeData = getBowlerRunsOverbyOver(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData);
+				String challengeData = getchallenge(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData);
 				
 				homecolor = "ISPL";
 				
@@ -1006,17 +1006,18 @@ public class BugsAndMiniGfx
 						+ "$img_Logo*ACTIVE SET 1 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
 						+ "$img_Logo*TEXTURE*IMAGE SET " + Constants.ISPL_LOGOS_PATH + homecolor + "\0", print_writers);
+				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
-						+ "$txt_Name*GEOM*TEXT SET " + tapeData.split(",")[0] + "\0", print_writers);
+						+ "$txt_Name*GEOM*TEXT SET " + challengeData.split(",")[0] + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
 						+ "$txt_Sub*GEOM*TEXT SET " + "" + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
-						+ "$txt_Runs*GEOM*TEXT SET "  + " TAPE BALL OVER : " + "\0", print_writers);
+						+ "$txt_Runs*GEOM*TEXT SET "  + " 50-50 OVERS : " + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
-						+ "$txt_Balls*GEOM*TEXT SET " + tapeData.split(",")[1] + " RUNS & " + tapeData.split(",")[2] + " WICKETS" + "\0", print_writers);
+						+ "$txt_Balls*GEOM*TEXT SET " + challengeData.split(",")[1] + " RUNS & " + challengeData.split(",")[2] + " WICKETS" + "\0", print_writers);
 				break;	
 			case "Shift_F":
 				
@@ -1746,6 +1747,27 @@ public class BugsAndMiniGfx
 		}
 		
 		return name + "," + runs + "," + wicket;
+		
+	}
+	public String getchallenge(int inning,List<Event> event, MatchAllData matchAllData) {
+		
+		int runs = 0,bonus = 0;
+		String name = "";
+		if ((matchAllData.getEventFile().getEvents() != null) && (matchAllData.getEventFile().getEvents().size() > 0)) {
+			for(Event evnt: matchAllData.getEventFile().getEvents()) {
+				if(evnt.getEventInningNumber() == inning) {
+					if(evnt.getEventExtra() != null) {
+						if(evnt.getEventExtra().equalsIgnoreCase(CricketUtil.LOG_50_50)) {
+							runs = evnt.getEventRuns();
+							bonus = evnt.getEventExtraRuns();
+							name = evnt.getEventExtra();
+						}
+					}
+				}
+			}
+		}
+		
+		return runs + "," + name + "," + bonus;
 		
 	}
 }

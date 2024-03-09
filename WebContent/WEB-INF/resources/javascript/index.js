@@ -1231,10 +1231,10 @@ function addItemsToList(whatToProcess,dataToProcess)
 						}
 					});
 					
-					option = document.createElement('option');
+					/*option = document.createElement('option');
 					option.value = 'TIMELINE';
 					option.text = 'Timeline';
-					select.appendChild(option);
+					select.appendChild(option);*/
 					
 					break;
 				case 'ICC-U19-2023':
