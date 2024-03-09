@@ -28,6 +28,7 @@ import com.cricket.model.Player;
 import com.cricket.model.Staff;
 import com.cricket.model.Statistics;
 import com.cricket.model.StatsType;
+import com.cricket.model.TapeBall;
 import com.cricket.model.Team;
 import com.cricket.model.Tournament;
 import com.cricket.model.VariousText;
@@ -47,6 +48,7 @@ public class LowerThirdGfx
 	public List<Statistics> statistics;
 	public List<StatsType> statsTypes;
 	public List<Tournament> tournaments;
+	public List<TapeBall> tapeballs;
 	public List<MatchAllData> tournament_matches;
 	public List<NameSuper> nameSupers;
 	public List<Team> Teams;
@@ -66,6 +68,7 @@ public class LowerThirdGfx
 	public Statistics stat;
 	public StatsType statsType;
 	public Tournament tournament;
+	public TapeBall tapeball;
 	public LowerThird lowerThird;
 	public Staff staff;
 	public NameSuper namesuper;
@@ -78,11 +81,13 @@ public class LowerThirdGfx
 	public List<DuckWorthLewis> dls;
 	public List<BattingCard> battingCardList = new ArrayList<BattingCard>();
 	public List<BowlingCard> bowlingCardList = new ArrayList<BowlingCard>();
+	public List<TapeBall> top_tape = new ArrayList<TapeBall>();
 	public List<BestStats> top_batsman_beststats = new ArrayList<BestStats>();
 	public List<BestStats> top_bowler_beststats = new ArrayList<BestStats>();
 	public List<String> this_data_str = new ArrayList<String>();
 	public List<BatBallGriff> griff = new ArrayList<BatBallGriff>();
 	
+	public List<TapeBall> pastdata = new ArrayList<TapeBall>();
 	public List<Tournament> addPastDataToCurr = new ArrayList<Tournament>();
 	
 	String containerName = "",ltWhichContainer = "",surName = "", teamName = "", variousData = "",logo_name = "" , color_name = "";
@@ -93,7 +98,7 @@ public class LowerThirdGfx
 	
 	public LowerThirdGfx(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics, List<StatsType> statsTypes, 
 			List<MatchAllData> tournament_matches, List<NameSuper> nameSupers, List<Team> Teams, List<Ground> Grounds, 
-			List<Tournament> tournaments,List<DuckWorthLewis> dls, List<Staff> staff, List<Player> players, List<POTT> pott, List<VariousText> VariousText) {
+			List<Tournament> tournaments,List<TapeBall> tapeballs,List<DuckWorthLewis> dls, List<Staff> staff, List<Player> players, List<POTT> pott, List<VariousText> VariousText) {
 		super();
 		this.print_writers = print_writers;
 		this.config = config;
@@ -104,6 +109,7 @@ public class LowerThirdGfx
 		this.Teams = Teams;
 		this.Grounds = Grounds;
 		this.tournaments = tournaments;
+		this.tapeballs = tapeballs;
 		this.dls = dls;
 		this.Staff = staff;
 		this.Players = players;
@@ -1784,11 +1790,24 @@ public class LowerThirdGfx
 		int k =0;
 		double average = 0,economy_rate=0;
 		
+//		pastdata = CricketFunctions.extractTapeData("CURRENT_MATCH_DATA", null, tournament_matches, matchAllData, tapeballs);
 		addPastDataToCurr = CricketFunctions.extractTournamentStats("CURRENT_MATCH_DATA", false, tournament_matches, null, matchAllData, tournaments);
 		
 		if(addPastDataToCurr == null) {
 			return "addPastDataToCurr is Null";
 		}
+		
+		
+//		for(TapeBall tp : pastdata) {
+//			top_tape.add(tp);
+//		}
+//		
+//		Collections.sort(top_tape, new CricketFunctions.TapeBowlerWicketsComparator());
+//		
+//		System.out.println("Size = " + tapeballs.size());
+//		for (int i = 0; i<= tapeballs.size() -1; i++) {
+//			System.out.println("Tape = " + tapeballs.get(i));	
+//		}
 		
 		for(Tournament tourn : addPastDataToCurr) {
 			for(BestStats bs : tourn.getBatsman_best_Stats()) {
@@ -1921,8 +1940,8 @@ public class LowerThirdGfx
 				break;
 			case Constants.ISPL:
 				lowerThird = new LowerThird("", tournament.getPlayer().getFirstname(), surName,"ISPL 2024", "", "", 2,"",teamName,
-						new String[]{"MATCHES", "WICKETS", "AVERAGE", "ECONOMY", "BEST"},new String[]{String.valueOf(tournament.getMatches()),
-						String.valueOf(tournament.getWickets()),Data,economy,best},null,null,new String[] {"0.0","198.0","400.0","623.0","797.0"});
+						new String[]{"MATCHES", "WICKETS", "ECONOMY", "BEST"},new String[]{String.valueOf(tournament.getMatches()),
+						String.valueOf(tournament.getWickets()),economy,best},null,null,new String[] {"0.0","246.0","514.0","763.0"});
 				break;	
 			}
 		}
@@ -2757,7 +2776,7 @@ public class LowerThirdGfx
 						"SIXES" + "," + String.valueOf(in_data.split(",")[2]) , String.valueOf(inning.getTotalSixes()),
 						"NINES" + "," + String.valueOf(in_data.split(",")[4]) , String.valueOf(inning.getTotalNines())},null,new String[]{inning.getBowling_team().getTeamName4(), 
 						" WERE ",  String.valueOf(in_data.split(",")[0] + "-" + in_data.split(",")[1]),inning.getBatting_team().getTeamName4(), 
-						"ARE", String.valueOf(inning.getTotalRuns() + "-" + inning.getTotalWickets())},null,new String[] {"400.0","464.0","567.0","631.0","749.0","812.0"});
+						"ARE", String.valueOf(inning.getTotalRuns() + "-" + inning.getTotalWickets())},null,new String[] {"384.0","464.0","564.0","631.0","741.0","819.0"});
 				break;	
 			}
 			
@@ -4626,6 +4645,12 @@ public class LowerThirdGfx
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$TopLine$TopData_Position_Y$Side" + WhichSide 
 							+ "$Change$geom_ScorePositionX*ACTIVE SET 0 \0", print_writers);
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$TopLine$TopData_Position_Y$Side" + WhichSide 
+							+ "$Change$geom_ScorePositionX$txt_Score*GEOM*TEXT SET " + lowerThird.getSubTitle() + "\0", print_writers);
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$TopLine$TopData_Position_Y$Side" + WhichSide 
+							+ "$Change$geom_ScorePositionX$txt_Not_Out*GEOM*TEXT SET " + "" + "\0", print_writers);
 					break;
 				}
 				break;

@@ -1013,10 +1013,10 @@ public class BugsAndMiniGfx
 						+ "$txt_Sub*GEOM*TEXT SET " + "" + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
-						+ "$txt_Runs*GEOM*TEXT SET "  + " TAPE OVER : " + "\0", print_writers);
+						+ "$txt_Runs*GEOM*TEXT SET "  + " TAPE BALL OVER : " + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
-						+ "$txt_Balls*GEOM*TEXT SET " + tapeData.split(",")[1] + " RUNS" + "\0", print_writers);
+						+ "$txt_Balls*GEOM*TEXT SET " + tapeData.split(",")[1] + " RUNS & " + tapeData.split(",")[2] + " WICKETS" + "\0", print_writers);
 				break;	
 			case "Shift_F":
 				
@@ -1687,7 +1687,7 @@ public class BugsAndMiniGfx
 	}
 	public String getBowlerRunsOverbyOver(int inning,List<Event> event, MatchAllData matchAllData) {
 		
-		int bowlerId = 0,runs = 0;
+		int bowlerId = 0,runs = 0,wicket = 0;
 		String name = "";
 		boolean bowler_found = false;
 		
@@ -1699,6 +1699,7 @@ public class BugsAndMiniGfx
 							bowlerId = evnt.getEventBowlerNo();
 							bowler_found = true;
 							runs = 0;
+							wicket = 0;
 						}
 					}
 					if(bowler_found && evnt.getEventBowlerNo() == bowlerId) {
@@ -1716,6 +1717,7 @@ public class BugsAndMiniGfx
 		                    {
 		                    	runs += evnt.getEventRuns();
 		                    }
+		                    wicket += 1;
 		                    break;
 
 		            	case CricketUtil.LOG_ANY_BALL:
@@ -1730,7 +1732,7 @@ public class BugsAndMiniGfx
 		                    }
 		                    break;										
 						}
-					}else if(evnt.getEventBowlerNo() != bowlerId) {
+					}else if(evnt.getEventBowlerNo() != bowlerId && evnt.getEventBowlerNo() != 0) {
 						bowler_found = false;
 					}
 				}
@@ -1743,7 +1745,7 @@ public class BugsAndMiniGfx
 			}
 		}
 		
-		return name + "," + runs;
+		return name + "," + runs + "," + wicket;
 		
 	}
 }

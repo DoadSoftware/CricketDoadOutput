@@ -25,6 +25,7 @@ import com.cricket.model.POTT;
 import com.cricket.model.Player;
 import com.cricket.model.Statistics;
 import com.cricket.model.StatsType;
+import com.cricket.model.TapeBall;
 import com.cricket.model.Team;
 import com.cricket.model.Tournament;
 import com.cricket.model.VariousText;
@@ -46,6 +47,7 @@ public class Caption
 	public List<StatsType> statsTypes;
 	public List<MatchAllData> tournament_matches;
 	public List<Tournament> tournament;
+	public List<TapeBall> tapeball;
 	public List<NameSuper> nameSupers;
 	public List<Fixture> fixTures;
 	public List<Team> Teams;
@@ -81,7 +83,8 @@ public class Caption
 		List<MatchAllData> tournament_matches, List<NameSuper> nameSupers,List<Bugs> bugs, List<InfobarStats> infobarStats, List<Fixture> fixTures,
 		List<Team> Teams, List<Ground> Grounds, List<VariousText> varioustText, List<Commentator> commentators, List<Staff> staff, List<Player> players, 
 		List<POTT> pott, List<String> teamChanges, FullFramesGfx this_fullFramesGfx,LowerThirdGfx this_lowerThirdGfx, InfobarGfx this_infobarGfx, 
-		BugsAndMiniGfx this_bugsAndMiniGfx, int whichSide, String whichGraphhicsOnScreen, String slashOrDash, List<Tournament> tournament,List<DuckWorthLewis> dls) {
+		BugsAndMiniGfx this_bugsAndMiniGfx, int whichSide, String whichGraphhicsOnScreen, String slashOrDash, List<Tournament> tournament,
+		List<TapeBall> tapeball,List<DuckWorthLewis> dls) {
 	
 		super();
 		this.print_writers = print_writers;
@@ -96,6 +99,7 @@ public class Caption
 		this.Teams = Teams;
 		this.Grounds = Grounds;
 		this.tournament = tournament;
+		this.tapeball = tapeball;
 		this.VariousText = varioustText;
 		this.Commentators = commentators;
 		this.Staff = staff;
@@ -107,7 +111,7 @@ public class Caption
 		this.this_fullFramesGfx = new FullFramesGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
 				fixTures, Teams, Grounds,tournament, VariousText, players, pott, teamChanges);
 		this.this_lowerThirdGfx = new LowerThirdGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
-				nameSupers, Teams, Grounds, tournament, dls, staff, players, pott, varioustText);
+				nameSupers, Teams, Grounds, tournament,tapeball, dls, staff, players, pott, varioustText);
 		this.whichSide = whichSide;
 		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers, statistics, statsTypes, infobarStats, 
 				Grounds, Commentators, tournament_matches, dls);
@@ -539,36 +543,46 @@ public class Caption
 				
 				break;
 			case "Alt_8":
-				if(this_infobarGfx.infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
-					if(this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(CricketUtil.BOWLER) && 
-							whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
-						
-						status = "IN Alt+8 Section BOWLER IS ALREADY SELECTED";
-					}else {
-						if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
-							this_infobarGfx.infobar.setRight_section(CricketUtil.BOWLER);
-							this_infobarGfx.infobar.setRight_bottom("BOWLING_END");
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.ICC_U19_2023:
+					if(this_infobarGfx.infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
+						if(this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(CricketUtil.BOWLER) && 
+								whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
 							
-							status = this_infobarGfx.populateVizInfobarBowler(print_writers, matchAllData, 1);
+							status = "IN Alt+8 Section BOWLER IS ALREADY SELECTED";
 						}else {
-							if(this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(CricketUtil.BOWLER)) { 
-								// When Goes Bowler to Boundary/Compare Section
-								this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
-								status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 1);
+							if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
+								this_infobarGfx.infobar.setRight_section(CricketUtil.BOWLER);
+								this_infobarGfx.infobar.setRight_bottom("BOWLING_END");
+								
+								status = this_infobarGfx.populateVizInfobarBowler(print_writers, matchAllData, 1);
 							}else {
-								if(!this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(whatToProcess.split(",")[2])) {
-									// Add Data in Main Side1 -> SubSide2 between Boundary and Comparison and vice-versa
+								if(this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(CricketUtil.BOWLER)) { 
+									// When Goes Bowler to Boundary/Compare Section
 									this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
-									status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 2);
-								}else {
-									// Add Data in Main Side1 -> SubSide1  between Boundary and Comparison and vice-versa
 									status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 1);
+								}else {
+									if(!this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(whatToProcess.split(",")[2])) {
+										// Add Data in Main Side1 -> SubSide2 between Boundary and Comparison and vice-versa
+										this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
+										status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 2);
+									}else {
+										// Add Data in Main Side1 -> SubSide1  between Boundary and Comparison and vice-versa
+										status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 1);
+									}
 								}
 							}
 						}
+					}else {
+						status = "IN Alt+2 Section BASTMAN/BOWLER NOT SELECTED";
 					}
-				}else {
-					status = "IN Alt+2 Section BASTMAN/BOWLER NOT SELECTED";
+					break;
+				case Constants.ISPL:
+					System.out.println("whatToProcess = " + whatToProcess);
+					whichSide = 1;
+					this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
+					status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, whichSide, 0);
+					break;	
 				}
 				break;
 			case "Alt_9":

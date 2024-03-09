@@ -173,7 +173,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			break;
 		
 		case 'Control_-':
-			if(confirm('Animate Out Tape or Challenge Runs? ') == true){
+			if(confirm('Animate Out Top Section? ') == true){
 				processCricketProcedures('ANIMATE-OUT-TAPE');
 			}
 			break;
@@ -1175,7 +1175,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 				option.text = 'Bowling End';
 				select.appendChild(option);
 				break;
-				case 'ICC-U19-2023':
+			case 'ICC-U19-2023':
 				
 				select = document.createElement('select');
 				select.id = 'selectRightBottom';
@@ -1202,32 +1202,70 @@ function addItemsToList(whatToProcess,dataToProcess)
 			break;
 			
 		case 'Alt_8':
-			header_text.innerHTML = 'RIGHT INFOBAR SECTION';
+			switch($('#selected_broadcaster').val().toUpperCase()){
+				case 'ISPL':
+					header_text.innerHTML = 'RIGHT TOP INFOBAR SECTION';
 		
-			select = document.createElement('select');
-			select.id = 'selectRightSection';
-			select.name = select.id;
-			
-			option = document.createElement('option');
-			option.value = 'BOWLER';
-			option.text = 'Bowler';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'BOUNDARY';
-			option.text = 'Innings Boundaries';
-			select.appendChild(option);
-			
-			session_match.match.inning.forEach(function(inn,index,arr){
-				if(inn.isCurrentInning == 'YES'){
-					if(inn.inningNumber == 2){
-						option = document.createElement('option');
-						option.value = 'COMPARE';
-						option.text = 'Compare';
-						select.appendChild(option);
-					}
-				}
-			});
+					select = document.createElement('select');
+					select.id = 'selectRightSection';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = 'TAPED_BALL';
+					option.text = 'Tape Ball';
+					select.appendChild(option);
+					
+					session_match.match.inning.forEach(function(inn,index,arr){
+						if(inn.isCurrentInning == 'YES'){
+							if(inn.inningNumber == 2){
+								option = document.createElement('option');
+								option.value = 'TARGET';
+								option.text = 'Target';
+								select.appendChild(option);
+								
+								option = document.createElement('option');
+								option.value = 'EQUATION';
+								option.text = 'Equation';
+								select.appendChild(option);
+							}
+						}
+					});
+					
+					option = document.createElement('option');
+					option.value = 'TIMELINE';
+					option.text = 'Timeline';
+					select.appendChild(option);
+					
+					break;
+				case 'ICC-U19-2023':
+					header_text.innerHTML = 'RIGHT INFOBAR SECTION';
+		
+					select = document.createElement('select');
+					select.id = 'selectRightSection';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = 'BOWLER';
+					option.text = 'Bowler';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'BOUNDARY';
+					option.text = 'Innings Boundaries';
+					select.appendChild(option);
+					
+					session_match.match.inning.forEach(function(inn,index,arr){
+						if(inn.isCurrentInning == 'YES'){
+							if(inn.inningNumber == 2){
+								option = document.createElement('option');
+								option.value = 'COMPARE';
+								option.text = 'Compare';
+								select.appendChild(option);
+							}
+						}
+					});
+					break;
+			}	
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
 			row.insertCell(cellCount).appendChild(select);

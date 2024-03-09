@@ -57,6 +57,7 @@ import com.cricket.model.Player;
 import com.cricket.model.Setup;
 import com.cricket.model.Staff;
 import com.cricket.model.Statistics;
+import com.cricket.model.TapeBall;
 import com.cricket.model.Team;
 import com.cricket.model.Tournament;
 import com.cricket.model.VariousText;
@@ -89,6 +90,7 @@ public class IndexController
 	
 	public static List<MatchAllData> cricket_matches = new ArrayList<MatchAllData>();
 	public static List<Tournament> past_tournament_stats = new ArrayList<Tournament>();
+	public static List<TapeBall> past_tape = new ArrayList<TapeBall>();
 	public static List<Statistics> session_statistics = new ArrayList<Statistics>();
 	public static Statistics session_statistics_past_matches = new Statistics();
 	public static List<NameSuper> session_name_super = new ArrayList<NameSuper>();
@@ -588,7 +590,7 @@ public class IndexController
 
 			
 			session_statistics = cricketService.getAllStats();
-			
+			past_tape = CricketFunctions.extractTapeData("PAST_MATCHES_DATA", cricketService, cricket_matches, session_match, null);
 			past_tournament_stats = CricketFunctions.extractTournamentStats("PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
 			session_name_super =  cricketService.getNameSupers();
 			session_team =  cricketService.getTeams();
@@ -601,6 +603,10 @@ public class IndexController
 			session_fixture =  CricketFunctions.processAllFixtures(cricketService);
 			session_players = cricketService.getAllPlayer();
 			session_pott = cricketService.getPott();
+			
+//			for (int i = 0; i<= past_tape.size() -1; i++) {
+//				System.out.println("past_tape = " + past_tape.get(i));	
+//			}
 			
 			if(new File(CricketUtil.CRICKET_DIRECTORY + "ParScores BB.html").exists()) {
 				session_dls = CricketFunctions.populateDuckWorthLewis(session_match);
@@ -626,7 +632,7 @@ public class IndexController
 				this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), cricket_matches, session_name_super,
 					session_bugs,session_infoBarStats,session_fixture, session_team, session_ground,session_variousText, session_commentator, session_staff, 
 					session_players, session_pott, session_teamChanges, new FullFramesGfx(),new LowerThirdGfx(), new InfobarGfx(), new BugsAndMiniGfx(), 1, "", "-", 
-					past_tournament_stats,session_dls);
+					past_tournament_stats,past_tape,session_dls);
 				this_caption.this_infobarGfx.previous_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixes("COMBINED_PAST_CURRENT_MATCH_DATA", 
 					cricket_matches, session_match, null).getTournament_sixes());
 				break;
@@ -653,6 +659,7 @@ public class IndexController
 				this_caption.this_lowerThirdGfx.Teams = session_team;
 				this_caption.this_lowerThirdGfx.Grounds = session_ground;
 				this_caption.this_lowerThirdGfx.tournaments = past_tournament_stats;
+				this_caption.this_lowerThirdGfx.tapeballs = past_tape;
 				this_caption.this_lowerThirdGfx.dls = session_dls;
 				this_caption.this_lowerThirdGfx.Staff = session_staff;
 				this_caption.this_lowerThirdGfx.VariousText = session_variousText;
