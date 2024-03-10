@@ -1,10 +1,16 @@
 package com.cricket.captions;
 
+import java.io.File;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+
 import com.cricket.model.BattingCard;
 import com.cricket.model.BowlingCard;
 import com.cricket.model.Bugs;
@@ -12,6 +18,7 @@ import com.cricket.model.Configuration;
 import com.cricket.model.Event;
 import com.cricket.model.FallOfWicket;
 import com.cricket.model.Inning;
+import com.cricket.model.LeagueTable;
 import com.cricket.model.MatchAllData;
 import com.cricket.model.Partnership;
 import com.cricket.model.Player;
@@ -22,7 +29,7 @@ import com.cricket.util.CricketUtil;
 
 public class BugsAndMiniGfx 
 {
-	String status = "",homecolor = "", awaycolor = "";
+	String status = "",homecolor = "", awaycolor = "",WhichGroup = "",containerName = "";
 	int fallOfWickets;
 	
 	int rowId=0, omo_num=0;
@@ -40,6 +47,7 @@ public class BugsAndMiniGfx
 	public VariousText variousText;
 	public Inning inning;
 	public Player player;
+	public LeagueTable leagueTable;
 	
 	public Team team;
 	public Bugs bug;
@@ -55,6 +63,25 @@ public class BugsAndMiniGfx
 		this.bugs = bugs;
 		this.Teams = teams;
 		this.VariousText = VariousText;
+	}
+	
+	public String populatePointsTable(String whatToProcess, MatchAllData matchAllData,int WhichSide) throws ParseException, JAXBException, InterruptedException
+	{
+		if(new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.LEAGUE_TABLE_DIRECTORY + WhichGroup + CricketUtil.XML_EXTENSION).exists()) {
+			leagueTable = (LeagueTable)JAXBContext.newInstance(LeagueTable.class).createUnmarshaller().unmarshal(
+					new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.LEAGUE_TABLE_DIRECTORY + WhichGroup + CricketUtil.XML_EXTENSION));
+		}
+		if(leagueTable == null) {
+			return "populatePointsTable : League Table is null";
+		}
+		
+		if(populateMiniBody(WhichSide, whatToProcess.split(",")[0],matchAllData, Integer.valueOf(whatToProcess.split(",")[1])) == Constants.OK) {
+			status = Constants.OK;
+		}
+//		if(PopulateBugBody(WhichSide, whatToProcess,matchAllData) == Constants.OK) {
+//			status = Constants.OK;
+//		}
+		return status;
 	}
 	
 	public String populateWicketSequencing(String whatToProcess,MatchAllData matchAllData,int WhichSide)
@@ -941,6 +968,8 @@ public class BugsAndMiniGfx
 			case ".":
 				
 				homecolor = "ISPL";
+				String posOrNeg = "";
+				//String tapeData = getchallenge(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Right_Section$img_Base1*TEXTURE*IMAGE SET " 
 						+ Constants.ISPL_BASE1 + homecolor+ "\0", print_writers);
@@ -968,26 +997,28 @@ public class BugsAndMiniGfx
 						if(evnt.getEventType().equalsIgnoreCase(CricketUtil.LOG_50_50)) {
 							int bonus = 0;
 							int challengeRuns = 0;
-							challengeRuns = evnt.getEventRuns();
+							challengeRuns = evnt.getEventTotalRunsInAnOver();
 							bonus = evnt.getEventExtraRuns();
-							
+							posOrNeg = evnt.getEventExtra();
+									
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
 									+ "$txt_Runs*GEOM*TEXT SET "  + challengeRuns + " RUNS" + "\0", print_writers);
-							
-							if((bonus*2) >= challengeRuns) {
-								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
-										+ "$txt_Balls*GEOM*TEXT SET " + "(+" + bonus + ")" + "\0", print_writers);
-							}else {
-								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
-										+ "$txt_Balls*GEOM*TEXT SET " + "(-" + bonus + ")" + "\0", print_writers);
-							}
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
+									+ "$txt_Balls*GEOM*TEXT SET " + "(" + posOrNeg + bonus + ")" + "\0", print_writers);
+//							if((bonus*2) >= challengeRuns) {
+//								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
+//										+ "$txt_Balls*GEOM*TEXT SET " + "(+" + bonus + ")" + "\0", print_writers);
+//							}else {
+//								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
+//										+ "$txt_Balls*GEOM*TEXT SET " + "(-" + bonus + ")" + "\0", print_writers);
+//							}
 						}
 					}
 				}
 				break;
 			case "/":
 				
-				String challengeData = getchallenge(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData);
+				String tapeData = getBowlerRunsOverbyOver(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData);
 				
 				homecolor = "ISPL";
 				
@@ -1006,18 +1037,18 @@ public class BugsAndMiniGfx
 						+ "$img_Logo*ACTIVE SET 1 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
 						+ "$img_Logo*TEXTURE*IMAGE SET " + Constants.ISPL_LOGOS_PATH + homecolor + "\0", print_writers);
-				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
-						+ "$txt_Name*GEOM*TEXT SET " + challengeData.split(",")[0] + "\0", print_writers);
+						+ "$txt_Name*GEOM*TEXT SET " + tapeData.split(",")[0] + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
 						+ "$txt_Sub*GEOM*TEXT SET " + "" + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
-						+ "$txt_Runs*GEOM*TEXT SET "  + " 50-50 OVERS : " + "\0", print_writers);
+						+ "$txt_Runs*GEOM*TEXT SET "  + " TAPE BALL OVER : " + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
-						+ "$txt_Balls*GEOM*TEXT SET " + challengeData.split(",")[1] + " RUNS & " + challengeData.split(",")[2] + " WICKETS" + "\0", print_writers);
+						+ "$txt_Balls*GEOM*TEXT SET " + tapeData.split(",")[1] + " RUN" + CricketFunctions.Plural(Integer.valueOf(tapeData.split(",")[1])).toUpperCase() + " & " + tapeData.split(",")[2] + " WICKET" + 
+						CricketFunctions.Plural(Integer.valueOf(tapeData.split(",")[2])).toUpperCase() + "\0", print_writers);
 				break;	
 			case "Shift_F":
 				
@@ -1467,6 +1498,71 @@ public class BugsAndMiniGfx
 			
 		case Constants.ISPL:
 			switch(whatToProcess) {
+			case "Alt_l":
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$minis$Side" + WhichSide 
+						+ "$Batting$LooBase$img2*TEXTURE*IMAGE SET " + Constants.ISPL_BASE2 + 
+						inning.getBatting_team().getTeamName4() + " \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$minis$Side" + WhichSide 
+						+ "$Batting$headerBnd$img1*TEXTURE*IMAGE SET " + Constants.ISPL_BASE1 + 
+						inning.getBatting_team().getTeamName4() + " \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$minis$Side" + WhichSide 
+						+ "$Batting$txt_FirstName*TEXTURE*IMAGE SET " + Constants.ISPL_BASE2 + 
+						inning.getBatting_team().getTeamName4() + " \0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$minis$Side" + WhichSide 
+						+ "$Batting$img_Flag*TEXTURE*IMAGE SET " + Constants.ISPL_LOGOS_PATH + inning.getBatting_team().getTeamName4() + " \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$minis$Side" + WhichSide 
+						+ "$Batting$txt_FirstName*GEOM*TEXT SET " + inning.getBatting_team().getTeamName1() + " \0", print_writers);
+				
+				rowId = 0;
+				for(int i=0; i<=leagueTable.getLeagueTeams().size()-1;i++) {
+					rowId = rowId + 1;
+					
+					if(matchAllData.getSetup().getHomeTeam().getTeamName4().equalsIgnoreCase(leagueTable.getLeagueTeams().get(i).getTeamName())  
+							|| matchAllData.getSetup().getAwayTeam().getTeamName4().equalsIgnoreCase(leagueTable.getLeagueTeams().get(i).getTeamName())) {
+						
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$MiniPointsTable$AllDataGrp$DataGrp"
+								+ "$Row$" + rowId + "$Select_Row_Type*FUNCTION*Omo*vis_con SET 3 \0", print_writers);
+						containerName = "$Highlight";
+						
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$MiniPointsTable$AllDataGrp$DataGrp"
+								+ "$Row$" + rowId + "$Select_Row_Type*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
+						containerName = "$Dehighlight";
+					}
+					
+					if(leagueTable.getLeagueTeams().get(i).getQualifiedStatus().trim().equalsIgnoreCase("")) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$MiniPointsTable$AllDataGrp$DataGrp"
+								+ "$Row$" + rowId + "$Select_Row_Type" + containerName + "*GEOM*TEXT SET  \0", print_writers);
+					}else if(leagueTable.getLeagueTeams().get(i).getQualifiedStatus().trim().equalsIgnoreCase("Q")) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$MiniPointsTable$AllDataGrp$DataGrp"
+								+ "$Row$" + rowId + "$Select_Row_Type" + containerName + "*GEOM*TEXT SET Q \0", print_writers);
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$MiniPointsTable$AllDataGrp$DataGrp"
+								+ "$Row$" + rowId + "$Select_Row_Type" + containerName + "*GEOM*TEXT SET " + rowId + " \0", print_writers);
+					}
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$MiniPointsTable$AllDataGrp$DataGrp"
+							+ "$Row$" + rowId + "$Select_Row_Type" + containerName + "$txt_Name*GEOM*TEXT SET " + 
+							leagueTable.getLeagueTeams().get(i).getTeamName() + " \0", print_writers);
+					
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$MiniPointsTable$AllDataGrp$DataGrp"
+							+ "$Row$" + rowId + "$Select_Row_Type" + containerName + "$fig_Play*GEOM*TEXT SET " + 
+							leagueTable.getLeagueTeams().get(i).getPlayed() + " \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$MiniPointsTable$AllDataGrp$DataGrp"
+							+ "$Row$" + rowId + "$Select_Row_Type" + containerName + "$fig_Wins*GEOM*TEXT SET " + 
+							leagueTable.getLeagueTeams().get(i).getWon() + " \0", print_writers);
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$MiniPointsTable$AllDataGrp$DataGrp"
+							+ "$Row$" + rowId + "$Select_Row_Type" + containerName + "$fig_Points*GEOM*TEXT SET " + 
+							leagueTable.getLeagueTeams().get(i).getPoints() + " \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$MiniPointsTable$AllDataGrp$DataGrp"
+							+ "$Row$" + rowId + "$Select_Row_Type" + containerName + "$fig_NRR*GEOM*TEXT SET " + 
+							String.format("%.2f", leagueTable.getLeagueTeams().get(i).getNetRunRate()) + " \0", print_writers);
+					
+				}
+				break;
 			case "Shift_F1":
 				int battingSize=0;
 				cont_name = "";
@@ -1747,27 +1843,6 @@ public class BugsAndMiniGfx
 		}
 		
 		return name + "," + runs + "," + wicket;
-		
-	}
-	public String getchallenge(int inning,List<Event> event, MatchAllData matchAllData) {
-		
-		int runs = 0,bonus = 0;
-		String name = "";
-		if ((matchAllData.getEventFile().getEvents() != null) && (matchAllData.getEventFile().getEvents().size() > 0)) {
-			for(Event evnt: matchAllData.getEventFile().getEvents()) {
-				if(evnt.getEventInningNumber() == inning) {
-					if(evnt.getEventExtra() != null) {
-						if(evnt.getEventExtra().equalsIgnoreCase(CricketUtil.LOG_50_50)) {
-							runs = evnt.getEventRuns();
-							bonus = evnt.getEventExtraRuns();
-							name = evnt.getEventExtra();
-						}
-					}
-				}
-			}
-		}
-		
-		return runs + "," + name + "," + bonus;
 		
 	}
 }

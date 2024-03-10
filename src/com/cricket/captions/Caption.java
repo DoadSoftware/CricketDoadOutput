@@ -431,6 +431,14 @@ public class Caption
 			case "Alt_p":
 				status = this_bugsAndMiniGfx.bugsToss(whatToProcess,matchAllData,whichSide);
 				break;
+			case "Alt_l":// Points Table
+				if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ICC_U19_2023)) {
+					this_bugsAndMiniGfx.WhichGroup = whatToProcess.split(",")[2];
+				}else {
+					this_bugsAndMiniGfx.WhichGroup = "LeagueTable";
+				}
+				status = this_bugsAndMiniGfx.populatePointsTable(whatToProcess.split(",")[0], matchAllData,whichSide);
+				break;	
 			case "h":
 				status = this_bugsAndMiniGfx.populateBugHighlight(whatToProcess,matchAllData,whichSide, Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
@@ -562,15 +570,15 @@ public class Caption
 								if(this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(CricketUtil.BOWLER)) { 
 									// When Goes Bowler to Boundary/Compare Section
 									this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
-									status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 1);
+									status = this_infobarGfx.populateVizInfobarRightSection(false,print_writers, matchAllData, 1, 1);
 								}else {
 									if(!this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(whatToProcess.split(",")[2])) {
 										// Add Data in Main Side1 -> SubSide2 between Boundary and Comparison and vice-versa
 										this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
-										status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 2);
+										status = this_infobarGfx.populateVizInfobarRightSection(false,print_writers, matchAllData, 1, 2);
 									}else {
 										// Add Data in Main Side1 -> SubSide1  between Boundary and Comparison and vice-versa
-										status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, 1, 1);
+										status = this_infobarGfx.populateVizInfobarRightSection(false,print_writers, matchAllData, 1, 1);
 									}
 								}
 							}
@@ -580,10 +588,9 @@ public class Caption
 					}
 					break;
 				case Constants.ISPL:
-					System.out.println("whatToProcess = " + whatToProcess);
 					whichSide = 1;
 					this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
-					status = this_infobarGfx.populateVizInfobarRightSection(print_writers, matchAllData, whichSide, 0);
+					status = this_infobarGfx.populateVizInfobarRightSection(false,print_writers, matchAllData, whichSide, 0);
 					break;	
 				}
 				break;

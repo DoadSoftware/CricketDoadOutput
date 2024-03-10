@@ -90,7 +90,7 @@ public class Animation
 			case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Alt_p": case "o": case "t": 
 			case "Control_y": case "h": case "Shift_F4": case "Shift_F": case ".": case "/":
 				return Constants.BUGS;
-			case "Shift_F1": case "Shift_F2":
+			case "Shift_F1": case "Shift_F2": case "Alt_l":
 				return Constants.MINIS;
 			}
 			break;
@@ -123,7 +123,7 @@ public class Animation
 			case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Alt_p": case "o": case "t": 
 			case "Control_y": case "h": case "Shift_F4": case "Shift_F": case ".": case "/":
 				return Constants.BUGS;
-			case "Shift_F1": case "Shift_F2":
+			case "Shift_F1": case "Shift_F2": case "Alt_l":
 				return Constants.MINIS;
 			}
 			break;	
@@ -136,6 +136,7 @@ public class Animation
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.ISPL:
 			//Full framers
+//			System.out.println("whatToProcess.split(\",\")[0] = " + whatToProcess.split(",")[0]);
 			switch (whatToProcess.split(",")[0]) {
 			case "Control_1":
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Bonus_In", "START");
@@ -297,6 +298,12 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "Anim_Mini$In_Out", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
+			case "Alt_l":
+				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
+				TimeUnit.MILLISECONDS.sleep(1000);
+				processAnimation(Constants.FRONT, print_writers, "Anim_MiniPoints$In_Out", "START");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;
 			case "Alt_c":
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$TopStage", "START");
 				this.infobar.setChallengeRunOnScreen(true);
@@ -406,7 +413,7 @@ public class Animation
 					TimeUnit.MILLISECONDS.sleep(800);
 				}
 				break;
-			case "w": case "i": case "y": case "u": case "0":
+			case "w": case "i": case "y": case "u": case "0": case ";":
 				if(whatToProcess.split(",")[0].equalsIgnoreCase("w")) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$WIPES$Select*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
 				}else if(whatToProcess.split(",")[0].equalsIgnoreCase("i")) {
@@ -417,6 +424,8 @@ public class Animation
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$WIPES$Select*FUNCTION*Omo*vis_con SET 4 \0", print_writers);
 				}else if(whatToProcess.split(",")[0].equalsIgnoreCase("0")) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$WIPES$Select*FUNCTION*Omo*vis_con SET 5 \0", print_writers);
+				}else if(whatToProcess.split(",")[0].equalsIgnoreCase(";")) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$WIPES$Select*FUNCTION*Omo*vis_con SET 6 \0", print_writers);
 				}
 				
 				if(this.infobar.isInfobar_on_screen() == true && !this.infobar.isInfobar_pushed()) {
@@ -993,6 +1002,13 @@ public class Animation
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;
+			case "Alt_l":
+				processAnimation(Constants.FRONT, print_writers, "Anim_MiniPoints$In_Out", "CONTINUE");
+				TimeUnit.MILLISECONDS.sleep(1000);
+				processAnimation(Constants.FRONT, print_writers, "Anim_MiniPoints$In_Out", "Show 0.0");
+				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
+				this.whichGraphicOnScreen = "";
+				break;	
 			case "Shift_T":
 				if(infobar.getRight_section().equalsIgnoreCase("TARGET")) {
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Target_Out", "START");
@@ -1001,7 +1017,11 @@ public class Animation
 				}else if(infobar.getRight_section().equalsIgnoreCase("EQUATION")) {
 //					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$ToWin$In", "SHOW 0.0");
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$ToWin$Out", "START");
+				}else if(infobar.getRight_section().equalsIgnoreCase("TIMELINE")) {
+//					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$ToWin$In", "SHOW 0.0");
+					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$TimeLine", "CONTINUE");
 				}
+				
 				infobar.setRight_section("");
 //				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$TapedBall_Out", "START");
 //				this.tapeballOnScreen = "";
@@ -1722,6 +1742,9 @@ public class Animation
 					}else if(whatToProcess.split(",")[2].equalsIgnoreCase("EQUATION")) {
 						processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$ToWin$In", "SHOW 0.0");
 						processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$ToWin$In", "START");
+					}else if(whatToProcess.split(",")[2].equalsIgnoreCase("TIMELINE")) {
+						processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$TimeLine", "SHOW 0.0");
+						processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$TimeLine", "START");
 					}
 					infobar.setRight_section(whatToProcess.split(",")[2]);
 					infobar.setLast_right_section(whatToProcess.split(",")[2]);
@@ -2201,6 +2224,7 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$Target_In", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$ToWin", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$TapedBall_In", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$TimeLine", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Ident_In", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$IdentInfo$In_Out", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$TopStage", "SHOW 0.0");
@@ -2647,7 +2671,7 @@ public class Animation
 						switch(whatToProcess.split(",")[0]) {
 						case "F1": case "F2": case "F4": case "Shift_F11": case "Control_F8": case "Shift_F8": case "Shift_K":
 						case "Control_p": case "z": case "x": case "c": case "v":
-							previewCommand = previewCommand + " Change$Header 1.600  Change$Header$Change_In 1.600 Change$Header$Change_Out 0.420";
+							previewCommand = previewCommand + "Change$Header 1.600 Change$Header$Change_In 1.600 Change$Header$Change_Out 0.420";
 							if(whichGraphicOnScreen.contains(",")) {
 								switch(whichGraphicOnScreen.split(",")[0]) {
 								case "F1":  
@@ -2719,10 +2743,6 @@ public class Animation
 									previewCommand = previewCommand + " Change$Standings 1.543 Change$Standings$Change_Out 0.760 "
 											+ "Change$Standings$Change_In 1.543";
 									break;
-								case "z": case "x": case "c": case "v":	
-									previewCommand = previewCommand + " Change$LeaderBoard 2.200 Change$LeaderBoard$Change_Out 0.760 "
-											+ "Change$LeaderBoard$Change_In 2.200";
-									previewCommand = previewCommand + " LeaderBoardHighlight$Side2$Player" + whatToProcess.split(",")[2].split("_")[0] + " 1.574";
 								}
 							}
 //							previewCommand = previewCommand + " Change$Footer 1.700 Change$Footer$Change_In 1.700 Change$Footer$Chnage_Out 0.580";
@@ -2934,13 +2954,17 @@ public class Animation
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
 								+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$Push 0.500 Anim_Mini$In_Out 1.260 Anim_Mini$In_Out$In 1.240 \0", print_writer);
 						break;
+					case "Alt_l":
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+								+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$Push 0.500 Anim_MiniPoints$In_Out 0.940 Anim_MiniPoints$In_Out$In 0.940 \0", print_writer);
+						break;
 					}
 					if(whichside == 2) {
 						switch(whatToProcess.split(",")[0]) {
 						case "Shift_F1": case "Shift_F2":
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
 									+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_MiniChange 1.860 Anim_MiniChange$Change_In 1.860 \0", print_writer);
-							break;
+							break;	
 						}
 					}
 				}

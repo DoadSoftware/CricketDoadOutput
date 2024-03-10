@@ -283,7 +283,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case '5': case '6': case '7': case '8': case '9':
 				processCricketProcedures("QUIDICH-COMMANDS", dataToProcess);
 				break;
-			case 'Alt_f': case 'Alt_g': case 'ArrowDown': case 'ArrowUp': case 'w': case 'i': case 'y': case 'u': case '0':
+			case 'Alt_f': case 'Alt_g': case 'ArrowDown': case 'ArrowUp': case 'w': case 'i': case 'y': case 'u': case '0': case ';':
 			case 'Control_2': case 'Control_3':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("ANIMATE-IN-GRAPHICS", dataToProcess);
@@ -830,6 +830,12 @@ function addItemsToList(whatToProcess,dataToProcess)
 				select.appendChild(option);*/
 				
 				option = document.createElement('option');
+				option.value = 'BOUNDARY';
+				option.text = 'Inning Boundaries';
+				select.appendChild(option);
+				
+				
+				option = document.createElement('option');
 				option.value = 'EXTRAS';
 				option.text = 'Extras';
 				select.appendChild(option);
@@ -1232,10 +1238,10 @@ function addItemsToList(whatToProcess,dataToProcess)
 						}
 					});
 					
-					/*option = document.createElement('option');
+					option = document.createElement('option');
 					option.value = 'TIMELINE';
 					option.text = 'Timeline';
-					select.appendChild(option);*/
+					select.appendChild(option);
 					
 					break;
 				case 'ICC-U19-2023':
