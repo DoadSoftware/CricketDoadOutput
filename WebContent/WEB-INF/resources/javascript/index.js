@@ -257,7 +257,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Control_k': case 'Control_F10': case 'Control_F3':  case 'a': case 't': case 'h': //case 'n':
 			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q': case 'Control_b': case 'o': case 'Control_F2': case 'b':
 			case 'Alt_F11': case 'r': case 'Shift_J'://case 'Shift_F': 
-			case 'Shift_T': case 'Alt_y': case '.': case '/':
+			case 'Shift_T': case 'Alt_y': case '.': case '/': case 'Shift_V':
 				/*switch(dataToProcess){
 				case 'Shift_F':
 					count++;
@@ -478,7 +478,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l': case 'Shift_E': //case 'Alt_F9':
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9': case 'Alt_0':
 	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10': case 'Alt_d': case 'Shift_F4': case 'Alt_a': case 'Alt_s': 
-	case 'Shift_P': case 'Shift_Q': case 'Alt_z':  case 'Control_z': case 'Control_x': case 'Alt_q': case 'Shift_F': case 'Alt_F6': case 'Shift_A': case 'Shift_L':
+	case 'Shift_P': case 'Shift_Q': case 'Alt_z': case 'Control_c': case 'Control_v': case 'Control_z': case 'Control_x': case 'Alt_q': case 'Shift_F': 
+	case 'Alt_F6': case 'Shift_A': case 'Shift_L':
 	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'n':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		
@@ -1909,8 +1910,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 				cellCount = cellCount + 1
 			}
 			break;
-			
-		case 'z': case 'x': case 'c': case 'v': case 'Control_z': case 'Control_x':
+		
+		case 'z': case 'x': case 'c': case 'v': case 'Control_z': case 'Control_x': case 'Control_c': case 'Control_v':
 			switch(whatToProcess) {
 			case 'z':
 				header_text.innerHTML = 'LEADERBOARD - MOST RUNS';
@@ -1930,6 +1931,12 @@ function addItemsToList(whatToProcess,dataToProcess)
 			case 'Control_x':
 			    header_text.innerHTML = 'LEADERBOARD - BEST FIGURES';
 				break;	
+			case 'Control_c':
+				header_text.innerHTML = 'LEADERBOARD - TAPE BALL';
+				break;
+			case 'Control_v':
+				header_text.innerHTML = 'LEADERBOARD - MOST ECONOMICAL 50-50 OVER';
+				break;
 			}
 		
 			select = document.createElement('select');

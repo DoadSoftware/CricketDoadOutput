@@ -49,6 +49,7 @@ import com.cricket.model.EventFile;
 import com.cricket.model.Fixture;
 import com.cricket.model.Ground;
 import com.cricket.model.InfobarStats;
+import com.cricket.model.LogFifty;
 import com.cricket.model.Match;
 import com.cricket.model.MatchAllData;
 import com.cricket.model.NameSuper;
@@ -546,6 +547,16 @@ public class IndexController
 				break;
 			}
 			return (List<T>) tournament_stats;
+		case "Control_c":
+			List<TapeBall> tapeball = new ArrayList<TapeBall>();
+			tapeball = CricketFunctions.extractTapeData("COMBINED_PAST_CURRENT_MATCH_DATA", cricketService, cricket_matches, session_match, null);
+			Collections.sort(tapeball,new CricketFunctions.TapeBowlerWicketsComparator());
+			return (List<T>) tapeball;
+		case "Control_v":
+			List<LogFifty> log_fifty = new ArrayList<LogFifty>();
+			log_fifty = CricketFunctions.extractLogFifty("COMBINED_PAST_CURRENT_MATCH_DATA",CricketUtil.BOWLER,cricketService, cricket_matches, session_match, null);
+			Collections.sort(log_fifty,new CricketFunctions.LogFiftyWicketsComparator());
+			return (List<T>) log_fifty;
 		case "Control_z": case "Control_x":
 			List<BestStats> top_ten_beststat = new ArrayList<BestStats>();
 			switch (whatToProcess) {
