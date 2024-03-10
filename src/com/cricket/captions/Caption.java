@@ -431,7 +431,7 @@ public class Caption
 			case "Alt_p":
 				status = this_bugsAndMiniGfx.bugsToss(whatToProcess,matchAllData,whichSide);
 				break;
-			case "Alt_l":// Points Table
+			case "Alt_F7":// Points Table
 				if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ICC_U19_2023)) {
 					this_bugsAndMiniGfx.WhichGroup = whatToProcess.split(",")[2];
 				}else {

@@ -1899,6 +1899,7 @@ public class LowerThirdGfx
 		}else if(whatToProcess.split(",")[0].equalsIgnoreCase("Control_f")) {
 			
 			for(int j=0;j<= top_bowler_beststats.size()-1;j++) {
+				System.out.println("top_bowler_beststats = " + top_bowler_beststats.get(j));
 				if(top_bowler_beststats.get(j).getPlayerId() == Integer.valueOf(whatToProcess.split(",")[2])) {
 					if(k == 0) {
 						k += 1;
@@ -1907,6 +1908,11 @@ public class LowerThirdGfx
 						}
 						else if(top_bowler_beststats.get(j).getBestEquation() % 1000 < 0) {
 							best = (top_bowler_beststats.get(j).getBestEquation() / 1000) + "-" + Math.abs(top_bowler_beststats.get(j).getBestEquation());
+						}
+						else if(top_bowler_beststats.get(j).getBestEquation() != 0) {
+							if(top_bowler_beststats.get(j).getBestEquation() % 1000 == 0) {
+								best = (top_bowler_beststats.get(j).getBestEquation() / 1000) + "-" + "0";
+							}
 						}
 						break;
 					}

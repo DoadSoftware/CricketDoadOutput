@@ -232,7 +232,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 					break;
 				}
 				break;
-			case 'Control_p':
+			case 'Control_p': case 'Alt_F7':
 				switch($('#selected_broadcaster').val().toUpperCase()){
 				case 'ISPL':
 					dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;

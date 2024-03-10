@@ -1252,8 +1252,10 @@ public class FullFramesGfx
 			case "Shift_V":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side"+ WhichSide + 
 						"$In_Out$Select_Header*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side"+ WhichSide + 
+						"$Change$Select_SubHeader*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side" + WhichSide + "$Change$"
-						+ "txt_Subheader*GEOM*TEXT SET " + "INDIAN STREET PREMIER LEAGUE 2024" + "\0", print_writers);
+						+ "txt_SubheaderLong*GEOM*TEXT SET " + "INDIAN STREET PREMIER LEAGUE 2024" + "\0", print_writers);
 				
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main" + 
@@ -1345,8 +1347,12 @@ public class FullFramesGfx
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side"+ WhichSide + 
 					"$In_Out$Select_Header*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side"+ WhichSide + 
+						"$Change$Select_SubHeader*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side" + WhichSide + "$Change$"
-					+ "txt_Subheader*GEOM*TEXT SET " + "ISPL 2024 - " + matchAllData.getSetup().getMatchIdent() + "\0", print_writers);
+					+ "txt_SubheaderShort*GEOM*TEXT SET " + "ISPL 2024 - " + matchAllData.getSetup().getMatchIdent() + "\0", print_writers);
 				
 				switch (whatToProcess) {
 				case "Shift_F11":
@@ -1368,7 +1374,10 @@ public class FullFramesGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side"+ WhichSide + 
 					"$In_Out$Select_Header*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
 				
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side" + WhichSide + "$Change$txt_Subheader"
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side"+ WhichSide + 
+						"$Change$Select_SubHeader*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side" + WhichSide + "$Change$txt_SubheaderShort"
 						+ "*GEOM*TEXT SET " + "ISPL 2024 - " + previous_match.get(previous_match.size()-1).getSetup().getMatchIdent() + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side" + WhichSide + 
@@ -1382,8 +1391,11 @@ public class FullFramesGfx
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side"+ WhichSide + 
 					"$In_Out$Select_Header*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side"+ WhichSide + 
+						"$Change$Select_SubHeader*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side" + WhichSide + "$Change$"
-					+ "txt_Subheader*GEOM*TEXT SET " + "INDIAN STREET PREMIER LEAGUE 2024" + "\0", print_writers);
+					+ "txt_SubheaderLong*GEOM*TEXT SET " + "INDIAN STREET PREMIER LEAGUE 2024" + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side" + WhichSide + 
 						"$In_Out$Select_Header$Title$txt_Title*GEOM*TEXT SET " + "STANDINGS" + "\0", print_writers);
 				break;
@@ -1410,8 +1422,11 @@ public class FullFramesGfx
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side"+ WhichSide + 
 						"$In_Out$Select_Header*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side"+ WhichSide + 
+						"$Change$Select_SubHeader*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side" + WhichSide + "$Change$"
-						+ "txt_Subheader*GEOM*TEXT SET " + "ISPL 2024 - " + matchAllData.getSetup().getMatchIdent() + "\0", print_writers);
+						+ "txt_SubheaderShort*GEOM*TEXT SET " + "ISPL 2024 - " + matchAllData.getSetup().getMatchIdent() + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side" + WhichSide + 
 						"$In_Out$Select_Header$Title$txt_Title*GEOM*TEXT SET " + "CURRENT PARTNERSHIP" + "\0", print_writers);
@@ -1476,8 +1491,11 @@ public class FullFramesGfx
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side"+ WhichSide + 
 						"$In_Out$Select_Header*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side"+ WhichSide + 
+						"$Change$Select_SubHeader*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side" + WhichSide + "$Change$"
-						+ "txt_Subheader*GEOM*TEXT SET " + "ISPL 2024 - " + matchAllData.getSetup().getMatchIdent() + "\0", print_writers);
+						+ "txt_SubheaderShort*GEOM*TEXT SET " + "ISPL 2024 - " + matchAllData.getSetup().getMatchIdent() + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side" + WhichSide + 
 						"$In_Out$Select_Header$Title$txt_Title*GEOM*TEXT SET " + team.getTeamName1() + "\0", print_writers);
@@ -1523,8 +1541,11 @@ public class FullFramesGfx
 					return "PopulateFfHeader: current inning is NULL";
 				}
 				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side"+ WhichSide + 
+						"$Change$Select_SubHeader*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side" + WhichSide + "$Change$"
-						+ "txt_Subheader*GEOM*TEXT SET " + "ISPL 2024 - " + matchAllData.getSetup().getMatchIdent() + "\0", print_writers);
+						+ "txt_SubheaderShort*GEOM*TEXT SET " + "ISPL 2024 - " + matchAllData.getSetup().getMatchIdent() + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side" + WhichSide + "$In_Out$Select_Header$Big_First$"
 						+ "txt_Team_1*GEOM*TEXT SET " + matchAllData.getMatch().getInning().get(0).getBatting_team().getTeamName4() +"\0", print_writers);

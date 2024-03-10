@@ -90,7 +90,7 @@ public class Animation
 			case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Alt_p": case "o": case "t": 
 			case "Control_y": case "h": case "Shift_F4": case "Shift_F": case ".": case "/":
 				return Constants.BUGS;
-			case "Shift_F1": case "Shift_F2": case "Alt_l":
+			case "Shift_F1": case "Shift_F2": case "Alt_F7":
 				return Constants.MINIS;
 			}
 			break;
@@ -123,7 +123,7 @@ public class Animation
 			case "Shift_O": case "Control_k": case "k": case "g": case "f": case "Alt_p": case "o": case "t": 
 			case "Control_y": case "h": case "Shift_F4": case "Shift_F": case ".": case "/":
 				return Constants.BUGS;
-			case "Shift_F1": case "Shift_F2": case "Alt_l":
+			case "Shift_F1": case "Shift_F2": case "Alt_F7":
 				return Constants.MINIS;
 			}
 			break;	
@@ -301,7 +301,7 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "Anim_Mini$In_Out", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
-			case "Alt_l":
+			case "Alt_F7":
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
 				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "Anim_MiniPoints$In_Out", "START");
@@ -1004,14 +1004,15 @@ public class Animation
 			case "Shift_F1": case "Shift_F2":
 				processAnimation(Constants.FRONT, print_writers, "Anim_Mini$In_Out", "CONTINUE");
 				TimeUnit.MILLISECONDS.sleep(1000);
-				processAnimation(Constants.FRONT, print_writers, "Anim_Mini$In_Out", "Show 0.0");
+				processAnimation(Constants.FRONT, print_writers, "Anim_Mini$In_Out", "SHOW 0.0");
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;
-			case "Alt_l":
+			case "Alt_F7":
 				processAnimation(Constants.FRONT, print_writers, "Anim_MiniPoints$In_Out", "CONTINUE");
 				TimeUnit.MILLISECONDS.sleep(1000);
-				processAnimation(Constants.FRONT, print_writers, "Anim_MiniPoints$In_Out", "Show 0.0");
+				processAnimation(Constants.FRONT, print_writers, "Anim_MiniPoints$In_Out", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "Anim_MiniPoints", "SHOW 0.0");
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;	
@@ -2212,7 +2213,8 @@ public class Animation
 			processAnimation(Constants.FRONT, print_writers, "Anim_Image_LT", "SHOW 0.0");
 			processAnimation(Constants.FRONT, print_writers, "Anim_Image_LtChange", "SHOW 0.0");
 			processAnimation(Constants.FRONT, print_writers, "Anim_Bugs", "SHOW 0.0");
-			
+//			processAnimation(Constants.FRONT, print_writers, "Anim_MiniPoints$In_Out", "Show 0.0");
+			processAnimation(Constants.FRONT, print_writers, "Anim_MiniPoints", "SHOW 0.0");
 			processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "SHOW 0.0");
 			
 			processAnimation(Constants.FRONT, print_writers, "Anim_BugsChange", "SHOW 0.0");
@@ -2963,7 +2965,7 @@ public class Animation
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
 								+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$Push 0.500 Anim_Mini$In_Out 1.260 Anim_Mini$In_Out$In 1.240 \0", print_writer);
 						break;
-					case "Alt_l":
+					case "Alt_F7":
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
 								+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$Push 0.500 Anim_MiniPoints$In_Out 0.940 Anim_MiniPoints$In_Out$In 0.940 \0", print_writer);
 						break;
