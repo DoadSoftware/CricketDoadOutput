@@ -2521,96 +2521,306 @@ public class LowerThirdGfx
 			if(inning == null) {
 				return "populateTeamSummary: Inning is Not Found";
 			}
-			String pp1="",pp2="",pp3="",run_rate="";
 			
-			String pp_ovrs="";
-			if(inning.getInningNumber()==1) {
-				
-				pp_ovrs=CricketFunctions.PowerPlayMatchOvers(inning.getInningNumber(),matchAllData,",");
-				
-				if(inning.getTotalOvers() >= inning.getFirstPowerplayStartOver()-1) {
-					pp1=CricketFunctions.getFirstPowerPlayScore(matchAllData,inning.getInningNumber(), matchAllData.getEventFile().getEvents()).replace("-", ",");
-					
-					run_rate = CricketFunctions.generateRunRates(Integer.valueOf(pp1.split(",")[0].split("-")[0]),Integer.valueOf(pp_ovrs.split(",")[0].split("-")[0]),
-							Integer.valueOf(pp_ovrs.split(",")[0].split("-")[1]),2,matchAllData) + ",";
-					
-				}else {
-					pp1 = "-,-,-,-" ;
-					run_rate = "-" + ",";
-				}
-				
-				if(inning.getTotalOvers() > inning.getSecondPowerplayStartOver()-1) {
-					pp2=CricketFunctions.getSecPowerPlayScore(matchAllData, inning.getInningNumber(), matchAllData.getEventFile().getEvents()).replace("-", ",");
-					run_rate = run_rate + CricketFunctions.generateRunRates(Integer.valueOf(pp2.split(",")[0].split("-")[0]),Integer.valueOf(pp_ovrs.split(",")[1].split("-")[0]),
-							Integer.valueOf(pp_ovrs.split(",")[1].split("-")[1]),2,matchAllData) + ",";
-					
-				}else if(inning.getTotalOvers() == inning.getSecondPowerplayStartOver()-1 && inning.getTotalBalls() > 0) {
-					pp2=CricketFunctions.getSecPowerPlayScore(matchAllData, inning.getInningNumber(), matchAllData.getEventFile().getEvents()).replace("-", ",");
-					run_rate = run_rate + CricketFunctions.generateRunRates(Integer.valueOf(pp2.split(",")[0].split("-")[0]),Integer.valueOf(pp_ovrs.split(",")[1].split("-")[0]),
-							Integer.valueOf(pp_ovrs.split(",")[1].split("-")[1]),2,matchAllData) + ",";
-					
-				}else {
-					pp2 = "-,-,-,-" ;
-					run_rate = run_rate + "-" + ",";
-				}
-				
-				if(inning.getTotalOvers() > inning.getThirdPowerplayStartOver()-1) {
-					pp3=CricketFunctions.getThirdPowerPlayScore(matchAllData,inning.getInningNumber(), matchAllData.getEventFile().getEvents()).replace("-", ",");
-					run_rate = run_rate + CricketFunctions.generateRunRates(Integer.valueOf(pp3.split(",")[0].split("-")[0]),
-							Integer.valueOf(pp_ovrs.split(",")[2].split("-")[0]),Integer.valueOf(pp_ovrs.split(",")[2].split("-")[1]),2,matchAllData);
-					
-				}else if(inning.getTotalOvers() == inning.getThirdPowerplayStartOver()-1 && inning.getTotalBalls() > 0) {
-					pp3=CricketFunctions.getThirdPowerPlayScore(matchAllData,inning.getInningNumber(), matchAllData.getEventFile().getEvents()).replace("-", ",");
-					run_rate = run_rate + CricketFunctions.generateRunRates(Integer.valueOf(pp3.split(",")[0].split("-")[0]),
-							Integer.valueOf(pp_ovrs.split(",")[2].split("-")[0]),Integer.valueOf(pp_ovrs.split(",")[2].split("-")[1]),2,matchAllData);
-					
-				}else {
-					pp3 = "-,-,-,-" ;
-					run_rate = run_rate + "-";
-				}
-				
-			}else if(inning.getInningNumber()==2) {
-				
-				pp_ovrs=CricketFunctions.PowerPlayMatchOvers(inning.getInningNumber(),matchAllData,",");
-				
-				if(inning.getTotalOvers() >= inning.getFirstPowerplayStartOver()-1) {
-					pp1=CricketFunctions.getFirstPowerPlayScore(matchAllData,inning.getInningNumber(), matchAllData.getEventFile().getEvents()).replace("-", ",");
-					
-					run_rate = CricketFunctions.generateRunRates(Integer.valueOf(pp1.split(",")[0].split("-")[0]),Integer.valueOf(pp_ovrs.split(",")[0].split("-")[0]),
-							Integer.valueOf(pp_ovrs.split(",")[0].split("-")[1]),2,matchAllData) + ",";
-					
-				}else {
-					pp1 = "-,-,-,-" ;
-					run_rate = "-" + ",";
-				}
-				
-				if(inning.getTotalOvers() >= inning.getSecondPowerplayStartOver()-1) {
-					pp2=CricketFunctions.getSecPowerPlayScore(matchAllData, inning.getInningNumber(), matchAllData.getEventFile().getEvents()).replace("-", ",");
-					
-					run_rate = run_rate + CricketFunctions.generateRunRates(Integer.valueOf(pp2.split(",")[0].split("-")[0]),Integer.valueOf(pp_ovrs.split(",")[1].split("-")[0]),
-							Integer.valueOf(pp_ovrs.split(",")[1].split("-")[1]),2,matchAllData) + ",";
-					
-				}else {
-					pp2 = "-,-,-,-" ;
-					run_rate = run_rate + "-" + ",";
-				}
-				
-				if(inning.getTotalOvers() >= inning.getThirdPowerplayStartOver()-1) {
-					pp3=CricketFunctions.getThirdPowerPlayScore(matchAllData,inning.getInningNumber(), matchAllData.getEventFile().getEvents()).replace("-", ",");
-					
-					run_rate = run_rate + CricketFunctions.generateRunRates(Integer.valueOf(pp3.split(",")[0].split("-")[0]),
-							Integer.valueOf(pp_ovrs.split(",")[2].split("-")[0]),Integer.valueOf(pp_ovrs.split(",")[2].split("-")[1]),2,matchAllData);
-					
-				}else {
-					pp3 = "-,-,-,-" ;
-					run_rate = run_rate + "-";
-				}
-			}
+			String p1 = "-",p2 = "-",p3 = "-",p4 = "";
 			
-			lowerThird = new LowerThird(inning.getBatting_team().getTeamName1(),"", "","POWERPLAY SUMMARY", "","", 
-					4,"",inning.getBatting_team().getTeamName4(),new String[]{"OVERS","RUNS","WICKETS","RUN RATE","FOURS","SIXES"},
-					new String[]{"",pp_ovrs,pp1,pp2,pp3,run_rate},null,null,new String[] {"-517.0","-328.0","-122.0","115.0","344.0","560.0"});
+			switch (config.getBroadcaster().toUpperCase()) {
+			case Constants.ICC_U19_2023:
+				String pp1="",pp2="",pp3="",run_rate="";
+				
+				String pp_ovrs="";
+				if(inning.getInningNumber()==1) {
+					
+					pp_ovrs=CricketFunctions.PowerPlayMatchOvers(inning.getInningNumber(),matchAllData,",");
+					
+					if(inning.getTotalOvers() >= inning.getFirstPowerplayStartOver()-1) {
+						pp1=CricketFunctions.getFirstPowerPlayScore(matchAllData,inning.getInningNumber(), matchAllData.getEventFile().getEvents()).replace("-", ",");
 						
+						run_rate = CricketFunctions.generateRunRates(Integer.valueOf(pp1.split(",")[0].split("-")[0]),Integer.valueOf(pp_ovrs.split(",")[0].split("-")[0]),
+								Integer.valueOf(pp_ovrs.split(",")[0].split("-")[1]),2,matchAllData) + ",";
+						
+					}else {
+						pp1 = "-,-,-,-" ;
+						run_rate = "-" + ",";
+					}
+					
+					if(inning.getTotalOvers() > inning.getSecondPowerplayStartOver()-1) {
+						pp2=CricketFunctions.getSecPowerPlayScore(matchAllData, inning.getInningNumber(), matchAllData.getEventFile().getEvents()).replace("-", ",");
+						run_rate = run_rate + CricketFunctions.generateRunRates(Integer.valueOf(pp2.split(",")[0].split("-")[0]),Integer.valueOf(pp_ovrs.split(",")[1].split("-")[0]),
+								Integer.valueOf(pp_ovrs.split(",")[1].split("-")[1]),2,matchAllData) + ",";
+						
+					}else if(inning.getTotalOvers() == inning.getSecondPowerplayStartOver()-1 && inning.getTotalBalls() > 0) {
+						pp2=CricketFunctions.getSecPowerPlayScore(matchAllData, inning.getInningNumber(), matchAllData.getEventFile().getEvents()).replace("-", ",");
+						run_rate = run_rate + CricketFunctions.generateRunRates(Integer.valueOf(pp2.split(",")[0].split("-")[0]),Integer.valueOf(pp_ovrs.split(",")[1].split("-")[0]),
+								Integer.valueOf(pp_ovrs.split(",")[1].split("-")[1]),2,matchAllData) + ",";
+						
+					}else {
+						pp2 = "-,-,-,-" ;
+						run_rate = run_rate + "-" + ",";
+					}
+					
+					if(inning.getTotalOvers() > inning.getThirdPowerplayStartOver()-1) {
+						pp3=CricketFunctions.getThirdPowerPlayScore(matchAllData,inning.getInningNumber(), matchAllData.getEventFile().getEvents()).replace("-", ",");
+						run_rate = run_rate + CricketFunctions.generateRunRates(Integer.valueOf(pp3.split(",")[0].split("-")[0]),
+								Integer.valueOf(pp_ovrs.split(",")[2].split("-")[0]),Integer.valueOf(pp_ovrs.split(",")[2].split("-")[1]),2,matchAllData);
+						
+					}else if(inning.getTotalOvers() == inning.getThirdPowerplayStartOver()-1 && inning.getTotalBalls() > 0) {
+						pp3=CricketFunctions.getThirdPowerPlayScore(matchAllData,inning.getInningNumber(), matchAllData.getEventFile().getEvents()).replace("-", ",");
+						run_rate = run_rate + CricketFunctions.generateRunRates(Integer.valueOf(pp3.split(",")[0].split("-")[0]),
+								Integer.valueOf(pp_ovrs.split(",")[2].split("-")[0]),Integer.valueOf(pp_ovrs.split(",")[2].split("-")[1]),2,matchAllData);
+						
+					}else {
+						pp3 = "-,-,-,-" ;
+						run_rate = run_rate + "-";
+					}
+					
+				}else if(inning.getInningNumber()==2) {
+					
+					pp_ovrs=CricketFunctions.PowerPlayMatchOvers(inning.getInningNumber(),matchAllData,",");
+					
+					if(inning.getTotalOvers() >= inning.getFirstPowerplayStartOver()-1) {
+						pp1=CricketFunctions.getFirstPowerPlayScore(matchAllData,inning.getInningNumber(), matchAllData.getEventFile().getEvents()).replace("-", ",");
+						
+						run_rate = CricketFunctions.generateRunRates(Integer.valueOf(pp1.split(",")[0].split("-")[0]),Integer.valueOf(pp_ovrs.split(",")[0].split("-")[0]),
+								Integer.valueOf(pp_ovrs.split(",")[0].split("-")[1]),2,matchAllData) + ",";
+						
+					}else {
+						pp1 = "-,-,-,-" ;
+						run_rate = "-" + ",";
+					}
+					
+					if(inning.getTotalOvers() >= inning.getSecondPowerplayStartOver()-1) {
+						pp2=CricketFunctions.getSecPowerPlayScore(matchAllData, inning.getInningNumber(), matchAllData.getEventFile().getEvents()).replace("-", ",");
+						
+						run_rate = run_rate + CricketFunctions.generateRunRates(Integer.valueOf(pp2.split(",")[0].split("-")[0]),Integer.valueOf(pp_ovrs.split(",")[1].split("-")[0]),
+								Integer.valueOf(pp_ovrs.split(",")[1].split("-")[1]),2,matchAllData) + ",";
+						
+					}else {
+						pp2 = "-,-,-,-" ;
+						run_rate = run_rate + "-" + ",";
+					}
+					
+					if(inning.getTotalOvers() >= inning.getThirdPowerplayStartOver()-1) {
+						pp3=CricketFunctions.getThirdPowerPlayScore(matchAllData,inning.getInningNumber(), matchAllData.getEventFile().getEvents()).replace("-", ",");
+						
+						run_rate = run_rate + CricketFunctions.generateRunRates(Integer.valueOf(pp3.split(",")[0].split("-")[0]),
+								Integer.valueOf(pp_ovrs.split(",")[2].split("-")[0]),Integer.valueOf(pp_ovrs.split(",")[2].split("-")[1]),2,matchAllData);
+						
+					}else {
+						pp3 = "-,-,-,-" ;
+						run_rate = run_rate + "-";
+					}
+				}
+				
+				lowerThird = new LowerThird(inning.getBatting_team().getTeamName1(),"", "","POWERPLAY SUMMARY", "","", 
+						4,"",inning.getBatting_team().getTeamName4(),new String[]{"OVERS","RUNS","WICKETS","RUN RATE","FOURS","SIXES"},
+						new String[]{"",pp_ovrs,pp1,pp2,pp3,run_rate},null,null,new String[] {"-517.0","-328.0","-122.0","115.0","344.0","560.0"});
+					
+				break;
+			case Constants.ISPL:
+				
+				if(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).size() <= 0) {
+					lowerThird = new LowerThird(inning.getBatting_team().getTeamName1(),"", "","POWERPLAY SUMMARY", "","", 
+							4,"",inning.getBatting_team().getTeamName4(),new String[]{"POWERPLAY","3-5","6-8","9-10"},
+							new String[]{"-","-","-","-"},null,null,new String[] {"-517.0","-328.0","-122.0","115.0"});
+				}else {
+					if(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).size()) == 1) {
+						
+						p1 = Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(0).split("-")[0])+ "-" + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(0).split("-")[1]);
+						
+						lowerThird = new LowerThird(inning.getBatting_team().getTeamName1(),"", "","POWERPLAY SUMMARY", "","", 
+								4,"",inning.getBatting_team().getTeamName4(),new String[]{"POWERPLAY","3-5","6-8","9-10"},
+								new String[]{p1,p2,p3,p4},null,null,new String[] {"-517.0","-328.0","-122.0","115.0"});
+					}else if(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).size()) == 2) {
+						
+						p1 = (Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(0).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(1).split("-")[0]))+ "-" + 
+								(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(0).split("-")[1]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(1).split("-")[1]));
+						
+						lowerThird = new LowerThird(inning.getBatting_team().getTeamName1(),"", "","POWERPLAY SUMMARY", "","", 
+								4,"",inning.getBatting_team().getTeamName4(),new String[]{"POWERPLAY","3-5","6-8","9-10"},
+								new String[]{p1,p2,p3,p4},null,null,new String[] {"-517.0","-328.0","-122.0","115.0"});
+					}else if(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).size()) == 3) {
+						
+						p1 = (Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(0).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(1).split("-")[0]))+ "-" + 
+								(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(0).split("-")[1]) + 
+										Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(1).split("-")[1]));
+						
+						p2 = Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(2).split("-")[0]) + "-" + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(2).split("-")[1]);
+						
+						lowerThird = new LowerThird(inning.getBatting_team().getTeamName1(),"", "","POWERPLAY SUMMARY", "","", 
+								4,"",inning.getBatting_team().getTeamName4(),new String[]{"POWERPLAY","3-5","6-8","9-10"},
+								new String[]{p1,p2,p3,p4},null,null,new String[] {"-517.0","-328.0","-122.0","115.0"});
+					}else if(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).size()) == 4) {
+						
+						p1 = (Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(0).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(1).split("-")[0]))+ "-" + 
+								(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(0).split("-")[1]) + 
+										Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(1).split("-")[1]));
+						
+						p2 = (Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(2).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(3).split("-")[0]))+ "-" + 
+								(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(2).split("-")[1]) + 
+										Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(3).split("-")[1]));
+						
+						lowerThird = new LowerThird(inning.getBatting_team().getTeamName1(),"", "","POWERPLAY SUMMARY", "","", 
+								4,"",inning.getBatting_team().getTeamName4(),new String[]{"POWERPLAY","3-5","6-8","9-10"},
+								new String[]{p1,p2,p3,p4},null,null,new String[] {"-517.0","-328.0","-122.0","115.0"});
+					}else if(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).size()) == 5) {
+						
+						p1 = (Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(0).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(1).split("-")[0]))+ "-" + 
+								(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(0).split("-")[1]) + 
+										Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(1).split("-")[1]));
+						
+						p2 = (Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(2).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(3).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(4).split("-")[0]))+ "-" + 
+								(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(2).split("-")[1]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(3).split("-")[1]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(4).split("-")[1]));
+						
+						
+						lowerThird = new LowerThird(inning.getBatting_team().getTeamName1(),"", "","POWERPLAY SUMMARY", "","", 
+								4,"",inning.getBatting_team().getTeamName4(),new String[]{"POWERPLAY","3-5","6-8","9-10"},
+								new String[]{p1,p2,p3,p4},null,null,new String[] {"-517.0","-328.0","-122.0","115.0"});
+					}else if(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).size()) == 6) {
+						
+						p1 = (Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(0).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(1).split("-")[0]))+ "-" + 
+								(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(0).split("-")[1]) + 
+							Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(1).split("-")[1]));
+						
+						p2 = (Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(2).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(3).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(4).split("-")[0]))+ "-" + 
+								(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(2).split("-")[1]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(3).split("-")[1]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(4).split("-")[1]));
+						
+						p3 = Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(5).split("-")[0]) + "-" + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(5).split("-")[1]);
+						
+						lowerThird = new LowerThird(inning.getBatting_team().getTeamName1(),"", "","POWERPLAY SUMMARY", "","", 
+								4,"",inning.getBatting_team().getTeamName4(),new String[]{"POWERPLAY","3-5","6-8","9-10"},
+								new String[]{p1,p2,p3,p4},null,null,new String[] {"-517.0","-328.0","-122.0","115.0"});
+					}else if(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).size()) == 7) {
+						
+						p1 = (Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(0).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(1).split("-")[0]))+ "-" + 
+								(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(0).split("-")[1]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(1).split("-")[1]));
+						
+						p2 = (Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(2).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(3).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(4).split("-")[0]))+ "-" + 
+								(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(2).split("-")[1]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(3).split("-")[1]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(4).split("-")[1]));
+						
+						p3 = (Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(5).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(6).split("-")[0]))+ "-" + 
+								(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(5).split("-")[1]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(6).split("-")[1]));
+						
+						lowerThird = new LowerThird(inning.getBatting_team().getTeamName1(),"", "","POWERPLAY SUMMARY", "","", 
+								4,"",inning.getBatting_team().getTeamName4(),new String[]{"POWERPLAY","3-5","6-8","9-10"},
+								new String[]{p1,p2,p3,p4},null,null,new String[] {"-517.0","-328.0","-122.0","115.0"});
+					}else if(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).size()) == 8) {
+						
+						p1 = (Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(0).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(1).split("-")[0]))+ "-" + 
+								(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(0).split("-")[1]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(1).split("-")[1]));
+						
+						p2 = (Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(2).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(3).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(4).split("-")[0]))+ "-" + 
+								(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(2).split("-")[1]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(3).split("-")[1]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(4).split("-")[1]));
+						
+						p3 = (Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(5).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(6).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(7).split("-")[0]))+ "-" + 
+								(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(5).split("-")[1]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(6).split("-")[1]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(7).split("-")[1]));
+						
+						lowerThird = new LowerThird(inning.getBatting_team().getTeamName1(),"", "","POWERPLAY SUMMARY", "","", 
+								4,"",inning.getBatting_team().getTeamName4(),new String[]{"POWERPLAY","3-5","6-8","9-10"},
+								new String[]{p1,p2,p3,p4},null,null,new String[] {"-517.0","-328.0","-122.0","115.0"});
+					}else if(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).size()) == 9) {
+						
+						p1 = (Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(0).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(1).split("-")[0]))+ "-" + 
+								(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(0).split("-")[1]) + 
+										Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(1).split("-")[1]));
+						
+						p2 = (Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(2).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(3).split("-")[0]) + 
+										Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(4).split("-")[0]))+ "-" + 
+								(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(2).split("-")[1]) + 
+										Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(3).split("-")[1]) + 
+												Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(4).split("-")[1]));
+						
+						p3 = (Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(5).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(6).split("-")[0]) + 
+										Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(7).split("-")[0]))+ "-" + 
+								(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(5).split("-")[1]) + 
+										Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(6).split("-")[1]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(7).split("-")[1]));
+						
+						
+						p4 = (Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(8).split("-")[0])+ "-" + 
+								(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(8).split("-")[1])));
+						
+						
+						lowerThird = new LowerThird(inning.getBatting_team().getTeamName1(),"", "","POWERPLAY SUMMARY", "","", 
+								4,"",inning.getBatting_team().getTeamName4(),new String[]{"POWERPLAY","3-5","6-8","9-10"},
+								new String[]{p1,p2,p3,p4},null,null,new String[] {"-517.0","-328.0","-122.0","115.0"});
+					}else if(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).size()) == 10) {
+						
+						p1 = (Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(0).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(1).split("-")[0]))+ "-" + 
+								(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(0).split("-")[1]) + 
+										Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(1).split("-")[1]));
+						
+						p2 = (Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(2).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(3).split("-")[0]) + 
+										Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(4).split("-")[0]))+ "-" + 
+								(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(2).split("-")[1]) + 
+										Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(3).split("-")[1]) + 
+												Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(4).split("-")[1]));
+						
+						p3 = (Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(5).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(6).split("-")[0]) + 
+										Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(7).split("-")[0]))+ "-" + 
+								(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(5).split("-")[1]) + 
+										Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(6).split("-")[1]) + 
+												Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(7).split("-")[1]));
+						
+						
+						p4 = (Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(8).split("-")[0]) + 
+								Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(9).split("-")[0]))+ "-" + 
+								(Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(8).split("-")[1]) + 
+										Integer.valueOf(getAllOverData(inning.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(9).split("-")[1]));
+						
+						
+						lowerThird = new LowerThird(inning.getBatting_team().getTeamName1(),"", "","POWERPLAY SUMMARY", "","", 
+								4,"",inning.getBatting_team().getTeamName4(),new String[]{"POWERPLAY","3-5","6-8","9-10"},
+								new String[]{p1,p2,p3,p4},null,null,new String[] {"-517.0","-328.0","-122.0","115.0"});
+					}
+				}
+				
+				
+					
+				break;	
+			}	
 			status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);
 			if(status == Constants.OK) {
 				HideAndShowL3rdSubStrapContainers(WhichSide);
@@ -3256,25 +3466,51 @@ public class LowerThirdGfx
 				
 				break;
 			case "a":
-				if(lowerThird.getWhichTeamFlag() != null) {
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"+ WhichSide + 
-							"$Select_Flags*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
-					if(lowerThird.getWhichTeamFlag().equalsIgnoreCase("NEP")) {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide +
-								"$Select_Flags$Flag" + containerName + "$img_Shadow*ACTIVE SET 0 \0", print_writers);
-					}else {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide +
-								"$Select_Flags$Flag" + containerName + "$img_Shadow*ACTIVE SET 1 \0", print_writers);
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.ICC_U19_2023:
+					if(lowerThird.getWhichTeamFlag() != null) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"+ WhichSide + 
+								"$Select_Flags*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+						if(lowerThird.getWhichTeamFlag().equalsIgnoreCase("NEP")) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide +
+									"$Select_Flags$Flag" + containerName + "$img_Shadow*ACTIVE SET 0 \0", print_writers);
+						}else {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide +
+									"$Select_Flags$Flag" + containerName + "$img_Shadow*ACTIVE SET 1 \0", print_writers);
+						}
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide + 
+								"$Select_Flags$Flag" + containerName + "$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + lowerThird.getWhichTeamFlag() + "\0", print_writers);
 					}
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide + 
-							"$Select_Flags$Flag" + containerName + "$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + lowerThird.getWhichTeamFlag() + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Top_Line$Data$Side_" + WhichSide 
+							+ "$Name" + containerName + "$txt_Name*GEOM*TEXT SET " + lowerThird.getHeaderText() + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Top_Line$Data$Side_" + WhichSide 
+							+ "$Name" + containerName + "$txt_Designation*GEOM*TEXT SET " +lowerThird.getSubTitle() + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"
+							+ WhichSide + "$Name" + containerName + "$Score*ACTIVE SET 0 \0", print_writers);
+					break;
+				case Constants.ISPL:
+					if(lowerThird.getWhichTeamFlag() != null) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"+ WhichSide + 
+								"$Select_Flags*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+						if(lowerThird.getWhichTeamFlag().equalsIgnoreCase("NEP")) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide +
+									"$Select_Flags$Flag" + containerName + "$img_Shadow*ACTIVE SET 0 \0", print_writers);
+						}else {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide +
+									"$Select_Flags$Flag" + containerName + "$img_Shadow*ACTIVE SET 1 \0", print_writers);
+						}
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_" + WhichSide + 
+								"$Select_Flags$Flag" + containerName + "$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + lowerThird.getWhichTeamFlag() + "\0", print_writers);
+					}
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Top_Line$Data$Side_" + WhichSide 
+							+ "$Name" + containerName + "$txt_Name*GEOM*TEXT SET " + lowerThird.getHeaderText() + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Top_Line$Data$Side_" + WhichSide 
+							+ "$Name" + containerName + "$txt_Designation*GEOM*TEXT SET " +lowerThird.getSubTitle() + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"
+							+ WhichSide + "$Name" + containerName + "$Score*ACTIVE SET 0 \0", print_writers);
+					break;
 				}
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Top_Line$Data$Side_" + WhichSide 
-						+ "$Name" + containerName + "$txt_Name*GEOM*TEXT SET " + lowerThird.getHeaderText() + "\0", print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Top_Line$Data$Side_" + WhichSide 
-						+ "$Name" + containerName + "$txt_Designation*GEOM*TEXT SET " +lowerThird.getSubTitle() + "\0", print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"
-						+ WhichSide + "$Name" + containerName + "$Score*ACTIVE SET 0 \0", print_writers);
+				
 				break;
 				
 			case "Shift_F3":
@@ -7298,4 +7534,94 @@ public class LowerThirdGfx
 		}
 	}
 
+	public List<String> getAllOverData(int inning,List<Event> event, MatchAllData matchAllData) {
+		
+		String to = "";
+		int runs = 0,wicket = 0,bowlerId = 0;
+		boolean over_start = false,is_this_current_over = false;
+		ArrayList<String> allData = new ArrayList<String>();
+		if ((matchAllData.getEventFile().getEvents() != null) && (matchAllData.getEventFile().getEvents().size() > 0)) {
+			for(Event evnt: matchAllData.getEventFile().getEvents()) {
+				if(evnt.getEventInningNumber() == inning) {
+					if(evnt.getEventType().equalsIgnoreCase(CricketUtil.LOG_50_50)) {
+						String lastElement = allData.get(allData.size() - 1);
+				        lastElement = lastElement.concat("-CR");
+				        allData.set(allData.size() - 1, lastElement);
+					}
+					
+					if(evnt.getEventType().equalsIgnoreCase(CricketUtil.CHANGE_BOWLER)) {
+						to = "";
+						if(evnt.getEventExtra().equalsIgnoreCase("TAPE")) {
+							to = "-TO";
+						}
+						for(BowlingCard boc : matchAllData.getMatch().getInning().get(inning - 1).getBowlingCard()) {
+							if(boc.getStatus().equalsIgnoreCase(CricketUtil.CURRENT + CricketUtil.BOWLER)) {
+								bowlerId = boc.getPlayerId();
+							}
+						}
+					}
+					
+					switch(evnt.getEventType()) {
+					case CricketUtil.ONE : case CricketUtil.TWO: case CricketUtil.THREE:  case CricketUtil.FIVE : case CricketUtil.DOT:
+	            	case CricketUtil.FOUR: case CricketUtil.SIX: case CricketUtil.NINE:
+	            		runs += evnt.getEventRuns();
+	                    break;
+	            	case CricketUtil.WIDE: case CricketUtil.NO_BALL: case CricketUtil.BYE: case CricketUtil.LEG_BYE: case CricketUtil.PENALTY:
+	            		runs += evnt.getEventRuns();
+	                    break;
+	
+	            	case CricketUtil.LOG_WICKET:
+	                    if (evnt.getEventRuns() > 0)
+	                    {
+	                    	runs += evnt.getEventRuns();
+	                    }
+	                    wicket += 1;
+	                    break;
+	
+	            	case CricketUtil.LOG_ANY_BALL:
+	            		runs += evnt.getEventRuns();
+	                    if (evnt.getEventExtra() != null)
+	                    {
+	                    	runs += evnt.getEventExtraRuns();
+	                    }
+	                    if (evnt.getEventSubExtra() != null)
+	                    {
+	                    	runs += evnt.getEventSubExtraRuns();
+	                    }
+	                    break;										
+					}
+					
+					if(evnt.getEventType().equalsIgnoreCase(CricketUtil.END_OVER)) {
+						if(is_this_current_over == true) {
+							allData.set(allData.size()-1, runs + "-" + wicket + "-EO" + to);
+						}else {
+							allData.add(runs + "-" + wicket + "-EO" + to);
+						}
+						runs = 0;
+						wicket = 0;
+						over_start = false;
+					}else if(evnt.getEventOverNo() == (matchAllData.getMatch().getInning().get(inning - 1).getTotalOvers())){
+						if(!evnt.getEventType().equalsIgnoreCase(CricketUtil.CHANGE_BOWLER)) {
+							if(evnt.getEventBowlerNo() == bowlerId) {
+//								System.out.println(evnt.getEventType());
+								if(over_start == false) {
+									allData.add(runs + "-" + wicket + "-CO" + to);
+									over_start = true;
+									is_this_current_over = true;
+								}
+								
+								if(over_start == true) {
+									String rw = runs + "-" + wicket;
+									allData.set(allData.size()-1, runs + "-" + wicket + "-CO" + to);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+//		System.out.println("allData = " + allData);
+		return allData;
+		
+	}
 }

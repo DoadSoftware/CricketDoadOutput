@@ -1494,7 +1494,7 @@ public class InfobarGfx
 							
 							for(int j =0; j<= getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).size() - 1; j++) {
 								
-								if(inn.getFirstPowerplayStartOver() == (j+1)) {
+								if(inn.getFirstPowerplayEndOver() >= (j+1)) {
 									//------------ first powerplay ---------------------------------//
 									if(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).contains("CR")) {
 										CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"

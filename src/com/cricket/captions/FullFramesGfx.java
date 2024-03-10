@@ -3490,8 +3490,8 @@ public class FullFramesGfx
 								+ "Position*FUNCTION*Grid*num_row SET 1\0", print_writers);
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Manhattan$Bar$"
 								+ "Position*FUNCTION*Grid*num_col SET " + j + "\0", print_writers);
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Manhattan$Wickets_Axis$"
-								+ "Out$Wickets*FUNCTION*Grid*num_col SET " + j + "\0", print_writers);
+//						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Manhattan$Wickets_Axis$"
+//								+ "Out$Wickets*FUNCTION*Grid*num_col SET " + j + "\0", print_writers);
 						
 						if(log_50_over == j) {
 							if(log_50_type.equalsIgnoreCase("-")) {
@@ -3516,6 +3516,9 @@ public class FullFramesGfx
 									+ "$Out$Wkt_" + j + powerPlay + "$Select_Wickets*FUNCTION*Omo*vis_con SET " + manhattan.get(j).getOverTotalWickets() + "\0", print_writers);
 							break;
 						}
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Manhattan$Wickets_Axis"
+								+ "$Out$Wkt_" + j + "$Select_Wickets*FUNCTION*Omo*vis_con SET 0\0", print_writers);
 					}
 				}
 				break;
