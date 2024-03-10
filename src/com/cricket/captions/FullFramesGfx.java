@@ -20,6 +20,7 @@ import com.cricket.model.BattingCard;
 import com.cricket.model.BestStats;
 import com.cricket.model.BowlingCard;
 import com.cricket.model.Configuration;
+import com.cricket.model.Event;
 import com.cricket.model.FallOfWicket;
 import com.cricket.model.Fixture;
 import com.cricket.model.Ground;
@@ -1544,6 +1545,9 @@ public class FullFramesGfx
 						break;
 					case "F4":
 						containerName = "$Partnership_List";
+						break;
+					case "Control_F10":
+						containerName = "$Manhattan";
 						break;
 					}
 					
@@ -3341,15 +3345,46 @@ public class FullFramesGfx
 		case "Control_F10":
 			switch (config.getBroadcaster().toUpperCase()) {
 			case Constants.ICC_U19_2023: case Constants.ISPL:
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
-						"$Select_GraphicsType*FUNCTION*Omo*vis_con SET 11 \0", print_writers);
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.ISPL:
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
+							"$Select_Graphics*FUNCTION*Omo*vis_con SET 9 \0", print_writers);
+					break;
+				case Constants.ICC_U19_2023:
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
+							"$Select_GraphicsType*FUNCTION*Omo*vis_con SET 11 \0", print_writers);
+					break;
+				}
 				
-				int maxRuns = 0,runsIncr = 0,powerplay_omo=0;
+				int maxRuns = 0,runsIncr = 0,powerplay_omo=0,tape_ball1=0,tape_ball2=0,log_50_over=0;
 				double lngth = 0;
 				String powerPlay = "";
-				System.out.println("manhattan size "+manhattan.size());
+				
+				if(config.getBroadcaster().equalsIgnoreCase(Constants.ISPL)) {
+					for(int i=1;i<=10;i++) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
+								"$Manhattan$Bar$" + i + "$Select_TapeBall*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+					}
+					
+					if ((matchAllData.getEventFile().getEvents() != null) && (matchAllData.getEventFile().getEvents().size() > 0)) {
+						for(Event evnt: matchAllData.getEventFile().getEvents()) {
+							if(evnt.getEventInningNumber() == WhichInning) {
+								if(evnt.getEventExtra() != null) {
+									if(evnt.getEventExtra().equalsIgnoreCase("TAPE")) {
+										CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
+												"$Manhattan$Bar$" + (evnt.getEventOverNo()+1) + "$Select_TapeBall*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+									}
+									
+									if(evnt.getEventType().equalsIgnoreCase("LOG_50_50")) {
+										log_50_over = evnt.getEventOverNo();
+									}
+								}
+							}
+						}
+					}
+				}
+				
 				for (int j = 0; j < manhattan.size(); j++) {
-					System.out.println("Inn number : "+manhattan.get(j).getInningNumber() +" RUNS "+Integer.valueOf(manhattan.get(j).getOverTotalRuns()));
 					if(manhattan.get(j).getInningNumber() == WhichInning) {
 						if(Integer.valueOf(manhattan.get(j).getOverTotalRuns()) > maxRuns){
 							maxRuns = Integer.valueOf(manhattan.get(j).getOverTotalRuns()); // 33 runs came off 34th over
@@ -3367,25 +3402,48 @@ public class FullFramesGfx
 				
 				for(int j = 1; j <= matchAllData.getSetup().getMaxOvers(); j++) {
 					
-					if(j <= matchAllData.getMatch().getInning().get(WhichInning - 1).getFirstPowerplayEndOver()) {
-						powerplay_omo = 0;
-						powerPlay = "$PowerPlay_1";
-					}
-					else if(j >= matchAllData.getMatch().getInning().get(WhichInning - 1).getSecondPowerplayStartOver() && 
-							j <= matchAllData.getMatch().getInning().get(WhichInning - 1).getSecondPowerplayEndOver()) {
-						powerplay_omo = 1;
-						powerPlay = "$PowerPlay_2";
-					}
-					else if(j >= matchAllData.getMatch().getInning().get(WhichInning - 1).getThirdPowerplayStartOver() && 
-							j <= matchAllData.getMatch().getInning().get(WhichInning - 1).getThirdPowerplayEndOver()) {
-						powerplay_omo = 2;
-						powerPlay = "$PowerPlay_3";
+					switch (config.getBroadcaster().toUpperCase()) {
+					case Constants.ISPL:
+						if(j <= matchAllData.getMatch().getInning().get(WhichInning - 1).getFirstPowerplayEndOver()) {
+							powerplay_omo = 0;
+							powerPlay = "$PowerPlay";
+						}
+						else if(j == matchAllData.getMatch().getInning().get(WhichInning - 1).getSecondPowerplayEndOver()) {
+							powerplay_omo = 0;
+							powerPlay = "$PowerPlay";
+						}else {
+							if(log_50_over == j) {
+								powerplay_omo = 2;
+								powerPlay = "$Challenge";
+							}else {
+								powerplay_omo = 1;
+								powerPlay = "$Normal";
+							}
+						}
+						break;
+					case Constants.ICC_U19_2023:
+						if(j <= matchAllData.getMatch().getInning().get(WhichInning - 1).getFirstPowerplayEndOver()) {
+							powerplay_omo = 0;
+							powerPlay = "$PowerPlay_1";
+						}
+						else if(j >= matchAllData.getMatch().getInning().get(WhichInning - 1).getSecondPowerplayStartOver() && 
+								j <= matchAllData.getMatch().getInning().get(WhichInning - 1).getSecondPowerplayEndOver()) {
+							powerplay_omo = 1;
+							powerPlay = "$PowerPlay_2";
+						}
+						else if(j >= matchAllData.getMatch().getInning().get(WhichInning - 1).getThirdPowerplayStartOver() && 
+								j <= matchAllData.getMatch().getInning().get(WhichInning - 1).getThirdPowerplayEndOver()) {
+							powerplay_omo = 2;
+							powerPlay = "$PowerPlay_3";
+						}
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Manhattan$Wickets_Axis"
+								+ "$Out$Wkt_" + j + "$Select_PowerPlay*FUNCTION*Omo*vis_con SET " + powerplay_omo + "\0", print_writers);
+						break;
 					}
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Manhattan$Bar$"
 							+ j + "$Select_PowerPlay*FUNCTION*Omo*vis_con SET " + powerplay_omo + "\0", print_writers);
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Manhattan$Wickets_Axis"
-							+ "$Out$Wkt_" + j + "$Select_PowerPlay*FUNCTION*Omo*vis_con SET " + powerplay_omo + "\0", print_writers);
+					
 					
 					if(j < manhattan.size()) {
 //						System.out.println("OVERS : " + j + " RUNS/WICKETS : " + manhattan.get(j).getOverTotalRuns() + "/" + manhattan.get(j).getOverTotalWickets() 
@@ -3402,8 +3460,16 @@ public class FullFramesGfx
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Manhattan$Bar$"
 								+ j + powerPlay + "$Bar*GEOM*height SET " + lngth + "\0", print_writers);
 						
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Manhattan$Wickets_Axis"
-								+ "$Out$Wkt_" + j + powerPlay + "$Select_Wickets*FUNCTION*Omo*vis_con SET " + manhattan.get(j).getOverTotalWickets() + "\0", print_writers);
+						switch (config.getBroadcaster().toUpperCase()) {
+						case Constants.ISPL:
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Manhattan$Wickets_Axis"
+									+ "$Out$Wkt_" + j + "$Select_Wickets*FUNCTION*Omo*vis_con SET " + manhattan.get(j).getOverTotalWickets() + "\0", print_writers);
+							break;
+						case Constants.ICC_U19_2023:
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Manhattan$Wickets_Axis"
+									+ "$Out$Wkt_" + j + powerPlay + "$Select_Wickets*FUNCTION*Omo*vis_con SET " + manhattan.get(j).getOverTotalWickets() + "\0", print_writers);
+							break;
+						}
 					}
 				}
 				break;

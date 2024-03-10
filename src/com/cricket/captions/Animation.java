@@ -155,7 +155,7 @@ public class Animation
 				this.whichGraphicOnScreen = whatToProcess;
 				break;	
 			case "F1": case "F2": case "F4": case "Control_F7": case "Control_F8": case "Shift_F8": case "Shift_F11":
-			case "Shift_K":	case "Control_p": case "Control_F11": case "z": case "x": case "c": case "v":
+			case "Shift_K":	case "Control_p": case "Control_F11": case "z": case "x": case "c": case "v": case "Control_F10":
 			case "Control_c": case "Control_v": case "Shift_V":
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
 				TimeUnit.MILLISECONDS.sleep(500);
@@ -185,6 +185,9 @@ public class Animation
 					break;
 				case "Shift_K":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Partnership", "START");
+					break;
+				case "Control_F10":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Manhattan", "START");
 					break;
 				case "Control_p":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Standings", "START");
@@ -883,7 +886,7 @@ public class Animation
 				break;	
 			case "F1": case "F2": case "F4": case "Control_F7": case "Control_F8": case "Shift_F8": case "Shift_F11":
 			case "Shift_K":	case "Control_p": case "Control_F11": case "z": case "x": case "c": case "v": case "Control_c": case "Control_v":
-			case "Shift_V":
+			case "Shift_V": case "Control_F10":
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Essentials$Out", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Header$Out", "CONTINUE");
 				
@@ -911,6 +914,9 @@ public class Animation
 					break;
 				case "Shift_K":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Partnership$Out", "CONTINUE");
+					break;
+				case "Control_F10":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Manhattan$Out", "CONTINUE");
 					break;
 				case "Control_p":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Standings$Out", "CONTINUE");
@@ -2619,7 +2625,7 @@ public class Animation
 						switch(whatToProcess.split(",")[0]) {
 						case "F1": case "F2": case "F4": case "Shift_F11": case "Control_F7": case "Shift_F8":
 						case "Shift_K":	case "Control_p": case "Control_F11": case "z": case "x": case "c": case "v":
-						case "Control_c": case "Control_v": case "Shift_V":
+						case "Control_c": case "Control_v": case "Shift_V": case "Control_F10":
 							previewCommand = "Anim_Infobar$Push 0.500 Anim_FullFrames$In_Out$Essentials$In 2.140 Anim_FullFrames$In_Out$Header$In 2.100";
 							break;
 						case "m": case "Control_m":
@@ -2653,6 +2659,9 @@ public class Animation
 							break;
 						case "Shift_K":
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Partnership$In 2.200";
+							break;
+						case "Control_F10":
+							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Manhattan$In 2.220";
 							break;
 						case "Control_p":
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Standings$In 1.843";
