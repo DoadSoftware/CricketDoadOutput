@@ -513,6 +513,8 @@ public class IndexController
 	@SuppressWarnings("unchecked")
 	public <T> List<T> GetGraphicOption(String whatToProcess) throws IOException {
 		switch (whatToProcess) {
+		case "Control_h":
+			return (List<T>) session_team;
 		case "F10": case "j":
 		    return (List<T>) session_name_super;
 		case "k":

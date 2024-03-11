@@ -156,7 +156,7 @@ public class Animation
 				break;	
 			case "F1": case "F2": case "F4": case "Control_F7": case "Control_F8": case "Shift_F8": case "Shift_F11":
 			case "Shift_K":	case "Control_p": case "Control_F11": case "z": case "x": case "c": case "v": case "Control_F10":
-			case "Control_c": case "Control_v": case "Shift_V":
+			case "Control_c": case "Control_v": case "Shift_V": case "Control_z": case "Control_x":
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
 				TimeUnit.MILLISECONDS.sleep(500);
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Essentials", "START");
@@ -886,7 +886,7 @@ public class Animation
 				break;	
 			case "F1": case "F2": case "F4": case "Control_F7": case "Control_F8": case "Shift_F8": case "Shift_F11":
 			case "Shift_K":	case "Control_p": case "Control_F11": case "z": case "x": case "c": case "v": case "Control_c": case "Control_v":
-			case "Shift_V": case "Control_F10":
+			case "Shift_V": case "Control_F10": case "Control_z": case "Control_x":
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Essentials$Out", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Header$Out", "CONTINUE");
 				
@@ -921,7 +921,7 @@ public class Animation
 				case "Control_p":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Standings$Out", "CONTINUE");
 					break;
-				case "z": case "x": case "c": case "v": case "Control_c": case "Control_v": case "Shift_V":
+				case "z": case "x": case "c": case "v": case "Control_c": case "Control_v": case "Shift_V": case "Control_z": case "Control_x":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$LeaderBoard$Out", "CONTINUE");
 					break;
 				}
@@ -2626,7 +2626,7 @@ public class Animation
 					if(whatToProcess.contains(",")) {
 						switch(whatToProcess.split(",")[0]) {
 						case "F1": case "F2": case "F4": case "Shift_F11": case "Control_F7": case "Shift_F8":
-						case "Shift_K":	case "Control_p": case "Control_F11": case "z": case "x": case "c": case "v":
+						case "Shift_K":	case "Control_p": case "Control_F11": case "z": case "x": case "c": case "v": case "Control_z": case "Control_x":
 						case "Control_c": case "Control_v": case "Shift_V": case "Control_F10":
 							previewCommand = "Anim_Infobar$Push 0.500 Anim_FullFrames$In_Out$Essentials$In 2.140 Anim_FullFrames$In_Out$Header$In 2.100";
 							break;
@@ -2668,7 +2668,7 @@ public class Animation
 						case "Control_p":
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Standings$In 1.843";
 							break;
-						case "z": case "x": case "c": case "v":	case "Control_c": case "Control_v":
+						case "z": case "x": case "c": case "v":	case "Control_c": case "Control_v": case "Control_z": case "Control_x":
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$LeaderBoard$In 2.220";
 							previewCommand = previewCommand + " LeaderBoardHighlight$Side1$Player" + whatToProcess.split(",")[2].split("_")[0] + " 1.574";
 							break;
@@ -2681,7 +2681,7 @@ public class Animation
 					if(whatToProcess.contains(",")) {
 						switch(whatToProcess.split(",")[0]) {
 						case "F1": case "F2": case "F4": case "Shift_F11": case "Control_F8": case "Shift_F8": case "Shift_K":
-						case "Control_p": case "z": case "x": case "c": case "v":
+						case "Control_p": case "z": case "x": case "c": case "v": case "Control_z": case "Control_x":
 							previewCommand = previewCommand + "Change$Header 1.600 Change$Header$Change_In 1.600 Change$Header$Change_Out 0.420";
 							if(whichGraphicOnScreen.contains(",")) {
 								switch(whichGraphicOnScreen.split(",")[0]) {
@@ -2712,7 +2712,7 @@ public class Animation
 									previewCommand = previewCommand + " Change$Standings 1.543 Change$Standings$Change_Out 0.760 "
 											+ "Change$Standings$Change_In 1.543";
 									break;
-								case "z": case "x": case "c": case "v":	
+								case "z": case "x": case "c": case "v":	case "Control_z": case "Control_x":
 									previewCommand = previewCommand + " Change$LeaderBoard 2.200 Change$LeaderBoard$Change_Out 0.760 "
 											+ "Change$LeaderBoard$Change_In 2.200";
 									previewCommand = previewCommand + " LeaderBoardHighlight$Side2$Player" + whatToProcess.split(",")[2].split("_")[0] + " 1.574";
@@ -2722,7 +2722,7 @@ public class Animation
 							if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase(whatToProcess.split(",")[0])) {
 								switch(whatToProcess.split(",")[0]) {
 								case "F1": case "F2":case "F4": case "Shift_F11": case "Shift_K": case "Control_p":
-								case "Control_F8":	case "Shift_F8": case "z": case "x": case "c": case "v":	
+								case "Control_F8":	case "Shift_F8": case "z": case "x": case "c": case "v": case "Control_z": case "Control_x":
 									previewCommand = previewCommand + " Header_Shrink 0.000 Header_Shrink$In 0.000";
 									break;
 								}

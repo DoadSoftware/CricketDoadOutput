@@ -455,6 +455,8 @@ public class Caption
 						whichSide = 1;
 					}
 					this_infobarGfx.infobar.setFull_section(whatToProcess.split(",")[2]);
+					this_infobarGfx.infobar.setMiddle_section("");
+					this_infobarGfx.infobar.setRight_bottom("");
 					status = this_infobarGfx.populateFullSection(print_writers, matchAllData, whichSide);
 					break;
 
@@ -475,16 +477,32 @@ public class Caption
 					break;
 
 				case Constants.ISPL:
+					
 					if(this_infobarGfx.infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
 						this_infobarGfx.infobar.setMiddle_section(whatToProcess.split(",")[2]);
 						status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers,matchAllData, 1);
 					}else {
 						if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BATSMAN)) {
 							this_infobarGfx.infobar.setMiddle_section(whatToProcess.split(",")[2]);
+							
 							status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers,matchAllData, 1);
 						}else {
+							if(this_infobarGfx.infobar.getMiddle_section() != null && !this_infobarGfx.infobar.getMiddle_section().isEmpty()) {
+								if(!this_infobarGfx.infobar.getMiddle_section().equalsIgnoreCase(whatToProcess.split(",")[2])) {
+									whichSide = 2;
+								}else {
+									whichSide = 1;
+								}
+							}else {
+								whichSide = 1;
+							}
 							this_infobarGfx.infobar.setMiddle_section(whatToProcess.split(",")[2]);
 							status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers,matchAllData, whichSide);
+						}
+						
+						if(this_infobarGfx.infobar.getRight_bottom().trim().isEmpty()) {
+							this_infobarGfx.infobar.setRight_bottom(CricketUtil.BOWLER);
+							this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, 1, 1);
 						}
 					}
 					
@@ -540,12 +558,28 @@ public class Caption
 							this_infobarGfx.infobar.setRight_bottom(whatToProcess.split(",")[2]);
 							status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, 1, 1);
 						}else {
+							if(this_infobarGfx.infobar.getRight_bottom() != null && !this_infobarGfx.infobar.getRight_bottom().isEmpty()) {
+								if(!this_infobarGfx.infobar.getRight_bottom().equalsIgnoreCase(whatToProcess.split(",")[2])) {
+									whichSide = 2;
+								}else {
+									whichSide = 1;
+								}
+							}else {
+								whichSide = 1;
+							}
+							
 							this_infobarGfx.infobar.setRight_bottom(whatToProcess.split(",")[2]);
 							status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, whichSide, 1);
+						}
+						
+						if(this_infobarGfx.infobar.getMiddle_section().trim().isEmpty()) {
+							this_infobarGfx.infobar.setMiddle_section(CricketUtil.BATSMAN);
+							this_infobarGfx.populateVizInfobarMiddleSection(print_writers,matchAllData, 1);
 						}
 					}
 					
 					this_infobarGfx.infobar.setFull_section("");
+					
 //					this_infobarGfx.infobar.setRight_bottom(whatToProcess.split(",")[2]);
 //					status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, 1, whichSide);
 					break;
@@ -613,6 +647,8 @@ public class Caption
 					}
 					
 					this_infobarGfx.infobar.setFull_section("FREE_TEXT");
+					this_infobarGfx.infobar.setMiddle_section("");
+					this_infobarGfx.infobar.setRight_bottom("");
 					this_infobarGfx.infobarStatsId = Integer.valueOf(whatToProcess.split(",")[2]);
 					status = this_infobarGfx.populateFullSection(print_writers, matchAllData, whichSide);
 					break;	
@@ -634,6 +670,8 @@ public class Caption
 					}
 					
 					this_infobarGfx.infobar.setFull_section("COMMENTATORS");
+					this_infobarGfx.infobar.setMiddle_section("");
+					this_infobarGfx.infobar.setRight_bottom("");
 					this_infobarGfx.Comms_Name = whatToProcess;
 					status = this_infobarGfx.populateFullSection(print_writers, matchAllData, whichSide);
 					break;	

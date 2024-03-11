@@ -84,6 +84,8 @@ public class FullFramesGfx
 	public LeagueTable leagueTable;
 	public String whichSponsor;
 	
+	String varText = "";
+	
 	public List<BattingCard> battingCardList = new ArrayList<BattingCard>();
 	public List<OverByOverData> manhattan, manhattan2 = new ArrayList<OverByOverData>();
 	public List<Statistics> statisticsList = new ArrayList<Statistics>();
@@ -721,6 +723,15 @@ public class FullFramesGfx
 			return "populateFFPointsTable : League Table is null";
 		}
 		
+		for(VariousText vt : VariousText) {
+			if(vt.getVariousType().equalsIgnoreCase("POINTSTABLEFOOTER") && vt.getUseThis().toUpperCase().equalsIgnoreCase(CricketUtil.YES)) {
+				varText = vt.getVariousText();
+				break;
+			}else {
+				varText = "TOP FOUR TEAMS QUALIFY FOR SEMI-FINALS";
+			}
+		}
+		
 		status = PopulateFfHeader(WhichSide, whatToProcess, matchAllData, WhichInning);
 		if(status == Constants.OK) {
 			status = PopulateFfBody(WhichSide, whatToProcess, matchAllData, WhichInning);
@@ -1300,17 +1311,17 @@ public class FullFramesGfx
 					break;
 				case "Control_z":
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$LeaderBoard$LeaderBoardData$TitleGrp$" 
-							+ "$txt_Title1*GEOM*TEXT SET " + "MATCHES" + "\0", print_writers);
+							+ "$txt_Title1*GEOM*TEXT SET " + "RUNS" + "\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$LeaderBoard$LeaderBoardData$TitleGrp$" 
-							+ "$txt_Title2*GEOM*TEXT SET " + "RUNS" + "\0", print_writers);
+							+ "$txt_Title2*GEOM*TEXT SET " + "BALLS FACED" + "\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side" + WhichSide + 
 							"$In_Out$Select_Header$Title$txt_Title*GEOM*TEXT SET " + "HIGHEST SCORES" + "\0", print_writers);
 					break;
 				case "Control_x":
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$LeaderBoard$LeaderBoardData$TitleGrp$" 
-							+ "$txt_Title1*GEOM*TEXT SET " + "MATCHES" + "\0", print_writers);
+							+ "$txt_Title1*GEOM*TEXT SET " + "FIGURES" + "\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$LeaderBoard$LeaderBoardData$TitleGrp$" 
-							+ "$txt_Title2*GEOM*TEXT SET " + "FIG" + "\0", print_writers);
+							+ "$txt_Title2*GEOM*TEXT SET " + "OVERS" + "\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side" + WhichSide + 
 							"$In_Out$Select_Header$Title$txt_Title*GEOM*TEXT SET " + "BEST FIGURES" + "\0", print_writers);
 					break;
@@ -3409,9 +3420,9 @@ public class FullFramesGfx
 					}
 				}
 				
-				for (int j = 0; j < manhattan.size(); j++) {
+				for (int j = 1; j < manhattan.size(); j++) {
 					if(manhattan.get(j).getInningNumber() == WhichInning) {
-						if(log_50_over == (j+1)) {
+						if(log_50_over == j) {
 							if(log_50_type.equalsIgnoreCase("-")) {
 								if((Integer.valueOf(manhattan.get(j).getOverTotalRuns())-log_50_runs) > maxRuns){
 									maxRuns = (Integer.valueOf(manhattan.get(j).getOverTotalRuns())-log_50_runs); // 33 runs came off 34th over
@@ -5460,8 +5471,20 @@ public class FullFramesGfx
 							CricketUtil.FULL, "", config.getBroadcaster()).replace("win", "won").toUpperCase() + "\0", print_writers);
 					break;
 			case "Control_p":
+				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Select_Graphics"
-						+ "$Standings$InfoGrp$txt_Info*GEOM*TEXT SET " + "TOP FOUR TEAMS QUALIFY FOR SEMI-FINALS" + "\0", print_writers);
+						+ "$Standings$InfoGrp$txt_Info*GEOM*TEXT SET " + varText + "\0", print_writers);
+				
+//				for(VariousText vartext : VariousText) {
+//					if(vartext.getVariousType().equalsIgnoreCase("POINTSTABLEFOOTER") && vartext.getUseThis().toUpperCase().equalsIgnoreCase(CricketUtil.YES)) {
+//						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Select_Graphics"
+//								+ "$Standings$InfoGrp$txt_Info*GEOM*TEXT SET " + vartext.getVariousText() + "\0", print_writers);
+//					}else {
+//						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Select_Graphics"
+//								+ "$Standings$InfoGrp$txt_Info*GEOM*TEXT SET " + "TOP FOUR TEAMS QUALIFY FOR SEMI-FINALS" + "\0", print_writers);
+//					}
+//				}
+				
 				break;
 			case "Control_F7":
 				
@@ -5590,6 +5613,9 @@ public class FullFramesGfx
 						 + "$txt_TotalScore*GEOM*TEXT SET " + CricketFunctions.getTeamScore(inning, "-", false) + "\0", print_writers);
 				break;
 			case "F2":
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$SplitBowling$FowGrp$1$Select_Row_Type$FOW"
+						+ "$BatterGrp$txt_Title*GEOM*TEXT SET " + "FALL OF WICKETS" + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$SplitBowling$InfoGrp"
 						+ "$Select_ChallangeRuns*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
@@ -7442,6 +7468,7 @@ public class FullFramesGfx
 							}else {
 								containerName ="$ProfileDataGrp";
 							}
+//							top_bowler_beststats.get(i).GET
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$Stats$" 
 									+ rowId + containerName + "$txt_NotOutStar*ACTIVE SET 0 \0", print_writers);
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Leader_Board$Stats$" 
@@ -7535,22 +7562,23 @@ public class FullFramesGfx
 							}else {
 								containerName ="$Dehighlight";
 							}
-							
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$LeaderBoard$LeaderBoardData$Rows$" 
 									+ rowId + containerName + "$TextGrp$txt_TeamName*GEOM*TEXT SET " + top_batsman_beststats.get(i).getPlayer().getFull_name() + "\0", print_writers);
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$LeaderBoard$LeaderBoardData$Rows$" 
-									+ rowId + containerName + "$TextGrp$txt_Info*GEOM*TEXT SET " + Teams.get(top_batsman_beststats.get(i).getPlayer().getTeamId() - 1).getTeamName1() + "\0", print_writers);
+									+ rowId + containerName + "$TextGrp$txt_Info*GEOM*TEXT SET vs " + top_batsman_beststats.get(i).getOpponentTeam().getTeamName1().toUpperCase() + "\0", print_writers);
+							
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$LeaderBoard$LeaderBoardData$Rows$" 
+									+ rowId + containerName + "$StatsGrp$txt_Runs*GEOM*TEXT SET " + top_batsman_beststats.get(i).getBalls() + " \0", print_writers);
 							
 							if(top_batsman_beststats.get(i).getBestEquation() % 2 == 0) {
+								
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$LeaderBoard$LeaderBoardData$Rows$" 
-										+ rowId + containerName + "$StatsGrp$txt_Matches*GEOM*TEXT SET  \0", print_writers);
-								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$LeaderBoard$LeaderBoardData$Rows$" 
-										+ rowId + containerName + "$StatsGrp$txt_Runs*GEOM*TEXT SET " + top_batsman_beststats.get(i).getBestEquation() / 2 + "\0", print_writers);
+										+ rowId + containerName + "$StatsGrp$txt_Matches*GEOM*TEXT SET " + top_batsman_beststats.get(i).getBestEquation() / 2 + "\0", print_writers);
 							}else {
+//								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$LeaderBoard$LeaderBoardData$Rows$" 
+//										+ rowId + containerName + "$StatsGrp$txt_Matches*GEOM*TEXT SET  \0", print_writers);
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$LeaderBoard$LeaderBoardData$Rows$" 
-										+ rowId + containerName + "$StatsGrp$txt_Matches*GEOM*TEXT SET  \0", print_writers);
-								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$LeaderBoard$LeaderBoardData$Rows$" 
-										+ rowId + containerName + "$StatsGrp$txt_Runs*GEOM*TEXT SET " + top_batsman_beststats.get(i).getBestEquation() / 2 + "\0", print_writers);
+										+ rowId + containerName + "$StatsGrp$txt_Matches*GEOM*TEXT SET " + top_batsman_beststats.get(i).getBestEquation() / 2 + "*" + "\0", print_writers);
 							}
 						}
 					}
@@ -7579,22 +7607,23 @@ public class FullFramesGfx
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$LeaderBoard$LeaderBoardData$Rows$" 
 									+ rowId + containerName + "$TextGrp$txt_TeamName*GEOM*TEXT SET " + top_bowler_beststats.get(i).getPlayer().getFull_name() + "\0", print_writers);
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$LeaderBoard$LeaderBoardData$Rows$" 
-									+ rowId + containerName + "$TextGrp$txt_Info*GEOM*TEXT SET " + Teams.get(top_bowler_beststats.get(i).getPlayer().getTeamId() - 1).getTeamName1() + "\0", print_writers);
+									+ rowId + containerName + "$TextGrp$txt_Info*GEOM*TEXT SET vs " + top_bowler_beststats.get(i).getOpponentTeam().getTeamName1().toUpperCase() + "\0", print_writers);
 							
-							
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$LeaderBoard$LeaderBoardData$Rows$" 
+									+ rowId + containerName + "$StatsGrp$txt_Runs*GEOM*TEXT SET " + CricketFunctions.OverBalls(0, top_bowler_beststats.get(i).getBalls()) + "\0", print_writers);
+							System.out.println(top_bowler_beststats.get(j).getPlayer().getFull_name() + j + " " + top_bowler_beststats.get(j).getBestEquation() % 1000);
 							if(top_bowler_beststats.get(i).getBestEquation() % 1000 > 0) {
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$LeaderBoard$LeaderBoardData$Rows$" 
-										+ rowId + containerName + "$StatsGrp$txt_Matches*GEOM*TEXT SET " + "" + "\0", print_writers);
-								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$LeaderBoard$LeaderBoardData$Rows$" 
-										+ rowId + containerName + "$StatsGrp$txt_Runs*GEOM*TEXT SET " + ((top_bowler_beststats.get(i).getBestEquation() / 1000) +1) 
+										+ rowId + containerName + "$StatsGrp$txt_Matches*GEOM*TEXT SET " + ((top_bowler_beststats.get(i).getBestEquation() / 1000) +1) 
 										+ "-" + (1000 - (top_bowler_beststats.get(i).getBestEquation() % 1000)) + "\0", print_writers);
 							}
 							else if(top_bowler_beststats.get(i).getBestEquation() % 1000 < 0) {
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$LeaderBoard$LeaderBoardData$Rows$" 
-										+ rowId + containerName + "$StatsGrp$txt_Matches*GEOM*TEXT SET  \0", print_writers);
-								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$LeaderBoard$LeaderBoardData$Rows$" 
-										+ rowId + containerName + "$StatsGrp$txt_Runs*GEOM*TEXT SET " + (top_bowler_beststats.get(i).getBestEquation() / 1000) 
+										+ rowId + containerName + "$StatsGrp$txt_Matches*GEOM*TEXT SET " + (top_bowler_beststats.get(i).getBestEquation() / 1000) 
 										+ "-" + Math.abs(top_batsman_beststats.get(i).getBestEquation()) + "\0", print_writers);
+							}else {
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$LeaderBoard$LeaderBoardData$Rows$" 
+										+ rowId + containerName + "$StatsGrp$txt_Matches*GEOM*TEXT SET " + (top_bowler_beststats.get(j).getBestEquation() / 1000) + "-" + "0" + "\0", print_writers);
 							}
 						}	
 					}

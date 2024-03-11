@@ -202,10 +202,13 @@ public class InfobarGfx
 								populateCurrentBatsmen(print_writers, matchAllData, 1);
 								populateCurrentBatsmen(print_writers, matchAllData, 2);
 							}
-							if(!infobar.getRight_bottom().equalsIgnoreCase(CricketUtil.BOWLER)) {
-								populateVizInfobarRightBottom(print_writers, matchAllData, 1, 1);
-							}else {
-								populateVizInfobarBowler(print_writers, matchAllData, 1);
+							
+							if(infobar.getRight_bottom() != null && !infobar.getRight_bottom().isEmpty()) {
+								if(!infobar.getRight_bottom().equalsIgnoreCase(CricketUtil.BOWLER)) {
+									populateVizInfobarRightBottom(print_writers, matchAllData, 1, 1);
+								}else {
+									populateVizInfobarBowler(print_writers, matchAllData, 1);
+								}
 							}
 						}
 					}
@@ -1475,7 +1478,7 @@ public class InfobarGfx
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + i + "$Select_OverType"
 									+ "*FUNCTION*Omo*vis_con SET 0\0",print_writers);
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + i + "$Select_OverType$YetTo_Bowl"
-									+ "$txt_Title*GEOM*TEXT SET OVR " + i + "\0",print_writers);
+									+ "$txt_Title*GEOM*TEXT SET  \0",print_writers);
 						}
 					}
 					for(Inning inn : matchAllData.getMatch().getInning()) {
@@ -1497,6 +1500,16 @@ public class InfobarGfx
 								if(inn.getFirstPowerplayEndOver() >= (j+1)) {
 									//------------ first powerplay ---------------------------------//
 									if(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).contains("CR")) {
+										
+										int cr = 0;
+										if(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split(",")[1].equalsIgnoreCase("-")) {
+											cr = (Integer.valueOf(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0]) - 
+												Integer.valueOf(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split(",")[2]));
+										}else if(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split(",")[1].equalsIgnoreCase("+")){
+											cr = (Integer.valueOf(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0]) + 
+													Integer.valueOf(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split(",")[2]));
+										}
+										
 										CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 												+ "*FUNCTION*Omo*vis_con SET 5\0",print_writers);
 										CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
@@ -1504,8 +1517,7 @@ public class InfobarGfx
 										
 										CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 												+ "$ChallengeOver$txt_OverData*GEOM*TEXT SET " + 
-												getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "/" + 
-												getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[1] + "\0",print_writers);
+												cr + "-" + getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[1] + "\0",print_writers);
 									}else if(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).contains("EO")) {
 										if(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).contains("TO")) {
 											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
@@ -1514,14 +1526,14 @@ public class InfobarGfx
 													+ "$TapeBallOver$txt_TapeBall*GEOM*TEXT SET TAPE BALL/PP\0",print_writers);
 											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 													+ "$TapeBallOver$txt_OverData*GEOM*TEXT SET " + 
-													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "/" + 
+													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "-" + 
 													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[1] + "\0",print_writers);
 										}else {
 											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 													+ "*FUNCTION*Omo*vis_con SET 3\0",print_writers);
 											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 													+ "$PowerPlayOver$txt_OverData*GEOM*TEXT SET " + 
-													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "/" + 
+													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "-" + 
 													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[1] + "\0",print_writers);
 										}
 									}else if(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).contains("CO")) {
@@ -1532,12 +1544,12 @@ public class InfobarGfx
 													+ "$TapeBallOver$txt_TapeBall*GEOM*TEXT SET TAPE BALL/PP\0",print_writers);
 											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 													+ "$TapeBallOver$txt_OverData*GEOM*TEXT SET " + 
-													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "/" + 
+													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "-" + 
 													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[1] + "\0",print_writers);
 										}else {
 											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 													+ "$PowerPlayOver$txt_OverData*GEOM*TEXT SET " + 
-													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "/" + 
+													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "-" + 
 													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[1] + "\0",print_writers);
 											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 													+ "*FUNCTION*Omo*vis_con SET 3\0",print_writers);
@@ -1546,6 +1558,16 @@ public class InfobarGfx
 								}else if(inn.getSecondPowerplayStartOver() == (j+1) && inn.getSecondPowerplayStartOver() != 0) {
 									//--------------------------------second powerplay ----------------------------------------------//
 									if(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).contains("CR")) {
+										
+										int cr = 0;
+										if(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split(",")[1].equalsIgnoreCase("-")) {
+											cr = (Integer.valueOf(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0]) - 
+												Integer.valueOf(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split(",")[2]));
+										}else if(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split(",")[1].equalsIgnoreCase("+")){
+											cr = (Integer.valueOf(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0]) + 
+													Integer.valueOf(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split(",")[2]));
+										}
+										
 										CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 												+ "*FUNCTION*Omo*vis_con SET 5\0",print_writers);
 										CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
@@ -1553,8 +1575,7 @@ public class InfobarGfx
 										
 										CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 												+ "$ChallengeOver$txt_OverData*GEOM*TEXT SET " + 
-												getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "/" + 
-												getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[1] + "\0",print_writers);
+												cr + "-" + getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[1] + "\0",print_writers);
 									}else if(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).contains("EO")) {
 										if(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).contains("TO")) {
 											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
@@ -1563,14 +1584,14 @@ public class InfobarGfx
 													+ "$TapeBallOver$txt_TapeBall*GEOM*TEXT SET TAPE BALL/PP\0",print_writers);
 											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 													+ "$TapeBallOver$txt_OverData*GEOM*TEXT SET " + 
-													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "/" + 
+													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "-" + 
 													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[1] + "\0",print_writers);
 										}else {
 											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 													+ "*FUNCTION*Omo*vis_con SET 3\0",print_writers);
 											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 													+ "$PowerPlayOver$txt_OverData*GEOM*TEXT SET " + 
-													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "/" + 
+													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "-" + 
 													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[1] + "\0",print_writers);
 										}
 									}else if(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).contains("CO")) {
@@ -1581,12 +1602,12 @@ public class InfobarGfx
 													+ "$TapeBallOver$txt_TapeBall*GEOM*TEXT SET TAPE BALL/PP\0",print_writers);
 											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 													+ "$TapeBallOver$txt_OverData*GEOM*TEXT SET " + 
-													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "/" + 
+													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "-" + 
 													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[1] + "\0",print_writers);
 										}else {
 											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 													+ "$PowerPlayOver$txt_OverData*GEOM*TEXT SET " + 
-													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "/" + 
+													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "-" + 
 													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[1] + "\0",print_writers);
 											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 													+ "*FUNCTION*Omo*vis_con SET 3\0",print_writers);
@@ -1594,12 +1615,21 @@ public class InfobarGfx
 									}
 								}else {
 									if(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).contains("CR")) {
+										
+										int cr = 0;
+										if(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split(",")[1].equalsIgnoreCase("-")) {
+											cr = (Integer.valueOf(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0]) - 
+												Integer.valueOf(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split(",")[2]));
+										}else if(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split(",")[1].equalsIgnoreCase("+")){
+											cr = (Integer.valueOf(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0]) + 
+													Integer.valueOf(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split(",")[2]));
+										}
+										
 										CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 												+ "*FUNCTION*Omo*vis_con SET 5\0",print_writers);
 										CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 												+ "$ChallengeOver$txt_OverData*GEOM*TEXT SET " + 
-												getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "/" + 
-												getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[1] + "\0",print_writers);
+												cr + "-" + getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[1] + "\0",print_writers);
 									}else if(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).contains("EO")) {
 										if(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).contains("TO")) {
 											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
@@ -1608,14 +1638,14 @@ public class InfobarGfx
 													+ "$TapeBallOver$txt_TapeBall*GEOM*TEXT SET TAPE BALL\0",print_writers);
 											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 													+ "$TapeBallOver$txt_OverData*GEOM*TEXT SET " + 
-													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "/" + 
+													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "-" + 
 													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[1] + "\0",print_writers);
 										}else {
 											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 													+ "*FUNCTION*Omo*vis_con SET 2\0",print_writers);
 											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 													+ "$CompletedOver$txt_OverData*GEOM*TEXT SET " + 
-													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "/" + 
+													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "-" + 
 													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[1] + "\0",print_writers);
 										}
 									}else if(getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).contains("CO")) {
@@ -1626,12 +1656,12 @@ public class InfobarGfx
 													+ "$TapeBallOver$txt_TapeBall*GEOM*TEXT SET TAPE BALL\0",print_writers);
 											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 													+ "$TapeBallOver$txt_OverData*GEOM*TEXT SET " + 
-													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "/" + 
+													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "-" + 
 													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[1] + "\0",print_writers);
 										}else {
 											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 													+ "$RunningOver$txt_OverData*GEOM*TEXT SET " + 
-													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "/" + 
+													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[0] + "-" + 
 													getOverbyOver(inn.getInningNumber(), matchAllData.getEventFile().getEvents(), matchAllData).get(j).split("-")[1] + "\0",print_writers);
 											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$TimeLine$OversGrp$Over" + (j+1) + "$Select_OverType"
 													+ "*FUNCTION*Omo*vis_con SET 1\0",print_writers);
@@ -3565,7 +3595,7 @@ public class InfobarGfx
 				if(evnt.getEventInningNumber() == inning) {
 					if(evnt.getEventType().equalsIgnoreCase(CricketUtil.LOG_50_50)) {
 						String lastElement = allData.get(allData.size() - 1);
-				        lastElement = lastElement.concat("-CR");
+				        lastElement = lastElement.concat("-CR," + evnt.getEventExtra() + "," + evnt.getEventExtraRuns());
 				        allData.set(allData.size() - 1, lastElement);
 					}
 					

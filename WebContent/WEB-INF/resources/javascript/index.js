@@ -242,7 +242,18 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 					addItemsToList(dataToProcess,null);
 					break;
 				}
-				break;		
+				break;
+			case 'Control_h':
+				switch($('#selected_broadcaster').val().toUpperCase()){
+				case 'ISPL':
+					processCricketProcedures("GRAPHICS-OPTIONS", dataToProcess);
+					break;
+				case 'ICC-U19-2023':
+					addItemsToList(dataToProcess,null); 
+					break;
+				}
+				break;
+							
 			case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_7':  case 'Alt_5': //case 'Alt_6': case 'Alt_8': case 'Alt_3': case 'Alt_4': case 'F7': case 'F11':
 			case 'Control_F5': case 'Control_F8': case 'Shift_F8': case 'Control_F9': case 'F5': case 'F6':  case 'Alt_F8':
 			case 'F8': case 'F9':  case 's': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6': case 'Control_y':
@@ -1458,31 +1469,57 @@ function addItemsToList(whatToProcess,dataToProcess)
 			break;
 
 		case 'Control_h': case 'Control_g': case 'Control_y':
-			header_text.innerHTML = 'POWERPLAY';
-
-			select = document.createElement('select');
-			select.id = 'selectPowerplay';
-			select.name = select.id;
+			switch($('#selected_broadcaster').val().toUpperCase()){
+				case 'ICC-U19-2023':
+					header_text.innerHTML = 'POWERPLAY';
+	
+					select = document.createElement('select');
+					select.id = 'selectPowerplay';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = 'p1';
+					option.text = 'Powerplay 1';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'p2';
+					option.text = 'Powerplay 2';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'p3';
+					option.text = 'Powerplay 3';
+					select.appendChild(option);
+					
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),0);
+					cellCount = cellCount + 1
+					break;
+				case 'ISPL':
+					header_text.innerHTML = 'POWERPLAY';
+	
+					select = document.createElement('select');
+					select.style = 'width:130px';
+					select.id = 'selectTeam';
+					select.name = select.id;
+					
+					dataToProcess.forEach(function(tm,index,arr1){
+						option = document.createElement('option');
+						option.value = tm.teamId;
+						option.text = tm.teamName1 ;
+						select.appendChild(option);
+					});
+					
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),0);
+					
+					cellCount = cellCount + 1;
+					break;
+			}
 			
-			option = document.createElement('option');
-			option.value = 'p1';
-			option.text = 'Powerplay 1';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'p2';
-			option.text = 'Powerplay 2';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'p3';
-			option.text = 'Powerplay 3';
-			select.appendChild(option);
-			
-			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
-			row.insertCell(cellCount).appendChild(select);
-			setDropdownOptionToSelectOptionArray($(select),0);
-			cellCount = cellCount + 1
 			break;	
 			
 		case 's':
@@ -2267,12 +2304,12 @@ function addItemsToList(whatToProcess,dataToProcess)
 							if(bc.onStrike == 'YES'){
 								option = document.createElement('option');
 								option.value = bc.player.playerId;
-								option.text = bc.player.full_name;
+								option.text = bc.player.full_name + " - " + bc.status;
 								select.appendChild(option);
 							}else{
 								option = document.createElement('option');
 								option.value = bc.player.playerId;
-								option.text = bc.player.full_name;
+								option.text = bc.player.full_name + " - " + bc.status;
 								select.appendChild(option);
 							}
 						}
@@ -2289,8 +2326,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
 			row.insertCell(cellCount).appendChild(select);
-			removeSelectDuplicates(select.id);
+			//removeSelectDuplicates(select.id);
 			setDropdownOptionToSelectOptionArray($(select),0);
+			removeSelectDuplicates(select.id);
 			cellCount = cellCount + 1;
 			break;
 			
@@ -2354,8 +2392,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
 			row.insertCell(cellCount).appendChild(select);
-			removeSelectDuplicates(select.id);
+			//removeSelectDuplicates(select.id);
 			setDropdownOptionToSelectOptionArray($(select),0);
+			removeSelectDuplicates(select.id);
 			cellCount = cellCount + 1;
 			break;
 			
@@ -2412,8 +2451,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
 			row.insertCell(cellCount).appendChild(select);
-			removeSelectDuplicates(select.id);
+			//removeSelectDuplicates(select.id);
 			setDropdownOptionToSelectOptionArray($(select),0);
+			removeSelectDuplicates(select.id);
 			cellCount = cellCount + 1;
 			break;	
 		case 'F5': case 'Shift_A':
@@ -2455,8 +2495,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
 			row.insertCell(cellCount).appendChild(select);
-			removeSelectDuplicates(select.id);
+			//removeSelectDuplicates(select.id);
 			setDropdownOptionToSelectOptionArray($(select),0);
+			removeSelectDuplicates(select.id);
 			cellCount = cellCount + 1;
 			break;
 		case 'Shift_F5': case 'q'://BatThisMatch
@@ -2501,8 +2542,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
 			row.insertCell(cellCount).appendChild(select);
-			removeSelectDuplicates(select.id);
+			//removeSelectDuplicates(select.id);
 			setDropdownOptionToSelectOptionArray($(select),0);
+			removeSelectDuplicates(select.id);
 			cellCount = cellCount + 1;
 			break;
 		
@@ -2533,8 +2575,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
 			row.insertCell(cellCount).appendChild(select);
-			removeSelectDuplicates(select.id);
+			//removeSelectDuplicates(select.id);
 			setDropdownOptionToSelectOptionArray($(select),0);
+			removeSelectDuplicates(select.id);
 			cellCount = cellCount + 1;
 			break;
 		
@@ -2571,8 +2614,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
 			row.insertCell(cellCount).appendChild(select);
-			removeSelectDuplicates(select.id);
+			//removeSelectDuplicates(select.id);
 			setDropdownOptionToSelectOptionArray($(select),0);
+			removeSelectDuplicates(select.id);
 			cellCount = cellCount + 1;
 			break;
 		case 'Shift_F9': //BallThisMatch
@@ -2609,8 +2653,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
 			row.insertCell(cellCount).appendChild(select);
-			removeSelectDuplicates(select.id);
+			//removeSelectDuplicates(select.id);
 			setDropdownOptionToSelectOptionArray($(select),0);
+			removeSelectDuplicates(select.id);
 			cellCount = cellCount + 1;
 			break;
 		case 'Control_p':
@@ -2725,8 +2770,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			select.setAttribute('onchange','setDropdownOptionToSelectOptionArray(this, 0)');
 			row.insertCell(cellCount).appendChild(select);
-			removeSelectDuplicates(select.id);
+			//removeSelectDuplicates(select.id);
 			setDropdownOptionToSelectOptionArray($(select),0);
+			removeSelectDuplicates(select.id);
 			cellCount = cellCount + 1;
 			break;
 		case 'l':
@@ -2867,8 +2913,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
 			row.insertCell(cellCount).appendChild(select);
-			removeSelectDuplicates(select.id);
+			//removeSelectDuplicates(select.id);
 			setDropdownOptionToSelectOptionArray($(select),0);
+			removeSelectDuplicates(select.id);
 			cellCount = cellCount + 1;
 			
 			select = document.createElement('select');
@@ -3311,8 +3358,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
 			row.insertCell(cellCount).appendChild(select);
-			removeSelectDuplicates(select.id);
+			//removeSelectDuplicates(select.id);
 			setDropdownOptionToSelectOptionArray($(select),0);
+			removeSelectDuplicates(select.id);
 			cellCount = cellCount + 1;
 			
 			select = document.createElement('select');
