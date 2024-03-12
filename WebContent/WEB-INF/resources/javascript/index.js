@@ -1254,6 +1254,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 					option.text = 'Timeline';
 					select.appendChild(option);
 					
+					option = document.createElement('option');
+					option.value = 'SUPER_OVER';
+					option.text = 'Super Over';
+					select.appendChild(option);
+					
 					break;
 				case 'ICC-U19-2023':
 					header_text.innerHTML = 'RIGHT INFOBAR SECTION';

@@ -436,8 +436,8 @@ public class Animation
 				}
 				break;
 			case "Control_2":
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$PowerPlay$txt_PP*GEOM*TEXT SET " + 
-						"POWERPLAY" + "\0", print_writers);
+//				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$PowerPlay$txt_PP*GEOM*TEXT SET " + 
+//						"POWERPLAY" + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Anim_InfoBar$Main$PowerPlay_In START \0", print_writers);
 				break;
 			case "Control_3":
@@ -1027,6 +1027,9 @@ public class Animation
 				}else if(infobar.getRight_section().equalsIgnoreCase("TIMELINE")) {
 //					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$ToWin$In", "SHOW 0.0");
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$TimeLine", "CONTINUE");
+				}else if(infobar.getRight_section().equalsIgnoreCase("SUPER_OVER")) {
+//					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$ToWin$In", "SHOW 0.0");
+					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$TOPRIGHT_FREETEXT_Out", "CONTINUE");
 				}
 				
 				infobar.setRight_section("");
@@ -1752,6 +1755,9 @@ public class Animation
 					}else if(whatToProcess.split(",")[2].equalsIgnoreCase("TIMELINE")) {
 						processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$TimeLine", "SHOW 0.0");
 						processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$TimeLine", "START");
+					}else if(whatToProcess.split(",")[2].equalsIgnoreCase("SUPER_OVER")) {
+						processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$TOPRIGHT_FREETEXT_In", "SHOW 0.0");
+						processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$TOPRIGHT_FREETEXT_In", "START");
 					}
 					infobar.setRight_section(whatToProcess.split(",")[2]);
 					infobar.setLast_right_section(whatToProcess.split(",")[2]);
@@ -2230,8 +2236,10 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$StrikeIn", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Bowler_In", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$Target_In", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$PowerPlay_In", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$ToWin", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$TapedBall_In", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$TOPRIGHT_FREETEXT_In", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$TimeLine", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Ident_In", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$IdentInfo$In_Out", "SHOW 0.0");
