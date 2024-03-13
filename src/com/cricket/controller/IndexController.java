@@ -372,7 +372,7 @@ public class IndexController
 									case Constants.BOUNDARIES + Constants.LOWER_THIRD:
 										this_caption.whichSide = 1;
 										this_caption.PopulateGraphics(valueToProcess, session_match);
-										this_animation.processL3Preview(valueToProcess, print_writers, this_caption.whichSide, session_configuration);
+										this_animation.processL3Preview(valueToProcess, print_writers, this_caption.whichSide, session_configuration,session_match);
 										break;
 									}
 									break;
@@ -412,7 +412,7 @@ public class IndexController
 					case Constants.LOWER_THIRD: 
 					case Constants.NAME_SUPERS + Constants.LOWER_THIRD:
 					case Constants.BOUNDARIES + Constants.LOWER_THIRD:
-						this_animation.processL3Preview(valueToProcess, print_writers, this_caption.whichSide, session_configuration);
+						this_animation.processL3Preview(valueToProcess, print_writers, this_caption.whichSide, session_configuration,session_match);
 						break;
 					case Constants.BUGS:
 						this_animation.processBugsPreview(valueToProcess, print_writers, this_caption.whichSide, 

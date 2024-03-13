@@ -199,8 +199,8 @@ public class InfobarGfx
 								populateVizInfobarMiddleSection(print_writers, matchAllData, 1);
 								populateVizInfobarMiddleSection(print_writers, matchAllData, 2);
 							}else {
-								populateCurrentBatsmen(print_writers, matchAllData, 1);
 								populateCurrentBatsmen(print_writers, matchAllData, 2);
+								populateCurrentBatsmen(print_writers, matchAllData, 1);
 							}
 							
 							if(infobar.getRight_bottom() != null && !infobar.getRight_bottom().isEmpty()) {
@@ -679,17 +679,6 @@ public class InfobarGfx
 				//-----------------------------SUPER OVER---------------------------------//
 				
 				if(matchAllData.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.SUPER_OVER)) {
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_More$BattingTeamBaseGrp$img1*TEXTURE*IMAGE SET " + 
-							Constants.BASE_PATH + "1/" + "SO" + "\0", print_writers);
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_More$img_txt1*TEXTURE*IMAGE SET " + 
-							Constants.TEXT_PATH + "1/" + "SO" + "\0", print_writers);
-					
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$BolwerBaseGrp$img1*TEXTURE*IMAGE SET " + 
-							Constants.BASE_PATH + "1/" + "SO" + "\0", print_writers);
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$BowlerGrp_All$Side1$img_txt1*TEXTURE*IMAGE SET " + 
-							Constants.TEXT_PATH + "1/" + "SO" + "\0", print_writers);
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$BowlerGrp_All$Side2$img_txt1*TEXTURE*IMAGE SET " + 
-							Constants.TEXT_PATH + "1/" + "SO" + "\0", print_writers);
 				}else {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_More$BattingTeamBaseGrp$img1*TEXTURE*IMAGE SET " + 
 							Constants.BASE_PATH + "1/" + color + "\0", print_writers);
@@ -1023,7 +1012,8 @@ public class InfobarGfx
 					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 2, 1, battingCardList);
 					this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Batsman1_Change", "START");
 					TimeUnit.MILLISECONDS.sleep(800);
-					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 1, 1, battingCardList);
+					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, 1, 1, 1, battingCardList);
+					TimeUnit.MILLISECONDS.sleep(200);
 					this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Batsman1_Change", "SHOW 0.0");
 				} else {
 					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 1, 1, battingCardList);
@@ -1032,7 +1022,8 @@ public class InfobarGfx
 					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 2, 2, battingCardList);
 					this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Batsman2_Change", "START");
 					TimeUnit.MILLISECONDS.sleep(800);
-					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 1, 2, battingCardList);
+					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, 1, 1, 2, battingCardList);
+					TimeUnit.MILLISECONDS.sleep(200);
 					this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Batsman2_Change", "SHOW 0.0");
 				} else {
 					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 1, 2, battingCardList);
@@ -1093,12 +1084,6 @@ public class InfobarGfx
 			}
 			
 			if(matchAllData.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.SUPER_OVER)) {
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$BowlerGrp_All$Side1$img_txt1*TEXTURE*IMAGE SET " + 
-						Constants.TEXT_PATH + "1/" + "SO" + "\0", print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$BowlerGrp_All$Side2$img_txt1*TEXTURE*IMAGE SET " + 
-						Constants.TEXT_PATH + "1/" + "SO" + "\0", print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$BolwerBaseGrp$img1*TEXTURE*IMAGE SET " 
-						+Constants.BASE_PATH + "1/" + "SO" + "\0", print_writers);
 			}else {
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$BowlerGrp_All$Side1$img_txt1*TEXTURE*IMAGE SET " + 
 						Constants.TEXT_PATH + "1/" + color2 + "\0", print_writers);
@@ -1229,8 +1214,6 @@ public class InfobarGfx
 					}
 					
 					if(matchAllData.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.SUPER_OVER)) {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage2$Side" + WhichSide + "$Free_Text$img_Text1*TEXTURE*IMAGE SET " 
-								+ Constants.TEXT_PATH + "2/" + "SO" + "\0", print_writers);
 					}else {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage2$Side" + WhichSide + "$Free_Text$img_Text1*TEXTURE*IMAGE SET " 
 								+ Constants.TEXT_PATH + "1/" + color2 + "\0", print_writers);
@@ -1270,8 +1253,6 @@ public class InfobarGfx
 					for(int iBall = 0; iBall < this_data_str.get(this_data_str.size()-1).split(",").length; iBall++) {
 						
 						if(matchAllData.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.SUPER_OVER)) {
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage2$Side" + WhichSide + "$This_Over$Balls$"+(iBall + 1)+"$img_Text1*TEXTURE*IMAGE SET " 
-									+ Constants.TEXT_PATH + "2/" + "SO" + "\0", print_writers);
 						}else {
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage2$Side" + WhichSide + "$This_Over$Balls$"+(iBall + 1)+"$img_Text1*TEXTURE*IMAGE SET " 
 									+ Constants.TEXT_PATH + "1/" + color2 + "\0", print_writers);
@@ -3120,7 +3101,7 @@ public class InfobarGfx
 			this_data_str.add(CricketFunctions.getEventsText(CricketUtil.OVER,infobar.getLast_bowler().getPlayerId() ,
 					",", matchAllData.getEventFile().getEvents(),0));
 			
-			if(this_data_str.get(this_data_str.size()-1) == null || this_data_str.get(this_data_str.size()-1).split(",").length > 11) {
+			if(this_data_str.get(this_data_str.size()-1) == null || this_data_str.get(this_data_str.size()-1).split(",").length > 15) {
 				return "populateVizInfobarRightBottom: This over data returned invalid";
 			}
 			
@@ -3135,6 +3116,7 @@ public class InfobarGfx
 			}
 			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage3$Side" + WhichSide + "$Select*FUNCTION*Omo*vis_con SET 10 \0", print_writers);
 			
+			System.out.println("length = " + this_data_str.get(this_data_str.size()-1).split(",").length);
 			for(int iBall = 0; iBall < this_data_str.get(this_data_str.size()-1).split(",").length; iBall++) {
 				
 				switch (this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase()) {

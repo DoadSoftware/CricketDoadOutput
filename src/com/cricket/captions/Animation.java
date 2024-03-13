@@ -2783,7 +2783,7 @@ public class Animation
 		}
 	}
 
-	public void processL3Preview(String whatToProcess, List<PrintWriter> print_writer, int whichside, Configuration config)
+	public void processL3Preview(String whatToProcess, List<PrintWriter> print_writer, int whichside, Configuration config,MatchAllData match)
 	{
 		if(config.getPreview().equalsIgnoreCase("WITH_PREVIEW")) {
 			String previewCommands = "";
@@ -2886,9 +2886,9 @@ public class Animation
 					case "Control_g": case "Control_h": case "Control_p": case "Control_F6": case "Shift_F6": case "Control_s": case "Control_f": 
 					case "Alt_F6": case "Shift_A":  case "Shift_L": case "Shift_J": case "Alt_F8":  case "j": case "Alt_a": case "Alt_s":
 					//case "n":	
-						previewCommands = previewCommands + " Anim_LtChange$Sublines 1.300 Anim_LtChange$Sublines$Change 1.300"
-								+ "Anim_LtChange$Topline 1.320 Anim_LtChange$Topline$Change 1.000 Anim_LtChange$Lt_Y_Scale 0.940 "
-								+ "Anim_LtChange$Lt_X_Position 1.150 Anim_LtChange$Lt_X_Position$MoveForShrink 1.820 ";
+						previewCommands = previewCommands + " Anim_LtChange$Sublines 0.780 "
+								+ "Anim_LtChange$Topline 0.900 Anim_LtChange$Lt_Y_Scale 0.900 "
+								+ "Anim_LtChange$Lt_X_Position 0.900";
 						break;
 					case "q": case "Control_q":
 						previewCommands = previewCommands + " Anim_Boundary_LtChange$Flag 1.300 Anim_Boundary_LtChange$Sublines 1.200 "
@@ -2902,8 +2902,14 @@ public class Animation
 						break;	
 					}
 				}
-			    CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/Overlays "
-			    	+ "C:/Temp/Preview.png " + previewCommands + " \0", print_writer);
+				if(match.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.SUPER_OVER)) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/Overlays_SuperOver "
+					    	+ "C:/Temp/Preview.png " + previewCommands + " \0", print_writer);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/Overlays "
+					    	+ "C:/Temp/Preview.png " + previewCommands + " \0", print_writer);
+				}
+			    
 				break;	
 			}
 		}
