@@ -292,7 +292,16 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 					
 			//All key presses which doesn't require graphics population will come here
 			case '5': case '6': case '7': case '8': case '9':
-				processCricketProcedures("QUIDICH-COMMANDS", dataToProcess);
+				switch($('#selected_broadcaster').val().toUpperCase()){
+				case 'ISPL':
+					dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
+					processCricketProcedures("ANIMATE-IN-GRAPHICS", dataToProcess);
+					break;
+				case 'ICC-U19-2023':
+					processCricketProcedures("QUIDICH-COMMANDS", dataToProcess);
+					break;
+				}
+				
 				break;
 			case 'Alt_f': case 'Alt_g': case 'ArrowDown': case 'ArrowUp': case 'w': case 'i': case 'y': case 'u': case '0': case ';':
 			case 'Control_2': case 'Control_3':
@@ -839,6 +848,12 @@ function addItemsToList(whatToProcess,dataToProcess)
 				option.value = 'CURR_PARTNERSHIP';
 				option.text = 'Current Partnership';
 				select.appendChild(option);*/
+				if(session_match.setup.matchType == 'SUPER_OVER'){
+					option = document.createElement('option');
+					option.value = 'THIS_OVER';
+					option.text = 'This Over';
+					select.appendChild(option);
+				}
 				
 				option = document.createElement('option');
 				option.value = 'BOUNDARY';

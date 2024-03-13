@@ -194,22 +194,6 @@ public class IndexController
 			this_scene = new Scene();
 			this_animation = new Animation(new Infobar());
 			
-			switch (select_broadcaster) {
-			case Constants.ISPL:
-				if(session_configuration.getPrimaryVariousOptions().contains(Constants.FULL_FRAMER)) {
-					this_scene.LoadScene("FULL-FRAMERS", print_writers, session_configuration);
-				}
-				this_scene.LoadScene("OVERLAYS", print_writers, session_configuration);
-				this_animation.ResetAnimation("CLEAR-ALL", print_writers, session_configuration);
-				break;
-			case Constants.ICC_U19_2023: 
-				if(session_configuration.getPrimaryVariousOptions().contains(Constants.FULL_FRAMER)) {
-					this_scene.LoadScene("FULL-FRAMERS", print_writers, session_configuration);
-				}
-				this_scene.LoadScene("OVERLAYS", print_writers, session_configuration);
-				break;
-			}
-			
 			session_match = new MatchAllData();
 			
 			if(new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.SETUP_DIRECTORY + selectedMatch).exists()) {
@@ -231,6 +215,27 @@ public class IndexController
 			GetVariousDBData("NEW", session_configuration);
 			
 			show_speed = true;
+			
+			switch (select_broadcaster) {
+			case Constants.ISPL:
+				if(session_configuration.getPrimaryVariousOptions().contains(Constants.FULL_FRAMER)) {
+					this_scene.LoadScene("FULL-FRAMERS", print_writers, session_configuration);
+				}
+				if(session_match.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.SUPER_OVER)) {
+					this_scene.LoadScene("SO_OVERLAYS", print_writers, session_configuration);
+				}else {
+					this_scene.LoadScene("OVERLAYS", print_writers, session_configuration);
+				}
+				
+				this_animation.ResetAnimation("CLEAR-ALL", print_writers, session_configuration);
+				break;
+			case Constants.ICC_U19_2023: 
+				if(session_configuration.getPrimaryVariousOptions().contains(Constants.FULL_FRAMER)) {
+					this_scene.LoadScene("FULL-FRAMERS", print_writers, session_configuration);
+				}
+				this_scene.LoadScene("OVERLAYS", print_writers, session_configuration);
+				break;
+			}
 			
 			if(session_match.getMatch().getInning() != null) {
 				model.addAttribute("which_inning", session_match.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning()
