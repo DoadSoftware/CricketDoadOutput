@@ -37,6 +37,7 @@ public class Constants
 	public final static String ICONS_PATH = "IMAGE*/Default/Essentials/Icons/";
 	public final static String ISPL_PHOTO_PATH = "C:\\\\Images\\\\ISPL\\\\";
 	
+	public final static String LOCALHOST = "localhost";
 	public final static String ICC_U19_2023 = "ICC-U19-2023";
 	public final static String ICC_U19_2023_FLAG_PATH = "IMAGE*/Default/Essentials/Flags/";
 	public final static String ICC_U19_2023_POTT_FLAG_PATH = "IMAGE*/Default/Essentials/POTT_Flags/";
@@ -50,6 +51,7 @@ public class Constants
 	public final static String RIGHT_2048 = "\\RIGHT_2048\\\\";
 	
 	public final static String LOCAL_ICC_U19_2023_PHOTOS_PATH = "c\\Images\\ICC\\U19_MENS";
+	public final static String Local_ISPL_PHOTOS_PATH = "c\\Images\\ISPL\\";
 	
 	
 }

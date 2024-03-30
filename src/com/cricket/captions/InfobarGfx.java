@@ -34,7 +34,7 @@ public class InfobarGfx
 {
 	public Configuration config;
 	public String slashOrDash = "-", WhichProfile = "", containerName = "", status = "", previous_sixes = "", 
-			stats_text = "", par_Overs="", Comms_Name,color = "", color2 = "";
+			stats_text = "", par_Overs="", Comms_Name,color = "", color2 = "", prev_score = "", new_score = "",prev_wicket = "", new_wicket = "", prevTeamScore = "", currTeamScore = "";
 	
 //	int runs = 0,wicket = 0;
 //	List<String> allData = new ArrayList<String>();
@@ -175,7 +175,7 @@ public class InfobarGfx
 					infobar.setResult_on_screen(false);
 				}
 				
-				populateInfobarTeamNameScore(true,print_writers,matchAllData);
+				populateInfobarTeamNameScore(true,print_writers,matchAllData,2);
 				if(infobar.isChallengeRunOnScreen()) {
 					populateChallengedSection(true,print_writers, matchAllData, 1);
 				}
@@ -222,7 +222,7 @@ public class InfobarGfx
 				return "updateInfobar: Inning return is NULL";
 			}
 
-			populateInfobarTeamNameScore(true,print_writers,matchAllData);
+			populateInfobarTeamNameScore(true,print_writers,matchAllData,2);
 			if(infobar.getLeft_bottom() != null && !infobar.getLeft_bottom().isEmpty()) {
 				populateVizInfobarLeftBottom(print_writers, matchAllData, 1);
 			}
@@ -309,7 +309,7 @@ public class InfobarGfx
 		switch (config.getBroadcaster()) {
 		case Constants.ISPL:
 			infobar.setLast_full_section(null);
-			status = populateInfobarTeamNameScore(false,print_writers,matchAllData);
+			status = populateInfobarTeamNameScore(false,print_writers,matchAllData,1);
 			if(status == Constants.OK) {
 				if(status == Constants.OK) {
 					this.infobar.setMiddle_section(whatToProcess.split(",")[2]);
@@ -331,7 +331,7 @@ public class InfobarGfx
 			infobar.setPowerplay_on_screen(false);
 			infobar.setPowerplay_end(false);
 			
-			status = populateInfobarTeamNameScore(false,print_writers,matchAllData);
+			status = populateInfobarTeamNameScore(false,print_writers,matchAllData,1);
 			if(status == Constants.OK) {
 				this.infobar.setLeft_bottom(whatToProcess.split(",")[3]);
 				status = populateVizInfobarLeftBottom(print_writers,matchAllData,1);
@@ -646,7 +646,7 @@ public class InfobarGfx
 		return Constants.OK;
 	}
 	
-	public String populateInfobarTeamNameScore(boolean is_this_updating,List<PrintWriter> print_writers,MatchAllData matchAllData) {
+	public String populateInfobarTeamNameScore(boolean is_this_updating,List<PrintWriter> print_writers,MatchAllData matchAllData, int whichSide) throws InterruptedException {
 		
 		switch(config.getBroadcaster()) {
 		case Constants.ISPL:
@@ -655,6 +655,9 @@ public class InfobarGfx
 				return "populateInfobarTeamNameScore: Inning return is NULL";
 			}
 			if(is_this_updating == false) {
+				this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$UpWard$Thousands", "SHOW 0.0");
+				this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$UpWard$Tenths", "SHOW 0.0");
+				this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$UpWard$Units", "SHOW 0.0");
 				
 				if(inning.getBatting_team().getTeamName4().contains("KHILADI XI") || inning.getBatting_team().getTeamName4().contains("MASTER 11")) {
 					if(inning.getBatting_team().getTeamName4().equalsIgnoreCase("KHILADI XI")) {
@@ -781,6 +784,116 @@ public class InfobarGfx
 			
 			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$txt_Runs*GEOM*TEXT SET " + 
 					CricketFunctions.getTeamScore(inning, slashOrDash, false) + "\0", print_writers);
+			currTeamScore = CricketFunctions.getTeamScore(inning, slashOrDash, false);
+			if(currTeamScore.contains("-")) {
+				new_score = currTeamScore.split("-")[0];
+				new_wicket = currTeamScore.split("-")[1];
+			}
+			new_score = CricketFunctions.hundredsTensUnits(new_score);
+			if(whichSide == 2) {
+				if(new_score.split(",")[0].equalsIgnoreCase("0") && new_score.split(",")[1].equalsIgnoreCase("0")) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side"+whichSide+"$txt_Thousands*GEOM*TEXT SET " + 
+							"" + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side"+whichSide+"$txt_Tenths*GEOM*TEXT SET " + 
+							"" + "\0", print_writers);
+				}else if(new_score.split(",")[0].equalsIgnoreCase("0") && !new_score.split(",")[1].equalsIgnoreCase("0")) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side"+whichSide+"$txt_Thousands*GEOM*TEXT SET " + 
+							"" + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side"+whichSide+"$txt_Tenths*GEOM*TEXT SET " + 
+							new_score.split(",")[1] + "\0", print_writers);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side"+whichSide+"$txt_Thousands*GEOM*TEXT SET " + 
+							new_score.split(",")[0] + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side"+whichSide+"$txt_Tenths*GEOM*TEXT SET " + 
+							new_score.split(",")[1] + "\0", print_writers);
+				}
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side"+whichSide+"$txt_Units*GEOM*TEXT SET " + 
+						new_score.split(",")[2] + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side"+whichSide+"$txt_Wicket*GEOM*TEXT SET " + 
+						new_wicket + "\0", print_writers);
+				
+				if(Integer.valueOf(prevTeamScore.split("-")[0]) > Integer.valueOf(currTeamScore.split("-")[0])) {
+					if(Integer.valueOf(new_score.split(",")[0]) < Integer.valueOf(prev_score.split(",")[0])) {
+						this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$DownWard$Thousands", "START");
+						this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$DownWard$Tenths", "START");
+						this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$DownWard$Units", "START");
+					}else if(Integer.valueOf(new_score.split(",")[1]) < Integer.valueOf(prev_score.split(",")[1])) {
+						this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$DownWard$Tenths", "START");
+						this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$DownWard$Units", "START");
+					}else if(Integer.valueOf(new_score.split(",")[2]) < Integer.valueOf(prev_score.split(",")[2])) {
+						this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$DownWard$Units", "START");
+					}
+				}else {
+					if(Integer.valueOf(new_score.split(",")[0]) > Integer.valueOf(prev_score.split(",")[0])){
+						this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$UpWard$Thousands", "START");
+						this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$UpWard$Tenths", "START");
+						this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$UpWard$Units", "START");
+					}else if(Integer.valueOf(new_score.split(",")[1]) > Integer.valueOf(prev_score.split(",")[1])) {
+						this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$UpWard$Tenths", "START");
+						this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$UpWard$Units", "START");
+					}else if(Integer.valueOf(new_score.split(",")[2]) > Integer.valueOf(prev_score.split(",")[2])) {
+						this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$UpWard$Units", "START");
+					}
+				}
+				
+				if(Integer.valueOf(new_wicket) > Integer.valueOf(prev_wicket)) {
+					this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$UpWard$Wickets", "START");
+				}else if(Integer.valueOf(new_wicket) < Integer.valueOf(prev_wicket)) {
+					this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$DownWard$Wickets", "START");
+				}
+				TimeUnit.MILLISECONDS.sleep(500);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side1$txt_Wicket*GEOM*TEXT SET " + 
+						new_wicket + "\0", print_writers);
+				if(new_score.split(",")[0].equalsIgnoreCase("0") && new_score.split(",")[1].equalsIgnoreCase("0")) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side1$txt_Thousands*GEOM*TEXT SET " + 
+							"" + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side1$txt_Tenths*GEOM*TEXT SET " + 
+							"" + "\0", print_writers);
+				}else if(new_score.split(",")[0].equalsIgnoreCase("0") && !new_score.split(",")[1].equalsIgnoreCase("0")) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side1$txt_Thousands*GEOM*TEXT SET " + 
+							"" + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side1$txt_Tenths*GEOM*TEXT SET " + 
+							new_score.split(",")[1] + "\0", print_writers);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side1$txt_Thousands*GEOM*TEXT SET " + 
+							new_score.split(",")[0] + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side1$txt_Tenths*GEOM*TEXT SET " + 
+							new_score.split(",")[1] + "\0", print_writers);
+				}
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side1$txt_Units*GEOM*TEXT SET " + 
+						new_score.split(",")[2] + "\0", print_writers);
+				
+				this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$UpWard$Wickets", "SHOW 0.0");
+				this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$UpWard$Thousands", "SHOW 0.0");
+				this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$UpWard$Tenths", "SHOW 0.0");
+				this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$UpWard$Units", "SHOW 0.0");
+			}else {
+				if(new_score.split(",")[0].equalsIgnoreCase("0") && new_score.split(",")[1].equalsIgnoreCase("0")) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side"+whichSide+"$txt_Thousands*GEOM*TEXT SET " + 
+							"" + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side"+whichSide+"$txt_Tenths*GEOM*TEXT SET " + 
+							"" + "\0", print_writers);
+				}else if(new_score.split(",")[0].equalsIgnoreCase("0") && !new_score.split(",")[1].equalsIgnoreCase("0")) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side"+whichSide+"$txt_Thousands*GEOM*TEXT SET " + 
+							"" + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side"+whichSide+"$txt_Tenths*GEOM*TEXT SET " + 
+							new_score.split(",")[1] + "\0", print_writers);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side"+whichSide+"$txt_Thousands*GEOM*TEXT SET " + 
+							new_score.split(",")[0] + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side"+whichSide+"$txt_Tenths*GEOM*TEXT SET " + 
+							new_score.split(",")[1] + "\0", print_writers);
+				}
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side"+whichSide+"$txt_Units*GEOM*TEXT SET " + 
+						new_score.split(",")[2] + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$Score_Grp$RunsGrp$Side"+whichSide+"$txt_Wicket*GEOM*TEXT SET " + 
+						new_wicket + "\0", print_writers);
+			}
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$Main$BattingTeamGrp$txt_Overs*GEOM*TEXT SET " + 
+					CricketFunctions.OverBalls(inning.getTotalOvers(),inning.getTotalBalls()) + "\0", print_writers);
+			prevTeamScore = currTeamScore;
+			prev_score = new_score;
+			prev_wicket = new_wicket;
 			
 			break;
 		case Constants.ICC_U19_2023: 

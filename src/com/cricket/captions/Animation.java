@@ -1666,7 +1666,6 @@ public class Animation
 			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": case "Alt_9": case "Alt_0":
 				switch(whatToProcess.split(",")[0]) {
 				case "Alt_1": case "Alt_9": case "Alt_0":
-					System.out.println("infobar.getFull_section() = " + infobar.getFull_section());
 					if(infobar.getFull_section() != null && !infobar.getFull_section().trim().isEmpty()) {
 						processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage3_Change", "START");
 					}else {
@@ -1680,14 +1679,10 @@ public class Animation
 						infobar.setMiddle_section("");
 						infobar.setRight_bottom("");
 					}
-					System.out.println("whatToProcess = " + whatToProcess);
 					infobar.setFull_section(whatToProcess.split(",")[2]);
-					System.out.println("infobar.getFull_section()2 = " + infobar.getFull_section());
 					break;
 				case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6":
-					System.out.println("whatToProcess = " + whatToProcess.split(",")[2]);
 					if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BATSMAN)) {
-						System.out.println("Full_section = " + infobar.getFull_section());
 						
 						if(infobar.getFull_section() != null && !infobar.getFull_section().isEmpty()) {
 							processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage3_Out", "START");
