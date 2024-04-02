@@ -405,9 +405,9 @@ public class FullFramesGfx
 		if(team == null) {
 			return "populatePlayingXI: Team id [" + teamId + "] from database is returning NULL";
 		}
-		status = PopulateFfHeader(WhichSide, whatToProcess, matchAllData, WhichInning);
+		status = PopulateFfBody(WhichSide, whatToProcess, matchAllData, WhichInning);
 		if(status == Constants.OK) {
-			status = PopulateFfBody(WhichSide, whatToProcess, matchAllData, WhichInning);
+			status = PopulateFfHeader(WhichSide, whatToProcess, matchAllData, WhichInning);
 			if(status == Constants.OK) {
 				setFullFrameBaseAndTextColor(WhichSide, whatToProcess);
 				setFullFrameFooterPosition(WhichSide, 2);

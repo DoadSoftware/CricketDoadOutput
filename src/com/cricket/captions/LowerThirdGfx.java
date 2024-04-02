@@ -1,5 +1,6 @@
 package com.cricket.captions;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
@@ -4224,9 +4225,17 @@ public class LowerThirdGfx
 							"*TEXTURE*IMAGE SET " + Constants.ISPL_LOGOS_BW_PATH + logo_name + "\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Image_LowerThirds$TeamLogoGrp$LogoGrpOut$Side" + WhichSide + "$LogoScale$img_TeamLogo" + 
 							"*TEXTURE*IMAGE SET " + Constants.ISPL_LOGOS_PATH + logo_name + "\0", print_writers);
+					if(config.getPrimaryIpAddress().equalsIgnoreCase(Constants.LOCALHOST)) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Image_LowerThirds$TeamLogoGrp$LogoGrpOut$Side" + WhichSide + "$img_Player" + 
+								"*TEXTURE*IMAGE SET " + Constants.ISPL_PHOTO_PATH + logo_name + "\\\\" + lowerThird.getWhichSponsor() + CricketUtil.PNG_EXTENSION + "\0", print_writers);
+					}else {
+						if(!new File("\\\\"+config.getPrimaryIpAddress()+"\\"+Constants.Local_ISPL_PHOTOS_PATH + logo_name + "\\\\" + lowerThird.getWhichSponsor() + CricketUtil.PNG_EXTENSION ).exists()) {
+							return "Photo not found "+lowerThird.getWhichSponsor();
+						}
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Image_LowerThirds$TeamLogoGrp$LogoGrpOut$Side" + WhichSide + "$img_Player" + 
+								"*TEXTURE*IMAGE SET " + "\\\\"+config.getPrimaryIpAddress()+"\\"+Constants.Local_ISPL_PHOTOS_PATH + logo_name + "\\\\" + lowerThird.getWhichSponsor() + CricketUtil.PNG_EXTENSION + "\0", print_writers);
+					}
 					
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Image_LowerThirds$TeamLogoGrp$LogoGrpOut$Side" + WhichSide + "$img_Player" + 
-							"*TEXTURE*IMAGE SET " + Constants.ISPL_PHOTO_PATH + logo_name + "\\\\" + lowerThird.getWhichSponsor() + CricketUtil.PNG_EXTENSION + "\0", print_writers);
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Image_LowerThirds$MoveForShrink$Out$TopLine$TopData_Position_Y$Side" + WhichSide 
 							+ "$Change$TopTextGrp$txt_FirstName*GEOM*TEXT SET " + lowerThird.getFirstName() + "\0", print_writers);
