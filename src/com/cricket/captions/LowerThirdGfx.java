@@ -28,7 +28,6 @@ import com.cricket.model.Player;
 import com.cricket.model.Staff;
 import com.cricket.model.Statistics;
 import com.cricket.model.StatsType;
-import com.cricket.model.TapeBall;
 import com.cricket.model.Team;
 import com.cricket.model.Teams_Total_Score_in_powerplays;
 import com.cricket.model.Tournament;
@@ -49,7 +48,7 @@ public class LowerThirdGfx
 	public List<Statistics> statistics;
 	public List<StatsType> statsTypes;
 	public List<Tournament> tournaments;
-	public List<TapeBall> tapeballs;
+	public List<BestStats> tapeballs;
 	public List<MatchAllData> tournament_matches;
 	public List<NameSuper> nameSupers;
 	public List<Team> Teams;
@@ -69,7 +68,7 @@ public class LowerThirdGfx
 	public Statistics stat;
 	public StatsType statsType;
 	public Tournament tournament;
-	public TapeBall tapeball;
+	public BestStats tapeball;
 	public LowerThird lowerThird;
 	public Staff staff;
 	public NameSuper namesuper;
@@ -82,14 +81,14 @@ public class LowerThirdGfx
 	public List<DuckWorthLewis> dls;
 	public List<BattingCard> battingCardList = new ArrayList<BattingCard>();
 	public List<BowlingCard> bowlingCardList = new ArrayList<BowlingCard>();
-	public List<TapeBall> top_tape = new ArrayList<TapeBall>();
+	public List<BestStats> top_tape = new ArrayList<BestStats>();
 	public List<BestStats> top_batsman_beststats = new ArrayList<BestStats>();
 	public List<BestStats> top_bowler_beststats = new ArrayList<BestStats>();
 	public List<String> this_data_str = new ArrayList<String>();
 	public List<BatBallGriff> griff = new ArrayList<BatBallGriff>();
 	
 	public List<Teams_Total_Score_in_powerplays> powerplayData = new ArrayList<Teams_Total_Score_in_powerplays>();
-	public List<TapeBall> pastdata = new ArrayList<TapeBall>();
+	public List<BestStats> pastdata = new ArrayList<BestStats>();
 	public List<Tournament> addPastDataToCurr = new ArrayList<Tournament>();
 	
 	String containerName = "",ltWhichContainer = "",surName = "", teamName = "", variousData = "",logo_name = "" , color_name = "";
@@ -100,7 +99,7 @@ public class LowerThirdGfx
 	
 	public LowerThirdGfx(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics, List<StatsType> statsTypes, 
 			List<MatchAllData> tournament_matches, List<NameSuper> nameSupers, List<Team> Teams, List<Ground> Grounds, 
-			List<Tournament> tournaments,List<TapeBall> tapeballs,List<DuckWorthLewis> dls, List<Staff> staff, List<Player> players, List<POTT> pott, List<VariousText> VariousText) {
+			List<Tournament> tournaments,List<BestStats> tapeballs,List<DuckWorthLewis> dls, List<Staff> staff, List<Player> players, List<POTT> pott, List<VariousText> VariousText) {
 		super();
 		this.print_writers = print_writers;
 		this.config = config;

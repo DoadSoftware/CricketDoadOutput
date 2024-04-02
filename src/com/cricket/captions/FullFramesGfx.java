@@ -28,7 +28,6 @@ import com.cricket.model.Fixture;
 import com.cricket.model.Ground;
 import com.cricket.model.Inning;
 import com.cricket.model.LeagueTable;
-import com.cricket.model.LogFifty;
 import com.cricket.model.MatchAllData;
 import com.cricket.model.OverByOverData;
 import com.cricket.model.POTT;
@@ -36,7 +35,6 @@ import com.cricket.model.Partnership;
 import com.cricket.model.Player;
 import com.cricket.model.Statistics;
 import com.cricket.model.StatsType;
-import com.cricket.model.TapeBall;
 import com.cricket.model.Team;
 import com.cricket.model.Tournament;
 import com.cricket.model.VariousText;
@@ -90,8 +88,8 @@ public class FullFramesGfx
 	public List<OverByOverData> manhattan, manhattan2 = new ArrayList<OverByOverData>();
 	public List<Statistics> statisticsList = new ArrayList<Statistics>();
 	public List<Tournament> tournament_stats = new ArrayList<Tournament>();
-	public List<TapeBall> tape_ball = new ArrayList<TapeBall>();
-	public List<LogFifty> log_fifty = new ArrayList<LogFifty>();
+	public List<BestStats> tape_ball = new ArrayList<BestStats>();
+	public List<BestStats> log_fifty = new ArrayList<BestStats>();
 	public List<MatchAllData> previous_match = new ArrayList<MatchAllData>();
 	public List<String> team_change = new ArrayList<String>();
 	
@@ -801,8 +799,8 @@ public class FullFramesGfx
 	public String populateLeaderBoard(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) throws ParseException, JAXBException, IOException, InterruptedException
 	{
 		tournament_stats = new ArrayList<Tournament>();
-		tape_ball = new ArrayList<TapeBall>();
-		log_fifty = new ArrayList<LogFifty>();
+		tape_ball = new ArrayList<BestStats>();
+		log_fifty = new ArrayList<BestStats>();
 		
 		if(!whatToProcess.split(",")[0].equalsIgnoreCase("Shift_V")) {
 			if(FirstPlayerId <= 0) {

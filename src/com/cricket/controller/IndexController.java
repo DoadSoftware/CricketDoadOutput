@@ -49,7 +49,6 @@ import com.cricket.model.EventFile;
 import com.cricket.model.Fixture;
 import com.cricket.model.Ground;
 import com.cricket.model.InfobarStats;
-import com.cricket.model.LogFifty;
 import com.cricket.model.Match;
 import com.cricket.model.MatchAllData;
 import com.cricket.model.NameSuper;
@@ -58,7 +57,6 @@ import com.cricket.model.Player;
 import com.cricket.model.Setup;
 import com.cricket.model.Staff;
 import com.cricket.model.Statistics;
-import com.cricket.model.TapeBall;
 import com.cricket.model.Team;
 import com.cricket.model.Tournament;
 import com.cricket.model.VariousText;
@@ -91,7 +89,7 @@ public class IndexController
 	
 	public static List<MatchAllData> cricket_matches = new ArrayList<MatchAllData>();
 	public static List<Tournament> past_tournament_stats = new ArrayList<Tournament>();
-	public static List<TapeBall> past_tape = new ArrayList<TapeBall>();
+	public static List<BestStats> past_tape = new ArrayList<BestStats>();
 	public static List<Statistics> session_statistics = new ArrayList<Statistics>();
 	public static Statistics session_statistics_past_matches = new Statistics();
 	public static List<NameSuper> session_name_super = new ArrayList<NameSuper>();
@@ -555,12 +553,12 @@ public class IndexController
 			}
 			return (List<T>) tournament_stats;
 		case "Control_c":
-			List<TapeBall> tapeball = new ArrayList<TapeBall>();
+			List<BestStats> tapeball = new ArrayList<BestStats>();
 			tapeball = CricketFunctions.extractTapeData("COMBINED_PAST_CURRENT_MATCH_DATA", cricketService, cricket_matches, session_match, null);
 			Collections.sort(tapeball,new CricketFunctions.TapeBowlerWicketsComparator());
 			return (List<T>) tapeball;
 		case "Control_v":
-			List<LogFifty> log_fifty = new ArrayList<LogFifty>();
+			List<BestStats> log_fifty = new ArrayList<BestStats>();
 			log_fifty = CricketFunctions.extractLogFifty("COMBINED_PAST_CURRENT_MATCH_DATA",CricketUtil.BOWLER,cricketService, cricket_matches, session_match, null);
 			Collections.sort(log_fifty,new CricketFunctions.LogFiftyWicketsComparator());
 			return (List<T>) log_fifty;

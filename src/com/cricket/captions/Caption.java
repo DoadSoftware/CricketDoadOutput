@@ -11,6 +11,7 @@ import javax.xml.bind.JAXBException;
 
 import com.cricket.containers.LowerThird;
 import com.cricket.model.BattingCard;
+import com.cricket.model.BestStats;
 import com.cricket.model.Bugs;
 import com.cricket.model.Commentator;
 import com.cricket.model.Configuration;
@@ -25,7 +26,6 @@ import com.cricket.model.POTT;
 import com.cricket.model.Player;
 import com.cricket.model.Statistics;
 import com.cricket.model.StatsType;
-import com.cricket.model.TapeBall;
 import com.cricket.model.Team;
 import com.cricket.model.Tournament;
 import com.cricket.model.VariousText;
@@ -47,7 +47,7 @@ public class Caption
 	public List<StatsType> statsTypes;
 	public List<MatchAllData> tournament_matches;
 	public List<Tournament> tournament;
-	public List<TapeBall> tapeball;
+	public List<BestStats> tapeball;
 	public List<NameSuper> nameSupers;
 	public List<Fixture> fixTures;
 	public List<Team> Teams;
@@ -84,7 +84,7 @@ public class Caption
 		List<Team> Teams, List<Ground> Grounds, List<VariousText> varioustText, List<Commentator> commentators, List<Staff> staff, List<Player> players, 
 		List<POTT> pott, List<String> teamChanges, FullFramesGfx this_fullFramesGfx,LowerThirdGfx this_lowerThirdGfx, InfobarGfx this_infobarGfx, 
 		BugsAndMiniGfx this_bugsAndMiniGfx, int whichSide, String whichGraphhicsOnScreen, String slashOrDash, List<Tournament> tournament,
-		List<TapeBall> tapeball,List<DuckWorthLewis> dls) {
+		List<BestStats> tapeball,List<DuckWorthLewis> dls) {
 	
 		super();
 		this.print_writers = print_writers;
