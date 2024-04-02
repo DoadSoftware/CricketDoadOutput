@@ -342,8 +342,11 @@ public class Animation
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Ident_In", "START");
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$IdentInfo$In_Out", "START");
 					
+					infobar.setMiddle_section("");
 					infobar.setFull_section("");
 					infobar.setRight_bottom("");
+					infobar.setRight_section("");
+					this_infobarGfx.infobar.setLast_bowler(null);
 					this.infobar.setInfobar_on_screen(true);
 				}else {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Logos_All$Main$Select*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
@@ -352,6 +355,12 @@ public class Animation
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Ident_In", "START");
 					TimeUnit.MILLISECONDS.sleep(1500);
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$IdentInfo$In_Out", "START");
+					
+					infobar.setMiddle_section("");
+					infobar.setFull_section("");
+					infobar.setRight_bottom("");
+					infobar.setRight_section("");
+					
 					this.infobar.setInfobar_on_screen(true);
 				}
 				break;
@@ -1053,6 +1062,12 @@ public class Animation
 				TimeUnit.MILLISECONDS.sleep(500);
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Ident_In", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$IdentInfo$In_Out", "SHOW 0.0");
+				
+				infobar.setMiddle_section("");
+				infobar.setFull_section("");
+				infobar.setRight_bottom("");
+				infobar.setRight_section("");
+				
 				this.infobar.setInfobar_on_screen(false);
 				break;
 			case "F12": //Infobar
@@ -1089,9 +1104,10 @@ public class Animation
 					TimeUnit.MILLISECONDS.sleep(500);
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$Main_In", "SHOW 0.0");
 					
-					infobar.setFull_section("");
 					infobar.setMiddle_section("");
+					infobar.setFull_section("");
 					infobar.setRight_bottom("");
+					infobar.setRight_section("");
 					
 					this.infobar.setInfobar_on_screen(false);
 				}
@@ -2246,6 +2262,10 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Main$Main_In", "SHOW 0.0");
 				this.infobar.setInfobar_on_screen(false);
 				this.infobar.setInfobar_status("");
+				infobar.setMiddle_section("");
+				infobar.setFull_section("");
+				infobar.setRight_bottom("");
+				infobar.setRight_section("");
 			}
 			this.whichGraphicOnScreen = "";
 			this.specialBugOnScreen = "";

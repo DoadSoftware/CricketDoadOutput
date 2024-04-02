@@ -243,7 +243,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 					break;
 				}
 				break;
-			case 'Control_h':
+			/*case 'Control_h':
 				switch($('#selected_broadcaster').val().toUpperCase()){
 				case 'ISPL':
 					processCricketProcedures("GRAPHICS-OPTIONS", dataToProcess);
@@ -252,7 +252,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 					addItemsToList(dataToProcess,null); 
 					break;
 				}
-				break;
+				break;*/
 							
 			case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_7':  case 'Alt_5': //case 'Alt_6': case 'Alt_8': case 'Alt_3': case 'Alt_4': case 'F7': case 'F11':
 			case 'Control_F5': case 'Control_F8': case 'Shift_F8': case 'Control_F9': case 'F5': case 'F6':  case 'Alt_F8':
@@ -1525,12 +1525,15 @@ function addItemsToList(whatToProcess,dataToProcess)
 					select.id = 'selectTeam';
 					select.name = select.id;
 					
-					dataToProcess.forEach(function(tm,index,arr1){
-						option = document.createElement('option');
-						option.value = tm.teamId;
-						option.text = tm.teamName1 ;
-						select.appendChild(option);
-					});
+					option = document.createElement('option');
+					option.value = session_match.setup.homeTeamId;
+					option.text = session_match.setup.homeTeam.teamName1;
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = session_match.setup.awayTeamId;
+					option.text = session_match.setup.awayTeam.teamName1;
+					select.appendChild(option);
 					
 					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
 					row.insertCell(cellCount).appendChild(select);
@@ -1665,6 +1668,29 @@ function addItemsToList(whatToProcess,dataToProcess)
 			removeSelectDuplicates(select.id);
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
+			
+			switch(whatToProcess) {
+			case 'Control_s':
+				select = document.createElement('select');
+				select.id = 'selectType';
+				select.name = select.id;
+				
+				option = document.createElement('option');
+				option.value = 'WITH_CURRENT';
+				option.text = 'With Current Match';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'WITHOUT_CURRENT';
+				option.text = 'Without Current Match';
+				select.appendChild(option);
+				
+				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+				row.insertCell(cellCount).appendChild(select);
+				setDropdownOptionToSelectOptionArray($(select),1);
+				cellCount = cellCount + 1;
+				break;
+			}
 			break;
 		 case 'Alt_m':  case 'Shift_P':
 			switch(whatToProcess) {	
@@ -2077,6 +2103,24 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
 			
+			select = document.createElement('select');
+			select.id = 'selectType';
+			select.name = select.id;
+			
+			option = document.createElement('option');
+			option.value = 'WITH_CURRENT';
+			option.text = 'With Current Match';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'WITHOUT_CURRENT';
+			option.text = 'Without Current Match';
+			select.appendChild(option);
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),1);
+			cellCount = cellCount + 1;
 			break;
 				
 		case 'Control_F9':  case 'n'://BowlerStyle
@@ -2147,6 +2191,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 				select.name = select.id;
 				
 				option = document.createElement('option');
+				option.value = 'WITHOUTEND';
+				option.text = 'WITHOUT END';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
 				option.value = session_match.setup.ground.first_bowling_end;
 				option.text = session_match.setup.ground.first_bowling_end;
 				select.appendChild(option);
@@ -2154,11 +2203,6 @@ function addItemsToList(whatToProcess,dataToProcess)
 				option = document.createElement('option');
 				option.value = session_match.setup.ground.second_bowling_end;
 				option.text = session_match.setup.ground.second_bowling_end;
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = 'WITHOUTEND';
-				option.text = 'WITHOUT END';
 				select.appendChild(option);
 				
 				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");

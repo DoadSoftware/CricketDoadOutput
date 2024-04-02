@@ -3444,8 +3444,11 @@ public class FullFramesGfx
 								}
 							}
 							else if(log_50_type.equalsIgnoreCase("+")) {
+								System.out.println("total over = " + Integer.valueOf(manhattan.get(j).getOverTotalRuns()));
+								System.out.println("log_50_runs = " + log_50_runs);
 								if((Integer.valueOf(manhattan.get(j).getOverTotalRuns())+log_50_runs) > maxRuns){
 									maxRuns = (Integer.valueOf(manhattan.get(j).getOverTotalRuns())+log_50_runs); // 33 runs came off 34th over
+									System.out.println("maxRuns = " + maxRuns);
 								}
 							}
 						}else {
@@ -5439,7 +5442,8 @@ public class FullFramesGfx
 				if(fixture.getMatchnumber() > 9) {
 					match_name=fixture.getMatchfilename();
 				}else {
-					match_name= "MATCH " + fixture.getMatchnumber();
+					//match_name= "MATCH " + fixture.getMatchnumber();
+					match_name= fixture.getMatchfilename();
 				}
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_MatchId$InfoGrp$InfoTextGrp1$txt_Info1A"

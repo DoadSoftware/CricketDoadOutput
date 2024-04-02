@@ -1251,6 +1251,7 @@ public class InfobarGfx
 		case Constants.ISPL:
 			if(infobar.getLast_bowler() != null) {
 				if(infobar.getLast_bowler().getPlayerId() != bowlingCard.getPlayerId()) {
+					populateRightTopBowler(print_writers, matchAllData, 1, 2);
 					populateRightTopBowler(print_writers, matchAllData, 2, 2);
 					this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Bowler_Change", "START");
 				} else {
@@ -3579,27 +3580,38 @@ public class InfobarGfx
 			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage3$Side" + WhichSide 
 					+ "$Select*FUNCTION*Omo*vis_con SET 6 \0", print_writers);
 			
-			if(CricketFunctions.generateMatchSummaryStatus(inning.getInningNumber(), matchAllData, CricketUtil.FULL, "", 
-							config.getBroadcaster()).contains("tied")) {
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage3$Side" + WhichSide + "$Free_Text$txt_Header*GEOM*TEXT SET " + 
-						"MATCH TIED - WINNER WILL BE DECIDED BY SUPER OVER" + "\0", print_writers);
-			}else {
-				if(matchAllData.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.SUPER_OVER)) {
-					if(CricketFunctions.getRequiredRuns(matchAllData) <= 0) {
+			if(matchAllData.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.SUPER_OVER)) {
+				if(CricketFunctions.generateMatchSummaryStatus(inning.getInningNumber(), matchAllData, CricketUtil.FULL, "", 
+						config.getBroadcaster()).contains("tied")) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage3$Side" + WhichSide + "$Free_Text$txt_Header*GEOM*TEXT SET " + 
+							"SUPER OVER TIED - WINNER WILL BE DECIDED BY ANOTHER SUPER OVER" + "\0", print_writers);
+				}else {
+					if(matchAllData.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.SUPER_OVER)) {
+						if(CricketFunctions.getRequiredRuns(matchAllData) <= 0) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage3$Side" + WhichSide + "$Free_Text$txt_Header*GEOM*TEXT SET " + 
+									matchAllData.getMatch().getInning().get(1).getBatting_team().getTeamName4() + " WIN THE SUPER OVER" + "\0", print_writers);
+						}else if(matchAllData.getMatch().getInning().get(1).getTotalWickets() >= 10 || 
+								matchAllData.getMatch().getInning().get(1).getTotalOvers() >= matchAllData.getSetup().getMaxOvers()) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage3$Side" + WhichSide + "$Free_Text$txt_Header*GEOM*TEXT SET " + 
+									matchAllData.getMatch().getInning().get(1).getBowling_team().getTeamName4() + " WIN THE SUPER OVER" + "\0", print_writers);
+						}
+					}else {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage3$Side" + WhichSide + "$Free_Text$txt_Header*GEOM*TEXT SET " + 
-								matchAllData.getMatch().getInning().get(1).getBatting_team().getTeamName4() + " - WIN BY SUPER OVER" + "\0", print_writers);
-					}else if(matchAllData.getMatch().getInning().get(1).getTotalWickets() >= 10 || 
-							matchAllData.getMatch().getInning().get(1).getTotalOvers() >= matchAllData.getSetup().getMaxOvers()) {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage3$Side" + WhichSide + "$Free_Text$txt_Header*GEOM*TEXT SET " + 
-								matchAllData.getMatch().getInning().get(1).getBowling_team().getTeamName4() + " - WIN BY SUPER OVER" + "\0", print_writers);
+								CricketFunctions.generateMatchSummaryStatus(inning.getInningNumber(), matchAllData, CricketUtil.FULL, "", 
+										config.getBroadcaster()).toUpperCase() + "\0", print_writers);
 					}
+				}
+			}else {
+				if(CricketFunctions.generateMatchSummaryStatus(inning.getInningNumber(), matchAllData, CricketUtil.FULL, "", 
+						config.getBroadcaster()).contains("tied")) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage3$Side" + WhichSide + "$Free_Text$txt_Header*GEOM*TEXT SET " + 
+							"MATCH TIED - WINNER WILL BE DECIDED BY SUPER OVER" + "\0", print_writers);
 				}else {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage3$Side" + WhichSide + "$Free_Text$txt_Header*GEOM*TEXT SET " + 
 							CricketFunctions.generateMatchSummaryStatus(inning.getInningNumber(), matchAllData, CricketUtil.FULL, "", 
 									config.getBroadcaster()).toUpperCase() + "\0", print_writers);
 				}
 			}
-			
 			break;
 		case "EQUATION":
 			inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
@@ -3904,6 +3916,9 @@ public class InfobarGfx
 	                    if (evnt.getEventSubExtra() != null)
 	                    {
 	                    	runs += evnt.getEventSubExtraRuns();
+	                    }
+	                    if(evnt.getEventHowOut() != null && !evnt.getEventHowOut().trim().isEmpty()) {
+	                    	wicket += 1;
 	                    }
 	                    break;										
 					}
