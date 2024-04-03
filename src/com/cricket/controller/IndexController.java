@@ -48,6 +48,7 @@ import com.cricket.model.DuckWorthLewis;
 import com.cricket.model.EventFile;
 import com.cricket.model.Fixture;
 import com.cricket.model.Ground;
+import com.cricket.model.HeadToHead;
 import com.cricket.model.InfobarStats;
 import com.cricket.model.Match;
 import com.cricket.model.MatchAllData;
@@ -89,6 +90,7 @@ public class IndexController
 	
 	public static List<MatchAllData> cricket_matches = new ArrayList<MatchAllData>();
 	public static List<Tournament> past_tournament_stats = new ArrayList<Tournament>();
+	public static List<HeadToHead> headToHead = new ArrayList<HeadToHead>();
 	public static List<BestStats> past_tape = new ArrayList<BestStats>();
 	public static List<Statistics> session_statistics = new ArrayList<Statistics>();
 	public static Statistics session_statistics_past_matches = new Statistics();
@@ -112,7 +114,7 @@ public class IndexController
 	@RequestMapping(value = {"/","/initialise"}, method={RequestMethod.GET,RequestMethod.POST}) 
 	public String initialisePage(ModelMap model, 
 		@ModelAttribute("session_configuration") Configuration session_configuration) 
-		throws JAXBException, MalformedURLException, IOException 
+		throws JAXBException, MalformedURLException, IOException, IllegalAccessException, InvocationTargetException 
 	{
 		
 		if(current_date == null || current_date.isEmpty()) {
@@ -134,6 +136,21 @@ public class IndexController
 		        return name.endsWith(".xml") && pathname.isFile();
 		    }
 		}));
+		
+//		if(cricket_matches == null || cricket_matches.size()<=0) {
+//			cricket_matches = CricketFunctions.getTournamentMatches(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
+//					CricketUtil.MATCHES_DIRECTORY).listFiles(new FileFilter() {
+//				@Override
+//			    public boolean accept(File pathname) {
+//			        String name = pathname.getName().toLowerCase();
+//			        return name.endsWith(".json") && pathname.isFile();
+//			    }
+//			}), cricketService);
+//			
+//			for(MatchAllData tournament_match : cricket_matches) {
+//				CricketFunctions.getHeadToHead(tournament_match, "FULL_WRITE");
+//			}
+//		}
 
 		return "initialise";
 	}
@@ -594,18 +611,14 @@ public class IndexController
 		switch (config.getBroadcaster()) {
 		case Constants.ICC_U19_2023: case Constants.ISPL:
 			
-			cricket_matches = CricketFunctions.getTournamentMatches(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + CricketUtil.MATCHES_DIRECTORY).listFiles(new FileFilter() {
-				@Override
-			    public boolean accept(File pathname) {
-			        String name = pathname.getName().toLowerCase();
-			        return name.endsWith(".json") && pathname.isFile();
-			    }
-			}), cricketService);
-
-			
 			session_statistics = cricketService.getAllStats();
-			past_tape = CricketFunctions.extractTapeData("PAST_MATCHES_DATA", cricketService, cricket_matches, session_match, null);
-			past_tournament_stats = CricketFunctions.extractTournamentStats("PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
+			if(config.getBroadcaster().equalsIgnoreCase(Constants.ISPL)) {
+				past_tape = CricketFunctions.extractTapeData("PAST_MATCHES_DATA", cricketService, cricket_matches, session_match, null);
+			}
+			
+			headToHead = CricketFunctions.extractHeadToHead(cricketService);
+			past_tournament_stats = CricketFunctions.extractTournamentData("COMBINED_PAST_CURRENT_MATCH_DATA", false, headToHead, cricketService, session_match, null);
+			//past_tournament_stats = CricketFunctions.extractTournamentStats("PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
 			session_name_super =  cricketService.getNameSupers();
 			session_team =  cricketService.getTeams();
 			session_ground =  cricketService.getGrounds();
@@ -617,10 +630,6 @@ public class IndexController
 			session_fixture =  CricketFunctions.processAllFixtures(cricketService);
 			session_players = cricketService.getAllPlayer();
 			session_pott = cricketService.getPott();
-			
-//			for (int i = 0; i<= past_tape.size() -1; i++) {
-//				System.out.println("past_tape = " + past_tape.get(i));	
-//			}
 			
 			if(new File(CricketUtil.CRICKET_DIRECTORY + "ParScores BB.html").exists()) {
 				session_dls = CricketFunctions.populateDuckWorthLewis(session_match);
@@ -641,6 +650,14 @@ public class IndexController
 				}
 			}
 			
+			for(Tournament tour : past_tournament_stats) {
+				if(tour.getPlayerId() == 6) {
+					System.out.println("PLAYER ID " + tour.getPlayerId() + " BATSMAN RUNS : " + tour.getRuns() + " BATSMAN BALLS : " + tour.getBallsFaced()
+					+ " BOWLER WICKETS : " + tour.getWickets() + " BOWLER RUNS : " + tour.getRunsConceded() + " BOWLER BALLS : " + tour.getBallsBowled());
+				}
+			}
+			
+			
 			switch (typeOfUpdate) {
 			case "NEW":
 				this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), cricket_matches, session_name_super,
@@ -651,6 +668,16 @@ public class IndexController
 					cricket_matches, session_match, null).getTournament_sixes());
 				break;
 			case "UPDATE":
+				
+				cricket_matches = CricketFunctions.getTournamentMatches(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
+						CricketUtil.MATCHES_DIRECTORY).listFiles(new FileFilter() {
+					@Override
+				    public boolean accept(File pathname) {
+				        String name = pathname.getName().toLowerCase();
+				        return name.endsWith(".json") && pathname.isFile();
+				    }
+				}), cricketService);
+
 				//Bug and Mini
 				this_caption.this_bugsAndMiniGfx.bugs = session_bugs;
 				this_caption.this_bugsAndMiniGfx.Teams = session_team;
