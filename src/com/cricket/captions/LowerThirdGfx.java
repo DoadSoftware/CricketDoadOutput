@@ -26,11 +26,11 @@ import com.cricket.model.NameSuper;
 import com.cricket.model.POTT;
 import com.cricket.model.Partnership;
 import com.cricket.model.Player;
+import com.cricket.model.PowerPlays;
 import com.cricket.model.Staff;
 import com.cricket.model.Statistics;
 import com.cricket.model.StatsType;
 import com.cricket.model.Team;
-import com.cricket.model.Teams_Total_Score_in_powerplays;
 import com.cricket.model.Tournament;
 import com.cricket.model.VariousText;
 import com.cricket.util.CricketFunctions;
@@ -88,7 +88,7 @@ public class LowerThirdGfx
 	public List<String> this_data_str = new ArrayList<String>();
 	public List<BatBallGriff> griff = new ArrayList<BatBallGriff>();
 	
-	public List<Teams_Total_Score_in_powerplays> powerplayData = new ArrayList<Teams_Total_Score_in_powerplays>();
+	public List<PowerPlays> powerplayData = new ArrayList<PowerPlays>();
 	public List<BestStats> pastdata = new ArrayList<BestStats>();
 	public List<Tournament> addPastDataToCurr = new ArrayList<Tournament>();
 	
@@ -2533,11 +2533,11 @@ public class LowerThirdGfx
 				String pp1 = "",pp2 = "",tName = "",tName4 = "";
 				powerplayData = CricketFunctions.AllpowerplayScores(tournament_matches, matchAllData, null, "PAST_CURRENT");
 				for (int i = 0; i<= powerplayData.size() -1; i++) {
-					if(powerplayData.get(i).getTeamId() == Integer.valueOf(whatToProcess.split(",")[2])) {
-						pp1 = powerplayData.get(i).getTotal_runs_pp1() + "-" + powerplayData.get(i).getTotal_wickets_pp1();
-						pp2 = powerplayData.get(i).getTotal_runs_pp2() + "-" + powerplayData.get(i).getTotal_wickets_pp2();
-						tName = powerplayData.get(i).getTeam_Name();
-						tName4 = powerplayData.get(i).getTeam_Name4();
+					if(powerplayData.get(i).getTeam().getTeamId() == Integer.valueOf(whatToProcess.split(",")[2])) {
+						pp1 = powerplayData.get(i).getTotal_runs().get(0) + "-" + powerplayData.get(i).getTotal_wickets().get(0);
+						pp2 = powerplayData.get(i).getTotal_runs().get(1) + "-" + powerplayData.get(i).getTotal_wickets().get(1);
+						tName = powerplayData.get(i).getTeam().getTeamName1();
+						tName4 = powerplayData.get(i).getTeam().getTeamName4();
 					}
 				}
 				
