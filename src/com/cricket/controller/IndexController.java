@@ -40,7 +40,9 @@ import com.cricket.captions.InfobarGfx;
 import com.cricket.captions.LowerThirdGfx;
 import com.cricket.captions.Scene;
 import com.cricket.containers.Infobar;
+import com.cricket.model.BattingCard;
 import com.cricket.model.BestStats;
+import com.cricket.model.BowlingCard;
 import com.cricket.model.Bugs;
 import com.cricket.model.Commentator;
 import com.cricket.model.Configuration;
@@ -262,6 +264,7 @@ public class IndexController
 			model.addAttribute("session_configuration", session_configuration);
 			model.addAttribute("select_second_broadcaster", select_second_broadcaster);
 			model.addAttribute("select_broadcaster", select_broadcaster);
+			
 			return "output";
 //		}
 	}

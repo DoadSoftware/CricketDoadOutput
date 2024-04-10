@@ -255,7 +255,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				break;*/
 							
 			case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_7':  case 'Alt_5': //case 'Alt_6': case 'Alt_8': case 'Alt_3': case 'Alt_4': case 'F7': case 'F11':
-			case 'Control_F5': case 'Control_F8': case 'Shift_F8': case 'Control_F9': case 'F5': case 'F6':  case 'Alt_F8':
+			case 'Control_F5': case 'Control_F8': case 'Shift_F8': case 'Control_F9': case 'F5': case 'F6': case 'Alt_w':  case 'Alt_e': case 'Alt_F8':
 			case 'F8': case 'F9':  case 's': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6': case 'Control_y':
 			case 'Shift_O': case 'g': case 'f': case 'Control_g': case 'Control_s': case 'Control_f': //case 'Alt_F9':
 			case 'Control_h': case 'Alt_F12': case 'l': case 'p': case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_F10': case 'Alt_d':
@@ -267,8 +267,8 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Alt_k':  case 'Shift_F3': case 'd': case 'e': case 'Control_F6': case 'Control_F7': 
 			case 'Control_k': case 'Control_F10': case 'Control_F3':  case 'a': case 't': case 'h': //case 'n':
 			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q': case 'Control_b': case 'o': case 'Control_F2': case 'b':
-			case 'Alt_F11': case 'r': case 'Shift_J'://case 'Shift_F': 
-			case 'Shift_T': case 'Alt_y': case '.': case '/': case 'Shift_V':
+			case 'Alt_F11': case 'r': case 'Shift_J': case 'Alt_j'://case 'Shift_F': 
+			case 'Shift_T': case 'Alt_y': case '.': case '/': case 'Shift_V': case 'Alt_i': case 'Alt_o':
 				/*switch(dataToProcess){
 				case 'Shift_F':
 					count++;
@@ -491,7 +491,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 		}
 		break;*/
 		
-	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'F8': case 'F9': case 'F10': //case 'F7': case 'F11':
+	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'Alt_w': case 'Alt_e': case 'F8': case 'F9': case 'F10': //case 'F7': case 'F11':
 	case 'Control_F5': case 'Control_F9': case 'Control_F8': case 'Shift_F8': case 's': case 'p': case 'Control_p': //case 'Control_d': case 'Control_e':
 	case 'z': case 'x': case 'c': case 'v': case 'Control_F11': case 'Control_y': case 'Alt_F8': case 'Alt_F1': case 'Alt_F2':
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q':
@@ -953,6 +953,49 @@ function addItemsToList(whatToProcess,dataToProcess)
 						}
 					}
 				});
+				
+				if(session_match.setup.matchType == 'TEST'){
+					option = document.createElement('option');
+					option.value = 'LEAD_TRAIL_EQUATION';
+					option.text = 'Lead Trail Equation';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'REMAINING_OVERS';
+					option.text = 'remaining Overs';
+					select.appendChild(option);
+		
+					option = document.createElement('option');
+					option.value = 'FOLLOW_ON';
+					option.text = 'Follow On';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'DAY_SESSION';
+					option.text = 'Day Session';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'WHICH_INNING';
+					option.text = 'Which inning';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'CURRENT_INNING_OVER';
+					option.text = 'current inning Over';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'FIRST_INNING_SCORE';
+					option.text = 'First Inning Score';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'LOCAL-TIME';
+					option.text = 'Local Time';
+					select.appendChild(option);
+					
+				}
 					break;
 				}
 				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
@@ -1121,6 +1164,18 @@ function addItemsToList(whatToProcess,dataToProcess)
 						}
 					}
 				});
+				if(session_match.setup.matchType == 'TEST'){
+					option = document.createElement('option');
+					option.value = 'CURRENT_SESSION';
+					option.text = 'Current Session';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'DAY_PLAY';
+					option.text = 'Day Play';
+					select.appendChild(option);
+					
+				}
 				break;
 			}
 			
@@ -2793,6 +2848,108 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
 			break;
+		case 'Alt_e':
+			header_text.innerHTML = 'SESSION';
+			
+			select = document.createElement('select');
+			select.id = 'selectDays';
+			select.name = select.id;
+			
+			option = document.createElement('option');
+			option.value = '1';
+			option.text = 'Day 1' ;
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = '2';
+			option.text = 'Day 2' ;
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = '3';
+			option.text = 'Day 3' ;
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = '4';
+			option.text = 'Day 4' ;
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = '5';
+			option.text = 'Day 5' ;
+			select.appendChild(option);
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			//removeSelectDuplicates(select.id);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			removeSelectDuplicates(select.id);
+			cellCount = cellCount + 1;
+			break;	
+		case 'Alt_w':
+			header_text.innerHTML = 'SESSION';
+			
+			select = document.createElement('select');
+			select.id = 'selectday';
+			select.name = select.id;
+			
+			option = document.createElement('option');
+			option.value = '1';
+			option.text = 'Day 1' ;
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = '2';
+			option.text = 'Day 2' ;
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = '3';
+			option.text = 'Day 3' ;
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = '4';
+			option.text = 'Day 4' ;
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = '5';
+			option.text = 'Day 5' ;
+			select.appendChild(option);
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			//removeSelectDuplicates(select.id);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			removeSelectDuplicates(select.id);
+			cellCount = cellCount + 1;
+			
+			select = document.createElement('select');
+			select.id = 'selectsession';
+			select.name = select.id;
+			
+			option = document.createElement('option');
+			option.value = '1';
+			option.text = 'Session 1' ;
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = '2';
+			option.text = 'Session 2' ;
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = '3';
+			option.text = 'Session 3' ;
+			select.appendChild(option);
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),1);
+			cellCount = cellCount + 1;
+			break;	
 		case 'F6': case 'Shift_F6': case 'Alt_F6'://HowOut //how out w/o fielder // how out both
 			switch(whatToProcess) {
 			case 'F6':

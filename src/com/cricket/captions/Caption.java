@@ -181,6 +181,21 @@ public class Caption
 			case "Shift_J": //THIS SESSION
 				status = this_lowerThirdGfx.populateThisSession(whatToProcess, whichSide, matchAllData);
 				break;
+			case "Alt_w": //SESSION
+				status = this_lowerThirdGfx.populateSession(whatToProcess, whichSide, matchAllData);
+				break;
+			case "Alt_e": //SESSION WISE
+				status = this_lowerThirdGfx.populateAllSession(whatToProcess, whichSide, matchAllData);
+				break;
+			case "Alt_i": //SESSION WISE
+				status = this_lowerThirdGfx.populateSummaryDaybyDay(whatToProcess, whichSide, matchAllData);
+				break;
+			case "Alt_o": //MATCH STATISTICS
+				status = this_lowerThirdGfx.populateMatchStatistics(whatToProcess, whichSide, matchAllData);
+				break;
+			case "Alt_j": //TODAY'S MATCH
+				status = this_lowerThirdGfx.populateTodaysMatch(whatToProcess, whichSide, matchAllData);
+				break;	
 			case "F6"://HowOut
 				status = this_lowerThirdGfx.populateHowOut(whatToProcess,whichSide,matchAllData);
 				break;
