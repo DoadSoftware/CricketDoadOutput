@@ -252,8 +252,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 					addItemsToList(dataToProcess,null); 
 					break;
 				}
-				break;*/
-							
+				break;*/			
 			case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_7':  case 'Alt_5': //case 'Alt_6': case 'Alt_8': case 'Alt_3': case 'Alt_4': case 'F7': case 'F11':
 			case 'Control_F5': case 'Control_F8': case 'Shift_F8': case 'Control_F9': case 'F5': case 'F6': case 'Alt_w':  case 'Alt_e': case 'Alt_F8':
 			case 'F8': case 'F9':  case 's': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6': case 'Control_y':
@@ -955,14 +954,10 @@ function addItemsToList(whatToProcess,dataToProcess)
 				});
 				
 				if(session_match.setup.matchType == 'TEST'){
-					option = document.createElement('option');
-					option.value = 'LEAD_TRAIL_EQUATION';
-					option.text = 'Lead Trail Equation';
-					select.appendChild(option);
 					
 					option = document.createElement('option');
 					option.value = 'REMAINING_OVERS';
-					option.text = 'remaining Overs';
+					option.text = 'Remaining Overs';
 					select.appendChild(option);
 		
 					option = document.createElement('option');
@@ -993,6 +988,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 					option = document.createElement('option');
 					option.value = 'LOCAL-TIME';
 					option.text = 'Local Time';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'CURRENT_SESSION';
+					option.text = 'Current Session Run Rate';
 					select.appendChild(option);
 					
 				}
@@ -1132,7 +1132,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 				select.appendChild(option);
 				
 				session_match.match.inning.forEach(function(inn,index,arr){
-					if(inn.isCurrentInning == 'YES'){
+					if(inn.isCurrentInning == 'YES' && session_match.setup.matchType != 'TEST'){
 						if(inn.inningNumber == 1){
 							
 							option = document.createElement('option');
@@ -1166,13 +1166,18 @@ function addItemsToList(whatToProcess,dataToProcess)
 				});
 				if(session_match.setup.matchType == 'TEST'){
 					option = document.createElement('option');
+					option.value = 'LEAD_TRAIL_EQUATION';
+					option.text = 'Lead Trail Equation';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
 					option.value = 'CURRENT_SESSION';
-					option.text = 'Current Session';
+					option.text = 'This Session';
 					select.appendChild(option);
 					
 					option = document.createElement('option');
 					option.value = 'DAY_PLAY';
-					option.text = 'Day Play';
+					option.text = 'ToDay Play';
 					select.appendChild(option);
 					
 				}
