@@ -2368,7 +2368,7 @@ public class InfobarGfx
 				}else {
 					if(CricketFunctions.getRequiredRuns(matchAllData) == 0 || matchAllData.getMatch().getInning().get(1).getTotalWickets() >= 10 || CricketFunctions.getRequiredBalls(matchAllData) == 0) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage3$Side" + WhichSide + "$Free_Text$txt_Header*GEOM*TEXT SET " + 
-								CricketFunctions.generateMatchSummaryStatus(2, matchAllData, CricketUtil.FULL).toUpperCase() + "\0", print_writers);
+								CricketFunctions.generateMatchSummaryStatus(2, matchAllData, CricketUtil.FULL, config.getBroadcaster()).toUpperCase() + "\0", print_writers);
 					}else {
 						if(matchAllData.getSetup().getTargetOvers() == null || matchAllData.getSetup().getTargetOvers().trim().isEmpty() && matchAllData.getSetup().getTargetRuns() == 0) {
 							if(CricketFunctions.getRequiredRuns(matchAllData) == 0) {

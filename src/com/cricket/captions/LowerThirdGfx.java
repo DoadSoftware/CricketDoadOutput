@@ -237,7 +237,7 @@ public class LowerThirdGfx
 
 				if(matchAllData.getMatch().getDaysSessions().get(i).getDayNumber() == Integer.valueOf(whatToProcess.split(",")[2])) {
 				
-				header = CricketFunctions.getnumeric(matchAllData.getMatch().getDaysSessions().get(i).getDayNumber()).toUpperCase()  + " DAY ";
+				//header = CricketFunctions.getnumeric(matchAllData.getMatch().getDaysSessions().get(i).getDayNumber()).toUpperCase()  + " DAY ";
 				
 				if(matchAllData.getMatch().getDaysSessions().get(i).getSessionNumber() == 1) {
 					if(matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls() % 6 == 0) {
@@ -477,10 +477,10 @@ public class LowerThirdGfx
 			}
 		}
 		
-		runs = CricketFunctions.CurrentDayStats(matchAllData, "/", "CURRENT").split("/")[0];
-		overs = CricketFunctions.CurrentDayStats(matchAllData, "/", "CURRENT").split("/")[1];
-		wickets = CricketFunctions.CurrentDayStats(matchAllData, "/", "CURRENT").split("/")[2];
-		run_rate = CricketFunctions.CurrentDayStats(matchAllData, "/", "CURRENT").split("/")[3];
+//		runs = CricketFunctions.CurrentDayStats(matchAllData, "/", "CURRENT").split("/")[0];
+//		overs = CricketFunctions.CurrentDayStats(matchAllData, "/", "CURRENT").split("/")[1];
+//		wickets = CricketFunctions.CurrentDayStats(matchAllData, "/", "CURRENT").split("/")[2];
+//		run_rate = CricketFunctions.CurrentDayStats(matchAllData, "/", "CURRENT").split("/")[3];
 		
 		lowerThird = new LowerThird("TODAY'S MATCH", "", "","", "","", 2, "",inning.getBatting_team().getTeamName4(),
 				new String[] {"RUNS","OVERS","WICKETS","RUN RATE"},new String[] {runs,overs,wickets,run_rate}
