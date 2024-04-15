@@ -11,6 +11,9 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -77,14 +80,14 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @Controller
-@SessionAttributes(value = {"session_configuration"})
+@SessionAttributes(value = {"session_configuration","expiryDate"})
 public class IndexController 
 {
 	@Autowired
 	CricketService cricketService;
 	
 	public static MatchAllData session_match;
-	public static String expiry_date = "2024-01-31";
+	public static String expiry_date = "2024-12-31";
 	public static String current_date;
 	public static long last_match_time_stamp = 0;
 	public static Scene this_scene;
@@ -118,7 +121,8 @@ public class IndexController
 	
 	@RequestMapping(value = {"/","/initialise"}, method={RequestMethod.GET,RequestMethod.POST}) 
 	public String initialisePage(ModelMap model, 
-		@ModelAttribute("session_configuration") Configuration session_configuration) 
+		@ModelAttribute("session_configuration") Configuration session_configuration,
+		@ModelAttribute("expiryDate") String expiryDate) 
 		throws JAXBException, MalformedURLException, IOException, IllegalAccessException, InvocationTargetException 
 	{
 		
@@ -164,6 +168,7 @@ public class IndexController
 		consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}) 
 	public String outputPage(ModelMap model,
 			@ModelAttribute("session_configuration") Configuration session_configuration,
+			@ModelAttribute("expiryDate") String expiryDate,
 			@RequestParam(value = "configuration_file_name", required = false, defaultValue = "") String configuration_file_name,
 			@RequestParam(value = "select_cricket_matches", required = false, defaultValue = "") String selectedMatch,
 			@RequestParam(value = "select_broadcaster", required = false, defaultValue = "") String select_broadcaster,
@@ -187,18 +192,28 @@ public class IndexController
 				throws StreamWriteException, DatabindException, IllegalAccessException, InvocationTargetException, 
 				JAXBException, IOException, URISyntaxException, ParseException, InterruptedException, CloneNotSupportedException 
 	{
-//		if(current_date == null || current_date.isEmpty()) {
-//			
-//			model.addAttribute("error_message","You must be connected to the internet online");
-//			return "error";
-//		
-//		} else if(new SimpleDateFormat("yyyy-MM-dd").parse(expiry_date).before(new SimpleDateFormat("yyyy-MM-dd").parse(current_date))) {
-//			
-//			model.addAttribute("error_message","This software has expired");
-//			return "error";
-//			
-//		}else {
+		if(current_date == null || current_date.isEmpty()) {
+			
+			model.addAttribute("error_message","You must be connected to the internet online");
+			return "error";
+		
+		} else if(new SimpleDateFormat("yyyy-MM-dd").parse(expiry_date).before(new SimpleDateFormat("yyyy-MM-dd").parse(current_date))) {
+			
+			model.addAttribute("error_message","This software has expired");
+			return "error";
+			
+		}else {
 
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			
+			LocalDate date1 = LocalDate.parse(current_date, dtf);
+			LocalDate date2 = LocalDate.parse(expiry_date, dtf);
+			
+			System.out.println("date1 = " + date1 + "   date2 = " + date2);
+			long daysBetween = ChronoUnit.DAYS.between(date1, date2);
+			
+			expiryDate = String.valueOf(daysBetween);
+			
 			last_match_time_stamp = new File(CricketUtil.CRICKET_SERVER_DIRECTORY + CricketUtil.MATCHES_DIRECTORY 
 				+ selectedMatch).lastModified();
 			
@@ -264,12 +279,13 @@ public class IndexController
 				model.addAttribute("which_inning", "1");
 			}
 			model.addAttribute("session_match", session_match);
+			model.addAttribute("expiryDate", expiryDate);
 			model.addAttribute("session_configuration", session_configuration);
 			model.addAttribute("select_second_broadcaster", select_second_broadcaster);
 			model.addAttribute("select_broadcaster", select_broadcaster);
 			
 			return "output";
-//		}
+		}
 	}
 
 	@RequestMapping(value = {"/processCricketProcedures"}, method={RequestMethod.GET,RequestMethod.POST})    
@@ -536,6 +552,10 @@ public class IndexController
 	public Configuration session_configuration(){
 		return new Configuration();
 	}
+	@ModelAttribute("expiryDate")
+	public String expiryDate(){
+		return new String();
+	}
 	@SuppressWarnings("unchecked")
 	public <T> List<T> GetGraphicOption(String whatToProcess) throws IOException {
 		switch (whatToProcess) {
@@ -612,7 +632,7 @@ public class IndexController
 	}
 	
 	public void GetVariousDBData(String typeOfUpdate, Configuration config) throws StreamReadException, DatabindException, 
-		IllegalAccessException, InvocationTargetException, JAXBException, IOException, CloneNotSupportedException, InterruptedException
+		IllegalAccessException, InvocationTargetException, JAXBException, IOException, CloneNotSupportedException, InterruptedException, URISyntaxException
 	{
 		switch (config.getBroadcaster()) {
 		case Constants.ICC_U19_2023: case Constants.ISPL:
@@ -670,6 +690,9 @@ public class IndexController
 					cricket_matches, session_match, null).getTournament_sixes());
 				break;
 			case "UPDATE":
+				
+				session_match = CricketFunctions.populateMatchVariables(cricketService, CricketFunctions.readOrSaveMatchFile(CricketUtil.READ, 
+						CricketUtil.SETUP + "," + CricketUtil.MATCH + "," + CricketUtil.EVENT, session_match));
 				
 				cricket_matches = CricketFunctions.getTournamentMatches(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
 						CricketUtil.MATCHES_DIRECTORY).listFiles(new FileFilter() {
