@@ -260,6 +260,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Control_h': case 'Alt_F12': case 'l': case 'p': case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_F10': case 'Alt_d':
 			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2': case 'Shift_E': case 'Shift_P': case 'Shift_Q': case 'Alt_z': case 'Shift_F':
 			case 'Alt_F6': case 'Shift_L': case 'Shift_A': case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'Shift_F7': case 'n':
+			case 'Shift_Z': case 'Shift_X': 
 				addItemsToList(dataToProcess,null); 
 				break;
 			case 'Shift_F10': case 'm': case 'F2': case 'Control_F1': case 'Control_a': case 'Shift_F11': 
@@ -500,6 +501,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Shift_P': case 'Shift_Q': case 'Alt_z': case 'Control_c': case 'Control_v': case 'Control_z': case 'Control_x': case 'Alt_q': case 'Shift_F': 
 	case 'Alt_F6': case 'Shift_A': case 'Shift_L':
 	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'n':
+	case 'Shift_Z': case 'Shift_X':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		
 		$("#captions_div").hide();
@@ -2954,7 +2956,66 @@ function addItemsToList(whatToProcess,dataToProcess)
 			row.insertCell(cellCount).appendChild(select);
 			setDropdownOptionToSelectOptionArray($(select),1);
 			cellCount = cellCount + 1;
-			break;	
+			break;
+		case 'Shift_Z':
+			switch(whatToProcess) {
+			case 'Shift_Z':
+				header_text.innerHTML = 'BEST STATS - THIS SERIES';
+				break;		
+			}
+			
+			select = document.createElement('select');
+			select.id = 'selectHowoutPlayers';
+			select.name = select.id;
+			
+			session_match.match.inning.forEach(function(inn,index,arr){
+				if(inn.inningNumber == document.getElementById('which_inning').value){
+					inn.battingCard.forEach(function(bc,bc_index,bc_arr){
+						option = document.createElement('option');
+						option.value = bc.playerId;
+						option.text = bc.player.full_name;	
+						select.appendChild(option);
+					});
+				}
+			});
+			
+			select.setAttribute('onchange','setDropdownOptionToSelectOptionArray(this, 0)');
+			row.insertCell(cellCount).appendChild(select);
+			//removeSelectDuplicates(select.id);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			removeSelectDuplicates(select.id);
+			cellCount = cellCount + 1;
+			break;
+			
+		case 'Shift_X':
+			switch(whatToProcess) {
+			case 'Shift_X':
+				header_text.innerHTML = 'BEST FIGURE - THIS SERIES';
+				break;			
+			}
+			
+			select = document.createElement('select');
+			select.id = 'selectHowoutPlayers';
+			select.name = select.id;
+			
+			session_match.match.inning.forEach(function(inn,index,arr){
+				if(inn.inningNumber == (3 - document.getElementById('which_inning').value)){
+					inn.battingCard.forEach(function(bc,bc_index,bc_arr){
+						option = document.createElement('option');
+						option.value = bc.playerId;
+						option.text = bc.player.full_name;	
+						select.appendChild(option);
+					});
+				}
+			});
+			
+			select.setAttribute('onchange','setDropdownOptionToSelectOptionArray(this, 0)');
+			row.insertCell(cellCount).appendChild(select);
+			//removeSelectDuplicates(select.id);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			removeSelectDuplicates(select.id);
+			cellCount = cellCount + 1;
+			break;
 		case 'F6': case 'Shift_F6': case 'Alt_F6'://HowOut //how out w/o fielder // how out both
 			switch(whatToProcess) {
 			case 'F6':
