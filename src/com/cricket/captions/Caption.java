@@ -296,7 +296,7 @@ public class Caption
 				status = this_fullFramesGfx.populateMatchSummary(whichSide, whatToProcess.split(",")[0], matchAllData, 
 					Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
-			case "Control_F4": //MATCH SUMMARY
+			case "Control_F4": 
 				status = this_lowerThirdGfx.populateBowlingStyleWithPhoto(whatToProcess,whichSide,matchAllData);
 				break;	
 			case "d": //Target
@@ -311,10 +311,10 @@ public class Caption
 			case "Shift_F": //wicket sequencing
 				status = this_bugsAndMiniGfx.populateWicketSequencing(whatToProcess, matchAllData, whichSide);
 				break;
-			case "f": // Bug Batsman Score
+			case "y": // Bug Batsman Score
 				status = this_bugsAndMiniGfx.populateBatScore(whatToProcess, matchAllData, whichSide);
 				break;
-			case "g": //Bug Bowler Score
+			case "g": //Bug Bowler fig
 				status = this_bugsAndMiniGfx.populateBowlScore(whatToProcess, matchAllData, whichSide);
 				break;
 			case "j": //NameSuper DB
@@ -395,7 +395,7 @@ public class Caption
 			case "Control_k": //Curr Partnership
 				status = this_bugsAndMiniGfx.bugsCurrPartnership(whatToProcess,matchAllData,whichSide);
 				break;
-			case "Shift_F4": //Curr Partnership
+			case "Shift_F4": 
 				status = this_bugsAndMiniGfx.bugMultiPartnership(whatToProcess,matchAllData,whichSide);
 				break;
 			case "Control_m": //MATCH PROMO

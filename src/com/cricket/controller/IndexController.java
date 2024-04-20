@@ -161,8 +161,8 @@ public class IndexController
 //			}
 //		}
 		
-		headToHead = CricketFunctions.extractHeadToHead(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
-				CricketUtil.HEADTOHEAD_DIRECTORY).listFiles(), cricketService);
+//		headToHead = CricketFunctions.extractHeadToHead(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
+//				CricketUtil.HEADTOHEAD_DIRECTORY).listFiles(), cricketService);
 
 		return "initialise";
 	}
