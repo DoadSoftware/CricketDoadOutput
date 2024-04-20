@@ -45,8 +45,6 @@ import com.cricket.captions.InfobarGfx;
 import com.cricket.captions.LowerThirdGfx;
 import com.cricket.captions.Scene;
 import com.cricket.containers.Infobar;
-import com.cricket.model.AllEvents;
-import com.cricket.model.BattingCard;
 import com.cricket.model.BestStats;
 import com.cricket.model.BowlingCard;
 import com.cricket.model.Bugs;
