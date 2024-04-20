@@ -339,7 +339,7 @@ public class BugsAndMiniGfx
 							+ "$img_Shadow*ACTIVE SET 1 \0", print_writers);
 				}
 				break;
-			case "g": case "f": case "Shift_O": case "Shift_F": case "Control_k": case "Shift_F4":
+			case "g": case "y": case "Shift_O": case "Shift_F": case "Control_k": case "Shift_F4":
 				if(team.getTeamName4().equalsIgnoreCase("NEP")) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
 							+ "$img_Shadow*ACTIVE SET 0 \0", print_writers);
@@ -498,7 +498,7 @@ public class BugsAndMiniGfx
 						+ "$img_Sponsor*ACTIVE SET 0 \0", print_writers);
 				break;
 				
-			case "f":
+			case "y":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
 						+ "$img_Flag*ACTIVE SET 1 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
@@ -919,7 +919,7 @@ public class BugsAndMiniGfx
 						+ "$img_Sponsor*ACTIVE SET 0 \0", print_writers);
 				break;
 				
-			case "f":
+			case "y":
 				
 				if(team.getTeamName4().contains("KHILADI XI") || team.getTeamName4().contains("MASTER 11")) {
 					if(team.getTeamName4().equalsIgnoreCase("KHILADI XI")) {
