@@ -129,6 +129,9 @@ public class Caption
 	{
 		if(whatToProcess.contains(",")) {
 			switch (whatToProcess.split(",")[0]) {
+			case "Control_i":
+				status = this_lowerThirdGfx.populateInningBuilder(whatToProcess, whichSide, matchAllData);
+				break;
 			case "Control_1":
 				status = this_infobarGfx.populatebonus(whatToProcess,whichSide, matchAllData);
 				break;
@@ -183,7 +186,7 @@ public class Caption
 			case "Alt_w": //SESSION
 				status = this_lowerThirdGfx.populateSession(whatToProcess, whichSide, matchAllData);
 				break;
-			case "Alt_e": //SESSION WISE
+			case "Control_j": //SESSION WISE
 				status = this_lowerThirdGfx.populateAllSession(whatToProcess, whichSide, matchAllData);
 				break;
 			case "Alt_i": //SESSION WISE
