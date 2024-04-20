@@ -153,6 +153,10 @@ public class IndexController
 //				CricketFunctions.getHeadToHead(tournament_match, "FULL_WRITE");
 //			}
 //		}
+		
+//		headToHead = CricketFunctions.extractHeadToHead(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
+//			CricketUtil.MATCHES_DIRECTORY).listFiles(), cricketService);
+		headToHead = CricketFunctions.extractHeadToHead(cricketService);
 
 		return "initialise";
 	}
@@ -476,7 +480,7 @@ public class IndexController
 		if(whatToProcess.contains("ANIMATE-IN-GRAPHICS")) {
 			switch(this_animation.getTypeOfGraphicsOnScreen(session_configuration,valueToProcess)){
 			case Constants.INFO_BAR:
-				if(valueToProcess.split(",")[0].equalsIgnoreCase("Shift_T")){
+				if(valueToProcess.split(",")[0].equalsIgnoreCase("Control_F8")){
 					this_animation.AnimateIn(valueToProcess, print_writers, session_configuration);
 				}else if(valueToProcess.split(",")[0].equalsIgnoreCase("Control_F12")) {
 					this_animation.AnimateIn(valueToProcess, print_writers, session_configuration);
@@ -522,7 +526,7 @@ public class IndexController
 		}else if(whatToProcess.contains("QUIDICH-COMMANDS")) {
 			this_animation.processQuidichCommands(valueToProcess, print_writers, session_configuration);
 		}else if(whatToProcess.contains("ANIMATE-OUT-TAPE")) {
-			this_animation.AnimateOut("Shift_T,", print_writers, session_configuration);
+			this_animation.AnimateOut("Control_F8,", print_writers, session_configuration);
 		}else if(whatToProcess.contains("ANIMATE-OUT-TARGET")) {
 			this_animation.AnimateOut("Alt_y,", print_writers, session_configuration);
 		}else if(whatToProcess.contains("ANIMATE-OUT-CR")) {
@@ -540,7 +544,7 @@ public class IndexController
 		    return (List<T>) session_name_super;
 		case "k":
 			return (List<T>) session_bugs;
-		case "Control_m": case "Control_F11":
+		case "Control_m": case "Shift_F11":
 			return (List<T>) CricketFunctions.processAllFixtures(cricketService);
 		case "Alt_9":
 			return (List<T>) session_infoBarStats;
@@ -619,7 +623,7 @@ public class IndexController
 				past_tape = CricketFunctions.extractTapeData("PAST_MATCHES_DATA", cricketService, cricket_matches, session_match, null);
 			}
 			
-			headToHead = CricketFunctions.extractHeadToHead(cricketService);
+			
 			past_tournament_stats = CricketFunctions.extractTournamentData("COMBINED_PAST_CURRENT_MATCH_DATA", false, headToHead, cricketService, session_match, null);
 			//past_tournament_stats = CricketFunctions.extractTournamentStats("PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
 			session_name_super =  cricketService.getNameSupers();

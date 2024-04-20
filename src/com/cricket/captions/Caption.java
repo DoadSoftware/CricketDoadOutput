@@ -175,10 +175,10 @@ public class Caption
 			case "Shift_A": //BAT THIS MATCH BOTH INNING
 				status = this_lowerThirdGfx.populateBatThisMatchBoth(whatToProcess, whichSide, matchAllData);
 				break;
-			case "Shift_L": //BALL THIS MATCH BOTH INNING
+			case "Shift_R": //BALL THIS MATCH BOTH INNING
 				status = this_lowerThirdGfx.populateBallThisMatchBoth(whatToProcess, whichSide, matchAllData);
 				break;
-			case "Shift_J": //THIS SESSION
+			case "Shift_U": //THIS SESSION
 				status = this_lowerThirdGfx.populateThisSession(whatToProcess, whichSide, matchAllData);
 				break;
 			case "Alt_w": //SESSION
@@ -190,7 +190,7 @@ public class Caption
 			case "Alt_i": //SESSION WISE
 				status = this_lowerThirdGfx.populateSummaryDaybyDay(whatToProcess, whichSide, matchAllData);
 				break;
-			case "Alt_o": //MATCH STATISTICS
+			case "b": //MATCH STATISTICS
 				status = this_lowerThirdGfx.populateMatchStatistics(whatToProcess, whichSide, matchAllData);
 				break;
 			case "Alt_j": //TODAY'S MATCH
@@ -240,7 +240,7 @@ public class Caption
 			case "Control_F7": // Double Teams
 				status = this_fullFramesGfx.PopulateDoubleTeams(whichSide, whatToProcess.split(",")[0], matchAllData);
 				break;
-			case "Control_F8": case "Shift_F8"://Playing XI
+			case "Shift_T": case "Shift_F8"://Playing XI
 				status = this_fullFramesGfx.populatePlayingXI(whichSide, whatToProcess.split(",")[0],
 					Integer.valueOf(whatToProcess.split(",")[2]), matchAllData, 0);
 				break;
@@ -290,17 +290,15 @@ public class Caption
 				status = this_fullFramesGfx.populateWorms(whichSide, whatToProcess.split(",")[0], matchAllData, 
 					Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
-			case "Control_F11":
+			case "Shift_F11":
 				status = this_fullFramesGfx.populatePreviousMatchSummary(whichSide, whatToProcess, matchAllData, 0);
 				break;
-			case "Shift_F11": //MATCH SUMMARY
+			case "Control_F11": //MATCH SUMMARY
 				status = this_fullFramesGfx.populateMatchSummary(whichSide, whatToProcess.split(",")[0], matchAllData, 
 					Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
-			case "n": //MATCH SUMMARY
+			case "Control_F4": //MATCH SUMMARY
 				status = this_lowerThirdGfx.populateBowlingStyleWithPhoto(whatToProcess,whichSide,matchAllData);
-//				status = this_fullFramesGfx.populateMatchSummary(whichSide, whatToProcess.split(",")[0], matchAllData, 
-//					Integer.valueOf(whatToProcess.split(",")[1]));
 				break;	
 			case "d": //Target
 				status = this_lowerThirdGfx.populateL3rdTarget(whatToProcess, whichSide, matchAllData);
@@ -343,7 +341,7 @@ public class Caption
 				}
 				status = this_fullFramesGfx.populateLeaderBoard(whichSide, whatToProcess.split(",")[0], matchAllData, 0);
 				break;
-			case "s": //30-50
+			case "u": //30-50
 				status = this_lowerThirdGfx.populate30_50Split(whatToProcess, whichSide, matchAllData);
 				break;
 			case "q"://Boundaries
@@ -376,9 +374,9 @@ public class Caption
 			case "a": // All Powerplay Summary 
 				status = this_lowerThirdGfx.populateL3rdInningPowerPlay(whatToProcess,whichSide,matchAllData);
 				break;	
-//			case "n": // POWERPLAY COMPARISON 
-//				status = this_lowerThirdGfx.populateL3rdAllPowerPlay(whatToProcess,whichSide,matchAllData);
-//				break;	
+			case "n": // POWERPLAY COMPARISON 
+				status = this_lowerThirdGfx.populateL3rdAllPowerPlay(whatToProcess,whichSide,matchAllData);
+				break;	
 			case "Control_a"://Projected
 				status = this_lowerThirdGfx.populateL3rdProjected(whatToProcess,whichSide,matchAllData);
 				break;
@@ -440,7 +438,7 @@ public class Caption
 			case "Alt_F10"://Single Teams This Series
 				status = this_fullFramesGfx.populateSingleTeamsThisSeries(whichSide, whatToProcess, matchAllData, 0);
 				break;
-			case "Alt_k"://Curr Part
+			case "Alt_o"://Curr Part
 				status = this_lowerThirdGfx.populateL3rdCurrentPartnership(whatToProcess,whichSide,matchAllData);
 				break;
 			case "Alt_p":
@@ -481,7 +479,7 @@ public class Caption
 					break;
 				}
 				break;
-			case "Shift_T":
+			case "Control_F8":
 				status = this_infobarGfx.populateTapeBall(print_writers,matchAllData);
 				break;
 			case "Alt_2": // Infobar Middle

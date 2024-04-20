@@ -255,20 +255,21 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				break;*/
 							
 			case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_7':  case 'Alt_5': //case 'Alt_6': case 'Alt_8': case 'Alt_3': case 'Alt_4': case 'F7': case 'F11':
-			case 'Control_F5': case 'Control_F8': case 'Shift_F8': case 'Control_F9': case 'F5': case 'F6': case 'Alt_w':  case 'Alt_e': case 'Alt_F8':
-			case 'F8': case 'F9':  case 's': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6': case 'Control_y':
+			case 'Control_F5': case 'Shift_T': case 'Control_F9': case 'F5': case 'F6': case 'Alt_w':  case 'Alt_e': case 'Alt_F8':
+			case 'F8': case 'F9':  case 'u': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6': case 'Control_y':
 			case 'Shift_O': case 'g': case 'f': case 'Control_g': case 'Control_s': case 'Control_f': //case 'Alt_F9':
 			case 'Control_h': case 'Alt_F12': case 'l': case 'p': case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_F10': case 'Alt_d':
 			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2': case 'Shift_E': case 'Shift_P': case 'Shift_Q': case 'Alt_z': case 'Shift_F':
-			case 'Alt_F6': case 'Shift_L': case 'Shift_A': case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'Shift_F7': case 'n':
+			case 'Alt_F6': case 'Shift_R': case 'Shift_A': case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'Shift_F7': case 'Control_F4':
 				addItemsToList(dataToProcess,null); 
 				break;
-			case 'Shift_F10': case 'm': case 'F2': case 'Control_F1': case 'Control_a': case 'Shift_F11': 
-			case 'Alt_k':  case 'Shift_F3': case 'd': case 'e': case 'Control_F6': case 'Control_F7': 
-			case 'Control_k': case 'Control_F10': case 'Control_F3':  case 'a': case 't': case 'h': //case 'n':
+			//changed shift_f11 to control_f11
+			case 'Shift_F10': case 'm': case 'F2': case 'Control_F1': case 'Control_a': case 'Control_F11': 
+			case 'Alt_o':  case 'Shift_F3': case 'd': case 'e': case 'Control_F6': case 'Control_F7': 
+			case 'Control_k': case 'Control_F10': case 'Control_F3':  case 'a': case 't': case 'h': case 'n':
 			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q': case 'Control_b': case 'o': case 'Control_F2': case 'b':
-			case 'Alt_F11': case 'r': case 'Shift_J': case 'Alt_j'://case 'Shift_F': 
-			case 'Shift_T': case 'Alt_y': case '.': case '/': case 'Shift_V': case 'Alt_i': case 'Alt_o':
+			case 'Alt_F11': case 'r': case 'Shift_U': case 'Alt_j'://case 'Shift_F': 
+			case 'Control_F8': case 'Alt_y': case '.': case '/': case 'Shift_V': case 'Alt_i': case 'b':
 				/*switch(dataToProcess){
 				case 'Shift_F':
 					count++;
@@ -303,7 +304,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				}
 				
 				break;
-			case 'Alt_f': case 'Alt_g': case 'ArrowDown': case 'ArrowUp': case 'w': case 'i': case 'y': case 'u': case '0': case ';':
+			case 'Alt_f': case 'Alt_g': case 'ArrowDown': case 'ArrowUp': case 'w': case 'i': case 'y': case 's': case '0': case ';':
 			case 'Control_2': case 'Control_3':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("ANIMATE-IN-GRAPHICS", dataToProcess);
@@ -492,15 +493,15 @@ function addItemsToList(whatToProcess,dataToProcess)
 		break;*/
 		
 	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'Alt_w': case 'Alt_e': case 'F8': case 'F9': case 'F10': //case 'F7': case 'F11':
-	case 'Control_F5': case 'Control_F9': case 'Control_F8': case 'Shift_F8': case 's': case 'p': case 'Control_p': //case 'Control_d': case 'Control_e':
-	case 'z': case 'x': case 'c': case 'v': case 'Control_F11': case 'Control_y': case 'Alt_F8': case 'Alt_F1': case 'Alt_F2':
+	case 'Control_F5': case 'Control_F9': case 'Shift_T': case 'u': case 'p': case 'Control_p': //case 'Control_d': case 'Control_e':
+	case 'z': case 'x': case 'c': case 'v': case 'Shift_F11': case 'Control_y': case 'Alt_F8': case 'Alt_F1': case 'Alt_F2':
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'f': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q':
 	case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l': case 'Shift_E': //case 'Alt_F9':
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9': case 'Alt_0':
 	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10': case 'Alt_d': case 'Shift_F4': case 'Alt_a': case 'Alt_s': 
 	case 'Shift_P': case 'Shift_Q': case 'Alt_z': case 'Control_c': case 'Control_v': case 'Control_z': case 'Control_x': case 'Alt_q': case 'Shift_F': 
-	case 'Alt_F6': case 'Shift_A': case 'Shift_L':
-	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'n':
+	case 'Alt_F6': case 'Shift_A': case 'Shift_R':
+	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_F4':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		
 		$("#captions_div").hide();
@@ -1600,7 +1601,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			break;	
 			
-		case 's':
+		case 'u':
 			
 			switch($('#selected_broadcaster').val().toUpperCase()){
 				case 'ISPL':
@@ -1928,9 +1929,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			break;	
 			
-		case 'Control_F8': case 'Shift_F8': case 'Alt_F9': case 'Alt_F12': case 'Alt_F10': case 'Alt_z':
+		case 'Shift_T': case 'Alt_F9': case 'Alt_F12': case 'Alt_F10': case 'Alt_z':
 			switch(whatToProcess) {
-			case 'Control_F8': case 'Shift_F8':
+			case 'Shift_F8':
 				header_text.innerHTML = 'FF PLAYING XI';
 				break;
 			case 'Alt_F12':
@@ -2178,12 +2179,12 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			break;
 				
-		case 'Control_F9':  case 'n'://BowlerStyle
+		case 'Control_F9':  case 'Control_F4'://BowlerStyle
 			switch(whatToProcess) {
 			case 'Control_F9':
 				header_text.innerHTML = 'BALL STYLE';
 				break;	
-			case 'n':
+			case 'Control_F4':
 				header_text.innerHTML = 'BALL STYLE With Photo';
 				break;		
 			}
@@ -2240,7 +2241,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			
 			switch(whatToProcess) {
-			case 'Control_F9': case 'n':
+			case 'Control_F9': case 'Control_F4':
 				select = document.createElement('select');
 				select.id = 'selectBowlingEnd';
 				select.name = select.id;
@@ -2384,13 +2385,13 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			break;
 			
-		case 'Control_m': case 'Control_F11': //MATCH-PROMO - PreviousMatchSummary 
+		case 'Control_m': case 'Shift_F11': //MATCH-PROMO - PreviousMatchSummary 
 			
 			switch(whatToProcess) {
 			case 'Control_m':
 				header_text.innerHTML = 'FF MATCH PROMO';
 				break;
-			case 'Control_F11':
+			case 'Shift_F11':
 				header_text.innerHTML = 'FF PREVIOUS MATCH SUMMARY';
 				break;
 			}
@@ -2700,9 +2701,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			break;
 		
-		case 'F9': case 'Shift_L':
+		case 'F9': case 'Shift_R':
 			switch(whatToProcess) {
-			case 'F9': case 'Shift_L':
+			case 'F9': case 'Shift_R':
 				header_text.innerHTML = 'BALL THIS MATCH';
 				break;				
 			}

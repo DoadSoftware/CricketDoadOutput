@@ -84,7 +84,6 @@
 		   }
 			  
 		   if(validKeyFound == true) {
-			   //console.log('whichKey = ' + whichKey);
 			   processUserSelectionData('LOGGER_FORM_KEYPRESS',whichKey);
 		   }
 	      }

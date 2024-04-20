@@ -16,7 +16,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
-import org.bouncycastle.jce.provider.JDKDigestSignature;
 
 import com.cricket.model.BattingCard;
 import com.cricket.model.BestStats;
@@ -1188,7 +1187,8 @@ public class FullFramesGfx
 							+ i + "$Select_Row_Type$NotOut$ScoreGrp$img_Text1*TEXTURE*IMAGE SET " + Constants.ISPL_TEXT1 + color_name + "\0", print_writers);
 				}
 				break;
-			case "Control_F8":
+				//c-f8 to s-t
+			case "Shift_T":
 				
 				if(team.getTeamName4().contains("KHILADI XI") || team.getTeamName4().contains("MASTER 11")) {
 					if(team.getTeamName4().equalsIgnoreCase("KHILADI XI")) {
@@ -1350,7 +1350,7 @@ public class FullFramesGfx
 				}
 				
 				break;
-			case "Shift_F11": case "Control_F7":
+			case "Control_F11": case "Control_F7":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main" + 
 					"$WipeGrp$LeftWipe*TEXTURE*IMAGE SET " + Constants.ISPL_BASE1 + "ISPL" + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main" + 
@@ -1366,7 +1366,7 @@ public class FullFramesGfx
 					+ "txt_SubheaderShort*GEOM*TEXT SET " + "ISPL 2024 - " + matchAllData.getSetup().getMatchIdent() + "\0", print_writers);
 				
 				switch (whatToProcess) {
-				case "Shift_F11":
+				case "Control_F11":
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$HeaderGrp$Side" + WhichSide + 
 							"$In_Out$Select_Header$Title$txt_Title*GEOM*TEXT SET " + "SUMMARY" + "\0", print_writers);
 					break;
@@ -1376,7 +1376,7 @@ public class FullFramesGfx
 					break;
 				}
 				break;
-			case "Control_F11":
+			case "Shift_F11":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main" + 
 					"$WipeGrp$LeftWipe*TEXTURE*IMAGE SET " + Constants.ISPL_BASE1 + "ISPL" + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Main" + 
@@ -1475,11 +1475,12 @@ public class FullFramesGfx
 						+ "$TeamLogoGrp$DesignElementsGrp$img_Base1*TEXTURE*IMAGE SET " + Constants.ISPL_BASE1 + 
 					color_name + "\0", print_writers);
 				
-				break;	
-			case "Control_F8": case "Shift_F8":
+				break;
+				//c-f8 - s-t
+			case "Shift_T": case "Shift_F8":
 				
 				switch (whatToProcess) {
-				case "Control_F8": 
+				case "Shift_T": 
 					containerName = "$Team_Single";
 					break;
 				case "Shift_F8":
@@ -1931,7 +1932,8 @@ public class FullFramesGfx
 //				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Squad$txt_Subheader*GEOM*TEXT SET " +matchAllData.getSetup().getTournament()+ "\0", print_writers);
 				break;
 
-			case "Control_F8":
+				//c-f8-s-t
+			case "Shift_T":
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Header_Shrink SHOW 0.0 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
@@ -2013,7 +2015,7 @@ public class FullFramesGfx
 						"$Flag$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + inning.getBatting_team().getTeamName4() + "\0", print_writers);
 				break;
 				
-			case "m": case "Control_m": case "Shift_F11": case "Control_F11": case "Control_F7": case "p": case "z": case "x": case "c": case "v": case "Control_p": case "Alt_F11": case "Control_z": case "Control_x":
+			case "m": case "Control_m": case "Control_F11": case "Shift_F11": case "Control_F7": case "p": case "z": case "x": case "c": case "v": case "Control_p": case "Alt_F11": case "Control_z": case "Control_x":
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide +
 					"$Flag*ACTIVE SET 0 \0", print_writers);
@@ -2042,7 +2044,7 @@ public class FullFramesGfx
 							"$Change$Bottom$ICC_Wordmark*GEOM*TEXT SET " + matchAllData.getSetup().getTournament() + "\0", print_writers);
 					break;
 					
-				case "Shift_F11":
+				case "Control_F11":
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
 							"$Select_HeaderTop$Title$txt_Title*GEOM*TEXT SET " + "MATCH SUMMARY"+ "\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
@@ -2051,7 +2053,7 @@ public class FullFramesGfx
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + "$Bottom$txt_Subheader"
 							+ "*GEOM*TEXT SET " + matchAllData.getSetup().getMatchIdent() + " - " + ground.getCity() + "\0", print_writers);
 					break;
-				case "Control_F11":
+				case "Shift_F11":
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
 							"$Select_HeaderTop$Title$txt_Title*GEOM*TEXT SET " + "MATCH SUMMARY"+ "\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + 
@@ -2163,7 +2165,7 @@ public class FullFramesGfx
 			BowlingCardBody(WhichSide, whatToProcess, matchAllData, WhichInning);
 			break;
 		
-		case "Shift_F11": //Match Summary
+		case "Control_F11": //Match Summary
 			// inning declared in summary populate section
 			switch (config.getBroadcaster().toUpperCase()) {
 			case Constants.ISPL: case Constants.ICC_U19_2023:
@@ -2601,7 +2603,7 @@ public class FullFramesGfx
 			
 			break;
 		
-		case "Control_F11":
+		case "Shift_F11":
 			
 			switch (config.getBroadcaster().toUpperCase()) {
 			case Constants.ISPL: case Constants.ICC_U19_2023:
@@ -4103,8 +4105,8 @@ public class FullFramesGfx
 				break;
 			}
 			break;
-
-		case "Control_F7": case "Control_F8": //Double Teams-PlayingXi
+			//c-f8 - s-t
+		case "Control_F7": case "Shift_T": //Double Teams-PlayingXi
 			DoubleTeamsAndPlayingXiBody(WhichSide, whatToProcess, matchAllData, WhichInning);
 			break;
 		case "Shift_F8":
@@ -5609,7 +5611,7 @@ public class FullFramesGfx
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.ISPL:
 			switch (whatToProcess) {
-			case "Shift_F11":
+			case "Control_F11":
 				
 				System.out.println("result = " + CricketFunctions.generateMatchSummaryStatus(WhichInning, matchAllData, CricketUtil.FULL, "", 
 						config.getBroadcaster()));
@@ -5625,7 +5627,7 @@ public class FullFramesGfx
 				}
 				
 				break;
-			case "Control_F11":
+			case "Shift_F11":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Select_Graphics"
 						+ "$Summary$SummaryData$InfoGrp$txt_Info*GEOM*TEXT SET " + CricketFunctions.generateMatchSummaryStatus(2, previous_match.get(previous_match.size()-1), 
 							CricketUtil.FULL, "", config.getBroadcaster()).replace("win", "won").toUpperCase() + "\0", print_writers);
@@ -5699,7 +5701,8 @@ public class FullFramesGfx
 							+ "$ZoneLegend_6$txt_Legend*GEOM*TEXT SET " + "U19: UNDER-19" + "\0", print_writers);
 					
 					break;
-			case "Control_F8":
+					//c-f8 - s-t
+			case "Shift_T":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Team_Single$InfoGrp$"
 					+ "txt_Info*GEOM*TEXT SET " + CricketFunctions.generateTossResult(matchAllData, CricketUtil.SHORT, CricketUtil.FIELD, CricketUtil.SHORT,
 					CricketUtil.ELECTED).replace("toss", "tip-top").toUpperCase() + "\0", print_writers);
@@ -5851,7 +5854,7 @@ public class FullFramesGfx
 				}
 				break;
 				
-			case "Shift_F11": case "Control_F11": case "Shift_F10": case "Alt_F9": case "Alt_F10": case "Alt_F11": //MATCH SUMMARY
+			case "Control_F11": case "Shift_F11": case "Shift_F10": case "Alt_F9": case "Alt_F10": case "Alt_F11": //MATCH SUMMARY
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer*ACTIVE SET 1 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Side" + WhichSide + "$Select_FooterType"
 						+ "*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
@@ -5862,7 +5865,7 @@ public class FullFramesGfx
 							+ "$Info_Text$Data$txt_Info_1*GEOM*TEXT SET " + CricketFunctions.
 							generateMatchSummaryStatus(WhichInning, matchAllData, CricketUtil.FULL, "", config.getBroadcaster()).toUpperCase() + "\0", print_writers);
 					break;
-				case "Shift_F11":
+				case "Control_F11":
 					for(VariousText vt : VariousText) {
 						if(vt.getVariousType().equalsIgnoreCase("MATCHSUMMARYFOOTER") && vt.getUseThis().toUpperCase().equalsIgnoreCase(CricketUtil.YES)) {
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Top_Align$Side" + WhichSide + "$Select_FooterType"
@@ -5874,7 +5877,7 @@ public class FullFramesGfx
 						}
 					}
 					break;
-				case "Control_F11":
+				case "Shift_F11":
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Top_Align$Side" + WhichSide + "$Select_FooterType"
 							+ "$Info_Text$Data$txt_Info_1*GEOM*TEXT SET " + CricketFunctions.generateMatchSummaryStatus(2, previous_match.get(previous_match.size()-1), 
 							CricketUtil.FULL, "", config.getBroadcaster()).toUpperCase() + "\0", print_writers);
@@ -5913,8 +5916,8 @@ public class FullFramesGfx
 			case "Control_d": case "Control_e": case "z": case "x": case "c": case "v": case "Shift_P": case "Shift_Q": case "Control_z": case "Control_x":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer*ACTIVE SET 0 \0", print_writers);
 				break;
-
-			 case "Control_F7": case "Control_F8": //PlayingXI
+				//c-f8 - s-t
+			 case "Control_F7": case "Shift_T": //PlayingXI
 				 
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer*ACTIVE SET 1 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Side" + WhichSide + "$Select_FooterType"
@@ -6941,7 +6944,8 @@ public class FullFramesGfx
 				break;
 			}
 			break;
-		case "Control_F8":
+			//c-f8 - s-t
+		case "Shift_T":
 			switch (config.getBroadcaster().toUpperCase()) {
 			case Constants.ISPL:
 				rowId = 0; rowId1 =0;
