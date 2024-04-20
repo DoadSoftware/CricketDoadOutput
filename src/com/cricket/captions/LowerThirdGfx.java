@@ -124,6 +124,7 @@ public class LowerThirdGfx
 	public String populateThisSession(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws InterruptedException
 	{
 		double dayovers=0;
+		int Over = 0, Ball = 0; 
 		DecimalFormat df = new DecimalFormat("0.00");
 		
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
@@ -136,19 +137,24 @@ public class LowerThirdGfx
 			}
 		}
 		
+		
 		if(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls() % 6 == 0) {
 			dayovers = matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls() / 6 ;
+			Over = matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls() / 6;
 		}else {
 			dayovers = Double.valueOf(String.valueOf(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls()/6) + 
 					"." + String.valueOf(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls()%6)); 
+			Over = matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls()/6;
+			Ball = matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls()%6;
 		}
 		
 		lowerThird = new LowerThird("THIS SESSION", "", "","", "","", 2, "",inning.getBatting_team().getTeamName4(),
-				new String[] {"RUNS","OVERS","WICKETS","RUN RATE"},new String[] {String.valueOf(matchAllData.getMatch().getDaysSessions().
+				new String[] {"RUNS","OVERS","WICKETS", "OVER RATE","RUN RATE"},new String[] {String.valueOf(matchAllData.getMatch().getDaysSessions().
 				get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalRuns()),String.valueOf(dayovers),
 				String.valueOf(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalWickets()),
+				CricketFunctions.BetterOverRate(Over, Ball, inning.getDuration(), "", false),
 				String.valueOf(df.format(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalRuns()/dayovers))}
-				,null,null,new String[] {"-517.0","-193.0","184.0","533.0"});
+				,null,null,new String[] {"-517.0","-284.0","-17.0","255.0","533.0"});
 		
 		
 		status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);
@@ -486,6 +492,39 @@ public class LowerThirdGfx
 //		run_rate = CricketFunctions.CurrentDayStats(matchAllData, "/", "CURRENT").split("/")[3];
 		
 		lowerThird = new LowerThird("TODAY'S MATCH", "", "","", "","", 2, "",inning.getBatting_team().getTeamName4(),
+				new String[] {"RUNS","OVERS","WICKETS","RUN RATE"},new String[] {runs,overs,wickets,run_rate}
+				,null,null,new String[] {"-517.0","-193.0","184.0","533.0"});
+		
+		
+		status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);
+		if(status == Constants.OK) {
+			HideAndShowL3rdSubStrapContainers(WhichSide);
+			setPositionOfLT(whatToProcess,WhichSide,config,lowerThird.getNumberOfSubLines());
+			return PopulateL3rdBody(WhichSide, whatToProcess.split(",")[0]);
+		} else {
+			return status;
+		}
+	}
+	
+	public String populateOverRate(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws InterruptedException
+	{
+		String runs = "-", overs = "-", wickets = "-", run_rate = "-";
+		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
+			return status;
+		} else {
+			inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
+			
+			if(inning == null) {
+				return status;
+			}
+		}
+		
+//		runs = CricketFunctions.CurrentDayStats(matchAllData, "/", "CURRENT").split("/")[0];
+//		overs = CricketFunctions.CurrentDayStats(matchAllData, "/", "CURRENT").split("/")[1];
+//		wickets = CricketFunctions.CurrentDayStats(matchAllData, "/", "CURRENT").split("/")[2];
+//		run_rate = CricketFunctions.CurrentDayStats(matchAllData, "/", "CURRENT").split("/")[3];
+		
+		lowerThird = new LowerThird("OVER RATE", "", "","", "","", 2, "",inning.getBatting_team().getTeamName4(),
 				new String[] {"RUNS","OVERS","WICKETS","RUN RATE"},new String[] {runs,overs,wickets,run_rate}
 				,null,null,new String[] {"-517.0","-193.0","184.0","533.0"});
 		

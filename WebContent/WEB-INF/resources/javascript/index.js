@@ -268,7 +268,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Alt_o':  case 'Shift_F3': case 'd': case 'e': case 'Control_F6': case 'Control_F7': 
 			case 'Control_k': case 'Control_F10': case 'Control_F3':  case 'a': case 't': case 'h': case 'n':
 			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q': case 'Control_b': case 'o': case 'Control_F2': case 'b':
-			case 'Alt_F11': case 'r': case 'Shift_U': case 'Alt_j'://case 'Shift_F': 
+			case 'Alt_F11': case 'r': case 'Shift_U': case 'Alt_j': case 'Alt_h'://case 'Shift_F': 
 			case 'Control_F8': case 'Alt_y': case '.': case '/': case 'Shift_V': case 'Alt_i': case 'b':
 				/*switch(dataToProcess){
 				case 'Shift_F':
@@ -1168,6 +1168,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 					}
 				});
 				if(session_match.setup.matchType == 'TEST'){
+					
 					option = document.createElement('option');
 					option.value = 'LEAD_TRAIL_EQUATION';
 					option.text = 'Lead Trail Equation';
@@ -1181,6 +1182,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 					option = document.createElement('option');
 					option.value = 'DAY_PLAY';
 					option.text = 'ToDay Play';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'OVER_RATE';
+					option.text = 'Over Rate';
 					select.appendChild(option);
 					
 				}

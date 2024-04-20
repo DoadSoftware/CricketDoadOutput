@@ -161,8 +161,8 @@ public class IndexController
 //			}
 //		}
 		
-		headToHead = CricketFunctions.extractHeadToHead(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
-				CricketUtil.HEADTOHEAD_DIRECTORY).listFiles(), cricketService);
+//		headToHead = CricketFunctions.extractHeadToHead(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
+//				CricketUtil.HEADTOHEAD_DIRECTORY).listFiles(), cricketService);
 
 		return "initialise";
 	}
@@ -240,6 +240,7 @@ public class IndexController
 				session_match.setMatch(new ObjectMapper().readValue(new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.MATCHES_DIRECTORY + 
 						selectedMatch), Match.class));
 			}
+			
 			if(new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.EVENT_DIRECTORY + selectedMatch).exists()) {
 				session_match.setEventFile(new ObjectMapper().readValue(new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.EVENT_DIRECTORY + 
 						selectedMatch), EventFile.class));
@@ -645,8 +646,12 @@ public class IndexController
 				past_tape = CricketFunctions.extractTapeData("PAST_MATCHES_DATA", cricketService, cricket_matches, session_match, null);
 			}
 			
-
 			past_tournament_stats = CricketFunctions.extractTournamentData("PAST_MATCHES_DATA", false, headToHead, cricketService, session_match, null);
+//			headToHead = CricketFunctions.extractHeadToHead(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
+//					CricketUtil.HEADTOHEAD_DIRECTORY).listFiles(), cricketService);
+			
+			//past_tournament_stats = CricketFunctions.extractTournamentData("COMBINED_PAST_CURRENT_MATCH_DATA", false, headToHead, cricketService, session_match, null);
+
 			//past_tournament_stats = CricketFunctions.extractTournamentStats("PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
 			session_name_super =  cricketService.getNameSupers();
 			session_team =  cricketService.getTeams();

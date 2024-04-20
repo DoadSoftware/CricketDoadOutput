@@ -194,6 +194,9 @@ public class Caption
 				break;
 			case "Alt_j": //TODAY'S MATCH
 				status = this_lowerThirdGfx.populateTodaysMatch(whatToProcess, whichSide, matchAllData);
+				break;
+			case "Alt_h": // OVERRATE
+				status = this_lowerThirdGfx.populateOverRate(whatToProcess, whichSide, matchAllData);
 				break;	
 			case "F6"://HowOut
 				status = this_lowerThirdGfx.populateHowOut(whatToProcess,whichSide,matchAllData);

@@ -2249,6 +2249,15 @@ public class InfobarGfx
 
 			switch(infobar.getMiddle_section().toUpperCase()) {
 			
+			case "OVER_RATE":
+				inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
+						+ "$Select_Type*FUNCTION*Omo*vis_con SET 11 \0",print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Basic_Wide$txt_LongString*GEOM*TEXT SET " + 
+						"OVER RATE : " + CricketFunctions.BetterOverRate(inning.getTotalOvers(), inning.getTotalBalls() , inning.getDuration(), "", false) + " OVERS PER HOUR" + "\0", print_writers);
+				break;
 			case "LEAD_TRAIL_EQUATION":
 				
 //				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Right$Side_" + WhichSide 
