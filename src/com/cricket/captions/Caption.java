@@ -30,7 +30,6 @@ import com.cricket.model.Team;
 import com.cricket.model.Tournament;
 import com.cricket.model.VariousText;
 import com.cricket.model.Staff;
-import com.cricket.util.CricketFunctions;
 import com.cricket.util.CricketUtil;
 
 public class Caption 
@@ -336,7 +335,11 @@ public class Caption
 				status = this_fullFramesGfx.populateFFPointsTable(whichSide,whatToProcess.split(",")[0], matchAllData, 0);
 				break;
 			case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": case "Control_c": case "Control_v": case "Shift_V":
-				if(!whatToProcess.split(",")[0].equalsIgnoreCase("Shift_V")) {
+			case "Shift_Z": case "Shift_X":
+				if(whatToProcess.split(",")[0].equalsIgnoreCase("Shift_Z") || whatToProcess.split(",")[0].equalsIgnoreCase("Shift_X")) {
+					this_fullFramesGfx.FirstPlayerId = Integer.valueOf((whatToProcess.split(",")[2]));
+				}
+				else if(!whatToProcess.split(",")[0].equalsIgnoreCase("Shift_V")) {
 					this_fullFramesGfx.FirstPlayerId = Integer.valueOf((whatToProcess.split(",")[2]).split("_")[1]);
 				}
 				status = this_fullFramesGfx.populateLeaderBoard(whichSide, whatToProcess.split(",")[0], matchAllData, 0);

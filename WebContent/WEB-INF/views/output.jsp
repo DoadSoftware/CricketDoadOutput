@@ -84,6 +84,7 @@
 		   }
 			  
 		   if(validKeyFound == true) {
+			   console.log('whichKey = ' + whichKey);
 			   processUserSelectionData('LOGGER_FORM_KEYPRESS',whichKey);
 		   }
 	      }
@@ -112,7 +113,7 @@
          <div class="card card-outline-secondary">
            <div class="card-header">
              <h3 class="mb-0">Output</h3>
-            <!--   <h3 class="mb-0">${licence_expiry_message}</h3>  -->
+             <h5 align="right">${expiryDate} Days Left</h5>
            </div>
           <div class="card-body">
 			<div class="content py-5" style="background-color:#EAE8FF;color:#2E008B;">
