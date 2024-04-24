@@ -26,6 +26,7 @@ import com.cricket.model.Player;
 import com.cricket.model.Statistics;
 import com.cricket.model.StatsType;
 import com.cricket.model.Team;
+import com.cricket.service.CricketService;
 import com.cricket.util.CricketFunctions;
 import com.cricket.util.CricketUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -54,6 +55,7 @@ public class InfobarGfx
 	public List<Ground> Grounds;
 	public List<DuckWorthLewis> dls;
 	public List<Commentator> Commentators;
+	public List<Player> Players;
 
 	public List<PrintWriter> print_writers; 
 	public List<BattingCard> battingCardList = new ArrayList<BattingCard>();
@@ -73,7 +75,7 @@ public class InfobarGfx
 
 	public InfobarGfx(Configuration config, String slashOrDash, List<PrintWriter> print_writers, List<Statistics> statistics,
 			List<StatsType> statsTypes, List<InfobarStats> infobarStats, List<Ground> Grounds, List<Commentator> commentators,
-			List<MatchAllData> tournament_matches, List<DuckWorthLewis> dls) {
+			List<MatchAllData> tournament_matches, List<DuckWorthLewis> dls, List<Player> players) {
 		super();
 		this.config = config;
 		this.slashOrDash = slashOrDash;
@@ -85,6 +87,7 @@ public class InfobarGfx
 		this.Commentators = commentators;
 		this.tournament_matches = tournament_matches;
 		this.dls = dls;
+		this.Players = players;
 	}
 
 	public String populatebonus(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws InterruptedException
@@ -1341,6 +1344,19 @@ public class InfobarGfx
 		case Constants.ICC_U19_2023: 
 			if(infobar.getRight_bottom() != null && !infobar.getRight_bottom().isEmpty()) {
 				switch(infobar.getRight_bottom().toUpperCase()) {
+				case "BOWLER_REPLACE":
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Bottom_Right_Part$Side_" + 
+							WhichSubSide + "$Select_Type*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
+					
+					int Replaced_Player_id = CricketFunctions.SecondLastBowlerId(matchAllData,bowlingCard.getPlayerId());
+					
+					if(Replaced_Player_id > 0) {
+						player = Players.stream().filter(plyr -> plyr.getPlayerId() == Replaced_Player_id).findAny().orElse(null);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Bottom_Right_Part$Side_" + 
+								WhichSubSide + "$FreeText$txt_Free*GEOM*TEXT SET " + bowlingCard.getPlayer().getTicker_name() + " REPLACE " + 
+								player.getTicker_name() + "\0", print_writers);
+					}
+					break;
 				case "BOWLING_END":
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Bottom_Right_Part$Side_" + 
 							WhichSubSide + "$Select_Type*FUNCTION*Omo*vis_con SET 2 \0", print_writers);

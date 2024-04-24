@@ -113,7 +113,7 @@ public class Caption
 				nameSupers, Teams, Grounds, tournament,tapeball, dls, staff, players, pott, varioustText);
 		this.whichSide = whichSide;
 		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers, statistics, statsTypes, infobarStats, 
-				Grounds, Commentators, tournament_matches, dls);
+				Grounds, Commentators, tournament_matches, dls, players);
 		this.this_bugsAndMiniGfx = new BugsAndMiniGfx(print_writers, config, bugs, Teams, VariousText);
 		this.status = "";
 	}

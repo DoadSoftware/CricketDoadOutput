@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.xml.bind.JAXBContext;
@@ -219,6 +220,7 @@ public class FullFramesGfx
 		if(inning == null) {
 			return "populateMatchSummary: current inning is NULL";
 		}
+		
 		status = PopulateFfHeader(WhichSide, whatToProcess, matchAllData, WhichInning);
 		if(status == Constants.OK) {
 			status = PopulateFfBody(WhichSide, whatToProcess, matchAllData, WhichInning);

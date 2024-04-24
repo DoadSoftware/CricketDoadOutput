@@ -1332,6 +1332,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 				option.value = 'BOWLING_END';
 				option.text = 'Bowling End';
 				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'BOWLER_REPLACE';
+				option.text = 'Bowler Replace';
+				select.appendChild(option);
 				break;
 			}
 			header_text.innerHTML = 'RIGHT BOTTOM INFOBAR SECTION';
