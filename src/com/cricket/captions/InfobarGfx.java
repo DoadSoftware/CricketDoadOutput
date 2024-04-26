@@ -26,7 +26,6 @@ import com.cricket.model.Player;
 import com.cricket.model.Statistics;
 import com.cricket.model.StatsType;
 import com.cricket.model.Team;
-import com.cricket.service.CricketService;
 import com.cricket.util.CricketFunctions;
 import com.cricket.util.CricketUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -1850,23 +1849,14 @@ public class InfobarGfx
 				break;
 			
 			case "CURRENT_SESSION":
-				double dayovers=0;
-				
-				DecimalFormat df = new DecimalFormat("0.00");
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Bottom$Side_" 
 						+ WhichSide + "$Choose_Type*FUNCTION*Omo*vis_con SET 1 \0",print_writers);
 				
-				if(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls() % 6 == 0) {
-					dayovers = matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls() / 6 ;
-				}else {
-					dayovers = Double.valueOf(String.valueOf(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls()/6) + 
-							"." + String.valueOf(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls()%6)); 
-				}
-				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Bottom$Side_" + WhichSide + "$Free_Text$txt_Text*GEOM*TEXT SET " 
-						+ "SESSION RUN RATE " + 
-						df.format(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalRuns()/dayovers) + "\0", print_writers);
+					+ "SESSION RUN RATE " + CricketFunctions.generateRunRate(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().
+						getDaysSessions().size()-1).getTotalRuns(), 0, matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().
+						getDaysSessions().size()-1).getTotalBalls(), 2, matchAllData) + "\0", print_writers);
 				
 				break;	
 				
@@ -1980,7 +1970,10 @@ public class InfobarGfx
 						over_bowled = over_bowled + day_session.getTotalBalls();
 					}
 				}
-				remain_overs = (90 * 6) - over_bowled;
+				
+				if(inning.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)) {
+					remain_overs = (inning.getOversRemaining() * 6) - over_bowled;
+				}
 				if(remain_overs % 6 == 0) {
 					remain_overs = remain_overs / 6 ;
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Bottom$Side_" + WhichSide + "$Free_Text$txt_Text*GEOM*TEXT SET " 
@@ -2547,22 +2540,11 @@ public class InfobarGfx
 				break;	
 			
 			case "CURRENT_SESSION":
-				double dayovers=0;
-				
-				DecimalFormat df = new DecimalFormat("0.00");
-				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
 						+ "$Select_Type*FUNCTION*Omo*vis_con SET 4 \0",print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
 						+ "$Select_Type$Analytics_2_Wide$Select_Amount*FUNCTION*Omo*vis_con SET 2 \0",print_writers);
-				
-				if(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls() % 6 == 0) {
-					dayovers = matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls() / 6 ;
-				}else {
-					dayovers = Double.valueOf(String.valueOf(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls()/6) + 
-							"." + String.valueOf(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls()%6)); 
-				}
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Top$txt_Name_1"
 						+ "*GEOM*TEXT SET " + "THIS" + "\0", print_writers);
@@ -2572,25 +2554,26 @@ public class InfobarGfx
 						+ "*GEOM*TEXT SET " + "SESSION" + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Top$txt_Subtitle"
-						+ "*GEOM*TEXT SET " + "SESSION " + matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getSessionNumber() + "\0", print_writers);
+						+ "*GEOM*TEXT SET " + "" + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$4_Stats$Stat_1$Data$txt_Desig"
-						+ "*GEOM*TEXT SET " + "RUNS" + "\0", print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$4_Stats$Stat_2$Data$txt_Desig"
 						+ "*GEOM*TEXT SET " + "OVERS" + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$4_Stats$Stat_2$Data$txt_Desig"
+						+ "*GEOM*TEXT SET " + "RUNS" + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$4_Stats$Stat_3$Data$txt_Desig"
 						+ "*GEOM*TEXT SET " + "WICKETS" + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$4_Stats$Stat_4$Data$txt_Desig"
 						+ "*GEOM*TEXT SET " + "RUN RATE" + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$4_Stats$Stat_1$Data$txt_Fig"
-						+ "*GEOM*TEXT SET " + matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalRuns() + "\0", print_writers);
+						+ "*GEOM*TEXT SET " + CricketFunctions.OverBalls(0, matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls()) + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$4_Stats$Stat_2$Data$txt_Fig"
-						+ "*GEOM*TEXT SET " + dayovers + "\0", print_writers);
+						+ "*GEOM*TEXT SET " + matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalRuns()  + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$4_Stats$Stat_3$Data$txt_Fig"
 						+ "*GEOM*TEXT SET " + matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalWickets() + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$4_Stats$Stat_4$Data$txt_Fig"
-						+ "*GEOM*TEXT SET " + df.format(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalRuns()/dayovers) + "\0", print_writers);
+						+ "*GEOM*TEXT SET " + CricketFunctions.generateRunRate(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).
+						getTotalRuns(), 0, matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls(), 2, matchAllData) + "\0", print_writers);
 				
 				break;
 			case "DAY_PLAY":
@@ -2627,40 +2610,24 @@ public class InfobarGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$5_Stats$Stat_1$Data$txt_Desig"
 						+ "*GEOM*TEXT SET " + "DAY" + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$5_Stats$Stat_2$Data$txt_Desig"
-						+ "*GEOM*TEXT SET " + "RUNS" + "\0", print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$5_Stats$Stat_3$Data$txt_Desig"
 						+ "*GEOM*TEXT SET " + "OVERS" + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$5_Stats$Stat_3$Data$txt_Desig"
+						+ "*GEOM*TEXT SET " + "RUNS" + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$5_Stats$Stat_4$Data$txt_Desig"
 						+ "*GEOM*TEXT SET " + "WICKETS" + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$5_Stats$Stat_5$Data$txt_Desig"
 						+ "*GEOM*TEXT SET " + "RUN RATE" + "\0", print_writers);
 				
-				if(dayballs % 6 == 0) {
-					dayballs = dayballs / 6 ;
-					
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$5_Stats$Stat_1$Data$txt_Fig"
-							+ "*GEOM*TEXT SET " + daynumber + "\0", print_writers);
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$5_Stats$Stat_2$Data$txt_Fig"
-							+ "*GEOM*TEXT SET " + dayruns + "\0", print_writers);
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$5_Stats$Stat_3$Data$txt_Fig"
-							+ "*GEOM*TEXT SET " + dayballs + "\0", print_writers);
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$5_Stats$Stat_4$Data$txt_Fig"
-							+ "*GEOM*TEXT SET " + daywickets + "\0", print_writers);
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$5_Stats$Stat_5$Data$txt_Fig"
-							+ "*GEOM*TEXT SET " + dft.format(dayruns/dayballs) + "\0", print_writers);
-					
-				}else {
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$5_Stats$Stat_1$Data$txt_Fig"
-							+ "*GEOM*TEXT SET " + daynumber + "\0", print_writers);
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$5_Stats$Stat_2$Data$txt_Fig"
-							+ "*GEOM*TEXT SET " + dayruns + "\0", print_writers);
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$5_Stats$Stat_3$Data$txt_Fig"
-							+ "*GEOM*TEXT SET " + Double.valueOf(CricketFunctions.OverBalls(0, dayballs)) + "\0", print_writers);
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$5_Stats$Stat_4$Data$txt_Fig"
-							+ "*GEOM*TEXT SET " + daywickets + "\0", print_writers);
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$5_Stats$Stat_5$Data$txt_Fig"
-							+ "*GEOM*TEXT SET " + dft.format(dayruns/Double.valueOf(CricketFunctions.OverBalls(0, dayballs))) + "\0", print_writers);
-				}
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$5_Stats$Stat_1$Data$txt_Fig"
+						+ "*GEOM*TEXT SET " + daynumber + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$5_Stats$Stat_2$Data$txt_Fig"
+						+ "*GEOM*TEXT SET " + CricketFunctions.OverBalls(0, dayballs)  + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$5_Stats$Stat_3$Data$txt_Fig"
+						+ "*GEOM*TEXT SET " + dayruns + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$5_Stats$Stat_4$Data$txt_Fig"
+						+ "*GEOM*TEXT SET " + daywickets + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$Bottom$5_Stats$Stat_5$Data$txt_Fig"
+						+ "*GEOM*TEXT SET " + CricketFunctions.generateRunRate(dayruns, 0, dayballs, 2, matchAllData) + "\0", print_writers);
 				break;
 				
 			case "RESULTS":

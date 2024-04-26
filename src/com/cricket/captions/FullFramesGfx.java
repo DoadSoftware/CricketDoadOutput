@@ -1725,10 +1725,10 @@ public class FullFramesGfx
 				if(matchAllData.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.TEST)) {
 					if(WhichInning == 1 || WhichInning == 2) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + "$Bottom$txt_Subheader"
-								+ "*GEOM*TEXT SET " + "1st INNINGS" + "\0", print_writers);
+								+ "*GEOM*TEXT SET " + matchAllData.getSetup().getMatchIdent() + " - 1st INNINGS" + "\0", print_writers);
 					}else if(WhichInning == 3 || WhichInning == 4) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + "$Bottom$txt_Subheader"
-								+ "*GEOM*TEXT SET " + "2nd INNINGS" + "\0", print_writers);
+								+ "*GEOM*TEXT SET " + matchAllData.getSetup().getMatchIdent() + " - 2nd INNINGS" + "\0", print_writers);
 					}
 				}else {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Header$Side" + WhichSide + "$Bottom$txt_Subheader"
@@ -2298,7 +2298,7 @@ public class FullFramesGfx
 							getTotalOvers(),matchAllData.getMatch().getInning().get(i-1).getTotalBalls()) + " \0", print_writers);
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$" + containerName + i + 
-							containerName_2 + "$ScoreGrp$img_Text1$txt_Score*GEOM*TEXT SET " + CricketFunctions.getTeamScore(matchAllData.getMatch().getInning().get(i-1), 
+							containerName_2 + "$txt_Score*GEOM*TEXT SET " + CricketFunctions.getTeamScore(matchAllData.getMatch().getInning().get(i-1), 
 							"-", false) + " \0", print_writers);
 					
 					for(int j= matchAllData.getEventFile().getEvents().size()-1;j >= 0 ; j--) {
@@ -2433,7 +2433,7 @@ public class FullFramesGfx
 						}
 					}
 					for(int j = rowId+1; j <= numberOfRows; j++) {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$Team" + i + 
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$" + containerName + i + 
 								"$Row_" + j + "$Bowler*ACTIVE SET 0 \0", print_writers);
 					}
 				}

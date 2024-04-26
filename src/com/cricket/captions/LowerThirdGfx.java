@@ -21,14 +21,12 @@ import com.cricket.model.Event;
 import com.cricket.model.Fixture;
 import com.cricket.model.Ground;
 import com.cricket.model.Inning;
-import com.cricket.model.Match;
 import com.cricket.model.MatchAllData;
 import com.cricket.model.NameSuper;
 import com.cricket.model.POTT;
 import com.cricket.model.Partnership;
 import com.cricket.model.Player;
 import com.cricket.model.PowerPlays;
-import com.cricket.model.Setup;
 import com.cricket.model.Staff;
 import com.cricket.model.Statistics;
 import com.cricket.model.StatsType;
@@ -39,7 +37,6 @@ import com.cricket.util.CricketFunctions;
 import com.cricket.util.CricketUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class LowerThirdGfx 
 {
@@ -169,9 +166,7 @@ public class LowerThirdGfx
 	
 	public String populateThisSession(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws InterruptedException
 	{
-		double dayovers=0;
-		int Over = 0, Ball = 0; 
-		DecimalFormat df = new DecimalFormat("0.00");
+		String dayovers = "-";
 		
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
 			return status;
@@ -183,24 +178,16 @@ public class LowerThirdGfx
 			}
 		}
 		
-		
-		if(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls() % 6 == 0) {
-			dayovers = matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls() / 6 ;
-			Over = matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls() / 6;
-		}else {
-			dayovers = Double.valueOf(String.valueOf(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls()/6) + 
-					"." + String.valueOf(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls()%6)); 
-			Over = matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls()/6;
-			Ball = matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls()%6;
-		}
+		dayovers = CricketFunctions.OverBalls(0, matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls());
 		
 		lowerThird = new LowerThird("THIS SESSION", "", "","", "","", 2, "",inning.getBatting_team().getTeamName4(),
-				new String[] {"RUNS","OVERS","WICKETS", "OVER RATE","RUN RATE"},new String[] {String.valueOf(matchAllData.getMatch().getDaysSessions().
-				get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalRuns()),String.valueOf(dayovers),
+				new String[] {"OVERS","RUNS","WICKETS", "OVER RATE","RUN RATE"},new String[] {dayovers,
+				String.valueOf(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalRuns()),
 				String.valueOf(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalWickets()),
-				CricketFunctions.BetterOverRate(Over, Ball, inning.getDuration(), "", false),
-				String.valueOf(df.format(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalRuns()/dayovers))}
-				,null,null,new String[] {"-517.0","-284.0","-17.0","255.0","533.0"});
+				CricketFunctions.BetterOverRate(0, matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls(), 
+				(inning.getDuration()/60), "", false),CricketFunctions.generateRunRate(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().
+				getDaysSessions().size()-1).getTotalRuns(), 0, matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().
+				getDaysSessions().size()-1).getTotalBalls(), 2, matchAllData)}, null,null,new String[] {"-517.0","-284.0","-17.0","255.0","533.0"});
 		
 		
 		status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);
@@ -215,12 +202,10 @@ public class LowerThirdGfx
 	
 	public String populateSession(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws InterruptedException
 	{
-		double dayovers=0;
+		String dayovers= "-";
 		int runs = 0,wickets = 0;
 		String header = "",run_rate = "";
-		DecimalFormat df = new DecimalFormat("0.00");
 		
-		System.out.println("whatToProcess = " + whatToProcess);
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
 			return status;
 		} else {
@@ -238,25 +223,21 @@ public class LowerThirdGfx
 			if(matchAllData.getMatch().getDaysSessions().get(i).getDayNumber() == Integer.valueOf(whatToProcess.split(",")[2]) && 
 					matchAllData.getMatch().getDaysSessions().get(i).getSessionNumber() == Integer.valueOf(whatToProcess.split(",")[3])) {
 				
-				if(matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls() % 6 == 0) {
-					dayovers = matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls() / 6 ;
-				}else {
-					dayovers = Double.valueOf(String.valueOf(matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls()/6) + 
-							"." + String.valueOf(matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls()%6)); 
-				}
+				dayovers = CricketFunctions.OverBalls(0, matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls());
 				
-				header = "DAY " + matchAllData.getMatch().getDaysSessions().
-						get(i).getDayNumber() + " SESSION " + matchAllData.getMatch().getDaysSessions().get(i).getSessionNumber();
+				header = "DAY " + matchAllData.getMatch().getDaysSessions().get(i).getDayNumber() + " - SESSION " + 
+						matchAllData.getMatch().getDaysSessions().get(i).getSessionNumber();
+				
 				runs = matchAllData.getMatch().getDaysSessions().get(i).getTotalRuns();
 				wickets = matchAllData.getMatch().getDaysSessions().get(i).getTotalWickets();
-				run_rate = df.format(matchAllData.getMatch().getDaysSessions().get(i).getTotalRuns()/dayovers);
+				run_rate = CricketFunctions.generateRunRate(matchAllData.getMatch().getDaysSessions().get(i).getTotalRuns(), 0,
+						matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls(), 2, matchAllData);
 			}
 		}
 		
 		lowerThird = new LowerThird(header, "", "","", "","", 2, "","FLAG",
-				new String[] {"RUNS","OVERS","WICKETS","RUN RATE"},new String[] {String.valueOf(runs),String.valueOf(dayovers),
+				new String[] {"OVERS","RUNS","WICKETS","RUN RATE"},new String[] {dayovers,String.valueOf(runs),
 				String.valueOf(wickets),run_rate},null,null,new String[] {"-517.0","-193.0","184.0","533.0"});
-		
 		
 		status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);
 		if(status == Constants.OK) {
@@ -274,8 +255,6 @@ public class LowerThirdGfx
 		String session1_runs = "-",session2_runs = "-",session3_runs = "-",session1_wickets = "-",session2_wickets = "-",session3_wickets = "-";
 		String header = "",session1_run_rate = "-",session2_run_rate = "-",session3_run_rate = "-";
 		
-		DecimalFormat df = new DecimalFormat("0.00");
-		
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
 			return status;
 		} else {
@@ -292,48 +271,41 @@ public class LowerThirdGfx
 
 				if(matchAllData.getMatch().getDaysSessions().get(i).getDayNumber() == Integer.valueOf(whatToProcess.split(",")[2])) {
 				
-				//header = CricketFunctions.getnumeric(matchAllData.getMatch().getDaysSessions().get(i).getDayNumber()).toUpperCase()  + " DAY ";
+				header = CricketFunctions.getnumeric(matchAllData.getMatch().getDaysSessions().get(i).getDayNumber()).toUpperCase()  + " DAY ";
 				
 				if(matchAllData.getMatch().getDaysSessions().get(i).getSessionNumber() == 1) {
-					if(matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls() % 6 == 0) {
-						session1_dayovers = String.valueOf(matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls() / 6) ;
-					}else {
-						session1_dayovers = String.valueOf(String.valueOf(matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls()/6) + 
-								"." + String.valueOf(matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls()%6)); 
-					}
+					
+					session1_dayovers = CricketFunctions.OverBalls(0, matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls());
 					
 					session1_runs = String.valueOf(matchAllData.getMatch().getDaysSessions().get(i).getTotalRuns());
 					session1_wickets = String.valueOf(matchAllData.getMatch().getDaysSessions().get(i).getTotalWickets());
-					session1_run_rate = df.format(matchAllData.getMatch().getDaysSessions().get(i).getTotalRuns()/ Double.valueOf(session1_dayovers));
+					session1_run_rate = CricketFunctions.generateRunRate(matchAllData.getMatch().getDaysSessions().get(i).getTotalRuns(), 0, 
+							matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls(), 2, matchAllData);
+					
 				}else if(matchAllData.getMatch().getDaysSessions().get(i).getSessionNumber() == 2) {
-					if(matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls() % 6 == 0) {
-						session2_dayovers = String.valueOf(matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls() / 6) ;
-					}else {
-						session2_dayovers = String.valueOf(String.valueOf(matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls()/6) + 
-								"." + String.valueOf(matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls()%6)); 
-					}
+					
+					session2_dayovers = CricketFunctions.OverBalls(0, matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls());
 					
 					session2_runs = String.valueOf(matchAllData.getMatch().getDaysSessions().get(i).getTotalRuns());
 					session2_wickets = String.valueOf(matchAllData.getMatch().getDaysSessions().get(i).getTotalWickets());
-					session2_run_rate = df.format(matchAllData.getMatch().getDaysSessions().get(i).getTotalRuns()/ Double.valueOf(session2_dayovers));
+					session2_run_rate = CricketFunctions.generateRunRate(matchAllData.getMatch().getDaysSessions().get(i).getTotalRuns(), 0, 
+							matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls(), 2, matchAllData);
+					
 				}else if(matchAllData.getMatch().getDaysSessions().get(i).getSessionNumber() == 3) {
-					if(matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls() % 6 == 0) {
-						session3_dayovers = String.valueOf(matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls() / 6) ;
-					}else {
-						session3_dayovers = String.valueOf(String.valueOf(matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls()/6) + 
-								"." + String.valueOf(matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls()%6)); 
-					}
+					
+					session3_dayovers = CricketFunctions.OverBalls(0, matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls());
 					
 					session3_runs = String.valueOf(matchAllData.getMatch().getDaysSessions().get(i).getTotalRuns());
 					session3_wickets = String.valueOf(matchAllData.getMatch().getDaysSessions().get(i).getTotalWickets());
-					session3_run_rate = df.format(matchAllData.getMatch().getDaysSessions().get(i).getTotalRuns()/ Double.valueOf(session3_dayovers));
+					session3_run_rate = CricketFunctions.generateRunRate(matchAllData.getMatch().getDaysSessions().get(i).getTotalRuns(), 0, 
+							matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls(), 2, matchAllData);
 				}
 			}
 		}
 		
 		lowerThird = new LowerThird(header, "", "","", "","", 4, "","FLAG",
-				new String[] {"RUNS","OVERS","WICKETS","RUN RATE"},new String[] {String.valueOf(session1_runs + "/" + session2_runs + "/" + session3_runs),
-					String.valueOf(session1_dayovers + "/" + session2_dayovers + "/" + session3_dayovers),
+				new String[] {"OVERS","RUNS","WICKETS","RUN RATE"},new String[] {String.valueOf(session1_dayovers + "/" + session2_dayovers + "/" + session3_dayovers),
+					String.valueOf(session1_runs + "/" + session2_runs + "/" + session3_runs),
 					String.valueOf(session1_wickets + "/" + session2_wickets + "/" + session3_wickets),
 					String.valueOf(session1_run_rate + "/" + session2_run_rate + "/" + session3_run_rate)},
 					new String[]{"1st SESSION","2nd SESSION","3rd SESSION"},null,new String[] {"-194.0","51.0","305.0","536.0"});
@@ -351,15 +323,13 @@ public class LowerThirdGfx
 	
 	public String populateSummaryDaybyDay(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws InterruptedException
 	{
-		double day1_dayovers = 0,day2_dayovers = 0,day3_dayovers = 0,day4_dayovers = 0,day5_dayovers = 0;
+		String day1_dayovers = "-",day2_dayovers = "-",day3_dayovers = "-",day4_dayovers = "-",day5_dayovers = "-";
 		
 		int day1_total_balls = 0,day2_total_balls = 0,day3_total_balls = 0,day4_total_balls = 0,day5_total_balls = 0,
 				day1_runs = 0,day2_runs = 0,day3_runs = 0,day4_runs = 0,day5_runs = 0,day1_wickets = 0,day4_wickets = 0,
 				day5_wickets = 0,day2_wickets = 0,day3_wickets = 0, row = 0;
 		
 		String day1_run_rate = "-",day2_run_rate = "-",day3_run_rate = "-",day4_run_rate = "-",day5_run_rate = "-";
-		
-		DecimalFormat df = new DecimalFormat("0.00");
 		
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
 			return status;
@@ -379,15 +349,9 @@ public class LowerThirdGfx
 				day1_runs = day1_runs + matchAllData.getMatch().getDaysSessions().get(i).getTotalRuns();
 				day1_wickets = day1_wickets + matchAllData.getMatch().getDaysSessions().get(i).getTotalWickets();
 				day1_total_balls = day1_total_balls + matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls();
-//				System.out.println("day1_runs = " + day1_runs);
-				if(day1_total_balls % 6 == 0) {
-					day1_dayovers = day1_total_balls / 6 ;
-				}else {
-					day1_dayovers = Double.valueOf(String.valueOf(String.valueOf(day1_total_balls/6) + 
-							"." + String.valueOf(day1_total_balls%6))); 
-				}
 				
-				day1_run_rate = df.format(day1_runs/day1_dayovers);
+				day1_dayovers = CricketFunctions.OverBalls(0, day1_total_balls);
+				day1_run_rate = CricketFunctions.generateRunRate(day1_runs, 0, day1_total_balls, 2, matchAllData);
 				
 			}else if(matchAllData.getMatch().getDaysSessions().get(i).getDayNumber() == 2) {
 				
@@ -395,71 +359,51 @@ public class LowerThirdGfx
 				day2_wickets = day2_wickets + matchAllData.getMatch().getDaysSessions().get(i).getTotalWickets();
 				day2_total_balls = day2_total_balls + matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls();
 				
-				if(day2_total_balls % 6 == 0) {
-					day2_dayovers = day2_total_balls / 6 ;
-				}else {
-					day2_dayovers = Double.valueOf(String.valueOf(String.valueOf(day2_total_balls/6) + 
-							"." + String.valueOf(day2_total_balls%6))); 
-				}
-				day2_run_rate = df.format(day2_runs/day2_dayovers);
+				day2_dayovers = CricketFunctions.OverBalls(0, day2_total_balls);
+				day2_run_rate = CricketFunctions.generateRunRate(day2_runs, 0, day2_total_balls, 2, matchAllData);
 			}else if(matchAllData.getMatch().getDaysSessions().get(i).getDayNumber() == 3) {
 				
 				day3_runs = day3_runs + matchAllData.getMatch().getDaysSessions().get(i).getTotalRuns();
 				day3_wickets = day3_wickets + matchAllData.getMatch().getDaysSessions().get(i).getTotalWickets();
 				day3_total_balls = day3_total_balls + matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls();
 				
-				if(day3_total_balls % 6 == 0) {
-					day3_dayovers = day3_total_balls / 6 ;
-				}else {
-					day3_dayovers = Double.valueOf(String.valueOf(String.valueOf(day3_total_balls/6) + 
-							"." + String.valueOf(day3_total_balls%6))); 
-				}
-				day3_run_rate = df.format(day3_runs/day3_dayovers);
+				day3_dayovers = CricketFunctions.OverBalls(0, day3_total_balls);
+				day3_run_rate = CricketFunctions.generateRunRate(day3_runs, 0, day3_total_balls, 2, matchAllData);
 			}else if(matchAllData.getMatch().getDaysSessions().get(i).getDayNumber() == 4) {
 				
 				day4_runs = day4_runs + matchAllData.getMatch().getDaysSessions().get(i).getTotalRuns();
 				day4_wickets = day4_wickets + matchAllData.getMatch().getDaysSessions().get(i).getTotalWickets();
 				day4_total_balls = day4_total_balls + matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls();
 				
-				if(day4_total_balls % 6 == 0) {
-					day4_dayovers = day4_total_balls / 6 ;
-				}else {
-					day4_dayovers = Double.valueOf(String.valueOf(String.valueOf(day4_total_balls/6) + 
-							"." + String.valueOf(day4_total_balls%6))); 
-				}
-				day4_run_rate = df.format(day4_runs/day4_dayovers);
+				day4_dayovers = CricketFunctions.OverBalls(0, day4_total_balls);
+				day4_run_rate = CricketFunctions.generateRunRate(day4_runs, 0, day4_total_balls, 2, matchAllData);
 			}else if(matchAllData.getMatch().getDaysSessions().get(i).getDayNumber() == 5) {
 				
 				day5_runs = day5_runs + matchAllData.getMatch().getDaysSessions().get(i).getTotalRuns();
 				day5_wickets = day5_wickets + matchAllData.getMatch().getDaysSessions().get(i).getTotalWickets();
 				day5_total_balls = day5_total_balls + matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls();
 				
-				if(day5_total_balls % 6 == 0) {
-					day5_dayovers = day5_total_balls / 6 ;
-				}else {
-					day5_dayovers = Double.valueOf(String.valueOf(String.valueOf(day5_total_balls/6) + 
-							"." + String.valueOf(day5_total_balls%6))); 
-				}
-				day5_run_rate = df.format(day5_runs/day5_dayovers);
+				day5_dayovers = CricketFunctions.OverBalls(0, day5_total_balls);
+				day5_run_rate = CricketFunctions.generateRunRate(day5_runs, 0, day5_total_balls, 2, matchAllData);
 			}
 		}
 		
 		if(matchAllData.getMatch().getDaysSessions().size() <= 3) {
-			row = 1;
-		}else if(matchAllData.getMatch().getDaysSessions().size() > 3 && matchAllData.getMatch().getDaysSessions().size() <= 6) {
 			row = 2;
-		}else if(matchAllData.getMatch().getDaysSessions().size() > 6 && matchAllData.getMatch().getDaysSessions().size() <= 9) {
+		}else if(matchAllData.getMatch().getDaysSessions().size() > 3 && matchAllData.getMatch().getDaysSessions().size() <= 6) {
 			row = 3;
-		}else if(matchAllData.getMatch().getDaysSessions().size() > 9 && matchAllData.getMatch().getDaysSessions().size() <= 12) {
+		}else if(matchAllData.getMatch().getDaysSessions().size() > 6 && matchAllData.getMatch().getDaysSessions().size() <= 9) {
 			row = 4;
-		}else if(matchAllData.getMatch().getDaysSessions().size() > 12 && matchAllData.getMatch().getDaysSessions().size() <= 15) {
+		}else if(matchAllData.getMatch().getDaysSessions().size() > 9 && matchAllData.getMatch().getDaysSessions().size() <= 12) {
 			row = 5;
+		}else if(matchAllData.getMatch().getDaysSessions().size() > 12 && matchAllData.getMatch().getDaysSessions().size() <= 15) {
+			row = 6;
 		}
 		  		
 		
 		lowerThird = new LowerThird("MATCH SUMMARY", "", "","DAY BY DAY", "","", row, "","FLAG",
-				new String[] {"RUNS","OVERS","WICKETS","RUN RATE"},new String[] {String.valueOf(day1_runs + "/" + day2_runs + "/" + day3_runs + "/" + day4_runs + "/" + day5_runs),
-					String.valueOf(day1_dayovers + "/" + day2_dayovers + "/" + day3_dayovers + "/" + day4_dayovers + "/" + day5_dayovers),
+				new String[] {"OVERS","RUNS","WICKETS","RUN RATE"},new String[] {String.valueOf(day1_dayovers + "/" + day2_dayovers + "/" + day3_dayovers + "/" + day4_dayovers + "/" + day5_dayovers),
+					String.valueOf(day1_runs + "/" + day2_runs + "/" + day3_runs + "/" + day4_runs + "/" + day5_runs),
 					String.valueOf(day1_wickets + "/" + day2_wickets + "/" + day3_wickets + "/" + day4_wickets + "/" + day5_wickets),
 					String.valueOf(day1_run_rate + "/" + day2_run_rate + "/" + day3_run_rate + "/" + day4_run_rate + "/" + day5_run_rate)},
 					new String[]{"DAY 1","DAY 2","DAY 3"},null,new String[] {"-194.0","51.0","305.0","536.0"});
@@ -532,13 +476,14 @@ public class LowerThirdGfx
 			}
 		}
 		
-//		runs = CricketFunctions.CurrentDayStats(matchAllData, "/", "CURRENT").split("/")[0];
-//		overs = CricketFunctions.CurrentDayStats(matchAllData, "/", "CURRENT").split("/")[1];
-//		wickets = CricketFunctions.CurrentDayStats(matchAllData, "/", "CURRENT").split("/")[2];
-//		run_rate = CricketFunctions.CurrentDayStats(matchAllData, "/", "CURRENT").split("/")[3];
+		overs = CricketFunctions.CurrentDayStats(matchAllData, "/", "CURRENT").split("/")[0];
+		runs = CricketFunctions.CurrentDayStats(matchAllData, "/", "CURRENT").split("/")[1];
+		wickets = CricketFunctions.CurrentDayStats(matchAllData, "/", "CURRENT").split("/")[2];
+		
+		run_rate = CricketFunctions.CurrentDayStats(matchAllData, "/", "CURRENT").split("/")[4];
 		
 		lowerThird = new LowerThird("TODAY'S MATCH", "", "","", "","", 2, "",inning.getBatting_team().getTeamName4(),
-				new String[] {"RUNS","OVERS","WICKETS","RUN RATE"},new String[] {runs,overs,wickets,run_rate}
+				new String[] {"OVERS","RUNS","WICKETS","RUN RATE"},new String[] {overs,runs,wickets,run_rate}
 				,null,null,new String[] {"-517.0","-193.0","184.0","533.0"});
 		
 		
@@ -1303,6 +1248,7 @@ public class LowerThirdGfx
 				splitData[split_id] = CricketFunctions.getSplit(Integer.valueOf(whatToProcess.split(",")[1]), Integer.valueOf(whatToProcess.split(",")[2])
 						,matchAllData,matchAllData.getEventFile().getEvents()).get(split_id);
 				splitNumber[split_id] = String.valueOf(split_id+1);
+				System.out.println(splitData[split_id]);
 	    	}
 			
 			if(Integer.valueOf(whatToProcess.split(",")[2]) == 30) {
@@ -2004,7 +1950,7 @@ public class LowerThirdGfx
 			lowerThird = new LowerThird("", battingCard.getPlayer().getFirstname(), surName,"", 
 					String.valueOf(battingCard.getRuns()), String.valueOf(battingCard.getBalls()),2,"",inning.getBatting_team().getTeamName4(),
 					null,null,new String[]{howOut,String.valueOf(battingCard.getFours()),String.valueOf(battingCard.getSixes()),Count[0],striktRate},
-					null,null);
+					new String[]{String.valueOf((battingCard.getDuration()/60))},null);
 			break;
 		case Constants.ISPL:
 			lowerThird = new LowerThird("", battingCard.getPlayer().getFirstname(), surName,"", 
@@ -2088,7 +2034,7 @@ public class LowerThirdGfx
 	
 	public String populateQuickHowOut(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws InterruptedException
 	{
-		String striktRate = "",howOut = "";
+		String striktRate = "",howOut = "",duration ="";
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
 			return status;
 		} else {
@@ -2170,7 +2116,7 @@ public class LowerThirdGfx
 					String.valueOf(battingCardList.get(battingCardList.size()-1).getBalls()),2,"",inning.getBatting_team().getTeamName4(),
 					null,null,new String[]{howOut,String.valueOf(battingCardList.get(battingCardList.size()-1).getFours()),
 					String.valueOf(battingCardList.get(battingCardList.size()-1).getSixes()),Count[0],striktRate},
-					null,null);
+					new String[]{String.valueOf((battingCardList.get(battingCardList.size()-1).getDuration()/60))},null);
 			break;
 		case Constants.ISPL:
 			lowerThird = new LowerThird("", battingCardList.get(battingCardList.size()-1).getPlayer().getFirstname(), surName,"", 
@@ -6910,6 +6856,11 @@ public class LowerThirdGfx
 						+ "$Select_Subline$2$Data$Left$txt_1*GEOM*TEXT SET " + "FOURS  " + lowerThird.getLeftText()[1] + "                           SIXES  " + 
 						lowerThird.getLeftText()[2] + "                           DOTS  " + lowerThird.getLeftText()[3] + "                           STRIKE RATE  " + 
 						lowerThird.getLeftText()[4]  + "\0", print_writers);
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide 
+							+ "$Select_Subline$1$Data$Right$txt_1*GEOM*TEXT SET " + lowerThird.getRightText()[0] + " Minutes" + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide 
+							+ "$Select_Subline$2$Data$Right$txt_1*GEOM*TEXT SET " + "" + "\0", print_writers);
 					break;
 				case Constants.ISPL:
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$SubLines$Side" + WhichSide +
