@@ -185,7 +185,8 @@ public class LowerThirdGfx
 				String.valueOf(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalRuns()),
 				String.valueOf(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalWickets()),
 				CricketFunctions.BetterOverRate(0, matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls(), 
-				(inning.getDuration()/60), "", false),CricketFunctions.generateRunRate(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().
+				(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalSeconds()/60), "", false),
+				CricketFunctions.generateRunRate(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().
 				getDaysSessions().size()-1).getTotalRuns(), 0, matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().
 				getDaysSessions().size()-1).getTotalBalls(), 2, matchAllData)}, null,null,new String[] {"-517.0","-284.0","-17.0","255.0","533.0"});
 		
