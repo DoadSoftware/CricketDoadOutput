@@ -273,6 +273,9 @@ public class Caption
 			case "Alt_Shift_L":
 				status = this_lowerThirdGfx.populateL3rdOversPerHour(whatToProcess,whichSide,matchAllData);
 				break;
+			case "Control_Shift_P":
+				status = this_lowerThirdGfx.populateL3rdBowlerSpell(whatToProcess,whichSide,matchAllData);
+				break;
 			case "Control_y":
 				status = this_bugsAndMiniGfx.populatebugPowerplay(whatToProcess,whichSide ,matchAllData);
 				break;	

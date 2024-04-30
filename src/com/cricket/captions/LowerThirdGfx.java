@@ -30,6 +30,7 @@ import com.cricket.model.POTT;
 import com.cricket.model.Partnership;
 import com.cricket.model.Player;
 import com.cricket.model.PowerPlays;
+import com.cricket.model.Spell;
 import com.cricket.model.Staff;
 import com.cricket.model.Statistics;
 import com.cricket.model.StatsType;
@@ -292,7 +293,7 @@ public class LowerThirdGfx
 	{
 		String dayovers= "-";
 		int runs = 0,wickets = 0;
-		String header = "",run_rate = "";
+		String header = "",run_rate = "",over_rate="";
 		
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
 			return status;
@@ -320,12 +321,16 @@ public class LowerThirdGfx
 				wickets = matchAllData.getMatch().getDaysSessions().get(i).getTotalWickets();
 				run_rate = CricketFunctions.generateRunRate(matchAllData.getMatch().getDaysSessions().get(i).getTotalRuns(), 0,
 						matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls(), 2, matchAllData);
+				
+				over_rate = CricketFunctions.BetterOverRate(0, matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls(), 
+						(matchAllData.getMatch().getDaysSessions().get(i).getTotalSeconds()/60), "", false);
+				
 			}
 		}
 		
 		lowerThird = new LowerThird(header, "", "","", "","", 2, "","FLAG",
-				new String[] {"OVERS","RUNS","WICKETS","RUN RATE"},new String[] {dayovers,String.valueOf(runs),
-				String.valueOf(wickets),run_rate},null,null,new String[] {"-517.0","-193.0","184.0","533.0"});
+				new String[] {"OVERS","RUNS","WICKETS","OVER RATE","RUN RATE"},new String[] {dayovers,String.valueOf(runs),
+				String.valueOf(wickets),over_rate,run_rate},null,null,new String[] {"-517.0","-284.0","-17.0","255.0","533.0"});
 		
 		status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);
 		if(status == Constants.OK) {
@@ -340,6 +345,7 @@ public class LowerThirdGfx
 	public String populateAllSession(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws InterruptedException
 	{
 		String session1_dayovers = "-",session2_dayovers = "-",session3_dayovers = "-";
+		String session1_over_rate = "-",session2_over_rate = "-",session3_over_rate = "-";
 		String session1_runs = "-",session2_runs = "-",session3_runs = "-",session1_wickets = "-",session2_wickets = "-",session3_wickets = "-";
 		String header = "",session1_run_rate = "-",session2_run_rate = "-",session3_run_rate = "-";
 		
@@ -369,6 +375,8 @@ public class LowerThirdGfx
 					session1_wickets = String.valueOf(matchAllData.getMatch().getDaysSessions().get(i).getTotalWickets());
 					session1_run_rate = CricketFunctions.generateRunRate(matchAllData.getMatch().getDaysSessions().get(i).getTotalRuns(), 0, 
 							matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls(), 2, matchAllData);
+					session1_over_rate = CricketFunctions.BetterOverRate(0, matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls(), 
+							(matchAllData.getMatch().getDaysSessions().get(i).getTotalSeconds()/60), "", false);
 					
 				}else if(matchAllData.getMatch().getDaysSessions().get(i).getSessionNumber() == 2) {
 					
@@ -378,6 +386,8 @@ public class LowerThirdGfx
 					session2_wickets = String.valueOf(matchAllData.getMatch().getDaysSessions().get(i).getTotalWickets());
 					session2_run_rate = CricketFunctions.generateRunRate(matchAllData.getMatch().getDaysSessions().get(i).getTotalRuns(), 0, 
 							matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls(), 2, matchAllData);
+					session2_over_rate = CricketFunctions.BetterOverRate(0, matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls(), 
+							(matchAllData.getMatch().getDaysSessions().get(i).getTotalSeconds()/60), "", false);
 					
 				}else if(matchAllData.getMatch().getDaysSessions().get(i).getSessionNumber() == 3) {
 					
@@ -387,17 +397,21 @@ public class LowerThirdGfx
 					session3_wickets = String.valueOf(matchAllData.getMatch().getDaysSessions().get(i).getTotalWickets());
 					session3_run_rate = CricketFunctions.generateRunRate(matchAllData.getMatch().getDaysSessions().get(i).getTotalRuns(), 0, 
 							matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls(), 2, matchAllData);
+					session3_over_rate = CricketFunctions.BetterOverRate(0, matchAllData.getMatch().getDaysSessions().get(i).getTotalBalls(), 
+							(matchAllData.getMatch().getDaysSessions().get(i).getTotalSeconds()/60), "", false);
 				}
 			}
 		}
 		
-		lowerThird = new LowerThird(header, "", "","", "","", 4, "","FLAG",
-				new String[] {"OVERS","RUNS","WICKETS","RUN RATE"},new String[] {String.valueOf(session1_dayovers + "/" + session2_dayovers + "/" + session3_dayovers),
+		lowerThird = new LowerThird(header, "", "" , "", "", "", 4, "", "FLAG",
+				new String[] {"OVERS","RUNS","WICKETS","OVER RATE","RUN RATE"},new String[] {
+					String.valueOf(session1_dayovers + "/" + session2_dayovers + "/" + session3_dayovers),
 					String.valueOf(session1_runs + "/" + session2_runs + "/" + session3_runs),
 					String.valueOf(session1_wickets + "/" + session2_wickets + "/" + session3_wickets),
+					String.valueOf(session1_over_rate+ "/" + session2_over_rate + "/" + session3_over_rate),
 					String.valueOf(session1_run_rate + "/" + session2_run_rate + "/" + session3_run_rate)},
-					new String[]{"1st SESSION","2nd SESSION","3rd SESSION"},null,new String[] {"-194.0","51.0","305.0","536.0"});
-		
+					new String[]{"1st SESSION","2nd SESSION","3rd SESSION"},null,new String[] {"-295.0","-125.0","60.0","300.0","533.0"}
+		);
 		
 		status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);
 		if(status == Constants.OK) {
@@ -606,6 +620,49 @@ public class LowerThirdGfx
 		lowerThird = new LowerThird("OVER RATE", "", "","", "","", 2, "",inning.getBatting_team().getTeamName4(),
 				new String[] {"RUNS","OVERS","WICKETS","RUN RATE"},new String[] {runs,overs,wickets,run_rate}
 				,null,null,new String[] {"-517.0","-193.0","184.0","533.0"});
+		
+		
+		status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);
+		if(status == Constants.OK) {
+			HideAndShowL3rdSubStrapContainers(WhichSide);
+			setPositionOfLT(whatToProcess,WhichSide,config,lowerThird.getNumberOfSubLines());
+			return PopulateL3rdBody(WhichSide, whatToProcess.split(",")[0]);
+		} else {
+			return status;
+		}
+	}
+	
+	public String populateL3rdBowlerSpell(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws InterruptedException
+	{
+		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
+			return status;
+		} else {
+			inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
+			if(inning == null) {
+				return status;
+			}
+		}
+		
+		player = CricketFunctions.getPlayerFromMatchData(Integer.valueOf(whatToProcess.split(",")[2]), matchAllData);
+		
+		if(player == null) {
+			return status;
+		}
+		
+		for(Spell sp : inning.getSpells()) {
+			if(sp.getPlayerId() == Integer.valueOf(whatToProcess.split(",")[2])) {
+				this_data_str.add(CricketFunctions.OverBalls(0, sp.getBalls()) + "," + sp.getMaidens() + "," + sp.getRuns() + "," + sp.getWickets() + "," + 
+						CricketFunctions.getEconomy(sp.getRuns(), sp.getBalls(), 2, "-"));
+			}
+		}
+		
+		if(this_data_str == null) {
+			return status;
+		}
+		
+		lowerThird = new LowerThird(player.getFull_name(), "ALL SPELLS", "","", "","", 2, "",inning.getBowling_team().getTeamName4(),
+				new String[] {"OVERS","MAIDENS","RUNS","WICKETS","ECONOMY"},new String[] {"","","","",""}
+				,new String[] {"","1st","2nd","3rd"},null,new String[] {"-410.0","-185.0","60.0","300.0","533.0"});
 		
 		
 		status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);
@@ -4396,7 +4453,7 @@ public class LowerThirdGfx
 					break;
 				}
 				break;
-			case "Alt_Shift_L":
+			case "Alt_Shift_L": case "Control_Shift_P":
 				switch (config.getBroadcaster().toUpperCase()) {
 				case Constants.ICC_U19_2023:
 					if(lowerThird.getWhichTeamFlag() != null) {
@@ -6531,6 +6588,35 @@ public class LowerThirdGfx
 				}
 				
 				break;
+			case "Control_Shift_P":
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.ICC_U19_2023:
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+							"$Select_Subline$2$Data$Title*ACTIVE SET 0 \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+							"$Select_Subline$3$Data$Title*ACTIVE SET 0 \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+							"$Select_Subline$4$Data$Title*ACTIVE SET 0 \0", print_writers);
+					
+					for(int j=0;j<=this_data_str.size()-1;j++) {
+						for(int i=0; i<lowerThird.getTitlesText().length; i++) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+								"$Select_Subline$1" + containerName + "$Data$Title$txt_" + (i+1) + "*GEOM*TEXT SET " + lowerThird.getTitlesText()[i] + "\0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide +
+									"$Select_Subline$2" + containerName + "$Data$Stat$txt_" + (i+1) + "*GEOM*TEXT SET " + this_data_str.get(j).split(",")[i] + "\0", print_writers);
+						}
+					}
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide 
+						+ "$Select_Subline$1$Data$Left$txt_1*GEOM*TEXT SET " + lowerThird.getLeftText()[0] + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide 
+						+ "$Select_Subline$2$Data$Left$txt_1*GEOM*TEXT SET " + lowerThird.getLeftText()[1] + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Sublines$Side_" + WhichSide 
+							+ "$Select_Subline$3$Data$Left$txt_1*GEOM*TEXT SET " + lowerThird.getLeftText()[2] + "\0", print_writers);
+					
+					break;
+				}
+				break;
 			case "Alt_Shift_L":
 				switch (config.getBroadcaster().toUpperCase()) {
 				case Constants.ICC_U19_2023:
@@ -6561,7 +6647,6 @@ public class LowerThirdGfx
 					
 					break;
 				}
-				
 				break;	
 				
 			case "u":
