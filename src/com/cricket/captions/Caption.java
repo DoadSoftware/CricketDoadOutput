@@ -129,6 +129,9 @@ public class Caption
 	{
 		if(whatToProcess.contains(",")) {
 			switch (whatToProcess.split(",")[0]) {
+			case "Control_Shift_F":
+				status = this_lowerThirdGfx.populateBatVsAllBowlers(whatToProcess, whichSide, matchAllData);
+				break;
 			case "Control_i":
 				status = this_lowerThirdGfx.populateInningBuilder(whatToProcess, whichSide, matchAllData);
 				break;
@@ -410,9 +413,9 @@ public class Caption
 			case "Control_m": //MATCH PROMO
 				status = this_fullFramesGfx.populateFFMatchPromo(whichSide, whatToProcess,matchAllData);
 				break;
-//			case "Control_p": //Lt MATCH SUMMARY
-//				status = this_lowerThirdGfx.populateL3rdMatchSummary(whatToProcess,whichSide,matchAllData);
-//				break;
+			case "Shift_B": //Lt MATCH SUMMARY
+				status = this_lowerThirdGfx.populateL3rdMatchSummary(whatToProcess,whichSide,matchAllData);
+				break;
 			case "Shift_K"://FF curr part
 				switch (config.getBroadcaster().toUpperCase()) {
 				case Constants.ICC_U19_2023:
