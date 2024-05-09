@@ -1071,6 +1071,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 					option.value = 'REMAINING_OVERS';
 					option.text = 'Remaining Overs';
 					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'BOWLING_TEAM_TARGET';
+					option.text = 'BOWLING TEAM TARGET';
+					select.appendChild(option);
 		
 					option = document.createElement('option');
 					option.value = 'FOLLOW_ON';
@@ -1303,6 +1308,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 					option.text = 'Over Rate';
 					select.appendChild(option);
 					
+					option = document.createElement('option');
+					option.value = 'BOWLING_TEAM_TARGET';
+					option.text = 'BOWLING TEAM TARGET';
+					select.appendChild(option);
+		
 				}
 				break;
 			}

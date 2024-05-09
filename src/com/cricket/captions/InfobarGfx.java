@@ -1872,7 +1872,21 @@ public class InfobarGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Bottom$Side_" + WhichSide + "$Free_Text$txt_Text*GEOM*TEXT SET " 
 						+ "LOCAL TIME : " + dateFormat.format(dt) + "\0", print_writers);	
 				break;
+				
+			case "BOWLING_TEAM_TARGET":
+				
+				inning = matchAllData.getMatch().getInning().stream().filter(in->in.getIsCurrentInning()
+						.equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Bottom$Side_" + WhichSide 
+						+ "$Choose_Type*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Bottom$Side_" + WhichSide 
+						+ "$Stat$txt_Title*GEOM*TEXT SET " + "TARGET" + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Bottom$Side_" + WhichSide 
+							+ "$Stat$txt_Value*GEOM*TEXT SET " + inning.getBowling_team().getTeamName1()+" NEED "+(10-inning.getTotalWickets())+" WICKET"
+							+CricketFunctions.Plural((10-inning.getTotalWickets())).toUpperCase()+" TO WIN "+ "\0", print_writers);
 			
+				break;
+				
 			case "FIRST_INNING_SCORE":
 				
 				int id = 0;
@@ -1885,6 +1899,7 @@ public class InfobarGfx
 				for(int i = matchAllData.getMatch().getInning().size() - 1; i >= 0; i--) {
 					if (matchAllData.getMatch().getInning().get(i).getIsCurrentInning().toUpperCase().equalsIgnoreCase(CricketUtil.YES)) {
 						id = matchAllData.getMatch().getInning().get(i).getBattingTeamId();
+						System.out.println("inning num    "+matchAllData.getMatch().getInning().get(i).getInningNumber()+"  id  "+id);
 					}
 					
 					if (matchAllData.getMatch().getInning().get(i).getIsCurrentInning().toUpperCase().equalsIgnoreCase(CricketUtil.NO) && 
@@ -2541,8 +2556,21 @@ public class InfobarGfx
 						}
 					}
 				}
-				break;	
-			
+				break;
+				
+			case "BOWLING_TEAM_TARGET":
+				inning = matchAllData.getMatch().getInning().stream().filter(in->in.getIsCurrentInning()
+						.equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
+						+ "$Select_Type*FUNCTION*Omo*vis_con SET 11 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Basic_Wide$txt_LongString*GEOM*TEXT SET " + 
+						inning.getBowling_team().getTeamName1()+" NEED "+(10-inning.getTotalWickets())+" WICKET"
+						+CricketFunctions.Plural((10-inning.getTotalWickets())).toUpperCase()+" TO WIN " + "\0", print_writers);
+				
+					
+				break;
+				
 			case "CURRENT_SESSION":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
 						+ "$Select_Type*FUNCTION*Omo*vis_con SET 4 \0",print_writers);
