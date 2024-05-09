@@ -1284,6 +1284,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 					select.appendChild(option);
 					
 					option = document.createElement('option');
+					option.value = 'EQUATION';
+					option.text = 'Equation';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
 					option.value = 'CURRENT_SESSION';
 					option.text = 'This Session';
 					select.appendChild(option);
