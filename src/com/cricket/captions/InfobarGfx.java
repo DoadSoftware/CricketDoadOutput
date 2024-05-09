@@ -2087,6 +2087,7 @@ public class InfobarGfx
 	{
 		switch(config.getBroadcaster()) {
 		case Constants.ISPL:
+			
 			switch(infobar.getMiddle_section().toUpperCase()) {
 			case CricketUtil.BATSMAN:
 				this.infobar.setMiddle_section(CricketUtil.BATSMAN);
@@ -2178,7 +2179,8 @@ public class InfobarGfx
 				break;
 			case "TARGET":
 				
-				if(!matchAllData.getMatch().getInning().get(1).getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)) {
+				if(!matchAllData.getMatch().getInning().get(1).getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)&&
+						!matchAllData.getMatch().getInning().get(3).getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)) {
 					return "populateVizInfobarMiddleSection: Target available in 2nd inning only";
 				}
 				inning = matchAllData.getMatch().getInning().stream().filter(inn ->inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
@@ -2207,7 +2209,7 @@ public class InfobarGfx
 				
 				if(!matchAllData.getMatch().getInning().get(1).getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)&&
 						!matchAllData.getMatch().getInning().get(3).getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)) {
-					return "populateVizInfobarMiddleSection: Target available in 2nd inning only";
+					return "populateVizInfobarMiddleSection: Equation available in 2nd inning only";
 				}
 				inning = matchAllData.getMatch().getInning().stream().filter(inn ->inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
 //				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage1$Side" + WhichSide + "$Equation$First$txt_StatHead*TEXTURE*IMAGE SET " 
@@ -2831,7 +2833,8 @@ public class InfobarGfx
 				
 			case "TARGET":
 				
-				if(!matchAllData.getMatch().getInning().get(1).getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)) {
+				if(!matchAllData.getMatch().getInning().get(1).getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)&&
+						!matchAllData.getMatch().getInning().get(3).getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)) {
 					return "populateVizInfobarMiddleSection: Target available in 2nd inning only";
 				}
 				
@@ -2864,8 +2867,9 @@ public class InfobarGfx
 				
 			case "EQUATION":
 				
-				if(!matchAllData.getMatch().getInning().get(1).getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)) {
-					return "populateVizInfobarMiddleSection: Target available in 2nd inning only";
+				if(!matchAllData.getMatch().getInning().get(1).getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)&&
+						!matchAllData.getMatch().getInning().get(3).getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)) {
+					return "populateVizInfobarMiddleSection: Equation available in 2nd inning only";
 				}
 
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
