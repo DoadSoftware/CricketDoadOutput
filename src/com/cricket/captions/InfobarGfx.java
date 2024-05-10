@@ -1880,7 +1880,7 @@ public class InfobarGfx
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Bottom$Side_" + WhichSide 
 						+ "$Choose_Type*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Bottom$Side_" + WhichSide 
-						+ "$Stat$txt_Title*GEOM*TEXT SET " + "TARGET" + "\0", print_writers);
+						+ "$Stat$txt_Title*GEOM*TEXT SET " + " " + "\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$LeftALL$Data_Left$Bottom$Side_" + WhichSide 
 							+ "$Stat$txt_Value*GEOM*TEXT SET " + inning.getBowling_team().getTeamName1()+" NEED "+(10-inning.getTotalWickets())+" WICKET"
 							+CricketFunctions.Plural((10-inning.getTotalWickets())).toUpperCase()+" TO WIN "+ "\0", print_writers);
