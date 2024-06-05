@@ -30,15 +30,22 @@ public class Constants
 	
 	public final static String ISPL_TEXT1 = "IMAGE*/Default/Essentials/Text1/";
 	public final static String ISPL_TEXT2 = "IMAGE*/Default/Essentials/Text2/";
+	
 	public final static String ISPL_PHOTOS_PATH = "C:\\\\Images\\\\ISPL\\\\PHOTOS\\";
+	
 	public final static String BASE_PATH = "IMAGE*/Default/Essentials/Base";
 	public final static String TEXT_PATH = "IMAGE*/Default/Essentials/Text";
 	
 	public final static String ICONS_PATH = "IMAGE*/Default/Essentials/Icons/";
 	public final static String ISPL_PHOTO_PATH = "C:\\\\Images\\\\ISPL\\\\";
+
+	public final static String BENGAL_T20 = "BENGAL-T20";
+	public final static String BENGAL_ICONS_PATH = "IMAGE*/Default/Essentials/Badge/";
+	public final static String BENGAL_PHOTO_PATH = "C:\\\\Images\\\\BENGAL\\\\";
 	
 	public final static String LOCALHOST = "localhost";
 	public final static String ICC_U19_2023 = "ICC-U19-2023";
+	
 	public final static String ICC_U19_2023_FLAG_PATH = "IMAGE*/Default/Essentials/Flags/";
 	public final static String ICC_U19_2023_POTT_FLAG_PATH = "IMAGE*/Default/Essentials/POTT_Flags/";
 	public final static String ICC_U19_2023_LOGOS_PATH = "IMAGE*/Default/Essentials/Logos/";

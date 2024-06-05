@@ -215,7 +215,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				case 'ISPL':
 					addItemsToList(dataToProcess,null);
 					break;
-				case 'ICC-U19-2023':
+				case 'ICC-U19-2023': case 'BENGAL-T20':
 					dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 					processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 					break;
@@ -227,7 +227,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 					dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 					processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 					break;
-				case 'ICC-U19-2023':
+				case 'ICC-U19-2023': case 'BENGAL-T20':
 					addItemsToList(dataToProcess,null);
 					break;
 				}
@@ -238,7 +238,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 					dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 					processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 					break;
-				case 'ICC-U19-2023':
+				case 'ICC-U19-2023': case 'BENGAL-T20':
 					addItemsToList(dataToProcess,null);
 					break;
 				}
@@ -298,7 +298,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 					dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 					processCricketProcedures("ANIMATE-IN-GRAPHICS", dataToProcess);
 					break;
-				case 'ICC-U19-2023':
+				case 'ICC-U19-2023': case 'BENGAL-T20':
 					processCricketProcedures("QUIDICH-COMMANDS", dataToProcess);
 					break;
 				}
@@ -813,62 +813,25 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
 			
-			/*option = document.createElement('option');
-			option.value = 'IDENT_TEAM';
-			option.text = 'Ident & Team';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'IDENT_TOURNAMENT';
-			option.text = 'Ident & tournament';
-			select.appendChild(option);
-			
-			
-			
-			
-			
-			select = document.createElement('select');
-			select.id = 'selectLeftBottom';
-			select.name = select.id;
-
-			option = document.createElement('option');
-			option.value = 'GROUP';
-			option.text = 'Group';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'VENUE';
-			option.text = 'Venue Name';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'CRR';
-			option.text = 'Run Rate';
-			select.appendChild(option);
-
-			session_match.match.inning.forEach(function(inn,index,arr){
-				if(inn.isCurrentInning == 'YES'){
-					if(inn.inningNumber == 1){
-						option = document.createElement('option');
-						option.value = 'TOSS';
-						option.text = 'Toss';
-						select.appendChild(option);
-					}
-					else{
-						option = document.createElement('option');
-						option.value = 'TARGET';
-						option.text = 'Target';
-						select.appendChild(option);
-						
-						option = document.createElement('option');
-						option.value = 'RRR';
-						option.text = 'Required Rate';
-						select.appendChild(option);
-					}
-				}
-			});*/
 				break;
-				case 'ICC-U19-2023':
+			
+			case 'BENGAL-T20':
+				select = document.createElement('select');
+				select.id = 'selectMiddleStat';
+				select.name = select.id;
+				
+				option = document.createElement('option');
+				option.value = 'BATSMAN';
+				option.text = 'Batsman/Bowler';
+				select.appendChild(option);
+				
+				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+				row.insertCell(cellCount).appendChild(select);
+				setDropdownOptionToSelectOptionArray($(select),0);
+				cellCount = cellCount + 1;
+				break; 	
+				
+			case 'ICC-U19-2023':
 				
 			select = document.createElement('select');
 			select.id = 'selectMiddleStat';
@@ -1176,6 +1139,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 					}
 				});
 				break;
+				
 				case 'ICC-U19-2023':
 				header_text.innerHTML = 'MIDDLE INFOBAR SECTION';
 			
@@ -1315,6 +1279,97 @@ function addItemsToList(whatToProcess,dataToProcess)
 		
 				}
 				break;
+			case 'BENGAL-T20':
+				header_text.innerHTML = 'MIDDLE INFOBAR SECTION';
+			
+				select = document.createElement('select');
+				select.id = 'selectMiddleStat';
+				select.name = select.id;
+	
+				option = document.createElement('option');
+				option.value = 'BATSMAN';
+				option.text = 'Batsman/Bowler';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'IDENT_TEAM';
+				option.text = 'Ident & team';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'IDENT_TOURNAMENT';
+				option.text = 'Ident & Tournament';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'CURR_PARTNERSHIP';
+				option.text = 'Current Partnership';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'EXTRAS';
+				option.text = 'Extras';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'FOW';
+				option.text = 'Fall Of Wickets';
+				select.appendChild(option);
+	
+				option = document.createElement('option');
+				option.value = 'LAST_WICKET';
+				option.text = 'Last Wicket';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'BALLS_SINCE_LAST_BOUNDARY';
+				option.text = 'Balls Since Last Boundary';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'THIS_MATCH_SIXES';
+				option.text = 'This Match Sixes';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'TOURNAMENT_SIXES';
+				option.text = 'Tournament Sixes';
+				select.appendChild(option);
+				
+				session_match.match.inning.forEach(function(inn,index,arr){
+					if(inn.isCurrentInning == 'YES' && session_match.setup.matchType != 'TEST'){
+						if(inn.inningNumber == 1){
+							
+							option = document.createElement('option');
+							option.value = 'PROJECTED';
+							option.text = 'Projected Score';
+							select.appendChild(option);
+							
+						}
+						else{
+							/*option = document.createElement('option');
+							option.value = 'TARGET';
+							option.text = 'Target';
+							select.appendChild(option);*/
+							
+							option = document.createElement('option');
+							option.value = 'EQUATION';
+							option.text = 'Equation';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'RESULTS';
+							option.text = 'Result';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'DLS_PAR_SCORE';
+							option.text = 'D/L Par Score';
+							select.appendChild(option);
+						}
+					}
+				});
+				break;	
 			}
 			
 			
@@ -1422,6 +1477,27 @@ function addItemsToList(whatToProcess,dataToProcess)
 				option.text = 'Bowler Replace';
 				select.appendChild(option);
 				break;
+			case 'BENGAL-T20':
+				
+				select = document.createElement('select');
+				select.id = 'selectRightBottom';
+				select.name = select.id;
+				
+				option = document.createElement('option');
+				option.value = 'OVER';
+				option.text = 'This Over';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'BOWLING_END';
+				option.text = 'Bowling End';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'BOWLER_REPLACE';
+				option.text = 'Bowler Replace';
+				select.appendChild(option);
+				break;	
 			}
 			header_text.innerHTML = 'RIGHT BOTTOM INFOBAR SECTION';
 			
@@ -1501,6 +1577,34 @@ function addItemsToList(whatToProcess,dataToProcess)
 						}
 					});
 					break;
+				case 'BENGAL-T20':
+					header_text.innerHTML = 'RIGHT INFOBAR SECTION';
+		
+					select = document.createElement('select');
+					select.id = 'selectRightSection';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = 'BOWLER';
+					option.text = 'Bowler';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'BOUNDARY';
+					option.text = 'Innings Boundaries';
+					select.appendChild(option);
+					
+					session_match.match.inning.forEach(function(inn,index,arr){
+						if(inn.isCurrentInning == 'YES'){
+							if(inn.inningNumber == 2){
+								option = document.createElement('option');
+								option.value = 'COMPARE';
+								option.text = 'Compare';
+								select.appendChild(option);
+							}
+						}
+					});
+					break;	
 			}	
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
