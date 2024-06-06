@@ -136,6 +136,7 @@ public class Animation
 					return Constants.LOWER_THIRD;
 				}
 			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": case "Alt_9": case "Alt_0":
+			case "Control_F12": case "Shift_F12":	
 				return Constants.INFO_BAR;
 			case "Shift_O": case "Control_k": case "k": case "g": case "y": case "Alt_p": case "o": case "t": 
 			case "Control_y": case "h": case "Shift_F4": case "Shift_F": case ".": case "/":
@@ -1163,25 +1164,48 @@ public class Animation
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			
-//			case "Alt_2":
-//				switch (config.getBroadcaster().toUpperCase()) {
-//				case Constants.ISPL:
-//					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Stage3_Out", "START");
-//					break;
-//				}
-//				break;
+			case "Control_F12":
+				if(this.infobar.isInfobar_on_screen() == true) {
+					
+					processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Ident_To_Normal", "CONTINUE REVERSE");
+					
+					infobar.setMiddle_section("");
+					infobar.setFull_section("");
+					infobar.setRight_bottom("");
+					infobar.setRight_section("");
+					this_infobarGfx.infobar.setLast_bowler(null);
+					this.infobar.setInfobar_on_screen(true);
+				}else {
+					
+					processAnimation(Constants.FRONT, print_writers, "anim_Infobar$InOut", "START");
+					
+					infobar.setMiddle_section("");
+					infobar.setFull_section("");
+					infobar.setRight_bottom("");
+					infobar.setRight_section("");
+					
+					this.infobar.setInfobar_on_screen(true);
+				}
+				break;
 				
 			case "F12": //Infobar
-				switch (config.getBroadcaster().toUpperCase()) {
-				case Constants.BENGAL_T20:
-					processAnimation(Constants.FRONT, print_writers, "anim_Infobar$InOut", "START");
+				if(this.infobar.isInfobar_on_screen()) {
+					
 					processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Ident_To_Normal", "START");
+					
 					this.infobar.setInfobar_on_screen(true);
 					this.infobar.setInfobar_pushed(false);
 					this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
-					break;
+				}else {
+					
+					processAnimation(Constants.FRONT, print_writers, "anim_Infobar$InOut", "START");
+					processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Ident_To_Normal", "START");
+					
+					this.infobar.setInfobar_on_screen(true);
+					this.infobar.setInfobar_pushed(false);
+					this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
 				}
-				break;
+				break;	
 			case "ArrowUp":
 				if(this.infobar.isInfobar_on_screen() == true && this.infobar.isInfobar_pushed()) {
 					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Push", "CONTINUE");
@@ -1198,7 +1222,7 @@ public class Animation
 			
 			case "w": case "i": case "f": case "s":
 				switch(config.getBroadcaster().toUpperCase()) {
-				case Constants.ICC_U19_2023:
+				case Constants.BENGAL_T20:
 					if(whatToProcess.split(",")[0].equalsIgnoreCase("w")) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Wipes$Select*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
 					}else if(whatToProcess.split(",")[0].equalsIgnoreCase("i")) {
@@ -1928,17 +1952,36 @@ public class Animation
 				this.whichGraphicOnScreen = "";
 				break;
 			
-			case "F12": //Infobar
-				switch (config.getBroadcaster().toUpperCase()) {
-				case Constants.BENGAL_T20:
-					if(infobar.isInfobar_on_screen() == true) {
-						processAnimation(Constants.FRONT, print_writers, "anim_Infobar$InOut", "CONTINUE");
-						infobar.setInfobar_on_screen(false);
-					}
-					break;
-				}
+			case "Control_F12":
+				processAnimation(Constants.FRONT, print_writers, "anim_Infobar$InOut", "CONTINUE");
 				
+				TimeUnit.MILLISECONDS.sleep(1500);
+				processAnimation(Constants.FRONT, print_writers, "anim_Infobar", "SHOW 0.0");
+				
+				infobar.setMiddle_section("");
+				infobar.setFull_section("");
+				infobar.setRight_bottom("");
+				infobar.setRight_section("");
+				
+				this.infobar.setInfobar_on_screen(false);
 				break;
+				
+			case "F12": //Infobar
+				if(infobar.isInfobar_on_screen() == true) {
+					
+					processAnimation(Constants.FRONT, print_writers, "anim_Infobar$InOut", "CONTINUE");
+					
+					TimeUnit.MILLISECONDS.sleep(1500);
+					processAnimation(Constants.FRONT, print_writers, "anim_Infobar", "SHOW 0.0");
+					
+					infobar.setMiddle_section("");
+					infobar.setFull_section("");
+					infobar.setRight_bottom("");
+					infobar.setRight_section("");
+					
+					this.infobar.setInfobar_on_screen(false);
+				}
+				break;	
 			}
 			break;	
 		}
