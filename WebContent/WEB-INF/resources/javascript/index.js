@@ -1378,30 +1378,10 @@ function addItemsToList(whatToProcess,dataToProcess)
 				option.value = 'EXTRAS';
 				option.text = 'Extras';
 				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = 'FOW';
-				option.text = 'Fall Of Wickets';
-				select.appendChild(option);
 	
 				option = document.createElement('option');
 				option.value = 'LAST_WICKET';
 				option.text = 'Last Wicket';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = 'BALLS_SINCE_LAST_BOUNDARY';
-				option.text = 'Balls Since Last Boundary';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = 'THIS_MATCH_SIXES';
-				option.text = 'This Match Sixes';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = 'TOURNAMENT_SIXES';
-				option.text = 'Tournament Sixes';
 				select.appendChild(option);
 				
 				session_match.match.inning.forEach(function(inn,index,arr){
@@ -1423,16 +1403,6 @@ function addItemsToList(whatToProcess,dataToProcess)
 							option = document.createElement('option');
 							option.value = 'EQUATION';
 							option.text = 'Equation';
-							select.appendChild(option);
-							
-							option = document.createElement('option');
-							option.value = 'RESULTS';
-							option.text = 'Result';
-							select.appendChild(option);
-							
-							option = document.createElement('option');
-							option.value = 'DLS_PAR_SCORE';
-							option.text = 'D/L Par Score';
 							select.appendChild(option);
 						}
 					}
@@ -1660,6 +1630,21 @@ function addItemsToList(whatToProcess,dataToProcess)
 					option = document.createElement('option');
 					option.value = 'BOUNDARY';
 					option.text = 'Innings Boundaries';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'THIS_MATCH_SIXES';
+					option.text = 'Inning Sixes';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'THIS_MATCH_FOURS';
+					option.text = 'Inning Fours';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'BALLS_SINCE_LAST_BOUNDARY';
+					option.text = 'Ball Since Last Boundary';
 					select.appendChild(option);
 					
 					session_match.match.inning.forEach(function(inn,index,arr){

@@ -2297,6 +2297,7 @@ public class Animation
 							processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Fade_For_Analytics", "CONTINUE");
 							processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Analytics", "CONTINUE");
 //							infobar.setRight_section("");
+							TimeUnit.MILLISECONDS.sleep(2000);
 							processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Fade_For_Analytics", "SHOW 0.0");
 							processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Analytics", "SHOW 0.0");
 						}else {
@@ -2321,13 +2322,13 @@ public class Animation
 						processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Section1_Change", "START");
 						break;
 					}
-					
 					break;
 				case "Alt_8":
 					if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
 						processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Fade_For_Section_2", "CONTINUE");
 						processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Section_2", "CONTINUE REVERSE");
 						infobar.setRight_section("");
+						TimeUnit.MILLISECONDS.sleep(2000);
 						processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Fade_For_Section_2", "SHOW 0.0");
 					}else {
 						if(infobar.getRight_section()!= null && !infobar.getRight_section().isEmpty()) {
@@ -2635,7 +2636,7 @@ public class Animation
 			case "Alt_1":
 				switch (config.getBroadcaster().toUpperCase()) {
 				case Constants.ICC_U19_2023:
-					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_Bottom_Left", "SHOW 0.0");
+					processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Section3_Change", "SHOW 0.0");
 					break;
 				}
 				break;
@@ -2655,6 +2656,178 @@ public class Animation
 				switch (config.getBroadcaster().toUpperCase()) {
 
 				case Constants.ICC_U19_2023:
+					processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Section1_Change", "SHOW 0.0");
+					break;
+				}
+				break;
+			case "Alt_8":
+				if(!whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
+					if(infobar.getRight_section()!= null && !infobar.getRight_section().isEmpty()) {
+						processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Section_2$Change", "SHOW 0.0");
+					}
+				}
+				break;
+			case "F5": case "F6": case "F7": case "F9": case "F11": case "Control_g": case "Control_h": case "Alt_F1": case "Alt_F2":
+			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_o": case "Control_F2":
+			case "Control_F6": case "Shift_F6": case "Control_s": case "Control_f": case "l": case "n": case "a": 
+			case "Alt_F6": case "Shift_A":  case "Shift_R": case "Shift_U": case "Alt_w": case "Control_j": case "Alt_i": case "b":
+			case "Alt_j":	case "Control_Shift_F":
+				switch (config.getBroadcaster().toUpperCase()) {
+					case Constants.ICC_U19_2023:
+						processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "SHOW 0.0");
+						this.whichGraphicOnScreen = whatToProcess;
+						break;
+					case Constants.ISPL:
+						processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "SHOW 0.0");
+						processAnimation(Constants.FRONT, print_writers, "Anim_LtChange$Lt_X_Position", "SHOW 0.900");
+						this.whichGraphicOnScreen = whatToProcess;
+						break;
+				 }
+				break;
+			 case "Alt_F8": case "F8": case "F10": case "j": case "Alt_a": case "Alt_s":
+				 switch (config.getBroadcaster().toUpperCase()) {
+					case Constants.ICC_U19_2023:
+						processAnimation(Constants.FRONT, print_writers, "Anim_NameSuperChange", "SHOW 0.0");
+						this.whichGraphicOnScreen = whatToProcess;
+						break;
+					case Constants.ISPL:
+						processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "SHOW 0.0");
+						this.whichGraphicOnScreen = whatToProcess;
+						break;
+				 }
+				break;
+				
+			 case "Control_x": case "Control_z": case "z": case "x": case "c": case "v": case "Control_c": case "Control_v":
+				 if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase(whatToProcess.split(",")[0])) {
+					 processAnimation(Constants.BACK, print_writers, "Change$Header", "SHOW 0.0");
+				 }
+				 processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Leader_Board", "SHOW 3.000");
+				 processAnimation(Constants.BACK, print_writers, "Change$Leader_Board", "SHOW 0.0");
+				
+				 for(int iPlyr = 1; iPlyr <= 5; iPlyr++) {
+					 if(iPlyr == Integer.valueOf(prevWhichPlayer)) {
+						 processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player" + iPlyr, "SHOW 2.700");
+					 } else {
+						 processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player" + iPlyr, "SHOW 0.00");
+					 }
+				 }
+				processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side2", "SHOW 0.0");
+				 
+				 setVariousAnimationsKeys("CUT-BACK", print_writers, config);
+				 this.whichGraphicOnScreen = whatToProcess;
+				 break;
+				
+			case "F1": case "F2": case "F4": case "Control_F11": case "Shift_T": case "p": case "Control_p":
+				processAnimation(Constants.BACK, print_writers, "Change$Header", "SHOW 0.0");
+				processAnimation(Constants.BACK, print_writers, "Change$Footer", "SHOW 0.0");
+				switch(whichGraphicOnScreen.split(",")[0]) {
+				case "F1":  
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Batting_Card", "SHOW 3.000");
+					processAnimation(Constants.BACK, print_writers, "Change$Batting_Card", "SHOW 0.0");
+					break;
+				case "F2":  
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Bowling_Card", "SHOW 3.000");
+					processAnimation(Constants.BACK, print_writers, "Change$Bowling_Card", "SHOW 0.0");
+					break;
+				case "F4":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Partnership_List", "SHOW 3.000");
+					processAnimation(Constants.BACK, print_writers, "Change$Partnership_List", "SHOW 0.0");
+					break;
+				case "Control_F11":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Summary", "SHOW 3.000");
+					processAnimation(Constants.BACK, print_writers, "Change$Summary", "SHOW 0.0");
+					break;
+				case "Shift_T":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$LineUp_Image", "SHOW 3.000");
+					processAnimation(Constants.BACK, print_writers, "Change$LineUp_Image", "SHOW 0.0");
+					break;
+				case "p":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Group_Standings", "SHOW 3.000");
+					processAnimation(Constants.BACK, print_writers, "Change$Group_Standings", "SHOW 0.0");
+					break;
+				case "Control_p":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Standings", "SHOW 3.000");
+					processAnimation(Constants.BACK, print_writers, "Change$Standings", "SHOW 0.0");
+					break;
+				}
+				if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase(whatToProcess.split(",")[0])) {
+					switch(whatToProcess.split(",")[0]) {
+					case "F1":  
+						processAnimation(Constants.BACK, print_writers, "Header_Shrink", "SHOW 0.0");
+						processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Batting_Card", "SHOW 3.000");
+						processAnimation(Constants.BACK, print_writers, "Change$Batting_Card", "SHOW 0.0");
+						break;
+					case "F2":
+						processAnimation(Constants.BACK, print_writers, "Header_Shrink", "SHOW 0.0");
+						processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Bowling_Card", "SHOW 3.000");
+						processAnimation(Constants.BACK, print_writers, "Change$Bowling_Card", "SHOW 0.0");
+						break;
+					case "F4":
+						processAnimation(Constants.BACK, print_writers, "Header_Shrink", "SHOW 0.0");
+						processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Partnership_List", "SHOW 3.000");
+						processAnimation(Constants.BACK, print_writers, "Change$Partnership_List", "SHOW 0.0");
+						break;
+					case "Control_F11":
+						processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Summary", "SHOW 3.000");
+						processAnimation(Constants.BACK, print_writers, "Change$Summary", "SHOW 0.0");
+						break;
+					case "p":
+						processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Group_Standings", "SHOW 3.000");
+						processAnimation(Constants.BACK, print_writers, "Change$Group_Standings", "SHOW 0.0");
+						break;
+					case "Control_p":
+						processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Standings", "SHOW 3.000");
+						processAnimation(Constants.BACK, print_writers, "Change$Standings", "SHOW 0.0");
+						break;
+					}
+				}
+				setVariousAnimationsKeys("CUT-BACK", print_writers, config);
+				processAnimation(Constants.BACK, print_writers, "ConcussExtend_Y", "SHOW 0.0");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;
+			}
+			break;
+			
+		case Constants.BENGAL_T20:
+
+			if(!whatToProcess.contains(",")) {
+				return CricketUtil.NO;
+			}
+			
+			switch(whatToProcess.split(",")[0]) {
+			case "Shift_F1": case "Shift_F2":
+				processAnimation(Constants.FRONT, print_writers, "Anim_MiniChange", "SHOW 0.0");
+				break;
+			case "Shift_F": case "y": case "Shift_O":
+				processAnimation(Constants.FRONT, print_writers, "Anim_BugsChange", "SHOW 0.0");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;
+			case "Shift_F12":
+				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$IdentInfo$Change", "SHOW 0.0");
+				break;
+			case "Alt_1":
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.ICC_U19_2023:
+					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_Bottom_Left", "SHOW 0.0");
+					break;
+				}
+				break;
+//			case "Alt_c":
+//				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$TopStage_Change", "SHOW 0.0");
+//				break;
+			case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_9": case "Alt_0":
+				TimeUnit.MILLISECONDS.sleep(1000);
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.BENGAL_T20:
+					processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Analytics$Change", "SHOW 0.0");
+					break;
+				}
+				
+				break;
+			case "Alt_7":
+				switch (config.getBroadcaster().toUpperCase()) {
+
+				case Constants.BENGAL_T20:
 					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo_BottomRightPart", "SHOW 0.0");
 					break;
 				}
@@ -2786,7 +2959,7 @@ public class Animation
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			}
-			break;
+			break;	
 			
 		case Constants.ISPL:
 

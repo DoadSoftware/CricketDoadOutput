@@ -512,8 +512,28 @@ public class Caption
 					break;
 					
 				case Constants.BENGAL_T20:
-					this_infobarGfx.infobar.setMiddle_section(whatToProcess.split(",")[2]);
-					status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers,matchAllData, whichSide);
+					
+					if(this_infobarGfx.infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
+						this_infobarGfx.infobar.setMiddle_section(whatToProcess.split(",")[2]);
+						status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers,matchAllData, whichSide);
+					}else {
+						if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BATSMAN)) {
+							this_infobarGfx.infobar.setMiddle_section(whatToProcess.split(",")[2]);
+							status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers,matchAllData, 1);
+						}else {
+							if(this_infobarGfx.infobar.getMiddle_section() != null && !this_infobarGfx.infobar.getMiddle_section().isEmpty()) {
+								if(!this_infobarGfx.infobar.getMiddle_section().equalsIgnoreCase(whatToProcess.split(",")[2])) {
+									whichSide = 2;
+								}else {
+									whichSide = 1;
+								}
+							}else {
+								whichSide = 1;
+							}
+							this_infobarGfx.infobar.setMiddle_section(whatToProcess.split(",")[2]);
+							status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers,matchAllData, whichSide);
+						}
+					}
 					break;	
 
 				case Constants.ISPL:
@@ -690,7 +710,7 @@ public class Caption
 									if(!this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(whatToProcess.split(",")[2])) {
 										// Add Data in Main Side1 -> SubSide2 between Boundary and Comparison and vice-versa
 										this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
-										status = this_infobarGfx.populateVizInfobarRightSection(false,print_writers, matchAllData, 1, 2);
+										status = this_infobarGfx.populateVizInfobarRightSection(false,print_writers, matchAllData, 2, 2);
 									}else {
 										// Add Data in Main Side1 -> SubSide1  between Boundary and Comparison and vice-versa
 										status = this_infobarGfx.populateVizInfobarRightSection(false,print_writers, matchAllData, 1, 1);
