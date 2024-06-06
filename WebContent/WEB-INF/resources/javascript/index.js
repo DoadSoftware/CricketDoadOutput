@@ -829,6 +829,41 @@ function addItemsToList(whatToProcess,dataToProcess)
 				row.insertCell(cellCount).appendChild(select);
 				setDropdownOptionToSelectOptionArray($(select),0);
 				cellCount = cellCount + 1;
+				
+				select = document.createElement('select');
+				select.id = 'selectLeftBottom';
+				select.name = select.id;
+	
+				option = document.createElement('option');
+				option.value = 'CRR';
+				option.text = 'Run Rate';
+				select.appendChild(option);
+	
+				session_match.match.inning.forEach(function(inn,index,arr){
+					if(inn.isCurrentInning == 'YES'){
+						if(inn.inningNumber == 1){
+							option = document.createElement('option');
+							option.value = 'TOSS';
+							option.text = 'Toss';
+							select.appendChild(option);
+						}
+						else{
+							option = document.createElement('option');
+							option.value = 'TARGET';
+							option.text = 'Target';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'RRR';
+							option.text = 'Required Rate';
+							select.appendChild(option);
+						}
+					}
+				});
+				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+				row.insertCell(cellCount).appendChild(select);
+				setDropdownOptionToSelectOptionArray($(select),1);
+				cellCount = cellCount + 1;
 				break; 	
 				
 			case 'ICC-U19-2023':
@@ -1077,13 +1112,46 @@ function addItemsToList(whatToProcess,dataToProcess)
 					
 				}
 					break;
+				
+				case 'BENGAL-T20':
+					header_text.innerHTML = 'LEFT BOTTON INFOBAR SECTION';
+					select = document.createElement('select');
+					select.id = 'selectLeftBottom';
+					select.name = select.id;
+		
+					option = document.createElement('option');
+					option.value = 'CRR';
+					option.text = 'Run Rate';
+					select.appendChild(option);
+		
+					session_match.match.inning.forEach(function(inn,index,arr){
+						if(inn.isCurrentInning == 'YES'){
+							if(inn.inningNumber == 1){
+								option = document.createElement('option');
+								option.value = 'TOSS';
+								option.text = 'Toss';
+								select.appendChild(option);
+							}
+							else{
+								
+								option = document.createElement('option');
+								option.value = 'RRR';
+								option.text = 'Required Rate';
+								select.appendChild(option);
+								
+								option = document.createElement('option');
+								option.value = 'TARGET';
+								option.text = 'Target';
+								select.appendChild(option);
+							}
+						}
+					});
+					break;	
 				}
 				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
 				row.insertCell(cellCount).appendChild(select);
 				setDropdownOptionToSelectOptionArray($(select),0);
 				cellCount = cellCount + 1;
-				
-
 			break;
 			
 		case 'Alt_2':

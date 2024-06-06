@@ -495,6 +495,10 @@ public class Caption
 					this_infobarGfx.infobar.setLeft_bottom(whatToProcess.split(",")[2]);
 					status = this_infobarGfx.populateVizInfobarLeftBottom(print_writers, matchAllData, whichSide);
 					break;
+				case Constants.BENGAL_T20:
+					this_infobarGfx.infobar.setLeft_bottom(whatToProcess.split(",")[2]);
+					status = this_infobarGfx.populateVizInfobarLeftBottom(print_writers, matchAllData, whichSide);
+					break;	
 				}
 				break;
 			case "Control_F8":
@@ -506,6 +510,11 @@ public class Caption
 					this_infobarGfx.infobar.setMiddle_section(whatToProcess.split(",")[2]);
 					status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers,matchAllData, whichSide);
 					break;
+					
+				case Constants.BENGAL_T20:
+					this_infobarGfx.infobar.setMiddle_section(whatToProcess.split(",")[2]);
+					status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers,matchAllData, whichSide);
+					break;	
 
 				case Constants.ISPL:
 					
@@ -734,6 +743,11 @@ public class Caption
 					this_infobarGfx.Comms_Name = whatToProcess;
 					status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
 					break;
+				case Constants.BENGAL_T20:
+					this_infobarGfx.infobar.setMiddle_section("COMMENTATORS");
+					this_infobarGfx.Comms_Name = whatToProcess;
+					status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
+					break;	
 				case Constants.ISPL:
 					if(this_infobarGfx.infobar.getFull_section() != null && !this_infobarGfx.infobar.getFull_section().isEmpty()) {
 						whichSide = 2;

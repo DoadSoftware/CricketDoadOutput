@@ -2284,7 +2284,7 @@ public class Animation
 				case "Alt_1":
 					switch (config.getBroadcaster().toUpperCase()) {
 					case Constants.BENGAL_T20:
-						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_Bottom_Left", "START");
+						processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Section3_Change", "START");
 						break;
 					}
 					
@@ -2292,11 +2292,24 @@ public class Animation
 				case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_9": case "Alt_0":
 					switch (config.getBroadcaster().toUpperCase()) {
 					case Constants.BENGAL_T20:
-						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo", "START");
-						if(infobar.getRight_section()!= null && !infobar.getRight_section().isEmpty()) {
-							processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_All$In_Out", "SHOW 0.0");
-							infobar.setRight_section("");
+						
+						if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BATSMAN)) {
+							processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Fade_For_Analytics", "CONTINUE");
+							processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Analytics", "CONTINUE");
+//							infobar.setRight_section("");
+							processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Fade_For_Analytics", "SHOW 0.0");
+							processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Analytics", "SHOW 0.0");
+						}else {
+							if(infobar.getMiddle_section()!= null && !infobar.getMiddle_section().isEmpty()) {
+								processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Analytics", "START");
+//								infobar.setRight_section("");
+							}else {
+								processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Fade_For_Analytics", "START");
+								processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Analytics", "START");
+								infobar.setMiddle_section(whatToProcess.split(",")[2]);
+							}
 						}
+						System.out.println("infobar.getMiddle_section() = " + infobar.getMiddle_section());
 						break;
 					}
 					
