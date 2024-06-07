@@ -280,10 +280,10 @@ public class InfobarGfx
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Result$Right$In$img_Badge*TEXTURE*IMAGE SET " + 
 							Constants.BENGAL_ICONS_PATH + matchAllData.getSetup().getAwayTeam().getTeamName4() + "\0", print_writers);
 					
-					if(CricketFunctions.getRequiredRuns(matchAllData) <= 1 || CricketFunctions.getWicketsLeft(matchAllData) <= 0 || 
+					if(CricketFunctions.getRequiredRuns(matchAllData) <= 1 || CricketFunctions.getWicketsLeft(matchAllData, inning.getInningNumber()) <= 0 || 
 							CricketFunctions.getRequiredBalls(matchAllData)  == 0) {
 						
-						if(CricketFunctions.getRequiredRuns(matchAllData) == 0 || CricketFunctions.getWicketsLeft(matchAllData) <= 0 || 
+						if(CricketFunctions.getRequiredRuns(matchAllData) == 0 || CricketFunctions.getWicketsLeft(matchAllData, inning.getInningNumber()) <= 0 || 
 								CricketFunctions.getRequiredBalls(matchAllData)  == 0) {
 							
 							if(matchAllData.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.SUPER_OVER)) {
@@ -296,9 +296,9 @@ public class InfobarGfx
 									CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Result$Middle$txt_Title*GEOM*TEXT SET " + 
 											matchAllData.getMatch().getInning().get(1).getBatting_team().getTeamName1().toUpperCase() + "\0", print_writers);
 									CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Result$Middle$txt_Subtitle*GEOM*TEXT SET " + 
-											"WIN BY " + CricketFunctions.getWicketsLeft(matchAllData) + " WICKET" + 
-											CricketFunctions.Plural(CricketFunctions.getWicketsLeft(matchAllData)).toUpperCase() + "\0", print_writers);
-								}else if (CricketFunctions.getWicketsLeft(matchAllData) <= 0 || 
+											"WIN BY " + CricketFunctions.getWicketsLeft(matchAllData, inning.getInningNumber()) + " WICKET" + 
+											CricketFunctions.Plural(CricketFunctions.getWicketsLeft(matchAllData, inning.getInningNumber())).toUpperCase() + "\0", print_writers);
+								}else if (CricketFunctions.getWicketsLeft(matchAllData,inning.getInningNumber()) <= 0 || 
 										CricketFunctions.getRequiredBalls(matchAllData)  == 0) {
 									CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Result$Middle$txt_Title*GEOM*TEXT SET " + 
 											matchAllData.getMatch().getInning().get(1).getBowling_team().getTeamName1().toUpperCase() + "\0", print_writers);
