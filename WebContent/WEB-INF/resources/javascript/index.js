@@ -1903,7 +1903,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 		case 'u':
 			
 			switch($('#selected_broadcaster').val().toUpperCase()){
-				case 'ISPL':
+				case 'ISPL': case 'BENGAL-T20':
 					header_text.innerHTML = '30-50 SPLIT';
 			
 					select = document.createElement('select');

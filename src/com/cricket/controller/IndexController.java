@@ -452,6 +452,7 @@ public class IndexController
 					case Constants.LOWER_THIRD: 
 					case Constants.NAME_SUPERS + Constants.LOWER_THIRD:
 					case Constants.BOUNDARIES + Constants.LOWER_THIRD:
+						System.out.println("HELL");
 						this_animation.processL3Preview(valueToProcess, print_writers, this_caption.whichSide, session_configuration,session_match);
 						break;
 					case Constants.BUGS:
