@@ -1224,17 +1224,17 @@ public class Animation
 				switch(config.getBroadcaster().toUpperCase()) {
 				case Constants.BENGAL_T20:
 					if(whatToProcess.split(",")[0].equalsIgnoreCase("w")) {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Wipes$Select*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Animation$Select_Type*FUNCTION*Omo*vis_con SET 4 \0", print_writers);
 					}else if(whatToProcess.split(",")[0].equalsIgnoreCase("i")) {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Wipes$Select*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Animation$Select_Type*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
 					}else if(whatToProcess.split(",")[0].equalsIgnoreCase("f")) {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Wipes$Select*FUNCTION*Omo*vis_con SET 3 \0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Animation$Select_Type*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
 					}else if(whatToProcess.split(",")[0].equalsIgnoreCase("s")) {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Wipes$Select*FUNCTION*Omo*vis_con SET 4 \0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Animation$Select_Type*FUNCTION*Omo*vis_con SET 3 \0", print_writers);
 					}
 					
 					if(this.infobar.isInfobar_on_screen() == true && !this.infobar.isInfobar_pushed()) {
-						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Wipes", "START");
+						processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Animation", "START");
 					}
 					break;
 				}
@@ -1248,45 +1248,45 @@ public class Animation
 					switch (whatToProcess.split(",")[0]) {
 					case "Alt_f":
 						if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.TWO_LINER_INFOBAR)) {
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Overall_Transformation*"
-								+ "ANIMATION*KEY*$Shrink_In*VALUE SET 120.0 -436.0 0.0\0",print_writers);
-							processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Small", "START");
+//							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Overall_Transformation*"
+//								+ "ANIMATION*KEY*$Shrink_In*VALUE SET 120.0 -436.0 0.0\0",print_writers);
+							processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Shrink", "START");
 							this.infobar.setInfobar_status(Constants.FORCED + Constants.SHRUNK_INFOBAR);
 						} else if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.FORCED + Constants.SHRUNK_INFOBAR)) {
-							processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Small", "CONTINUE REVERSE");
+							processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Shrink", "CONTINUE");
 							this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
 						}
 						break;
 					case "Alt_g":
 						if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.TWO_LINER_INFOBAR)) {
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Overall_Transformation*"
-								+ "ANIMATION*KEY*$Shrink_In*VALUE SET 183.0 -436.0 0.0\0",print_writers);
-							processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Small", "START");
+//							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Overall_Transformation*"
+//								+ "ANIMATION*KEY*$Shrink_In*VALUE SET 183.0 -436.0 0.0\0",print_writers);
+							processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Shrink", "START");
 							this.infobar.setInfobar_status(Constants.FORCED + Constants.MIDDLE + Constants.SHRUNK_INFOBAR);
 						} else if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.FORCED + Constants.MIDDLE + Constants.SHRUNK_INFOBAR)) {
-							processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Small", "CONTINUE REVERSE");
+							processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Shrink", "CONTINUE");
 							this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
 						}
 						break;
 					case Constants.SHRUNK_INFOBAR:
 						if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.TWO_LINER_INFOBAR)) {
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Overall_Transformation*"
-								+ "ANIMATION*KEY*$Shrink_In*VALUE SET 120.0 -436.0 0.0\0",print_writers);
-							processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Small", "START");
+//							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Overall_Transformation*"
+//								+ "ANIMATION*KEY*$Shrink_In*VALUE SET 120.0 -436.0 0.0\0",print_writers);
+							processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Shrink", "START");
 							this.infobar.setInfobar_status(Constants.SHRUNK_INFOBAR);
 						} else if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.SHRUNK_INFOBAR)) {
-							processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Small", "CONTINUE REVERSE");
+							processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Shrink", "CONTINUE");
 							this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
 						}
 						break;
 					case Constants.MIDDLE + Constants.SHRUNK_INFOBAR:
 						if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.TWO_LINER_INFOBAR)) {
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Overall_Transformation*"
-								+ "ANIMATION*KEY*$Shrink_In*VALUE SET 183.0 -436.0 0.0\0",print_writers);
-							processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Small", "START");
+//							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Overall_Transformation*"
+//								+ "ANIMATION*KEY*$Shrink_In*VALUE SET 183.0 -436.0 0.0\0",print_writers);
+							processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Shrink", "START");
 							this.infobar.setInfobar_status(Constants.MIDDLE + Constants.SHRUNK_INFOBAR);
 						} else if(this.infobar.getInfobar_status().equalsIgnoreCase(Constants.MIDDLE + Constants.SHRUNK_INFOBAR)) {
-							processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Small", "CONTINUE REVERSE");
+							processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Shrink", "CONTINUE");
 							this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
 						}
 						break;

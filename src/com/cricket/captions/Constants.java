@@ -42,6 +42,8 @@ public class Constants
 	public final static String BENGAL_T20 = "BENGAL-T20";
 	public final static String BENGAL_ICONS_PATH = "IMAGE*/Default/Essentials/Badge/";
 	public final static String BENGAL_PHOTO_PATH = "C:\\\\Images\\\\BENGAL\\\\";
+	public final static String BENGAL_BASE_PATH = "IMAGE*/Default/Essentials/Base";
+	public final static String BENGAL_TEXT_PATH = "IMAGE*/Default/Essentials/Text";
 	
 	public final static String LOCALHOST = "localhost";
 	public final static String ICC_U19_2023 = "ICC-U19-2023";
