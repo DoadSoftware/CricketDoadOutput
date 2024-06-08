@@ -136,6 +136,9 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 		document.getElementById('which_keypress').value = dataToProcess;
 		//alert('dataToProcess = ' + dataToProcess);
 		switch(dataToProcess) {
+		case '7':
+			processCricketProcedures('HEAD_TO_HEAD_FILE');
+			break;
 		case 'SPEED':
 			processCricketProcedures('SHOW_SPEED');
 			break;
@@ -252,7 +255,21 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 					addItemsToList(dataToProcess,null); 
 					break;
 				}
-				break;*/			
+				break;*/
+			case 'F7':
+				switch($('#selected_broadcaster').val().toUpperCase()){
+					case 'BENGAL-T20':
+					addItemsToList(dataToProcess,null); 
+					break;
+				}
+			break;		
+			case 'F11':
+				switch($('#selected_broadcaster').val().toUpperCase()){
+					case 'BENGAL-T20':
+					addItemsToList(dataToProcess,null); 
+					break;
+				}
+			break;	
 			case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_7':  case 'Alt_5': //case 'Alt_6': case 'Alt_8': case 'Alt_3': case 'Alt_4': case 'F7': case 'F11':
 			case 'Control_F5': case 'Shift_T': case 'Control_F9': case 'F5': case 'F6': case 'Alt_w':  case 'Control_j': case 'Alt_F8':
 			case 'F8': case 'F9':  case 'u': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6': case 'Control_y':
@@ -342,6 +359,9 @@ function processCricketProcedures(whatToProcess,dataToProcess)
         dataType : 'json',
         success : function(data) {
 			switch(whatToProcess) {
+			case 'HEAD_TO_HEAD_FILE':
+				alert(data.match.matchFileName + ' H2H FILE IS CREATED');
+				break;
 			case 'GET-CONFIG-DATA':
 				initialiseForm('UPDATE-CONFIG',data);
 				break;
@@ -492,7 +512,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 		}
 		break;*/
 		
-	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'Alt_w': case 'Control_j': case 'F8': case 'F9': case 'F10': //case 'F7': case 'F11':
+	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'Alt_w': case 'Control_j': case 'F8': case 'F9': case 'F10': case 'F7': case 'F11':
 	case 'Control_F5': case 'Control_F9': case 'Shift_T': case 'u': case 'p': case 'Control_p': //case 'Control_d': case 'Control_e':
 	case 'z': case 'x': case 'c': case 'v': case 'Shift_F11': case 'Control_y': case 'Alt_F8': case 'Alt_F1': case 'Alt_F2':
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'y': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q':
@@ -2026,24 +2046,29 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			switch(whatToProcess) {
 			case 'Control_s':
-				select = document.createElement('select');
-				select.id = 'selectType';
-				select.name = select.id;
-				
-				option = document.createElement('option');
-				option.value = 'WITH_CURRENT';
-				option.text = 'With Current Match';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = 'WITHOUT_CURRENT';
-				option.text = 'Without Current Match';
-				select.appendChild(option);
-				
-				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
-				row.insertCell(cellCount).appendChild(select);
-				setDropdownOptionToSelectOptionArray($(select),1);
-				cellCount = cellCount + 1;
+				switch($('#selected_broadcaster').val().toUpperCase()){
+					case 'BENGAL-T20':
+					break;
+					default:
+						select = document.createElement('select');
+						select.id = 'selectType';
+						select.name = select.id;
+						
+						option = document.createElement('option');
+						option.value = 'WITH_CURRENT';
+						option.text = 'With Current Match';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = 'WITHOUT_CURRENT';
+						option.text = 'Without Current Match';
+						select.appendChild(option);
+						
+						select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+						row.insertCell(cellCount).appendChild(select);
+						setDropdownOptionToSelectOptionArray($(select),1);
+						cellCount = cellCount + 1;
+				}
 				break;
 			}
 			break;
@@ -2488,24 +2513,29 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
 			
-			select = document.createElement('select');
-			select.id = 'selectType';
-			select.name = select.id;
-			
-			option = document.createElement('option');
-			option.value = 'WITH_CURRENT';
-			option.text = 'With Current Match';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'WITHOUT_CURRENT';
-			option.text = 'Without Current Match';
-			select.appendChild(option);
-			
-			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
-			row.insertCell(cellCount).appendChild(select);
-			setDropdownOptionToSelectOptionArray($(select),1);
-			cellCount = cellCount + 1;
+			switch($('#selected_broadcaster').val().toUpperCase()){
+					case 'BENGAL-T20':
+					break;
+					default:
+						select = document.createElement('select');
+						select.id = 'selectType';
+						select.name = select.id;
+						
+						option = document.createElement('option');
+						option.value = 'WITH_CURRENT';
+						option.text = 'With Current Match';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = 'WITHOUT_CURRENT';
+						option.text = 'Without Current Match';
+						select.appendChild(option);
+						
+						select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+						row.insertCell(cellCount).appendChild(select);
+						setDropdownOptionToSelectOptionArray($(select),1);
+						cellCount = cellCount + 1;
+				}
 			break;
 				
 		case 'Control_F9':  case 'Control_F4'://BowlerStyle
@@ -3459,7 +3489,6 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			break;
 		case 'F7': case 'Control_d'://Lt Bat Profile
-		
 			switch(whatToProcess){
 				case 'F7':
 				header_text.innerHTML = 'BAT PLAYER PROFILE';
@@ -3532,26 +3561,39 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select.id = 'selectProfile';
 			select.name = select.id;
 			
-			option = document.createElement('option');
-			option.value = 'U19ODI';
-			option.text = 'U19 ODI';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'LIST A';
-			option.text = 'LIST A';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'ACCU19';
-			option.text = 'ACC U19';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'SA TRI-NATION 2023-24';
-			option.text = 'SA TRI-NATION';
-			select.appendChild(option);
-			
+			switch($('#selected_broadcaster').val().toUpperCase()){
+				case 'BENGAL-T20':
+					option = document.createElement('option');
+					option.value = 'DT20';
+					option.text = 'DT20';
+					select.appendChild(option);
+				
+					option = document.createElement('option');
+					option.value = 'IT20';
+					option.text = 'IT20';
+					select.appendChild(option);
+				break;
+				default:
+					option = document.createElement('option');
+					option.value = 'U19ODI';
+					option.text = 'U19 ODI';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'LIST A';
+					option.text = 'LIST A';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'ACCU19';
+					option.text = 'ACC U19';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'SA TRI-NATION 2023-24';
+					option.text = 'SA TRI-NATION';
+					select.appendChild(option);
+			}
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
 			row.insertCell(cellCount).appendChild(select);
 			setDropdownOptionToSelectOptionArray($(select),1);
@@ -3977,25 +4019,39 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select.id = 'selectProfile';
 			select.name = select.id;
 			
-			option = document.createElement('option');
-			option.value = 'U19ODI';
-			option.text = 'U19 ODI';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'LIST A';
-			option.text = 'LIST A';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'ACCU19';
-			option.text = 'ACC U19';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'SA TRI-NATION 2023-24';
-			option.text = 'SA TRI-NATION';
-			select.appendChild(option);
+			switch($('#selected_broadcaster').val().toUpperCase()){
+				case 'BENGAL-T20':
+					option = document.createElement('option');
+					option.value = 'DT20';
+					option.text = 'DT20';
+					select.appendChild(option);
+				
+					option = document.createElement('option');
+					option.value = 'IT20';
+					option.text = 'IT20';
+					select.appendChild(option);
+				break;
+				default:
+					option = document.createElement('option');
+					option.value = 'U19ODI';
+					option.text = 'U19 ODI';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'LIST A';
+					option.text = 'LIST A';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'ACCU19';
+					option.text = 'ACC U19';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'SA TRI-NATION 2023-24';
+					option.text = 'SA TRI-NATION';
+					select.appendChild(option);
+			}
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
 			row.insertCell(cellCount).appendChild(select);

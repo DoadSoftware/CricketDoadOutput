@@ -250,6 +250,9 @@ public class IndexController
 					CricketUtil.SETUP + "," + CricketUtil.MATCH + "," + CricketUtil.EVENT, session_match));			
 			session_match.getSetup().setMatchFileTimeStamp(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
 			
+			headToHead = CricketFunctions.extractHeadToHead(session_match, cricketService);
+			past_tournament_stats = CricketFunctions.extractTournamentData("PAST_MATCHES_DATA", false, headToHead, cricketService, session_match, null);
+			
 			GetVariousDBData("NEW", session_configuration);
 			
 			show_speed = true;
@@ -299,6 +302,10 @@ public class IndexController
 			throws Exception 
 	{
 		switch (whatToProcess.toUpperCase()) {
+		case "HEAD_TO_HEAD_FILE":
+			CricketFunctions.exportMatchData(session_match);
+			
+			return JSONObject.fromObject(session_match).toString();
 		case "GET-CONFIG-DATA":
 
 			session_configuration = (Configuration)JAXBContext.newInstance(Configuration.class).createUnmarshaller().unmarshal(
@@ -307,6 +314,9 @@ public class IndexController
 			return JSONObject.fromObject(session_configuration).toString();
 			
 		case "RE_READ_DATA":
+			
+			headToHead = CricketFunctions.extractHeadToHead(session_match, cricketService);
+			past_tournament_stats = CricketFunctions.extractTournamentData("PAST_MATCHES_DATA", false, headToHead, cricketService, session_match, null);
 			
 			GetVariousDBData("UPDATE", session_configuration);
 			return JSONObject.fromObject(session_match).toString();
@@ -689,7 +699,7 @@ public class IndexController
 				this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), cricket_matches, session_name_super,
 					session_bugs,session_infoBarStats,session_fixture, session_team, session_ground,session_variousText, session_commentator, session_staff, 
 					session_players, session_pott, session_teamChanges, new FullFramesGfx(),new LowerThirdGfx(), new InfobarGfx(), new BugsAndMiniGfx(), 1, "", "-", 
-					past_tournament_stats,past_tape,session_dls);
+					past_tournament_stats,past_tape,session_dls, headToHead, past_tournament_stats, cricketService);
 				this_caption.this_infobarGfx.previous_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixes("COMBINED_PAST_CURRENT_MATCH_DATA", 
 					cricket_matches, session_match, null).getTournament_sixes());
 				break;

@@ -18,6 +18,7 @@ import com.cricket.model.Configuration;
 import com.cricket.model.DuckWorthLewis;
 import com.cricket.model.Fixture;
 import com.cricket.model.Ground;
+import com.cricket.model.HeadToHead;
 import com.cricket.model.InfobarStats;
 import com.cricket.model.Inning;
 import com.cricket.model.MatchAllData;
@@ -29,6 +30,7 @@ import com.cricket.model.StatsType;
 import com.cricket.model.Team;
 import com.cricket.model.Tournament;
 import com.cricket.model.VariousText;
+import com.cricket.service.CricketService;
 import com.cricket.model.Staff;
 import com.cricket.util.CricketUtil;
 
@@ -60,6 +62,9 @@ public class Caption
 	public List<Player> Players;
 	public List<POTT> Pott;
 	public List<String> TeamChanges;
+	public List<HeadToHead> headToHead;
+	public List<Tournament> past_tournament_stats;
+	public CricketService cricketService;
 	
 	public BattingCard battingCard;
 	public Inning inning;
@@ -83,7 +88,7 @@ public class Caption
 		List<Team> Teams, List<Ground> Grounds, List<VariousText> varioustText, List<Commentator> commentators, List<Staff> staff, List<Player> players, 
 		List<POTT> pott, List<String> teamChanges, FullFramesGfx this_fullFramesGfx,LowerThirdGfx this_lowerThirdGfx, InfobarGfx this_infobarGfx, 
 		BugsAndMiniGfx this_bugsAndMiniGfx, int whichSide, String whichGraphhicsOnScreen, String slashOrDash, List<Tournament> tournament,
-		List<BestStats> tapeball,List<DuckWorthLewis> dls) {
+		List<BestStats> tapeball,List<DuckWorthLewis> dls, List<HeadToHead> headToHead, List<Tournament> past_tournament_stats, CricketService cricketService) {
 	
 		super();
 		this.print_writers = print_writers;
@@ -105,12 +110,16 @@ public class Caption
 		this.Players = players;
 		this.Pott = pott;
 		this.TeamChanges = teamChanges;
+		this.headToHead = headToHead;
+		this.past_tournament_stats = past_tournament_stats;
+		this.cricketService = cricketService;
+		
 		
 		this.dls = dls;
 		this.this_fullFramesGfx = new FullFramesGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
 				fixTures, Teams, Grounds,tournament, VariousText, players, pott, teamChanges);
 		this.this_lowerThirdGfx = new LowerThirdGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
-				nameSupers, Teams, Grounds, tournament,tapeball, dls, staff, players, pott, varioustText);
+				nameSupers, Teams, Grounds, tournament,tapeball, dls, staff, players, pott, varioustText, headToHead, past_tournament_stats, cricketService);
 		this.whichSide = whichSide;
 		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers, statistics, statsTypes, infobarStats, 
 				Grounds, Commentators, tournament_matches, dls, players);
