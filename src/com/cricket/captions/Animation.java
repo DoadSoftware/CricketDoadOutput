@@ -1160,6 +1160,7 @@ public class Animation
 				if(this.infobar.isInfobar_on_screen() == true) {
 					
 					processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Ident_To_Normal", "CONTINUE REVERSE");
+					processAnimation(Constants.FRONT, print_writers, "Loop", "START");
 					
 					infobar.setMiddle_section("");
 					infobar.setFull_section("");
@@ -1170,6 +1171,7 @@ public class Animation
 				}else {
 					
 					processAnimation(Constants.FRONT, print_writers, "anim_Infobar$InOut", "START");
+					processAnimation(Constants.FRONT, print_writers, "Loop", "START");
 					
 					infobar.setMiddle_section("");
 					infobar.setFull_section("");
@@ -1184,6 +1186,7 @@ public class Animation
 				if(this.infobar.isInfobar_on_screen()) {
 					
 					processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Ident_To_Normal", "START");
+					processAnimation(Constants.FRONT, print_writers, "Loop", "START");
 					
 					this.infobar.setInfobar_on_screen(true);
 					this.infobar.setInfobar_pushed(false);
@@ -1192,6 +1195,7 @@ public class Animation
 					
 					processAnimation(Constants.FRONT, print_writers, "anim_Infobar$InOut", "START");
 					processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Ident_To_Normal", "START");
+					processAnimation(Constants.FRONT, print_writers, "Loop", "START");
 					
 					this.infobar.setInfobar_on_screen(true);
 					this.infobar.setInfobar_pushed(false);
@@ -2334,8 +2338,15 @@ public class Animation
 							processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Fade_For_Analytics", "SHOW 0.0");
 							processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Analytics", "SHOW 0.0");
 						}else {
+							System.out.println("infobar = " + infobar.getMiddle_section());
 							if(infobar.getMiddle_section()!= null && !infobar.getMiddle_section().isEmpty()) {
-								processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Analytics", "START");
+								
+								if(infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
+									processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Fade_For_Analytics", "START");
+									processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Analytics", "START");
+								}else {
+									processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Analytics$Change", "START");
+								}
 //								infobar.setRight_section("");
 							}else {
 								processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Fade_For_Analytics", "START");
@@ -2343,6 +2354,7 @@ public class Animation
 								infobar.setMiddle_section(whatToProcess.split(",")[2]);
 							}
 						}
+						infobar.setMiddle_section(whatToProcess.split(",")[2]);
 						System.out.println("infobar.getMiddle_section() = " + infobar.getMiddle_section());
 						break;
 					}
@@ -2861,7 +2873,7 @@ public class Animation
 				switch (config.getBroadcaster().toUpperCase()) {
 
 				case Constants.BENGAL_T20:
-					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo_BottomRightPart", "SHOW 0.0");
+					processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Section1_Change", "SHOW 0.0");
 					break;
 				}
 				
@@ -2869,7 +2881,7 @@ public class Animation
 			case "Alt_8":
 				if(!whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
 					if(infobar.getRight_section()!= null && !infobar.getRight_section().isEmpty()) {
-						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_All$Change", "SHOW 0.0");
+						processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Section_2$Change", "SHOW 0.0");
 					}
 				}
 				break;

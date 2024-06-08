@@ -610,12 +610,9 @@ public class Caption
 					}
 					break;
 				case Constants.BENGAL_T20:
-					if(this_infobarGfx.infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
-						this_infobarGfx.infobar.setRight_bottom(whatToProcess.split(",")[2]);
-						status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, 1, whichSide);
-					}else {
-						status = "IN Alt+2 Section BASTMAN/BOWLER NOT SELECTED";
-					}
+					System.out.println("whatToProcess.split(\",\")[2] = " + whatToProcess.split(",")[2]);
+					this_infobarGfx.infobar.setRight_bottom(whatToProcess.split(",")[2]);
+					status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, whichSide, whichSide);
 					break;	
 				case Constants.ISPL:
 					if(this_infobarGfx.infobar.getRight_bottom().equalsIgnoreCase(CricketUtil.BOWLER)) {
@@ -701,6 +698,7 @@ public class Caption
 								this_infobarGfx.infobar.setRight_bottom("BOWLING_END");
 								
 								status = this_infobarGfx.populateVizInfobarBowler(print_writers, matchAllData, 1);
+								status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, whichSide, whichSide);
 							}else {
 								if(this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(CricketUtil.BOWLER)) { 
 									// When Goes Bowler to Boundary/Compare Section
