@@ -583,9 +583,26 @@ public class Caption
 				status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
 				break;
 			case "Alt_5":
-				this_infobarGfx.infobar.setMiddle_section("LAST_X_BALLS");
-				this_infobarGfx.lastXballs = Integer.valueOf(whatToProcess.split(",")[2]);
-				status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
+				
+				if(this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(CricketUtil.BOWLER)) { 
+					// When Goes Bowler to Boundary/Compare Section
+					this_infobarGfx.infobar.setRight_section("LAST_X_BALLS");
+					this_infobarGfx.lastXballs = Integer.valueOf(whatToProcess.split(",")[2]);
+					status = this_infobarGfx.populateVizInfobarRightSection(false,print_writers, matchAllData, 1, 1);
+				}else {
+					if(!this_infobarGfx.infobar.getRight_section().equalsIgnoreCase("LAST_X_BALLS")) {
+						// Add Data in Main Side1 -> SubSide2 between Boundary and Comparison and vice-versa
+						this_infobarGfx.infobar.setRight_section("LAST_X_BALLS");
+						this_infobarGfx.lastXballs = Integer.valueOf(whatToProcess.split(",")[2]);
+						status = this_infobarGfx.populateVizInfobarRightSection(false,print_writers, matchAllData, 2, 2);
+					}else {
+						// Add Data in Main Side1 -> SubSide1  between Boundary and Comparison and vice-versa
+						this_infobarGfx.infobar.setRight_section("LAST_X_BALLS");
+						this_infobarGfx.lastXballs = Integer.valueOf(whatToProcess.split(",")[2]);
+						status = this_infobarGfx.populateVizInfobarRightSection(false,print_writers, matchAllData, 1, 1);
+					}
+				}
+				
 				break;
 			case "Alt_y":
 				status = this_infobarGfx.populateTarget(print_writers,matchAllData);
@@ -734,6 +751,11 @@ public class Caption
 					this_infobarGfx.infobarStatsId = Integer.valueOf(whatToProcess.split(",")[2]);
 					status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
 					break;
+				case Constants.BENGAL_T20:
+					this_infobarGfx.infobar.setMiddle_section("FREE_TEXT");
+					this_infobarGfx.infobarStatsId = Integer.valueOf(whatToProcess.split(",")[2]);
+					status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
+					break;	
 				case Constants.ISPL:
 					if(this_infobarGfx.infobar.getFull_section() != null && !this_infobarGfx.infobar.getFull_section().isEmpty()) {
 						if(this_infobarGfx.infobarStatsId != Integer.valueOf(whatToProcess.split(",")[2])) {

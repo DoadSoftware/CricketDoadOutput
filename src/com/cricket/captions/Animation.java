@@ -2326,7 +2326,7 @@ public class Animation
 					}
 					
 					break;
-				case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_9": case "Alt_0":
+				case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_6": case "Alt_9": case "Alt_0":
 					switch (config.getBroadcaster().toUpperCase()) {
 					case Constants.BENGAL_T20:
 						
@@ -2368,7 +2368,7 @@ public class Animation
 						break;
 					}
 					break;
-				case "Alt_8":
+				case "Alt_8": case "Alt_5":
 					if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
 						processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Fade_For_Section_2", "CONTINUE");
 						processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Section_2", "CONTINUE REVERSE");
@@ -2860,7 +2860,7 @@ public class Animation
 //			case "Alt_c":
 //				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$TopStage_Change", "SHOW 0.0");
 //				break;
-			case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_9": case "Alt_0":
+			case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_6": case "Alt_9": case "Alt_0":
 				TimeUnit.MILLISECONDS.sleep(1000);
 				switch (config.getBroadcaster().toUpperCase()) {
 				case Constants.BENGAL_T20:
@@ -2878,7 +2878,7 @@ public class Animation
 				}
 				
 				break;
-			case "Alt_8":
+			case "Alt_8": case "Alt_5":
 				if(!whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
 					if(infobar.getRight_section()!= null && !infobar.getRight_section().isEmpty()) {
 						processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Section_2$Change", "SHOW 0.0");

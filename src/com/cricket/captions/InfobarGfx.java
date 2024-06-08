@@ -2128,6 +2128,78 @@ public class InfobarGfx
 			case Constants.BENGAL_T20: 
 				if(infobar.getRight_section() != null && !infobar.getRight_section().isEmpty()) {
 					switch(infobar.getRight_section().toUpperCase()) {
+					case "LAST_X_BALLS":
+						
+						inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
+						if(inning == null) {
+							return "populateVizInfobarMiddleSection: Inning returned is NULL";
+						}
+						//System.out.println(lastXballs);
+						this_data_str = new ArrayList<String>();
+						this_data_str.add(CricketFunctions.getlastthirtyballsdata(matchAllData, slashOrDash, matchAllData.getEventFile().getEvents(), lastXballs));
+						
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Section_2_Grp$Side" + WhichSide + "$BaseGrp$"
+								+ "LeftMask$img_Base1*TEXTURE*IMAGE SET " + 
+								Constants.BENGAL_BASE_PATH + "1/" + inning.getBatting_team().getTeamName4() + "\0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Section_2_Grp$Side" + WhichSide + "$BaseGrp$"
+								+ "GlossBaseGrp$img_Base1*TEXTURE*IMAGE SET " + 
+								Constants.BENGAL_BASE_PATH + "1/" + inning.getBatting_team().getTeamName4() + "\0", print_writers);
+						
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Section_2_Grp$Side" + WhichSide + "$Select_DataType$"
+								+ "Last_X_Overs$Figures_Grp$img_This_Over*TEXTURE*IMAGE SET " + 
+								Constants.BENGAL_OVER_PATH + inning.getBatting_team().getTeamName4() + "\0", print_writers);
+						
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Section_2_Grp$Side" + WhichSide + "$Select_DataType$"
+								+ "Last_X_Overs$img_Text1*TEXTURE*IMAGE SET " + 
+								Constants.BENGAL_TEXT_PATH + "1/" + inning.getBatting_team().getTeamName4() + "\0", print_writers);
+						
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Section_2_Grp$Side" + WhichSide + "$Select_DataType$"
+								+ "Last_X_Overs$Runs_Grp$Header_Grp$img_Text1*TEXTURE*IMAGE SET " + 
+								Constants.BENGAL_TEXT_PATH + "1/" + inning.getBatting_team().getTeamName4() + "\0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Section_2_Grp$Side" + WhichSide + "$Select_DataType$"
+								+ "Last_X_Overs$Runs_Grp$Figures_Grp$img_Text1*TEXTURE*IMAGE SET " + 
+								Constants.BENGAL_TEXT_PATH + "1/" + inning.getBatting_team().getTeamName4() + "\0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Section_2_Grp$Side" + WhichSide + "$Select_DataType$"
+								+ "Last_X_Overs$Runs_Grp$Figures_Grp$img_This_Over*TEXTURE*IMAGE SET " + 
+								Constants.BENGAL_OVER_PATH + inning.getBatting_team().getTeamName4() + "\0", print_writers);
+						
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Section_2_Grp$Side" + WhichSide + "$Select_DataType$"
+								+ "Last_X_Overs$Wickets_Grp$Header_Grp$img_Text1*TEXTURE*IMAGE SET " + 
+								Constants.BENGAL_TEXT_PATH + "1/" + inning.getBatting_team().getTeamName4() + "\0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Section_2_Grp$Side" + WhichSide + "$Select_DataType$"
+								+ "Last_X_Overs$Wickets_Grp$Figures_Grp$img_Text1*TEXTURE*IMAGE SET " + 
+								Constants.BENGAL_TEXT_PATH + "1/" + inning.getBatting_team().getTeamName4() + "\0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Section_2_Grp$Side" + WhichSide + "$Select_DataType$"
+								+ "Last_X_Overs$Wickets_Grp$Figures_Grp$img_This_Over*TEXTURE*IMAGE SET " + 
+								Constants.BENGAL_OVER_PATH + inning.getBatting_team().getTeamName4() + "\0", print_writers);
+						
+						if(this_data_str.get(this_data_str.size()-1) == null || this_data_str.get(this_data_str.size()-1).split(slashOrDash).length > 4) {
+							return "populateVizInfobarMiddleSection: Last " + lastXballs + " Balls data returned invalid";
+						}
+						
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$"
+								+ "Section_2_Grp$Side" + WhichSide + "$Select_DataType*FUNCTION*Omo*vis_con SET 6 \0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Section_2_Grp$Side" + WhichSide + "$Select_DataType$"
+								+ "Last_X_Overs$img_Text1$txt_Head*GEOM*TEXT SET " + 
+								 "LAST " + lastXballs + " BALLS" + "\0", print_writers);
+						
+						
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Section_2_Grp$Side" + WhichSide + "$Select_DataType$"
+								+ "Last_X_Overs$Runs_Grp$txt_Header*GEOM*TEXT SET " + 
+								"RUN" + CricketFunctions.Plural(Integer.valueOf(this_data_str.get(this_data_str.size()-1).split(slashOrDash)[0])).toUpperCase() + "\0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Section_2_Grp$Side" + WhichSide + "$Select_DataType$"
+								+ "Last_X_Overs$Runs_Grp$txt_Figures*GEOM*TEXT SET " + 
+								this_data_str.get(this_data_str.size()-1).split(slashOrDash)[0] + "\0", print_writers);
+						
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Section_2_Grp$Side" + WhichSide + "$Select_DataType$"
+								+ "Last_X_Overs$Wickets_Grp$txt_Header*GEOM*TEXT SET " + 
+								"WICKET" + CricketFunctions.Plural(Integer.valueOf(this_data_str.get(this_data_str.size()-1).split(slashOrDash)[1])).toUpperCase() + "\0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Section_2_Grp$Side" + WhichSide + "$Select_DataType$"
+								+ "Last_X_Overs$Wickets_Grp$txt_Figures*GEOM*TEXT SET " + 
+								this_data_str.get(this_data_str.size()-1).split(slashOrDash)[1] + "\0", print_writers);
+						
+						TimeUnit.MILLISECONDS.sleep(1000);
+						break;
 					case "BALLS_SINCE_LAST_BOUNDARY":
 						inning = matchAllData.getMatch().getInning().stream().filter(inn -> 
 							inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
@@ -4841,15 +4913,15 @@ public class InfobarGfx
 						+ "img_Text1*TEXTURE*IMAGE SET " + 
 						Constants.BENGAL_TEXT_PATH + "1/" + inning.getBatting_team().getTeamName4() + "\0", print_writers);
 				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
+						+ "$Select_Type*FUNCTION*Omo*vis_con SET 1 \0",print_writers);
+				
 				infoBarStats = infobarStats.stream().filter(infostats -> infostats.getOrder() == infobarStatsId).findAny().orElse(null);
 				if(infoBarStats == null) {
 					return "InfoBarFreeText: Stats  not found for [" + infobarStatsId + "]";
 				}
 				
 				if(infoBarStats.getText2() != null) {
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
-							+ "$Select_Type*FUNCTION*Omo*vis_con SET 1 \0",print_writers);
-					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide + "$Select_Type$2_Line_Text$Maxsize_Title$txt_Title*GEOM*TEXT SET " 
 							+ infoBarStats.getText1() + "\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide + "$Select_Type$2_Line_Text$Maxsize_Subtitle$txt_Subtitle*GEOM*TEXT SET " 
