@@ -504,7 +504,7 @@ public class IndexController
 	}
 	public void processAnimations(String whatToProcess, Configuration session_configuration, String valueToProcess, 
 		List<PrintWriter> print_writers) throws InterruptedException, NumberFormatException, ParseException, 
-		CloneNotSupportedException, IOException, JAXBException, UnsupportedAudioFileException, LineUnavailableException
+		CloneNotSupportedException, IOException, JAXBException, UnsupportedAudioFileException, LineUnavailableException, IllegalAccessException, InvocationTargetException, URISyntaxException
 	{
 		if(whatToProcess.contains("ANIMATE-IN-GRAPHICS")) {
 			switch(this_animation.getTypeOfGraphicsOnScreen(session_configuration,valueToProcess)){

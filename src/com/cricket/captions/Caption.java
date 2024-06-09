@@ -2,6 +2,8 @@ package com.cricket.captions;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -134,7 +136,8 @@ public class Caption
 		this.status = status;
 	}
 
-	public void PopulateGraphics(String whatToProcess, MatchAllData matchAllData) throws InterruptedException, NumberFormatException, ParseException, CloneNotSupportedException, IOException, JAXBException, UnsupportedAudioFileException, LineUnavailableException
+	public void PopulateGraphics(String whatToProcess, MatchAllData matchAllData) throws InterruptedException, NumberFormatException, ParseException, CloneNotSupportedException, 
+		IOException, JAXBException, UnsupportedAudioFileException, LineUnavailableException, IllegalAccessException, InvocationTargetException, URISyntaxException
 	{
 		if(whatToProcess.contains(",")) {
 			switch (whatToProcess.split(",")[0]) {

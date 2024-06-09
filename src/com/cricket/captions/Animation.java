@@ -3610,8 +3610,13 @@ public class Animation
 						case "m": case "Control_m":
 							previewCommand = "Anim_Infobar$Push 0.500 Anim_Ident$In 2.000 ";
 							break;
+						
+						case "Control_d": case "Control_e":
+							previewCommand = "Anim_Infobar$Push 0.500 anim_Profile 1.700 anim_Profile$Essentials$In 1.140 anim_Profile$Main$In 1.140";
+							break;
+							
 						case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Control_F11": case "Shift_F11": case "p": case "Control_p":
-						case "Shift_T": case "Control_d": case "Control_e": case "Control_F7": case "Control_F10": case "Alt_F9": case "Shift_K":
+						case "Shift_T": case "Control_F7": case "Control_F10": case "Alt_F9": case "Shift_K":
 						case "z": case "x": case "c": case "v": case "Alt_F10": case "Shift_P": case "Shift_Q": case "Alt_F11": case "Control_z": case "Control_x":
 						case "Control_Shift_F1":
 							if(!whatToProcess.split(",")[0].equalsIgnoreCase("Shift_K")) {
@@ -3620,7 +3625,6 @@ public class Animation
 							}else {
 								previewCommand = "Anim_Infobar$Push 0.500 Anim_FullFrames$In_Out$Essentials$In 2.200 Anim_FullFrames$In_Out$Header$In 1.900";
 							}
-							
 							break;
 						}
 						switch(whatToProcess.split(",")[0]) {
@@ -3656,7 +3660,7 @@ public class Animation
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Worm$In 2.440 Anim_FullFrames$In_Out$Main$Worm$In$Runs 2.440";
 							break;
 						case "Control_F11": case "Shift_F11": //MATCH SUMMARY
-							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Summary$In 1.820";
+							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Summary$In 2.200 Change$Footer$Dynamic 0.500";
 							break;
 						case "p": // PointsTable
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Group_Standings$In 1.540";
@@ -3667,9 +3671,6 @@ public class Animation
 						case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": //LeaderBoard Most - Runs,Wickets,Fours,Sixes 
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Leader_Board$In 2.300";
 							previewCommand = previewCommand + " LeaderBoardHighlight$Side1$Player"+whatToProcess.split(",")[2].split("_")[0] + " 2.700";
-							break;
-						case "Control_d": case "Control_e":
-							previewCommand = previewCommand + " anim_Profile 1.700 anim_Profile$Essentials 1.140 anim_Profile$Main 1.140";
 							break;
 						case "Shift_P": case "Shift_Q"://PlayerProfile
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Profile$In 2.300";
