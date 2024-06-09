@@ -153,6 +153,19 @@ public class Caption
 			case "r":
 				status = this_fullFramesGfx.populatePOTT(whichSide, whatToProcess.split(",")[0], matchAllData, 0);
 				break;
+				
+			case "Control_Shift_F1":
+				this_fullFramesGfx.FirstPlayerId = Integer.valueOf(whatToProcess.split(",")[2]);
+				this_fullFramesGfx.WhichType = whatToProcess.split(",")[3];
+				
+				if(this_anim.whichGraphicOnScreen.equalsIgnoreCase("F1") || this_anim.whichGraphicOnScreen.equalsIgnoreCase("Control_Shift_F1")) {
+				}else {
+					status = this_fullFramesGfx.PopulateScorecardFF(whichSide, "F1", matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
+				}
+				status = this_fullFramesGfx.PopulateBatPerformerFF(whichSide, whatToProcess.split(",")[0], matchAllData, 
+						Integer.valueOf(whatToProcess.split(",")[1]));
+				break;
+				
 			case "F1": // Scorecard FF
 				if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ISPL)) {
 					this_fullFramesGfx.WhichScoreCard = whatToProcess.split(",")[2];
@@ -435,9 +448,7 @@ public class Caption
 					this_fullFramesGfx.whichSponsor = whatToProcess.split(",")[2];
 					break;
 				}
-				
-				status = this_fullFramesGfx.populateCurrPartnership(whichSide, whatToProcess.split(",")[0], 
-					matchAllData, whichSide);
+				status = this_fullFramesGfx.populateCurrPartnership(whichSide, whatToProcess.split(",")[0], matchAllData, whichSide);
 				break;
 			case "Shift_O":
 				status = this_bugsAndMiniGfx.bugsDismissal(whatToProcess,matchAllData,whichSide);

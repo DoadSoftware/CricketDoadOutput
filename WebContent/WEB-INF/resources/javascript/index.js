@@ -226,11 +226,11 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				break;	
 			case 'F4': case 'Shift_K':
 				switch($('#selected_broadcaster').val().toUpperCase()){
-				case 'ISPL':
+				case 'ISPL': case 'BENGAL-T20':
 					dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 					processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 					break;
-				case 'ICC-U19-2023': case 'BENGAL-T20':
+				case 'ICC-U19-2023':
 					addItemsToList(dataToProcess,null);
 					break;
 				}
@@ -277,7 +277,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Control_h': case 'Alt_F12': case 'l': case 'p': case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_F10': case 'Alt_d':
 			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2': case 'Shift_E': case 'Shift_P': case 'Shift_Q': case 'Alt_z': case 'Shift_F':
 			case 'Alt_F6': case 'Shift_R': case 'Shift_A': case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'Shift_F7': case 'Control_F4':
-			case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_F': case 'Control_Shift_P':
+			case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_F': case 'Control_Shift_P': case 'Control_Shift_F1':
 				addItemsToList(dataToProcess,null); 
 				break;
 			//changed shift_f11 to control_f11
@@ -520,7 +520,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9': case 'Alt_0':
 	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10': case 'Alt_d': case 'Shift_F4': case 'Alt_a': case 'Alt_s': 
 	case 'Shift_P': case 'Shift_Q': case 'Alt_z': case 'Control_c': case 'Control_v': case 'Control_z': case 'Control_x': case 'Alt_q': case 'Shift_F': 
-	case 'Alt_F6': case 'Shift_A': case 'Shift_R':
+	case 'Alt_F6': case 'Shift_A': case 'Shift_R': case 'Control_Shift_F1':
 	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_F4':
 	case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_F': case 'Control_Shift_P':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
@@ -544,6 +544,65 @@ function addItemsToList(whatToProcess,dataToProcess)
 		row = tbody.insertRow(tbody.rows.length);
 		
 		switch(whatToProcess) {
+		case 'Control_Shift_F1':
+			header_text.innerHTML = 'BAT PERFORMER/PARTNERSHIP';
+
+			select = document.createElement('select');
+			select.id = 'selectPlayer';
+			select.name = select.id;
+			
+			session_match.match.inning.forEach(function(inn,index,arr){
+				if(inn.inningNumber == document.getElementById('which_inning').value){
+					inn.battingCard.forEach(function(bc,index,arr){
+						if(bc.status == 'NOT OUT'){
+							if(bc.onStrike == 'YES'){
+								option = document.createElement('option');
+								option.value = bc.playerId;
+								option.text = bc.player.full_name + " - " + bc.status;
+								select.appendChild(option);
+							}else{
+								option = document.createElement('option');
+								option.value = bc.playerId;
+								option.text = bc.player.full_name + " - " + bc.status;
+								select.appendChild(option);
+							}
+						}
+					});
+					
+					inn.battingCard.forEach(function(bc,bc_index,bc_arr){
+						option = document.createElement('option');
+						option.value = bc.playerId;
+						option.text = bc.player.full_name + " - " + bc.status;	
+						select.appendChild(option);
+					});
+				}
+			});
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			removeSelectDuplicates(select.id);
+			cellCount = cellCount + 1;
+			
+			select = document.createElement('select');
+			select.id = 'selectStatsType';
+			select.name = select.id;
+			
+			option = document.createElement('option');
+			option.value = 'performer';
+			option.text = 'Performer';
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'partnership';
+			option.text = 'Partnership';
+			select.appendChild(option);
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),1);
+			cellCount = cellCount + 1;
+			break;
 		case 'Control_Shift_F':
 			header_text.innerHTML = 'BATSMAN VS BOWLERS';
 			select = document.createElement('select');
