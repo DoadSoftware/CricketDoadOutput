@@ -117,7 +117,7 @@ public class Caption
 		
 		this.dls = dls;
 		this.this_fullFramesGfx = new FullFramesGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
-				fixTures, Teams, Grounds,tournament, VariousText, players, pott, teamChanges);
+				fixTures, Teams, Grounds,tournament, VariousText, players, pott, teamChanges,headToHead, past_tournament_stats, cricketService);
 		this.this_lowerThirdGfx = new LowerThirdGfx(print_writers, config, statistics, statsTypes, tournament_matches, 
 				nameSupers, Teams, Grounds, tournament,tapeball, dls, staff, players, pott, varioustText, headToHead, past_tournament_stats, cricketService);
 		this.whichSide = whichSide;
@@ -405,6 +405,7 @@ public class Caption
 				status = this_lowerThirdGfx.populateL3rdAllPowerPlay(whatToProcess,whichSide,matchAllData);
 				break;	
 			case "Control_a"://Projected
+				System.out.println("HELLO");
 				status = this_lowerThirdGfx.populateL3rdProjected(whatToProcess,whichSide,matchAllData);
 				break;
 			case "Control_F3"://Comparison

@@ -513,7 +513,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 		break;*/
 		
 	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'Alt_w': case 'Control_j': case 'F8': case 'F9': case 'F10': case 'F7': case 'F11':
-	case 'Control_F5': case 'Control_F9': case 'Shift_T': case 'u': case 'p': case 'Control_p': //case 'Control_d': case 'Control_e':
+	case 'Control_F5': case 'Control_F9': case 'Shift_T': case 'u': case 'p': case 'Control_p': case 'Control_d': case 'Control_e':
 	case 'z': case 'x': case 'c': case 'v': case 'Shift_F11': case 'Control_y': case 'Alt_F8': case 'Alt_F1': case 'Alt_F2':
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'y': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q':
 	case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l': case 'Shift_E': //case 'Alt_F9':
@@ -2978,6 +2978,28 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			removeSelectDuplicates(select.id);
 			cellCount = cellCount + 1;
+			
+			switch($('#selected_broadcaster').val().toUpperCase()){
+				case 'BENGAL-T20':
+					select = document.createElement('select');
+					select.id = 'sponsorOrNot';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = 'sponsor';
+					option.text = 'With Sponsor';
+					select.appendChild(option);
+				
+					option = document.createElement('option');
+					option.value = 'nosponsor';
+					option.text = 'Without Sponsor';
+					select.appendChild(option);
+				break;
+			}
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),1);
+			cellCount = cellCount + 1
 			break;
 		case 'Shift_F5': case 'q'://BatThisMatch
 			switch(whatToProcess) {
@@ -3097,6 +3119,28 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			removeSelectDuplicates(select.id);
 			cellCount = cellCount + 1;
+			
+			switch($('#selected_broadcaster').val().toUpperCase()){
+				case 'BENGAL-T20':
+					select = document.createElement('select');
+					select.id = 'sponsorOrNot';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = 'sponsor';
+					option.text = 'With Sponsor';
+					select.appendChild(option);
+				
+					option = document.createElement('option');
+					option.value = 'nosponsor';
+					option.text = 'Without Sponsor';
+					select.appendChild(option);
+				break;
+			}
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),1);
+			cellCount = cellCount + 1
 			break;
 		case 'Shift_F9': //BallThisMatch
 			
@@ -3567,11 +3611,6 @@ function addItemsToList(whatToProcess,dataToProcess)
 					option.value = 'DT20';
 					option.text = 'DT20';
 					select.appendChild(option);
-				
-					option = document.createElement('option');
-					option.value = 'IT20';
-					option.text = 'IT20';
-					select.appendChild(option);
 				break;
 				default:
 					option = document.createElement('option');
@@ -3601,54 +3640,58 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			switch(whatToProcess){
 			case 'Control_d':
-				select = document.createElement('select');
-				select.id = 'selectStatType';
-				select.name = select.id;
-				
-				option = document.createElement('option');
-				option.value = '0';
-				option.text = '';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = '1';
-				option.text = 'Matches';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = '2';
-				option.text = 'Runs';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = '3';
-				option.text = 'Fifties';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = '4';
-				option.text = 'Hundreds';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = '5';
-				option.text = 'Average';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = '6';
-				option.text = 'Strike Rate';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = '7';
-				option.text = 'Best';
-				select.appendChild(option);
-				
-				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 2)");
-				row.insertCell(cellCount).appendChild(select);
-				setDropdownOptionToSelectOptionArray($(select),2);
-				cellCount = cellCount + 1
+				switch($('#selected_broadcaster').val().toUpperCase()){
+					case 'ICC-U19-2023':
+					select = document.createElement('select');
+					select.id = 'selectStatType';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = '0';
+					option.text = '';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '1';
+					option.text = 'Matches';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '2';
+					option.text = 'Runs';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '3';
+					option.text = 'Fifties';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '4';
+					option.text = 'Hundreds';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '5';
+					option.text = 'Average';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '6';
+					option.text = 'Strike Rate';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '7';
+					option.text = 'Best';
+					select.appendChild(option);
+					
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 2)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),2);
+					cellCount = cellCount + 1
+					break;
+				}
 				break;
 			}
 			break;		
@@ -4025,11 +4068,6 @@ function addItemsToList(whatToProcess,dataToProcess)
 					option.value = 'DT20';
 					option.text = 'DT20';
 					select.appendChild(option);
-				
-					option = document.createElement('option');
-					option.value = 'IT20';
-					option.text = 'IT20';
-					select.appendChild(option);
 				break;
 				default:
 					option = document.createElement('option');
@@ -4060,54 +4098,58 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			switch(whatToProcess){
 			case 'Control_e':
-				select = document.createElement('select');
-				select.id = 'selectStatType';
-				select.name = select.id;
-				
-				option = document.createElement('option');
-				option.value = '0';
-				option.text = '';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = '1';
-				option.text = 'Matches';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = '2';
-				option.text = 'Wickets';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = '3';
-				option.text = '3WI';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = '4';
-				option.text = '5WI';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = '5';
-				option.text = 'Average';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = '6';
-				option.text = 'Economy';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = '7';
-				option.text = 'Best Fig';
-				select.appendChild(option);
-				
-				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 2)");
-				row.insertCell(cellCount).appendChild(select);
-				setDropdownOptionToSelectOptionArray($(select),2);
-				cellCount = cellCount + 1
+				switch($('#selected_broadcaster').val().toUpperCase()){
+					case 'ICC-U19-2023':
+						select = document.createElement('select');
+						select.id = 'selectStatType';
+						select.name = select.id;
+						
+						option = document.createElement('option');
+						option.value = '0';
+						option.text = '';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = '1';
+						option.text = 'Matches';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = '2';
+						option.text = 'Wickets';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = '3';
+						option.text = '3WI';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = '4';
+						option.text = '5WI';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = '5';
+						option.text = 'Average';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = '6';
+						option.text = 'Economy';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = '7';
+						option.text = 'Best Fig';
+						select.appendChild(option);
+						
+						select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 2)");
+						row.insertCell(cellCount).appendChild(select);
+						setDropdownOptionToSelectOptionArray($(select),2);
+						cellCount = cellCount + 1
+					break;
+					}
 					break;
 			}
 			break;
