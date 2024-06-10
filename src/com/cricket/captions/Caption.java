@@ -449,6 +449,9 @@ public class Caption
 			case "Control_Shift_D":
 				status = this_fullFramesGfx.populateDoubleMatchIDAndPromo(whichSide, whatToProcess, matchAllData);
 				break;
+			case "Alt_Shift_Z":
+				status = this_fullFramesGfx.populateTeamLogoAndCaptain(whichSide, whatToProcess, matchAllData);
+				break;
 				
 			case "Shift_B": //Lt MATCH SUMMARY
 				status = this_lowerThirdGfx.populateL3rdMatchSummary(whatToProcess,whichSide,matchAllData);
