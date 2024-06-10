@@ -24,6 +24,8 @@ import com.cricket.model.VariousText;
 import com.cricket.util.CricketFunctions;
 import com.cricket.util.CricketUtil;
 
+import io.netty.util.Constant;
+
 public class BugsAndMiniGfx 
 {
 	String status = "",homecolor = "", awaycolor = "",WhichGroup = "",containerName = "";
@@ -1354,6 +1356,17 @@ public class BugsAndMiniGfx
 				break;
 			}
 			break;	
+		case Constants.BENGAL_T20:
+			switch(whatToProcess.split(",")[0]) {
+				case "Alt_p":
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_All$All_TossBug$In_Out$Data"
+						+ "$txt_Info*GEOM*TEXT SET " + whatToProcess.split(",")[2].split("-")[0] + " WON THE TOSS & ELECTED TO " + 
+						whatToProcess.split(",")[2].split("-")[1]+ "\0", print_writers);
+					
+				 break;
+			}
+			break;
 		}
 		
 		return Constants.OK;
@@ -1815,7 +1828,179 @@ public class BugsAndMiniGfx
 				}
 				break;
 			}
-			break;	
+			break;
+		case Constants.BENGAL_T20:
+			switch(whatToProcess) {
+			case "Shift_F1":
+				int battingSize=0;
+				cont_name = "";
+				omo_num = 0;
+				rowId = 0;
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
+						+ "$Select_GraphicsType*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+//				
+//				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide 
+//						+ "$Batting$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + inning.getBatting_team().getTeamName4() + " \0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
+						+ "$Select_GraphicsType$Batting_Card$Data$Title$Out$In$txt_TeamName*GEOM*TEXT SET " + inning.getBatting_team().getTeamName1() + " \0", print_writers);
+				
+//				for(int i=1; i<=inning.getBattingCard().size(); i++) {
+//					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
+//							+ "$Select_GraphicsType$Batting_Card$Data$Row$Select_Row*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+//				}
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
+						+ "$Select_GraphicsType$Batting_Card$Data$Row$Select_Row*FUNCTION*Omo*vis_con SET " +inning.getBattingCard().size()+"\0", print_writers);
+			
+				Collections.sort(inning.getBattingCard());
+				
+				for (BattingCard bc : inning.getBattingCard()) {
+					
+					rowId = rowId + 1;
+					
+					switch (bc.getStatus().toUpperCase()) {
+					case CricketUtil.OUT:
+						omo_num = 0;
+						cont_name = "$Out";
+						text_name = "$Data";
+						battingSize = battingSize + 1;
+						break;
+					case CricketUtil.NOT_OUT:
+						omo_num = 1;
+						cont_name = "$Not_Out";
+						text_name = "$img_Text1";
+						battingSize = battingSize + 1;
+						break;
+					}
+					
+					
+					if(CricketFunctions.checkImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), 
+							bc.getPlayerId()).equalsIgnoreCase(CricketUtil.YES)) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
+								+ "$Select_GraphicsType$Batting_Card$Data$Rows$Select_Row$" + rowId +"$Out$In$BattingData$Select_Row_Type"+ cont_name +text_name+ "$Select_Impact*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+					}
+					else if(CricketFunctions.checkImpactPlayerBowler(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), 
+							bc.getPlayerId()).equalsIgnoreCase(CricketUtil.YES)) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
+								+ "$Select_GraphicsType$Batting_Card$Data$Rows$Select_Row$" + rowId +"$BattingData$Select_Row_Type" +cont_name+ text_name+"$Select_Impact*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
+								+ "$Select_GraphicsType$Batting_Card$Data$Rows$Row$Select_Row$" + rowId +"$BattingData$Select_Row_Type"+cont_name +text_name+"$Select_Impact*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+					}
+					
+					
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
+							+ "$Select_GraphicsType$Batting_Card$Data$Rows$Select_Row*FUNCTION*Grid*num_row SET " + battingSize + " \0", print_writers);
+					
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
+							+ "$Select_GraphicsType$Batting_Card$Data$Rows$Select_Row$"+rowId+"$Select_Row_Type*FUNCTION*Omo*vis_con SET " + String.valueOf(omo_num) + " \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
+							+ "$Select_GraphicsType$Batting_Card$Data$Rows$Select_Row$" + rowId  +"$BattingData$Select_Row_Type$Data" + cont_name+"$img_Text1$Name$txt_BatterName*GEOM*TEXT SET " + bc.getPlayer().getFull_name() + " \0", print_writers);
+					
+					if(bc.getStatus().toUpperCase().equalsIgnoreCase(CricketUtil.NOT_OUT)) {
+						
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_gfx_Minis$All_Graphics$Side" + WhichSide 
+								+ "$Select_GraphicsType$Batting_Card$Data$Rows$Select_Row$"+rowId+"$BattingData$Select_Row_Type*ACTIVE SET 1 \0", print_writers);
+						
+						
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
+								+ "$Select_GraphicsType$Batting_Card$Data$Rows$Select_Row$" + rowId +"$BattingData$Select_Row_Type"+ cont_name + "$txt_Out*GEOM*TEXT SET " + "" + " \0", print_writers);
+					}else if(bc.getStatus().toUpperCase().equalsIgnoreCase(CricketUtil.OUT)) {
+						
+//						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_gfx_Minis$All_Graphics$Side" + WhichSide 
+//								+ "$Batting_Card$Data$Rows$Select_Row$"+rowId+"$Out$In$BattingData$Select_Row_Type*ACTIVE SET 0 \0", print_writers);
+//						
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
+								+ "$Select_GraphicsType$Batting_Card$Data$Rows$Select_Row$" + rowId+"$BattingData$Select_Row_Type" +cont_name+ "$txt_Out*GEOM*TEXT SET " +"" + " \0", print_writers);
+					}
+//					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide 
+//							+ "$Batting_Card$Data$Row" + rowId + cont_name + "$obj_Divider*ACTIVE SET 0  \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
+							+ "$Select_GraphicsType$Batting_Card$Data$Rows$Select_Row$" + rowId +"$BattingData$Select_Row_Type" +cont_name+ "$txt_Runs*GEOM*TEXT SET " + bc.getRuns() + " \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
+							+ "$Select_GraphicsType$Batting_Card$Data$Rows$Select_Row$" + rowId +"$BattingData$Select_Row_Type"+cont_name+"$txt_Balls*GEOM*TEXT SET " + bc.getBalls() + " \0", print_writers);
+				
+				}
+				
+				break;
+			case "Shift_F2":
+				int bowling_size = 1;
+				rowId = 1;
+				cont_name = "";
+				omo_num = 0;
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide 
+						+ "$Select_GraphicsType*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+				if(inning.getBowling_team().getTeamName4().equalsIgnoreCase("NEP")) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide 
+							+ "$Bowling$img_Flag1*ACTIVE SET 0 \0", print_writers);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide 
+							+ "$Bowling$img_Flag1*ACTIVE SET 1 \0", print_writers);
+				}
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide 
+						+ "$Bowling$img_Flag*TEXTURE*IMAGE SET " + Constants.ICC_U19_2023_FLAG_PATH + inning.getBowling_team().getTeamName4() + " \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide 
+						+ "$Bowling$txt_FirstName*GEOM*TEXT SET " + inning.getBowling_team().getTeamName1() + " \0", print_writers);
+				
+				for(int i=1; i<=inning.getBowlingCard().size(); i++) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide 
+							+ "$Bowling$Row"+(i+1)+"*ACTIVE SET 1 \0", print_writers);
+				}
+				
+				for (BowlingCard boc : inning.getBowlingCard()) {
+					if(boc.getRuns() > 0 || ((boc.getOvers()*6)+boc.getBalls()) > 0) {
+						bowling_size=bowling_size + 1;
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide 
+								+ "$Bowling$DataGrp*FUNCTION*Grid*num_row SET " + bowling_size + " \0", print_writers);
+					}
+					switch (boc.getStatus().toUpperCase()) {
+					case (CricketUtil.OTHER + CricketUtil.BOWLER):
+						omo_num = 2;
+						cont_name = "$Players_Dehighlight";
+						break;
+					case (CricketUtil.LAST + CricketUtil.BOWLER):
+						omo_num = 2;
+						cont_name = "$Players_Dehighlight";
+						break;
+					case (CricketUtil.CURRENT + CricketUtil.BOWLER):
+						omo_num = 3;
+						cont_name = "$Players_Highlight";
+						break;
+					}
+					
+					rowId = rowId + 1;
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide 
+							+ "$Bowling$Row"+rowId+"$Select_Row_Type*FUNCTION*Omo*vis_con SET " + String.valueOf(omo_num) + " \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide 
+							+ "$Bowling$Row" + rowId + cont_name + "$txt_Name*GEOM*TEXT SET " + boc.getPlayer().getTicker_name() + " \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide 
+							+ "$Bowling$Row" + rowId + cont_name + "$fig_Overs*GEOM*TEXT SET " + CricketFunctions.OverBalls(boc.getOvers(),boc.getBalls()) + " \0", print_writers);
+
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide 
+							+ "$Bowling$Row" + rowId + cont_name + "$fig_Maidens*GEOM*TEXT SET " + boc.getMaidens() + " \0", print_writers);
+
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide 
+							+ "$Bowling$Row" + rowId + cont_name + "$fig_Runs*GEOM*TEXT SET " + boc.getRuns() + " \0", print_writers);
+
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide 
+							+ "$Bowling$Row" + rowId + cont_name + "$fig_Wickets*GEOM*TEXT SET " + boc.getWickets() + " \0", print_writers);
+					
+					if(boc.getEconomyRate() != null) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide 
+								+ "$Bowling$Row" + rowId + cont_name + "$fig_Economy*GEOM*TEXT SET " + boc.getEconomyRate() + " \0", print_writers);
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide 
+								+ "$Bowling$Row" + rowId + cont_name + "$fig_Economy*GEOM*TEXT SET " + "-" + " \0", print_writers);
+					}
+					
+
+				}
+				break;
+			}
+			break;
 		}
 		
 			

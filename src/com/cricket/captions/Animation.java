@@ -322,8 +322,14 @@ public class Animation
 				break;
 				
 			case "Alt_p":
-				
-				processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "START");
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.BENGAL_T20:
+					processAnimation(Constants.FRONT, print_writers, "anim_Toss", "START");
+					break;
+				default:
+					processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "START");
+					break;
+				}
 				this.specialBugOnScreen = CricketUtil.TOSS;
 				break;
 			case "o": case "t":
@@ -787,8 +793,14 @@ public class Animation
 				break;
 				
 			case "Alt_p":
-				
-				processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "START");
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.BENGAL_T20:
+					processAnimation(Constants.FRONT, print_writers, "anim_Toss", "START");
+					break;
+				default:
+					processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "START");
+					break;
+				}
 				this.specialBugOnScreen = CricketUtil.TOSS;
 				break;
 			case "o": case "t":
@@ -1182,8 +1194,14 @@ public class Animation
 				break;
 				
 			case "Alt_p":
-				
-				processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "START");
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.BENGAL_T20:
+					processAnimation(Constants.FRONT, print_writers, "anim_Toss", "START");
+					break;
+				default:
+					processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "START");
+					break;
+				}
 				this.specialBugOnScreen = CricketUtil.TOSS;
 				break;
 			case "o": case "t":
@@ -1452,7 +1470,14 @@ public class Animation
 				
 			case "Alt_p":
 				if(this.specialBugOnScreen.equalsIgnoreCase(CricketUtil.TOSS)) {
-					processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "CONTINUE");
+					switch (config.getBroadcaster().toUpperCase()) {
+					case Constants.BENGAL_T20:
+						processAnimation(Constants.FRONT, print_writers, "anim_Toss", "CONTINUE");
+						break;
+					default:
+						processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "CONTINUE");
+						break;
+					}
 					this.specialBugOnScreen = "";
 				}
 				break;
@@ -1752,7 +1777,14 @@ public class Animation
 				
 			case "Alt_p":
 				if(this.specialBugOnScreen.equalsIgnoreCase(CricketUtil.TOSS)) {
-					processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "CONTINUE");
+					switch (config.getBroadcaster().toUpperCase()) {
+					case Constants.BENGAL_T20:
+						processAnimation(Constants.FRONT, print_writers, "anim_Toss", "CONTINUE");
+						break;
+					default:
+						processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "CONTINUE");
+						break;
+					}
 					this.specialBugOnScreen = "";
 				}
 				break;
@@ -2019,7 +2051,14 @@ public class Animation
 				
 			case "Alt_p":
 				if(this.specialBugOnScreen.equalsIgnoreCase(CricketUtil.TOSS)) {
-					processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "CONTINUE");
+					switch (config.getBroadcaster().toUpperCase()) {
+					case Constants.BENGAL_T20:
+						processAnimation(Constants.FRONT, print_writers, "anim_Toss", "CONTINUE");
+						break;
+					default:
+						processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "CONTINUE");
+						break;
+					}
 					this.specialBugOnScreen = "";
 				}
 				break;
@@ -4156,7 +4195,7 @@ public class Animation
 						break;
 					case "F6": case "Control_F6": case "Shift_F6": case "F8": case "Alt_F8": case "F10": case "Shift_F3": case "d": case "e": case "u":
 					case "Shift_F5": case "Alt_o": case "Shift_F9": case "Control_F3": case "Control_F5": case "Control_F9": case "Alt_F12": case "Control_s": case "Control_f": case "F7": case "F11":
-						previewCommands = "anim_Lower_Third 2.200 anim_Lower_Third$Essentials 1.500 anim_Lower_Third$Essentials$In 1.500 ";
+						previewCommands = "anim_Lower_Third 2.200 anim_Lower_Third$Essentials 2.200 anim_Lower_Third$Essentials$In 1.500 ";
 						break;
 					}
 				}else if(whichside == 2){
@@ -4164,7 +4203,7 @@ public class Animation
 					case "F6": case "Control_F6": case "Shift_F6": case "F5": case "F9": case "F8": case "Alt_F8": case "F10": case "Shift_F3": case "d": case "e": case "u":
 					case "Shift_F5": case "Alt_o": case "Shift_F9": case "Control_F3": case "Control_F5": case "Control_F9":  case "Alt_F12": case "Control_s": case "Control_f":case "F7": case "F11":
 						previewCommands = previewCommands + " Anim_LtChange$Badge 1.00 Anim_LtChange$Sublines 1.00 "
-								+ "Anim_LtChange$Topline 0.100 Anim_LtChange$Dynamic$Change_In 1.180 Anim_LtChange$Dynamic$Change_Out 0.560";
+								+ "Anim_LtChange 1.2000 Anim_LtChange$Topline 1.000 Anim_LtChange$Dynamic$Change_In 1.180 Anim_LtChange$Dynamic$Change_Out 0.560";
 						break;
 					}
 				}
@@ -4333,6 +4372,10 @@ public class Animation
 							
 							 CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
 										+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Center_Bug$In 0.700 \0", print_writer);
+						 }else if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.BENGAL_T20)) {
+							
+							 CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+										+ "/Default/Overlays" + " C:/Temp/Preview.png anim_Toss 1.000 \0", print_writer);
 						 }
 						break;
 					}
