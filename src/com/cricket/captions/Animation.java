@@ -1255,13 +1255,13 @@ public class Animation
 				break;	
 			case "ArrowUp":
 				if(this.infobar.isInfobar_on_screen() == true && this.infobar.isInfobar_pushed()) {
-					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Push", "CONTINUE");
+					processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Push", "CONTINUE REVERSE");
 					this.infobar.setInfobar_pushed(false);
 				}
 				break;
 			case "ArrowDown":
 				if(this.infobar.isInfobar_on_screen() == true && !this.infobar.isInfobar_pushed()) {
-					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Push", "START");
+					processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Push", "START");
 					this.infobar.setInfobar_pushed(true);
 					TimeUnit.MILLISECONDS.sleep(800);
 				}
