@@ -2296,6 +2296,9 @@ public class Animation
 				break;
 			}
 			switch(whatToProcess.split(",")[0]) {
+			case "Shift_F12":
+				processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Ident_Change", "START");
+				break;
 			case "F1": case "F2": case "F4": case "Control_F11": case "Shift_T": case "p": case "Control_p":
 			case "Shift_F8": 	
 				setVariousAnimationsKeys("CHANGE-ON", print_writers, config);
@@ -2941,15 +2944,15 @@ public class Animation
 			}
 			
 			switch(whatToProcess.split(",")[0]) {
+			case "Shift_F12":
+				processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Ident_Change", "SHOW 0.0");
+				break;
 			case "Shift_F1": case "Shift_F2":
 				processAnimation(Constants.FRONT, print_writers, "Anim_MiniChange", "SHOW 0.0");
 				break;
 			case "Shift_F": case "y": case "Shift_O":
 				processAnimation(Constants.FRONT, print_writers, "Anim_BugsChange", "SHOW 0.0");
 				this.whichGraphicOnScreen = whatToProcess;
-				break;
-			case "Shift_F12":
-				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$IdentInfo$Change", "SHOW 0.0");
 				break;
 			case "Alt_1":
 				switch (config.getBroadcaster().toUpperCase()) {
