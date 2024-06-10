@@ -2006,6 +2006,7 @@ public class Animation
 					this.whichGraphicOnScreen = "";
 					LT.setWhichSponsor("");
 				}
+				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
 				break;
 			case "F9":
 				if(LT.getWhichSponsor().equalsIgnoreCase("SPONSOR")) {
@@ -2021,12 +2022,14 @@ public class Animation
 					this.whichGraphicOnScreen = "";
 					LT.setWhichSponsor("");
 				}
+				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
 				break;
 			case "Control_a":
 				processAnimation(Constants.FRONT, print_writers, "anim_Projected_LT", "CONTINUE");
 				TimeUnit.MILLISECONDS.sleep(1000);
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
+				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
 				break;
 			case "F6": case "F7": case "F11": case "Control_F2":
 			case "Control_F5": case "Control_F9": case "Control_F3": case "Alt_o":
@@ -2037,11 +2040,10 @@ public class Animation
 			case "Shift_B": case "Control_Shift_F": case "Control_Shift_P":
 			case "Alt_F8": case "F8": case "F10": case "j": case "Alt_a": case "Alt_s":
 				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "CONTINUE");
-				//processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "CONTINUE REVERSE");
-				//processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 2.680");
 				TimeUnit.MILLISECONDS.sleep(1000);
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
+				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
 				break;
 			 
 			 case "Alt_q":
@@ -3382,18 +3384,19 @@ public class Animation
 			processAnimation(Constants.BACK, print_writers, "Change", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Anim_Highlights", "SHOW 0.0");
 			
-			processAnimation(Constants.FRONT, print_writers, "anim_Infobar", "SHOW 0.0");
-			processAnimation(Constants.FRONT, print_writers, "anim_Ident", "SHOW 0.0");
-			processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
-			processAnimation(Constants.FRONT, print_writers, "anim_Projected_LT", "SHOW 0.0");
-			processAnimation(Constants.FRONT, print_writers, "anim_BatsmanScore_LT", "SHOW 0.0");
-			processAnimation(Constants.FRONT, print_writers, "anim_BowlerFigure_LT", "SHOW 0.0");
-			processAnimation(Constants.FRONT, print_writers, "anim_Toss", "SHOW 0.0");
-			processAnimation(Constants.FRONT, print_writers, "anim_LtChange", "SHOW 0.0");
-			processAnimation(Constants.FRONT, print_writers, "Minis", "SHOW 0.0");
-			this.infobar.setInfobar_on_screen(false);
-			this.infobar.setInfobar_status("");
-			
+			if(whatToProcess.contains("CLEAR-ALL")) {
+				processAnimation(Constants.FRONT, print_writers, "anim_Infobar", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "anim_Ident", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "anim_Projected_LT", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "anim_BatsmanScore_LT", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "anim_BowlerFigure_LT", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "anim_Toss", "SHOW 0.0");
+//				processAnimation(Constants.FRONT, print_writers, "anim_LtChange", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "Minis", "SHOW 0.0");
+				this.infobar.setInfobar_on_screen(false);
+				this.infobar.setInfobar_status("");
+			}
 			this.whichGraphicOnScreen = "";
 			this.specialBugOnScreen = "";
 			break;
@@ -4258,24 +4261,24 @@ public class Animation
 						break;
 					case "F5": 
 						if(whatToProcess.split(",")[3].toUpperCase().equalsIgnoreCase("SPONSOR")) {
-							previewCommands = "anim_Infobar$Push 1.000 anim_BatsmanScore_LT 2.200 anim_BatsmanScore_LT$In 1.500";
+							previewCommands = "anim_BatsmanScore_LT 2.200 anim_BatsmanScore_LT$In 1.500 anim_Infobar$Push 1.000";
 						}else {
-							previewCommands = "anim_Infobar$Push 1.000 anim_Lower_Third 1.500 anim_Lower_Third$Essentials 1.500 anim_Lower_Third$Essentials$In 1.500";
+							previewCommands = "anim_Lower_Third 1.500 anim_Lower_Third$Essentials 1.500 anim_Lower_Third$Essentials$In 1.500 anim_Infobar$Push 1.000";
 						}
 						break;
 					case "F9":
 						if(whatToProcess.split(",")[3].toUpperCase().equalsIgnoreCase("SPONSOR")) {
-							previewCommands = "anim_Infobar$Push 1.000 anim_BowlerFigure_LT 2.200 anim_BowlerFigure_LT$In 1.200";
+							previewCommands = "anim_BowlerFigure_LT 2.200 anim_BowlerFigure_LT$In 1.200 anim_Infobar$Push 1.000";
 						}else {
-							previewCommands = "anim_Infobar$Push 1.000 anim_Lower_Third 1.500 anim_Lower_Third$Essentials 1.500 anim_Lower_Third$Essentials$In 1.500";
+							previewCommands = "anim_Lower_Third 1.500 anim_Lower_Third$Essentials 1.500 anim_Lower_Third$Essentials$In 1.500 anim_Infobar$Push 1.000";
 						}
 						break;
 					case "Control_a":
-						previewCommands = "anim_Infobar$Push 1.000 anim_Projected_LT 2.200 anim_Projected_LT$Essentials 2.200 anim_Projected_LT$Essentials$In 1.500";
+						previewCommands = "anim_Projected_LT 2.200 anim_Projected_LT$Essentials 2.200 anim_Projected_LT$Essentials$In 1.500 anim_Infobar$Push 1.000";
 						break;
 					case "F6": case "Control_F6": case "Shift_F6": case "F8": case "Alt_F8": case "F10": case "Shift_F3": case "d": case "e": case "u":
 					case "Shift_F5": case "Alt_o": case "Shift_F9": case "Control_F3": case "Control_F5": case "Control_F9": case "Alt_F12": case "Control_s": case "Control_f": case "F7": case "F11":
-						previewCommands = "anim_Infobar$Push 1.000 anim_Lower_Third 1.500 anim_Lower_Third$Essentials 1.500 anim_Lower_Third$Essentials$In 1.500";
+						previewCommands = "anim_Lower_Third 1.500 anim_Lower_Third$Essentials 1.500 anim_Lower_Third$Essentials$In 1.500 anim_Infobar$Push 1.000";
 						break;
 					}
 				}else if(whichside == 2){

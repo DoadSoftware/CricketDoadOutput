@@ -263,6 +263,131 @@ public class LowerThirdGfx
 		 
 	}
 	
+	public String populateImpact(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws InterruptedException
+	{
+		String dayovers = "-";
+		
+		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
+			return status;
+		} else {
+			inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
+			
+			if(inning == null) {
+				return status;
+			}
+		}
+		
+		Player outPlayer = CricketFunctions.getPlayerFromMatchData(Integer.valueOf(whatToProcess.split(",")[2]), match);
+		Player inPlayer = CricketFunctions.getPlayerFromMatchData(Integer.valueOf(whatToProcess.split(",")[3]), match);
+		
+		
+//		if (inPlayer.getTeamId() == match.getSetup().getHomeTeamId()) {
+//			print_writer.println("-1 RENDERER*TREE*$Main*FUNCTION*ControlObject*in SET ON " + "tInfo03" + " SET "
+//					+ "IMPACT SUB"+ "\0");
+//			
+//			print_writer.println("-1 RENDERER*TREE*$Main*FUNCTION*ControlObject*in SET ON " + "tInfo02" + " SET "
+//					+ match.getSetup().getHomeTeam().getTeamName1().toUpperCase()+ "\0");
+//			
+//			if (config.getPrimaryIpAddress().equalsIgnoreCase("LOCALHOST")) {
+//				print_writer.println("-1 RENDERER*TREE*$Main*FUNCTION*ControlObject*in SET ON "
+//						+ "lgInPlayerImage" + " SET " + photo_path
+//						+ match.getSetup().getHomeTeam().getTeamName4().toUpperCase() + centre_path
+//						+ inPlayer.getPhoto() + CricketUtil.PNG_EXTENSION + "\0");
+//				
+//				print_writer.println("-1 RENDERER*TREE*$Main*FUNCTION*ControlObject*in SET ON "
+//						+ "lgOutPlayerImage" + " SET " + photo_path
+//						+ match.getSetup().getHomeTeam().getTeamName4().toUpperCase() + centre_path
+//						+ outPlayer.getPhoto() + CricketUtil.PNG_EXTENSION + "\0");
+//			} else {
+//				if (!new File("\\\\" + config.getPrimaryIpAddress() + "\\c\\Images\\MPL\\Photos\\"
+//						+ match.getSetup().getHomeTeam().getTeamName4().toUpperCase() + "\\"
+//						+ inPlayer.getPhoto() + CricketUtil.PNG_EXTENSION).exists()) {
+//					this.status = CricketUtil.UNSUCCESSFUL;
+//				}
+//				print_writer.println("-1 RENDERER*TREE*$Main*FUNCTION*ControlObject*in SET ON "
+//						+ "lgInPlayerImage" + " SET " + "\\\\\\\\" + config.getPrimaryIpAddress()
+//						+ local_photo_path + match.getSetup().getHomeTeam().getTeamName4().toUpperCase() + "\\\\"
+//						+ inPlayer.getPhoto() + CricketUtil.PNG_EXTENSION + "\0");
+//				
+//				print_writer.println("-1 RENDERER*TREE*$Main*FUNCTION*ControlObject*in SET ON "
+//						+ "lgOutPlayerImage" + " SET " + "\\\\\\\\" + config.getPrimaryIpAddress()
+//						+ local_photo_path + match.getSetup().getHomeTeam().getTeamName4().toUpperCase() + "\\\\"
+//						+ outPlayer.getPhoto() + CricketUtil.PNG_EXTENSION + "\0");
+//			}
+//		} else {
+//			print_writer.println("-1 RENDERER*TREE*$Main*FUNCTION*ControlObject*in SET ON " + "tInfo02" + " SET "
+//					+ match.getSetup().getAwayTeam().getTeamName1()+ "\0");
+//			
+//			if (config.getPrimaryIpAddress().equalsIgnoreCase("LOCALHOST")) {
+//				print_writer.println("-1 RENDERER*TREE*$Main*FUNCTION*ControlObject*in SET ON "
+//						+ "lgInPlayerImage" + " SET " + photo_path
+//						+ match.getSetup().getAwayTeam().getTeamName4().toUpperCase() + centre_path
+//						+ inPlayer.getPhoto() + CricketUtil.PNG_EXTENSION + "\0");
+//				
+//				print_writer.println("-1 RENDERER*TREE*$Main*FUNCTION*ControlObject*in SET ON "
+//						+ "lgOutPlayerImage" + " SET " + photo_path
+//						+ match.getSetup().getAwayTeam().getTeamName4().toUpperCase() + centre_path
+//						+ outPlayer.getPhoto() + CricketUtil.PNG_EXTENSION + "\0");
+//			} else {
+//				if (!new File("\\\\" + config.getPrimaryIpAddress() + "\\c\\Images\\MPL\\Photos\\"
+//						+ match.getSetup().getAwayTeam().getTeamName4().toUpperCase() + "\\"
+//						+ inPlayer.getPhoto() + CricketUtil.PNG_EXTENSION).exists()) {
+//					this.status = CricketUtil.UNSUCCESSFUL;
+//				}
+//				print_writer.println("-1 RENDERER*TREE*$Main*FUNCTION*ControlObject*in SET ON "
+//						+ "lgInPlayerImage" + " SET " + "\\\\\\\\" + config.getPrimaryIpAddress()
+//						+ local_photo_path + match.getSetup().getAwayTeam().getTeamName4().toUpperCase() + "\\\\"
+//						+ inPlayer.getPhoto() + CricketUtil.PNG_EXTENSION + "\0");
+//				
+//				print_writer.println("-1 RENDERER*TREE*$Main*FUNCTION*ControlObject*in SET ON "
+//						+ "lgOutPlayerImage" + " SET " + "\\\\\\\\" + config.getPrimaryIpAddress()
+//						+ local_photo_path + match.getSetup().getAwayTeam().getTeamName4().toUpperCase() + "\\\\"
+//						+ outPlayer.getPhoto() + CricketUtil.PNG_EXTENSION + "\0");
+//			}
+//		}
+//		
+//		
+//		print_writer.println("-1 RENDERER*TREE*$Main*FUNCTION*ControlObject*in SET ON " + "tOutPlayerFirstName" + " SET "
+//				+ outPlayer.getFirstname()+ "\0");
+//		if(outPlayer.getSurname() != null) {
+//			print_writer.println("-1 RENDERER*TREE*$Main*FUNCTION*ControlObject*in SET ON " + "tOutPlayerLastName" + " SET "
+//					+ outPlayer.getSurname()+ "\0");
+//		}else {
+//			print_writer.println("-1 RENDERER*TREE*$Main*FUNCTION*ControlObject*in SET ON " + "tOutPlayerLastName" + " SET "
+//					+ ""+ "\0");
+//		}
+//		
+//		print_writer.println("-1 RENDERER*TREE*$Main*FUNCTION*ControlObject*in SET ON " + "tInPlayerFirstName" + " SET "
+//				+ inPlayer.getFirstname()+ "\0");
+//		if(inPlayer.getSurname() != null) {
+//			print_writer.println("-1 RENDERER*TREE*$Main*FUNCTION*ControlObject*in SET ON " + "tIntPlayerLastName" + " SET "
+//					+ inPlayer.getSurname()+ "\0");
+//		}else {
+//			print_writer.println("-1 RENDERER*TREE*$Main*FUNCTION*ControlObject*in SET ON " + "tIntPlayerLastName" + " SET "
+//					+ ""+ "\0");
+//		}
+		
+		lowerThird = new LowerThird("THIS SESSION", "", "","", "","", 2, "",inning.getBatting_team().getTeamName4(),
+				new String[] {"OVERS","RUNS","WICKETS", "OVER RATE","RUN RATE"},new String[] {dayovers,
+				String.valueOf(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalRuns()),
+				String.valueOf(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalWickets()),
+				CricketFunctions.BetterOverRate(0, matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalBalls(), 
+				(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().getDaysSessions().size()-1).getTotalSeconds()/60), "", false),
+				CricketFunctions.generateRunRate(matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().
+				getDaysSessions().size()-1).getTotalRuns(), 0, matchAllData.getMatch().getDaysSessions().get(matchAllData.getMatch().
+				getDaysSessions().size()-1).getTotalBalls(), 2, matchAllData)}, null,null,new String[] {"-517.0","-284.0","-17.0","255.0","533.0"});
+		
+		
+		status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);
+		if(status == Constants.OK) {
+			HideAndShowL3rdSubStrapContainers(WhichSide);
+			setPositionOfLT(whatToProcess,WhichSide,config,lowerThird.getNumberOfSubLines());
+			return PopulateL3rdBody(WhichSide, whatToProcess.split(",")[0]);
+		} else {
+			return status;
+		}
+	}
+	
 	public String populateThisSession(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws InterruptedException
 	{
 		String dayovers = "-";
