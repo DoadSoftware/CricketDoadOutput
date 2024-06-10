@@ -1969,7 +1969,7 @@ public class InfobarGfx
 								if(this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase().contains("BOUNDARY")) {
 									
 									CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Fade_For_Section_2$"
-											+ "Stats$Side" + WhichSide + "$ThisOver$Ball_" + (iBall +1) + "$3$img_Base2*TEXTURE*IMAGE SET " + Constants.BENGAL_BASE_PATH + "1/" + inning.getBowling_team().getTeamName4() + "\0", print_writers);
+											+ "Stats$Side" + WhichSide + "$ThisOver$Ball_" + (iBall +1) + "$3$img_Base2*TEXTURE*IMAGE SET " + Constants.BENGAL_BASE_PATH + "2/" + inning.getBowling_team().getTeamName4() + "\0", print_writers);
 									CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Fade_For_Section_2$"
 											+ "Stats$Side" + WhichSide + "$ThisOver$Ball_" + (iBall +1) + "$3$img_Text2*TEXTURE*IMAGE SET " + Constants.BENGAL_TEXT_PATH + "2/" + inning.getBowling_team().getTeamName4() + "\0", print_writers);
 									
@@ -2008,7 +2008,7 @@ public class InfobarGfx
 									this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase().equalsIgnoreCase("W")) {
 								
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Fade_For_Section_2$"
-										+ "Stats$Side" + WhichSide + "$ThisOver$Ball_" + (iBall +1) + "$3$img_Base2*TEXTURE*IMAGE SET " + Constants.BENGAL_BASE_PATH + "1/" + inning.getBowling_team().getTeamName4() + "\0", print_writers);
+										+ "Stats$Side" + WhichSide + "$ThisOver$Ball_" + (iBall +1) + "$3$img_Base2*TEXTURE*IMAGE SET " + Constants.BENGAL_BASE_PATH + "2/" + inning.getBowling_team().getTeamName4() + "\0", print_writers);
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Fade_For_Section_2$"
 										+ "Stats$Side" + WhichSide + "$ThisOver$Ball_" + (iBall +1) + "$3$img_Text2*TEXTURE*IMAGE SET " + Constants.BENGAL_TEXT_PATH + "2/" + inning.getBowling_team().getTeamName4() + "\0", print_writers);
 								
@@ -5461,7 +5461,7 @@ public class InfobarGfx
 				}
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
-						+ "$Select_Type$2_Line_Text$Select_Sponsor*FUNCTION*Omo*vis_con SET 0 \0",print_writers);
+						+ "$Select_Type$2_Line_Text$Select_Sponsor*FUNCTION*Omo*vis_con SET 1 \0",print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide + "$BaseAll$"
 						+ "Left_Mask1$img_Base1*TEXTURE*IMAGE SET " + 

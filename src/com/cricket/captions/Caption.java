@@ -366,6 +366,9 @@ public class Caption
 			case "m": //Match id
 				status = this_fullFramesGfx.populateFFMatchId(whichSide,whatToProcess.split(",")[0], matchAllData);
 				break;
+			case "Control_Shift_M": //LT Match id
+				status = this_lowerThirdGfx.populateLTMatchId(whatToProcess, whichSide, matchAllData);
+				break;	
 			case "p": case "Control_p":// Points Table
 				if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ICC_U19_2023)) {
 					this_fullFramesGfx.WhichGroup = whatToProcess.split(",")[2];

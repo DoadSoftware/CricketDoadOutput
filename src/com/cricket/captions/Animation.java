@@ -117,7 +117,7 @@ public class Animation
 			case "Control_s": case "Alt_d": case "Control_f": case "Control_q": case "l": case "n": case "a": case "Control_F2":
 			case "Alt_a": case "Alt_s":case "Shift_E": case "Alt_q": case "Alt_F6": case "Shift_A": case "Shift_R": case "Shift_U":
 			case "Alt_w": case "Control_j": case "Alt_i": case "Alt_j": case "b": case "Control_i": case "Alt_Shift_L": case "Shift_B": 
-			case "Control_Shift_F": case "Control_Shift_P":
+			case "Control_Shift_F": case "Control_Shift_P": case "Control_Shift_M":
 				switch (whatToProcess.split(",")[0]) {
 				case "q": case "Control_q": case "Alt_q": case "Shift_F7": // Boundary L3rd
 					return Constants.BOUNDARIES + Constants.LOWER_THIRD;
@@ -1156,7 +1156,14 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "anim_Projected_LT", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
-				
+			case "Control_Shift_M":
+				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
+				TimeUnit.MILLISECONDS.sleep(1000);
+				processAnimation(Constants.FRONT, print_writers, "anim_Ident", "START");
+				//processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "START");
+				//processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;	
 			case "F6": case "Control_F2":
 			case "Control_F5": case "Control_F9":  case "Control_F3": case "Alt_o":
 			case "Shift_F3": case "u": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":
@@ -1842,6 +1849,12 @@ public class Animation
 		case Constants.BENGAL_T20:
 			System.out.println(whatToProcess.split(",")[0]);
 			switch (whatToProcess.split(",")[0]) {
+			case "Control_Shift_M":
+				AnimateIn("ArrowUp,", print_writers, config); // Push infobar
+				TimeUnit.MILLISECONDS.sleep(1000);
+				processAnimation(Constants.FRONT, print_writers, "anim_Ident", "CONTINUE");
+				this.whichGraphicOnScreen = "";
+				break;	
 			case "Alt_z":
 				processAnimation(Constants.BACK, print_writers, "Anim_Squad", "CONTINUE");
 				if(!caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("role")) {
@@ -2017,11 +2030,13 @@ public class Animation
 				if(LT.getWhichSponsor().equalsIgnoreCase("SPONSOR")) {
 					processAnimation(Constants.FRONT, print_writers, "anim_BatsmanScore_LT", "CONTINUE");
 					TimeUnit.MILLISECONDS.sleep(1000);
+					AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
 					this.whichGraphicOnScreen = "";
 					LT.setWhichSponsor("");
 				}else {
 					processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "CONTINUE");
 					TimeUnit.MILLISECONDS.sleep(1000);
+					AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
 					this.whichGraphicOnScreen = "";
 					LT.setWhichSponsor("");
 				}
@@ -2030,11 +2045,13 @@ public class Animation
 				if(LT.getWhichSponsor().equalsIgnoreCase("SPONSOR")) {
 					processAnimation(Constants.FRONT, print_writers, "anim_BowlerFigure_LT", "CONTINUE");
 					TimeUnit.MILLISECONDS.sleep(1000);
+					AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
 					this.whichGraphicOnScreen = "";
 					LT.setWhichSponsor("");
 				}else {
 					processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "CONTINUE");
 					TimeUnit.MILLISECONDS.sleep(1000);
+					AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
 					this.whichGraphicOnScreen = "";
 					LT.setWhichSponsor("");
 				}
@@ -3372,10 +3389,26 @@ public class Animation
 			processAnimation(Constants.BACK, print_writers, "Anim_Ident", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Anim_DoubleIdent", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "anim_Profile", "SHOW 0.0");
+			processAnimation(Constants.BACK, print_writers, "Anim_Target", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Change_Profile", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Change", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Anim_Highlights", "SHOW 0.0");
-			processAnimation(Constants.BACK, print_writers, "Anim_Target", "SHOW 0.0");
+			
+			if(whatToProcess.contains("CLEAR-ALL-WITH-INFOBAR")) {
+				processAnimation(Constants.FRONT, print_writers, "anim_Infobar", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "anim_Ident", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "anim_Projected_LT", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "anim_BatsmanScore_LT", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "anim_BowlerFigure_LT", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "anim_Toss", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "anim_LtChange", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "Minis", "SHOW 0.0");
+				this.infobar.setInfobar_on_screen(false);
+				this.infobar.setInfobar_status("");
+			}
+			this.whichGraphicOnScreen = "";
+			this.specialBugOnScreen = "";
 			break;
 		case Constants.ICC_U19_2023: 
 
@@ -4227,26 +4260,29 @@ public class Animation
 			case Constants.BENGAL_T20:
 				if(whichside == 1) {
 					switch(whatToProcess.split(",")[0]) {
+					case "Control_Shift_M":
+						previewCommands = "anim_Infobar$Push 1.000 anim_Ident 1.220 anim_Ident$In 1.220";
+						break;
 					case "F5": 
 						if(whatToProcess.split(",")[3].toUpperCase().equalsIgnoreCase("SPONSOR")) {
-							previewCommands = "anim_BatsmanScore_LT 2.200 anim_BatsmanScore_LT$In 1.500";
+							previewCommands = "anim_Infobar$Push 1.000 anim_BatsmanScore_LT 2.200 anim_BatsmanScore_LT$In 1.500";
 						}else {
-							previewCommands = "anim_Lower_Third 2.200 anim_Lower_Third$Essentials 1.500 anim_Lower_Third$Essentials$In 1.500 ";
+							previewCommands = "anim_Infobar$Push 1.000 anim_Lower_Third 2.200 anim_Lower_Third$Essentials 1.500 anim_Lower_Third$Essentials$In 1.500 ";
 						}
 						break;
 					case "F9":
 						if(whatToProcess.split(",")[3].toUpperCase().equalsIgnoreCase("SPONSOR")) {
-							previewCommands = "anim_BowlerFigure_LT 2.200 anim_BowlerFigure_LT$In 1.200";
+							previewCommands = "anim_Infobar$Push 1.000 anim_BowlerFigure_LT 2.200 anim_BowlerFigure_LT$In 1.200";
 						}else {
-							previewCommands = "anim_Lower_Third 2.200 anim_Lower_Third$Essentials 1.500 anim_Lower_Third$Essentials$In 1.500 ";
+							previewCommands = "anim_Infobar$Push 1.000 anim_Lower_Third 2.200 anim_Lower_Third$Essentials 1.500 anim_Lower_Third$Essentials$In 1.500 ";
 						}
 						break;
 					case "Control_a":
-						previewCommands = "anim_Projected_LT 2.200 anim_Projected_LT$Essentials 2.200 anim_Projected_LT$Essentials$In 1.500";
+						previewCommands = "anim_Infobar$Push 1.000 anim_Projected_LT 2.200 anim_Projected_LT$Essentials 2.200 anim_Projected_LT$Essentials$In 1.500";
 						break;
 					case "F6": case "Control_F6": case "Shift_F6": case "F8": case "Alt_F8": case "F10": case "Shift_F3": case "d": case "e": case "u":
 					case "Shift_F5": case "Alt_o": case "Shift_F9": case "Control_F3": case "Control_F5": case "Control_F9": case "Alt_F12": case "Control_s": case "Control_f": case "F7": case "F11":
-						previewCommands = "anim_Lower_Third 2.200 anim_Lower_Third$Essentials 2.200 anim_Lower_Third$Essentials$In 1.500 ";
+						previewCommands = "anim_Infobar$Push 1.000 anim_Lower_Third 2.200 anim_Lower_Third$Essentials 1.500 anim_Lower_Third$Essentials$In 1.500 ";
 						break;
 					}
 				}else if(whichside == 2){

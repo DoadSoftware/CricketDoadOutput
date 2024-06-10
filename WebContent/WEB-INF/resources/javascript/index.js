@@ -281,7 +281,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				addItemsToList(dataToProcess,null); 
 				break;
 			//changed shift_f11 to control_f11
-			case 'Shift_F10': case 'm': case 'F2': case 'Control_F1': case 'Control_a': case 'Control_F11': 
+			case 'Shift_F10': case 'm': case 'F2': case 'Control_F1': case 'Control_a': case 'Control_F11': case 'Control_Shift_M':
 			case 'Alt_o':  case 'Shift_F3': case 'd': case 'e': case 'Control_F6': case 'Control_F7': 
 			case 'Control_k': case 'Control_F10': case 'Control_F3':  case 'a': case 't': case 'h': case 'n':
 			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q': case 'Control_b': case 'o': case 'Control_F2': case 'b':
