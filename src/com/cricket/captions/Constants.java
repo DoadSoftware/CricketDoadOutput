@@ -45,6 +45,7 @@ public class Constants
 	public final static String BENGAL_PHOTO_PATH = "\\c\\Images\\BENGAL\\Photos\\";
 	public final static String BENGAL_BASE_PATH = "IMAGE*/Default/Essentials/Base";
 	public final static String BENGAL_TEXT_PATH = "IMAGE*/Default/Essentials/Text";
+	public final static String BENGAL_SPONSOR_PATH = "IMAGE*/Default/Essentials/Sponsors/";
 	public final static String BENGAL_OVER_PATH = "IMAGE*/Default/Essentials/This_Over/";
 	
 	public final static String LOCALHOST = "localhost";
