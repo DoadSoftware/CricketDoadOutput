@@ -237,11 +237,11 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				break;
 			case 'Control_p': case 'Alt_F7':
 				switch($('#selected_broadcaster').val().toUpperCase()){
-				case 'ISPL':
+				case 'ISPL': case 'BENGAL-T20':
 					dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 					processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 					break;
-				case 'ICC-U19-2023': case 'BENGAL-T20':
+				case 'ICC-U19-2023': 
 					addItemsToList(dataToProcess,null);
 					break;
 				}
