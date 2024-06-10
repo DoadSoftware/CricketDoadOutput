@@ -107,7 +107,7 @@ public class Animation
 			case "Shift_K": case "Alt_F9": case "Shift_D": case "p": case "Control_b": case "Alt_m": case "Alt_n":
 			case "Alt_F10": case "Control_F1": case "Control_p": case "Shift_P": case "Shift_Q": 
 			case "z": case "x": case "c": case "v": case "Alt_F11": case "Alt_z": case "Control_z": case "Control_x": case "r":
-			case "Shift_Z": case "Shift_X": case "Control_Shift_F1":
+			case "Shift_Z": case "Shift_X": case "Control_Shift_F1": case "Control_Shift_D":
 				return Constants.FULL_FRAMER;
 				
 			case "F5": case "F6": case "F7": case "F8": case "F9": case "F10": case "F11": case "Alt_F8":
@@ -958,6 +958,12 @@ public class Animation
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
 				TimeUnit.MILLISECONDS.sleep(500);
 				processAnimation(Constants.BACK, print_writers, "Anim_Ident", "START");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;
+			case "Control_Shift_D":
+				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
+				TimeUnit.MILLISECONDS.sleep(500);
+				processAnimation(Constants.BACK, print_writers, "Anim_DoubleIdent", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			
@@ -1842,6 +1848,13 @@ public class Animation
 			
 			case "m": case "Control_m":
 				processAnimation(Constants.BACK, print_writers, "Anim_Ident", "CONTINUE");
+				TimeUnit.MILLISECONDS.sleep(1000);
+				AnimateIn("ArrowUp,", print_writers, config); // Restore infobar
+				this.whichGraphicOnScreen = "";
+				break;
+			
+			case "Control_Shift_D":
+				processAnimation(Constants.BACK, print_writers, "Anim_DoubleIdent", "CONTINUE");
 				TimeUnit.MILLISECONDS.sleep(1000);
 				AnimateIn("ArrowUp,", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
@@ -3613,6 +3626,9 @@ public class Animation
 						case "m": case "Control_m":
 							previewCommand = "Anim_Infobar$Push 0.500 Anim_Ident$In 2.000 ";
 							break;
+						case "Control_Shift_D":
+							previewCommand = "Anim_Infobar$Push 0.500 Anim_DoubleIdent$In 2.000 ";
+							break;
 						
 						case "Control_d": case "Control_e":
 							previewCommand = "Anim_Infobar$Push 0.500 anim_Profile 1.700 anim_Profile$Essentials$In 1.140 anim_Profile$Main$In 1.140";
@@ -3656,7 +3672,7 @@ public class Animation
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Batting_Card_Image$In 2.040";
 							break;
 						case "Control_F10"://Manhattan
-							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Manhattan$In 2.900";
+							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Manhattan$In 2.500";
 							break;
 						case "Shift_F10"://WORMS
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Worm$In 2.440 Anim_FullFrames$In_Out$Main$Worm$In$Runs 2.440";
