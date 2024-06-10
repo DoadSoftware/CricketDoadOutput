@@ -2339,7 +2339,7 @@ public class Animation
 						processAnimation(Constants.BACK, print_writers, "Change$Batting_Card", "START");
 						processAnimation(Constants.BACK, print_writers, "Change$Footer$Dynamic", "SHOW 0.0");
 						switch(whatToProcess.split(",")[0]) {
-						case "F1":
+						case "F1": case "F2":
 							break;
 						default:
 							processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Sponsor", "CONTINUE REVERSE");
@@ -2350,7 +2350,7 @@ public class Animation
 						processAnimation(Constants.BACK, print_writers, "Change$Bowling_Card", "START");
 						processAnimation(Constants.BACK, print_writers, "Change$Footer$Dynamic", "SHOW 0.0");
 						switch(whatToProcess.split(",")[0]) {
-						case "F2":
+						case "F2": case "F1":
 							break;
 						default:
 							processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Sponsor", "CONTINUE REVERSE");
