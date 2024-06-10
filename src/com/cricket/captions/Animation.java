@@ -3040,6 +3040,9 @@ public class Animation
 					}
 				}
 				break;
+			
+			
+			case "d": case "e": case "u": case "Shift_F5": case "Shift_F9": case "Alt_F12": case "Shift_F3":
 			case "F5": case "F6": case "F7": case "F9": case "F11": case "Control_g": case "Control_h": case "Alt_F1": case "Alt_F2":
 			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_o": case "Control_F2":
 			case "Control_F6": case "Shift_F6": case "Control_s": case "Control_f": case "l": case "n": case "a": 
@@ -3367,19 +3370,18 @@ public class Animation
 			processAnimation(Constants.BACK, print_writers, "Change", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Anim_Highlights", "SHOW 0.0");
 			
-			if(whatToProcess.contains("CLEAR-ALL-WITH-INFOBAR")) {
-				processAnimation(Constants.FRONT, print_writers, "anim_Infobar", "SHOW 0.0");
-				processAnimation(Constants.FRONT, print_writers, "anim_Ident", "SHOW 0.0");
-				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
-				processAnimation(Constants.FRONT, print_writers, "anim_Projected_LT", "SHOW 0.0");
-				processAnimation(Constants.FRONT, print_writers, "anim_BatsmanScore_LT", "SHOW 0.0");
-				processAnimation(Constants.FRONT, print_writers, "anim_BowlerFigure_LT", "SHOW 0.0");
-				processAnimation(Constants.FRONT, print_writers, "anim_Toss", "SHOW 0.0");
-				processAnimation(Constants.FRONT, print_writers, "anim_LtChange", "SHOW 0.0");
-				processAnimation(Constants.FRONT, print_writers, "Minis", "SHOW 0.0");
-				this.infobar.setInfobar_on_screen(false);
-				this.infobar.setInfobar_status("");
-			}
+			processAnimation(Constants.FRONT, print_writers, "anim_Infobar", "SHOW 0.0");
+			processAnimation(Constants.FRONT, print_writers, "anim_Ident", "SHOW 0.0");
+			processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
+			processAnimation(Constants.FRONT, print_writers, "anim_Projected_LT", "SHOW 0.0");
+			processAnimation(Constants.FRONT, print_writers, "anim_BatsmanScore_LT", "SHOW 0.0");
+			processAnimation(Constants.FRONT, print_writers, "anim_BowlerFigure_LT", "SHOW 0.0");
+			processAnimation(Constants.FRONT, print_writers, "anim_Toss", "SHOW 0.0");
+			processAnimation(Constants.FRONT, print_writers, "anim_LtChange", "SHOW 0.0");
+			processAnimation(Constants.FRONT, print_writers, "Minis", "SHOW 0.0");
+			this.infobar.setInfobar_on_screen(false);
+			this.infobar.setInfobar_status("");
+			
 			this.whichGraphicOnScreen = "";
 			this.specialBugOnScreen = "";
 			break;
@@ -4243,14 +4245,14 @@ public class Animation
 						if(whatToProcess.split(",")[3].toUpperCase().equalsIgnoreCase("SPONSOR")) {
 							previewCommands = "anim_Infobar$Push 1.000 anim_BatsmanScore_LT 2.200 anim_BatsmanScore_LT$In 1.500";
 						}else {
-							previewCommands = "anim_Infobar$Push 1.000 anim_Lower_Third 2.200 anim_Lower_Third$Essentials 1.500 anim_Lower_Third$Essentials$In 1.500 ";
+							previewCommands = "anim_Infobar$Push 1.000 anim_Lower_Third 1.500 anim_Lower_Third$Essentials 1.500 anim_Lower_Third$Essentials$In 1.500";
 						}
 						break;
 					case "F9":
 						if(whatToProcess.split(",")[3].toUpperCase().equalsIgnoreCase("SPONSOR")) {
 							previewCommands = "anim_Infobar$Push 1.000 anim_BowlerFigure_LT 2.200 anim_BowlerFigure_LT$In 1.200";
 						}else {
-							previewCommands = "anim_Infobar$Push 1.000 anim_Lower_Third 2.200 anim_Lower_Third$Essentials 1.500 anim_Lower_Third$Essentials$In 1.500 ";
+							previewCommands = "anim_Infobar$Push 1.000 anim_Lower_Third 1.500 anim_Lower_Third$Essentials 1.500 anim_Lower_Third$Essentials$In 1.500";
 						}
 						break;
 					case "Control_a":
@@ -4258,20 +4260,20 @@ public class Animation
 						break;
 					case "F6": case "Control_F6": case "Shift_F6": case "F8": case "Alt_F8": case "F10": case "Shift_F3": case "d": case "e": case "u":
 					case "Shift_F5": case "Alt_o": case "Shift_F9": case "Control_F3": case "Control_F5": case "Control_F9": case "Alt_F12": case "Control_s": case "Control_f": case "F7": case "F11":
-						previewCommands = "anim_Infobar$Push 1.000 anim_Lower_Third 2.200 anim_Lower_Third$Essentials 1.500 anim_Lower_Third$Essentials$In 1.500 ";
+						previewCommands = "anim_Infobar$Push 1.000 anim_Lower_Third 1.500 anim_Lower_Third$Essentials 1.500 anim_Lower_Third$Essentials$In 1.500";
 						break;
 					}
 				}else if(whichside == 2){
 					switch (whatToProcess.split(",")[0]) {
 					case "F6": case "Control_F6": case "Shift_F6": case "F5": case "F9": case "F8": case "Alt_F8": case "F10": case "Shift_F3": case "d": case "e": case "u":
 					case "Shift_F5": case "Alt_o": case "Shift_F9": case "Control_F3": case "Control_F5": case "Control_F9":  case "Alt_F12": case "Control_s": case "Control_f":case "F7": case "F11":
-						previewCommands = previewCommands + " Anim_LtChange$Badge 1.00 Anim_LtChange$Sublines 1.00 "
-								+ "Anim_LtChange 1.2000 Anim_LtChange$Topline 1.000 Anim_LtChange$Dynamic$Change_In 1.180 Anim_LtChange$Dynamic$Change_Out 0.560";
+						previewCommands =  "Anim_LtChange$Badge 1.000 Anim_LtChange$Sublines 1.200 Anim_LtChange 1.200 Anim_LtChange$Topline 1.000 Anim_LtChange$Dynamic 0.560 "
+								+ "Anim_LtChange$Dynamic$Change_In 0.560 Anim_LtChange$Dynamic$Change_Out 0.560";
 						break;
 					}
 				}
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/Overlays "
-				    	+ "C:/Temp/Preview.png " + previewCommands + " \0", print_writer);
+				    	+ "C:/Temp/Preview.png " + previewCommands + "\0", print_writer);
 				break;
 			case Constants.ICC_U19_2023:
 				if(whichside == 1) {

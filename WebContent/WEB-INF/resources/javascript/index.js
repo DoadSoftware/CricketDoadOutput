@@ -115,6 +115,7 @@ function processUserSelection(whichInput)
       	document.initialise_form.submit();
 		break;
 	case 'cancel_graphics_btn':
+		processCricketProcedures("CANCLE-GRAPHICS");
 		$("#select_graphic_options_div").empty();
 		document.getElementById('select_graphic_options_div').style.display = 'none';
 		$("#captions_div").show();
@@ -408,6 +409,8 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 									setDropdownOptionForWicketSequence(0);
 								}
 							}
+						}else {
+							processUserSelection($('#cancel_graphics_btn').attr('value','cancel_graphics_btn'));
 						}
 					} else {
 						if(data.status != 'YES'){
