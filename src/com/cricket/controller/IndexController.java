@@ -494,7 +494,11 @@ public class IndexController
 				}
 				
 				processAnimations(whatToProcess, session_configuration, valueToProcess, print_writers);
-			} else if(whatToProcess.contains("CLEAR-ALL") || whatToProcess.contains("CLEAR-ALL-WITH-INFOBAR")) {
+			}else if(whatToProcess.contains("ANIMATE-OUT-SECOND_PLAYING")) {
+				this_animation.processAnimation(Constants.BACK, print_writers, "Anim_Lineup_Image_Big", "CONTINUE");
+				this_animation.whichGraphicOnScreen = "";
+			} 
+			else if(whatToProcess.contains("CLEAR-ALL") || whatToProcess.contains("CLEAR-ALL-WITH-INFOBAR")) {
 				this_animation.ResetAnimation(whatToProcess, print_writers, session_configuration);
 			}else if(whatToProcess.contains("CANCLE-GRAPHICS")) {
 				this_caption.whichSide = 1;

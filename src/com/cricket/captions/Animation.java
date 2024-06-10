@@ -107,7 +107,7 @@ public class Animation
 			case "Shift_K": case "Alt_F9": case "Shift_D": case "p": case "Control_b": case "Alt_m": case "Alt_n":
 			case "Alt_F10": case "Control_F1": case "Control_p": case "Shift_P": case "Shift_Q": 
 			case "z": case "x": case "c": case "v": case "Alt_F11": case "Alt_z": case "Control_z": case "Control_x": case "r":
-			case "Shift_Z": case "Shift_X": case "Control_Shift_F1": case "Control_Shift_D": case "Alt_Shift_Z":
+			case "Shift_Z": case "Shift_X": case "Control_Shift_F1": case "Control_Shift_D": case "Alt_Shift_Z": case "Control_Shift_F7":
 				return Constants.FULL_FRAMER;
 				
 			case "F5": case "F6": case "F7": case "F8": case "F9": case "F10": case "F11": case "Alt_F8":
@@ -978,6 +978,12 @@ public class Animation
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
 				TimeUnit.MILLISECONDS.sleep(500);
 				processAnimation(Constants.BACK, print_writers, "Anim_DoubleIdent", "START");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;
+			case "Control_Shift_F7":
+				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
+				TimeUnit.MILLISECONDS.sleep(500);
+				processAnimation(Constants.BACK, print_writers, "Anim_Lineup_Image_Big", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			
@@ -1888,7 +1894,13 @@ public class Animation
 				AnimateIn("ArrowUp,", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;
-			
+			case "Control_Shift_F7":
+				processAnimation(Constants.BACK, print_writers, "Anim_Lineup_Image_Big", "CONTINUE");
+				TimeUnit.MILLISECONDS.sleep(1000);
+				AnimateIn("ArrowUp,", print_writers, config); // Restore infobar
+				this.whichGraphicOnScreen = "";
+				break;
+				
 			case "Control_d": case "Control_e":
 				processAnimation(Constants.BACK, print_writers, "anim_Profile$Essentials", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "anim_Profile$Main", "CONTINUE");
@@ -3698,10 +3710,13 @@ public class Animation
 							previewCommand = "Anim_Infobar$Push 0.500 Anim_Ident$In 2.000 ";
 							break;
 						case "Control_Shift_D":
-							previewCommand = "Anim_Infobar$Push 0.500 Anim_DoubleIdent$In 2.000 ";
+							previewCommand = "Anim_Infobar$Push 0.500 Anim_DoubleIdent$In 2.000";
 							break;
 						case "Alt_Shift_Z":
-							previewCommand = "Anim_Infobar$Push 0.500 Anim_Teams$In_Out$In 2.200 ";
+							previewCommand = "Anim_Infobar$Push 0.500 Anim_Teams$In_Out$In 2.200";
+							break;
+						case "Control_Shift_F7":
+							previewCommand = "Anim_Infobar$Push 0.500 Anim_Teams$In_Out$In 2.480";
 							break;
 						
 						case "Control_d": case "Control_e":

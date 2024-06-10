@@ -277,6 +277,10 @@ public class Caption
 				status = this_fullFramesGfx.populatePlayingXI(whichSide, whatToProcess.split(",")[0],
 					Integer.valueOf(whatToProcess.split(",")[2]), matchAllData, 0);
 				break;
+			case "Control_Shift_F7":
+				status = this_fullFramesGfx.populateSecondPlayingXI(whichSide, whatToProcess.split(",")[0],
+					Integer.valueOf(whatToProcess.split(",")[2]), matchAllData, 0);
+				break;
 
 			case "Alt_z": //Squad
 				this_fullFramesGfx.WhichType = whatToProcess.split(",")[3];
