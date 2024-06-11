@@ -108,6 +108,7 @@ public class Animation
 			case "Alt_F10": case "Control_F1": case "Control_p": case "Shift_P": case "Shift_Q": 
 			case "z": case "x": case "c": case "v": case "Alt_F11": case "Alt_z": case "Control_z": case "Control_x": case "r":
 			case "Shift_Z": case "Shift_X": case "Control_Shift_F1": case "Control_Shift_D": case "Alt_Shift_Z": case "Control_Shift_F7":
+			case "Control_Shift_F2":
 				return Constants.FULL_FRAMER;
 				
 			case "F5": case "F6": case "F7": case "F8": case "F9": case "F10": case "F11": case "Alt_F8":
@@ -999,7 +1000,7 @@ public class Animation
 			case "Shift_K": case "Alt_F9": case "Alt_F10": case "p": case "z": case "x": case "c": case "v": case "Control_p":
 			case "Shift_P": case "Shift_Q": case "Alt_F11": case "Control_z": case "Control_x": case "Shift_Z": case "Shift_X":
 			
-			case "Control_Shift_F1":
+			case "Control_Shift_F1": case "Control_Shift_F2":
 				
 				setVariousAnimationsKeys("ANIMATE-IN", print_writers, config);
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
@@ -1026,10 +1027,22 @@ public class Animation
 						caption.this_fullFramesGfx.pervious_batperformer_id = caption.this_fullFramesGfx.batperformer_id;
 					}
 					break;
+				
 				case "F2":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Bowling_Card", "START");
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Sponsor", "START");
 					break;
+				case "Control_Shift_F2":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Bowling_Card", "START");
+					TimeUnit.MILLISECONDS.sleep(800);
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Extra_Info", "START");
+					if(caption.this_fullFramesGfx.ballperformer_id > 0) {
+						TimeUnit.MILLISECONDS.sleep(800);
+						processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Bowling_Card$Side1$" + caption.this_fullFramesGfx.ballperformer_id, "START");
+						caption.this_fullFramesGfx.pervious_ballperformer_id = caption.this_fullFramesGfx.ballperformer_id;
+					}
+					break;
+					
 				case "F4":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Partnership_List", "START");
 					break;
@@ -1037,24 +1050,19 @@ public class Animation
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Batting_Card_Image", "START");
 					break;
 				case "Shift_F10":
-					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Worm", "START");
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Worms", "START");
+					processAnimation(Constants.BACK, print_writers, "Change$Footer$Dynamic", "START");
 					break;
 				case "Control_F11": case "Shift_F11":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Summary", "START");
 					processAnimation(Constants.BACK, print_writers, "Change$Footer$Dynamic", "START");
-					break;
-				case "m":
-					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Ident", "START");
-					break;
-				case "Control_m":
-					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Ident", "START");
 					break;
 				case "Shift_T":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$LineUp_Image", "START");
 					processAnimation(Constants.BACK, print_writers, "Change$Footer$Dynamic", "START");
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Sponsor", "START");
 					break;
-				case "Control_d": case "Shift_P": case "Control_e": case "Shift_Q":
+				case "Shift_P": case "Shift_Q":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Profile", "START");
 					break;
 				case "Control_F7":
@@ -1933,7 +1941,7 @@ public class Animation
 			case "Alt_F10": case "Control_p": case "Shift_P": case "Shift_Q":
 			case "z": case "x": case "c": case "v": case "Alt_F11": case "Control_z": case "Control_x": case "Shift_Z": case "Shift_X":
 				
-			case "Control_Shift_F1":
+			case "Control_Shift_F1": case "Control_Shift_F2":
 				
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Essentials", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Header", "CONTINUE");
@@ -1957,6 +1965,16 @@ public class Animation
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Sponsor", "CONTINUE");
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Bowling_Card", "CONTINUE");
 					break;
+				case "Control_Shift_F2":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Bowling_Card", "CONTINUE");
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Extra_Info", "CONTINUE");
+					processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Bowling_Card$Side1$" + 
+							caption.this_fullFramesGfx.pervious_ballperformer_id, "CONTINUE REVERSE");
+					
+					caption.this_fullFramesGfx.pervious_ballperformer_id = 0;
+					caption.this_fullFramesGfx.ballperformer_id = 0;
+					break;
+					
 				case "F4":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Partnership_List", "CONTINUE");
 					break;
@@ -1964,7 +1982,8 @@ public class Animation
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Batting_Card_Image", "CONTINUE");
 					break;
 				case "Shift_F10":
-					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Worm", "CONTINUE");
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Worms", "CONTINUE");
+					processAnimation(Constants.BACK, print_writers, "Change$Footer$Dynamic", "SHOW 0.0");
 					break;
 				case "Control_F11": case "Shift_F11":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Summary", "CONTINUE");
@@ -3771,7 +3790,7 @@ public class Animation
 							
 						case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Control_F11": case "Shift_F11": case "p": case "Control_p":
 						case "Shift_T": case "Control_F7": case "Control_F10": case "Alt_F9": case "Shift_K":case "z": case "x": case "c": case "v": case "Alt_F10": 
-						case "Shift_P": case "Shift_Q": case "Alt_F11": case "Control_z": case "Control_x": case "Control_Shift_F1":
+						case "Shift_P": case "Shift_Q": case "Alt_F11": case "Control_z": case "Control_x": case "Control_Shift_F1": case "Control_Shift_F2":
 							if(!whatToProcess.split(",")[0].equalsIgnoreCase("Shift_K")) {
 								previewCommand = "anim_Infobar$Push 1.000 Anim_FullFrames$In_Out$Essentials$In 2.200 Anim_FullFrames$In_Out$Header$In 1.900 "
 										+ "Anim_FullFrames$In_Out$Footer$In 2.200";
@@ -3791,6 +3810,11 @@ public class Animation
 						case "F2"://bowlingCard
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Bowling_Card$In 2.100 Anim_FullFrames$In_Out$Sponsor$In 2.420";
 							break;
+						case "Control_Shift_F2":
+							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Bowling_Card$In 2.100 Anim_FullFrames$In_Out$Extra_Info$In 2.500 "
+									+ "Anim_Highlights$Bowling_Card$Side1$" + caption.this_fullFramesGfx.ballperformer_id + " 0.500";
+							break;
+							
 						case "F4": //All Partnership
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Partnership_List$In 2.180";
 							if(whichside == 1 && caption.this_fullFramesGfx.whichSponsor != null && !caption.this_fullFramesGfx.whichSponsor.isEmpty()) {
@@ -3811,7 +3835,8 @@ public class Animation
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Manhattan$In 2.500";
 							break;
 						case "Shift_F10"://WORMS
-							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Worm$In 2.440 Anim_FullFrames$In_Out$Main$Worm$In$Runs 2.440";
+							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Worms$In 2.500 Anim_FullFrames$In_Out$Worms$In$Runs 2.500"
+									+ " Change$Footer$Dynamic 0.500";
 							break;
 						case "Control_F11": case "Shift_F11": //MATCH SUMMARY
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Summary$In 2.200 Change$Footer$Dynamic 0.500";

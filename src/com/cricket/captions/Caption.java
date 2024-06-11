@@ -171,6 +171,17 @@ public class Caption
 				status = this_fullFramesGfx.PopulateBatPerformerFF(whichSide, whatToProcess.split(",")[0], matchAllData, 
 						Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
+			case "Control_Shift_F2":
+				this_fullFramesGfx.FirstPlayerId = Integer.valueOf(whatToProcess.split(",")[2]);
+				this_fullFramesGfx.WhichType = whatToProcess.split(",")[3];
+				
+				if(this_anim.whichGraphicOnScreen.equalsIgnoreCase("F2") || this_anim.whichGraphicOnScreen.equalsIgnoreCase("Control_Shift_F2")) {
+				}else {
+					status = this_fullFramesGfx.PopulateBowlingCardFF(whichSide, "F2", matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
+				}
+				status = this_fullFramesGfx.PopulateBallPerformerFF(whichSide, whatToProcess.split(",")[0], matchAllData, 
+						Integer.valueOf(whatToProcess.split(",")[1]));
+				break;
 				
 			case "F1": // Scorecard FF
 				if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ISPL)) {

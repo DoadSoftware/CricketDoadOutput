@@ -288,7 +288,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2': case 'Shift_E': case 'Shift_P': case 'Shift_Q': case 'Alt_z': case 'Shift_F':
 			case 'Alt_F6': case 'Shift_R': case 'Shift_A': case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'Shift_F7': case 'Control_F4':
 			case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_F': case 'Control_Shift_P': case 'Control_Shift_F1': case 'Control_Shift_D':
-			case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Shift_I': case 'Alt_Shift_C': 
+			case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Shift_I': case 'Alt_Shift_C': case 'Control_Shift_F2':
 				addItemsToList(dataToProcess,null); 
 				break;
 			//changed shift_f11 to control_f11
@@ -532,9 +532,10 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9': case 'Alt_0':
 	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10': case 'Alt_d': case 'Shift_F4': case 'Alt_a': case 'Alt_s': 
 	case 'Shift_P': case 'Shift_Q': case 'Alt_z': case 'Control_c': case 'Control_v': case 'Control_z': case 'Control_x': case 'Alt_q': case 'Shift_F': 
-	case 'Alt_F6': case 'Shift_A': case 'Shift_R': case 'Control_Shift_F1': case 'Control_Shift_D': case 'Alt_Shift_Z': case 'Control_Shift_F7':
+	case 'Alt_F6': case 'Shift_A': case 'Shift_R': case 'Control_Shift_F1': case 'Control_Shift_D': case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Control_Shift_F2':
 	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_F4': case 'Alt_Shift_C':
 	case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I':
+
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		
 		$("#captions_div").hide();
@@ -701,6 +702,53 @@ function addItemsToList(whatToProcess,dataToProcess)
 			row.insertCell(cellCount).appendChild(select);
 			setDropdownOptionToSelectOptionArray($(select),1);
 			removeSelectDuplicates(select.id);
+			cellCount = cellCount + 1;
+			break;
+		case 'Control_Shift_F2':
+			header_text.innerHTML = 'BALL PERFORMER';
+
+			select = document.createElement('select');
+			select.id = 'selectPlayer';
+			select.name = select.id;
+			
+			session_match.match.inning.forEach(function(inn,index,arr){
+				if(inn.inningNumber == document.getElementById('which_inning').value){
+					inn.bowlingCard.forEach(function(boc,index,arr){
+						if(boc.status == 'CURRENTBOWLER'){
+							option = document.createElement('option');
+							option.value = boc.player.playerId;
+							option.text = boc.player.full_name;
+							select.appendChild(option);
+						}
+					});
+					
+					inn.bowlingCard.forEach(function(boc,boc_index,bc_arr){
+						option = document.createElement('option');
+						option.value = boc.playerId;
+						option.text = boc.player.full_name;	
+						select.appendChild(option);
+					});
+				}
+			});
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			removeSelectDuplicates(select.id);
+			cellCount = cellCount + 1;
+			
+			select = document.createElement('select');
+			select.id = 'selectStatsType';
+			select.name = select.id;
+			
+			option = document.createElement('option');
+			option.value = 'performer';
+			option.text = 'Performer';
+			select.appendChild(option);
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),1);
 			cellCount = cellCount + 1;
 			break;
 		case 'Control_Shift_F1':
