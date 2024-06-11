@@ -338,6 +338,7 @@ public class InfobarGfx
 				}
 				
 				populateInfobarTeamNameScore(true,print_writers,matchAllData,2);
+
 				populateVizInfobarLeftBottom(print_writers, matchAllData, 1);
 				
 				if(!infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
@@ -385,6 +386,7 @@ public class InfobarGfx
 				
 			}else {
 				populateInfobarTeamNameScore(true,print_writers,matchAllData,2);
+
 				populateVizInfobarLeftBottom(print_writers, matchAllData, 1);
 				
 				if(!infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {

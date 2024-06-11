@@ -533,7 +533,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10': case 'Alt_d': case 'Shift_F4': case 'Alt_a': case 'Alt_s': 
 	case 'Shift_P': case 'Shift_Q': case 'Alt_z': case 'Control_c': case 'Control_v': case 'Control_z': case 'Control_x': case 'Alt_q': case 'Shift_F': 
 	case 'Alt_F6': case 'Shift_A': case 'Shift_R': case 'Control_Shift_F1': case 'Control_Shift_D': case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Control_Shift_F2':
-	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_F4': case 'Alt_Shift_C':
+	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_F4': case 'Alt_Shift_C': case 'Control_Shift_L':
 	case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I':
 
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
@@ -3028,9 +3028,12 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			break;
 			
-		case 'Control_m': case 'Shift_F11': //MATCH-PROMO - PreviousMatchSummary 
+		case 'Control_m': case 'Shift_F11': case 'Control_Shift_L'://MATCH-PROMO - PreviousMatchSummary 
 			
 			switch(whatToProcess) {
+			case 'Control_Shift_L':
+				header_text.innerHTML = 'MATCH PROMO';
+				break;	
 			case 'Control_m':
 				header_text.innerHTML = 'FF MATCH PROMO';
 				break;

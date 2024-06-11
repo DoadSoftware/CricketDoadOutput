@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -67,6 +70,7 @@ public class LowerThirdGfx
 	public List<VariousText> VariousText;
 	public List<HeadToHead> headToHead;
 	public List<Tournament> past_tournament_stats;
+	public List<Fixture> fixTures;
 	
 	public BattingCard battingCard;
 	public Partnership partnership;
@@ -96,6 +100,7 @@ public class LowerThirdGfx
 	public List<BestStats> top_bowler_beststats = new ArrayList<BestStats>();
 	public List<String> this_data_str = new ArrayList<String>();
 	public List<BatBallGriff> griff = new ArrayList<BatBallGriff>();
+	public List<Fixture> FixturesList = new ArrayList<Fixture>();
 	
 	public List<PowerPlays> powerplayData = new ArrayList<PowerPlays>();
 	public List<BestStats> pastdata = new ArrayList<BestStats>();
@@ -112,7 +117,7 @@ public class LowerThirdGfx
 	public LowerThirdGfx(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics, List<StatsType> statsTypes, 
 			List<MatchAllData> tournament_matches, List<NameSuper> nameSupers, List<Team> Teams, List<Ground> Grounds, 
 			List<Tournament> tournaments,List<BestStats> tapeballs,List<DuckWorthLewis> dls, List<Staff> staff, List<Player> players, List<POTT> pott,
-			List<VariousText> VariousText, List<HeadToHead> headToHead, List<Tournament> past_tournament_stats, CricketService cricketService) {
+			List<VariousText> VariousText, List<HeadToHead> headToHead, List<Tournament> past_tournament_stats, CricketService cricketService,List<Fixture> fixTures) {
 		super();
 		this.print_writers = print_writers;
 		this.config = config;
@@ -132,6 +137,7 @@ public class LowerThirdGfx
 		this.headToHead = headToHead;
 		this.past_tournament_stats = past_tournament_stats;
 		this.cricketService = cricketService;
+		this.fixTures = fixTures;
 	}
 	
 	public String populateBatVsAllBowlers(String whatToProcess, int whichSide, MatchAllData matchAllData) throws InterruptedException {
@@ -3965,6 +3971,66 @@ public class LowerThirdGfx
 //			setStatsPositionOfLT(5, 2, WhichSide,whatToProcess.split(",")[0], print_writers, config);
 			setPositionOfLT(whatToProcess,WhichSide,config,lowerThird.getNumberOfSubLines());
 //			setPositionOfLT(lowerThird.getNumberOfSubLines(), WhichSide, 4,print_writers, config);
+			return PopulateL3rdBody(WhichSide, whatToProcess.split(",")[0]);
+		} else {
+			return status;
+		}
+	}
+	public String populateLTMatchPromo(String whatToProcess, int WhichSide, MatchAllData matchAllData) throws InterruptedException {
+		
+		fixture = fixTures.stream().filter(fix -> fix.getMatchnumber() == 
+				Integer.valueOf(whatToProcess.split(",")[2])).findAny().orElse(null);
+		
+		if(fixture == null) {
+			return "Fixture id [" + Integer.valueOf(whatToProcess.split(",")[2]) + "] from database is returning NULL";
+		}
+		
+		String match_name="",newDate = "",date_data = "",text = "";
+		
+		String[] dateSuffix = {
+				"th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th",
+				
+				"th", "th", "th", "th", "th", "th", "th", "th", "th", "th",
+				
+				"th", "st", "nd", "rd", "th", "th", "th", "th", "th","th",
+				
+				"th", "st"
+		};
+		
+		if(fixture.getMatchnumber() > 9) {
+			match_name = fixture.getMatchfilename();
+		}else {
+			match_name = "MATCH " + fixture.getMatchnumber();
+		}
+		
+		Calendar cal_bengal = Calendar.getInstance();
+		cal_bengal.add(Calendar.DATE, +1);
+		if(fixture.getDate().equalsIgnoreCase(new SimpleDateFormat("dd-MM-yyyy").format(cal_bengal.getTime()))) {
+			text = "TOMORROW - " + fixture.getLocalTime() + " IST - " + fixture.getVenue();
+		}else {
+			cal_bengal.add(Calendar.DATE, -1);
+			if(fixture.getDate().equalsIgnoreCase(new SimpleDateFormat("dd-MM-yyyy").format(cal_bengal.getTime()))) {
+				text = "UP NEXT - " + fixture.getLocalTime() + " IST - " + fixture.getVenue();
+			}else {
+				newDate = fixture.getDate().split("-")[0];
+				if(Integer.valueOf(newDate) < 10) {
+					newDate = newDate.replaceFirst("0", "");
+				}
+				date_data = newDate + dateSuffix[Integer.valueOf(newDate)] + " " + 
+						Month.of(Integer.valueOf(fixture.getDate().split("-")[1])) + " " + fixture.getDate().split("-")[2];
+				
+				text = date_data + " - " + fixture.getLocalTime() + " IST - " + fixture.getVenue();
+			}
+		}
+		
+		lowerThird = new LowerThird(fixture.getHome_Team().getTeamName2() + fixture.getHome_Team().getTeamName3(), fixture.getAway_Team().getTeamName2(),
+				fixture.getAway_Team().getTeamName3(),fixture.getHome_Team().getTeamName4(), fixture.getAway_Team().getTeamName4(), "",2,"Emirates","",null,null,
+				null,null,null);
+		
+		status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);
+		if(status == Constants.OK) {
+			HideAndShowL3rdSubStrapContainers(WhichSide);
+			setPositionOfLT(whatToProcess,WhichSide,config,lowerThird.getNumberOfSubLines());
 			return PopulateL3rdBody(WhichSide, whatToProcess.split(",")[0]);
 		} else {
 			return status;
