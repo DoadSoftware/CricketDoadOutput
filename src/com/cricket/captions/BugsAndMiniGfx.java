@@ -1951,7 +1951,7 @@ public class BugsAndMiniGfx
 				break;
 			case "Shift_F2":
 				int bowling_size = 1;
-				rowId = 1;
+				rowId = 0;
 				cont_name = "";
 				omo_num = 0;
 				
@@ -1966,6 +1966,7 @@ public class BugsAndMiniGfx
 				
 				
 				for (BowlingCard boc : inning.getBowlingCard()) {
+					rowId = rowId + 1;
 					if(boc.getRuns() > 0 || ((boc.getOvers()*6)+boc.getBalls()) > 0) {
 						bowling_size=bowling_size + 1;
 //						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
@@ -1983,21 +1984,23 @@ public class BugsAndMiniGfx
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
 								+ "$Select_GraphicsType$Bowling_Card$Data$Rows$Select_Row$" + rowId +"$BowlingData$Select_Row_Type" + cont_name +text_name+"$Overs$txt_Overs*GEOM*TEXT SET " + CricketFunctions.OverBalls(boc.getOvers(),boc.getBalls()) + " \0", print_writers);
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
-								+ "$Select_GraphicsType$Bowling_Card$Data$Rows$Select_Row$" + rowId +"$BowlingData$Select_Row_Type"+cont_name +text_name+ "$Figures$txt_Figures*GEOM*TEXT SET " + boc.getRuns()+"-"+ boc.getWickets() + " \0", print_writers);
+								+ "$Select_GraphicsType$Bowling_Card$Data$Rows$Select_Row$" + rowId +"$BowlingData$Select_Row_Type"+cont_name +text_name+ "$Figures$txt_Figures*GEOM*TEXT SET " + boc.getWickets() +"-"+ boc.getRuns() + " \0", print_writers);
 
 						break;
 					
 					case (CricketUtil.CURRENT + CricketUtil.BOWLER):
+						System.out.println("HELLO "+rowId);
 						omo_num = 1;
 						cont_name = "$Not_Out";
 						text_name = "$img_Text1";
+						
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
 								+ "$Select_GraphicsType$Bowling_Card$Data$Rows$Select_Row$" + rowId  +"$BowlingData$Select_Row_Type" +cont_name +"$img_Text1$Name$txt_Name*GEOM*TEXT SET " +  boc.getPlayer().getTicker_name() + " \0", print_writers);
 		
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
 								+ "$Select_GraphicsType$Bowling_Card$Data$Rows$Select_Row$" + rowId +"$BowlingData$Select_Row_Type" + cont_name +"$img_Text2$Overs$txt_Overs*GEOM*TEXT SET " + CricketFunctions.OverBalls(boc.getOvers(),boc.getBalls()) + " \0", print_writers);
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
-								+ "$Select_GraphicsType$Bowling_Card$Data$Rows$Select_Row$" + rowId +"$BowlingData$Select_Row_Type"+cont_name + "$img_Text2$Figures$txt_Figures*GEOM*TEXT SET " + boc.getRuns()+"-"+ boc.getWickets() + " \0", print_writers);
+								+ "$Select_GraphicsType$Bowling_Card$Data$Rows$Select_Row$" + rowId +"$BowlingData$Select_Row_Type"+cont_name + "$img_Text2$Figures$txt_Figures*GEOM*TEXT SET " + boc.getWickets()+"-"+  boc.getRuns() + " \0", print_writers);
 
 						break;
 					}
@@ -2017,7 +2020,7 @@ public class BugsAndMiniGfx
 								+ "$Select_GraphicsType$Bowling_Card$Data$Rows$Select_Row$" + rowId +"$BowlingData$Select_Row_Type"+cont_name +text_name+"$Name$Select_Impact*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
 					}
 					
-					rowId = rowId + 1;
+					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
 							+ "$Select_GraphicsType$Bowling_Card$Data$Rows$Select_Row$"+rowId+"$Select_Row_Type*FUNCTION*Omo*vis_con SET " + String.valueOf(omo_num) + " \0", print_writers);
 
