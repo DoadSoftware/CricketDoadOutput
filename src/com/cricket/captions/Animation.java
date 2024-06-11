@@ -3383,6 +3383,8 @@ public class Animation
 			processAnimation(Constants.BACK, print_writers, "Change_Profile", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Change", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Anim_Highlights", "SHOW 0.0");
+			processAnimation(Constants.BACK, print_writers, "Anim_Teams", "SHOW 0.0");
+			processAnimation(Constants.BACK, print_writers, "Anim_Lineup_Image_Big", "SHOW 0.0");
 			
 			if(whatToProcess.contains("CLEAR-ALL")) {
 				processAnimation(Constants.FRONT, print_writers, "anim_Infobar", "SHOW 0.0");
@@ -3710,30 +3712,30 @@ public class Animation
 					if(whatToProcess.contains(",")) {
 						switch(whatToProcess.split(",")[0]) {
 						case "m": case "Control_m":
-							previewCommand = "Anim_Infobar$Push 0.500 Anim_Ident$In 2.000 ";
+							previewCommand = "anim_Infobar$Push 1.000 Anim_Ident$In 2.000 ";
 							break;
 						case "Control_Shift_D":
-							previewCommand = "Anim_Infobar$Push 0.500 Anim_DoubleIdent$In 2.000";
+							previewCommand = "anim_Infobar$Push 1.000 Anim_DoubleIdent$In 2.000";
 							break;
 						case "Alt_Shift_Z":
-							previewCommand = "Anim_Infobar$Push 0.500 Anim_Teams$In_Out$In 2.200";
+							previewCommand = "anim_Infobar$Push 1.000 Anim_Teams$In_Out$In 2.200";
 							break;
 						case "Control_Shift_F7":
-							previewCommand = "Anim_Infobar$Push 0.500 Anim_Teams$In_Out$In 2.480";
+							previewCommand = "anim_Infobar$Push 1.000 Anim_Lineup_Image_Big$In_Out$In 2.480";
 							break;
 						
 						case "Control_d": case "Control_e":
-							previewCommand = "Anim_Infobar$Push 0.500 anim_Profile 1.700 anim_Profile$Essentials$In 1.140 anim_Profile$Main$In 1.140";
+							previewCommand = "anim_Infobar$Push 1.000 anim_Profile 1.700 anim_Profile$Essentials$In 1.140 anim_Profile$Main$In 1.140";
 							break;
 							
 						case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Control_F11": case "Shift_F11": case "p": case "Control_p":
 						case "Shift_T": case "Control_F7": case "Control_F10": case "Alt_F9": case "Shift_K":case "z": case "x": case "c": case "v": case "Alt_F10": 
 						case "Shift_P": case "Shift_Q": case "Alt_F11": case "Control_z": case "Control_x": case "Control_Shift_F1":
 							if(!whatToProcess.split(",")[0].equalsIgnoreCase("Shift_K")) {
-								previewCommand = "Anim_Infobar$Push 0.500 Anim_FullFrames$In_Out$Essentials$In 2.200 Anim_FullFrames$In_Out$Header$In 1.900 "
+								previewCommand = "anim_Infobar$Push 1.000 Anim_FullFrames$In_Out$Essentials$In 2.200 Anim_FullFrames$In_Out$Header$In 1.900 "
 										+ "Anim_FullFrames$In_Out$Footer$In 2.200";
 							}else {
-								previewCommand = "Anim_Infobar$Push 0.500 Anim_FullFrames$In_Out$Essentials$In 2.200 Anim_FullFrames$In_Out$Header$In 1.900";
+								previewCommand = "Anim_Infobar$Push 1.000 Anim_FullFrames$In_Out$Essentials$In 2.200 Anim_FullFrames$In_Out$Header$In 1.900";
 							}
 							break;
 						}
