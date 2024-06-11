@@ -117,7 +117,7 @@ public class Animation
 			case "Control_s": case "Alt_d": case "Control_f": case "Control_q": case "l": case "n": case "a": case "Control_F2":
 			case "Alt_a": case "Alt_s":case "Shift_E": case "Alt_q": case "Alt_F6": case "Shift_A": case "Shift_R": case "Shift_U":
 			case "Alt_w": case "Control_j": case "Alt_i": case "Alt_j": case "b": case "Control_i": case "Alt_Shift_L": case "Shift_B": 
-			case "Control_Shift_F": case "Control_Shift_P": case "Control_Shift_M":
+			case "Control_Shift_F": case "Control_Shift_P": case "Control_Shift_M":case "Shift_I":
 				switch (whatToProcess.split(",")[0]) {
 				case "q": case "Control_q": case "Alt_q": case "Shift_F7": // Boundary L3rd
 					return Constants.BOUNDARIES + Constants.LOWER_THIRD;
@@ -1163,6 +1163,17 @@ public class Animation
 				//processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;	
+			case "Shift_I":
+				if(whichGraphicOnScreen.equalsIgnoreCase("Shift_I")) {
+					processAnimation(Constants.FRONT, print_writers, "anim_Substitute", "CONTINUE");
+					this.whichGraphicOnScreen = whatToProcess;
+				}else {
+					AnimateIn("ArrowDown,", print_writers, config);
+					TimeUnit.MILLISECONDS.sleep(500);
+					processAnimation(Constants.FRONT, print_writers, "anim_Substitute", "START");
+					this.whichGraphicOnScreen = whatToProcess.split(",")[0];
+				}
+				break;
 			case "Alt_q":
 				if(this.infobar.isInfobar_on_screen() == true) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_POTT_Aramco$Overall_Position_Y*"
@@ -1460,7 +1471,6 @@ public class Animation
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;
-			 
 			 case "Alt_q":
 				 processAnimation(Constants.FRONT, print_writers, "anim_POTT", "CONTINUE");
 				 TimeUnit.MILLISECONDS.sleep(1000);
@@ -2045,6 +2055,13 @@ public class Animation
 				this.whichGraphicOnScreen = "";
 				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
 				break;
+			 case "Shift_I":
+					processAnimation(Constants.FRONT, print_writers, "anim_Substitute", "CONTINUE");
+					TimeUnit.MILLISECONDS.sleep(1000);
+					AnimateIn("ArrowUp,", print_writers, config);
+					processAnimation(Constants.FRONT, print_writers, "anim_Substitute", "SHOW 0.0");
+					this.whichGraphicOnScreen = "";
+					break;
 			 
 			 case "Alt_q":
 				 processAnimation(Constants.FRONT, print_writers, "anim_POTT", "CONTINUE");
@@ -3391,6 +3408,7 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "anim_Ident", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "anim_Projected_LT", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "anim_Substitute", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "anim_BatsmanScore_LT", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "anim_BowlerFigure_LT", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "anim_Toss", "SHOW 0.0");
@@ -4277,6 +4295,10 @@ public class Animation
 						break;
 					case "Control_a":
 						previewCommands = "anim_Projected_LT 2.200 anim_Projected_LT$Essentials 2.200 anim_Projected_LT$Essentials$In 1.500 anim_Infobar$Push 1.000";
+						break;
+					case "Shift_I":
+						previewCommands = "anim_Substitute 1.600 anim_Substitute$In_Out 1.600 anim_Substitute$In_Out$Base 1.600 anim_Substitute$In_Out$Sub 1.600 anim_Substitute$In_Out$Impact 0.000"
+								+ " anim_Substitute$In_Out$Base$In 1.000 anim_Substitute$In_Out$Sub$In 1.620 anim_Substitute$In_Out$Impact$In 0.000";
 						break;
 					case "F6": case "Control_F6": case "Shift_F6": case "F8": case "Alt_F8": case "F10": case "Shift_F3": case "d": case "e": case "u":
 					case "Shift_F5": case "Alt_o": case "Shift_F9": case "Control_F3": case "Control_F5": case "Control_F9": case "Alt_F12": case "Control_s": case "Control_f": case "F7": case "F11":

@@ -347,6 +347,9 @@ public class IndexController
 			return JSONObject.fromObject(session_match).toString();
 		
 		default:
+			if(whatToProcess.toUpperCase().equalsIgnoreCase("IMPACT-CHANGE-ON")) {
+				this_animation.AnimateIn("Shift_I", print_writers, session_configuration);
+			}
 			if(whatToProcess.contains("GRAPHICS-OPTIONS")) {
 				return JSONArray.fromObject(GetGraphicOption(valueToProcess)).toString();
 			} else if(whatToProcess.contains("POPULATE-GRAPHICS")) {
@@ -492,7 +495,6 @@ public class IndexController
 						break;
 					}
 				}
-				
 				processAnimations(whatToProcess, session_configuration, valueToProcess, print_writers);
 			}else if(whatToProcess.contains("ANIMATE-OUT-SECOND_PLAYING")) {
 				this_animation.processAnimation(Constants.BACK, print_writers, "Anim_Lineup_Image_Big", "CONTINUE");
