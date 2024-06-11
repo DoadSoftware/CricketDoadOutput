@@ -301,53 +301,6 @@ public class InfobarGfx
 									CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Result$Middle$txt_Subtitle*GEOM*TEXT SET " + 
 											"WIN " + CricketFunctions.generateMatchSummaryStatus(2, matchAllData, CricketUtil.FULL, "|", config.getBroadcaster()).toUpperCase().split(" WIN ")[1] + "\0", print_writers);
 									
-									
-//									CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Result$Middle$txt_Title*GEOM*TEXT SET " + 
-//											matchAllData.getMatch().getInning().get(1).getBatting_team().getTeamName1().toUpperCase() + "\0", print_writers);
-//									
-//									if(matchAllData.getSetup().getTargetType() != null) {
-//										if(matchAllData.getSetup().getTargetType().equalsIgnoreCase(CricketUtil.DLS)) {
-//											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Result$Middle$txt_Subtitle*GEOM*TEXT SET " + 
-//													"WIN BY " + CricketFunctions.getWicketsLeft(matchAllData, inning.getInningNumber()) + " WICKET" + 
-//													CricketFunctions.Plural(CricketFunctions.getWicketsLeft(matchAllData, inning.getInningNumber())).toUpperCase() + " (DLS)" + "\0", print_writers);
-//										}else if(matchAllData.getSetup().getTargetType().equalsIgnoreCase(CricketUtil.VJD)) {
-//											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Result$Middle$txt_Subtitle*GEOM*TEXT SET " + 
-//													"WIN BY " + CricketFunctions.getWicketsLeft(matchAllData, inning.getInningNumber()) + " WICKET" + 
-//													CricketFunctions.Plural(CricketFunctions.getWicketsLeft(matchAllData, inning.getInningNumber())).toUpperCase() + " (VJD)" + "\0", print_writers);
-//										}
-//								    }else {
-//								    	CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Result$Middle$txt_Subtitle*GEOM*TEXT SET " + 
-//												"WIN BY " + CricketFunctions.getWicketsLeft(matchAllData, inning.getInningNumber()) + " WICKET" + 
-//												CricketFunctions.Plural(CricketFunctions.getWicketsLeft(matchAllData, inning.getInningNumber())).toUpperCase() + "\0", print_writers);
-//								    }
-								}else if (CricketFunctions.getWicketsLeft(matchAllData,inning.getInningNumber()) <= 0 || 
-										CricketFunctions.getRequiredBalls(matchAllData)  == 0) {
-									
-									CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Result$Middle$txt_Title*GEOM*TEXT SET " + 
-											CricketFunctions.generateMatchSummaryStatus(2, matchAllData, CricketUtil.FULL, "|", config.getBroadcaster()).toUpperCase().split(" WIN ")[0] + "\0", print_writers);
-									
-									CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Result$Middle$txt_Subtitle*GEOM*TEXT SET " + 
-											"WIN " + CricketFunctions.generateMatchSummaryStatus(2, matchAllData, CricketUtil.FULL, "|", config.getBroadcaster()).toUpperCase().split(" WIN ")[1] + "\0", print_writers);
-									
-									
-//									CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Result$Middle$txt_Title*GEOM*TEXT SET " + 
-//											matchAllData.getMatch().getInning().get(1).getBowling_team().getTeamName1().toUpperCase() + "\0", print_writers);
-//									
-//									if(matchAllData.getSetup().getTargetType() != null) {
-//										if(matchAllData.getSetup().getTargetType().equalsIgnoreCase(CricketUtil.DLS)) {
-//											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Result$Middle$txt_Subtitle*GEOM*TEXT SET " + 
-//													"WIN BY " + Integer.valueOf(CricketFunctions.getRequiredRuns(matchAllData) - 1) + " RUN" + 
-//													CricketFunctions.Plural(Integer.valueOf(CricketFunctions.getRequiredRuns(matchAllData) - 1)).toUpperCase() + " (DLS)" + "\0", print_writers);
-//										}else if(matchAllData.getSetup().getTargetType().equalsIgnoreCase(CricketUtil.VJD)) {
-//											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Result$Middle$txt_Subtitle*GEOM*TEXT SET " + 
-//													"WIN BY " + Integer.valueOf(CricketFunctions.getRequiredRuns(matchAllData) - 1) + " RUN" + 
-//													CricketFunctions.Plural(Integer.valueOf(CricketFunctions.getRequiredRuns(matchAllData) - 1)).toUpperCase() + " (VJD)" + "\0", print_writers);
-//										}
-//								    }else {
-//								    	CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Result$Middle$txt_Subtitle*GEOM*TEXT SET " + 
-//												"WIN BY " + Integer.valueOf(CricketFunctions.getRequiredRuns(matchAllData) - 1) + " RUN" + 
-//												CricketFunctions.Plural(Integer.valueOf(CricketFunctions.getRequiredRuns(matchAllData) - 1)).toUpperCase() + "\0", print_writers);
-//								    }
 								}
 							}
 						}
@@ -382,6 +335,31 @@ public class InfobarGfx
 					
 					infobar.setResult_on_screen(true);
 				}
+				
+				populateInfobarTeamNameScore(true,print_writers,matchAllData,2);
+				
+				if(infobar.getLeft_bottom() != null && !infobar.getLeft_bottom().isEmpty()) {
+					populateVizInfobarLeftBottom(print_writers, matchAllData, 1);
+				}
+				
+				if(!infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
+					populateVizInfobarMiddleSection(print_writers, matchAllData, 1);
+				}else {
+					populateCurrentBatsmen(print_writers, matchAllData, 1);
+				}
+				
+				if(infobar.getRight_section() != null && !infobar.getRight_section().isEmpty()) {
+					System.out.println("Right = " + infobar.getRight_section());
+					System.out.println("Bottom = " + infobar.getRight_bottom());
+					if(infobar.getRight_section().equalsIgnoreCase(CricketUtil.BOWLER)) {
+						populateVizInfobarBowler(print_writers, matchAllData, 2);
+						populateVizInfobarBowler(print_writers, matchAllData, 1);
+						populateVizInfobarRightBottom(print_writers, matchAllData, 1, 1);
+					}else {
+						populateVizInfobarRightSection(true,print_writers, matchAllData, 1, 1);
+					}
+				}
+				
 			}else if (CricketFunctions.getRequiredRuns(matchAllData) > 0 && CricketFunctions.getRequiredBalls(matchAllData) <= 0 
 		    		|| CricketFunctions.getRequiredRuns(matchAllData) > 0 && matchAllData.getMatch().getInning().get(1).getTotalWickets() >= 10 ) {
 				
@@ -399,25 +377,6 @@ public class InfobarGfx
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Result$Right$In$img_Badge*TEXTURE*IMAGE SET " + 
 							Constants.BENGAL_ICONS_PATH + matchAllData.getSetup().getAwayTeam().getTeamName4() + "\0", print_writers);
 
-//					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Result$Middle$txt_Title*GEOM*TEXT SET " + 
-//							matchAllData.getMatch().getInning().get(1).getBowling_team().getTeamName1().toUpperCase() + "\0", print_writers);
-//					
-//					if(matchAllData.getSetup().getTargetType() != null) {
-//						if(matchAllData.getSetup().getTargetType().equalsIgnoreCase(CricketUtil.DLS)) {
-//							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Result$Middle$txt_Subtitle*GEOM*TEXT SET " + 
-//									"WIN BY " + Integer.valueOf(CricketFunctions.getRequiredRuns(matchAllData) - 1) + " RUN" + 
-//									CricketFunctions.Plural(Integer.valueOf(CricketFunctions.getRequiredRuns(matchAllData) - 1)).toUpperCase() + " (DLS)" + "\0", print_writers);
-//						}else if(matchAllData.getSetup().getTargetType().equalsIgnoreCase(CricketUtil.VJD)) {
-//							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Result$Middle$txt_Subtitle*GEOM*TEXT SET " + 
-//									"WIN BY " + Integer.valueOf(CricketFunctions.getRequiredRuns(matchAllData) - 1) + " RUN" + 
-//									CricketFunctions.Plural(Integer.valueOf(CricketFunctions.getRequiredRuns(matchAllData) - 1)).toUpperCase() + " (VJD)" + "\0", print_writers);
-//						}
-//				    }else {
-//				    	CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Result$Middle$txt_Subtitle*GEOM*TEXT SET " + 
-//								"WIN BY " + Integer.valueOf(CricketFunctions.getRequiredRuns(matchAllData) - 1) + " RUN" + 
-//								CricketFunctions.Plural(Integer.valueOf(CricketFunctions.getRequiredRuns(matchAllData) - 1)).toUpperCase() + "\0", print_writers);
-//				    }
-					
 					TimeUnit.MILLISECONDS.sleep(2000);
 					
 					this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Infobar_To_Result", "START");
@@ -1128,6 +1087,10 @@ public class InfobarGfx
 			
 			if(is_this_updating == false) {
 				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$MainScoreGrp$In$BottomDataGrp$"
+						+ "PowerplayGrp*ACTIVE SET 0 \0", print_writers);
+				infobar.setPowerplay_on_screen(false);
+				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$TeamGrp1$Move_To_Normal$Move_To_Result$"
 						+ "img_Badge*TEXTURE*IMAGE SET " + 
 						Constants.BENGAL_ICONS_PATH + inning.getBatting_team().getTeamName4() + "\0", print_writers);
@@ -1194,7 +1157,7 @@ public class InfobarGfx
 //					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Top$Powerplay$Select*FUNCTION*Omo*vis_con SET 0 \0",
 //							print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$MainScoreGrp$In$BottomDataGrp$"
-							+ "PowerplayGrp$P*GEOM*TEXT SET " + "P" + " \0", print_writers);
+							+ "PowerplayGrp$P*GEOM*TEXT SET " + "P" + "\0", print_writers);
 					
 //					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Top$Powerplay$PP$txt_Powerplay*GEOM*TEXT SET " + 
 //							CricketFunctions.processPowerPlay(CricketUtil.MINI,matchAllData) + "\0", print_writers);
@@ -1329,12 +1292,15 @@ public class InfobarGfx
 			if(CricketFunctions.checkImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), battingCardList.get(WhichBatsman-1).getPlayer().getPlayerId()).equalsIgnoreCase(CricketUtil.YES)) {
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Fade_For_Analytics$BatsmanGrp$"
 						+ "Batsmen$Batsman_" + WhichBatsman + "$Side_" + WhichSide + "$Select_Impact*FUNCTION*Omo*vis_con SET 1\0", print_writers);
+				TimeUnit.MILLISECONDS.sleep(200);
 			}else if(CricketFunctions.checkImpactPlayerBowler(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), battingCardList.get(WhichBatsman-1).getPlayer().getPlayerId()).equalsIgnoreCase(CricketUtil.YES)) {
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Fade_For_Analytics$BatsmanGrp$"
 						+ "Batsmen$Batsman_" + WhichBatsman + "$Side_" + WhichSide + "$Select_Impact*FUNCTION*Omo*vis_con SET 1\0", print_writers);
+				TimeUnit.MILLISECONDS.sleep(200);
 			}else {
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Fade_For_Analytics$BatsmanGrp$"
 						+ "Batsmen$Batsman_" + WhichBatsman + "$Side_" + WhichSide + "$Select_Impact*FUNCTION*Omo*vis_con SET 0\0", print_writers);
+				TimeUnit.MILLISECONDS.sleep(200);
 			}
 			
 			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Fade_For_Analytics$BatsmanGrp$"
@@ -2004,6 +1970,18 @@ public class InfobarGfx
 								matchAllData.getSetup().getGround().getSecond_bowling_end().toUpperCase() + " \0", print_writers);
 					}
 					break;
+				case "BOWLING_ECONOMY":
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Fade_For_Section_2$"
+							+ "Stats$Side" + WhichSide + "$Free_Text$img_Text1*TEXTURE*IMAGE SET " + Constants.BENGAL_TEXT_PATH + "1/" + inning.getBowling_team().getTeamName4() + "\0", print_writers);
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Section_2"
+							+ "$Stats$Side" + WhichSide + "$Slect_Type*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Section_2"
+							+ "$Stats$Side" + WhichSide + "$Slect_Type$Free_Text$txt_TeamName*GEOM*TEXT SET " + 
+							"ECONOMY : " + bowlingCard.getEconomyRate() + " \0", print_writers);
+					break;	
 				case CricketUtil.OVER:
 					this_data_str = new ArrayList<String>();
 					this_data_str.add(CricketFunctions.getEventsText(CricketUtil.OVER,infobar.getLast_bowler().getPlayerId() ,
@@ -5211,16 +5189,13 @@ public class InfobarGfx
 				
 				if (matchAllData.getSetup().getTargetType().toUpperCase().equalsIgnoreCase("VJD")) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
-							+ "$Select_Type$Equation$Top_Line$Stat_2$txt_Title*GEOM*TEXT SET " + 
-							" BALL" + CricketFunctions.Plural(CricketFunctions.getRequiredBalls(matchAllData)).toUpperCase() + " (VJD)" + "\0", print_writers);
+							+ "$Select_Type$Equation$Top_Line$Stat_2$txt_DLS*GEOM*TEXT SET (VJD)\0", print_writers);
 				} else if (matchAllData.getSetup().getTargetType().toUpperCase().equalsIgnoreCase("DLS")) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
-							+ "$Select_Type$Equation$Top_Line$Stat_2$txt_Title*GEOM*TEXT SET " + 
-							" BALL" + CricketFunctions.Plural(CricketFunctions.getRequiredBalls(matchAllData)).toUpperCase() + " (DLS)" + "\0", print_writers);
+							+ "$Select_Type$Equation$Top_Line$Stat_2$txt_DLS*GEOM*TEXT SET (DLS)\0", print_writers);
 				}else {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
-							+ "$Select_Type$Equation$Top_Line$Stat_2$txt_Title*GEOM*TEXT SET " + 
-							" BALL" + CricketFunctions.Plural(CricketFunctions.getRequiredBalls(matchAllData)).toUpperCase() + "\0", print_writers);
+							+ "$Select_Type$Equation$Top_Line$Stat_2$txt_DLS*GEOM*TEXT SET \0", print_writers);
 				}
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
@@ -5652,6 +5627,22 @@ public class InfobarGfx
 					return "populateVizInfobarMiddleSection: Partnership size is NULL/Zero";
 				}
 				
+				String Left_Batsman = "", Right_Batsman = "";
+				
+				for (BattingCard bc : inning.getBattingCard()) {
+					if (bc.getStatus().equalsIgnoreCase(CricketUtil.NOT_OUT)) {
+						if (bc.getPlayerId() == inning.getPartnerships().get(inning.getPartnerships().size() - 1)
+								.getFirstBatterNo()) {
+							Left_Batsman = bc.getPlayer().getTicker_name();
+						}
+
+						if (bc.getPlayerId() == inning.getPartnerships().get(inning.getPartnerships().size() - 1)
+								.getSecondBatterNo()) {
+							Right_Batsman = bc.getPlayer().getTicker_name();
+						}
+					}
+				}
+				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
 						+ "$Select_Type$2_Line_Text$Select_Sponsor*FUNCTION*Omo*vis_con SET 1 \0",print_writers);
 				
@@ -5670,10 +5661,14 @@ public class InfobarGfx
 						+ "$Select_Type*FUNCTION*Omo*vis_con SET 1 \0",print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide + "$Select_Type$2_Line_Text$Maxsize_Title$txt_Title*GEOM*TEXT SET " 
-						+ CricketFunctions.ordinal(inning.getPartnerships().get(inning.getPartnerships().size()-1).getPartnershipNumber()) + " WICKET PARTNERSHIP"+ "\0", print_writers);
+						+ CricketFunctions.ordinal(inning.getPartnerships().get(inning.getPartnerships().size()-1).getPartnershipNumber()) + " WICKET PARTNERSHIP  " + 
+						inning.getPartnerships().get(inning.getPartnerships().size()-1).getTotalRuns() + "(" + 
+						inning.getPartnerships().get(inning.getPartnerships().size()-1).getTotalBalls() + ")" + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide + "$Select_Type$2_Line_Text$Maxsize_Subtitle$txt_Subtitle*GEOM*TEXT SET " 
-						+ inning.getPartnerships().get(inning.getPartnerships().size()-1).getTotalRuns() + " (" + 
-						inning.getPartnerships().get(inning.getPartnerships().size()-1).getTotalRuns() + ")" + "\0", print_writers);
+						+ Left_Batsman + " " + inning.getPartnerships().get(inning.getPartnerships().size()-1).getFirstBatterRuns() + 
+						" (" + inning.getPartnerships().get(inning.getPartnerships().size()-1).getFirstBatterBalls() + ")  &  " + 
+						Right_Batsman + " " + inning.getPartnerships().get(inning.getPartnerships().size()-1).getSecondBatterRuns() + " (" + 
+						inning.getPartnerships().get(inning.getPartnerships().size()-1).getSecondBatterBalls() + ")" + "\0", print_writers);
 				
 //				infobar.setBatsmanAndBowlOrSponsor("$Partnership_Wide");
 //				populateCurrentBatsmen(print_writers, matchAllData, WhichSide);
@@ -6807,6 +6802,20 @@ public class InfobarGfx
 //		}
 		
 		this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$Bonus_In", "START");
+		
+	}
+	public String powerplay(List<PrintWriter> print_writers, MatchAllData matchAllData) {
+		
+		if(infobar.isPowerplay_on_screen() == false) {
+			 CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$MainScoreGrp$In$BottomDataGrp$"
+						+ "PowerplayGrp*ACTIVE SET 1 \0", print_writers);
+			 infobar.setPowerplay_on_screen(true);
+        }else {
+        	CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$MainScoreGrp$In$BottomDataGrp$"
+					+ "PowerplayGrp*ACTIVE SET 0 \0", print_writers);
+        	infobar.setPowerplay_on_screen(false);
+        }
+		return Constants.OK;
 		
 	}
 }

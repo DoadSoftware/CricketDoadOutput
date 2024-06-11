@@ -579,8 +579,14 @@ public class IndexController
 		return new String();
 	}
 	@SuppressWarnings("unchecked")
-	public <T> List<T> GetGraphicOption(String whatToProcess) throws IOException {
+	public <T> List<T> GetGraphicOption(String whatToProcess) throws IOException, NumberFormatException, IllegalAccessException, 
+	InvocationTargetException, InterruptedException, ParseException, CloneNotSupportedException, JAXBException, UnsupportedAudioFileException, 
+	LineUnavailableException, URISyntaxException {
 		switch (whatToProcess) {
+		case "Alt_e":
+			this_caption.whichSide = 1;
+			this_caption.PopulateGraphics("Alt_e,", session_match);
+			break;
 		case "F10": case "j":
 		    return (List<T>) session_name_super;
 		case "k":

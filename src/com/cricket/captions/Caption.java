@@ -235,6 +235,9 @@ public class Caption
 			case "F6"://HowOut
 				status = this_lowerThirdGfx.populateHowOut(whatToProcess,whichSide,matchAllData);
 				break;
+			case "Alt_Shift_C":
+				status = this_lowerThirdGfx.populateCaptain(whatToProcess,whichSide,matchAllData);
+				break;
 			case "Alt_F6"://HowOut both
 				status = this_lowerThirdGfx.populateHowOutBoth(whatToProcess,whichSide,matchAllData);
 				break;
@@ -503,6 +506,9 @@ public class Caption
 				break;
 			case "Alt_p":
 				status = this_bugsAndMiniGfx.bugsToss(whatToProcess,matchAllData,whichSide);
+				break;
+			case "Alt_e":
+				status = this_infobarGfx.powerplay(print_writers, matchAllData);
 				break;
 			case "Alt_F7":// Points Table
 				if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ICC_U19_2023)) {

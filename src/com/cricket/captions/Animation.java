@@ -117,7 +117,7 @@ public class Animation
 			case "Control_s": case "Alt_d": case "Control_f": case "Control_q": case "l": case "n": case "a": case "Control_F2":
 			case "Alt_a": case "Alt_s":case "Shift_E": case "Alt_q": case "Alt_F6": case "Shift_A": case "Shift_R": case "Shift_U":
 			case "Alt_w": case "Control_j": case "Alt_i": case "Alt_j": case "b": case "Control_i": case "Alt_Shift_L": case "Shift_B": 
-			case "Control_Shift_F": case "Control_Shift_P": case "Control_Shift_M":case "Shift_I":
+			case "Control_Shift_F": case "Control_Shift_P": case "Control_Shift_M":case "Shift_I": case "Alt_Shift_C":
 				switch (whatToProcess.split(",")[0]) {
 				case "q": case "Control_q": case "Alt_q": case "Shift_F7": // Boundary L3rd
 					return Constants.BOUNDARIES + Constants.LOWER_THIRD;
@@ -125,7 +125,7 @@ public class Animation
 					return Constants.LOWER_THIRD;
 				}
 			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": case "Alt_9": case "Alt_0":
-			case "Control_F12": case "Shift_F12":	
+			case "Control_F12": case "Shift_F12": case "Alt_e":	
 				return Constants.INFO_BAR;
 			case "Shift_O": case "Control_k": case "k": case "g": case "y": case "Alt_p": case "o": case "t": 
 			case "Control_y": case "h": case "Shift_F4": case "Shift_F": case ".": case "/":
@@ -1140,6 +1140,12 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "anim_Projected_LT", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
+			case "Shift_F3":
+				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
+				TimeUnit.MILLISECONDS.sleep(1000);
+				processAnimation(Constants.FRONT, print_writers, "anim_Fall_Of_Wickets", "START");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;	
 			case "Control_Shift_M":
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
 				TimeUnit.MILLISECONDS.sleep(1000);
@@ -1148,9 +1154,15 @@ public class Animation
 				//processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;	
+			case "Alt_Shift_C":
+				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
+				TimeUnit.MILLISECONDS.sleep(1000);
+				processAnimation(Constants.FRONT, print_writers, "anim_Captain_LT", "START");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;			
 			case "F6": case "Control_F2":
 			case "Control_F5": case "Control_F9":  case "Control_F3": case "Alt_o":
-			case "Shift_F3": case "u": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":
+			case "u": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "Control_g": case "Control_h": case "Control_F6": case "Shift_F6": case "Control_s":case "Shift_E":
 			case "Alt_d": case "Control_f": case "l": case "n": case "a":  case "Alt_F1": case "Alt_F2": case "Alt_F6": case "Alt_Shift_L":
 			case "Shift_A":  case "Shift_R": case "Shift_U": case "Alt_w": case "Control_j": case "Alt_i": case "Alt_j": case "b": case "Control_i": 
@@ -2041,9 +2053,23 @@ public class Animation
 				this.whichGraphicOnScreen = "";
 				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
 				break;
+			case "Shift_F3":
+				processAnimation(Constants.FRONT, print_writers, "anim_Fall_Of_Wickets", "CONTINUE");
+				TimeUnit.MILLISECONDS.sleep(1000);
+				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
+				this.whichGraphicOnScreen = "";
+				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
+				break;
+			case "Alt_Shift_C":
+				processAnimation(Constants.FRONT, print_writers, "anim_Captain_LT", "CONTINUE");
+				TimeUnit.MILLISECONDS.sleep(1000);
+				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
+				this.whichGraphicOnScreen = "";
+				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
+				break;	
 			case "F6": case "F7": case "F11": case "Control_F2":
 			case "Control_F5": case "Control_F9": case "Control_F3": case "Alt_o":
-			case "Shift_F3": case "u": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12": case "Alt_Shift_L":
+			case "u": case "d": case "e": case "Shift_F5": case "Shift_F9": case "Alt_F12": case "Alt_Shift_L":
 			case "Control_g": case "Control_h": case "Control_F6": case "Shift_F6": case "Control_s":case "Shift_E":
 			case "Alt_d": case "Control_f": case "l": case "n": case "a":  case "Alt_F1": case "Alt_F2": case "Alt_F6": 
 			case "Shift_A":  case "Shift_R": case "Shift_U": case "Alt_w": case "Control_j": case "Alt_i": case "Alt_j": case "b": case "Control_i":  
@@ -4294,20 +4320,26 @@ public class Animation
 						}
 						break;
 					case "Control_a":
-						previewCommands = "anim_Projected_LT 2.200 anim_Projected_LT$Essentials 2.200 anim_Projected_LT$Essentials$In 1.500 anim_Infobar$Push 1.000";
+						previewCommands = "anim_Projected_LT 2.200 anim_Projected_LT$Essentials 1.500 anim_Projected_LT$Essentials$In 1.500 anim_Infobar$Push 1.000";
 						break;
+					case "Shift_F3":
+						previewCommands = "anim_Fall_Of_Wickets 1.500 anim_Fall_Of_Wickets$Essentials 1.500 anim_Fall_Of_Wickets$Essentials$In 1.500 anim_Infobar$Push 1.000";
+						break;
+					case "Alt_Shift_C":
+						previewCommands = "anim_Captain_LT 1.200 anim_Captain_LT$In 1.200 anim_Infobar$Push 1.000";
+						break;	
 					case "Shift_I":
 						previewCommands = "anim_Substitute 1.600 anim_Substitute$In_Out 1.600 anim_Substitute$In_Out$Base 1.600 anim_Substitute$In_Out$Sub 1.600 anim_Substitute$In_Out$Impact 0.000"
 								+ " anim_Substitute$In_Out$Base$In 1.000 anim_Substitute$In_Out$Sub$In 1.620 anim_Substitute$In_Out$Impact$In 0.000";
-						break;
-					case "F6": case "Control_F6": case "Shift_F6": case "F8": case "Alt_F8": case "F10": case "Shift_F3": case "d": case "e": case "u":
+						break;	
+					case "F6": case "Control_F6": case "Shift_F6": case "F8": case "Alt_F8": case "F10": case "d": case "e": case "u":
 					case "Shift_F5": case "Alt_o": case "Shift_F9": case "Control_F3": case "Control_F5": case "Control_F9": case "Alt_F12": case "Control_s": case "Control_f": case "F7": case "F11":
 						previewCommands = "anim_Lower_Third 1.500 anim_Lower_Third$Essentials 1.500 anim_Lower_Third$Essentials$In 1.500 anim_Infobar$Push 1.000";
 						break;
 					}
 				}else if(whichside == 2){
 					switch (whatToProcess.split(",")[0]) {
-					case "F6": case "Control_F6": case "Shift_F6": case "F5": case "F9": case "F8": case "Alt_F8": case "F10": case "Shift_F3": case "d": case "e": case "u":
+					case "F6": case "Control_F6": case "Shift_F6": case "F5": case "F9": case "F8": case "Alt_F8": case "F10": case "d": case "e": case "u":
 					case "Shift_F5": case "Alt_o": case "Shift_F9": case "Control_F3": case "Control_F5": case "Control_F9":  case "Alt_F12": case "Control_s": case "Control_f":case "F7": case "F11":
 						previewCommands =  "Anim_LtChange$Badge 1.000 Anim_LtChange$Sublines 1.200 Anim_LtChange 1.200 Anim_LtChange$Topline 1.000 Anim_LtChange$Dynamic 0.560 "
 								+ "Anim_LtChange$Dynamic$Change_In 0.560 Anim_LtChange$Dynamic$Change_Out 0.560";
@@ -4532,6 +4564,40 @@ public class Animation
 					}
 				}
 				break;
+			case Constants.BENGAL_T20:
+				if(whatToProcess.contains(",")) {
+					switch(whatToProcess.split(",")[0]) {
+					case "Shift_F1":
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+								+ "/Default/Overlays" + " C:/Temp/Preview.png Minis 1.120 Minis$Anim_Mini 1.120 Minis$Anim_Mini$In_Out 1.120 "
+										+ "Minis$Anim_Mini$In_Out$Batting_Card 1.120 Minis$Anim_Mini$In_Out$Batting_Card$In 1.120\0", print_writer);
+						break;
+					case "Shift_F2":
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+								+ "/Default/Overlays" + " C:/Temp/Preview.png Minis 1.120 Minis$Anim_Mini 1.120 Minis$Anim_Mini$In_Out 1.120 "
+										+ "Minis$Anim_Mini$In_Out$Bowling_Card 1.120 Minis$Anim_Mini$In_Out$Bowling_Card$In 1.120\0", print_writer);
+						break;	
+					case "Alt_F7":
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+								+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$Push 0.500 Anim_MiniPoints$In_Out 0.940 Anim_MiniPoints$In_Out$In 0.940 \0", print_writer);
+						break;
+					}
+					if(whichside == 2) {
+						switch(whatToProcess.split(",")[0]) {
+						case "Shift_F1":
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+									+ "/Default/Overlays" + " C:/Temp/Preview.png Minis$Change 1.420 Minis$Change$Batting_Card 1.420 "
+											+ "Minis$Change$Batting_Card$In 1.420\0", print_writer);
+							break;
+						case "Shift_F2":
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+									+ "/Default/Overlays" + " C:/Temp/Preview.png Minis$Change 1.420 Minis$Change$Bowling_Card 1.420 "
+											+ "Minis$Change$Bowling_Card$In 1.420\0", print_writer);
+							break;	
+						}
+					}
+				}
+				break;	
 			}
 		}
 	}

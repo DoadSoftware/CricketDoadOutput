@@ -288,7 +288,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2': case 'Shift_E': case 'Shift_P': case 'Shift_Q': case 'Alt_z': case 'Shift_F':
 			case 'Alt_F6': case 'Shift_R': case 'Shift_A': case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'Shift_F7': case 'Control_F4':
 			case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_F': case 'Control_Shift_P': case 'Control_Shift_F1': case 'Control_Shift_D':
-			case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Shift_I':
+			case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Shift_I': case 'Alt_Shift_C': 
 				addItemsToList(dataToProcess,null); 
 				break;
 			//changed shift_f11 to control_f11
@@ -318,7 +318,6 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 					//processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 				}
 				break;
-					
 			//All key presses which doesn't require graphics population will come here
 			case '5': case '6': case '7': case '8': case '9':
 				switch($('#selected_broadcaster').val().toUpperCase()){
@@ -534,7 +533,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10': case 'Alt_d': case 'Shift_F4': case 'Alt_a': case 'Alt_s': 
 	case 'Shift_P': case 'Shift_Q': case 'Alt_z': case 'Control_c': case 'Control_v': case 'Control_z': case 'Control_x': case 'Alt_q': case 'Shift_F': 
 	case 'Alt_F6': case 'Shift_A': case 'Shift_R': case 'Control_Shift_F1': case 'Control_Shift_D': case 'Alt_Shift_Z': case 'Control_Shift_F7':
-	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_F4':
+	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_F4': case 'Alt_Shift_C':
 	case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		
@@ -1073,17 +1072,17 @@ function addItemsToList(whatToProcess,dataToProcess)
 				select.id = 'selectLeftBottom';
 				select.name = select.id;
 	
-				option = document.createElement('option');
-				option.value = 'CRR';
-				option.text = 'Run Rate';
-				select.appendChild(option);
-	
 				session_match.match.inning.forEach(function(inn,index,arr){
 					if(inn.isCurrentInning == 'YES'){
 						if(inn.inningNumber == 1){
 							option = document.createElement('option');
 							option.value = 'TOSS';
 							option.text = 'Toss';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'CRR';
+							option.text = 'Run Rate';
 							select.appendChild(option);
 						}
 						else{
@@ -1358,17 +1357,17 @@ function addItemsToList(whatToProcess,dataToProcess)
 					select.id = 'selectLeftBottom';
 					select.name = select.id;
 		
-					option = document.createElement('option');
-					option.value = 'CRR';
-					option.text = 'Run Rate';
-					select.appendChild(option);
-		
 					session_match.match.inning.forEach(function(inn,index,arr){
 						if(inn.isCurrentInning == 'YES'){
 							if(inn.inningNumber == 1){
 								option = document.createElement('option');
 								option.value = 'TOSS';
 								option.text = 'Toss';
+								select.appendChild(option);
+								
+								option = document.createElement('option');
+								option.value = 'CRR';
+								option.text = 'Run Rate';
 								select.appendChild(option);
 							}
 							else{
@@ -1673,41 +1672,46 @@ function addItemsToList(whatToProcess,dataToProcess)
 			break;
 			
 		case 'Alt_6':
-			header_text.innerHTML = 'MIDDLE INFOBAR SECTION - BAT & SPONSOR';
+			switch($('#selected_broadcaster').val().toUpperCase()){
+				case 'ICC-U19-2023':
+					header_text.innerHTML = 'MIDDLE INFOBAR SECTION - BAT & SPONSOR';
 		
-			select = document.createElement('select');
-			select.id = 'selectWhichSponsor';
-			select.name = select.id;
+					select = document.createElement('select');
+					select.id = 'selectWhichSponsor';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = '1';
+					option.text = 'DP World';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '2';
+					option.text = 'IndusInd Bank';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '3';
+					option.text = 'Emirates';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '4';
+					option.text = 'Coco Cola';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '5';
+					option.text = 'Aramco';
+					select.appendChild(option);
+					
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),0);
+					cellCount = cellCount + 1
+					break;
+			}
 			
-			option = document.createElement('option');
-			option.value = '1';
-			option.text = 'DP World';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = '2';
-			option.text = 'IndusInd Bank';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = '3';
-			option.text = 'Emirates';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = '4';
-			option.text = 'Coco Cola';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = '5';
-			option.text = 'Aramco';
-			select.appendChild(option);
-			
-			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
-			row.insertCell(cellCount).appendChild(select);
-			setDropdownOptionToSelectOptionArray($(select),0);
-			cellCount = cellCount + 1
 			break;
 			
 		case 'Alt_7':
@@ -1771,9 +1775,14 @@ function addItemsToList(whatToProcess,dataToProcess)
 				select.appendChild(option);
 				
 				option = document.createElement('option');
+				option.value = 'BOWLING_ECONOMY';
+				option.text = 'Bowling Economy';
+				select.appendChild(option);
+				
+				/*option = document.createElement('option');
 				option.value = 'BOWLER_REPLACE';
 				option.text = 'Bowler Replace';
-				select.appendChild(option);
+				select.appendChild(option);*/
 				break;	
 			}
 			header_text.innerHTML = 'RIGHT BOTTOM INFOBAR SECTION';
@@ -2419,23 +2428,23 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select.name = select.id;
 			
 			option = document.createElement('option');
-			option.value = session_match.setup.homeTeam.teamName1 + '-' + 'BAT';
-			option.text = session_match.setup.homeTeam.teamName1 + '-' + 'BAT';
+			option.value = session_match.setup.homeTeam.teamName4 + '-' + 'BAT';
+			option.text = session_match.setup.homeTeam.teamName4 + '-' + 'BAT';
 			select.appendChild(option);
 			
 			option = document.createElement('option');
-			option.value = session_match.setup.homeTeam.teamName1 + '-' + 'FIELD';
-			option.text = session_match.setup.homeTeam.teamName1 + '-' + 'FIELD';
+			option.value = session_match.setup.homeTeam.teamName4 + '-' + 'FIELD';
+			option.text = session_match.setup.homeTeam.teamName4 + '-' + 'FIELD';
 			select.appendChild(option);
 			
 			option = document.createElement('option');
-			option.value = session_match.setup.awayTeam.teamName1 + '-' + 'BAT';
-			option.text = session_match.setup.awayTeam.teamName1 + '-' + 'BAT';
+			option.value = session_match.setup.awayTeam.teamName4 + '-' + 'BAT';
+			option.text = session_match.setup.awayTeam.teamName4 + '-' + 'BAT';
 			select.appendChild(option);
 			
 			option = document.createElement('option');
-			option.value = session_match.setup.awayTeam.teamName1 + '-' + 'FIELD';
-			option.text = session_match.setup.awayTeam.teamName1 + '-' + 'FIELD';
+			option.value = session_match.setup.awayTeam.teamName4 + '-' + 'FIELD';
+			option.text = session_match.setup.awayTeam.teamName4 + '-' + 'FIELD';
 			select.appendChild(option);
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
@@ -3633,6 +3642,37 @@ function addItemsToList(whatToProcess,dataToProcess)
 			removeSelectDuplicates(select.id);
 			cellCount = cellCount + 1;
 			break;
+			
+		case 'Alt_Shift_C'://HowOut //how out w/o fielder // how out both
+			switch(whatToProcess) {
+			case 'Alt_Shift_C':
+				header_text.innerHTML = 'CAPTAIN';
+				break;				
+			}
+			select = document.createElement('select');
+			select.id = 'selectCaptainPlayers';
+			select.name = select.id;
+			
+			session_match.match.inning.forEach(function(inn,index,arr){
+				if(inn.inningNumber == document.getElementById('which_inning').value){
+					inn.battingCard.forEach(function(bc,bc_index,bc_arr){
+						option = document.createElement('option');
+						option.value = bc.playerId;
+						option.text = bc.player.full_name;	
+						select.appendChild(option);
+						
+					});
+				}
+			});
+			
+			select.setAttribute('onchange','setDropdownOptionToSelectOptionArray(this, 0)');
+			row.insertCell(cellCount).appendChild(select);
+			//removeSelectDuplicates(select.id);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			removeSelectDuplicates(select.id);
+			cellCount = cellCount + 1;
+			break;
+				
 		case 'F6': case 'Shift_F6': case 'Alt_F6'://HowOut //how out w/o fielder // how out both
 			switch(whatToProcess) {
 			case 'F6':
@@ -3916,99 +3956,103 @@ function addItemsToList(whatToProcess,dataToProcess)
 			}
 			break;		
 		case 'Alt_3':
-		
-			switch(whatToProcess){
-				case 'Alt_3':
-				header_text.innerHTML = 'MIDDLE INFOBAR SECTION - BAT PLAYER PROFILE';
-				break;
-			}
-			
-			select = document.createElement('select');
-			select.id = 'selectPlayerName';
-			select.name = select.id;
-			
-			session_match.match.inning.forEach(function(inn,index,arr){
-				if(inn.isCurrentInning == 'YES'){
-					inn.battingCard.forEach(function(bc,index,arr){
-						if(bc.status == 'NOT OUT'){
-							if(bc.onStrike == 'YES'){
-								option = document.createElement('option');
-								option.value = bc.player.playerId;
-								option.text = bc.player.full_name;
-								select.appendChild(option);
-							}else{
-								option = document.createElement('option');
-								option.value = bc.player.playerId;
-								option.text = bc.player.full_name;
-								select.appendChild(option);
+			switch($('#selected_broadcaster').val().toUpperCase()){
+				case 'ICC-U19-2023':
+				switch(whatToProcess){
+						case 'Alt_3':
+						header_text.innerHTML = 'MIDDLE INFOBAR SECTION - BAT PLAYER PROFILE';
+						break;
+					}
+					
+					select = document.createElement('select');
+					select.id = 'selectPlayerName';
+					select.name = select.id;
+					
+					session_match.match.inning.forEach(function(inn,index,arr){
+						if(inn.isCurrentInning == 'YES'){
+							inn.battingCard.forEach(function(bc,index,arr){
+								if(bc.status == 'NOT OUT'){
+									if(bc.onStrike == 'YES'){
+										option = document.createElement('option');
+										option.value = bc.player.playerId;
+										option.text = bc.player.full_name;
+										select.appendChild(option);
+									}else{
+										option = document.createElement('option');
+										option.value = bc.player.playerId;
+										option.text = bc.player.full_name;
+										select.appendChild(option);
+									}
+								}
+							});
+							
+							if(inn.battingTeamId == session_match.setup.homeTeamId){
+								session_match.setup.homeSquad.forEach(function(hs,index,arr){
+									option = document.createElement('option');
+									option.value = hs.playerId;
+									option.text = hs.full_name;
+									select.appendChild(option);
+								});
+								session_match.setup.homeOtherSquad.forEach(function(hos,index,arr){
+									option = document.createElement('option');
+									option.value = hos.playerId;
+									option.text = hos.full_name  + ' (OTHER)';
+									select.appendChild(option);
+								});
+							}else {
+								session_match.setup.awaySquad.forEach(function(as,index,arr){
+									option = document.createElement('option');
+									option.value = as.playerId;
+									option.text = as.full_name;
+									select.appendChild(option);
+								});
+								session_match.setup.awayOtherSquad.forEach(function(aos,index,arr){
+									option = document.createElement('option');
+									option.value = aos.playerId;
+									option.text = aos.full_name  + ' (OTHER)';
+									select.appendChild(option);
+								});
 							}
 						}
 					});
+		
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+					row.insertCell(cellCount).appendChild(select);
+					removeSelectDuplicates(select.id);
+					setDropdownOptionToSelectOptionArray($(select),0);
+					cellCount = cellCount + 1;
 					
-					if(inn.battingTeamId == session_match.setup.homeTeamId){
-						session_match.setup.homeSquad.forEach(function(hs,index,arr){
-							option = document.createElement('option');
-							option.value = hs.playerId;
-							option.text = hs.full_name;
-							select.appendChild(option);
-						});
-						session_match.setup.homeOtherSquad.forEach(function(hos,index,arr){
-							option = document.createElement('option');
-							option.value = hos.playerId;
-							option.text = hos.full_name  + ' (OTHER)';
-							select.appendChild(option);
-						});
-					}else {
-						session_match.setup.awaySquad.forEach(function(as,index,arr){
-							option = document.createElement('option');
-							option.value = as.playerId;
-							option.text = as.full_name;
-							select.appendChild(option);
-						});
-						session_match.setup.awayOtherSquad.forEach(function(aos,index,arr){
-							option = document.createElement('option');
-							option.value = aos.playerId;
-							option.text = aos.full_name  + ' (OTHER)';
-							select.appendChild(option);
-						});
-					}
-				}
-			});
+					select = document.createElement('select');
+					select.id = 'selectProfile';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = 'U19ODI';
+					option.text = 'U19 ODI';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'LIST A';
+					option.text = 'LIST A';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'ACCU19';
+					option.text = 'ACC U19';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'SA TRI-NATION 2023-24';
+					option.text = 'SA TRI-NATION';
+					select.appendChild(option);
+					
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),1);
+					cellCount = cellCount + 1
+					break;	
+			}
 
-			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
-			row.insertCell(cellCount).appendChild(select);
-			removeSelectDuplicates(select.id);
-			setDropdownOptionToSelectOptionArray($(select),0);
-			cellCount = cellCount + 1;
-			
-			select = document.createElement('select');
-			select.id = 'selectProfile';
-			select.name = select.id;
-			
-			option = document.createElement('option');
-			option.value = 'U19ODI';
-			option.text = 'U19 ODI';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'LIST A';
-			option.text = 'LIST A';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'ACCU19';
-			option.text = 'ACC U19';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'SA TRI-NATION 2023-24';
-			option.text = 'SA TRI-NATION';
-			select.appendChild(option);
-			
-			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
-			row.insertCell(cellCount).appendChild(select);
-			setDropdownOptionToSelectOptionArray($(select),1);
-			cellCount = cellCount + 1
 			
 			break;
 			
@@ -4132,92 +4176,95 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			break;
 		case 'Alt_4': 
-			switch(whatToProcess){
-			case 'Alt_4':
-			header_text.innerHTML = 'MIDDLE INFOBAR SECTION - BALL PLAYER PROFILE';
-				break;
-			}
-		
-			select = document.createElement('select');
-			select.id = 'selectPlayerName';
-			select.name = select.id;
-			
-			session_match.match.inning.forEach(function(inn,index,arr){
-				if(inn.isCurrentInning == 'YES'){
-					inn.bowlingCard.forEach(function(boc,index,arr){
-						if(boc.status == 'CURRENTBOWLER'){
-							option = document.createElement('option');
-							option.value = boc.player.playerId;
-							option.text = boc.player.full_name;
-							select.appendChild(option);
+			switch($('#selected_broadcaster').val().toUpperCase()){
+				case 'ICC-U19-2023':
+					switch(whatToProcess){
+					case 'Alt_4':
+					header_text.innerHTML = 'MIDDLE INFOBAR SECTION - BALL PLAYER PROFILE';
+						break;
+					}
+				
+					select = document.createElement('select');
+					select.id = 'selectPlayerName';
+					select.name = select.id;
+					
+					session_match.match.inning.forEach(function(inn,index,arr){
+						if(inn.isCurrentInning == 'YES'){
+							inn.bowlingCard.forEach(function(boc,index,arr){
+								if(boc.status == 'CURRENTBOWLER'){
+									option = document.createElement('option');
+									option.value = boc.player.playerId;
+									option.text = boc.player.full_name;
+									select.appendChild(option);
+								}
+							});
+							
+							if(inn.bowlingTeamId == session_match.setup.homeTeamId){
+								session_match.setup.homeSquad.forEach(function(hs,index,arr){
+									option = document.createElement('option');
+									option.value = hs.playerId;
+									option.text = hs.full_name;
+									select.appendChild(option);
+								});
+								session_match.setup.homeOtherSquad.forEach(function(hos,index,arr){
+									option = document.createElement('option');
+									option.value = hos.playerId;
+									option.text = hos.full_name  + ' (OTHER)';
+									select.appendChild(option);
+								});
+							}else {
+								session_match.setup.awaySquad.forEach(function(as,index,arr){
+									option = document.createElement('option');
+									option.value = as.playerId;
+									option.text = as.full_name;
+									select.appendChild(option);
+								});
+								session_match.setup.awayOtherSquad.forEach(function(aos,index,arr){
+									option = document.createElement('option');
+									option.value = aos.playerId;
+									option.text = aos.full_name  + ' (OTHER)';
+									select.appendChild(option);
+								});
+							}
 						}
 					});
+		
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+					row.insertCell(cellCount).appendChild(select);
+					removeSelectDuplicates(select.id);
+					setDropdownOptionToSelectOptionArray($(select),0);
+					cellCount = cellCount + 1;
 					
-					if(inn.bowlingTeamId == session_match.setup.homeTeamId){
-						session_match.setup.homeSquad.forEach(function(hs,index,arr){
-							option = document.createElement('option');
-							option.value = hs.playerId;
-							option.text = hs.full_name;
-							select.appendChild(option);
-						});
-						session_match.setup.homeOtherSquad.forEach(function(hos,index,arr){
-							option = document.createElement('option');
-							option.value = hos.playerId;
-							option.text = hos.full_name  + ' (OTHER)';
-							select.appendChild(option);
-						});
-					}else {
-						session_match.setup.awaySquad.forEach(function(as,index,arr){
-							option = document.createElement('option');
-							option.value = as.playerId;
-							option.text = as.full_name;
-							select.appendChild(option);
-						});
-						session_match.setup.awayOtherSquad.forEach(function(aos,index,arr){
-							option = document.createElement('option');
-							option.value = aos.playerId;
-							option.text = aos.full_name  + ' (OTHER)';
-							select.appendChild(option);
-						});
-					}
-				}
-			});
-
-			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
-			row.insertCell(cellCount).appendChild(select);
-			removeSelectDuplicates(select.id);
-			setDropdownOptionToSelectOptionArray($(select),0);
-			cellCount = cellCount + 1;
-			
-			select = document.createElement('select');
-			select.id = 'selectProfile';
-			select.name = select.id;
-			
-			option = document.createElement('option');
-			option.value = 'U19ODI';
-			option.text = 'U19 ODI';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'LIST A';
-			option.text = 'LIST A';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'ACCU19';
-			option.text = 'ACC U19';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'SA TRI-NATION 2023-24';
-			option.text = 'SA TRI-NATION';
-			select.appendChild(option);
-			
-			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
-			row.insertCell(cellCount).appendChild(select);
-			setDropdownOptionToSelectOptionArray($(select),1);
-			cellCount = cellCount + 1
-			
+					select = document.createElement('select');
+					select.id = 'selectProfile';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = 'U19ODI';
+					option.text = 'U19 ODI';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'LIST A';
+					option.text = 'LIST A';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'ACCU19';
+					option.text = 'ACC U19';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'SA TRI-NATION 2023-24';
+					option.text = 'SA TRI-NATION';
+					select.appendChild(option);
+					
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),1);
+					cellCount = cellCount + 1;
+					break;
+			}			
 			break;
 		case 'F11': case 'Control_e'://Lt Ball Profile
 			switch(whatToProcess){
