@@ -988,7 +988,7 @@ public class Animation
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			
-			case "Control_d": case "Control_e":
+			case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q":
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
 				processAnimation(Constants.BACK, print_writers, "anim_Profile$Essentials", "START");
 				processAnimation(Constants.BACK, print_writers, "anim_Profile$Main", "START");
@@ -998,7 +998,7 @@ public class Animation
 			case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Control_F11": case "Shift_F11": 
 			case "Shift_T": case "Control_F7": case "Control_F10":
 			case "Shift_K": case "Alt_F9": case "Alt_F10": case "p": case "z": case "x": case "c": case "v": case "Control_p":
-			case "Shift_P": case "Shift_Q": case "Alt_F11": case "Control_z": case "Control_x": case "Shift_Z": case "Shift_X":
+			case "Alt_F11": case "Control_z": case "Control_x": case "Shift_Z": case "Shift_X":
 			
 			case "Control_Shift_F1": case "Control_Shift_F2":
 				
@@ -1929,7 +1929,7 @@ public class Animation
 				this.whichGraphicOnScreen = "";
 				break;
 				
-			case "Control_d": case "Control_e":
+			case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q":
 				processAnimation(Constants.BACK, print_writers, "anim_Profile$Essentials", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "anim_Profile$Main", "CONTINUE");
 				AnimateIn("ArrowUp,", print_writers, config); // Push infobar
@@ -1938,7 +1938,7 @@ public class Animation
 			
 			case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Control_F11": case "Shift_F11": case "p":
 			case "Shift_T": case "Control_F7": case "Control_F10": case "Shift_K": case "Alt_F9":
-			case "Alt_F10": case "Control_p": case "Shift_P": case "Shift_Q":
+			case "Alt_F10": case "Control_p":
 			case "z": case "x": case "c": case "v": case "Alt_F11": case "Control_z": case "Control_x": case "Shift_Z": case "Shift_X":
 				
 			case "Control_Shift_F1": case "Control_Shift_F2":
@@ -3784,13 +3784,15 @@ public class Animation
 							previewCommand = "anim_Infobar$Push 1.000 Anim_Lineup_Image_Big$In_Out$In 2.480";
 							break;
 						
-						case "Control_d": case "Control_e":
+						case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q":
 							previewCommand = "anim_Infobar$Push 1.000 anim_Profile 1.700 anim_Profile$Essentials$In 1.140 anim_Profile$Main$In 1.140";
 							break;
 							
 						case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Control_F11": case "Shift_F11": case "p": case "Control_p":
 						case "Shift_T": case "Control_F7": case "Control_F10": case "Alt_F9": case "Shift_K":case "z": case "x": case "c": case "v": case "Alt_F10": 
-						case "Shift_P": case "Shift_Q": case "Alt_F11": case "Control_z": case "Control_x": case "Control_Shift_F1": case "Control_Shift_F2":
+
+					   case "Alt_F11": case "Control_z": case "Control_x": case "Control_Shift_F1": case "Control_Shift_F2":
+
 							if(!whatToProcess.split(",")[0].equalsIgnoreCase("Shift_K")) {
 								previewCommand = "anim_Infobar$Push 1.000 Anim_FullFrames$In_Out$Essentials$In 2.200 Anim_FullFrames$In_Out$Header$In 1.900 "
 										+ "Anim_FullFrames$In_Out$Footer$In 2.200";
