@@ -467,7 +467,7 @@ public class FullFramesGfx
 			cal.add(Calendar.DATE, +2);
 			Date = new SimpleDateFormat("dd-MM-yyyy").format(cal.getTime());
 		}
-		
+		FixturesList.clear();
 		for(Fixture fixture : fixTures) {
 			if(fixture.getDate().equalsIgnoreCase(Date)) {
 				FixturesList.add(fixture);
@@ -3237,6 +3237,7 @@ public class FullFramesGfx
 			int omo_num=0,Top_Score = 50,impactInPlayerId=0,impactOutPlayerId=0;
 			double Mult = 0,ScaleFac1 = 0, ScaleFac2 = 0;
 			String Left_Batsman="", Right_Batsman="";
+			impactList.clear();
 			
 			switch (config.getBroadcaster().toUpperCase()) {
 			case Constants.ICC_U19_2023: case Constants.ISPL: case Constants.BENGAL_T20:
@@ -3499,25 +3500,26 @@ public class FullFramesGfx
 							}
 							else if(bc.getStatus().toUpperCase().equalsIgnoreCase(CricketUtil.STILL_TO_BAT)) {
 								rowId = rowId + 1;
-								
-								if(inning.getBatting_team().getTeamId() == impactList.get(0).getTeamId()) {
-									if(bc.getPlayerId() == impactList.get(0).getOutPlayerId()) {
-										if(!bc.getStatus().equalsIgnoreCase(CricketUtil.STILL_TO_BAT)) {
-											this.numberOfRows= 11;
-										}else {
-											rowId--;
-											this.numberOfRows= 11;
-											continue;
+								if(impactList != null && !impactList.isEmpty()) {
+									if(inning.getBatting_team().getTeamId() == impactList.get(0).getTeamId()) {
+										if(bc.getPlayerId() == impactList.get(0).getOutPlayerId()) {
+											if(!bc.getStatus().equalsIgnoreCase(CricketUtil.STILL_TO_BAT)) {
+												this.numberOfRows= 11;
+											}else {
+												rowId--;
+												this.numberOfRows= 11;
+												continue;
+											}
 										}
-									}
-									
-								}else if(inning.getBatting_team().getTeamId() == impactList.get(1).getTeamId()) {
-									if(bc.getPlayerId() == impactList.get(1).getOutPlayerId()) {
-										if(!bc.getStatus().equalsIgnoreCase(CricketUtil.STILL_TO_BAT)) {
-											this.numberOfRows= 11;
-										}else {
-											rowId--;
-											continue;
+										
+									}else if(inning.getBatting_team().getTeamId() == impactList.get(1).getTeamId()) {
+										if(bc.getPlayerId() == impactList.get(1).getOutPlayerId()) {
+											if(!bc.getStatus().equalsIgnoreCase(CricketUtil.STILL_TO_BAT)) {
+												this.numberOfRows= 11;
+											}else {
+												rowId--;
+												continue;
+											}
 										}
 									}
 								}
@@ -6477,6 +6479,7 @@ public class FullFramesGfx
 	public String ScoreCardBody(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) {
 		
 		String how_out_txt = "";
+		impactList.clear();
 		
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.BENGAL_T20:
@@ -6511,24 +6514,26 @@ public class FullFramesGfx
 			rowId = 0;
 			for(int iRow = 1; iRow <= inning.getBattingCard().size(); iRow++) {
 				rowId = rowId + 1;
-				if(inning.getBatting_team().getTeamId() == impactList.get(0).getTeamId()) {
-					if(inning.getBattingCard().get(iRow-1).getPlayerId() == impactList.get(0).getOutPlayerId()) {
-						if(!inning.getBattingCard().get(iRow-1).getStatus().equalsIgnoreCase(CricketUtil.STILL_TO_BAT)) {
-							this.numberOfRows= 11;
-						}else {
-							rowId--;
-							this.numberOfRows= 11;
-							continue;
+				if(impactList != null && !impactList.isEmpty()) {
+					if(inning.getBatting_team().getTeamId() == impactList.get(0).getTeamId()) {
+						if(inning.getBattingCard().get(iRow-1).getPlayerId() == impactList.get(0).getOutPlayerId()) {
+							if(!inning.getBattingCard().get(iRow-1).getStatus().equalsIgnoreCase(CricketUtil.STILL_TO_BAT)) {
+								this.numberOfRows= 11;
+							}else {
+								rowId--;
+								this.numberOfRows= 11;
+								continue;
+							}
 						}
-					}
-					
-				}else if(inning.getBatting_team().getTeamId() == impactList.get(1).getTeamId()) {
-					if(inning.getBattingCard().get(iRow-1).getPlayerId() == impactList.get(1).getOutPlayerId()) {
-						if(!inning.getBattingCard().get(iRow-1).getStatus().equalsIgnoreCase(CricketUtil.STILL_TO_BAT)) {
-							this.numberOfRows= 11;
-						}else {
-							rowId--;
-							continue;
+						
+					}else if(inning.getBatting_team().getTeamId() == impactList.get(1).getTeamId()) {
+						if(inning.getBattingCard().get(iRow-1).getPlayerId() == impactList.get(1).getOutPlayerId()) {
+							if(!inning.getBattingCard().get(iRow-1).getStatus().equalsIgnoreCase(CricketUtil.STILL_TO_BAT)) {
+								this.numberOfRows= 11;
+							}else {
+								rowId--;
+								continue;
+							}
 						}
 					}
 				}
@@ -7332,7 +7337,8 @@ public class FullFramesGfx
 				}else {
 					rowId=0;
 					if(matchAllData.getSetup().getTargetOvers() != null && !matchAllData.getSetup().getTargetOvers().trim().isEmpty()) {
-						if(Integer.valueOf(matchAllData.getSetup().getTargetOvers()) != Integer.valueOf(matchAllData.getMatch().getInning().get(0).getTotalOvers())) {
+						if((Integer.valueOf(matchAllData.getSetup().getTargetOvers())*6) != 
+								((matchAllData.getMatch().getInning().get(0).getTotalOvers()*6)+matchAllData.getMatch().getInning().get(0).getTotalBalls())) {
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$" + 
 									containerName + "2" + containerName_2 + "$Overs$txt_DLS_Value*ACTIVE SET 1 \0", print_writers);
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Summary$" + containerName +"2" 
