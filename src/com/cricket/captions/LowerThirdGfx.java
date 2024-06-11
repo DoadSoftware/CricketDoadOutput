@@ -6903,7 +6903,7 @@ public class LowerThirdGfx
 							+ Constants.BENGAL_LOCAL_PHOTO_PATH + lowerThird.getWhichTeamFlag() + "\\\\" + lowerThird.getSurName() + CricketUtil.PNG_EXTENSION + " \0", print_writers);
 				}else {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$gfx_Substitute$SubGrp$img_Image*TEXTURE*IMAGE SET " 
-							+ config.getPrimaryIpAddress() + Constants.BENGAL_PHOTO_PATH  + lowerThird.getWhichTeamFlag() + "\\" + lowerThird.getSurName() + CricketUtil.PNG_EXTENSION+ " \0", print_writers);
+							+ "\\\\" + config.getPrimaryIpAddress() + Constants.BENGAL_PHOTO_PATH  + lowerThird.getWhichTeamFlag() + "\\" + lowerThird.getSurName() + CricketUtil.PNG_EXTENSION+ " \0", print_writers);
 				}
 				
 				if(lowerThird.getFirstName() != null) {
@@ -6926,7 +6926,7 @@ public class LowerThirdGfx
 							+ Constants.BENGAL_LOCAL_PHOTO_PATH + lowerThird.getWhichTeamFlag() + "\\\\" + lowerThird.getBallsFacedText() + CricketUtil.PNG_EXTENSION + " \0", print_writers);
 				}else {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$gfx_Substitute$ImpactGrp$img_Image*TEXTURE*IMAGE SET " 
-							+ config.getPrimaryIpAddress() + Constants.BENGAL_PHOTO_PATH  + lowerThird.getWhichTeamFlag() + "\\" + lowerThird.getBallsFacedText() + CricketUtil.PNG_EXTENSION+ " \0", print_writers);
+							+ "\\\\" + config.getPrimaryIpAddress() + Constants.BENGAL_PHOTO_PATH  + lowerThird.getWhichTeamFlag() + "\\" + lowerThird.getBallsFacedText() + CricketUtil.PNG_EXTENSION+ " \0", print_writers);
 				}
 				if(lowerThird.getScoreText() != null) {
 					//firstname

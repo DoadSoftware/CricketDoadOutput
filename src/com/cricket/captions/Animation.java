@@ -1180,8 +1180,6 @@ public class Animation
 					processAnimation(Constants.FRONT, print_writers, "anim_Substitute", "CONTINUE");
 					this.whichGraphicOnScreen = whatToProcess;
 				}else {
-					AnimateIn("ArrowDown,", print_writers, config);
-					TimeUnit.MILLISECONDS.sleep(500);
 					processAnimation(Constants.FRONT, print_writers, "anim_Substitute", "START");
 					this.whichGraphicOnScreen = whatToProcess.split(",")[0];
 				}
@@ -2084,7 +2082,6 @@ public class Animation
 			 case "Shift_I":
 					processAnimation(Constants.FRONT, print_writers, "anim_Substitute", "CONTINUE");
 					TimeUnit.MILLISECONDS.sleep(1000);
-					AnimateIn("ArrowUp,", print_writers, config);
 					processAnimation(Constants.FRONT, print_writers, "anim_Substitute", "SHOW 0.0");
 					this.whichGraphicOnScreen = "";
 					break;
