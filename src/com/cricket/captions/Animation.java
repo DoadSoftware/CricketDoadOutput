@@ -1253,12 +1253,17 @@ public class Animation
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "Shift_F1": case "Shift_F2":
-				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
+//				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
 				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "Anim_Mini$In_Out", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
-			
+			case "Alt_F7":
+//				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
+				TimeUnit.MILLISECONDS.sleep(1000);
+				processAnimation(Constants.FRONT, print_writers, "Anim_Mini$In_Out", "START");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;
 			case "Control_F12":
 				if(this.infobar.isInfobar_on_screen() == true) {
 					
@@ -2165,9 +2170,16 @@ public class Animation
 			case "Shift_F1": case "Shift_F2":
 				processAnimation(Constants.FRONT, print_writers, "Anim_Mini$In_Out", "CONTINUE");
 				TimeUnit.MILLISECONDS.sleep(1000);
-				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
+//				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;
+				
+			case "Alt_F7":
+				processAnimation(Constants.FRONT, print_writers, "Anim_Mini$In_Out", "CONTINUE");
+				TimeUnit.MILLISECONDS.sleep(1000);
+//				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
+				this.whichGraphicOnScreen = "";
+				break;	
 			
 			case "Control_F12":
 				processAnimation(Constants.FRONT, print_writers, "anim_Infobar$InOut", "CONTINUE");
@@ -2643,8 +2655,10 @@ public class Animation
 				case "Alt_1":
 					switch (config.getBroadcaster().toUpperCase()) {
 					case Constants.BENGAL_T20:
+						System.out.println("whatToProcess = " + whatToProcess);
 						processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Section3_Change", "START");
 						TimeUnit.MILLISECONDS.sleep(200);
+						infobar.setLeft_bottom(whatToProcess.split(",")[2]);
 						break;
 					}
 					
@@ -3174,9 +3188,10 @@ public class Animation
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "Alt_1":
+				TimeUnit.MILLISECONDS.sleep(1000);
 				switch (config.getBroadcaster().toUpperCase()) {
-				case Constants.ICC_U19_2023:
-					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_Bottom_Left", "SHOW 0.0");
+				case Constants.BENGAL_T20:
+					processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Section3_Change", "SHOW 0.0");
 					break;
 				}
 				break;
@@ -4609,7 +4624,7 @@ public class Animation
 						previewCommands = "anim_Substitute 1.600 anim_Substitute$In_Out 1.600 anim_Substitute$In_Out$Base 1.600 anim_Substitute$In_Out$Sub 1.600 anim_Substitute$In_Out$Impact 0.000"
 								+ " anim_Substitute$In_Out$Base$In 1.000 anim_Substitute$In_Out$Sub$In 1.620 anim_Substitute$In_Out$Impact$In 0.000";
 						break;	
-					case "F6": case "Control_F6": case "Shift_F6": case "F8": case "Alt_F8": case "F10": case "d": case "e": case "u":
+					case "F6": case "Control_F6": case "Shift_F6": case "F8": case "Alt_F8": case "F10": case "d": case "e": case "u": case "Shift_B":
 					case "Shift_F5": case "Alt_o": case "Shift_F9": case "Control_F3": case "Control_F5": case "Control_F9": case "Alt_F12": case "Control_s": case "Control_f": case "F7": case "F11":
 						previewCommands = "anim_Lower_Third 1.500 anim_Lower_Third$Essentials 1.500 anim_Lower_Third$Essentials$In 1.500 anim_Infobar$Push 1.000";
 						break;
@@ -4853,10 +4868,11 @@ public class Animation
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
 								+ "/Default/Overlays" + " C:/Temp/Preview.png Minis 1.120 Minis$Anim_Mini 1.120 Minis$Anim_Mini$In_Out 1.120 "
 										+ "Minis$Anim_Mini$In_Out$Bowling_Card 1.120 Minis$Anim_Mini$In_Out$Bowling_Card$In 1.120\0", print_writer);
-						break;	
+						break;
 					case "Alt_F7":
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-								+ "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$Push 0.500 Anim_MiniPoints$In_Out 0.940 Anim_MiniPoints$In_Out$In 0.940 \0", print_writer);
+								+ "/Default/Overlays" + " C:/Temp/Preview.png Minis 0.960 Minis$Anim_Mini 0.960 Minis$Anim_Mini$In_Out 0.960 "
+										+ "Minis$Anim_Mini$In_Out$Standings 0.960 Minis$Anim_Mini$In_Out$Standings$In 0.960\0", print_writer);
 						break;
 					}
 					if(whichside == 2) {

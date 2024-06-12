@@ -1932,9 +1932,65 @@ public class LowerThirdGfx
 	public String populateLTMatchId(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws InterruptedException
 	{
 		
-		lowerThird = new LowerThird(matchAllData.getSetup().getHomeTeam().getTeamName4(), matchAllData.getSetup().getAwayTeam().getTeamName4(), 
-				matchAllData.getSetup().getVenueName(),matchAllData.getSetup().getHomeTeam().getTeamName2(), matchAllData.getSetup().getHomeTeam().getTeamName3(),
-				matchAllData.getSetup().getAwayTeam().getTeamName2(),1,matchAllData.getSetup().getAwayTeam().getTeamName3(),"",null,null,null,null,null);
+		if(whatToProcess.split(",")[2].equalsIgnoreCase("VENUE")) {
+			lowerThird = new LowerThird(matchAllData.getSetup().getHomeTeam().getTeamName4(), matchAllData.getSetup().getAwayTeam().getTeamName4(), 
+					"LIVE FROM " + matchAllData.getSetup().getVenueName(),matchAllData.getSetup().getHomeTeam().getTeamName2(), matchAllData.getSetup().getHomeTeam().getTeamName3(),
+					matchAllData.getSetup().getAwayTeam().getTeamName2(),1,matchAllData.getSetup().getAwayTeam().getTeamName3(),"",null,null,null,null,null);
+			
+		}else if(whatToProcess.split(",")[2].equalsIgnoreCase("TARGET")) {
+			
+			inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == Integer.valueOf(whatToProcess.split(",")[1]))
+					.findAny().orElse(null);
+				
+			if(inning == null) {
+				return "populateTarget: Current Inning NOT found in this match";
+			}
+			
+			if(inning.getInningNumber() == 1) {
+				return "populateTarget: Current Inning is 1";
+			}
+			
+			String summary = "";
+			
+			teamNameAsCity = matchAllData.getMatch().getInning().get(1).getBatting_team().getTeamLogo();
+			
+			if(matchAllData.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.SUPER_OVER) && matchAllData.getSetup().getMaxOvers() == 1) {
+				summary = teamNameAsCity + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS TO WIN FROM " + (matchAllData.getSetup().getMaxOvers()*6) + " BALLS";
+				
+			}else {
+				if(matchAllData.getSetup().getTargetOvers() == "" || matchAllData.getSetup().getTargetOvers().trim().isEmpty() && matchAllData.getSetup().getTargetRuns() == 0) {
+					
+					summary = teamNameAsCity + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS TO WIN FROM " + 
+								CricketFunctions.getTargetOvers(matchAllData) + " OVERS";
+				}else {
+					if(matchAllData.getSetup().getTargetOvers() != "") {
+						
+						summary = teamNameAsCity + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS TO WIN FROM " + 
+								CricketFunctions.getTargetOvers(matchAllData) + " OVERS";
+					}
+					if(matchAllData.getSetup().getTargetType().toUpperCase().equalsIgnoreCase("VJD")) {
+						summary = teamNameAsCity + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS TO WIN FROM " + 
+								CricketFunctions.getTargetOvers(matchAllData) + " OVERS (VJD)";
+						
+					}else if(matchAllData.getSetup().getTargetType().toUpperCase().equalsIgnoreCase("DLS")) {
+						summary = teamNameAsCity + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS TO WIN FROM " + 
+								CricketFunctions.getTargetOvers(matchAllData) + " OVERS (DLS)";
+					}
+				}
+			}
+			
+			lowerThird = new LowerThird(matchAllData.getSetup().getHomeTeam().getTeamName4(), matchAllData.getSetup().getAwayTeam().getTeamName4(), 
+					summary,matchAllData.getSetup().getHomeTeam().getTeamName2(), matchAllData.getSetup().getHomeTeam().getTeamName3(),
+					matchAllData.getSetup().getAwayTeam().getTeamName2(),1,matchAllData.getSetup().getAwayTeam().getTeamName3(),"",null,null,null,null,null);
+			
+		}else if(whatToProcess.split(",")[2].equalsIgnoreCase("RESULT")) {
+			
+			lowerThird = new LowerThird(matchAllData.getSetup().getHomeTeam().getTeamName4(), matchAllData.getSetup().getAwayTeam().getTeamName4(), 
+					CricketFunctions.generateMatchSummaryStatus(2, matchAllData, CricketUtil.FULL, "|", config.getBroadcaster()).toUpperCase()
+					,matchAllData.getSetup().getHomeTeam().getTeamName2(), matchAllData.getSetup().getHomeTeam().getTeamName3(),
+					matchAllData.getSetup().getAwayTeam().getTeamName2(),1,matchAllData.getSetup().getAwayTeam().getTeamName3(),"",null,null,null,null,null);
+			
+		}
 		
 		status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);
 		if(status == Constants.OK) {
@@ -5151,7 +5207,7 @@ public class LowerThirdGfx
 							"$txt_TeamLastName*GEOM*TEXT SET " + lowerThird.getWhichSponsor() + " \0", print_writers);
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_Ident$Main$Middle$Bottom" + 
-							"$txt_Title*GEOM*TEXT SET " + "LIVE FROM " + lowerThird.getSurName() + " \0", print_writers);
+							"$txt_Title*GEOM*TEXT SET " + lowerThird.getSurName() + " \0", print_writers);
 					break;
 				}	
 				

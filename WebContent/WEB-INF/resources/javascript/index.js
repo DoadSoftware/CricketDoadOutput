@@ -299,11 +299,11 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2': case 'Shift_E': case 'Shift_P': case 'Shift_Q': case 'Alt_z': case 'Shift_F':
 			case 'Alt_F6': case 'Shift_R': case 'Shift_A': case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'Shift_F7': case 'Control_F4':
 			case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_F': case 'Control_Shift_P': case 'Control_Shift_F1': case 'Control_Shift_D':
-			case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Shift_I': case 'Alt_Shift_C': case 'Control_Shift_F2':
+			case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Shift_I': case 'Alt_Shift_C': case 'Control_Shift_F2': case 'Control_Shift_M':
 				addItemsToList(dataToProcess,null); 
 				break;
 			//changed shift_f11 to control_f11
-			case 'Shift_F10': case 'm': case 'F2': case 'Control_F1': case 'Control_a': case 'Control_Shift_M':
+			case 'Shift_F10': case 'm': case 'F2': case 'Control_F1': case 'Control_a':
 			case 'Alt_o':  case 'Shift_F3': case 'd': case 'e': case 'Control_F6': case 'Control_F7': 
 			case 'Control_k': case 'Control_F10': case 'Control_F3':  case 'a': case 't': case 'h': case 'n':
 			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q': case 'Control_b': case 'o': case 'Control_F2': case 'b':
@@ -545,7 +545,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Shift_P': case 'Shift_Q': case 'Alt_z': case 'Control_c': case 'Control_v': case 'Control_z': case 'Control_x': case 'Alt_q': case 'Shift_F': 
 	case 'Alt_F6': case 'Shift_A': case 'Shift_R': case 'Control_Shift_F1': case 'Control_Shift_D': case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Control_Shift_F2':
 	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_F4': case 'Alt_Shift_C': case 'Control_Shift_L':
-	case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I': case 'Control_F11':
+	case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I': case 'Control_F11': case 'Control_Shift_M':
 
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		
@@ -568,6 +568,37 @@ function addItemsToList(whatToProcess,dataToProcess)
 		row = tbody.insertRow(tbody.rows.length);
 		
 		switch(whatToProcess) {
+		case 'Control_Shift_M':
+			header_text.innerHTML = 'LT MATCH IDENT';
+			
+			select = document.createElement('select');
+			select.id = 'selectMatchData';
+			select.name = select.id;
+
+			option = document.createElement('option');
+			option.value = 'Venue';
+			option.text = 'Venue' ;
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'Target';
+			option.text = 'Target' ;
+			select.appendChild(option);
+			
+			option = document.createElement('option');
+			option.value = 'Result';
+			option.text = 'Result' ;
+			select.appendChild(option);
+			
+			row.insertCell(cellCount).appendChild(select);
+			cellCount = cellCount + 1;
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			removeSelectDuplicates(select.id);
+			cellCount = cellCount + 1;
+			break;
 		case 'Alt_Shift_Z':
 			header_text.innerHTML = 'TEAMS LOGOS/CAPTAINS';
 			
@@ -613,6 +644,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 								option.text = hs.full_name;
 								select.appendChild(option);
 						});
+						
 						session_match.setup.homeOtherSquad.forEach(function(hos,index,arr){
 								option = document.createElement('option');
 								option.value = hos.playerId;

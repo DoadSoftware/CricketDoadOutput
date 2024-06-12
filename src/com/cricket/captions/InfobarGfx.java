@@ -514,7 +514,9 @@ public class InfobarGfx
 			
 			status = populateInfobarTeamNameScore(false,print_writers,matchAllData,1);
 			if(status == Constants.OK) {
+				infobar.setLeft_bottom(whatToProcess.split(",")[3]);
 				this.infobar.setLeft_bottom(whatToProcess.split(",")[3]);
+				System.out.println("whatToProcess.split(\",\")[3] = " + whatToProcess.split(",")[3]);
 				status = populateVizInfobarLeftBottom(print_writers,matchAllData,1);
 				if(status == Constants.OK) {
 					this.infobar.setMiddle_section(whatToProcess.split(",")[2]);
@@ -5687,7 +5689,7 @@ public class InfobarGfx
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide + "$Select_Type$2_Line_Text$Maxsize_Title$txt_Title*GEOM*TEXT SET " 
 						+ CricketFunctions.ordinal(inning.getPartnerships().get(inning.getPartnerships().size()-1).getPartnershipNumber()) + " WICKET PARTNERSHIP  " + 
-						inning.getPartnerships().get(inning.getPartnerships().size()-1).getTotalRuns() + "(" + 
+						inning.getPartnerships().get(inning.getPartnerships().size()-1).getTotalRuns() + " (" + 
 						inning.getPartnerships().get(inning.getPartnerships().size()-1).getTotalBalls() + ")" + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide + "$Select_Type$2_Line_Text$Maxsize_Subtitle$txt_Subtitle*GEOM*TEXT SET " 
 						+ Left_Batsman + " " + inning.getPartnerships().get(inning.getPartnerships().size()-1).getFirstBatterRuns() + 
