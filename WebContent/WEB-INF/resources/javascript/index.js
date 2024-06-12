@@ -3929,6 +3929,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 					option.value = 'DT20';
 					option.text = 'DT20';
 					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'IPL';
+					option.text = 'IPL';
+					select.appendChild(option);
 				break;
 				default:
 					option = document.createElement('option');
@@ -4392,6 +4397,10 @@ function addItemsToList(whatToProcess,dataToProcess)
 					option = document.createElement('option');
 					option.value = 'DT20';
 					option.text = 'DT20';
+					select.appendChild(option);
+					option = document.createElement('option');
+					option.value = 'IPL';
+					option.text = 'IPL';
 					select.appendChild(option);
 				break;
 				default:

@@ -179,17 +179,42 @@ public class FullFramesGfx
 			return "populatePlayerProfile: Player id [" + whatToProcess.split(",")[2] + "] from database is returning NULL";
 		}
 		
-		stat = statistics.stream().filter(stat -> stat.getPlayer_id() == player.getPlayerId()).findAny().orElse(null);
-		if(stat == null) {
-			return "populatePlayerProfile: No stats found for player id [" + player.getPlayerId() + "] from database is returning NULL";
+		for(Statistics stats : statistics) {
+			if (stats.getPlayer_id() == FirstPlayerId) {
+				stats.setStats_type(null);
+				stats.setStats_type(cricketService.getStatsType(stats.getStats_type_id()));
+				if (stats.getStats_type().getStats_short_name().equalsIgnoreCase(WhichProfile)) {
+					stat = null;
+					stat = stats;
+				}
+			}
 		}
 		
-		statsType = statsTypes.stream().filter(st -> st.getStats_short_name().equalsIgnoreCase(WhichProfile)).findAny().orElse(null);
+		if(stat == null) {
+			return "PopulateL3rdPlayerProfile: Stats not found for Player Id [" + FirstPlayerId + "]";
+		}
+		
+		for(StatsType st : statsTypes) {
+			if(st.getStats_short_name().equalsIgnoreCase(WhichProfile)) {
+				statsType = null;
+				statsType = st;
+			}
+		}
 		if(statsType == null) {
 			return "PopulateL3rdPlayerProfile: Stats Type not found for profile [" + WhichProfile + "]";
 		}
 		
-		stat.setStats_type(statsType);
+//		stat = statistics.stream().filter(stat -> stat.getPlayer_id() == player.getPlayerId()).findAny().orElse(null);
+//		if(stat == null) {
+//			return "populatePlayerProfile: No stats found for player id [" + player.getPlayerId() + "] from database is returning NULL";
+//		}
+//		
+//		statsType = statsTypes.stream().filter(st -> st.getStats_short_name().equalsIgnoreCase(WhichProfile)).findAny().orElse(null);
+//		if(statsType == null) {
+//			return "PopulateL3rdPlayerProfile: Stats Type not found for profile [" + WhichProfile + "]";
+//		}
+//		
+//		stat.setStats_type(statsType);
 		
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.BENGAL_T20:
@@ -1888,14 +1913,25 @@ public class FullFramesGfx
 						"$Data$SubHead$txt_Age*ACTIVE SET 0 \0", print_writers);
 				switch (whatToProcess) {
 				case "Control_d":
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Side" + WhichSide +
-							"$Data$Title$txt_Title*GEOM*TEXT SET " + "T20 CAREER" + "\0", print_writers);
+					if(stat.getStats_type().getStats_short_name().equalsIgnoreCase("DT20")) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Side" + WhichSide +
+								"$Data$Title$txt_Title*GEOM*TEXT SET " + "T20 CAREER" + "\0", print_writers);
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Side" + WhichSide +
+								"$Data$Title$txt_Title*GEOM*TEXT SET " + "IPL CAREER" + "\0", print_writers);
+					}
+					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Side" + WhichSide + "$Data$SubHead$txt_PlayerHand*GEOM*TEXT SET " 
 							+ CricketFunctions.getbattingstyle(player.getBattingStyle(), CricketUtil.SHORT, true, false).toUpperCase()  + "\0", print_writers);
 					break;
 				case "Control_e":
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Side" + WhichSide +
-							"$Data$Title$txt_Title*GEOM*TEXT SET " + "T20 CAREER" + "\0", print_writers);
+					if(stat.getStats_type().getStats_short_name().equalsIgnoreCase("DT20")) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Side" + WhichSide +
+								"$Data$Title$txt_Title*GEOM*TEXT SET " + "T20 CAREER" + "\0", print_writers);
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Side" + WhichSide +
+								"$Data$Title$txt_Title*GEOM*TEXT SET " + "IPL CAREER" + "\0", print_writers);
+					}
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Side" + WhichSide + "$Data$SubHead$txt_PlayerHand*GEOM*TEXT SET " 
 							+ CricketFunctions.getbowlingstyle(player.getBowlingStyle()).toUpperCase()  + "\0", print_writers);
 					break;
@@ -4795,8 +4831,6 @@ public class FullFramesGfx
 			
 			switch (config.getBroadcaster().toUpperCase()) {
 			case Constants.BENGAL_T20:
-				double BowlAverage = (double) stat.getRuns_conceded()/stat.getWickets();
-				DecimalFormat dff = new DecimalFormat("0.00");
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Side" + WhichSide + "$DataGrp$1"
 						+ "$txt_StatHead*GEOM*TEXT SET " + "MATCHES" + "\0", print_writers);		
@@ -4813,8 +4847,16 @@ public class FullFramesGfx
 						+ "$txt_StatValue*GEOM*TEXT SET " + stat.getMatches() + "\0", print_writers);	
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Side" + WhichSide + "$DataGrp$2"
 						+ "$txt_StatValue*GEOM*TEXT SET " + stat.getWickets() + "\0", print_writers);	
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Side" + WhichSide + "$DataGrp$3"
-						+ "$txt_StatValue*GEOM*TEXT SET " + dff.format(BowlAverage) + "\0", print_writers);
+				
+				if(stat.getWickets()<=0) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Side" + WhichSide + "$DataGrp$3"
+							+ "$txt_StatValue*GEOM*TEXT SET " + "-" + "\0", print_writers);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Side" + WhichSide + "$DataGrp$3"
+							+ "$txt_StatValue*GEOM*TEXT SET " + String.format("%.01f", (float)stat.getRuns_conceded() / (float)(stat.getWickets())) + "\0", print_writers);
+				}
+				
+				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Side" + WhichSide + "$DataGrp$4"
 						+ "$txt_StatValue*GEOM*TEXT SET " + CricketFunctions.getEconomy(stat.getRuns_conceded(), stat.getBalls_bowled(), 2, "-") + "\0", print_writers);	
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Side" + WhichSide + "$DataGrp$5"
