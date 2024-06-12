@@ -2550,6 +2550,7 @@ public class Animation
 					switch (config.getBroadcaster().toUpperCase()) {
 					case Constants.BENGAL_T20:
 						processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Section3_Change", "START");
+						TimeUnit.MILLISECONDS.sleep(200);
 						break;
 					}
 					

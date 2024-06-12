@@ -1958,7 +1958,7 @@ public class BugsAndMiniGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
 						+ "$Select_GraphicsType*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
-						+ "$Bowling_Card$Title$txt_TeamName*GEOM*TEXT SET " + inning.getBowling_team().getTeamName1() + " \0", print_writers);
+						+ "$Bowling_Card$Title$txt_TeamName*GEOM*TEXT SET " + inning.getBowling_team().getTeamLogo() + " \0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
 						+ "$Bowling_Card$Rows$Select_Row*FUNCTION*Omo*vis_con SET "+inning.getBowlingCard().size()+" \0", print_writers);
