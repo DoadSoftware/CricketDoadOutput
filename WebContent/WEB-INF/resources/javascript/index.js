@@ -245,6 +245,17 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 					break;
 				}
 				break;
+			case 'Control_F11':
+				switch($('#selected_broadcaster').val().toUpperCase()){
+				case 'ISPL': case 'ICC-U19-2023':
+					dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
+					processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
+					break;
+				case 'BENGAL-T20':
+					addItemsToList(dataToProcess,null);
+					break;
+				}
+				break;
 			case 'Control_p': case 'Alt_F7':
 				switch($('#selected_broadcaster').val().toUpperCase()){
 				case 'ISPL': case 'BENGAL-T20':
@@ -292,7 +303,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				addItemsToList(dataToProcess,null); 
 				break;
 			//changed shift_f11 to control_f11
-			case 'Shift_F10': case 'm': case 'F2': case 'Control_F1': case 'Control_a': case 'Control_F11': case 'Control_Shift_M':
+			case 'Shift_F10': case 'm': case 'F2': case 'Control_F1': case 'Control_a': case 'Control_Shift_M':
 			case 'Alt_o':  case 'Shift_F3': case 'd': case 'e': case 'Control_F6': case 'Control_F7': 
 			case 'Control_k': case 'Control_F10': case 'Control_F3':  case 'a': case 't': case 'h': case 'n':
 			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q': case 'Control_b': case 'o': case 'Control_F2': case 'b':
@@ -534,7 +545,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Shift_P': case 'Shift_Q': case 'Alt_z': case 'Control_c': case 'Control_v': case 'Control_z': case 'Control_x': case 'Alt_q': case 'Shift_F': 
 	case 'Alt_F6': case 'Shift_A': case 'Shift_R': case 'Control_Shift_F1': case 'Control_Shift_D': case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Control_Shift_F2':
 	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_F4': case 'Alt_Shift_C': case 'Control_Shift_L':
-	case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I':
+	case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I': case 'Control_F11':
 
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		
@@ -918,7 +929,27 @@ function addItemsToList(whatToProcess,dataToProcess)
 			removeSelectDuplicates(select.id);
 			cellCount = cellCount + 1;
 		break;	
+		case 'Control_F11':
+			header_text.innerHTML = 'SUMMARY';
+			select = document.createElement('select');
+			select.id = 'selectScoreCard';
+			select.name = select.id;
 			
+			option = document.createElement('option');
+            option.value = 'captain';
+            option.text = 'Captain';
+            select.appendChild(option);
+            
+			option = document.createElement('option');
+            option.value = 'logo';
+            option.text = 'logo';
+            select.appendChild(option);
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			cellCount = cellCount + 1;
+			break;
 		case 'F1':
 			header_text.innerHTML = 'SCORECARD';
 			select = document.createElement('select');
