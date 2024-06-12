@@ -1011,7 +1011,7 @@ public class Animation
 				if(!whatToProcess.split(",")[0].equalsIgnoreCase("Shift_K")) {
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Footer", "START");
 				}
-				
+			
 				switch (whatToProcess.split(",")[0]) {
 				case "F1":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Batting_Card", "START");
@@ -1019,12 +1019,16 @@ public class Animation
 					break;
 				case "Control_Shift_F1":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Batting_Card", "START");
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Sponsor", "START");
 					TimeUnit.MILLISECONDS.sleep(800);
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Extra_Info", "START");
-					if(caption.this_fullFramesGfx.batperformer_id > 0) {
+					if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("performer")) {
 						TimeUnit.MILLISECONDS.sleep(800);
 						processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Batting_Card$Side1$" + caption.this_fullFramesGfx.batperformer_id, "START");
 						caption.this_fullFramesGfx.pervious_batperformer_id = caption.this_fullFramesGfx.batperformer_id;
+					}
+					else if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("partnership")) {
+						
 					}
 					break;
 				
@@ -1034,6 +1038,7 @@ public class Animation
 					break;
 				case "Control_Shift_F2":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Bowling_Card", "START");
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Sponsor", "START");
 					TimeUnit.MILLISECONDS.sleep(800);
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Extra_Info", "START");
 					if(caption.this_fullFramesGfx.ballperformer_id > 0) {
@@ -1090,6 +1095,12 @@ public class Animation
 					break;
 				case "Alt_F11":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Manhattan_Comparison", "START");
+					break;
+				}
+				
+				switch (whatToProcess.split(",")[0]) {
+				case "F1": case "F2": case "F4": case "Control_F11": case "Control_p":
+					 processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Extra_Info", "START");
 					break;
 				}
 				
@@ -1953,11 +1964,16 @@ public class Animation
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Batting_Card", "CONTINUE");
 					break;
 				case "Control_Shift_F1":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Sponsor", "CONTINUE");
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Batting_Card", "CONTINUE");
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Extra_Info", "CONTINUE");
-					processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Batting_Card$Side1$" + 
-							caption.this_fullFramesGfx.pervious_batperformer_id, "CONTINUE REVERSE");
-					
+					if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("performer")) {
+						processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Batting_Card$Side1$" + 
+								caption.this_fullFramesGfx.pervious_batperformer_id, "CONTINUE REVERSE");
+					}
+					else if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("partnership")) {
+						
+					}
 					caption.this_fullFramesGfx.pervious_batperformer_id = 0;
 					caption.this_fullFramesGfx.batperformer_id = 0;
 					break;
@@ -1966,6 +1982,7 @@ public class Animation
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Bowling_Card", "CONTINUE");
 					break;
 				case "Control_Shift_F2":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Sponsor", "CONTINUE");
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Bowling_Card", "CONTINUE");
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Extra_Info", "CONTINUE");
 					processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Bowling_Card$Side1$" + 
@@ -2024,6 +2041,12 @@ public class Animation
 					break;
 				case "Alt_F11":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Manhattan_Comparison", "CONTINUE");
+					break;
+				}
+				
+				switch (whatToProcess.split(",")[0]) {
+				case "F1": case "F2": case "F4": case "Control_F11": case "Control_p":
+					 processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Extra_Info", "CONTINUE");
 					break;
 				}
 				
@@ -2402,7 +2425,7 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Ident_Change", "START");
 				break;
 			case "F1": case "F2": case "F4": case "Control_F11": case "Shift_T": case "p": case "Control_p":
-			case "Shift_F8": 	
+			case "Shift_F8": case "Control_Shift_F1": case "Control_Shift_F2":
 				setVariousAnimationsKeys("CHANGE-ON", print_writers, config);
 				processAnimation(Constants.BACK, print_writers, "Change$Header", "START");
 				processAnimation(Constants.BACK, print_writers, "Change$Footer", "START");
@@ -2412,7 +2435,7 @@ public class Animation
 						processAnimation(Constants.BACK, print_writers, "Change$Batting_Card", "START");
 						processAnimation(Constants.BACK, print_writers, "Change$Footer$Dynamic", "SHOW 0.0");
 						switch(whatToProcess.split(",")[0]) {
-						case "F1": case "F2":
+						case "F1": case "F2": case "Control_Shift_F1": case "Control_Shift_F2":
 							break;
 						default:
 							processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Sponsor", "CONTINUE REVERSE");
@@ -2423,13 +2446,57 @@ public class Animation
 						processAnimation(Constants.BACK, print_writers, "Change$Bowling_Card", "START");
 						processAnimation(Constants.BACK, print_writers, "Change$Footer$Dynamic", "SHOW 0.0");
 						switch(whatToProcess.split(",")[0]) {
-						case "F2": case "F1":
+						case "F2": case "F1": case "Control_Shift_F1": case "Control_Shift_F2":
 							break;
 						default:
 							processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Sponsor", "CONTINUE REVERSE");
 							break;
 						}
 						break;
+						
+					case "Control_Shift_F1":
+						processAnimation(Constants.BACK, print_writers, "Change$Batting_Card", "START");
+						processAnimation(Constants.BACK, print_writers, "Change$Footer$Dynamic", "SHOW 0.0");
+						processAnimation(Constants.BACK, print_writers, "Change$Extra_Info", "START");
+						switch(whatToProcess.split(",")[0]) {
+						case "F2": case "F1": case "Control_Shift_F2":
+							break;
+						case "Control_Shift_F1":
+							if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("performer")) {
+								processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Batting_Card$Side1$" + 
+										caption.this_fullFramesGfx.pervious_batperformer_id, "CONTINUE REVERSE");
+								processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Batting_Card$Side2$" + caption.this_fullFramesGfx.batperformer_id, "START");
+								caption.this_fullFramesGfx.pervious_batperformer_id = caption.this_fullFramesGfx.batperformer_id;
+							}
+							else if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("partnership")) {
+								
+							}
+							break;
+						default:
+							processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Sponsor", "CONTINUE REVERSE");
+							break;
+						}
+						break;
+						
+					case "Control_Shift_F2":
+						processAnimation(Constants.BACK, print_writers, "Change$Bowling_Card", "START");
+						processAnimation(Constants.BACK, print_writers, "Change$Footer$Dynamic", "SHOW 0.0");
+						processAnimation(Constants.BACK, print_writers, "Change$Extra_Info", "START");
+						switch(whatToProcess.split(",")[0]) {
+						case "F2": case "F1": case "Control_Shift_F1":
+							break;
+						case "Control_Shift_F2":
+							processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Bowling_Card$Side1$" + 
+									caption.this_fullFramesGfx.pervious_ballperformer_id, "CONTINUE REVERSE");
+							processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Bowling_Card$Side2$" + caption.this_fullFramesGfx.ballperformer_id, "START");
+							caption.this_fullFramesGfx.pervious_ballperformer_id = caption.this_fullFramesGfx.ballperformer_id;
+							break;
+						default:
+							processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Sponsor", "CONTINUE REVERSE");
+							break;
+						}
+						break;
+						
 					case "F4":
 						processAnimation(Constants.BACK, print_writers, "Change$Partnership_List", "START");
 						processAnimation(Constants.BACK, print_writers, "Change$Footer$Dynamic", "SHOW 0.0");
@@ -2491,6 +2558,33 @@ public class Animation
 						processAnimation(Constants.BACK, print_writers, "Change$Bowling_Card", "START");
 						processAnimation(Constants.BACK, print_writers, "Change$Sponsor", "START");
 						break;
+						
+					case "Control_Shift_F1":
+						processAnimation(Constants.BACK, print_writers, "Change$Batting_Card", "START");
+						processAnimation(Constants.BACK, print_writers, "Change$Sponsor", "START");
+						TimeUnit.MILLISECONDS.sleep(800);
+						processAnimation(Constants.BACK, print_writers, "Change$Extra_Info", "START");
+						if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("performer")) {
+							TimeUnit.MILLISECONDS.sleep(800);
+							processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Batting_Card$Side2$" + caption.this_fullFramesGfx.batperformer_id, "START");
+							caption.this_fullFramesGfx.pervious_batperformer_id = caption.this_fullFramesGfx.batperformer_id;
+						}
+						else if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("partnership")) {
+							
+						}
+						break;
+					case "Control_Shift_F2":
+						processAnimation(Constants.BACK, print_writers, "Change$Bowling_Card", "START");
+						processAnimation(Constants.BACK, print_writers, "Change$Sponsor", "START");
+						TimeUnit.MILLISECONDS.sleep(800);
+						processAnimation(Constants.BACK, print_writers, "Change$Extra_Info", "START");
+						if(caption.this_fullFramesGfx.ballperformer_id > 0) {
+							TimeUnit.MILLISECONDS.sleep(800);
+							processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Bowling_Card$Side2$" + caption.this_fullFramesGfx.ballperformer_id, "START");
+							caption.this_fullFramesGfx.pervious_ballperformer_id = caption.this_fullFramesGfx.ballperformer_id;
+						}
+						break;
+						
 					case "F4":
 						processAnimation(Constants.BACK, print_writers, "Change$Partnership_List", "START");
 //						if(caption.this_fullFramesGfx.whichSponsor != null || !caption.this_fullFramesGfx.whichSponsor.isEmpty()) {
@@ -3155,6 +3249,7 @@ public class Animation
 				 break;
 				
 			case "F1": case "F2": case "F4": case "Control_F11": case "Shift_T": case "p": case "Control_p":
+			case "Control_Shift_F1": case "Control_Shift_F2":
 				processAnimation(Constants.BACK, print_writers, "Change$Header", "SHOW 0.0");
 				processAnimation(Constants.BACK, print_writers, "Change$Footer", "SHOW 0.0");
 				switch(whichGraphicOnScreen.split(",")[0]) {
@@ -3166,6 +3261,64 @@ public class Animation
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Bowling_Card", "SHOW 2.500");
 					processAnimation(Constants.BACK, print_writers, "Change$Bowling_Card", "SHOW 0.0");
 					break;
+					
+				case "Control_Shift_F1":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Batting_Card", "SHOW 2.500");
+					processAnimation(Constants.BACK, print_writers, "Change$Batting_Card", "SHOW 0.0");
+					
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Extra_Info", "SHOW 2.500");
+					processAnimation(Constants.BACK, print_writers, "Change$Extra_Info", "SHOW 0.0");
+					
+					switch(whatToProcess.split(",")[0]) {
+					case "Control_Shift_F1":
+						if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("performer")) {
+							processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Batting_Card$Side1$" + 
+									caption.this_fullFramesGfx.pervious_batperformer_id, "SHOW 0.500");
+							processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Batting_Card$Side2$" + 
+									caption.this_fullFramesGfx.pervious_batperformer_id, "SHOW 0.0");
+						}
+						else if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("partnership")) {
+							processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Batting_Card$Side1", "SHOW 0.0");
+							processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Batting_Card$Side2", "SHOW 0.0");
+						}
+						break;
+					default:
+						if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("performer")) {
+							processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Batting_Card$Side1$" + 
+									caption.this_fullFramesGfx.pervious_batperformer_id, "SHOW 0.0");
+							processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Batting_Card$Side2$" + 
+									caption.this_fullFramesGfx.pervious_batperformer_id, "SHOW 0.0");
+						}
+						else if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("partnership")) {
+							processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Batting_Card$Side1", "SHOW 0.0");
+							processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Batting_Card$Side2", "SHOW 0.0");
+						}
+						break;
+					}
+					break;	
+				case "Control_Shift_F2":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Bowling_Card", "SHOW 2.500");
+					processAnimation(Constants.BACK, print_writers, "Change$Bowling_Card", "SHOW 0.0");
+					
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Extra_Info", "SHOW 2.500");
+					processAnimation(Constants.BACK, print_writers, "Change$Extra_Info", "SHOW 0.0");
+					
+					switch(whatToProcess.split(",")[0]) {
+					case "Control_Shift_F2":
+						processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Bowling_Card$Side1$" + 
+								caption.this_fullFramesGfx.pervious_ballperformer_id, "SHOW 0.500");
+						processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Bowling_Card$Side2$" + 
+								caption.this_fullFramesGfx.pervious_ballperformer_id, "SHOW 0.0");
+						break;
+					default:
+						processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Bowling_Card$Side1$" + 
+								caption.this_fullFramesGfx.pervious_ballperformer_id, "SHOW 0.0");
+						processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Bowling_Card$Side2$" + 
+								caption.this_fullFramesGfx.pervious_ballperformer_id, "SHOW 0.0");
+						break;
+					}
+					break;
+					
 				case "F4":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Partnership_List", "SHOW 2.500");
 					processAnimation(Constants.BACK, print_writers, "Change$Partnership_List", "SHOW 0.0");
@@ -3209,6 +3362,47 @@ public class Animation
 						processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Sponsor", "SHOW 2.500");
 						processAnimation(Constants.BACK, print_writers, "Change$Sponsor", "SHOW 0.0");
 						break;
+						
+					case "Control_Shift_F1":
+						processAnimation(Constants.BACK, print_writers, "Change$Footer$Dynamic", "SHOW 0.0");
+						processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Batting_Card", "SHOW 2.500");
+						processAnimation(Constants.BACK, print_writers, "Change$Batting_Card", "SHOW 0.0");
+						
+						processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Sponsor", "SHOW 2.500");
+						processAnimation(Constants.BACK, print_writers, "Change$Sponsor", "SHOW 0.0");
+						
+						processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Extra_Info", "SHOW 2.500");
+						processAnimation(Constants.BACK, print_writers, "Change$Extra_Info", "SHOW 0.0");
+						
+						if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("performer")) {
+							processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Batting_Card$Side1$" + 
+									caption.this_fullFramesGfx.pervious_batperformer_id, "SHOW 0.500");
+							processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Batting_Card$Side2$" + 
+									caption.this_fullFramesGfx.pervious_batperformer_id, "SHOW 0.0");
+						}
+						else if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("partnership")) {
+							processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Batting_Card$Side1", "SHOW 0.0");
+							processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Batting_Card$Side2", "SHOW 0.0");
+						}
+						
+						break;
+					case "Control_Shift_F2":
+						processAnimation(Constants.BACK, print_writers, "Change$Footer$Dynamic", "SHOW 0.0");
+						processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Bowling_Card", "SHOW 2.500");
+						processAnimation(Constants.BACK, print_writers, "Change$Bowling_Card", "SHOW 0.0");
+						
+						processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Sponsor", "SHOW 2.500");
+						processAnimation(Constants.BACK, print_writers, "Change$Sponsor", "SHOW 0.0");
+						
+						processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Extra_Info", "SHOW 2.500");
+						processAnimation(Constants.BACK, print_writers, "Change$Extra_Info", "SHOW 0.0");
+						
+						processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Bowling_Card$Side1$" + 
+								caption.this_fullFramesGfx.pervious_ballperformer_id, "SHOW 0.500");
+						processAnimation(Constants.BACK, print_writers, "Anim_Highlights$Bowling_Card$Side2$" + 
+								caption.this_fullFramesGfx.pervious_ballperformer_id, "SHOW 0.0");
+						break;
+						
 					case "F4":
 						processAnimation(Constants.BACK, print_writers, "Change$Footer$Dynamic", "SHOW 0.0");
 						processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Partnership_List", "SHOW 2.500");
@@ -3807,15 +4001,21 @@ public class Animation
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Batting_Card$In 2.180 Anim_FullFrames$In_Out$Sponsor$In 2.420";
 							break;
 						case "Control_Shift_F1":
-							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Batting_Card$In 1.860 Anim_FullFrames$In_Out$Extra_Info$In 2.500 "
-									+ "Anim_Highlights$Batting_Card$Side1$" + caption.this_fullFramesGfx.batperformer_id + " 0.500";
+							if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("performer")) {
+								previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Batting_Card$In 2.180 Anim_FullFrames$In_Out$Sponsor$In 2.420 "
+										+ "Anim_FullFrames$In_Out$Extra_Info$In 2.500 Anim_Highlights$Batting_Card$Side1$" + caption.this_fullFramesGfx.batperformer_id + " 0.500";
+							}
+							else if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("partnership")) {
+								previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Batting_Card$In 2.180 Anim_FullFrames$In_Out$Sponsor$In 2.420 "
+										+ "Anim_FullFrames$In_Out$Extra_Info$In 2.500";
+							}
 							break;
 						case "F2"://bowlingCard
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Bowling_Card$In 2.100 Anim_FullFrames$In_Out$Sponsor$In 2.420";
 							break;
 						case "Control_Shift_F2":
-							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Bowling_Card$In 2.100 Anim_FullFrames$In_Out$Extra_Info$In 2.500 "
-									+ "Anim_Highlights$Bowling_Card$Side1$" + caption.this_fullFramesGfx.ballperformer_id + " 0.500";
+							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Bowling_Card$In 2.100 Anim_FullFrames$In_Out$Sponsor$In 2.420 "
+									+ "Anim_FullFrames$In_Out$Extra_Info$In 2.500 Anim_Highlights$Bowling_Card$Side1$" + caption.this_fullFramesGfx.ballperformer_id + " 0.500";
 							break;
 							
 						case "F4": //All Partnership
@@ -3894,8 +4094,8 @@ public class Animation
 					if(whatToProcess.contains(",")) {
 						switch(whatToProcess.split(",")[0]) {
 						case "F1": case "F2": case "F4": case "Control_F11": case "Shift_T": case "p": case "Control_p":
-						case "z": case "x": case "c": case "v": case "Control_z": case "Control_x":
-							previewCommand = previewCommand + " Change$Header 1.320  Change$Header$Change_In 1.320 Change$Header$Change_Out 0.420";
+						case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": case "Control_Shift_F1": case "Control_Shift_F2":
+							previewCommand = previewCommand + " Change$Header 1.320 Change$Header$Change_In 1.320 Change$Header$Change_Out 0.420";
 							if(whichGraphicOnScreen.contains(",")) {
 								switch(whichGraphicOnScreen.split(",")[0]) {
 								case "F1":  
@@ -3906,12 +4106,37 @@ public class Animation
 									previewCommand = previewCommand + " Change$Bowling_Card 1.100 Change$Bowling_Card$Change_Out 0.500 Change$Bowling_Card$Change_In 1.100 "
 											+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500";
 									break;
+									
+								case "Control_Shift_F1":
+									if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("performer")) {
+										previewCommand = previewCommand + " Change$Batting_Card 1.180 Change$Batting_Card$Change_Out 0.540 Change$Batting_Card$Change_In 1.180 "
+												+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500 "
+												+ "Change$Extra_Info 1.300 Change$Extra_Info$Change_Out 0.600 Change$Extra_Info$Change_In 1.300 Anim_Highlights 0.700 "
+												+ "Anim_Highlights$Batting_Card 0.500 Anim_Highlights$Batting_Card$Side2 0.500 "
+												+ "Anim_Highlights$Batting_Card$Side2$" + caption.this_fullFramesGfx.batperformer_id + " 0.500";
+									}
+									else if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("partnership")) {
+										previewCommand = previewCommand + " Change$Batting_Card 1.180 Change$Batting_Card$Change_Out 0.540 Change$Batting_Card$Change_In 1.180 "
+												+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500 "
+												+ "Change$Extra_Info 1.300 Change$Extra_Info$Change_Out 0.600 Change$Extra_Info$Change_In 1.300";
+									}
+									break;
+									
+								case "Control_Shift_F2":
+									previewCommand = previewCommand + " Change$Bowling_Card 1.100 Change$Bowling_Card$Change_Out 0.500 Change$Bowling_Card$Change_In 1.100 "
+											+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500 "
+											+ "Change$Extra_Info 1.300 Change$Extra_Info$Change_Out 0.600 Change$Extra_Info$Change_In 1.300 Anim_Highlights 0.700 "
+											+ "Anim_Highlights$Bowling_Card 0.500 Anim_Highlights$Bowling_Card$Side2 0.500 "
+											+ "Anim_Highlights$Bowling_Card$Side2$" + caption.this_fullFramesGfx.ballperformer_id + " 0.500";
+									break;
+									
 								case "F4":
 									previewCommand = previewCommand + " Change$Partnership_List 1.180 Change$Partnership_List$Change_Out 0.540 "
 										+ "Change$Partnership_List$Change_In 1.180";
 									break;
 								case "Control_F11":
-									previewCommand = previewCommand + " Change$Summary 1.200 Change$Summary$Change_Out 0.480 Change$Summary$Change_In 1.200";
+									previewCommand = previewCommand + " Change$Summary 1.200 Change$Summary$Change_Out 0.480 Change$Summary$Change_In 1.200 "
+											+ "Change$Footer$Dynamic 0.500";
 									break;
 								case "Shift_T":
 									previewCommand = previewCommand + " Change$LineUp_Image 0.960 Change$LineUp_Image$Change_Out 0.440 Change$LineUp_Image$Change_In 0.960 "
@@ -3921,7 +4146,8 @@ public class Animation
 									previewCommand = previewCommand + " Change$Group_Standings 1.040 Change$Group_Standings$Change_Out 0.624 Change$Group_Standings$Change_In 1.040";
 									break;
 								case "Control_p":
-									previewCommand = previewCommand + " Change$Standings 1.020 Change$Standings$Change_Out 0.460 Change$Standings$Change_In 1.020";
+									previewCommand = previewCommand + " Change$Standings 1.020 Change$Standings$Change_Out 0.460 Change$Standings$Change_In 1.020 "
+											+ "Change$Footer$Dynamic 0.500";
 									break;
 								case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": //LeaderBoard Most - Runs,Wickets,Fours,Sixes 
 									previewCommand = previewCommand + " Change$Leader_Board 2.800 Change$Leader_Board$Change_Out 0.600 Change$Leader_Board$Change_In 2.800";
@@ -3954,12 +4180,37 @@ public class Animation
 									previewCommand = previewCommand + " Change$Bowling_Card 1.100 Change$Bowling_Card$Change_Out 0.500 Change$Bowling_Card$Change_In 1.100"
 											+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500";
 									break;
+									
+								case "Control_Shift_F1":
+									if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("performer")) {
+										previewCommand = previewCommand + " Change$Batting_Card 1.180 Change$Batting_Card$Change_Out 0.540 Change$Batting_Card$Change_In 1.180 "
+												+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500 "
+												+ "Change$Extra_Info 1.300 Change$Extra_Info$Change_Out 0.600 Change$Extra_Info$Change_In 1.300 Anim_Highlights 0.700 "
+												+ "Anim_Highlights$Batting_Card 0.500 Anim_Highlights$Batting_Card$Side2 0.500 "
+												+ "Anim_Highlights$Batting_Card$Side2$" + caption.this_fullFramesGfx.batperformer_id + " 0.500";
+									}
+									else if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("partnership")) {
+										previewCommand = previewCommand + " Change$Batting_Card 1.180 Change$Batting_Card$Change_Out 0.540 Change$Batting_Card$Change_In 1.180 "
+												+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500 "
+												+ "Change$Extra_Info 1.300 Change$Extra_Info$Change_Out 0.600 Change$Extra_Info$Change_In 1.300";
+									}
+									break;
+									
+								case "Control_Shift_F2":
+									previewCommand = previewCommand + " Change$Bowling_Card 1.100 Change$Bowling_Card$Change_Out 0.500 Change$Bowling_Card$Change_In 1.100 "
+											+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500 "
+											+ "Change$Extra_Info 1.300 Change$Extra_Info$Change_Out 0.600 Change$Extra_Info$Change_In 1.300 Anim_Highlights 0.700 "
+											+ "Anim_Highlights$Bowling_Card 0.500 Anim_Highlights$Bowling_Card$Side2 0.500 "
+											+ "Anim_Highlights$Bowling_Card$Side2$" + caption.this_fullFramesGfx.ballperformer_id + " 0.500";
+									break;
+									
 								case "F4":
 									previewCommand = previewCommand + " Change$Partnership_List 1.180 Change$Partnership_List$Change_Out 0.540 "
 										+ "Change$Partnership_List$Change_In 1.180";
 									break;
 								case "Control_F11":
-									previewCommand = previewCommand + " Change$Summary 1.200 Change$Summary$Change_Out 0.480 Change$Summary$Change_In 1.200";
+									previewCommand = previewCommand + " Change$Summary 1.200 Change$Summary$Change_Out 0.480 Change$Summary$Change_In 1.200 "
+											+ "Change$Footer$Dynamic 0.500";
 									break;
 								case "Shift_T":
 									previewCommand = previewCommand + " Change$LineUp_Image 0.960 Change$LineUp_Image$Change_Out 0.440 Change$LineUp_Image$Change_In 0.960"
@@ -3969,7 +4220,8 @@ public class Animation
 									previewCommand = previewCommand + " Change$Group_Standings 1.040 Change$Group_Standings$Change_Out 0.624 Change$Group_Standings$Change_In 1.040";
 									break;
 								case "Control_p":
-									previewCommand = previewCommand + " Change$Standings 1.020 Change$Standings$Change_Out 0.460 Change$Standings$Change_In 1.020";
+									previewCommand = previewCommand + " Change$Standings 1.020 Change$Standings$Change_Out 0.460 Change$Standings$Change_In 1.020 "
+											+ "Change$Footer$Dynamic 0.500";
 									break;
 								}
 							}
