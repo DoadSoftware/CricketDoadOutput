@@ -3219,6 +3219,7 @@ public class Animation
 			case "Alt_8": case "Alt_5":
 				if(!whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
 					if(infobar.getRight_section()!= null && !infobar.getRight_section().isEmpty()) {
+						TimeUnit.MILLISECONDS.sleep(1000);
 						processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Section_2$Change", "SHOW 0.0");
 					}
 				}
