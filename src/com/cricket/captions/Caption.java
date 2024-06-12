@@ -354,6 +354,7 @@ public class Caption
 				status = this_fullFramesGfx.populatePreviousMatchSummary(whichSide, whatToProcess, matchAllData, 0);
 				break;
 			case "Control_F11": //MATCH SUMMARY
+				this_fullFramesGfx.WhichType = whatToProcess.split(",")[2];
 				status = this_fullFramesGfx.populateMatchSummary(whichSide, whatToProcess.split(",")[0], matchAllData, 
 					Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
