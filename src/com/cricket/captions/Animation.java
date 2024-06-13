@@ -129,7 +129,7 @@ public class Animation
 			case "Control_F12": case "Shift_F12": case "Alt_e":	
 				return Constants.INFO_BAR;
 			case "Shift_O": case "Control_k": case "k": case "g": case "y": case "Alt_p": case "o": case "t": 
-			case "Control_y": case "h": case "Shift_F4": case "Shift_F": case ".": case "/":
+			case "Control_y": case "h": case "Shift_F4": case "Shift_F": case ".": case "/": case "Control_Shift_U": case "Control_Shift_V":
 				return Constants.BUGS;
 			case "Shift_F1": case "Shift_F2": case "Alt_F7":
 				return Constants.MINIS;
@@ -1221,6 +1221,10 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "anim_POTT", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
+			case "Control_Shift_U": case "Control_Shift_V":
+				processAnimation(Constants.FRONT, print_writers, "anim_Popup", "START");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;
 				
 			case "q": case "Control_q":// Boundary L3rd
 				
@@ -2151,6 +2155,12 @@ public class Animation
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;
+			 case "Control_Shift_U": case "Control_Shift_V":
+					processAnimation(Constants.FRONT, print_writers, "anim_Popup", "CONTINUE");
+					TimeUnit.MILLISECONDS.sleep(1000);
+					processAnimation(Constants.FRONT, print_writers, "anim_Popup", "SHOW 0.0");
+					this.whichGraphicOnScreen = "";
+					break;
 				
 			case "Alt_p":
 				if(this.specialBugOnScreen.equalsIgnoreCase(CricketUtil.TOSS)) {
@@ -2431,6 +2441,9 @@ public class Animation
 			}
 			
 			switch (whatToProcess.split(",")[0]) {
+			 case "Control_Shift_U": case "Control_Shift_V":
+					processAnimation(Constants.FRONT, print_writers, "Change_Popup", "START");
+					break;
 			case "Control_x": case "Control_z": case "z": case "x": case "c": case "v": 
 				setVariousAnimationsKeys("CHANGE-ON", print_writers, config);
 				if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase(whatToProcess.split(",")[0])) {
@@ -2571,6 +2584,7 @@ public class Animation
 						//TimeUnit.MILLISECONDS.sleep(1000);
 						break;
 					}
+					
 				}
 				if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase(whatToProcess.split(",")[0])) {
 					switch(whatToProcess.split(",")[0]) {
@@ -3189,6 +3203,9 @@ public class Animation
 			}
 			
 			switch(whatToProcess.split(",")[0]) {
+			 case "Control_Shift_U": case "Control_Shift_V":
+					processAnimation(Constants.FRONT, print_writers, "Change_Popup", "SHOW 0.0");
+					break;
 			case "Shift_F12":
 				processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Ident_Change", "SHOW 0.0");
 				break;
@@ -3667,6 +3684,8 @@ public class Animation
 			processAnimation(Constants.BACK, print_writers, "Anim_Highlights", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Anim_Teams", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Anim_Lineup_Image_Big", "SHOW 0.0");
+			processAnimation(Constants.BACK, print_writers, "anim_Popup", "SHOW 0.0");
+			processAnimation(Constants.BACK, print_writers, "Change_Popup", "SHOW 0.0");
 			
 			if(whatToProcess.contains("CLEAR-ALL")) {
 				processAnimation(Constants.FRONT, print_writers, "anim_Infobar", "SHOW 0.0");
@@ -4794,6 +4813,23 @@ public class Animation
 	{
 		if(config.getPreview().equalsIgnoreCase("WITH_PREVIEW")) {
 			switch (config.getBroadcaster().toUpperCase()) {
+			case Constants.BENGAL_T20: 
+				switch(whatToProcess.split(",")[0]) {
+				case "Control_Shift_U": case "Control_Shift_V":
+					if(whichside == 1) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+								+ "/Default/Overlays" + " C:/Temp/Preview.png anim_Popup 1.620 anim_Popup$In_Out 1.620 anim_Popup$In_Out$Essentials 1.620 "
+										+ "anim_Popup$In_Out$Essentials$In 1.620 anim_Popup$In_Out$Text 1.620 anim_Popup$In_Out$Text$In 1.620 \0", print_writer);
+					}else if(whichside == 2) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+								+ "/Default/Overlays" + " C:/Temp/Preview.png Change_Popup 1.040 Change_Popup$Tex 1.040  Change_Popup$Tex$Change_Out 0.380"
+										+ "Change_Popup$Tex$Change_In 1.040 \0", print_writer);
+					}
+					
+					
+					break;
+				}
+				break;
 			case Constants.ICC_U19_2023: case Constants.ISPL:
 				if(whatToProcess.contains(",")) {
 					switch(whatToProcess.split(",")[0]) {

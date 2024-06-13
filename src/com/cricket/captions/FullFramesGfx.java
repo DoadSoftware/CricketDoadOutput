@@ -541,7 +541,6 @@ public class FullFramesGfx
 			Date = new SimpleDateFormat("dd-MM-yyyy").format(cal.getTime());
 		}
 		FixturesList.clear();
-		System.out.println("DATE : "+Date);
 		for(Fixture fixture : fixTures) {
 			if(fixture.getDate().equalsIgnoreCase(Date)) {
 				FixturesList.add(fixture);
@@ -1973,7 +1972,7 @@ public class FullFramesGfx
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Side" + WhichSide +
 							"$Data$Title$txt_Title*GEOM*TEXT SET " + "" + "\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Side" + WhichSide + "$Data$SubHead$txt_PlayerHand*GEOM*TEXT SET " 
-							+ "THIS SERIES"  + "\0", print_writers);
+							+ "BPTL - 2024"  + "\0", print_writers);
 				}
 				break;
 			case "Alt_Shift_R":

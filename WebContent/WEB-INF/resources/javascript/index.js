@@ -300,7 +300,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Alt_F6': case 'Shift_R': case 'Shift_A': case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'Shift_F7': case 'Control_F4':
 			case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_F': case 'Control_Shift_P': case 'Control_Shift_F1': case 'Control_Shift_D':
 			case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Shift_I': case 'Alt_Shift_C': case 'Control_Shift_F2': case 'Control_Shift_M':
-			case 'Control_Shift_U':
+			case 'Control_Shift_U': case 'Control_Shift_V':
 				addItemsToList(dataToProcess,null); 
 				break;
 			//changed shift_f11 to control_f11
@@ -547,8 +547,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Alt_F6': case 'Shift_A': case 'Shift_R': case 'Control_Shift_F1': case 'Control_Shift_D': case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Control_Shift_F2':
 	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_F4': case 'Alt_Shift_C': case 'Control_Shift_L':
 	case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I': case 'Control_F11': case 'Control_Shift_M':
-	case 'Control_Shift_U': case 'Alt_Shift_R':
-
+	case 'Alt_Shift_R': case 'Control_Shift_U': case 'Control_Shift_V':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		
 		$("#captions_div").hide();
@@ -769,8 +768,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 			removeSelectDuplicates(select.id);
 			cellCount = cellCount + 1;
 			break;
-		case 'Control_Shift_F2':
-			header_text.innerHTML = 'BALL PERFORMER';
+		case 'Control_Shift_F2': case 'Control_Shift_V':
+			
 
 			select = document.createElement('select');
 			select.id = 'selectPlayer';
@@ -805,20 +804,33 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select = document.createElement('select');
 			select.id = 'selectStatsType';
 			select.name = select.id;
-			
-			option = document.createElement('option');
-			option.value = 'performer';
-			option.text = 'Performer';
-			select.appendChild(option);
-			
+			switch(whatToProcess){
+				case 'Control_Shift_V':
+				header_text.innerHTML = 'BALL POP UP';
+				option = document.createElement('option');
+				option.value = 'figure';
+				option.text = 'Bowler Figure';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'economy';
+				option.text = 'Economy';
+				select.appendChild(option);
+				break;
+				case 'Control_Shift_F2':
+				header_text.innerHTML = 'BALL PERFORMER';
+				option = document.createElement('option');
+				option.value = 'performer';
+				option.text = 'Performer';
+				select.appendChild(option);
+				break;
+			}
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
 			row.insertCell(cellCount).appendChild(select);
 			setDropdownOptionToSelectOptionArray($(select),1);
 			cellCount = cellCount + 1;
 			break;
 		case 'Control_Shift_F1': case 'Control_Shift_U':
-			header_text.innerHTML = 'BAT PERFORMER/PARTNERSHIP';
-
 			select = document.createElement('select');
 			select.id = 'selectPlayer';
 			select.name = select.id;
@@ -861,6 +873,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select.name = select.id;
 			switch(whatToProcess){
 				case 'Control_Shift_U':
+				header_text.innerHTML = 'BAT POP UP';
 				option = document.createElement('option');
 				option.value = 'score';
 				option.text = 'Score';
@@ -872,6 +885,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 				select.appendChild(option);
 				break;
 				case 'Control_Shift_F1':
+				header_text.innerHTML = 'BAT PERFORMER/PARTNERSHIP';
 				option = document.createElement('option');
 				option.value = 'performer';
 				option.text = 'Performer';
