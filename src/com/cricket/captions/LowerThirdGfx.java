@@ -2814,7 +2814,7 @@ public class LowerThirdGfx
 			
 			switch (config.getBroadcaster().toUpperCase()) {
 			case Constants.BENGAL_T20:
-				lowerThird = new LowerThird("", tournament.getPlayer().getFirstname(), surName,"THIS SERIES", "", "", 2,"",teamName,
+				lowerThird = new LowerThird("", tournament.getPlayer().getFirstname(), surName,"BPTL - 2024", "", "", 2,"",teamName,
 						new String[]{"MATCHES", "RUNS", "50s", "100s", "S/R", "BEST"},new String[]{String.valueOf(tournament.getMatches()), 
 						String.format("%,d\n", tournament.getRuns()), fifties,hundred,bat_sr,best},null,null,
 						new String[] {"-3.0","51.0","103.0","155.0","207.0","259.0"});
@@ -2876,7 +2876,7 @@ public class LowerThirdGfx
 			
 			switch (config.getBroadcaster().toUpperCase()) {
 			case Constants.BENGAL_T20:
-				lowerThird = new LowerThird("", tournament.getPlayer().getFirstname(), surName,"THIS SERIES", "", "", 2,"",teamName,
+				lowerThird = new LowerThird("", tournament.getPlayer().getFirstname(), surName,"BPTL - 2024", "", "", 2,"",teamName,
 						new String[]{"MATCHES", "WICKETS", "AVERAGE", "ECONOMY", "BEST"},new String[]{String.valueOf(tournament.getMatches()),
 						String.valueOf(tournament.getWickets()),Data,economy,best},null,null,new String[] {"-3.0","63.0","129.0","195.0","261.0"});
 				break;

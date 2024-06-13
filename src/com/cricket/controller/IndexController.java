@@ -602,7 +602,9 @@ public class IndexController
 		case "Alt_s":
 			return (List<T>) CricketFunctions.processAllStaff(cricketService, session_match.getSetup().getAwayTeamId());
 		case "Alt_q":
-			return (List<T>) CricketFunctions.processAllPott(cricketService);	
+			return (List<T>) CricketFunctions.processAllPott(cricketService);
+		case "Alt_Shift_R":
+			return (List<T>) session_team;
 		case "z": case "x": case "c": case "v": 
 			List<Tournament> tournament_stats = CricketFunctions.extractTournamentData("CURRENT_MATCH_DATA", false, headToHead, cricketService, 
 					session_match, past_tournament_stats);
