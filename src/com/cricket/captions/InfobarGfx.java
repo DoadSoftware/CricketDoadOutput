@@ -5000,6 +5000,9 @@ public class InfobarGfx
 						Constants.BENGAL_TEXT_PATH + "1/" + inning.getBatting_team().getTeamName4() + "\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
+						+ "$Select_Type$2_Line_Text$Select_Sponsor$img_Sponsor*TEXTURE*IMAGE SET " + Constants.BENGAL_SPONSOR_PATH + "SOBISCO" + " \0",print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
 						+ "$Select_Type*FUNCTION*Omo*vis_con SET 1 \0",print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
@@ -5043,18 +5046,23 @@ public class InfobarGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide + "$"
 						+ "img_Text1*TEXTURE*IMAGE SET " + 
 						Constants.BENGAL_TEXT_PATH + "1/" + inning.getBatting_team().getTeamName4() + "\0", print_writers);
-				
+
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
 						+ "$Select_Type*FUNCTION*Omo*vis_con SET 1 \0",print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
+						+ "$Select_Type$2_Line_Text$Select_Sponsor*FUNCTION*Omo*vis_con SET 1 \0",print_writers);
 				
 				infoBarStats = infobarStats.stream().filter(infostats -> infostats.getOrder() == infobarStatsId).findAny().orElse(null);
 				if(infoBarStats == null) {
 					return "InfoBarFreeText: Stats  not found for [" + infobarStatsId + "]";
 				}
 				
-				if(infoBarStats.getText2() != null) {
+				if(infoBarStats.getText1().equalsIgnoreCase("THIRD UMPIRE")) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
-							+ "$Select_Type$2_Line_Text$Select_Sponsor*FUNCTION*Omo*vis_con SET 0 \0",print_writers);
+							+ "$Select_Type$2_Line_Text$Select_Sponsor$img_Sponsor*TEXTURE*IMAGE SET " + Constants.BENGAL_SPONSOR_PATH + "UTKARSH" + " \0",print_writers);
+				}
+				
+				if(infoBarStats.getText2() != null) {
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide + "$Select_Type$2_Line_Text$Maxsize_Title$txt_Title*GEOM*TEXT SET " 
 							+ infoBarStats.getText1() + "\0", print_writers);
@@ -5524,6 +5532,9 @@ public class InfobarGfx
 				}
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
+						+ "$Select_Type$2_Line_Text$Select_Sponsor$img_Sponsor*TEXTURE*IMAGE SET " + Constants.BENGAL_SPONSOR_PATH + "SOBISCO" + " \0",print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
 						+ "$Select_Type$2_Line_Text$Select_Sponsor*FUNCTION*Omo*vis_con SET 1 \0",print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide + "$BaseAll$"
@@ -5669,6 +5680,9 @@ public class InfobarGfx
 						}
 					}
 				}
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
+						+ "$Select_Type$2_Line_Text$Select_Sponsor$img_Sponsor*TEXTURE*IMAGE SET " + Constants.BENGAL_SPONSOR_PATH + "SOBISCO" + " \0",print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
 						+ "$Select_Type$2_Line_Text$Select_Sponsor*FUNCTION*Omo*vis_con SET 1 \0",print_writers);

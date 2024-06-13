@@ -496,7 +496,6 @@ public class FullFramesGfx
 		String Date = "";
 		WhichStyle = whatToProcess.split(",")[2];
 		
-		System.out.println(whatToProcess.split(",")[2]);
 		if (whatToProcess.split(",")[2].equalsIgnoreCase("TODAY")) {
 			Date = new SimpleDateFormat("dd-MM-yyyy").format(cal.getTime());
 			
@@ -6041,7 +6040,7 @@ public class FullFramesGfx
 					
 					if (WhichStyle.equalsIgnoreCase("TODAY")) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_DoubleIdent$Main$DataAll$" + i + "$VenueGrp$txt_Venue*GEOM*TEXT SET " 
-								+ FixturesList.get(i-1).getVenue() + "\0", print_writers);
+								+ "TODAY - " + FixturesList.get(i-1).getLocalTime() + " - " +  FixturesList.get(i-1).getVenue() + "\0", print_writers);
 						
 					} else if (WhichStyle.equalsIgnoreCase("TOMORROW")) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_DoubleIdent$Main$DataAll$" + i + "$VenueGrp$txt_Venue*GEOM*TEXT SET " 
