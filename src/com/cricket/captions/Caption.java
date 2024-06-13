@@ -471,6 +471,7 @@ public class Caption
 				status = this_lowerThirdGfx.populateLTMatchPromo(whatToProcess,whichSide,matchAllData);
 				break;
 			case "Control_Shift_D":
+				System.out.println("wot : "+whatToProcess);
 				status = this_fullFramesGfx.populateDoubleMatchIDAndPromo(whichSide, whatToProcess, matchAllData);
 				break;
 			case "Alt_Shift_Z":

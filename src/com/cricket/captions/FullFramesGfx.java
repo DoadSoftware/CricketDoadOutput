@@ -496,6 +496,7 @@ public class FullFramesGfx
 		String Date = "";
 		WhichStyle = whatToProcess.split(",")[2];
 		
+		System.out.println(whatToProcess.split(",")[2]);
 		if (whatToProcess.split(",")[2].equalsIgnoreCase("TODAY")) {
 			Date = new SimpleDateFormat("dd-MM-yyyy").format(cal.getTime());
 			
@@ -508,11 +509,13 @@ public class FullFramesGfx
 			Date = new SimpleDateFormat("dd-MM-yyyy").format(cal.getTime());
 		}
 		FixturesList.clear();
+		System.out.println("DATE : "+Date);
 		for(Fixture fixture : fixTures) {
 			if(fixture.getDate().equalsIgnoreCase(Date)) {
 				FixturesList.add(fixture);
 			}
 		}
+		System.out.println("SIZE : "+FixturesList.size());
 		
 		if(FixturesList == null) {
 			return "populateDoubleMatchIDAndPromo : FixturesList is returning NULL";
@@ -6011,6 +6014,8 @@ public class FullFramesGfx
 						"th", "st" };
 				
 				for(int i=1;i<=2;i++) {
+					System.out.println(i-1);
+					System.out.println(FixturesList.size()); 
 					if(FixturesList.get(i-1).getMatchnumber() > 9) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_DoubleIdent$Main$DataAll$" + i + "$txt_Info*GEOM*TEXT SET " 
 								+ FixturesList.get(i-1).getMatchfilename() + "\0", print_writers);

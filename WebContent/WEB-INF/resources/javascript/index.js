@@ -300,6 +300,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Alt_F6': case 'Shift_R': case 'Shift_A': case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'Shift_F7': case 'Control_F4':
 			case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_F': case 'Control_Shift_P': case 'Control_Shift_F1': case 'Control_Shift_D':
 			case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Shift_I': case 'Alt_Shift_C': case 'Control_Shift_F2': case 'Control_Shift_M':
+			case 'Control_Shift_U':
 				addItemsToList(dataToProcess,null); 
 				break;
 			//changed shift_f11 to control_f11
@@ -546,7 +547,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Alt_F6': case 'Shift_A': case 'Shift_R': case 'Control_Shift_F1': case 'Control_Shift_D': case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Control_Shift_F2':
 	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_F4': case 'Alt_Shift_C': case 'Control_Shift_L':
 	case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I': case 'Control_F11': case 'Control_Shift_M':
-
+	case 'Control_Shift_U':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		
 		$("#captions_div").hide();
@@ -743,7 +744,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
 			row.insertCell(cellCount).appendChild(select);
-			setDropdownOptionToSelectOptionArray($(select),1);
+			setDropdownOptionToSelectOptionArray($(select),0);
 			removeSelectDuplicates(select.id);
 			cellCount = cellCount + 1;
 			break;
@@ -794,7 +795,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),1);
 			cellCount = cellCount + 1;
 			break;
-		case 'Control_Shift_F1':
+		case 'Control_Shift_F1': case 'Control_Shift_U':
 			header_text.innerHTML = 'BAT PERFORMER/PARTNERSHIP';
 
 			select = document.createElement('select');
@@ -837,17 +838,30 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select = document.createElement('select');
 			select.id = 'selectStatsType';
 			select.name = select.id;
-			
-			option = document.createElement('option');
-			option.value = 'performer';
-			option.text = 'Performer';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'partnership';
-			option.text = 'Partnership';
-			select.appendChild(option);
-			
+			switch(whatToProcess){
+				case 'Control_Shift_U':
+				option = document.createElement('option');
+				option.value = 'score';
+				option.text = 'Score';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'strikeRate';
+				option.text = 'Strike Rate';
+				select.appendChild(option);
+				break;
+				case 'Control_Shift_F1':
+				option = document.createElement('option');
+				option.value = 'performer';
+				option.text = 'Performer';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'partnership';
+				option.text = 'Partnership';
+				select.appendChild(option);
+				break;
+			}
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
 			row.insertCell(cellCount).appendChild(select);
 			setDropdownOptionToSelectOptionArray($(select),1);
