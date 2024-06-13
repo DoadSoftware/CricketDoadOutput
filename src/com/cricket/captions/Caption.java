@@ -160,6 +160,10 @@ public class Caption
 				status = this_fullFramesGfx.populatePOTT(whichSide, whatToProcess.split(",")[0], matchAllData, 0);
 				break;
 				
+			case "Alt_Shift_R":
+				status = this_fullFramesGfx.populateFixturesAndResults(whichSide, whatToProcess, matchAllData, 0);
+				break;
+				
 			case "Control_Shift_F1":
 				this_fullFramesGfx.FirstPlayerId = Integer.valueOf(whatToProcess.split(",")[2]);
 				this_fullFramesGfx.WhichType = whatToProcess.split(",")[3];

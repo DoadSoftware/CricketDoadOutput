@@ -547,7 +547,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Alt_F6': case 'Shift_A': case 'Shift_R': case 'Control_Shift_F1': case 'Control_Shift_D': case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Control_Shift_F2':
 	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_F4': case 'Alt_Shift_C': case 'Control_Shift_L':
 	case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I': case 'Control_F11': case 'Control_Shift_M':
-	case 'Control_Shift_U':
+	case 'Control_Shift_U': case 'Alt_Shift_R':
+
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		
 		$("#captions_div").hide();
@@ -569,6 +570,26 @@ function addItemsToList(whatToProcess,dataToProcess)
 		row = tbody.insertRow(tbody.rows.length);
 		
 		switch(whatToProcess) {
+		case 'Alt_Shift_R':
+			header_text.innerHTML = 'TEAM FIXTURES/RESULTS';
+			
+			select = document.createElement('select');
+			select.id = 'selectTeams';
+			select.name = select.id;
+
+			dataToProcess.forEach(function(teams,index,arr1){
+				option = document.createElement('option');
+				option.value = teams.teamId;
+				option.text = teams.teamName1;
+				select.appendChild(option);
+			});
+			
+			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+			row.insertCell(cellCount).appendChild(select);
+			setDropdownOptionToSelectOptionArray($(select),0);
+			removeSelectDuplicates(select.id);
+			cellCount = cellCount + 1;
+			break;
 		case 'Control_Shift_M':
 			header_text.innerHTML = 'LT MATCH IDENT';
 			

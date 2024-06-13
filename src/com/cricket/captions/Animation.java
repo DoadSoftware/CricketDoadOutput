@@ -108,7 +108,7 @@ public class Animation
 			case "Alt_F10": case "Control_F1": case "Control_p": case "Shift_P": case "Shift_Q": 
 			case "z": case "x": case "c": case "v": case "Alt_F11": case "Alt_z": case "Control_z": case "Control_x": case "r":
 			case "Shift_Z": case "Shift_X": case "Control_Shift_F1": case "Control_Shift_D": case "Alt_Shift_Z": case "Control_Shift_F7":
-			case "Control_Shift_F2":
+			case "Control_Shift_F2": case "Alt_Shift_R":
 				return Constants.FULL_FRAMER;
 				
 			case "F5": case "F6": case "F7": case "F8": case "F9": case "F10": case "F11": case "Alt_F8":
@@ -994,6 +994,13 @@ public class Animation
 				processAnimation(Constants.BACK, print_writers, "anim_Profile$Main", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
+				
+			case "Alt_Shift_R":
+				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Essentials", "START");
+				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Header", "START");
+				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Team_Fixtures", "START");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;
 			
 			case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Control_F11": case "Shift_F11": 
 			case "Shift_T": case "Control_F7": case "Control_F10":
@@ -1066,9 +1073,6 @@ public class Animation
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$LineUp_Image", "START");
 					processAnimation(Constants.BACK, print_writers, "Change$Footer$Dynamic", "START");
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Sponsor", "START");
-					break;
-				case "Shift_P": case "Shift_Q":
-					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Profile", "START");
 					break;
 				case "Control_F7":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Teams", "START");
@@ -1949,6 +1953,14 @@ public class Animation
 				processAnimation(Constants.BACK, print_writers, "anim_Profile$Essentials", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "anim_Profile$Main", "CONTINUE");
 				AnimateIn("ArrowUp,", print_writers, config); // Push infobar
+				this.whichGraphicOnScreen = "";
+				break;
+				
+			case "Alt_Shift_R":
+				System.out.println("HELLO");
+				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Essentials", "CONTINUE");
+				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Header", "CONTINUE");
+				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Team_Fixtures", "CONTINUE");
 				this.whichGraphicOnScreen = "";
 				break;
 			
@@ -3998,11 +4010,16 @@ public class Animation
 						case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q":
 							previewCommand = "anim_Infobar$Push 1.000 anim_Profile 1.700 anim_Profile$Essentials$In 1.140 anim_Profile$Main$In 1.140";
 							break;
+						
+						case "Alt_Shift_R":
+							previewCommand = "Anim_Infobar$Push 1.000 Anim_FullFrames$In_Out$Essentials$In 2.200 Anim_FullFrames$In_Out$Header$In 1.900 "
+									+ "Anim_FullFrames$In_Out$Team_Fixtures$In 2.060";
+							break;
 							
 						case "F1": case "F2": case "F4": case "Control_F1": case "Shift_F10": case "Control_F11": case "Shift_F11": case "p": case "Control_p":
 						case "Shift_T": case "Control_F7": case "Control_F10": case "Alt_F9": case "Shift_K":case "z": case "x": case "c": case "v": case "Alt_F10": 
 
-					   case "Alt_F11": case "Control_z": case "Control_x": case "Control_Shift_F1": case "Control_Shift_F2":
+						case "Alt_F11": case "Control_z": case "Control_x": case "Control_Shift_F1": case "Control_Shift_F2":
 
 							if(!whatToProcess.split(",")[0].equalsIgnoreCase("Shift_K")) {
 								previewCommand = "anim_Infobar$Push 1.000 Anim_FullFrames$In_Out$Essentials$In 2.200 Anim_FullFrames$In_Out$Header$In 1.900 "
