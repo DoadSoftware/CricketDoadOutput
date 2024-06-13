@@ -4131,8 +4131,12 @@ public class LowerThirdGfx
 		if(requiredBalls <= 0) {
 			requiredBalls = 0;
 		}
-		summary=inning.getBatting_team().getTeamName1()+" NEED "+(matchAllData.getMatch().getInning().get(0).getTotalRuns()-inning.getTotalRuns())+" MORE RUNS TO WIN AT "+
-				CricketFunctions.generateRunRate(requiredRuns, 0, requiredBalls, 2,matchAllData)+" RUNS PER OVER";
+		
+		
+		summary = inning.getBatting_team().getTeamName1() + " NEED " + CricketFunctions.getRequiredRuns(matchAllData) + " MORE RUN" + 
+				CricketFunctions.Plural(CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " TO WIN AT " +
+				CricketFunctions.generateRunRate(CricketFunctions.getRequiredRuns(matchAllData),
+						0,CricketFunctions.getRequiredBalls(matchAllData),2,matchAllData) + " RUNS PER OVER";
 		if(inning != null) {
 			
 			lowerThird = new LowerThird("MATCH SUMMARY", inning.getBowling_team().getTeamName4(),inning.getBatting_team().getTeamName4(),"", "", "",2,"Emirates","",null,null,
