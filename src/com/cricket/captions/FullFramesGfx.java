@@ -6847,9 +6847,12 @@ public class FullFramesGfx
 	public String ScoreCardBody(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) {
 		
 		String how_out_txt = "";
-		impactList.clear();
+		int count = 0;
+		//impactList.clear();
+		ImpactData impactArray[] = new ImpactData[2];
 		
 		switch (config.getBroadcaster().toUpperCase()) {
+		
 		case Constants.BENGAL_T20:
 			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
 					+ "$Select_GraphicsType*FUNCTION*Omo*vis_con SET 3 \0", print_writers);
@@ -6857,9 +6860,12 @@ public class FullFramesGfx
 			Collections.sort(inning.getBattingCard());
 			
 			for (int i = matchAllData.getEventFile().getEvents().size() - 1; i >= 0; i--) {
+				
 				if(matchAllData.getEventFile().getEvents().get(i).getSubstitutionMade() != null && 
 					matchAllData.getEventFile().getEvents().get(i).getSubstitutionMade().equalsIgnoreCase(CricketUtil.IMPACT)){
-					
+					if(count>=2) {
+						break;
+					}
 					ImpactData impactPlayer = new ImpactData();
 					if(matchAllData.getEventFile().getEvents().get(i).getEventBowlerNo() != 0) {
 						impactPlayer.setInBowlPlayerId(matchAllData.getEventFile().getEvents().get(i).getEventBowlerNo());
@@ -6875,32 +6881,37 @@ public class FullFramesGfx
 							}
 						}
 					}
-
-					impactList.add(impactPlayer);
+					impactArray[count] = impactPlayer;
+					//impactList.add(impactPlayer);
 				}
 			}
 			rowId = 0;
 			for(int iRow = 1; iRow <= inning.getBattingCard().size(); iRow++) {
 				rowId = rowId + 1;
-				if(impactList != null && !impactList.isEmpty()) {
-					if(inning.getBatting_team().getTeamId() == impactList.get(0).getTeamId()) {
-						if(inning.getBattingCard().get(iRow-1).getPlayerId() == impactList.get(0).getOutPlayerId()) {
-							if(!inning.getBattingCard().get(iRow-1).getStatus().equalsIgnoreCase(CricketUtil.STILL_TO_BAT)) {
-								this.numberOfRows= 11;
-							}else {
-								rowId--;
-								this.numberOfRows= 11;
-								continue;
+				if(impactArray != null) {
+					if(impactArray[0] != null) {
+						if(inning.getBatting_team().getTeamId() == impactArray[0].getTeamId()) {
+							if(inning.getBattingCard().get(iRow-1).getPlayerId() == impactArray[0].getOutPlayerId()) {
+								if(!inning.getBattingCard().get(iRow-1).getStatus().equalsIgnoreCase(CricketUtil.STILL_TO_BAT)) {
+									this.numberOfRows= 11;
+								}else {
+									rowId--;
+									this.numberOfRows= 11;
+									continue;
+								}
 							}
+							
 						}
-						
-					}else if(inning.getBatting_team().getTeamId() == impactList.get(1).getTeamId()) {
-						if(inning.getBattingCard().get(iRow-1).getPlayerId() == impactList.get(1).getOutPlayerId()) {
-							if(!inning.getBattingCard().get(iRow-1).getStatus().equalsIgnoreCase(CricketUtil.STILL_TO_BAT)) {
-								this.numberOfRows= 11;
-							}else {
-								rowId--;
-								continue;
+					}
+					if(impactArray[1] != null) {
+						if(inning.getBatting_team().getTeamId() == impactArray[1].getTeamId()) {
+							if(inning.getBattingCard().get(iRow-1).getPlayerId() == impactArray[1].getOutPlayerId()) {
+								if(!inning.getBattingCard().get(iRow-1).getStatus().equalsIgnoreCase(CricketUtil.STILL_TO_BAT)) {
+									this.numberOfRows= 11;
+								}else {
+									rowId--;
+									continue;
+								}
 							}
 						}
 					}
@@ -7338,6 +7349,9 @@ public class FullFramesGfx
 	public String BowlingCardBody(int WhichSide, String whatToProcess, MatchAllData matchAllData, int WhichInning) {
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.BENGAL_T20:
+			ImpactData[] impactArray = new ImpactData[2];
+			int count = 0, impactOmo = 0;
+			
 			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
 					"$Select_GraphicsType*FUNCTION*Omo*vis_con SET 4 \0", print_writers);
 			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
@@ -7356,6 +7370,36 @@ public class FullFramesGfx
 						+ (j+1) + "Select_Row_Type$Players$Data$Select_Impact*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Bowling_Card$Rows$" 
 						+ (j+1) + "Select_Row_Type$Players_Highlight$Data$Select_Impact*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+			}
+			
+			
+			for (int i = matchAllData.getEventFile().getEvents().size() - 1; i >= 0; i--) {
+				
+				if(matchAllData.getEventFile().getEvents().get(i).getSubstitutionMade() != null && 
+					matchAllData.getEventFile().getEvents().get(i).getSubstitutionMade().equalsIgnoreCase(CricketUtil.IMPACT)){
+					if(count>=2) {
+						break;
+					}
+						
+					ImpactData impactPlayer = new ImpactData();
+					if(matchAllData.getEventFile().getEvents().get(i).getEventBowlerNo() != 0) {
+						impactPlayer.setInBowlPlayerId(matchAllData.getEventFile().getEvents().get(i).getEventBowlerNo());
+					}
+					if(matchAllData.getEventFile().getEvents().get(i).getEventBatterNo() != 0) {
+						impactPlayer.setInBatPlayerId(matchAllData.getEventFile().getEvents().get(i).getEventBatterNo());
+					}
+					impactPlayer.setOutPlayerId(matchAllData.getEventFile().getEvents().get(i).getEventConcussionReplacePlayerId());
+					for(Player plyr : cricketService.getAllPlayer()) {
+						if(impactPlayer.getOutPlayerId() != 0) {
+							if(plyr.getPlayerId() == impactPlayer.getOutPlayerId()) {
+								impactPlayer.setTeamId(plyr.getTeamId());
+							}
+						}
+					}
+
+					impactArray[count] = impactPlayer;
+					count++;
+				}
 			}
 			
 			Collections.sort(inning.getBowlingCard());
@@ -7389,6 +7433,29 @@ public class FullFramesGfx
 								}
 							}
 						}
+						
+						if(impactArray != null) {
+							if(impactArray[0] != null) {
+								if(inning.getBowlingTeamId() == impactArray[0].getTeamId()) {
+									if(inning.getBowlingCard().get(iRow-1).getPlayerId() == impactArray[0].getInBowlPlayerId() || 
+											inning.getBowlingCard().get(iRow-1).getPlayerId() == impactArray[0].getInBatPlayerId()) {
+										impactOmo = 1;
+									}else {
+										impactOmo = 0;
+									}
+								}
+							}
+							if(impactArray[1] != null) {
+								if(inning.getBowlingTeamId() == impactArray[1].getTeamId()) {
+									if(inning.getBowlingCard().get(iRow-1).getPlayerId() == impactArray[1].getInBowlPlayerId() || 
+											inning.getBowlingCard().get(iRow-1).getPlayerId() == impactArray[1].getInBatPlayerId()) {
+										impactOmo = 1;
+									}else {
+										impactOmo = 0;
+									}
+								}
+							}
+						}
 					
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Bowling_Card$Rows$"
 							+ (iRow+1) + "$Select_Row_Type*FUNCTION*Omo*vis_con SET " + omo + "\0", print_writers);
@@ -7396,18 +7463,20 @@ public class FullFramesGfx
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Bowling_Card$Rows$" + (iRow+1) 
 								+ containerName + "$Data$txt_Name*GEOM*TEXT SET " + inning.getBowlingCard().get(iRow-1).getPlayer().getTicker_name() + "\0", print_writers);
 						
-						if (CricketFunctions.checkImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), 
-								inning.getBowlingCard().get(iRow-1).getPlayerId()).equalsIgnoreCase(CricketUtil.YES)) {
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
-									+ "$Bowling_Card$" + (iRow+1) + containerName + "$Data$Select_Impact*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
-						} else if (CricketFunctions.checkImpactPlayerBowler(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), 
-								inning.getBowlingCard().get(iRow-1).getPlayerId()).equalsIgnoreCase(CricketUtil.YES)) {
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
-									+ "$Bowling_Card$" + (iRow+1) + containerName + "$Data$Select_Impact*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
-						} else {
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
-									+ "$Bowling_Card$" + (iRow+1) + containerName + "$Data$Select_Impact*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
-						}
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+								+ "$Bowling_Card$" + (iRow+1) + containerName + "$Data$Select_Impact*FUNCTION*Omo*vis_con SET "+impactOmo+" \0", print_writers);
+//						if (CricketFunctions.checkImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), 
+//								inning.getBowlingCard().get(iRow-1).getPlayerId()).equalsIgnoreCase(CricketUtil.YES)) {
+//							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+//									+ "$Bowling_Card$" + (iRow+1) + containerName + "$Data$Select_Impact*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+//						} else if (CricketFunctions.checkImpactPlayerBowler(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), 
+//								inning.getBowlingCard().get(iRow-1).getPlayerId()).equalsIgnoreCase(CricketUtil.YES)) {
+//							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+//									+ "$Bowling_Card$" + (iRow+1) + containerName + "$Data$Select_Impact*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+//						} else {
+//							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
+//									+ "$Bowling_Card$" + (iRow+1) + containerName + "$Data$Select_Impact*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+//						}
 						
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Bowling_Card$Rows$"
 								+ (iRow+1) + containerName + "$Data$txt_Overs*GEOM*TEXT SET " + CricketFunctions.OverBalls(inning.getBowlingCard().get(iRow-1).getOvers(), 
