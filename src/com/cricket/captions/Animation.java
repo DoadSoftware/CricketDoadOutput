@@ -91,7 +91,8 @@ public class Animation
 				default:
 					return Constants.LOWER_THIRD;
 				}
-			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": case "Alt_9": case "Alt_0":
+			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": 
+			case "Alt_9": case "Alt_0":
 				return Constants.INFO_BAR;
 			case "Shift_O": case "Control_k": case "k": case "g": case "y": case "Alt_p": case "o": case "t": 
 			case "Control_y": case "h": case "Shift_F4": case "Shift_F": case ".": case "/":
@@ -112,7 +113,7 @@ public class Animation
 				return Constants.FULL_FRAMER;
 				
 			case "F5": case "F6": case "F7": case "F8": case "F9": case "F10": case "F11": case "Alt_F8":
-			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_o":
+			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_o": case "Control_Shift_F10":
 			case "Shift_F3": case "u": case "d": case "e": case "q": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "Control_g": case "Control_h": case "j": case "Control_F6": case "Shift_F6": case "Alt_F1": case "Alt_F2":
 			case "Control_s": case "Alt_d": case "Control_f": case "Control_q": case "l": case "n": case "a": case "Control_F2":
@@ -126,7 +127,7 @@ public class Animation
 					return Constants.LOWER_THIRD;
 				}
 			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": case "Alt_9": case "Alt_0":
-			case "Control_F12": case "Shift_F12": case "Alt_e":	
+			case "Control_F12": case "Shift_F12": case "Alt_e":
 				return Constants.INFO_BAR;
 			case "Shift_O": case "Control_k": case "k": case "g": case "y": case "Alt_p": case "o": case "t": 
 			case "Control_y": case "h": case "Shift_F4": case "Shift_F": case ".": case "/": case "Control_Shift_U": case "Control_Shift_V":
@@ -930,6 +931,10 @@ public class Animation
 
 			//Full framers
 			switch (whatToProcess.split(",")[0]) {
+			case "Control_Shift_F10":
+				processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Manhattan", "START");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;
 			case "Alt_z":
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
 				TimeUnit.MILLISECONDS.sleep(500);
@@ -1890,11 +1895,19 @@ public class Animation
 			break;
 		case Constants.BENGAL_T20:
 			switch (whatToProcess.split(",")[0]) {
+			case "Control_Shift_F10":
+				processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Manhattan", "CONTINUE");
+				TimeUnit.MILLISECONDS.sleep(500);
+				this.whichGraphicOnScreen = "";
+				processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Manhattan", "SHOW 0.0");
+				break;
 			case "Control_Shift_M":
 				AnimateIn("ArrowUp,", print_writers, config); // Push infobar
 				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "anim_Ident", "CONTINUE");
+				TimeUnit.MILLISECONDS.sleep(2000);
 				this.whichGraphicOnScreen = "";
+				processAnimation(Constants.FRONT, print_writers, "anim_Ident", "SHOW 0.0");
 				break;	
 			case "Alt_z":
 				processAnimation(Constants.BACK, print_writers, "Anim_Squad", "CONTINUE");
@@ -2688,7 +2701,6 @@ public class Animation
 					processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$TapedBall_In", "START");
 				}
 				break;
-			
 			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": case "Alt_9": case "Alt_0":
 				switch(whatToProcess.split(",")[0]) {
 				case "Alt_1":
@@ -4667,6 +4679,10 @@ public class Animation
 					case "Shift_F3":
 						previewCommands = "anim_Fall_Of_Wickets 1.500 anim_Fall_Of_Wickets$Essentials 1.500 anim_Fall_Of_Wickets$Essentials$In 1.500 anim_Infobar$Push 1.000";
 						break;
+					case "Control_Shift_F10":
+						previewCommands = "anim_Infobar$Manhattan 1.500 anim_Infobar$Manhattan$In_Out 1.500 anim_Infobar$Manhattan$In_Out$Main 1.500 anim_Infobar$Manhattan$In_Out$Main$Manhattan 1.500"
+								+ " anim_Infobar$Manhattan$In_Out$Main$Manhattan$In 1.500 anim_Infobar$Manhattan$In_Out$Main$Manhattan$Out 0.000";
+						break;	
 					case "Alt_Shift_C":
 						previewCommands = "anim_Captain_LT 1.200 anim_Captain_LT$In 1.200 anim_Infobar$Push 1.000";
 						break;	

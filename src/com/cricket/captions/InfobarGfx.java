@@ -22,6 +22,7 @@ import com.cricket.model.Ground;
 import com.cricket.model.InfobarStats;
 import com.cricket.model.Inning;
 import com.cricket.model.MatchAllData;
+import com.cricket.model.OverByOverData;
 import com.cricket.model.Player;
 import com.cricket.model.Statistics;
 import com.cricket.model.StatsType;
@@ -61,6 +62,7 @@ public class InfobarGfx
 	public List<BattingCard> battingCardList = new ArrayList<BattingCard>();
 	public BowlingCard bowlingCard = new BowlingCard();
 	public List<String> this_data_str = new ArrayList<String>();
+	public List<OverByOverData> manhattan = new ArrayList<OverByOverData>();
 	
 	public Player player;
 	public Statistics stat;
@@ -6856,6 +6858,80 @@ public class InfobarGfx
 					+ "PowerplayGrp*ACTIVE SET 0 \0", print_writers);
         	infobar.setPowerplay_on_screen(false);
         }
+		return Constants.OK;
+		
+	}
+	public String InfobarManhattan(List<PrintWriter> print_writers, MatchAllData matchAllData,int WhichInning) {
+		
+		int maxRuns = 0,runsIncr = 0,powerplay_omo=0;
+		double lngth = 0;
+		String powerPlay = "";
+		
+		manhattan = new ArrayList<OverByOverData>();
+		manhattan = CricketFunctions.getOverByOverData(matchAllData, WhichInning,"MANHATTAN" ,matchAllData.getEventFile().getEvents());
+		if(manhattan == null) {
+			return "populateManhattan is null";
+		}
+		
+		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == WhichInning)
+				.findAny().orElse(null);
+		if(inning == null) {
+			return "PopulateManhattan: current inning is NULL";
+		}
+		
+		for (int j = 1; j < manhattan.size(); j++) {
+			if(manhattan.get(j).getInningNumber() == WhichInning) {
+				if(Integer.valueOf(manhattan.get(j).getOverTotalRuns()) > maxRuns){
+					maxRuns = Integer.valueOf(manhattan.get(j).getOverTotalRuns()); // 33 runs came off 34th over
+				}
+				while (maxRuns % 5 != 0) {     // 5 label in y-axis
+			 		maxRuns = maxRuns + 1;    // keep incrementing till max runs is divisible by 5. maxRuns = 35
+				}
+			}
+		}
+		
+		for(int i = 0; i < 5;i++) {
+			runsIncr = maxRuns / 5; // 35/5=7 -> Y axis will be plot like 6,12,18,24,30 & 36
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Manhattan$Runs_Axis$Runs_Data"
+					+ "$txt_" + (i+1) + "*GEOM*TEXT SET " + runsIncr*(i+1) + "\0", print_writers);
+		}
+		
+		
+		for(int j = 1; j <= matchAllData.getSetup().getMaxOvers(); j++) {
+			
+			if(j <= matchAllData.getMatch().getInning().get(WhichInning - 1).getFirstPowerplayEndOver()) {
+				powerplay_omo = 0;
+				powerPlay = "$PowerPlay";
+			}
+			else {
+				powerplay_omo = 1;
+				powerPlay = "$Normal";
+			}
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Manhattan$Wickets_Axis"
+					+ "$Out$Wkt_" + j + "$Select_PowerPlay*FUNCTION*Omo*vis_con SET " + powerplay_omo + "\0", print_writers);
+			
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Manhattan$Bar$"
+					+ j + "$Select_PowerPlay*FUNCTION*Omo*vis_con SET " + powerplay_omo + "\0", print_writers);
+			
+			
+			if(j < manhattan.size()) {
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Manhattan$Bar$"
+						+ "Position*FUNCTION*Grid*num_row SET 1\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Manhattan$Bar$"
+						+ "Position*FUNCTION*Grid*num_col SET " + j + "\0", print_writers);
+				
+				lngth = ((50 * Integer.valueOf(manhattan.get(j).getOverTotalRuns())) / maxRuns);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Manhattan$Bar$"
+						+ j + powerPlay + "$Bar*GEOM*height SET " + lngth + "\0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Manhattan$Wickets_Axis"
+						+ "$Out$Wkt_" + j + powerPlay + "$Select_Wickets*FUNCTION*Omo*vis_con SET " + manhattan.get(j).getOverTotalWickets() + "\0", print_writers);
+			}else {
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Manhattan$Wickets_Axis"
+						+ "$Out$Wkt_" + j + powerPlay + "$Select_Wickets*FUNCTION*Omo*vis_con SET 0\0", print_writers);
+			}
+		}
 		return Constants.OK;
 		
 	}

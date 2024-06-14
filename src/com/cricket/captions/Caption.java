@@ -544,6 +544,9 @@ public class Caption
 			case "h":
 				status = this_bugsAndMiniGfx.populateBugHighlight(whatToProcess,matchAllData,whichSide, Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
+			case "Control_Shift_F10":
+				status = this_infobarGfx.InfobarManhattan(print_writers,matchAllData,Integer.valueOf(whatToProcess.split(",")[1]));
+				break;	
 			case "Alt_1": // Infobar Left Bottom
 				switch (config.getBroadcaster().toUpperCase()) {
 				case Constants.ISPL:
