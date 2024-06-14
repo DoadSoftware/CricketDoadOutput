@@ -209,43 +209,16 @@ public class FullFramesGfx
 		if(player == null) {
 			return "populatePlayerProfile: Player id [" + whatToProcess.split(",")[2] + "] from database is returning NULL";
 		}
-		
-		for(Statistics stats : statistics) {
-			if (stats.getPlayer_id() == FirstPlayerId) {
-				stats.setStats_type(null);
-				stats.setStats_type(cricketService.getStatsType(stats.getStats_type_id()));
-				if (stats.getStats_type().getStats_short_name().equalsIgnoreCase(WhichProfile)) {
-					stat = null;
-					stat = stats;
-				}
-			}
-		}
-		
-		if(stat == null) {
-			return "PopulateL3rdPlayerProfile: Stats not found for Player Id [" + FirstPlayerId + "]";
-		}
-		
-		for(StatsType st : statsTypes) {
-			if(st.getStats_short_name().equalsIgnoreCase(WhichProfile)) {
-				statsType = null;
-				statsType = st;
-			}
-		}
-		if(statsType == null) {
+
+		statsType = statsTypes.stream().filter(stype -> stype.getStats_short_name().equalsIgnoreCase(WhichProfile)).findAny().orElse(null);
+		if(statsTypes == null) {
 			return "PopulateL3rdPlayerProfile: Stats Type not found for profile [" + WhichProfile + "]";
 		}
-		
-//		stat = statistics.stream().filter(stat -> stat.getPlayer_id() == player.getPlayerId()).findAny().orElse(null);
-//		if(stat == null) {
-//			return "populatePlayerProfile: No stats found for player id [" + player.getPlayerId() + "] from database is returning NULL";
-//		}
-//		
-//		statsType = statsTypes.stream().filter(st -> st.getStats_short_name().equalsIgnoreCase(WhichProfile)).findAny().orElse(null);
-//		if(statsType == null) {
-//			return "PopulateL3rdPlayerProfile: Stats Type not found for profile [" + WhichProfile + "]";
-//		}
-//		
-//		stat.setStats_type(statsType);
+		stat = statistics.stream().filter(st -> st.getPlayer_id() == player.getPlayerId() && statsType.getStats_id() == st.getStats_type_id()).findAny().orElse(null);
+		if(stat == null) {
+			return "populatePlayerProfile: No stats found for player id [" + player.getFull_name() + "] from database is returning NULL";
+		}
+		stat.setStats_type(statsType);
 		
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.BENGAL_T20:

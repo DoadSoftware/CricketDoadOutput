@@ -4225,32 +4225,7 @@ public class LowerThirdGfx
 			return "PopulateL3rdPlayerProfile: Player Id NOT found [" + FirstPlayerId + "]";
 		}
 		
-		for(Statistics stats : statistics) {
-			if (stats.getPlayer_id() == FirstPlayerId) {
-				stats.setStats_type(null);
-				stats.setStats_type(cricketService.getStatsType(stats.getStats_type_id()));
-				if (stats.getStats_type().getStats_short_name().equalsIgnoreCase(WhichProfile)) {
-					stat = null;
-					stat = stats;
-				}
-			}
-		}
-		
-		if(stat == null) {
-			return "PopulateL3rdPlayerProfile: Stats not found for Player Id [" + FirstPlayerId + "]";
-		}
-		
-		for(StatsType st : statsTypes) {
-			if(st.getStats_short_name().equalsIgnoreCase(WhichProfile)) {
-				statsType = null;
-				statsType = st;
-			}
-		}
-		if(statsType == null) {
-			return "PopulateL3rdPlayerProfile: Stats Type not found for profile [" + WhichProfile + "]";
-		}
-		
-		player = CricketFunctions.getPlayerFromMatchData(stat.getPlayer_id(), matchAllData); 
+		player = CricketFunctions.getPlayerFromMatchData(FirstPlayerId, matchAllData); 
 		
 		if(player == null) {
 			return "PopulateL3rdPlayerProfile: Player Id not found [" + FirstPlayerId + "]";
@@ -4266,6 +4241,16 @@ public class LowerThirdGfx
 			return "PopulateL3rdPlayerProfile: Team Id not found [" + player.getTeamId() + "]";
 		}
 		
+		statsType = statsTypes.stream().filter(stype -> stype.getStats_short_name().equalsIgnoreCase(WhichProfile)).findAny().orElse(null);
+		if(statsTypes == null) {
+			return "PopulateL3rdPlayerProfile: Stats Type not found for profile [" + WhichProfile + "]";
+		}
+		stat = statistics.stream().filter(st -> st.getPlayer_id() == player.getPlayerId() && statsType.getStats_id() == st.getStats_type_id()).findAny().orElse(null);
+		if(stat == null) {
+			return "populatePlayerProfile: No stats found for player id [" + player.getFull_name() + "] from database is returning NULL";
+		}
+		stat.setStats_type(statsType);
+		
 		
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.BENGAL_T20:
@@ -4275,6 +4260,10 @@ public class LowerThirdGfx
 				stat = CricketFunctions.updateStatisticsWithMatchData(stat, matchAllData);
 				break;
 			}
+			break;
+		case Constants.ICC_U19_2023:
+			stat = CricketFunctions.updateTournamentDataWithStats(stat, tournament_matches, matchAllData);
+			stat = CricketFunctions.updateStatisticsWithMatchData(stat, matchAllData);
 			break;
 		}
 		
