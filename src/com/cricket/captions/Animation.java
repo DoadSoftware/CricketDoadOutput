@@ -118,7 +118,7 @@ public class Animation
 			case "Control_s": case "Alt_d": case "Control_f": case "Control_q": case "l": case "n": case "a": case "Control_F2":
 			case "Alt_a": case "Alt_s":case "Shift_E": case "Alt_q": case "Alt_F6": case "Shift_A": case "Shift_R": case "Shift_U":
 			case "Alt_w": case "Control_j": case "Alt_i": case "Alt_j": case "b": case "Control_i": case "Alt_Shift_L": case "Shift_B": 
-			case "Control_Shift_F": case "Control_Shift_P": case "Control_Shift_M":case "Shift_I": case "Alt_Shift_C":
+			case "Control_Shift_F": case "Control_Shift_P": case "Control_Shift_M":case "Shift_I": case "Alt_Shift_C": case "Control_Shift_B":
 				switch (whatToProcess.split(",")[0]) {
 				case "q": case "Control_q": case "Alt_q": case "Shift_F7": // Boundary L3rd
 					return Constants.BOUNDARIES + Constants.LOWER_THIRD;
@@ -1198,6 +1198,12 @@ public class Animation
 				//processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;	
+			case "Control_Shift_B":
+				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
+				TimeUnit.MILLISECONDS.sleep(1000);
+				processAnimation(Constants.FRONT, print_writers, "anim_Next_To_Bat_LT", "START");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;
 			case "Shift_I":
 				if(whichGraphicOnScreen.equalsIgnoreCase("Shift_I")) {
 					processAnimation(Constants.FRONT, print_writers, "anim_Substitute", "CONTINUE");
@@ -2141,6 +2147,13 @@ public class Animation
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
+				break;
+			case "Control_Shift_B":
+				processAnimation(Constants.FRONT, print_writers, "anim_Next_To_Bat_LT", "CONTINUE");
+				TimeUnit.MILLISECONDS.sleep(1000);
+				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
+				this.whichGraphicOnScreen = "";
+				processAnimation(Constants.FRONT, print_writers, "anim_Next_To_Bat_LT", "SHOW 0.0");
 				break;
 			 case "Shift_I":
 					processAnimation(Constants.FRONT, print_writers, "anim_Substitute", "CONTINUE");

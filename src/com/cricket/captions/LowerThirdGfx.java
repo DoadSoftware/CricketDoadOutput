@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import com.cricket.containers.L3Griff;
 import com.cricket.containers.LowerThird;
@@ -138,6 +139,20 @@ public class LowerThirdGfx
 		this.past_tournament_stats = past_tournament_stats;
 		this.cricketService = cricketService;
 		this.fixTures = fixTures;
+	}
+	
+	public String populateNextToBat(String whatToProcess, int whichSide, MatchAllData matchAllData) throws InterruptedException {
+		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
+		if(inning == null) {
+			return "Select the current inning";
+		}
+		battingCardList = inning.getBattingCard().stream().filter(bc ->bc.getStatus().equalsIgnoreCase(CricketUtil.STILL_TO_BAT)).collect(Collectors.toList());
+		status = PopulateL3rdHeader(whatToProcess.split(",")[0],whichSide);
+		if(status == Constants.OK) {
+			return PopulateL3rdBody(whichSide, whatToProcess.split(",")[0]);
+		} else {
+			return status;
+		}
 	}
 	
 	public String populateBatVsAllBowlers(String whatToProcess, int whichSide, MatchAllData matchAllData) throws InterruptedException {
@@ -7058,6 +7073,49 @@ public class LowerThirdGfx
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.ICC_U19_2023: case Constants.ISPL: case Constants.BENGAL_T20:
 			switch (whatToProcess) {
+			case "Control_Shift_B":
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.BENGAL_T20:
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$gfx_Next_To_Bat_LT$TeamBadge$img_BadgeShadow*TEXTURE*IMAGE SET " 
+							+ Constants.BENGAL_ICONS_PATH + inning.getBatting_team().getTeamName4().toUpperCase() + " \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$gfx_Next_To_Bat_LT$TeamBadge$img_Badge*TEXTURE*IMAGE SET " 
+							+ Constants.BENGAL_ICONS_PATH + inning.getBatting_team().getTeamName4().toUpperCase() + " \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$gfx_Next_To_Bat_LT$TeamBadge$TeamBadge1R*TEXTURE*IMAGE SET " 
+							+ Constants.BENGAL_ICONS_PATH + inning.getBatting_team().getTeamName4().toUpperCase() + " \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$gfx_Next_To_Bat_LT$TeamBadge$TeamBadge1*TEXTURE*IMAGE SET " 
+							+ Constants.BENGAL_ICONS_PATH + inning.getBatting_team().getTeamName4().toUpperCase() + " \0", print_writers);
+					
+					int row = 1;
+					boolean foundPlayerStats = false;
+					for(BattingCard bc : battingCardList) {
+						if(row>=4) {
+							break;
+						}
+						if(bc.getStatus().equalsIgnoreCase(CricketUtil.STILL_TO_BAT)) {
+							if(bc.getHowOut() != null && !bc.getHowOut().equalsIgnoreCase(CricketUtil.RETIRED_HURT)) {
+								continue;
+							}
+							if(config.getPrimaryIpAddress().equalsIgnoreCase(Constants.LOCALHOST)) {
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$gfx_Next_To_Bat_LT$"+row+"$img_1*TEXTURE*IMAGE SET " 
+										+ Constants.BENGAL_LOCAL_PHOTO_PATH + inning.getBatting_team().getTeamName4() + "\\\\" + bc.getPlayer().getPhoto() + CricketUtil.PNG_EXTENSION + " \0", print_writers);
+							}else {
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$gfx_Next_To_Bat_LT$"+row+"$img_1*TEXTURE*IMAGE SET " 
+										+ "\\\\" + config.getPrimaryIpAddress() + Constants.BENGAL_PHOTO_PATH  + inning.getBatting_team().getTeamName4() + "\\" + bc.getPlayer().getPhoto() + CricketUtil.PNG_EXTENSION+ " \0", print_writers);
+							}
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$gfx_Next_To_Bat_LT$"+row+"$txt_3*ACTIVE SET " 
+									+ "0" + " \0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$gfx_Next_To_Bat_LT$"+row+"$txt_4*ACTIVE SET " 
+									+ "0" + " \0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$gfx_Next_To_Bat_LT$"+row+"$txt_1*GEOM*TEXT SET " 
+									+ "IN AT "+ (inning.getTotalWickets() + 2 + row)+ " \0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$gfx_Next_To_Bat_LT$"+row+"$txt_2*GEOM*TEXT SET " 
+									+bc.getPlayer().getFull_name() + " \0", print_writers);
+							row++;
+						}
+					}
+					break;
+				}
+				break;
 			case "Shift_I":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$gfx_Substitute$TeamBadge$img_BadgeShadow*TEXTURE*IMAGE SET " 
 						+ Constants.BENGAL_ICONS_PATH + lowerThird.getWhichTeamFlag() + " \0", print_writers);

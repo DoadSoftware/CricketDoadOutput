@@ -141,6 +141,9 @@ public class Caption
 	{
 		if(whatToProcess.contains(",")) {
 			switch (whatToProcess.split(",")[0]) {
+			case "Control_Shift_B":
+				status = this_lowerThirdGfx.populateNextToBat(whatToProcess,whichSide, matchAllData);
+				break;
 			case "Shift_I":
 				status = this_lowerThirdGfx.populateImpact(whatToProcess, whichSide, matchAllData);
 				break;
