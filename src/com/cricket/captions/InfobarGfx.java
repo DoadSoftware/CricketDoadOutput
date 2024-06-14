@@ -1354,6 +1354,17 @@ public class InfobarGfx
 		
 		battingCardList = new ArrayList<BattingCard>();
 		for(int iBat = 1; iBat <= 2; iBat++) {
+//			if(iBat == 1) {
+//				if(battingCardList != null && battingCardList.size() == 2) {
+//					battingCardList.add(inning.getBattingCard().stream().filter(bc -> bc.getPlayerId() != battingCardList.get(1).getPlayerId() && 
+//							bc.getStatus().equalsIgnoreCase(CricketUtil.NOT_OUT)).findAny().orElse(null));
+//				}else {
+//					battingCardList.add(inning.getBattingCard().stream().filter(bc -> bc.getStatus().equalsIgnoreCase(CricketUtil.NOT_OUT)).findAny().orElse(null));
+//				}
+//			} else {
+//				battingCardList.add(inning.getBattingCard().stream().filter(bc -> bc.getPlayerId() != battingCardList.get(0).getPlayerId() && 
+//						bc.getStatus().equalsIgnoreCase(CricketUtil.NOT_OUT)).findAny().orElse(null));
+//			}
 			if(iBat == 1) {
 				battingCardList.add(inning.getBattingCard().stream().filter(bc -> bc.getPlayerId() == 
 					inning.getPartnerships().get(inning.getPartnerships().size() - 1).getFirstBatterNo()).findAny().orElse(null));
@@ -1430,20 +1441,20 @@ public class InfobarGfx
 					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 2, 1, battingCardList);
 					TimeUnit.MILLISECONDS.sleep(300);
 					this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Batsmen_Change$1", "START");
-					TimeUnit.MILLISECONDS.sleep(800);
+					TimeUnit.MILLISECONDS.sleep(100);
 					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 1, 1, battingCardList);
-					TimeUnit.MILLISECONDS.sleep(300);
+					TimeUnit.MILLISECONDS.sleep(100);
 					this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Batsmen_Change$1", "SHOW 0.0");
 				} else {
 					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 1, 1, battingCardList);
 				}
 				if(infobar.getLast_batsmen().get(1).getPlayerId() != battingCardList.get(1).getPlayerId()) {
 					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 2, 2, battingCardList);
-					TimeUnit.MILLISECONDS.sleep(300);
+					TimeUnit.MILLISECONDS.sleep(200);
 					this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Batsmen_Change$2", "START");
-					TimeUnit.MILLISECONDS.sleep(800);
+					TimeUnit.MILLISECONDS.sleep(200);
 					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 1, 2, battingCardList);
-					TimeUnit.MILLISECONDS.sleep(300);
+					TimeUnit.MILLISECONDS.sleep(200);
 					this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Batsmen_Change$2", "SHOW 0.0");
 				} else {
 					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 1, 2, battingCardList);
@@ -1620,7 +1631,7 @@ public class InfobarGfx
 					populateVizInfobarRightBottom(print_writers, matchAllData, WhichSide, 2);
 					this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Bowler_Change", "START");
 					this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Section1_Change", "START");
-					TimeUnit.MILLISECONDS.sleep(800);
+					TimeUnit.MILLISECONDS.sleep(1000);
 					populateRightTopBowler(print_writers, matchAllData, WhichSide, 1);
 					populateVizInfobarRightBottom(print_writers, matchAllData, WhichSide, 1);
 					this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Bowler_Change", "SHOW 0.0");
@@ -2053,6 +2064,22 @@ public class InfobarGfx
 										+ "$Stats$Side" + WhichSide + "$Slect_Type$ThisOver$Ball_" + (iBall + 1) + "$Select_DataType$2$txt_Figures*GEOM*TEXT SET " + 
 										"0" + "\0", print_writers);
 							
+							}else if(this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase().equalsIgnoreCase(CricketUtil.ONE) || 
+									this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase().equalsIgnoreCase(CricketUtil.TWO) || 
+									this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase().equalsIgnoreCase(CricketUtil.THREE) ||
+									this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase().equalsIgnoreCase(CricketUtil.FIVE)){
+								
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Fade_For_Section_2$"
+										+ "Stats$Side" + WhichSide + "$ThisOver$Ball_" + (iBall +1) + "$2$img_Text1*TEXTURE*IMAGE SET " + Constants.BENGAL_TEXT_PATH + "1/" + inning.getBowling_team().getTeamName4() + "\0", print_writers);
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Fade_For_Section_2$"
+										+ "Stats$Side" + WhichSide + "$ThisOver$Ball_" + (iBall +1) + "$2$img_This_Over*TEXTURE*IMAGE SET " + Constants.BENGAL_OVER_PATH + inning.getBowling_team().getTeamName4() + "\0", print_writers);
+								
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Section_2"
+										+ "$Stats$Side" + WhichSide + "$Slect_Type$ThisOver$Ball_" + (iBall + 1) + "$Select_DataType*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Section_2"
+										+ "$Stats$Side" + WhichSide + "$Slect_Type$ThisOver$Ball_" + (iBall + 1) + "$Select_DataType$2$txt_Figures*GEOM*TEXT SET " + 
+										"0" + "\0", print_writers);
+							
 							}else if(this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase().contains("+W")|| 
 									this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase().equalsIgnoreCase("W")) {
 								
@@ -2099,14 +2126,14 @@ public class InfobarGfx
 							else {
 								
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Fade_For_Section_2$"
-										+ "Stats$Side" + WhichSide + "$ThisOver$Ball_" + (iBall +1) + "$2$img_Text1*TEXTURE*IMAGE SET " + Constants.BENGAL_TEXT_PATH + "1/" + inning.getBowling_team().getTeamName4() + "\0", print_writers);
-								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Fade_For_Section_2$"
-										+ "Stats$Side" + WhichSide + "$ThisOver$Ball_" + (iBall +1) + "$2$img_This_Over*TEXTURE*IMAGE SET " + Constants.BENGAL_OVER_PATH + inning.getBowling_team().getTeamName4() + "\0", print_writers);
+										+ "Stats$Side" + WhichSide + "$ThisOver$Ball_" + (iBall +1) + "$1$img_Text1*TEXTURE*IMAGE SET " + Constants.BENGAL_TEXT_PATH + "1/" + inning.getBowling_team().getTeamName4() + "\0", print_writers);
+//								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Fade_For_Section_2$"
+//										+ "Stats$Side" + WhichSide + "$ThisOver$Ball_" + (iBall +1) + "$1$img_This_Over*TEXTURE*IMAGE SET " + Constants.BENGAL_OVER_PATH + inning.getBowling_team().getTeamName4() + "\0", print_writers);
 								
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Section_2"
-										+ "$Stats$Side" + WhichSide + "$Slect_Type$ThisOver$Ball_" + (iBall + 1) + "$Select_DataType*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+										+ "$Stats$Side" + WhichSide + "$Slect_Type$ThisOver$Ball_" + (iBall + 1) + "$Select_DataType*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Section_2"
-										+ "$Stats$Side" + WhichSide + "$Slect_Type$ThisOver$Ball_" + (iBall + 1) + "$Select_DataType$2$txt_Figures*GEOM*TEXT SET " + 
+										+ "$Stats$Side" + WhichSide + "$Slect_Type$ThisOver$Ball_" + (iBall + 1) + "$Select_DataType$1$txt_Figures*GEOM*TEXT SET " + 
 										this_data_str.get(this_data_str.size()-1).split(",")[iBall].trim() + "\0", print_writers);
 								
 							}

@@ -7120,7 +7120,7 @@ public class FullFramesGfx
 							+ String.valueOf(inning.getBattingCard().get(iRow-1).getBalls()) + "\0", print_writers);
 					
 					how_out_txt = CricketFunctions.processHowOutText("FOUR-PART-HOW-OUT", inning.getBattingCard().get(iRow-1));
-					
+					//System.out.println("how_out_txt = " + how_out_txt);
 					if(how_out_txt != null && how_out_txt.split("|").length >= 4) {
 						switch (inning.getBattingCard().get(iRow-1).getStatus().toUpperCase()) {
 						case CricketUtil.OUT:
@@ -7137,7 +7137,7 @@ public class FullFramesGfx
 						}
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide 
 							+ "$Batting_Card$" + rowId + "$BattingData$Select_Row_Type$" + containerName 
-							+ "$Data$How_Out_1$txt_FielderName*GEOM*TEXT SET " + how_out_txt.split("\\|")[1].trim() + "\0", print_writers);
+							+ "$Data$How_Out_1$txt_FielderName*GEOM*TEXT SET " + how_out_txt.split("\\|")[1].trim().replace("substitute", "sub") + "\0", print_writers);
 					}else {
 						switch (inning.getBattingCard().get(iRow-1).getStatus().toUpperCase()) {
 						case CricketUtil.NOT_OUT:

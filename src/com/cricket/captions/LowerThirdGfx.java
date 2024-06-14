@@ -2403,6 +2403,8 @@ public class LowerThirdGfx
 			if(battingCard.getWasHowOutFielderSubstitute() != null && 
 					battingCard.getWasHowOutFielderSubstitute().equalsIgnoreCase(CricketUtil.YES)) {
 				howOut = "run out " + "sub (" + battingCard.getHowOutFielder().getTicker_name() + ")";
+			}else if(battingCard.getHowOutFielder() == null){
+				howOut = "run out (sub)";
 			}else {
 				howOut = "run out (" + battingCard.getHowOutFielder().getTicker_name() + ")";
 			}
@@ -2412,7 +2414,9 @@ public class LowerThirdGfx
 					battingCard.getWasHowOutFielderSubstitute().equalsIgnoreCase(CricketUtil.YES)) {
 				howOut = "c" +  " sub (" + battingCard.getHowOutFielder().getTicker_name() + ")  b " + 
 						battingCard.getHowOutBowler().getTicker_name();
-			} else {
+			} else if(battingCard.getHowOutFielder() == null){
+				howOut = "c (sub)";
+			}else {
 				howOut = "c " + battingCard.getHowOutFielder().getTicker_name() + "  b " + 
 						battingCard.getHowOutBowler().getTicker_name();
 			}
@@ -2595,7 +2599,9 @@ public class LowerThirdGfx
 			if(battingCardList.get(battingCardList.size()-1).getWasHowOutFielderSubstitute() != null && 
 					battingCardList.get(battingCardList.size()-1).getWasHowOutFielderSubstitute().equalsIgnoreCase(CricketUtil.YES)) {
 				howOut = "run out " + "sub (" + battingCardList.get(battingCardList.size()-1).getHowOutFielder().getTicker_name() + ")";
-			} else {
+			} else if(battingCardList.get(battingCardList.size()-1).getHowOutFielder() == null){
+				howOut = "run out (sub)";
+			}else {
 				howOut = "run out (" + battingCardList.get(battingCardList.size()-1).getHowOutFielder().getTicker_name() + ")";
 			}
 		}
@@ -2604,7 +2610,9 @@ public class LowerThirdGfx
 					battingCardList.get(battingCardList.size()-1).getWasHowOutFielderSubstitute().equalsIgnoreCase(CricketUtil.YES)) {
 				howOut = "c" +  " sub (" + battingCardList.get(battingCardList.size()-1).getHowOutFielder().getTicker_name() + ")  b " + 
 						battingCardList.get(battingCardList.size()-1).getHowOutBowler().getTicker_name();
-			} else {
+			} else if(battingCardList.get(battingCardList.size()-1).getHowOutFielder() == null){
+				howOut = "c (sub)";
+			}else {
 				howOut = "c " + battingCardList.get(battingCardList.size()-1).getHowOutFielder().getTicker_name() + "  b " + 
 						battingCardList.get(battingCardList.size()-1).getHowOutBowler().getTicker_name();
 			}
