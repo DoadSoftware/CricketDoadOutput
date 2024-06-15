@@ -2051,6 +2051,16 @@ function addItemsToList(whatToProcess,dataToProcess)
 					select.appendChild(option);
 					
 					option = document.createElement('option');
+					option.value = 'TOURNAMENT_SIXES';
+					option.text = 'Tournament Sixes';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'TOURNAMENT_FOURS';
+					option.text = 'Tournament Fours';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
 					option.value = 'BALLS_SINCE_LAST_BOUNDARY';
 					option.text = 'Ball Since Last Boundary';
 					select.appendChild(option);

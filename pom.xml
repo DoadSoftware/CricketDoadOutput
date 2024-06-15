@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>CricketDoadOutput</groupId>
   <artifactId>CricketDoadOutput</artifactId>
-  <version>1.191</version>
+  <version>1.192</version>
   <packaging>war</packaging>
   <name>CricketDoadOutput</name>
   <properties>
@@ -17,7 +17,7 @@
 	<groupId>com.cricket</groupId>
 	<artifactId>CricketLibrary</artifactId>
 	<scope>compile</scope>
-	<version>1.362</version>
+	<version>1.365</version>
 </dependency>
 
 <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->

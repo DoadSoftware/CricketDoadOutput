@@ -19,6 +19,7 @@ import com.cricket.model.DaySession;
 import com.cricket.model.DuckWorthLewis;
 import com.cricket.model.Event;
 import com.cricket.model.Ground;
+import com.cricket.model.HeadToHead;
 import com.cricket.model.InfobarStats;
 import com.cricket.model.Inning;
 import com.cricket.model.MatchAllData;
@@ -27,6 +28,7 @@ import com.cricket.model.Player;
 import com.cricket.model.Statistics;
 import com.cricket.model.StatsType;
 import com.cricket.model.Team;
+import com.cricket.model.Tournament;
 import com.cricket.util.CricketFunctions;
 import com.cricket.util.CricketUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -57,6 +59,7 @@ public class InfobarGfx
 	public List<DuckWorthLewis> dls;
 	public List<Commentator> Commentators;
 	public List<Player> Players;
+	public List<HeadToHead> headToHead;
 
 	public List<PrintWriter> print_writers; 
 	public List<BattingCard> battingCardList = new ArrayList<BattingCard>();
@@ -69,6 +72,7 @@ public class InfobarGfx
 	public StatsType statsType;
 	public InfobarStats infoBarStats;
 	public Ground ground;
+	public Tournament tournament;
 	
 	public InfobarGfx() {
 		super();
@@ -77,7 +81,7 @@ public class InfobarGfx
 
 	public InfobarGfx(Configuration config, String slashOrDash, List<PrintWriter> print_writers, List<Statistics> statistics,
 			List<StatsType> statsTypes, List<InfobarStats> infobarStats, List<Ground> Grounds, List<Commentator> commentators,
-			List<MatchAllData> tournament_matches, List<DuckWorthLewis> dls, List<Player> players) {
+			List<MatchAllData> tournament_matches, List<DuckWorthLewis> dls, List<Player> players, List<HeadToHead> headToHead) {
 		super();
 		this.config = config;
 		this.slashOrDash = slashOrDash;
@@ -90,6 +94,8 @@ public class InfobarGfx
 		this.tournament_matches = tournament_matches;
 		this.dls = dls;
 		this.Players = players;
+		this.headToHead = headToHead;
+		
 	}
 
 	public String populatebonus(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws InterruptedException
@@ -2012,7 +2018,7 @@ public class InfobarGfx
 					
 					
 					for(int iBall = 0; iBall < this_data_str.get(this_data_str.size()-1).split(",").length; iBall++) {
-						
+						System.out.println(this_data_str.get(this_data_str.size()-1).split(",")[iBall]);
 						if(this_data_str.get(this_data_str.size()-1).split(",").length <= 9) {
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Section_2"
 									+ "$Stats$Side" + WhichSide + "$Slect_Type*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
@@ -2078,7 +2084,7 @@ public class InfobarGfx
 										+ "$Stats$Side" + WhichSide + "$Slect_Type$ThisOver$Ball_" + (iBall + 1) + "$Select_DataType*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Section_2"
 										+ "$Stats$Side" + WhichSide + "$Slect_Type$ThisOver$Ball_" + (iBall + 1) + "$Select_DataType$2$txt_Figures*GEOM*TEXT SET " + 
-										"0" + "\0", print_writers);
+										this_data_str.get(this_data_str.size()-1).split(",")[iBall].trim() + "\0", print_writers);
 							
 							}else if(this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase().contains("+W")|| 
 									this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase().equalsIgnoreCase("W")) {
@@ -2094,10 +2100,10 @@ public class InfobarGfx
 										+ "$Stats$Side" + WhichSide + "$Slect_Type$ThisOver$Ball_" + (iBall + 1) + "$Select_DataType$3$txt_Figures*GEOM*TEXT SET " + 
 										this_data_str.get(this_data_str.size()-1).split(",")[iBall].trim() + "\0", print_writers);
 							}
-							else if(this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase().contains("WD") || 
-									this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase().contains("NB")
-									 || this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase().contains("B") || 
-									 this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase().contains("LB")) {
+							else if(this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase().equalsIgnoreCase("WD") || 
+									this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase().equalsIgnoreCase("NB")
+									 || this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase().equalsIgnoreCase("B") || 
+									 this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase().equalsIgnoreCase("LB")) {
 								
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Fade_For_Section_2$"
 										+ "Stats$Side" + WhichSide + "$ThisOver$Ball_" + (iBall +1) + "$2$img_Text1*TEXTURE*IMAGE SET " + Constants.BENGAL_TEXT_PATH + "1/" + inning.getBowling_team().getTeamName4() + "\0", print_writers);
@@ -2110,7 +2116,7 @@ public class InfobarGfx
 										+ "$Stats$Side" + WhichSide + "$Slect_Type$ThisOver$Ball_" + (iBall + 1) + "$Select_DataType$2$txt_Figures*GEOM*TEXT SET " + 
 										this_data_str.get(this_data_str.size()-1).split(",")[iBall].trim() + "\0", print_writers);
 							}
-							else if(this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase().contains("PN")) {
+							else if(this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase().equalsIgnoreCase("PN")) {
 								
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Fade_For_Section_2$"
 										+ "Stats$Side" + WhichSide + "$ThisOver$Ball_" + (iBall +1) + "$2$img_Text1*TEXTURE*IMAGE SET " + Constants.BENGAL_TEXT_PATH + "1/" + inning.getBowling_team().getTeamName4() + "\0", print_writers);
@@ -2212,6 +2218,17 @@ public class InfobarGfx
 		
 		return Constants.OK;
 	}
+	
+	public static String TournamentFoursAndSixes(List<Tournament> past_tournament_stat) {
+    	int fours=0;int sixes=0;
+    	for(Tournament tn:past_tournament_stat) {
+    		fours = fours + tn.getFours();
+    		sixes =sixes + tn.getSixes();
+    	}
+    	System.out.println(fours + " "+sixes);
+		return String.valueOf(fours+","+sixes);
+    	
+    }
 	
 	public String populateVizInfobarRightSection(boolean is_this_updating,List<PrintWriter> print_writers, MatchAllData matchAllData,
 			int WhichSide,int WhichSubSide) throws InterruptedException, CloneNotSupportedException 
@@ -2400,7 +2417,6 @@ public class InfobarGfx
 						if(inning == null) {
 							return "populateVizInfobarRightSection: Inning return is NULL";
 						}
-						
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Section_2_Grp$Side" + WhichSide + "$BaseGrp$"
 								+ "LeftMask$img_Base1*TEXTURE*IMAGE SET " + 
 								Constants.BENGAL_BASE_PATH + "1/" + inning.getBatting_team().getTeamName4() + "\0", print_writers);
@@ -2471,6 +2487,33 @@ public class InfobarGfx
 								+ "Section_2_Grp$Side" + WhichSide + "$Select_DataType$Balls_Since$txt_Figures*GEOM*TEXT SET " + 
 								CricketFunctions.extracttournamentFoursAndSixes("CURRENT_MATCH_DATA",tournament_matches, matchAllData, null).getTournament_fours() + " \0", print_writers);
 						
+						break;
+						
+					case "TOURNAMENT_SIXES":
+						
+						 tournament = CricketFunctions.extracttournamentFoursAndSixesData("COMBINED_PAST_CURRENT_MATCH_DATA", headToHead, matchAllData, null);
+						
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$"
+								+ "Section_2_Grp$Side" + WhichSide + "$Select_DataType*FUNCTION*Omo*vis_con SET 7 \0", print_writers);
+						
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$"
+								+ "Section_2_Grp$Side" + WhichSide + "$Select_DataType$Balls_Since$txt_Head*GEOM*TEXT SET TOURNAMENT SIXES \0", print_writers);
+
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$"
+								+ "Section_2_Grp$Side" + WhichSide + "$Select_DataType$Balls_Since$txt_Figures*GEOM*TEXT SET " + 
+								tournament.getTournament_sixes() + " \0", print_writers);
+						break;
+					case "TOURNAMENT_FOURS":
+						tournament = CricketFunctions.extracttournamentFoursAndSixesData("COMBINED_PAST_CURRENT_MATCH_DATA", headToHead, matchAllData, null);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$"
+								+ "Section_2_Grp$Side" + WhichSide + "$Select_DataType*FUNCTION*Omo*vis_con SET 7 \0", print_writers);
+						
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$"
+								+ "Section_2_Grp$Side" + WhichSide + "$Select_DataType$Balls_Since$txt_Head*GEOM*TEXT SET TOURNAMENT FOURS \0", print_writers);
+
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$"
+								+ "Section_2_Grp$Side" + WhichSide + "$Select_DataType$Balls_Since$txt_Figures*GEOM*TEXT SET " + 
+								tournament.getTournament_fours()+ " \0", print_writers);
 						break;
 					case "LAST_WICKET":
 

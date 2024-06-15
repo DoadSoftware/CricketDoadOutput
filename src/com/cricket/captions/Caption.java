@@ -124,8 +124,8 @@ public class Caption
 				nameSupers, Teams, Grounds, tournament,tapeball, dls, staff, players, pott, varioustText, headToHead, past_tournament_stats, cricketService,fixTures);
 		this.whichSide = whichSide;
 		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers, statistics, statsTypes, infobarStats, 
-				Grounds, Commentators, tournament_matches, dls, players);
-		this.this_bugsAndMiniGfx = new BugsAndMiniGfx(print_writers, config, bugs, Teams, VariousText);
+				Grounds, Commentators, tournament_matches, dls, players, headToHead);
+		this.this_bugsAndMiniGfx = new BugsAndMiniGfx(print_writers, config, bugs, Teams, VariousText, cricketService, headToHead);
 		this.status = "";
 	}
 
@@ -216,10 +216,26 @@ public class Caption
 				status = this_fullFramesGfx.populateDoubleManhattan(whichSide, whatToProcess.split(",")[0],matchAllData,Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
 			case "Alt_F1": // BatGriff
-				status = this_lowerThirdGfx.PopulateBatBallGriff(whatToProcess,whichSide, matchAllData);
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.BENGAL_T20: 
+					status = this_bugsAndMiniGfx.populateGriff(whatToProcess, whichSide, matchAllData);
+					break;
+
+				case Constants.ICC_U19_2023:
+					status = this_lowerThirdGfx.PopulateBatBallGriff(whatToProcess,whichSide, matchAllData);
+					break;
+				}
 				break;
 			case "Alt_F2": // BallGriff
-				status = this_lowerThirdGfx.PopulateBatBallGriff(whatToProcess,whichSide, matchAllData);
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.BENGAL_T20: 
+					status = this_bugsAndMiniGfx.populateGriff(whatToProcess, whichSide, matchAllData);
+					break;
+
+				case Constants.ICC_U19_2023:
+					status = this_lowerThirdGfx.PopulateBatBallGriff(whatToProcess,whichSide, matchAllData);
+					break;
+				}
 				break;	
 			case "F5": //BAT THIS MATCH
 				status = this_lowerThirdGfx.populateBatThisMatch(whatToProcess, whichSide, matchAllData);

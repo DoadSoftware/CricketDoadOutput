@@ -2681,7 +2681,6 @@ public class LowerThirdGfx
 			return status;
 		}
 	}
-	
 	public String PopulateBatBallGriff(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws InterruptedException
 	{
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {

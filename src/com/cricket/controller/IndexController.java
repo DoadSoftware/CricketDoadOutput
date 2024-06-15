@@ -249,7 +249,7 @@ public class IndexController
 			session_match.getSetup().setMatchFileTimeStamp(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
 			
 			headToHead = CricketFunctions.extractHeadToHead(session_match, cricketService);
-			past_tournament_stats = CricketFunctions.extractTournamentData("PAST_MATCHES_DATA", false, headToHead, cricketService, session_match, null);
+			//past_tournament_stats = CricketFunctions.extractTournamentData("PAST_MATCHES_DATA", false, headToHead, cricketService, session_match, null);
 			
 			GetVariousDBData("NEW", session_configuration);
 			
@@ -314,7 +314,7 @@ public class IndexController
 		case "RE_READ_DATA":
 			
 			headToHead = CricketFunctions.extractHeadToHead(session_match, cricketService);
-			past_tournament_stats = CricketFunctions.extractTournamentData("PAST_MATCHES_DATA", false, headToHead, cricketService, session_match, null);
+//			past_tournament_stats = CricketFunctions.extractTournamentData("PAST_MATCHES_DATA", false, headToHead, cricketService, session_match, null);
 			
 			GetVariousDBData("UPDATE", session_configuration);
 			return JSONObject.fromObject(session_match).toString();
@@ -463,7 +463,6 @@ public class IndexController
 					case Constants.LOWER_THIRD: 
 					case Constants.NAME_SUPERS + Constants.LOWER_THIRD:
 					case Constants.BOUNDARIES + Constants.LOWER_THIRD:
-						System.out.println("HELL");
 						this_animation.processL3Preview(valueToProcess, print_writers, this_caption.whichSide, session_configuration,session_match);
 						break;
 					case Constants.BUGS:
@@ -504,7 +503,6 @@ public class IndexController
 				this_animation.ResetAnimation(whatToProcess, print_writers, session_configuration);
 			}else if(whatToProcess.contains("CANCLE-GRAPHICS")) {
 				this_caption.whichSide = 1;
-				System.out.println("Side");
 				
 			}
 			return JSONObject.fromObject(this_animation).toString();
@@ -675,8 +673,6 @@ public class IndexController
 			past_tournament_stats = CricketFunctions.extractTournamentData("PAST_MATCHES_DATA", false, headToHead, cricketService, session_match, null);
 //			headToHead = CricketFunctions.extractHeadToHead(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
 //					CricketUtil.HEADTOHEAD_DIRECTORY).listFiles(), cricketService);
-			
-			//past_tournament_stats = CricketFunctions.extractTournamentData("COMBINED_PAST_CURRENT_MATCH_DATA", false, headToHead, cricketService, session_match, null);
 
 			//past_tournament_stats = CricketFunctions.extractTournamentStats("PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
 			session_name_super =  cricketService.getNameSupers();
