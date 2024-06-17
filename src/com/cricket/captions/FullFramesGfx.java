@@ -329,7 +329,7 @@ public class FullFramesGfx
 			if(status == Constants.OK) {
 				setFullFrameBaseAndTextColor(WhichSide, whatToProcess, matchAllData);
 				setFullFrameFooterPosition(WhichSide, 1, whatToProcess);
-				this.numberOfRows = inning.getBattingCard().size();
+				//this.numberOfRows = inning.getBattingCard().size();
 				return PopulateFfFooter(WhichSide, whatToProcess, matchAllData, WhichInning);
 			} else {
 				return status;
@@ -1184,6 +1184,8 @@ public class FullFramesGfx
 							"Select_Row_Offset$13*ACTIVE SET 0 \0", print_writers);
 					break;
 				}
+				
+				System.out.println("NUMBER OF ROWS : "+numberOfRows);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichside + "$Batting_Card$"
 						+ "Select_Row_Offset*FUNCTION*Grid*num_row SET " + numberOfRows + "\0", print_writers);
@@ -6990,7 +6992,7 @@ public class FullFramesGfx
 						}
 					}
 					impactArray[count] = impactPlayer;
-					//impactList.add(impactPlayer);
+					count++;
 				}
 			}
 			rowId = 0;
@@ -6999,12 +7001,12 @@ public class FullFramesGfx
 				if(impactArray != null) {
 					if(impactArray[0] != null) {
 						if(inning.getBatting_team().getTeamId() == impactArray[0].getTeamId()) {
-							if(inning.getBattingCard().get(iRow-1).getPlayerId() == impactArray[0].getOutPlayerId()) {
+							if(inning.getBattingCard().get(iRow-1).getPlayerId() == impactArray[0].getOutPlayerId()){
 								if(!inning.getBattingCard().get(iRow-1).getStatus().equalsIgnoreCase(CricketUtil.STILL_TO_BAT)) {
-									this.numberOfRows= 11;
+									//this.numberOfRows= 11;
 								}else {
 									rowId--;
-									this.numberOfRows= 11;
+									//this.numberOfRows= 11;
 									continue;
 								}
 							}
@@ -7014,8 +7016,8 @@ public class FullFramesGfx
 					if(impactArray[1] != null) {
 						if(inning.getBatting_team().getTeamId() == impactArray[1].getTeamId()) {
 							if(inning.getBattingCard().get(iRow-1).getPlayerId() == impactArray[1].getOutPlayerId()) {
-								if(!inning.getBattingCard().get(iRow-1).getStatus().equalsIgnoreCase(CricketUtil.STILL_TO_BAT)) {
-									this.numberOfRows= 11;
+								if(!inning.getBattingCard().get(iRow-1).getStatus().equalsIgnoreCase(CricketUtil.STILL_TO_BAT)){
+									//this.numberOfRows= 11;
 								}else {
 									rowId--;
 									continue;
