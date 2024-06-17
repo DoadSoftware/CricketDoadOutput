@@ -1488,12 +1488,12 @@ public class BugsAndMiniGfx
 				case "Control_Shift_V":
 					if(config.getPrimaryIpAddress().equalsIgnoreCase(Constants.LOCALHOST)) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_All$gfx_Popup$img_Image"
-								+ "*TEXTURE*IMAGE SET " + Constants.BENGAL_LOCAL_PHOTO_PATH + inning.getBatting_team().getTeamName4() 
+								+ "*TEXTURE*IMAGE SET " + Constants.BENGAL_LOCAL_PHOTO_PATH + inning.getBowling_team().getTeamName4() 
 								+ "\\\\" +bowlingCard.getPlayer().getPhoto() + CricketUtil.PNG_EXTENSION+ "\0", print_writers);
 					}else {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_All$gfx_Popup$img_Image"
 								+ "*TEXTURE*IMAGE SET " + "\\\\" + config.getPrimaryIpAddress() + Constants.BENGAL_PHOTO_PATH + 
-								inning.getBatting_team().getTeamName4() + "\\\\" + bowlingCard.getPlayer().getPhoto() + CricketUtil.PNG_EXTENSION+ "\0", print_writers);
+								inning.getBowling_team().getTeamName4() + "\\\\" + bowlingCard.getPlayer().getPhoto() + CricketUtil.PNG_EXTENSION+ "\0", print_writers);
 					}
 					if(bowlingCard.getPlayer().getSurname() != null) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_All$gfx_Popup$PlayerName$txt_FirstName"
@@ -2148,7 +2148,7 @@ public class BugsAndMiniGfx
 						+ "$Rows$TitleGrp$PointData$txt_NRR*GEOM*TEXT SET NRR \0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Standings$Data"
-						+ "$Title$txt_TeamName*GEOM*TEXT SET " + "STANDING" + " \0", print_writers);
+						+ "$Title$txt_TeamName*GEOM*TEXT SET " + "STANDINGS" + " \0", print_writers);
 				
 				rowId = 0;
 				for(int i=0; i<=leagueTable.getLeagueTeams().size()-1;i++) {
