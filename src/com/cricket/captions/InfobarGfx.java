@@ -41,7 +41,7 @@ public class InfobarGfx
 			stats_text = "", par_Overs="", Comms_Name,color = "", color2 = "", prev_score = "", new_score = "",
 			prev_wicket = "", new_wicket = "", prevTeamScore = "", currTeamScore = "";
 	
-	boolean isThisOverLimitExceed = false;
+	boolean isThisOverLimitExceed = false, isbatsmannotout = false;
 //	int runs = 0,wicket = 0;
 //	List<String> allData = new ArrayList<String>();
 	
@@ -400,8 +400,9 @@ public class InfobarGfx
 			}else {
 				populateInfobarTeamNameScore(true,print_writers,matchAllData,2);
 
-				populateVizInfobarLeftBottom(print_writers, matchAllData, 1);
-				
+				if(infobar.getLeft_bottom() != null && !infobar.getLeft_bottom().isEmpty()) {
+					populateVizInfobarLeftBottom(print_writers, matchAllData, 1);
+				}
 				if(!infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
 					populateVizInfobarMiddleSection(print_writers, matchAllData, 1);
 				}else {
@@ -1329,7 +1330,12 @@ public class InfobarGfx
 			
 			if((WhichBatsman == 1 && battingCardList.get(0).getStatus().equalsIgnoreCase(CricketUtil.NOT_OUT)) || 
 					(WhichBatsman == 2 && battingCardList.get(1).getStatus().equalsIgnoreCase(CricketUtil.NOT_OUT))) {
-				this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Batsmen_Lowlight$" + WhichBatsman, "SHOW 0.0");
+				if(WhichBatsman == 1) {
+					isbatsmannotout = true;
+				}
+				if(WhichBatsman == 2) {
+					this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Batsmen_Lowlight$2", "SHOW 0.0");
+				}
 			} else {
 				this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Batsmen_Lowlight$" + WhichBatsman, "SHOW 0.6");
 			}
@@ -1447,25 +1453,42 @@ public class InfobarGfx
 				if(infobar.getLast_batsmen().get(0).getPlayerId() != battingCardList.get(0).getPlayerId()) {
 					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 2, 1, battingCardList);
 					TimeUnit.MILLISECONDS.sleep(300);
+					if(infobar.getLast_batsmen().get(1).getPlayerId() != battingCardList.get(1).getPlayerId()) {
+						populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 2, 2, battingCardList);
+						TimeUnit.MILLISECONDS.sleep(200);
+					}
+					
 					this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Batsmen_Change$1", "START");
 					TimeUnit.MILLISECONDS.sleep(100);
-					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 1, 1, battingCardList);
-					TimeUnit.MILLISECONDS.sleep(100);
-					this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Batsmen_Change$1", "SHOW 0.0");
-				} else {
-					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 1, 1, battingCardList);
-				}
-				if(infobar.getLast_batsmen().get(1).getPlayerId() != battingCardList.get(1).getPlayerId()) {
-					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 2, 2, battingCardList);
-					TimeUnit.MILLISECONDS.sleep(200);
 					this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Batsmen_Change$2", "START");
 					TimeUnit.MILLISECONDS.sleep(200);
+					
+					if(isbatsmannotout == true) {
+						this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Batsmen_Lowlight$1", "SHOW 0.0");
+					}
+					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 1, 1, battingCardList);
+					TimeUnit.MILLISECONDS.sleep(100);
 					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 1, 2, battingCardList);
-					TimeUnit.MILLISECONDS.sleep(200);
+					TimeUnit.MILLISECONDS.sleep(100);
+					
+					this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Batsmen_Change$1", "SHOW 0.0");
 					this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Batsmen_Change$2", "SHOW 0.0");
 				} else {
-					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 1, 2, battingCardList);
+					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 1, 1, battingCardList);
+					isbatsmannotout = false;
+					if(infobar.getLast_batsmen().get(1).getPlayerId() != battingCardList.get(1).getPlayerId()) {
+						populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 2, 2, battingCardList);
+						TimeUnit.MILLISECONDS.sleep(200);
+						this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Batsmen_Change$2", "START");
+						TimeUnit.MILLISECONDS.sleep(200);
+						populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 1, 2, battingCardList);
+						TimeUnit.MILLISECONDS.sleep(200);
+						this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Batsmen_Change$2", "SHOW 0.0");
+					} else {
+						populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 1, 2, battingCardList);
+					}
 				}
+				
 			} else {
 				populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 1, 1, battingCardList);
 				populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 1, 2, battingCardList);
@@ -1960,7 +1983,7 @@ public class InfobarGfx
 			if(infobar.getRight_bottom() != null && !infobar.getRight_bottom().isEmpty()) {
 				switch(infobar.getRight_bottom().toUpperCase()) {
 				case "BOWLER_REPLACE":
-					
+					isThisOverLimitExceed = true;
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Fade_For_Section_2$"
 							+ "Stats$Side" + WhichSide + "$Free_Text$img_Text1*TEXTURE*IMAGE SET " + Constants.BENGAL_TEXT_PATH + "1/" + inning.getBowling_team().getTeamName4() + "\0", print_writers);
 					
@@ -1977,7 +2000,7 @@ public class InfobarGfx
 					}
 					break;
 				case "BOWLING_END":
-					
+					isThisOverLimitExceed = true;
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Fade_For_Section_2$"
 							+ "Stats$Side" + WhichSide + "$Free_Text$img_Text1*TEXTURE*IMAGE SET " + Constants.BENGAL_TEXT_PATH + "1/" + inning.getBowling_team().getTeamName4() + "\0", print_writers);
 					
@@ -1996,7 +2019,7 @@ public class InfobarGfx
 					}
 					break;
 				case "BOWLING_ECONOMY":
-					
+					isThisOverLimitExceed = true;
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Fade_For_Section_2$"
 							+ "Stats$Side" + WhichSide + "$Free_Text$img_Text1*TEXTURE*IMAGE SET " + Constants.BENGAL_TEXT_PATH + "1/" + inning.getBowling_team().getTeamName4() + "\0", print_writers);
 					
@@ -2015,11 +2038,7 @@ public class InfobarGfx
 					if(this_data_str.get(this_data_str.size()-1) == null) {
 						return "populateVizInfobarRightBottom: This over data returned invalid";
 					}
-					
-					
-					
 					for(int iBall = 0; iBall < this_data_str.get(this_data_str.size()-1).split(",").length; iBall++) {
-						System.out.println(this_data_str.get(this_data_str.size()-1).split(",")[iBall]);
 						if(this_data_str.get(this_data_str.size()-1).split(",").length <= 9) {
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Section_2"
 									+ "$Stats$Side" + WhichSide + "$Slect_Type*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
@@ -2145,30 +2164,62 @@ public class InfobarGfx
 								
 							}
 						}
-//						else {
-//							if(isThisOverLimitExceed) {
-//								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Fade_For_Section_2$"
-//										+ "Stats$Side2$Free_Text$img_Text1*TEXTURE*IMAGE SET " + Constants.BENGAL_TEXT_PATH + "1/" + inning.getBowling_team().getTeamName4() + "\0", print_writers);
+						else {
+							
+							if(isThisOverLimitExceed) {
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Fade_For_Section_2$"
+										+ "Stats$Side2$Free_Text$img_Text1*TEXTURE*IMAGE SET " + Constants.BENGAL_TEXT_PATH + "1/" + inning.getBowling_team().getTeamName4() + "\0", print_writers);
 //								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Section_2"
 //										+ "$Stats$Side2$Slect_Type$Free_Text$txt_TeamName*GEOM*TEXT SET " + "THIS OVER : " + CricketFunctions.processThisOverRunsCount(infobar.getPlayer_id(),matchAllData.getEventFile().getEvents()).split("-")[0] + " \0", print_writers);
-//								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Section_2"
-//										+ "$Stats$Side2$Slect_Type*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
-//								this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Section1_Change", "START");
-//								
-//								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Fade_For_Section_2$"
-//										+ "Stats$Side1$Free_Text$img_Text1*TEXTURE*IMAGE SET " + Constants.BENGAL_TEXT_PATH + "1/" + inning.getBowling_team().getTeamName4() + "\0", print_writers);
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Section_2"
+										+ "$Stats$Side2$Slect_Type*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+								if(!infobar.getRight_bottom().equalsIgnoreCase(CricketUtil.OVER)) {
+									this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Section1_Change", "START");
+								}
+								
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Analytics$Fade_For_Section_2$"
+										+ "Stats$Side1$Free_Text$img_Text1*TEXTURE*IMAGE SET " + Constants.BENGAL_TEXT_PATH + "1/" + inning.getBowling_team().getTeamName4() + "\0", print_writers);
 //								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Section_2"
 //										+ "$Stats$Side1$Slect_Type$Free_Text$txt_TeamName*GEOM*TEXT SET " + "THIS OVER : " + CricketFunctions.processThisOverRunsCount(infobar.getPlayer_id(),matchAllData.getEventFile().getEvents()).split("-")[0] + " \0", print_writers);
-//								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Section_2"
-//										+ "$Stats$Side1$Slect_Type*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
-//								TimeUnit.MILLISECONDS.sleep(600);
-//								this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Section1_Change", "SHOW 0.0");
-//								isThisOverLimitExceed = false;
-//							}
-//							System.out.println("HELOO");
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Section_2"
+										+ "$Stats$Side1$Slect_Type*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+								TimeUnit.MILLISECONDS.sleep(600);
+								this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Section1_Change", "SHOW 0.0");
+								isThisOverLimitExceed = false;
+							}
+							
+							for (BowlingCard boc : inning.getBowlingCard()) {
+								switch (boc.getStatus().toUpperCase()) {
+								case CricketUtil.CURRENT + CricketUtil.BOWLER:
+								case CricketUtil.LAST + CricketUtil.BOWLER:
+									if (boc.getStatus().equalsIgnoreCase(CricketUtil.CURRENT + CricketUtil.BOWLER)) {
+										if(!CricketFunctions.processThisOverRunsCount(infobar.getPlayer_id(),matchAllData.getEventFile().getEvents()).split("-")[0].equalsIgnoreCase("0")) {
+											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Section_2"
+													+ "$Stats$Side2$Slect_Type$Free_Text$txt_TeamName*GEOM*TEXT SET " + "THIS OVER : " + CricketFunctions.processThisOverRunsCount(infobar.getPlayer_id(),
+															matchAllData.getEventFile().getEvents()).split("-")[0] + " \0", print_writers);
+											
+											CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Section_2"
+													+ "$Stats$Side1$Slect_Type$Free_Text$txt_TeamName*GEOM*TEXT SET " + "THIS OVER : " + CricketFunctions.processThisOverRunsCount(infobar.getPlayer_id(),
+															matchAllData.getEventFile().getEvents()).split("-")[0] + " \0", print_writers);
+										}
+									} else if (boc.getStatus().equalsIgnoreCase(CricketUtil.LAST + CricketUtil.BOWLER)) {
+										CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Section_2"
+												+ "$Stats$Side2$Slect_Type$Free_Text$txt_TeamName*GEOM*TEXT SET " + "LAST OVER : " + CricketFunctions.processThisOverRunsCount(boc.getPlayerId(),
+														matchAllData.getEventFile().getEvents()).split("-")[0] + " \0", print_writers);
+										CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Section_2"
+												+ "$Stats$Side1$Slect_Type$Free_Text$txt_TeamName*GEOM*TEXT SET " + "LAST OVER : " + CricketFunctions.processThisOverRunsCount(boc.getPlayerId(),
+														matchAllData.getEventFile().getEvents()).split("-")[0] + " \0", print_writers);
+										break;
+									}
+
+									break;
+								}
+							}	
+							
+//							String this_over_runs = CricketFunctions.processThisOverRunsCount(infobar.getPlayer_id(),matchAllData.getEventFile().getEvents()).split("-")[0];
 //							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_Infobar$Main$Fade_For_Shrink$TeamGrp2$Fade_For_Section_2"
-//									+ "$Stats$Side1$Slect_Type$Free_Text$txt_TeamName*GEOM*TEXT SET " + "THIS OVER : " + CricketFunctions.processThisOverRunsCount(infobar.getPlayer_id(),matchAllData.getEventFile().getEvents()).split("-")[0] + " \0", print_writers);
-//						}
+//									+ "$Stats$Side1$Slect_Type$Free_Text$txt_TeamName*GEOM*TEXT SET " + "THIS OVER : " + this_over_runs + " \0", print_writers);
+						}
 					}
 					
 //					if(this_data_str.get(this_data_str.size()-1).split(",").length > 9) {

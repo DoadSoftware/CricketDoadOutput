@@ -1239,18 +1239,21 @@ public class Animation
 				break;
 			case "6":
 				processAnimation(Constants.FRONT, print_writers, "anim_Counter$In_Out", "START");
-				TimeUnit.MILLISECONDS.sleep(2500);
+				TimeUnit.MILLISECONDS.sleep(1700);
 				this.whichGraphicOnScreen = whatToProcess;
-				if(!this_bugs.this_data_str.get(this_bugs.this_data_str.size()-2).split(",")[0].equalsIgnoreCase(this_bugs.this_data_str.get(this_bugs.this_data_str.size()-1).split(",")[0])) {
+				if(!caption.this_bugsAndMiniGfx.this_data_str.get(caption.this_bugsAndMiniGfx.this_data_str.size()-2).split(",")[0].
+						equalsIgnoreCase(caption.this_bugsAndMiniGfx.this_data_str.get(caption.this_bugsAndMiniGfx.this_data_str.size()-1).split(",")[0])) {
 					processAnimation(Constants.FRONT, print_writers, "anim_Counter$Change$Hundreths", "START");
 					processAnimation(Constants.FRONT, print_writers, "anim_Counter$Change$Tenths", "START");
 					processAnimation(Constants.FRONT, print_writers, "anim_Counter$Change$Unit", "START");
 				}
-				else if(!this_bugs.this_data_str.get(this_bugs.this_data_str.size()-2).split(",")[1].equalsIgnoreCase(this_bugs.this_data_str.get(this_bugs.this_data_str.size()-1).split(",")[1])) {
+				else if(!caption.this_bugsAndMiniGfx.this_data_str.get(caption.this_bugsAndMiniGfx.this_data_str.size()-2).split(",")[1].
+						equalsIgnoreCase(caption.this_bugsAndMiniGfx.this_data_str.get(caption.this_bugsAndMiniGfx.this_data_str.size()-1).split(",")[1])) {
 					processAnimation(Constants.FRONT, print_writers, "anim_Counter$Change$Tenths", "START");
 					processAnimation(Constants.FRONT, print_writers, "anim_Counter$Change$Unit", "START");
 				}
-				else if(!this_bugs.this_data_str.get(this_bugs.this_data_str.size()-2).split(",")[2].equalsIgnoreCase(this_bugs.this_data_str.get(this_bugs.this_data_str.size()-1).split(",")[2])) {
+				else if(!caption.this_bugsAndMiniGfx.this_data_str.get(caption.this_bugsAndMiniGfx.this_data_str.size()-2).split(",")[2].
+						equalsIgnoreCase(caption.this_bugsAndMiniGfx.this_data_str.get(caption.this_bugsAndMiniGfx.this_data_str.size()-1).split(",")[2])) {
 					processAnimation(Constants.FRONT, print_writers, "anim_Counter$Change$Unit", "START");
 				}
 				break;
@@ -2208,7 +2211,12 @@ public class Animation
 					processAnimation(Constants.FRONT, print_writers, "anim_Popup", "SHOW 0.0");
 					this.whichGraphicOnScreen = "";
 					break;
-				
+			 case "6":
+					processAnimation(Constants.FRONT, print_writers, "anim_Counter$In_Out", "CONTINUE");
+					this.whichGraphicOnScreen = "";
+					TimeUnit.MILLISECONDS.sleep(500);
+					processAnimation(Constants.FRONT, print_writers, "anim_Counter$Change", "SHOW 0.0");
+					break;
 			case "Alt_p":
 				if(this.specialBugOnScreen.equalsIgnoreCase(CricketUtil.TOSS)) {
 					switch (config.getBroadcaster().toUpperCase()) {
@@ -2768,16 +2776,17 @@ public class Animation
 							}
 						}
 						infobar.setMiddle_section(whatToProcess.split(",")[2]);
-						System.out.println("infobar.getMiddle_section() = " + infobar.getMiddle_section());
+						
 						break;
 					}
 					
 					break;
 				case "Alt_7":
-
+					System.out.println("infobar.getMiddle_section() = " + infobar.getRight_bottom());
 					switch(config.getBroadcaster().toUpperCase()) {
 					case Constants.BENGAL_T20: 
 						processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Section1_Change", "START");
+						infobar.setRight_bottom(whatToProcess.split(",")[2]);
 						break;
 					}
 					break;
@@ -4882,8 +4891,11 @@ public class Animation
 								+ "/Default/Overlays" + " C:/Temp/Preview.png Change_Popup 1.040 Change_Popup$Tex 1.040  Change_Popup$Tex$Change_Out 0.380"
 										+ "Change_Popup$Tex$Change_In 1.040 \0", print_writer);
 					}
-					
-					
+					break;
+				case "6":
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
+							+ "/Default/Overlays" + " C:/Temp/Preview.png anim_Counter 1.500 anim_Counter$In_Out 1.500 anim_Counter$In_Out$In 1.500 "
+									+ "\0", print_writer);
 					break;
 				}
 				break;
