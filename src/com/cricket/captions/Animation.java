@@ -22,7 +22,8 @@ public class Animation
 	
 	LowerThird LT = new LowerThird();
 	
-	BugsAndMiniGfx this_bugs = new BugsAndMiniGfx();
+	public BugsAndMiniGfx this_bugs;
+	
 	
 	public Animation(Infobar infobar) {
 		super();
@@ -130,7 +131,7 @@ public class Animation
 			case "Control_F12": case "Shift_F12": case "Alt_e":
 				return Constants.INFO_BAR;
 			case "Shift_O": case "Control_k": case "k": case "g": case "y": case "Alt_p": case "o": case "t": 
-			case "Control_y": case "h": case "Shift_F4": case "Shift_F": case ".": case "/": case "Control_Shift_U": case "Control_Shift_V":
+			case "Control_y": case "h": case "Shift_F4": case "Shift_F": case ".": case "/": case "Control_Shift_U": case "Control_Shift_V": case "6":
 				return Constants.BUGS;
 			case "Shift_F1": case "Shift_F2": case "Alt_F7": case "Alt_F1": case "Alt_F2":
 				return Constants.MINIS;
@@ -1236,7 +1237,23 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "anim_Popup", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
-				
+			case "6":
+				processAnimation(Constants.FRONT, print_writers, "anim_Counter$In_Out", "START");
+				TimeUnit.MILLISECONDS.sleep(2500);
+				this.whichGraphicOnScreen = whatToProcess;
+				if(!this_bugs.this_data_str.get(this_bugs.this_data_str.size()-2).split(",")[0].equalsIgnoreCase(this_bugs.this_data_str.get(this_bugs.this_data_str.size()-1).split(",")[0])) {
+					processAnimation(Constants.FRONT, print_writers, "anim_Counter$Change$Hundreths", "START");
+					processAnimation(Constants.FRONT, print_writers, "anim_Counter$Change$Tenths", "START");
+					processAnimation(Constants.FRONT, print_writers, "anim_Counter$Change$Unit", "START");
+				}
+				else if(!this_bugs.this_data_str.get(this_bugs.this_data_str.size()-2).split(",")[1].equalsIgnoreCase(this_bugs.this_data_str.get(this_bugs.this_data_str.size()-1).split(",")[1])) {
+					processAnimation(Constants.FRONT, print_writers, "anim_Counter$Change$Tenths", "START");
+					processAnimation(Constants.FRONT, print_writers, "anim_Counter$Change$Unit", "START");
+				}
+				else if(!this_bugs.this_data_str.get(this_bugs.this_data_str.size()-2).split(",")[2].equalsIgnoreCase(this_bugs.this_data_str.get(this_bugs.this_data_str.size()-1).split(",")[2])) {
+					processAnimation(Constants.FRONT, print_writers, "anim_Counter$Change$Unit", "START");
+				}
+				break;
 			case "q": case "Control_q":// Boundary L3rd
 				
 				if(this.infobar.isInfobar_on_screen() == true) {

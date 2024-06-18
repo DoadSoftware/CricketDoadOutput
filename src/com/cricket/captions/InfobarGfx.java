@@ -38,7 +38,8 @@ public class InfobarGfx
 {
 	public Configuration config;
 	public String slashOrDash = "-", WhichProfile = "", containerName = "", status = "", previous_sixes = "", 
-			stats_text = "", par_Overs="", Comms_Name,color = "", color2 = "", prev_score = "", new_score = "",prev_wicket = "", new_wicket = "", prevTeamScore = "", currTeamScore = "";
+			stats_text = "", par_Overs="", Comms_Name,color = "", color2 = "", prev_score = "", new_score = "",
+			prev_wicket = "", new_wicket = "", prevTeamScore = "", currTeamScore = "";
 	
 	boolean isThisOverLimitExceed = false;
 //	int runs = 0,wicket = 0;

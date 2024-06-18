@@ -125,7 +125,7 @@ public class Caption
 		this.whichSide = whichSide;
 		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers, statistics, statsTypes, infobarStats, 
 				Grounds, Commentators, tournament_matches, dls, players, headToHead);
-		this.this_bugsAndMiniGfx = new BugsAndMiniGfx(print_writers, config, bugs, Teams, VariousText, cricketService, headToHead);
+		this.this_bugsAndMiniGfx = new BugsAndMiniGfx(print_writers, config, bugs, Teams, VariousText, cricketService, headToHead, tournament_matches);
 		this.status = "";
 	}
 
@@ -141,6 +141,9 @@ public class Caption
 	{
 		if(whatToProcess.contains(",")) {
 			switch (whatToProcess.split(",")[0]) {
+			case "6":
+				status = this_bugsAndMiniGfx.populateCounter(whatToProcess, whichSide, matchAllData);
+				break;
 			case "Control_Shift_B":
 				status = this_lowerThirdGfx.populateNextToBat(whatToProcess,whichSide, matchAllData);
 				break;

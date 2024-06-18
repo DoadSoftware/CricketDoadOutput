@@ -2402,7 +2402,7 @@ public class LowerThirdGfx
 		if(battingCard.getHowOut().equalsIgnoreCase(CricketUtil.RUN_OUT)) {
 			if(battingCard.getWasHowOutFielderSubstitute() != null && 
 					battingCard.getWasHowOutFielderSubstitute().equalsIgnoreCase(CricketUtil.YES)) {
-				howOut = "run out " + "sub (" + battingCard.getHowOutFielder().getTicker_name() + ")";
+				howOut = "run out " + "( sub - " + battingCard.getHowOutFielder().getTicker_name() + ")";
 			}else if(battingCard.getHowOutFielder() == null){
 				howOut = "run out (sub)";
 			}else {
@@ -2412,7 +2412,7 @@ public class LowerThirdGfx
 		else if(battingCard.getHowOut().equalsIgnoreCase(CricketUtil.CAUGHT)) {
 			if(battingCard.getWasHowOutFielderSubstitute() != null && 
 					battingCard.getWasHowOutFielderSubstitute().equalsIgnoreCase(CricketUtil.YES)) {
-				howOut = "c" +  " sub (" + battingCard.getHowOutFielder().getTicker_name() + ")  b " + 
+				howOut = "c" +  "( sub - " + battingCard.getHowOutFielder().getTicker_name() + ")  b " + 
 						battingCard.getHowOutBowler().getTicker_name();
 			} else if(battingCard.getHowOutFielder() == null){
 				howOut = "c (sub)";

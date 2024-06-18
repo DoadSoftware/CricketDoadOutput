@@ -142,21 +142,16 @@ public class IndexController
 		    }
 		}));
 		
-//		if(cricket_matches == null || cricket_matches.size()<=0) {
-//			cricket_matches = CricketFunctions.getTournamentMatches(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
-//					CricketUtil.MATCHES_DIRECTORY).listFiles(new FileFilter() {
-//				@Override
-//			    public boolean accept(File pathname) {
-//			        String name = pathname.getName().toLowerCase();
-//			        return name.endsWith(".json") && pathname.isFile();
-//			    }
-//			}), cricketService);
-//			
-//			for(MatchAllData tournament_match : cricket_matches) {
-//				System.out.println("HELLO");
-//				CricketFunctions.exportMatchData(tournament_match);
-//			}
-//		}
+		if(cricket_matches == null || cricket_matches.size()<=0) {
+			cricket_matches = CricketFunctions.getTournamentMatches(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
+					CricketUtil.MATCHES_DIRECTORY).listFiles(new FileFilter() {
+				@Override
+			    public boolean accept(File pathname) {
+			        String name = pathname.getName().toLowerCase();
+			        return name.endsWith(".json") && pathname.isFile();
+			    }
+			}), cricketService);
+		}
 		
 //		headToHead = CricketFunctions.extractHeadToHead(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
 //				CricketUtil.HEADTOHEAD_DIRECTORY).listFiles(), cricketService);
@@ -712,8 +707,10 @@ public class IndexController
 					session_bugs,session_infoBarStats,session_fixture, session_team, session_ground,session_variousText, session_commentator, session_staff, 
 					session_players, session_pott, session_teamChanges, new FullFramesGfx(),new LowerThirdGfx(), new InfobarGfx(), new BugsAndMiniGfx(), 1, "", "-", 
 					past_tournament_stats,past_tape,session_dls, headToHead, past_tournament_stats, cricketService);
-				this_caption.this_infobarGfx.previous_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixes("COMBINED_PAST_CURRENT_MATCH_DATA", 
-					cricket_matches, session_match, null).getTournament_sixes());
+//				this_caption.this_infobarGfx.previous_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixes("COMBINED_PAST_CURRENT_MATCH_DATA", 
+//					cricket_matches, session_match, null).getTournament_sixes());
+				this_caption.this_bugsAndMiniGfx.previous_sixes =  String.valueOf(CricketFunctions.extracttournamentFoursAndSixesData("COMBINED_PAST_CURRENT_MATCH_DATA", 
+						headToHead, session_match, null).getTournament_sixes());
 				break;
 			case "UPDATE":
 				
