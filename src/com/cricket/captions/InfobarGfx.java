@@ -1660,6 +1660,7 @@ public class InfobarGfx
 					populateRightTopBowler(print_writers, matchAllData, WhichSide, 2);
 					populateVizInfobarRightBottom(print_writers, matchAllData, WhichSide, 2);
 					this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Bowler_Change", "START");
+					TimeUnit.MILLISECONDS.sleep(2000);
 					this_animation.processAnimation(Constants.FRONT, print_writers, "anim_Infobar$Section1_Change", "START");
 					TimeUnit.MILLISECONDS.sleep(1000);
 					populateRightTopBowler(print_writers, matchAllData, WhichSide, 1);

@@ -2084,15 +2084,24 @@ public class BugsAndMiniGfx
 							+ "$Select_GraphicsType$Griff$Data$"+rowId+"$Select_Row_Type*FUNCTION*Omo*vis_con SET "+omo_num+" \0", print_writers);
 					if(griff.get(rowId-1).getStatus().equalsIgnoreCase("DNB")) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
+								+ rowId +cont_name+"$txt_Star*ACTIVE SET 0 \0", print_writers);
+						
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
 								+ rowId +cont_name+"$txt_Runs*GEOM*TEXT SET "+"DNB"+" \0", print_writers);
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
 								+ rowId +cont_name+"$txt_Balls*GEOM*TEXT SET "+ ""+" \0", print_writers);
 					}else if(griff.get(rowId-1).getStatus().equalsIgnoreCase("BALL")) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
+								+ rowId +cont_name+"$txt_Star*ACTIVE SET 0 \0", print_writers);
+						
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
 								+ rowId +cont_name+"$txt_Runs*GEOM*TEXT SET "+griff.get(rowId-1).getWickets()+"-"+griff.get(rowId-1).getRunsConceded()+" \0", print_writers);
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
 								+ rowId +cont_name+"$txt_Balls*GEOM*TEXT SET "+ griff.get(rowId-1).getOversBowled()+" \0", print_writers);
 					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
+								+ rowId +cont_name+"$txt_Star*ACTIVE SET 0 \0", print_writers);
+						
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
 								+ rowId +cont_name+"$txt_Runs*GEOM*TEXT SET "+"DNP"+" \0", print_writers);
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
@@ -2143,17 +2152,29 @@ public class BugsAndMiniGfx
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
 									+ row +cont_name+"$txt_Balls*GEOM*TEXT SET "+ ""+" \0", print_writers);
 						}
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
+								+ row +cont_name+"$txt_Star*ACTIVE SET 0 \0", print_writers);
+						
 					}else if(griff.get(row-1).getStatus().equalsIgnoreCase(CricketUtil.OUT)) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
+								+ row +cont_name+"$txt_Star*ACTIVE SET 0 \0", print_writers);
+						
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
 								+ row +cont_name+"$txt_Runs*GEOM*TEXT SET "+griff.get(row-1).getRuns()+" \0", print_writers);
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
 								+ row +cont_name+"$txt_Balls*GEOM*TEXT SET "+ griff.get(row-1).getBallsFaced()+" \0", print_writers);
 					}else if(griff.get(row-1).getStatus().equalsIgnoreCase(CricketUtil.NOT_OUT)) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
+								+ row +cont_name+"$txt_Star*ACTIVE SET 1 \0", print_writers);
+						
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
 								+ row +cont_name+"$txt_Runs*GEOM*TEXT SET "+griff.get(row-1).getRuns()+"*"+" \0", print_writers);
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
 								+ row +cont_name+"$txt_Balls*GEOM*TEXT SET "+ griff.get(row-1).getBallsFaced()+" \0", print_writers);
 					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
+								+ row +cont_name+"$txt_Star*ACTIVE SET 0 \0", print_writers);
+						
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
 								+ row +cont_name+"$txt_Runs*GEOM*TEXT SET "+"DNP"+" \0", print_writers);
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
