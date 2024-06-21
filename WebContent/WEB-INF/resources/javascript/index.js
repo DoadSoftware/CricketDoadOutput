@@ -298,7 +298,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Control_h': case 'Alt_F12': case 'l': case 'p': case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_F10': case 'Alt_d':
 			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2': case 'Shift_E': case 'Shift_P': case 'Shift_Q': case 'Alt_z': case 'Shift_F':
 			case 'Alt_F6': case 'Shift_R': case 'Shift_A': case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'Shift_F7': case 'Control_F4':
-			case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_F': case 'Control_Shift_P': case 'Control_Shift_F1': case 'Control_Shift_D':
+			case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_E': case 'Control_Shift_F': case 'Control_Shift_P': case 'Control_Shift_F1': case 'Control_Shift_D':
 			case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Shift_I': case 'Alt_Shift_C': case 'Control_Shift_F2': case 'Control_Shift_M':
 			case 'Control_Shift_U': case 'Control_Shift_V':
 				addItemsToList(dataToProcess,null); 
@@ -310,7 +310,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q': case 'Control_b': case 'o': case 'Control_F2': case 'b':
 			case 'Alt_F11': case 'r': case 'Shift_U': case 'Alt_j': case 'Alt_h': case 'Alt_Shift_L': //case 'Shift_F':
 			case 'Control_F8': case 'Alt_y': case '.': case '/': case 'Shift_V': case 'Alt_i': case 'b': case 'Shift_B': case 'Control_Shift_B':
-			case '6':
+			case '6': case 'Alt_Shift_F3':
 				/*switch(dataToProcess){
 				case 'Shift_F':
 					count++;
@@ -547,7 +547,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Shift_P': case 'Shift_Q': case 'Alt_z': case 'Control_c': case 'Control_v': case 'Control_z': case 'Control_x': case 'Alt_q': case 'Shift_F': 
 	case 'Alt_F6': case 'Shift_A': case 'Shift_R': case 'Control_Shift_F1': case 'Control_Shift_D': case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Control_Shift_F2':
 	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_F4': case 'Alt_Shift_C': case 'Control_Shift_L':
-	case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I': case 'Control_F11': case 'Control_Shift_M':
+	case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_E': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I': case 'Control_F11': case 'Control_Shift_M':
 	case 'Alt_Shift_R': case 'Control_Shift_U': case 'Control_Shift_V':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		
@@ -903,8 +903,43 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),1);
 			cellCount = cellCount + 1;
 			break;
+		case 'Control_Shift_E':
+			header_text.innerHTML = 'BOWLER VS ALL BATSMAN';
+			select = document.createElement('select');
+			select.id = 'selectPlayer';
+			select.name = select.id;
+				select = document.createElement('select');
+				select.id = 'selectBowler';
+				select.name = select.id;
+				
+				session_match.match.inning.forEach(function(inn,index,arr){
+					if(inn.inningNumber == document.getElementById('which_inning').value){
+						inn.bowlingCard.forEach(function(boc,index,arr){
+							if(boc.status == 'CURRENTBOWLER'){
+								option = document.createElement('option');
+								option.value = boc.player.playerId;
+								option.text = boc.player.full_name;
+								select.appendChild(option);
+							}
+						});
+						
+						inn.bowlingCard.forEach(function(boc,boc_index,bc_arr){
+							option = document.createElement('option');
+							option.value = boc.playerId;
+							option.text = boc.player.full_name;	
+							select.appendChild(option);
+						});
+					}
+				});
+				
+				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+				row.insertCell(cellCount).appendChild(select);
+				setDropdownOptionToSelectOptionArray($(select),0);
+				removeSelectDuplicates(select.id);
+				cellCount = cellCount + 1;
+		break;
 		case 'Control_Shift_F':
-			header_text.innerHTML = 'BATSMAN VS BOWLERS';
+			header_text.innerHTML = 'BATSMAN VS ALL BOWLERS';
 			select = document.createElement('select');
 			select.id = 'selectPlayer';
 			select.name = select.id;
@@ -942,35 +977,40 @@ function addItemsToList(whatToProcess,dataToProcess)
 			removeSelectDuplicates(select.id);
 			cellCount = cellCount + 1;
 			
-			select = document.createElement('select');
-			select.id = 'selectBowler';
-			select.name = select.id;
-			
-			session_match.match.inning.forEach(function(inn,index,arr){
-				if(inn.inningNumber == document.getElementById('which_inning').value){
-					inn.bowlingCard.forEach(function(boc,index,arr){
-						if(boc.status == 'CURRENTBOWLER'){
+			switch($('#selected_broadcaster').val().toUpperCase()){
+				case 'BENGAL-T20':
+				break;
+				default:
+				select = document.createElement('select');
+				select.id = 'selectBowler';
+				select.name = select.id;
+				
+				session_match.match.inning.forEach(function(inn,index,arr){
+					if(inn.inningNumber == document.getElementById('which_inning').value){
+						inn.bowlingCard.forEach(function(boc,index,arr){
+							if(boc.status == 'CURRENTBOWLER'){
+								option = document.createElement('option');
+								option.value = boc.player.playerId;
+								option.text = boc.player.full_name;
+								select.appendChild(option);
+							}
+						});
+						
+						inn.bowlingCard.forEach(function(boc,boc_index,bc_arr){
 							option = document.createElement('option');
-							option.value = boc.player.playerId;
-							option.text = boc.player.full_name;
+							option.value = boc.playerId;
+							option.text = boc.player.full_name;	
 							select.appendChild(option);
-						}
-					});
-					
-					inn.bowlingCard.forEach(function(boc,boc_index,bc_arr){
-						option = document.createElement('option');
-						option.value = boc.playerId;
-						option.text = boc.player.full_name;	
-						select.appendChild(option);
-					});
-				}
-			});
-			
-			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
-			row.insertCell(cellCount).appendChild(select);
-			setDropdownOptionToSelectOptionArray($(select),1);
-			removeSelectDuplicates(select.id);
-			cellCount = cellCount + 1;
+						});
+					}
+				});
+				
+				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+				row.insertCell(cellCount).appendChild(select);
+				setDropdownOptionToSelectOptionArray($(select),1);
+				removeSelectDuplicates(select.id);
+				cellCount = cellCount + 1;
+			}
 		break;
 		case 'Control_i':
 			header_text.innerHTML = 'BATSMAN SCORE SPLIT';

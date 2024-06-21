@@ -141,6 +141,9 @@ public class Caption
 	{
 		if(whatToProcess.contains(",")) {
 			switch (whatToProcess.split(",")[0]) {
+			case "Alt_Shift_F3":
+				status = this_lowerThirdGfx.populateInningComp(whatToProcess,whichSide, matchAllData);
+				break;
 			case "6":
 				status = this_bugsAndMiniGfx.populateCounter(whatToProcess, whichSide, matchAllData);
 				break;
@@ -150,8 +153,19 @@ public class Caption
 			case "Shift_I":
 				status = this_lowerThirdGfx.populateImpact(whatToProcess, whichSide, matchAllData);
 				break;
+			case "Control_Shift_E":
+				status = this_bugsAndMiniGfx.populateBowlerVsAllBatsman(whatToProcess, whichSide, matchAllData);
+				break;
 			case "Control_Shift_F":
-				status = this_lowerThirdGfx.populateBatVsAllBowlers(whatToProcess, whichSide, matchAllData);
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.ICC_U19_2023:
+					status = this_lowerThirdGfx.populateBatVsAllBowlers(whatToProcess, whichSide, matchAllData);
+					break;
+
+				case Constants.BENGAL_T20:
+					status = this_bugsAndMiniGfx.populateBatStatsVsAllBowlers(whatToProcess, whichSide, matchAllData);
+					break;
+				}
 				break;
 			case "Control_i":
 				status = this_lowerThirdGfx.populateInningBuilder(whatToProcess, whichSide, matchAllData);

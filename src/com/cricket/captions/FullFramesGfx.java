@@ -6941,15 +6941,19 @@ public class FullFramesGfx
 							+ "$Highlight$Data$img_Text2*TEXTURE*IMAGE SET " + Constants.BENGAL_TEXT_PATH + "2/" + FixturesList.get(i).getHome_Team().getTeamName4() + "\0", print_writers);
 				}
 				
-				if(FixturesList.get(i).getWinnerteam() != null && FixturesList.get(i).getMargin() != null) {
-					if(FixturesList.get(i).getWinnerteam().equalsIgnoreCase(team.getTeamName1())) {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Team_Fixtures$" + (i+1)
-								+ "$TeamFixturesData$" + containerName + "$Info$txt_Info*GEOM*TEXT SET " + "WON BY " + FixturesList.get(i).getMargin() + "\0", print_writers);
+				if(FixturesList.get(i).getMargin() != null && !FixturesList.get(i).getMargin().isEmpty()) {
+					if(FixturesList.get(i).getWinnerteam() != null && !FixturesList.get(i).getWinnerteam().isEmpty()) {
+						if(FixturesList.get(i).getWinnerteam().equalsIgnoreCase(team.getTeamName1())) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Team_Fixtures$" + (i+1)
+									+ "$TeamFixturesData$" + containerName + "$Info$txt_Info*GEOM*TEXT SET " + "WON BY " + FixturesList.get(i).getMargin() + "\0", print_writers);
+						}else {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Team_Fixtures$" + (i+1)
+									+ "$TeamFixturesData$" + containerName + "$Info$txt_Info*GEOM*TEXT SET " + "LOST BY " + FixturesList.get(i).getMargin() + "\0", print_writers);
+						}
 					}else {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Team_Fixtures$" + (i+1)
-								+ "$TeamFixturesData$" + containerName + "$Info$txt_Info*GEOM*TEXT SET " + "LOST BY " + FixturesList.get(i).getMargin() + "\0", print_writers);
+								+ "$TeamFixturesData$" + containerName + "$Info$txt_Info*GEOM*TEXT SET " + FixturesList.get(i).getMargin() + "\0", print_writers);
 					}
-					
 				}else {
 					
 					if(FixturesList.get(i).getDate().equalsIgnoreCase(new SimpleDateFormat("dd-MM-yyyy").format(cal_bengal.getTime()))) {
