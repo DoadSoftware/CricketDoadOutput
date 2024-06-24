@@ -19,6 +19,18 @@ function onPageLoadEvent(whichPage){
 		$("#select_graphic_options_div").empty();
 		document.getElementById('selected_inning').innerHTML = 'Selected Inning: ' + document.getElementById('which_inning').value;
 		initialiseSelectedOptionsList();
+		if(document.getElementById('which_inning').value == 1){
+			document.getElementById('inning1_teamScore_lbl').style.backgroundColor ='#990000';
+			document.getElementById('inning2_teamScore_lbl').style.backgroundColor ='';
+			document.getElementById('inning1_teamScore_lbl').style.color ='white';
+			document.getElementById('inning2_teamScore_lbl').style.color ='';
+				
+		}else if(document.getElementById('which_inning').value == 2){
+			document.getElementById('inning2_teamScore_lbl').style.backgroundColor = '#990000';
+			document.getElementById('inning1_teamScore_lbl').style.backgroundColor = '';
+			document.getElementById('inning2_teamScore_lbl').style.color = 'white';
+			document.getElementById('inning1_teamScore_lbl').style.color = '';
+		}
 		addItemsToList('HELP-FILE',session_match);
 		break;
 	}
@@ -176,6 +188,20 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			}
 			document.getElementById('which_inning').value = dataToProcess;
 			document.getElementById('selected_inning').innerHTML = 'Selected Inning: ' + dataToProcess;
+			
+			if(dataToProcess == 1){
+				document.getElementById('inning1_teamScore_lbl').style.backgroundColor ='#990000';
+				document.getElementById('inning2_teamScore_lbl').style.backgroundColor ='';
+				document.getElementById('inning1_teamScore_lbl').style.color ='white';
+				document.getElementById('inning2_teamScore_lbl').style.color ='';
+				
+			}else if(dataToProcess == 2){
+				document.getElementById('inning2_teamScore_lbl').style.backgroundColor = '#990000';
+				document.getElementById('inning1_teamScore_lbl').style.backgroundColor = '';
+				document.getElementById('inning2_teamScore_lbl').style.color = 'white';
+				document.getElementById('inning1_teamScore_lbl').style.color = '';
+			}
+			
 			break;
 			
 		case '-':
@@ -291,7 +317,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 					break;
 				}
 			break;	
-			case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_7':  case 'Alt_5': //case 'Alt_6': case 'Alt_8': case 'Alt_3': case 'Alt_4': case 'F7': case 'F11':
+			case 'Control_4': case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_7':  case 'Alt_5': //case 'Alt_6': case 'Alt_8': case 'Alt_3': case 'Alt_4': case 'F7': case 'F11':
 			case 'Control_F5': case 'Shift_T': case 'Control_F9': case 'F5': case 'F6': case 'Alt_w':  case 'Control_j': case 'Alt_F8':
 			case 'F8': case 'F9':  case 'u': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6': case 'Control_y':
 			case 'Shift_O': case 'g': case 'y': case 'Control_g': case 'Control_s': case 'Control_f': //case 'Alt_F9':
@@ -548,7 +574,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Alt_F6': case 'Shift_A': case 'Shift_R': case 'Control_Shift_F1': case 'Control_Shift_D': case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Control_Shift_F2':
 	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_F4': case 'Alt_Shift_C': case 'Control_Shift_L':
 	case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_E': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I': case 'Control_F11': case 'Control_Shift_M':
-	case 'Alt_Shift_R': case 'Control_Shift_U': case 'Control_Shift_V':
+	case 'Alt_Shift_R': case 'Control_Shift_U': case 'Control_Shift_V': case 'Control_4':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		
 		$("#captions_div").hide();
@@ -1856,6 +1882,20 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			
 			break;
+		case 'Control_4':
+			header_text.innerHTML = 'INFOBAR FREE TEXT';
+		
+			select = document.createElement('input');
+			select.type = "text";
+			select.id = 'selectFreeText';
+			select.value = '';
+			select.style.width = '500px';
+			
+			select.setAttribute('onchange',"setTextBoxOptionToSelectOptionArray(0)");
+			row.insertCell(cellCount).appendChild(select);
+			setTextBoxOptionToSelectOptionArray(0);
+			cellCount = cellCount + 1;
+		break;
 		
 		case 'Alt_5':
 			header_text.innerHTML = 'MIDDLE INFOBAR SECTION - LAST x BALLS';
@@ -3444,12 +3484,32 @@ function addItemsToList(whatToProcess,dataToProcess)
 					option.value = 'nosponsor';
 					option.text = 'Without Sponsor';
 					select.appendChild(option);
+					
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),1);
+					cellCount = cellCount + 1
+					
+					select = document.createElement('select');
+					select.id = 'statType';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = 'noStats';
+					option.text = '';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'DT20';
+					option.text = 'DT20';
+					select.appendChild(option);
+					
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 2)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),2);
+					cellCount = cellCount + 1
 				break;
 			}
-			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
-			row.insertCell(cellCount).appendChild(select);
-			setDropdownOptionToSelectOptionArray($(select),1);
-			cellCount = cellCount + 1
 			break;
 		case 'Shift_F5': case 'q'://BatThisMatch
 			switch(whatToProcess) {

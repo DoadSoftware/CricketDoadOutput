@@ -129,7 +129,7 @@ public class Animation
 					return Constants.LOWER_THIRD;
 				}
 			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": case "Alt_9": case "Alt_0":
-			case "Control_F12": case "Shift_F12": case "Alt_e":
+			case "Control_F12": case "Shift_F12": case "Alt_e": case "Control_4":
 				return Constants.INFO_BAR;
 			case "Shift_O": case "Control_k": case "k": case "g": case "y": case "Alt_p": case "o": case "t": 
 			case "Control_y": case "h": case "Shift_F4": case "Shift_F": case ".": case "/": case "Control_Shift_U": case "Control_Shift_V": case "6":
@@ -2738,6 +2738,7 @@ public class Animation
 				}
 				break;
 			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": case "Alt_9": case "Alt_0":
+			case "Control_4":
 				switch(whatToProcess.split(",")[0]) {
 				case "Alt_1":
 					switch (config.getBroadcaster().toUpperCase()) {
@@ -2750,7 +2751,7 @@ public class Animation
 					}
 					
 					break;
-				case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_6": case "Alt_9": case "Alt_0":
+				case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_6": case "Alt_9": case "Alt_0": case "Control_4":
 					switch (config.getBroadcaster().toUpperCase()) {
 					case Constants.BENGAL_T20:
 						
@@ -3289,7 +3290,7 @@ public class Animation
 //			case "Alt_c":
 //				processAnimation(Constants.FRONT, print_writers, "Anim_InfoBar$TopStage_Change", "SHOW 0.0");
 //				break;
-			case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_6": case "Alt_9": case "Alt_0":
+			case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_6": case "Alt_9": case "Alt_0": case "Control_4":
 				TimeUnit.MILLISECONDS.sleep(1000);
 				switch (config.getBroadcaster().toUpperCase()) {
 				case Constants.BENGAL_T20:
@@ -4732,6 +4733,7 @@ public class Animation
 						break;
 					case "F6": case "Control_F6": case "Shift_F6": case "F8": case "Alt_F8": case "F10": case "d": case "e": case "u": case "Shift_B":
 					case "Shift_F5": case "Alt_o": case "Shift_F9": case "Control_F3": case "Control_F5": case "Control_F9": case "Alt_F12": case "Control_s": case "Control_f": case "F7": case "F11":
+					case "Alt_Shift_F3":
 						previewCommands = "anim_Lower_Third 1.500 anim_Lower_Third$Essentials 1.500 anim_Lower_Third$Essentials$In 1.500 anim_Infobar$Push 1.000";
 						break;
 					}
@@ -4739,6 +4741,7 @@ public class Animation
 					switch (whatToProcess.split(",")[0]) {
 					case "F6": case "Control_F6": case "Shift_F6": case "F5": case "F9": case "F8": case "Alt_F8": case "F10": case "d": case "e": case "u":
 					case "Shift_F5": case "Alt_o": case "Shift_F9": case "Control_F3": case "Control_F5": case "Control_F9":  case "Alt_F12": case "Control_s": case "Control_f":case "F7": case "F11":
+					case "Alt_Shift_F3":
 						previewCommands =  "Anim_LtChange$Badge 1.000 Anim_LtChange$Sublines 1.200 Anim_LtChange 1.200 Anim_LtChange$Topline 1.000 Anim_LtChange$Dynamic 0.560 "
 								+ "Anim_LtChange$Dynamic$Change_In 0.560 Anim_LtChange$Dynamic$Change_Out 0.560";
 						break;

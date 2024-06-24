@@ -124,9 +124,9 @@
 				    <label class="col-sm-4 col-form-label text-left">Match: ${session_match.match.matchFileName} </label>
 				    <label class="col-sm-4 col-form-label text-left">Broadcaster: ${session_configuration.broadcaster.replace("_"," ")} </label>
 				    <label class="col-sm-4 col-form-label text-left">2nd Broadcaster: ${session_configuration.secondaryBroadcaster.replace("_"," ")} </label>
-				    <label id="selected_inning" class="col-sm-4 col-form-label text-left">Selected Inning: </label>
-					<label id="inning1_teamScore_lbl" class="col-sm-4 col-form-label text-left">-</label>
-					<label id="inning2_teamScore_lbl" class="col-sm-4 col-form-label text-left">-</label>
+				     <label id="selected_inning" class="col-sm-4 col-form-label text-left">Selected Inning: </label>
+				    <label id="inning1_teamScore_lbl" class="col-sm-4 col-form-label text-left">-</label>
+				    <label id="inning2_teamScore_lbl" class="col-sm-4 col-form-label text-left">-</label>
 			    	<label id="inning1_battingcard1_lbl" class="col-sm-4 col-form-label text-left">-</label>
 			    	<label id="inning1_battingcard2_lbl" class="col-sm-4 col-form-label text-left">-</label>
 			      	<label id="inning1_bowlingcard_lbl" class="col-sm-4 col-form-label text-left">-</label>

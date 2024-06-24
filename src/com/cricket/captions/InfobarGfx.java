@@ -39,7 +39,7 @@ public class InfobarGfx
 	public Configuration config;
 	public String slashOrDash = "-", WhichProfile = "", containerName = "", status = "", previous_sixes = "", 
 			stats_text = "", par_Overs="", Comms_Name,color = "", color2 = "", prev_score = "", new_score = "",
-			prev_wicket = "", new_wicket = "", prevTeamScore = "", currTeamScore = "";
+			prev_wicket = "", new_wicket = "", prevTeamScore = "", currTeamScore = "", freeText = "";
 	
 	boolean isThisOverLimitExceed = false, isbatsmannotout = false;
 //	int runs = 0,wicket = 0;
@@ -5194,6 +5194,8 @@ public class InfobarGfx
 				
 			case "FREE_TEXT":
 				
+				System.out.println();
+				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide + "$BaseAll$"
 						+ "Left_Mask1$img_Base1*TEXTURE*IMAGE SET " + 
 						Constants.BENGAL_BASE_PATH + "1/" + inning.getBatting_team().getTeamName4() + "\0", print_writers);
@@ -5210,28 +5212,36 @@ public class InfobarGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
 						+ "$Select_Type$2_Line_Text$Select_Sponsor*FUNCTION*Omo*vis_con SET 1 \0",print_writers);
 				
-				infoBarStats = infobarStats.stream().filter(infostats -> infostats.getOrder() == infobarStatsId).findAny().orElse(null);
-				if(infoBarStats == null) {
-					return "InfoBarFreeText: Stats  not found for [" + infobarStatsId + "]";
-				}
-				
-				if(infoBarStats.getText1().equalsIgnoreCase("THIRD UMPIRE")) {
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
-							+ "$Select_Type$2_Line_Text$Select_Sponsor$img_Sponsor*TEXTURE*IMAGE SET " + Constants.BENGAL_SPONSOR_PATH + "UTKARSH" + " \0",print_writers);
-				}
-				
-				if(infoBarStats.getText2() != null) {
+				if(freeText.equalsIgnoreCase("")) {
+					infoBarStats = infobarStats.stream().filter(infostats -> infostats.getOrder() == infobarStatsId).findAny().orElse(null);
+					if(infoBarStats == null) {
+						return "InfoBarFreeText: Stats  not found for [" + infobarStatsId + "]";
+					}
 					
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide + "$Select_Type$2_Line_Text$Maxsize_Title$txt_Title*GEOM*TEXT SET " 
-							+ infoBarStats.getText1() + "\0", print_writers);
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide + "$Select_Type$2_Line_Text$Maxsize_Subtitle$txt_Subtitle*GEOM*TEXT SET " 
-							+ infoBarStats.getText2() + "\0", print_writers);
-				}
-				else {
+					if(infoBarStats.getText1().equalsIgnoreCase("THIRD UMPIRE")) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
+								+ "$Select_Type$2_Line_Text$Select_Sponsor$img_Sponsor*TEXTURE*IMAGE SET " + Constants.BENGAL_SPONSOR_PATH + "UTKARSH" + " \0",print_writers);
+					}
+					
+					if(infoBarStats.getText2() != null) {
+						
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide + "$Select_Type$2_Line_Text$Maxsize_Title$txt_Title*GEOM*TEXT SET " 
+								+ infoBarStats.getText1() + "\0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide + "$Select_Type$2_Line_Text$Maxsize_Subtitle$txt_Subtitle*GEOM*TEXT SET " 
+								+ infoBarStats.getText2() + "\0", print_writers);
+					}
+					else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
+								+ "$Select_Type*FUNCTION*Omo*vis_con SET 0 \0",print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide + "$Select_Type$1_Line_Text$txt_Title*GEOM*TEXT SET " 
+								+ infoBarStats.getText1() + "\0", print_writers);
+					}
+				}else {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
 							+ "$Select_Type*FUNCTION*Omo*vis_con SET 0 \0",print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide + "$Select_Type$1_Line_Text$txt_Title*GEOM*TEXT SET " 
-							+ infoBarStats.getText1() + "\0", print_writers);
+							+ freeText.toUpperCase() + "\0", print_writers);
+					freeText = "";
 				}
 				break;
 				
@@ -5379,6 +5389,10 @@ public class InfobarGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
 						+ "$Select_Type$Equation$Top_Line$Stat_1$txt_Title*GEOM*TEXT SET " + 
 						" RUN" + CricketFunctions.Plural(CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + "\0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
+						+ "$Select_Type$Equation$Top_Line$Stat_2$txt_Title*GEOM*TEXT SET " + 
+						" BALL" + CricketFunctions.Plural(CricketFunctions.getRequiredBalls(matchAllData)).toUpperCase() + "\0", print_writers);
 				
 				if (matchAllData.getSetup().getTargetType().toUpperCase().equalsIgnoreCase("VJD")) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
@@ -5722,7 +5736,7 @@ public class InfobarGfx
 				if(battingCardList.get(battingCardList.size()-1).getHowOut().equalsIgnoreCase(CricketUtil.RUN_OUT)) {
 					if(battingCardList.get(battingCardList.size()-1).getWasHowOutFielderSubstitute() != null && 
 							battingCardList.get(battingCardList.size()-1).getWasHowOutFielderSubstitute().equalsIgnoreCase(CricketUtil.YES)) {
-						how_out_txt = "run out " + "sub (" + battingCardList.get(battingCardList.size()-1).getHowOutFielder().getTicker_name() + ")";
+						how_out_txt = "run out " + "(sub - " + battingCardList.get(battingCardList.size()-1).getHowOutFielder().getTicker_name() + ")";
 					} else {
 						how_out_txt = "run out (" + battingCardList.get(battingCardList.size()-1).getHowOutFielder().getTicker_name() + ")";
 					}
@@ -5730,7 +5744,7 @@ public class InfobarGfx
 				else if(battingCardList.get(battingCardList.size()-1).getHowOut().equalsIgnoreCase(CricketUtil.CAUGHT)) {
 					if(battingCardList.get(battingCardList.size()-1).getWasHowOutFielderSubstitute() != null && 
 							battingCardList.get(battingCardList.size()-1).getWasHowOutFielderSubstitute().equalsIgnoreCase(CricketUtil.YES)) {
-						how_out_txt = "c" +  " sub (" + battingCardList.get(battingCardList.size()-1).getHowOutFielder().getTicker_name() + ")  b " + 
+						how_out_txt = "c " +  "(sub - " + battingCardList.get(battingCardList.size()-1).getHowOutFielder().getTicker_name() + ")  b " + 
 								battingCardList.get(battingCardList.size()-1).getHowOutBowler().getTicker_name();
 					} else {
 						how_out_txt = "c " + battingCardList.get(battingCardList.size()-1).getHowOutFielder().getTicker_name() + "  b " + 

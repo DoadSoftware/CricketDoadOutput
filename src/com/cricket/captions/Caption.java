@@ -689,6 +689,15 @@ public class Caption
 				this_infobarGfx.WhichProfile = whatToProcess.split(",")[3];
 				status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
 				break;
+			case "Control_4":
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.BENGAL_T20:
+					this_infobarGfx.infobar.setMiddle_section("FREE_TEXT");
+					this_infobarGfx.freeText = whatToProcess.split(",")[2];
+					status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
+					break;
+				}
+				break;
 			case "Alt_5":
 				
 				if(this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(CricketUtil.BOWLER)) { 
