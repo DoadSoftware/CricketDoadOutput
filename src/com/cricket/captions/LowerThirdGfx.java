@@ -1303,7 +1303,6 @@ public class LowerThirdGfx
 	}
 	public String populateBatThisMatch(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws InterruptedException, JsonMappingException, JsonProcessingException
 	{
-		System.out.println(whatToProcess);
 		
 		String outOrNot = "",striktRate = "";
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
@@ -1353,42 +1352,70 @@ public class LowerThirdGfx
 		}
 		
 			if(!whatToProcess.split(",")[4].equalsIgnoreCase("NOSTATS")) {
-				statsType = statsTypes.stream().filter(stype -> stype.getStats_short_name().equalsIgnoreCase(whatToProcess.split(",")[4])).findAny().orElse(null);
-				if(statsTypes == null) {
-					return "bat this match: Stats Type not found for profile [" + WhichProfile + "]";
-				}
-				stat = statistics.stream().filter(st -> st.getPlayer_id() == Integer.valueOf(whatToProcess.split(",")[2]) && statsType.getStats_id() == st.getStats_type_id()).findAny().orElse(null);
-				if(stat == null) {
-					return "bat this match : No stats found for player id [" + whatToProcess.split(",")[2] + "] from database is returning NULL";
-				}
-				stat.setStats_type(statsType);
-				
-				switch (config.getBroadcaster().toUpperCase()) {
-				case Constants.BENGAL_T20:
-					switch (whatToProcess.split(",")[4].toUpperCase()) {
-					case "DT20":
-						stat = CricketFunctions.updateTournamentWithH2h(stat, headToHead, matchAllData);
-						stat = CricketFunctions.updateStatisticsWithMatchData(stat, matchAllData);
+				if(whatToProcess.split(",")[4].equalsIgnoreCase("THISSERIES")) {
+					addPastDataToCurr = CricketFunctions.extractTournamentData("CURRENT_MATCH_DATA", false, headToHead,cricketService, matchAllData, past_tournament_stats);
+					if(addPastDataToCurr == null) {
+						return "addPastDataToCurr is Null";
+					}
+					
+					for(Tournament tourn : addPastDataToCurr) {
+						for(BestStats bs : tourn.getBatsman_best_Stats()) {
+							top_batsman_beststats.add(bs);
+						}
+						for(BestStats bfig : tourn.getBowler_best_Stats()) {
+							top_bowler_beststats.add(bfig);
+						}
+					}
+					
+					Collections.sort(top_batsman_beststats, new CricketFunctions.PlayerBestStatsComparator());
+					Collections.sort(top_bowler_beststats, new CricketFunctions.PlayerBestStatsComparator());
+					
+					tournament = addPastDataToCurr.stream().filter(tourn -> tourn.getPlayerId() == Integer.valueOf(whatToProcess.split(",")[2])).findAny().orElse(null);
+				}else {
+					statsType = statsTypes.stream().filter(stype -> stype.getStats_short_name().equalsIgnoreCase(whatToProcess.split(",")[4])).findAny().orElse(null);
+					if(statsTypes == null) {
+						return "bat this match: Stats Type not found for profile [" + WhichProfile + "]";
+					}
+					stat = statistics.stream().filter(st -> st.getPlayer_id() == Integer.valueOf(whatToProcess.split(",")[2]) && statsType.getStats_id() == st.getStats_type_id()).findAny().orElse(null);
+					if(stat == null) {
+						return "bat this match : No stats found for player id [" + whatToProcess.split(",")[2] + "] from database is returning NULL";
+					}
+					stat.setStats_type(statsType);
+					
+					switch (config.getBroadcaster().toUpperCase()) {
+					case Constants.BENGAL_T20:
+						switch (whatToProcess.split(",")[4].toUpperCase()) {
+						case "DT20":
+							stat = CricketFunctions.updateTournamentWithH2h(stat, headToHead, matchAllData);
+							stat = CricketFunctions.updateStatisticsWithMatchData(stat, matchAllData);
+							break;
+						}
 						break;
 					}
-					break;
 				}
 			}
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.BENGAL_T20:
 			String sponsorOrNot = whatToProcess.split(",")[3];
-			if(stat!=null) {
+			if(whatToProcess.split(",")[4].equalsIgnoreCase("THISSERIES")) {
 				lowerThird = new LowerThird("", battingCard.getPlayer().getFirstname(), surName,outOrNot, String.valueOf(battingCard.getRuns()),
 						"", 3, sponsorOrNot,inning.getBatting_team().getTeamName4(),new String[] {"BALLS","DOTS","FOURS","SIXES","STRIKE RATE"},new String[] {String.valueOf(battingCard.getBalls()),
 						Count[0],String.valueOf(battingCard.getFours()),String.valueOf(battingCard.getSixes()),striktRate},
-						new String[] {stat.getStats_type().getStats_short_name(),String.valueOf(stat.getMatches()),String.valueOf(stat.getRuns()),String.valueOf(stat.getBalls_faced())},null,
+						new String[] {"BPTL - 2024",String.valueOf(tournament.getMatches()),String.valueOf(tournament.getRuns()),String.valueOf(CricketFunctions.generateStrikeRate(tournament.getRuns(), tournament.getBallsFaced(), 1))},null,
 						new String[] {"-12.0","54.0","120.0","186.0","252.0"});
 			}else {
-				lowerThird = new LowerThird("", battingCard.getPlayer().getFirstname(), surName,outOrNot, String.valueOf(battingCard.getRuns()),
-						"", 2, sponsorOrNot,inning.getBatting_team().getTeamName4(),new String[] {"BALLS","DOTS","FOURS","SIXES","STRIKE RATE"},new String[] {String.valueOf(battingCard.getBalls()),
-						Count[0],String.valueOf(battingCard.getFours()),String.valueOf(battingCard.getSixes()),striktRate},null,null,new String[] {"-12.0","54.0","120.0","186.0","252.0"});
+				if(stat!=null) {
+					lowerThird = new LowerThird("", battingCard.getPlayer().getFirstname(), surName,outOrNot, String.valueOf(battingCard.getRuns()),
+							"", 3, sponsorOrNot,inning.getBatting_team().getTeamName4(),new String[] {"BALLS","DOTS","FOURS","SIXES","STRIKE RATE"},new String[] {String.valueOf(battingCard.getBalls()),
+							Count[0],String.valueOf(battingCard.getFours()),String.valueOf(battingCard.getSixes()),striktRate},
+							new String[] {stat.getStats_type().getStats_short_name(),String.valueOf(stat.getMatches()),String.valueOf(stat.getRuns()),String.valueOf(CricketFunctions.generateStrikeRate(stat.getRuns(), stat.getBalls_faced(), 1))},null,
+							new String[] {"-12.0","54.0","120.0","186.0","252.0"});
+				}else {
+					lowerThird = new LowerThird("", battingCard.getPlayer().getFirstname(), surName,outOrNot, String.valueOf(battingCard.getRuns()),
+							"", 2, sponsorOrNot,inning.getBatting_team().getTeamName4(),new String[] {"BALLS","DOTS","FOURS","SIXES","STRIKE RATE"},new String[] {String.valueOf(battingCard.getBalls()),
+							Count[0],String.valueOf(battingCard.getFours()),String.valueOf(battingCard.getSixes()),striktRate},null,null,new String[] {"-12.0","54.0","120.0","186.0","252.0"});
+				}
 			}
-			
 			break;
 		case Constants.ICC_U19_2023:
 			lowerThird = new LowerThird("", battingCard.getPlayer().getFirstname(), surName,outOrNot, String.valueOf(battingCard.getRuns()),
@@ -1415,7 +1442,7 @@ public class LowerThirdGfx
 			return status;
 		}
 	}
-	public String populateBowlThisMatch(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws InterruptedException
+	public String populateBowlThisMatch(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws InterruptedException, JsonMappingException, JsonProcessingException
 	{
 		String economy = "";
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
@@ -1450,13 +1477,75 @@ public class LowerThirdGfx
 		} else {
 			impactOmo =0;
 		}
+		
+		if(!whatToProcess.split(",")[4].equalsIgnoreCase("NOSTATS")) {
+			if(whatToProcess.split(",")[4].equalsIgnoreCase("THISSERIES")) {
+				addPastDataToCurr = CricketFunctions.extractTournamentData("CURRENT_MATCH_DATA", false, headToHead,cricketService, matchAllData, past_tournament_stats);
+				if(addPastDataToCurr == null) {
+					return "addPastDataToCurr is Null";
+				}
+				
+				for(Tournament tourn : addPastDataToCurr) {
+					for(BestStats bs : tourn.getBatsman_best_Stats()) {
+						top_batsman_beststats.add(bs);
+					}
+					for(BestStats bfig : tourn.getBowler_best_Stats()) {
+						top_bowler_beststats.add(bfig);
+					}
+				}
+				
+				Collections.sort(top_batsman_beststats, new CricketFunctions.PlayerBestStatsComparator());
+				Collections.sort(top_bowler_beststats, new CricketFunctions.PlayerBestStatsComparator());
+				
+				tournament = addPastDataToCurr.stream().filter(tourn -> tourn.getPlayerId() == Integer.valueOf(whatToProcess.split(",")[2])).findAny().orElse(null);
+				System.out.println("WICKETS : "+tournament.getWickets());
+				
+			}else {
+				statsType = statsTypes.stream().filter(stype -> stype.getStats_short_name().equalsIgnoreCase(whatToProcess.split(",")[4])).findAny().orElse(null);
+				if(statsTypes == null) {
+					return "bat this match: Stats Type not found for profile [" + WhichProfile + "]";
+				}
+				stat = statistics.stream().filter(st -> st.getPlayer_id() == Integer.valueOf(whatToProcess.split(",")[2]) && statsType.getStats_id() == st.getStats_type_id()).findAny().orElse(null);
+				if(stat == null) {
+					return "bat this match : No stats found for player id [" + whatToProcess.split(",")[2] + "] from database is returning NULL";
+				}
+				stat.setStats_type(statsType);
+				
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.BENGAL_T20:
+					switch (whatToProcess.split(",")[4].toUpperCase()) {
+					case "DT20":
+						stat = CricketFunctions.updateTournamentWithH2h(stat, headToHead, matchAllData);
+						stat = CricketFunctions.updateStatisticsWithMatchData(stat, matchAllData);
+						break;
+					}
+					break;
+				}
+			}
+		}
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.BENGAL_T20:
 			String sponsorOrNot = whatToProcess.split(",")[3];
-			lowerThird = new LowerThird("", bowlingCard.getPlayer().getFirstname(), surName,"", "", "", 2, sponsorOrNot, inning.getBowling_team().getTeamName4(),
-					new String[] {"OVERS", "MAIDENS", "RUNS", "WICKETS", "ECONOMY"},new String[]{CricketFunctions.OverBalls(bowlingCard.getOvers(), bowlingCard.getBalls()), 
-					String.valueOf(bowlingCard.getMaidens()),String.valueOf(bowlingCard.getRuns()),String.valueOf(bowlingCard.getWickets()), economy}
-					,null,null,new String[] {"-12.0","54.0","120.0","186.0","252.0"});
+			if(whatToProcess.split(",")[4].equalsIgnoreCase("THISSERIES")) {
+				lowerThird = new LowerThird("", bowlingCard.getPlayer().getFirstname(), surName,"", "", "", 3, sponsorOrNot, inning.getBowling_team().getTeamName4(),
+						new String[] {"OVERS", "DOTS", "RUNS", "WICKETS", "ECONOMY"},new String[]{CricketFunctions.OverBalls(bowlingCard.getOvers(), bowlingCard.getBalls()), 
+						String.valueOf(bowlingCard.getDots()),String.valueOf(bowlingCard.getRuns()),String.valueOf(bowlingCard.getWickets()), economy}
+						,new String[] {"BPTL - 2024", String.valueOf(tournament.getMatches()), String.valueOf(tournament.getWickets()), String.valueOf(CricketFunctions.getEconomy(tournament.getRunsConceded(), tournament.getBallsBowled(), 2, "-"))},null,new String[] {"-12.0","54.0","120.0","186.0","252.0"});
+			}else {
+				if(stat != null) {
+					lowerThird = new LowerThird("", bowlingCard.getPlayer().getFirstname(), surName,"", "", "", 3, sponsorOrNot, inning.getBowling_team().getTeamName4(),
+							new String[] {"OVERS", "DOTS", "RUNS", "WICKETS", "ECONOMY"},new String[]{CricketFunctions.OverBalls(bowlingCard.getOvers(), bowlingCard.getBalls()), 
+							String.valueOf(bowlingCard.getDots()),String.valueOf(bowlingCard.getRuns()),String.valueOf(bowlingCard.getWickets()), economy}
+							,new String[] {stat.getStats_type().getStats_short_name(), String.valueOf(stat.getMatches()), String.valueOf(stat.getWickets()), String.valueOf(CricketFunctions.getEconomy(stat.getRuns_conceded(),
+									stat.getBalls_bowled(), 2, "-"))},null,new String[] {"-12.0","54.0","120.0","186.0","252.0"});
+				}else {
+					lowerThird = new LowerThird("", bowlingCard.getPlayer().getFirstname(), surName,"", "", "", 2, sponsorOrNot, inning.getBowling_team().getTeamName4(),
+							new String[] {"OVERS", "DOTS", "RUNS", "WICKETS", "ECONOMY"},new String[]{CricketFunctions.OverBalls(bowlingCard.getOvers(), bowlingCard.getBalls()), 
+							String.valueOf(bowlingCard.getDots()),String.valueOf(bowlingCard.getRuns()),String.valueOf(bowlingCard.getWickets()), economy}
+							,null,null,new String[] {"-12.0","54.0","120.0","186.0","252.0"});
+				}
+			}
+			
 			break;
 		case Constants.ICC_U19_2023:
 			lowerThird = new LowerThird("", bowlingCard.getPlayer().getFirstname(), surName,"", "", "", 2, "", inning.getBowling_team().getTeamName4(),
@@ -8981,11 +9070,13 @@ public class LowerThirdGfx
 							}else {
 								statName = stat.getStats_type().getStats_short_name();
 							}
-							
-							
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side" + WhichSide 
 									+ "$Select_Subline$3$Data$Left$txt_1*GEOM*TEXT SET "+ statName +" CAREER - "+ "   MATCHES  "+ lowerThird.getLeftText()[1] +"  | "
-											+" RUNS  "+ lowerThird.getLeftText()[2] + "  | " +" S/R  "+ CricketFunctions.generateStrikeRate(stat.getRuns(), stat.getBalls_faced(), 1) + "\0", print_writers);
+											+" RUNS  "+ lowerThird.getLeftText()[2] + "  | " +" S/R  "+ lowerThird.getLeftText()[3] + "\0", print_writers);
+						}else if(tournament != null) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side" + WhichSide 
+									+ "$Select_Subline$3$Data$Left$txt_1*GEOM*TEXT SET "+ lowerThird.getLeftText()[0] +" - "+ "   MATCHES  "+ lowerThird.getLeftText()[1] +"  | "
+											+" RUNS  "+ lowerThird.getLeftText()[2] + "  | " +" S/R  "+ lowerThird.getLeftText()[3] + "\0", print_writers);
 						}
 						for(int i=0; i<lowerThird.getTitlesText().length; i++) {
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side" + WhichSide +
@@ -9004,6 +9095,7 @@ public class LowerThirdGfx
 			case "F9":
 				switch (config.getBroadcaster().toUpperCase()) {
 				case Constants.BENGAL_T20:
+					String statName = "";
 					if(!lowerThird.getWhichSponsor().equalsIgnoreCase("SPONSOR")) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side" + WhichSide +
 								"$Select_Subline$2$Data$Title*ACTIVE SET 0 \0", print_writers);
@@ -9011,11 +9103,36 @@ public class LowerThirdGfx
 								"$Select_Subline$3$Data$Title*ACTIVE SET 0 \0", print_writers);
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side" + WhichSide +
 								"$Select_Subline$4$Data$Title*ACTIVE SET 0 \0", print_writers);
+						if(stat != null) {
+							if(stat.getStats_type().getStats_short_name().equalsIgnoreCase("DT20")) {
+								statName = "T20";
+							}else {
+								statName = stat.getStats_type().getStats_short_name();
+							}
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side" + WhichSide 
+									+ "$Select_Subline$1$Data$Left$txt_1*GEOM*TEXT SET "+ "" + "\0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side" + WhichSide 
+									+ "$Select_Subline$2$Data$Left$txt_1*GEOM*TEXT SET "+ "" + "\0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side" + WhichSide 
+									+ "$Select_Subline$3$Data$Left$txt_1*GEOM*TEXT SET "+ statName +" CAREER - "+ "   MATCHES  "+ lowerThird.getLeftText()[1] +"  | "
+											+" WICKETS  "+ lowerThird.getLeftText()[2] + "  | " +" ECON  "+ lowerThird.getLeftText()[3] + "\0", print_writers);
+						}else if(tournament != null) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side" + WhichSide 
+									+ "$Select_Subline$1$Data$Left$txt_1*GEOM*TEXT SET "+ "" + "\0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side" + WhichSide 
+									+ "$Select_Subline$2$Data$Left$txt_1*GEOM*TEXT SET "+ "" + "\0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side" + WhichSide 
+									+ "$Select_Subline$3$Data$Left$txt_1*GEOM*TEXT SET "+ lowerThird.getLeftText()[0] +"- "+ "   MATCHES  "+ lowerThird.getLeftText()[1] +"  | "
+											+" WICKETS  "+ lowerThird.getLeftText()[2] + "  | " +" ECON  "+ lowerThird.getLeftText()[3] + "\0", print_writers);
+						}
+						
 						for(int i=0; i<lowerThird.getTitlesText().length; i++) {
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side" + WhichSide +
 									containerName+ "$Select_Subline$1" + "$Data$Title$txt_" + (i+1) + "*GEOM*TEXT SET " + lowerThird.getTitlesText()[i] + "\0", print_writers);
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side" + WhichSide +
 									containerName+ "$Select_Subline$2" + "$Data$Stat$txt_" + (i+1) + "*GEOM*TEXT SET " + lowerThird.getStatsText()[i] + "\0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Sublines$Side" + WhichSide +
+									containerName+ "$Select_Subline$3" + "$Data$Stat$txt_" + (i+1) + "*GEOM*TEXT SET " + "" + "\0", print_writers);
 						}
 					}
 					break;

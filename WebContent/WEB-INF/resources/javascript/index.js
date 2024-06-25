@@ -3504,6 +3504,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 					option.text = 'DT20';
 					select.appendChild(option);
 					
+					option = document.createElement('option');
+					option.value = 'THISSERIES';
+					option.text = 'THIS SERIES';
+					select.appendChild(option);
+					
 					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 2)");
 					row.insertCell(cellCount).appendChild(select);
 					setDropdownOptionToSelectOptionArray($(select),2);
@@ -3645,12 +3650,37 @@ function addItemsToList(whatToProcess,dataToProcess)
 					option.value = 'nosponsor';
 					option.text = 'Without Sponsor';
 					select.appendChild(option);
+					
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),1);
+					cellCount = cellCount + 1
+					
+					select = document.createElement('select');
+					select.id = 'statType';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = 'noStats';
+					option.text = '';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'DT20';
+					option.text = 'DT20';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'THISSERIES';
+					option.text = 'THIS SERIES';
+					select.appendChild(option);
+					
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 2)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),2);
+					cellCount = cellCount + 1
 				break;
 			}
-			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
-			row.insertCell(cellCount).appendChild(select);
-			setDropdownOptionToSelectOptionArray($(select),1);
-			cellCount = cellCount + 1
 			break;
 		case 'Shift_F9': //BallThisMatch
 			
