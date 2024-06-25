@@ -1092,6 +1092,11 @@ function addItemsToList(whatToProcess,dataToProcess)
             option.value = 'logo';
             option.text = 'logo';
             select.appendChild(option);
+            
+            option = document.createElement('option');
+            option.value = 'trophy';
+            option.text = 'trophy';
+            select.appendChild(option);
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
 			row.insertCell(cellCount).appendChild(select);
