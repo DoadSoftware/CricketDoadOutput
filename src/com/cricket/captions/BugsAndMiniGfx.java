@@ -35,7 +35,7 @@ import io.netty.util.Constant;
 
 public class BugsAndMiniGfx 
 {
-	public String status = "",homecolor = "", awaycolor = "",WhichGroup = "",containerName = "", previous_sixes = "";
+	public String status = "",homecolor = "", awaycolor = "",WhichGroup = "",containerName = "", previous_sixes = "",today_sixes="";
 	int fallOfWickets;
 	
 	int rowId=0, omo_num=0;
@@ -130,15 +130,21 @@ public class BugsAndMiniGfx
 	public String populateCounter(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws CloneNotSupportedException {
 		
 		this_data_str = new ArrayList<String>();
-		this_data_str.add(CricketFunctions.hundredsTensUnits(previous_sixes));
-		if(WhichSide == 1) {
-			String new_six_value = String.valueOf(CricketFunctions.extracttournamentFoursAndSixesData("COMBINED_PAST_CURRENT_MATCH_DATA", 
-					headToHead, matchAllData, null).getTournament_sixes());
-			this_data_str.add(CricketFunctions.hundredsTensUnits(new_six_value));
-			previous_sixes = new_six_value;
+		today_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixesData("CURRENT_MATCH_DATA", headToHead, matchAllData, null).getTournament_sixes());
+		
+		if(Integer.valueOf(today_sixes) > 0 && matchAllData.getEventFile().getEvents().get(matchAllData.getEventFile().getEvents().size()-1).getEventType().equalsIgnoreCase(CricketUtil.SIX)) {
+			if(matchAllData.getEventFile().getEvents().get(matchAllData.getEventFile().getEvents().size()-1).getEventWasABoundary() != null && 
+					matchAllData.getEventFile().getEvents().get(matchAllData.getEventFile().getEvents().size()-1).getEventWasABoundary().equalsIgnoreCase(CricketUtil.YES)) {
+				
+				today_sixes = String.valueOf(Integer.valueOf(today_sixes)-1);
+			}
 		}
-		System.out.println("PREV SIX : "+this_data_str.get(0));
-		System.out.println("NEW SIX : "+this_data_str.get(1));
+		
+		this_data_str.add(CricketFunctions.hundredsTensUnits(String.valueOf(Integer.valueOf(previous_sixes) + Integer.valueOf(today_sixes))));
+		if(WhichSide == 1) {
+			String new_six_value = String.valueOf((Integer.valueOf(previous_sixes) + Integer.valueOf(today_sixes) + 1));
+			this_data_str.add(CricketFunctions.hundredsTensUnits(new_six_value));
+		}
 		if(PopulateBugBody(WhichSide, whatToProcess,matchAllData) == Constants.OK) {
 			status = Constants.OK;
 		}

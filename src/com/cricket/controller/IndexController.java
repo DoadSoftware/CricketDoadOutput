@@ -709,7 +709,7 @@ public class IndexController
 					past_tournament_stats,past_tape,session_dls, headToHead, past_tournament_stats, cricketService);
 //				this_caption.this_infobarGfx.previous_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixes("COMBINED_PAST_CURRENT_MATCH_DATA", 
 //					cricket_matches, session_match, null).getTournament_sixes());
-				this_caption.this_bugsAndMiniGfx.previous_sixes =  String.valueOf(CricketFunctions.extracttournamentFoursAndSixesData("COMBINED_PAST_CURRENT_MATCH_DATA", 
+				this_caption.this_bugsAndMiniGfx.previous_sixes =  String.valueOf(CricketFunctions.extracttournamentFoursAndSixesData("PAST_MATCHES_DATA", 
 						headToHead, session_match, null).getTournament_sixes());
 				break;
 			case "UPDATE":
