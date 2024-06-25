@@ -1142,6 +1142,7 @@ public class Animation
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
 				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "START");
+				processAnimation(Constants.FRONT, print_writers, "Loop", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "F5": 
@@ -1149,12 +1150,14 @@ public class Animation
 					AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
 					TimeUnit.MILLISECONDS.sleep(1000);
 					processAnimation(Constants.FRONT, print_writers, "anim_BatsmanScore_LT", "START");
+					processAnimation(Constants.FRONT, print_writers, "Loop", "START");
 					LT.setWhichSponsor("SPONSOR");
 					this.whichGraphicOnScreen = whatToProcess;
 				}else {
 					AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
 					TimeUnit.MILLISECONDS.sleep(1000);
 					processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "START");
+					processAnimation(Constants.FRONT, print_writers, "Loop", "START");
 					this.whichGraphicOnScreen = whatToProcess;
 					LT.setWhichSponsor("NOSPONSOR");
 				}
@@ -1164,12 +1167,14 @@ public class Animation
 					AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
 					TimeUnit.MILLISECONDS.sleep(1000);
 					processAnimation(Constants.FRONT, print_writers, "anim_BowlerFigure_LT", "START");
+					processAnimation(Constants.FRONT, print_writers, "Loop", "START");
 					LT.setWhichSponsor("SPONSOR");
 					this.whichGraphicOnScreen = whatToProcess;
 				}else {
 					AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
 					TimeUnit.MILLISECONDS.sleep(1000);
 					processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "START");
+					processAnimation(Constants.FRONT, print_writers, "Loop", "START");
 					this.whichGraphicOnScreen = whatToProcess;
 					LT.setWhichSponsor("NOSPONSOR");
 				}
@@ -1178,18 +1183,21 @@ public class Animation
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
 				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "anim_Projected_LT", "START");
+				processAnimation(Constants.FRONT, print_writers, "Loop", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "Shift_F3":
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
 				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "anim_Fall_Of_Wickets", "START");
+				processAnimation(Constants.FRONT, print_writers, "Loop", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;	
 			case "Control_Shift_M":
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
 				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "anim_Ident", "START");
+				processAnimation(Constants.FRONT, print_writers, "Loop", "START");
 				//processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "START");
 				//processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
 				this.whichGraphicOnScreen = whatToProcess;
@@ -1198,6 +1206,7 @@ public class Animation
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
 				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "anim_Captain_LT", "START");
+				processAnimation(Constants.FRONT, print_writers, "Loop", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;			
 			case "F6": case "Control_F2":
@@ -1212,6 +1221,7 @@ public class Animation
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
 				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "START");
+				processAnimation(Constants.FRONT, print_writers, "Loop", "START");
 				//processAnimation(Constants.FRONT, print_writers, "Anim_LtChange", "START");
 				//processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third", "SHOW 0.0");
 				this.whichGraphicOnScreen = whatToProcess;
