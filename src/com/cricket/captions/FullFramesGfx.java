@@ -6481,8 +6481,15 @@ public class FullFramesGfx
 			case "Control_p":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$FooterAll$Text_In$Side" + WhichSide + "$Select_FooterType"
 						+ "*FUNCTION*Omo*vis_con SET " + "1" + "\0", print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$FooterAll$Text_In$Side" + WhichSide + "$Info_Text$"
-						+ "txt_Overs*GEOM*TEXT SET " + "TOP FOUR TEAMS QUALIFY FOR SEMI-FINALS" + "\0", print_writers);
+				for(VariousText vt : VariousText) {
+					if(vt.getVariousType().equalsIgnoreCase("POINTSTABLEFOOTER") && vt.getUseThis().toUpperCase().equalsIgnoreCase(CricketUtil.YES)) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$FooterAll$Text_In$Side" + WhichSide + "$Info_Text$"
+								+ "txt_Overs*GEOM*TEXT SET " + vt.getVariousText() + "\0", print_writers);
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$FooterAll$Text_In$Side" + WhichSide + "$Info_Text$"
+								+ "txt_Overs*GEOM*TEXT SET " + "TOP FOUR TEAMS QUALIFY FOR SEMI-FINALS" + "\0", print_writers);
+					}
+				}
 				break;
 			case "Shift_F11":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$FooterAll$Text_In$Side" + WhichSide + "$Select_FooterType"
