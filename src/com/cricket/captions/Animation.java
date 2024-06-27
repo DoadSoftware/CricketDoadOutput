@@ -4254,147 +4254,119 @@ public class Animation
 				} else if(whichside == 2) {
 					if(whatToProcess.contains(",")) {
 						switch(whatToProcess.split(",")[0]) {
-						case "F1": case "F2": case "F4": case "Control_F11": case "Shift_T": case "p": case "Control_p":
-						case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": case "Control_Shift_F1": case "Control_Shift_F2":
-							previewCommand = previewCommand + " Change$Header 1.100 Change$Header$Change_In 1.100 Change$Header$Change_Out 0.500";
+						case "F1": case "F2": case "F4": case "Control_F11": case "Shift_T": case "Control_p":
+						case "Control_Shift_F1": case "Control_Shift_F2":
+							previewCommand = previewCommand + "Change$Header 1.100 Change$Header$Change_In 1.100 Change$Header$Change_Out 0.500 ";
 							if(whichGraphicOnScreen.contains(",")) {
 								switch(whichGraphicOnScreen.split(",")[0]) {
 								case "F1":  
-									previewCommand = previewCommand + " Change$Batting_Card 1.180 Change$Batting_Card$Change_Out 0.540 Change$Batting_Card$Change_In 1.180 "
-											+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500";
+									previewCommand = previewCommand + "Change$Batting_Card 1.180 Change$Batting_Card$Change_Out 0.540 Change$Batting_Card$Change_In 1.180 ";
 									break;
 								case "F2":  
-									previewCommand = previewCommand + " Change$Bowling_Card 1.100 Change$Bowling_Card$Change_Out 0.500 Change$Bowling_Card$Change_In 1.100 "
-											+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500";
+									previewCommand = previewCommand + "Change$Bowling_Card 1.100 Change$Bowling_Card$Change_Out 0.500 Change$Bowling_Card$Change_In 1.100 ";
 									break;
 									
 								case "Control_Shift_F1":
 									if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("performer")) {
-										previewCommand = previewCommand + " Change$Batting_Card 1.180 Change$Batting_Card$Change_Out 0.540 Change$Batting_Card$Change_In 1.180 "
-												+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500 "
+										previewCommand = previewCommand + "Change$Batting_Card 1.180 Change$Batting_Card$Change_Out 0.540 Change$Batting_Card$Change_In 1.180 "
 												+ "Change$Extra_Info 1.300 Change$Extra_Info$Change_Out 0.600 Change$Extra_Info$Change_In 1.300 Anim_Highlights 0.700 "
 												+ "Anim_Highlights$Batting_Card 0.500 Anim_Highlights$Batting_Card$Side2 0.500 "
 												+ "Anim_Highlights$Batting_Card$Side2$" + caption.this_fullFramesGfx.batperformer_id + " 0.500";
 									}
 									else if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("partnership")) {
-										previewCommand = previewCommand + " Change$Batting_Card 1.180 Change$Batting_Card$Change_Out 0.540 Change$Batting_Card$Change_In 1.180 "
-												+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500 "
+										previewCommand = previewCommand + "Change$Batting_Card 1.180 Change$Batting_Card$Change_Out 0.540 Change$Batting_Card$Change_In 1.180 "
 												+ "Change$Extra_Info 1.300 Change$Extra_Info$Change_Out 0.600 Change$Extra_Info$Change_In 1.300";
 									}
 									break;
 									
 								case "Control_Shift_F2":
-									previewCommand = previewCommand + " Change$Bowling_Card 1.100 Change$Bowling_Card$Change_Out 0.500 Change$Bowling_Card$Change_In 1.100 "
-											+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500 "
+									previewCommand = previewCommand + "Change$Bowling_Card 1.100 Change$Bowling_Card$Change_Out 0.500 Change$Bowling_Card$Change_In 1.100 "
 											+ "Change$Extra_Info 1.300 Change$Extra_Info$Change_Out 0.600 Change$Extra_Info$Change_In 1.300 Anim_Highlights 0.700 "
 											+ "Anim_Highlights$Bowling_Card 0.500 Anim_Highlights$Bowling_Card$Side2 0.500 "
 											+ "Anim_Highlights$Bowling_Card$Side2$" + caption.this_fullFramesGfx.ballperformer_id + " 0.500";
 									break;
 									
 								case "F4":
-									previewCommand = previewCommand + " Change$Partnership_List 1.180 Change$Partnership_List$Change_Out 0.540 "
+									previewCommand = previewCommand + "Change$Partnership_List 1.180 Change$Partnership_List$Change_Out 0.540 "
 										+ "Change$Partnership_List$Change_In 1.180";
 									break;
 								case "Control_F11":
-									previewCommand = previewCommand + " Change$Summary 1.200 Change$Summary$Change_Out 0.480 Change$Summary$Change_In 1.200 "
-											+ "Change$Footer$Dynamic 0.500";
+									previewCommand = previewCommand + "Change$Summary 1.200 Change$Summary$Change_Out 0.480 Change$Summary$Change_In 1.200 "
+											+ "Change$Footer$Dynamic 0.500 ";
 									if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("trophy")) {
-										previewCommand = previewCommand + " Anin_Trophy$In_Out$In 3.000";
+										previewCommand = previewCommand + "Anin_Trophy$In_Out$In 3.000 ";
 									}
 									break;
 								case "Shift_T":
-									previewCommand = previewCommand + " Change$LineUp_Image 0.960 Change$LineUp_Image$Change_Out 0.440 Change$LineUp_Image$Change_In 0.960 "
-											+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500";
-									break;
-								case "p":
-									previewCommand = previewCommand + " Change$Group_Standings 1.040 Change$Group_Standings$Change_Out 0.624 "
-											+ "Change$Group_Standings$Change_In 1.040";
+									previewCommand = previewCommand + "Change$LineUp_Image 0.960 Change$LineUp_Image$Change_Out 0.440 Change$LineUp_Image$Change_In 0.960 "
+											+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500 ";
 									break;
 								case "Control_p":
-									previewCommand = previewCommand + " Change$Standings 1.020 Change$Standings$Change_Out 0.460 Change$Standings$Change_In 1.020 "
-											+ "Change$Footer$Dynamic 0.500 Anin_Trophy$In_Out$In 3.000";
-									break;
-								case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": //LeaderBoard Most - Runs,Wickets,Fours,Sixes 
-									previewCommand = previewCommand + " Change$Leader_Board 2.800 Change$Leader_Board$Change_Out 0.600 Change$Leader_Board$Change_In 2.800";
-									previewCommand = previewCommand + " LeaderBoardHighlight$Side2$Player"+whatToProcess.split(",")[2].split("_")[0] + " 2.700";
+									previewCommand = previewCommand + "Change$Standings 1.020 Change$Standings$Change_Out 0.460 Change$Standings$Change_In 1.020 "
+											+ "Change$Footer$Dynamic 0.500 Anin_Trophy$In_Out$In 3.000 ";
 									break;
 								}
 							}
 							if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase(whatToProcess.split(",")[0])) {
 								switch(whatToProcess.split(",")[0]) {
-								case "F1": case "F2": case "F4":
-									//previewCommand = previewCommand + " Header_Shrink 0.000 Header_Shrink$In 0.000";
-									switch(whatToProcess.split(",")[0]) {
-									case "F4":
-										if(caption.this_fullFramesGfx.whichSponsor != null && !caption.this_fullFramesGfx.whichSponsor.isEmpty()) {
-											previewCommand = previewCommand + " Change_Sponsor 1.000 Change_Sponsor$Change_Our 0.500 Change_Sponsor$Change_In 1.000";
-										}
-										break;
-									}
-									break;
-								case "Control_F11": case "p": case "Control_p":
-									//previewCommand = previewCommand + " Header_Shrink 0.500 Header_Shrink$In 0.500";
-									break;
-								}
-								switch(whatToProcess.split(",")[0]) {
 								case "F1":  
-									previewCommand = previewCommand + " Change$Batting_Card 1.180 Change$Batting_Card$Change_Out 0.540 Change$Batting_Card$Change_In 1.180 "
-											+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500";
+									previewCommand = previewCommand + "Change$Batting_Card 1.180 Change$Batting_Card$Change_Out 0.540 Change$Batting_Card$Change_In 1.180 "
+											+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500 ";
 									break;
 								case "F2":  
-									previewCommand = previewCommand + " Change$Bowling_Card 1.100 Change$Bowling_Card$Change_Out 0.500 Change$Bowling_Card$Change_In 1.100 "
-											+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500";
+									previewCommand = previewCommand + "Change$Bowling_Card 1.100 Change$Bowling_Card$Change_Out 0.500 Change$Bowling_Card$Change_In 1.100 "
+											+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500 ";
 									break;
 									
 								case "Control_Shift_F1":
 									if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("performer")) {
-										previewCommand = previewCommand + " Change$Batting_Card 1.180 Change$Batting_Card$Change_Out 0.540 Change$Batting_Card$Change_In 1.180 "
+										previewCommand = previewCommand + "Change$Batting_Card 1.180 Change$Batting_Card$Change_Out 0.540 Change$Batting_Card$Change_In 1.180 "
 												+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500 "
 												+ "Change$Extra_Info 1.300 Change$Extra_Info$Change_Out 0.600 Change$Extra_Info$Change_In 1.300 Anim_Highlights 0.700 "
 												+ "Anim_Highlights$Batting_Card 0.500 Anim_Highlights$Batting_Card$Side2 0.500 "
-												+ "Anim_Highlights$Batting_Card$Side2$" + caption.this_fullFramesGfx.batperformer_id + " 0.500";
+												+ "Anim_Highlights$Batting_Card$Side2$" + caption.this_fullFramesGfx.batperformer_id + " 0.500 ";
 									}
 									else if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("partnership")) {
-										previewCommand = previewCommand + " Change$Batting_Card 1.180 Change$Batting_Card$Change_Out 0.540 Change$Batting_Card$Change_In 1.180 "
+										previewCommand = previewCommand + "Change$Batting_Card 1.180 Change$Batting_Card$Change_Out 0.540 Change$Batting_Card$Change_In 1.180 "
 												+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500 "
-												+ "Change$Extra_Info 1.300 Change$Extra_Info$Change_Out 0.600 Change$Extra_Info$Change_In 1.300";
+												+ "Change$Extra_Info 1.300 Change$Extra_Info$Change_Out 0.600 Change$Extra_Info$Change_In 1.300 ";
 									}
 									break;
 									
 								case "Control_Shift_F2":
-									previewCommand = previewCommand + " Change$Bowling_Card 1.100 Change$Bowling_Card$Change_Out 0.500 Change$Bowling_Card$Change_In 1.100 "
+									previewCommand = previewCommand + "Change$Bowling_Card 1.100 Change$Bowling_Card$Change_Out 0.500 Change$Bowling_Card$Change_In 1.100 "
 											+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500 "
 											+ "Change$Extra_Info 1.300 Change$Extra_Info$Change_Out 0.600 Change$Extra_Info$Change_In 1.300 Anim_Highlights 0.700 "
 											+ "Anim_Highlights$Bowling_Card 0.500 Anim_Highlights$Bowling_Card$Side2 0.500 "
-											+ "Anim_Highlights$Bowling_Card$Side2$" + caption.this_fullFramesGfx.ballperformer_id + " 0.500";
+											+ "Anim_Highlights$Bowling_Card$Side2$" + caption.this_fullFramesGfx.ballperformer_id + " 0.500 ";
 									break;
 									
 								case "F4":
-									previewCommand = previewCommand + " Change$Partnership_List 1.180 Change$Partnership_List$Change_Out 0.540 "
-										+ "Change$Partnership_List$Change_In 1.180";
+									previewCommand = previewCommand + "Change$Partnership_List 1.180 Change$Partnership_List$Change_Out 0.540 "
+										+ "Change$Partnership_List$Change_In 1.180 ";
 									break;
 								case "Control_F11":
-									previewCommand = previewCommand + " Change$Summary 1.200 Change$Summary$Change_Out 0.480 Change$Summary$Change_In 1.200 "
-											+ "Change$Footer$Dynamic 0.500";
+									previewCommand = previewCommand + "Change$Summary 1.200 Change$Summary$Change_Out 0.480 Change$Summary$Change_In 1.200 "
+											+ "Change$Footer$Dynamic 0.500 ";
 									if(caption.this_fullFramesGfx.WhichType.equalsIgnoreCase("trophy")) {
-										previewCommand = previewCommand + " Anin_Trophy$In_Out$In 3.000";
+										previewCommand = previewCommand + "Anin_Trophy$In_Out$In 3.000 ";
 									}
 									break;
 								case "Shift_T":
-									previewCommand = previewCommand + " Change$LineUp_Image 0.960 Change$LineUp_Image$Change_Out 0.440 Change$LineUp_Image$Change_In 0.960 "
-											+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500";
+									previewCommand = previewCommand + "Change$LineUp_Image 0.960 Change$LineUp_Image$Change_Out 0.440 Change$LineUp_Image$Change_In 0.960 "
+											+ "Change$Sponsor 0.500 Change$Sponsor$Change_Out 0.300 Change$Sponsor$Change_In 0.500 ";
 									break;
 								case "p":
-									previewCommand = previewCommand + " Change$Group_Standings 1.040 Change$Group_Standings$Change_Out 0.624 "
-											+ "Change$Group_Standings$Change_In 1.040 Anin_Trophy$In_Out$In 0.0";
+									previewCommand = previewCommand + "Change$Group_Standings 1.040 Change$Group_Standings$Change_Out 0.624 "
+											+ "Change$Group_Standings$Change_In 1.040 Anin_Trophy$In_Out$In 0.0 ";
 									break;
 								case "Control_p":
-									previewCommand = previewCommand + " Change$Standings 1.020 Change$Standings$Change_Out 0.460 Change$Standings$Change_In 1.020 "
-											+ "Change$Footer$Dynamic 0.500 Anin_Trophy$In_Out$In 3.000";
+									previewCommand = previewCommand + "Change$Standings 1.020 Change$Standings$Change_Out 0.460 Change$Standings$Change_In 1.020 "
+											+ "Change$Footer$Dynamic 0.500 Anin_Trophy$In_Out$In 3.000 ";
 									break;
 								}
 							}
-							previewCommand = previewCommand + " Change$Footer 0.700 Change$Footer$Change_In 0.700 Change$Footer$Chnage_Out 0.500";
+							previewCommand = previewCommand + "Change$Footer 0.700 Change$Footer$Change_In 0.700 Change$Footer$Chnage_Out 0.500";
 //							System.out.println("Number of rows : " + caption.this_fullFramesGfx.numberOfRows);
 //							System.out.println("L Number of rows : " + lastNumberOfRows);
 //							if(caption.this_fullFramesGfx.numberOfRows != lastNumberOfRows) {
