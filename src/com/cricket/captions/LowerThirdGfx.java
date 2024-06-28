@@ -4412,24 +4412,33 @@ public class LowerThirdGfx
 		if(team == null) {
 			return "PopulateL3rdPlayerProfile: Team Id not found [" + player.getTeamId() + "]";
 		}
-		
+		System.out.println("which profile : "+WhichProfile);
+		for(StatsType st : statsTypes) {
+			System.out.println(st.getStats_short_name());
+		}
 		statsType = statsTypes.stream().filter(stype -> stype.getStats_short_name().equalsIgnoreCase(WhichProfile)).findAny().orElse(null);
-		if(statsTypes == null) {
+		if(statsType == null) {
 			return "PopulateL3rdPlayerProfile: Stats Type not found for profile [" + WhichProfile + "]";
 		}
+		System.out.println("STAT ID : "+statsType.getStats_id());
 		stat = statistics.stream().filter(st -> st.getPlayer_id() == player.getPlayerId() && statsType.getStats_id() == st.getStats_type_id()).findAny().orElse(null);
 		if(stat == null) {
 			return "populatePlayerProfile: No stats found for player id [" + player.getFull_name() + "] from database is returning NULL";
 		}
+		System.out.println("STAT TYPE : "+statsType.getStats_short_name());
 		stat.setStats_type(statsType);
 		
 		
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.BENGAL_T20:
 			switch (WhichProfile.toUpperCase()) {
-			case "DT20":
+			case "DT20": case "BPTL2024":
+				if(WhichProfile.equalsIgnoreCase("BPTL2024")) {
+					matchAllData.getSetup().setMatchType("BPTL2024");
+				}
 				stat = CricketFunctions.updateTournamentWithH2h(stat, headToHead, matchAllData);
 				stat = CricketFunctions.updateStatisticsWithMatchData(stat, matchAllData);
+				matchAllData.getSetup().setMatchType("DT20");
 				break;
 			}
 			break;
@@ -4442,7 +4451,7 @@ public class LowerThirdGfx
 		
 		double average = 0;
 		String Data = "",hundred = "",fifty = "",strikeRate = "",
-			batAverage = "",economy = "",best = "",runs = "" ;
+			batAverage = "",economy = "",best = "",runs = "",short_name = "";;
 		
 		if(stat.getRuns_conceded() == 0 || stat.getWickets() == 0) {
 			Data = "-";
@@ -4500,11 +4509,13 @@ public class LowerThirdGfx
 			switch (config.getBroadcaster().toUpperCase()) {
 			case Constants.BENGAL_T20:
 				if(WhichProfile.equalsIgnoreCase("DT20")) {
-					statsType.setStats_short_name("T20 CAREER");
+					short_name =  "T20 CAREER";
 				}else if(WhichProfile.equalsIgnoreCase("IPL")) {
-					statsType.setStats_short_name("IPL CAREER");
+					short_name =  "IPL CAREER";
+				}else if(WhichProfile.equalsIgnoreCase("BPTL2024")) {
+					short_name =  "BPTL 2024";
 				}
-				lowerThird = new LowerThird("", player.getFirstname(), surName,statsType.getStats_short_name(), "", "", 2,"",team.getTeamName4(),
+				lowerThird = new LowerThird("", player.getFirstname(), surName,short_name, "", "", 2,"",team.getTeamName4(),
 						new String[]{"MATCHES", "RUNS", "50s", "100s", "BEST", "S/R"},
 						new String[]{String.valueOf(stat.getMatches()), runs ,fifty, hundred, best,strikeRate},null,null,
 						new String[] {"-3.0","51.0","103.0","155.0","207.0","259.0"});
@@ -4536,14 +4547,31 @@ public class LowerThirdGfx
 			switch (config.getBroadcaster().toUpperCase()) {
 			case Constants.BENGAL_T20:
 				if(WhichProfile.equalsIgnoreCase("DT20")) {
-					statsType.setStats_short_name("T20 CAREER");
+					short_name = "T20 CAREER";
+					lowerThird = new LowerThird("", player.getFirstname(), surName,short_name, "", "", 2,"",team.getTeamName4(),
+							new String[]{"MATCHES", "WKTS", "AVG", "ECON", "5WI", "BEST"},new String[]{String.valueOf(stat.getMatches()), 
+							String.valueOf(stat.getWickets()),Data,economy, String.valueOf(stat.getPlus_5()), stat.getBest_figures()},null,null,
+							new String[] {"-3.0","51.0","103.0","155.0","207.0","259.0"});
 				}else if(WhichProfile.equalsIgnoreCase("IPL")) {
-					statsType.setStats_short_name("IPL CAREER");
+					short_name = "IPL CAREER";
+					lowerThird = new LowerThird("", player.getFirstname(), surName,short_name, "", "", 2,"",team.getTeamName4(),
+							new String[]{"MATCHES", "WKTS", "AVG", "ECON", "5WI", "BEST"},new String[]{String.valueOf(stat.getMatches()), 
+							String.valueOf(stat.getWickets()),Data,economy, String.valueOf(stat.getPlus_5()), stat.getBest_figures()},null,null,
+							new String[] {"-3.0","51.0","103.0","155.0","207.0","259.0"});
+				}else if(WhichProfile.equalsIgnoreCase("BPTL2024")) {
+					short_name = "BPTL 2024";
+					String bestFig = "";
+					if(stat.getBest_figures().contains("-")) {
+						bestFig = stat.getBest_figures();
+					}else {
+						bestFig = "-";
+					}
+					lowerThird = new LowerThird("", player.getFirstname(), surName,short_name, "", "", 2,"",team.getTeamName4(),
+							new String[]{"MATCHES", "WKTS", "AVG", "ECON", "BEST"},new String[]{String.valueOf(stat.getMatches()), 
+							String.valueOf(stat.getWickets()),Data,economy, bestFig},null,null,
+							new String[] {"-3.0","66.0","132.0","198.0","260.0"});
 				}
-				lowerThird = new LowerThird("", player.getFirstname(), surName,statsType.getStats_short_name(), "", "", 2,"",team.getTeamName4(),
-						new String[]{"MATCHES", "WKTS", "AVG", "ECON", "5WI", "BEST"},new String[]{String.valueOf(stat.getMatches()), 
-						String.valueOf(stat.getWickets()),Data,economy, String.valueOf(stat.getPlus_5()), stat.getBest_figures()},null,null,
-						new String[] {"-3.0","51.0","103.0","155.0","207.0","259.0"});
+				
 				break;
 
 			default:

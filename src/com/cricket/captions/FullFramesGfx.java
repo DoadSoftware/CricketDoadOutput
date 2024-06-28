@@ -222,6 +222,9 @@ public class FullFramesGfx
 		
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.BENGAL_T20:
+			if(WhichProfile.equalsIgnoreCase("BPTL2024")) {
+				matchAllData.getSetup().setMatchType("BPTL2024");
+			}
 			stat = CricketFunctions.updateTournamentWithH2h(stat, headToHead, matchAllData);
 			stat = CricketFunctions.updateStatisticsWithMatchData(stat, matchAllData);
 			break;
@@ -1923,6 +1926,9 @@ public class FullFramesGfx
 					if(stat.getStats_type().getStats_short_name().equalsIgnoreCase("DT20")) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Side" + WhichSide +
 								"$Data$Title$txt_Title*GEOM*TEXT SET " + "T20 CAREER" + "\0", print_writers);
+					}else if(stat.getStats_type().getStats_short_name().equalsIgnoreCase("BPTL2024")) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Side" + WhichSide +
+								"$Data$Title$txt_Title*GEOM*TEXT SET " + "BPTL 2024" + "\0", print_writers);
 					}else {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Side" + WhichSide +
 								"$Data$Title$txt_Title*GEOM*TEXT SET " + "IPL CAREER" + "\0", print_writers);
@@ -1935,6 +1941,9 @@ public class FullFramesGfx
 					if(stat.getStats_type().getStats_short_name().equalsIgnoreCase("DT20")) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Side" + WhichSide +
 								"$Data$Title$txt_Title*GEOM*TEXT SET " + "T20 CAREER" + "\0", print_writers);
+					}else if(stat.getStats_type().getStats_short_name().equalsIgnoreCase("BPTL2024")) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Side" + WhichSide +
+								"$Data$Title$txt_Title*GEOM*TEXT SET " + "BPTL 2024" + "\0", print_writers);
 					}else {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Side" + WhichSide +
 								"$Data$Title$txt_Title*GEOM*TEXT SET " + "IPL CAREER" + "\0", print_writers);
