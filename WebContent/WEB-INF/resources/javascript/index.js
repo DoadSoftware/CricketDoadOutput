@@ -4380,6 +4380,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 			switch($('#selected_broadcaster').val().toUpperCase()){
 				case 'BENGAL-T20':
 					option = document.createElement('option');
+					option.value = 'BPTL2024';
+					option.text = 'BPTL2024';
+					select.appendChild(option);
+									
+					option = document.createElement('option');
 					option.value = 'DT20';
 					option.text = 'DT20';
 					select.appendChild(option);
@@ -4849,6 +4854,10 @@ function addItemsToList(whatToProcess,dataToProcess)
 			switch($('#selected_broadcaster').val().toUpperCase()){
 				case 'BENGAL-T20':
 					option = document.createElement('option');
+					option.value = 'BPTL2024';
+					option.text = 'BPTL2024';
+					select.appendChild(option);
+					option = document.createElement('option');
 					option.value = 'DT20';
 					option.text = 'DT20';
 					select.appendChild(option);
@@ -4954,11 +4963,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 				option.text = bug.prompt;
 				select.appendChild(option);
 			});
-			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
 			row.insertCell(cellCount).appendChild(select);
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
+			$('#selectBugdb').select2();
 			break;
 		}
 		

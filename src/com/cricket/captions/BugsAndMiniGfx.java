@@ -167,6 +167,31 @@ public class BugsAndMiniGfx
 		if(team == null) {
 			return "Can't find team of the player";
 		}
+//		int count = 0;
+//		String MatchName = "";
+//		
+//		for(HeadToHead h2h : headToHead) {
+//			if(h2h.getPlayerId() == player.getPlayerId() && h2h.getTeam().getTeamName4().equalsIgnoreCase(team.getTeamName4())) {
+//				MatchName = h2h.getMatchFileName();
+//				if(h2h.getInningStarted().contains("Y")) {
+//					System.out.println(h2h.getMatchFileName() + " RUNS : " + h2h.getRuns());
+//				}else {
+//					System.out.println(h2h.getMatchFileName() +  " - DNB");
+//				}
+//				count = 0;
+//			}else if(h2h.getTeam().getTeamName4().equalsIgnoreCase(team.getTeamName4())) {
+//				if(count == 11) {
+//					System.out.println(h2h.getMatchFileName() +  " - DNP");
+//					count = 0;
+//				}else if(!MatchName.equalsIgnoreCase(h2h.getMatchFileName()) && count < 11) {
+//					MatchName = h2h.getMatchFileName();
+//					count = 1;
+//				}else {
+//					count++;
+//				}
+//			}
+//		}
+		
 		if(whatToProcess.split(",")[0].equalsIgnoreCase("Alt_F1")) {
 			griff = CricketFunctions.getBatBallGriffData(CricketUtil.BATSMAN,Integer.valueOf(whatToProcess.split(",")[2]), Teams, tournament_matches, matchAllData);
 		}else if(whatToProcess.split(",")[0].equalsIgnoreCase("Alt_F2")) {

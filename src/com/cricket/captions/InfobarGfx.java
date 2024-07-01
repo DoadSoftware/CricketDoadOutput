@@ -5405,6 +5405,19 @@ public class InfobarGfx
 							+ "$Select_Type$Equation$Top_Line$Stat_2$txt_DLS*GEOM*TEXT SET \0", print_writers);
 				}
 				
+				if(Double.valueOf(CricketFunctions.generateRunRate(CricketFunctions.getRequiredRuns(matchAllData),0,CricketFunctions.getRequiredBalls(matchAllData),2,matchAllData)) < 3.0 
+						|| Double.valueOf(CricketFunctions.generateRunRate(CricketFunctions.getRequiredRuns(matchAllData),0,CricketFunctions.getRequiredBalls(matchAllData),2,matchAllData))>36.0) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
+							+ "$Select_Type$Equation$Bottom_Line*ACTIVE SET 0 "  + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
+							+ "$Select_Type$Equation$Top_Line*TRANSFORMATION*POSITION*Y SET -1.0 "  + "\0", print_writers);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
+							+ "$Select_Type$Equation$Bottom_Line*ACTIVE SET 1 "  + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
+							+ "$Select_Type$Equation$Top_Line*TRANSFORMATION*POSITION*Y SET 5.0 "  + "\0", print_writers);
+				}
+				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide 
 						+ "$Select_Type$Equation$Bottom_Line$txt_Title*GEOM*TEXT SET REQUIRED RUN RATE : " + CricketFunctions.generateRunRate(CricketFunctions.getRequiredRuns(matchAllData),
 								0,CricketFunctions.getRequiredBalls(matchAllData),2,matchAllData) + "\0", print_writers);
