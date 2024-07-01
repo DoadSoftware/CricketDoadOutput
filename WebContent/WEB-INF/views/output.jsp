@@ -105,7 +105,7 @@
     </div>
 </div>
 <form:form name="output_form" method="POST" action="output" enctype="multipart/form-data">
-<div class="content py-5" style="background-color: #EAE8FF; color: #2E008B">
+<div class="content py-5" style="background-color: #EAE8FF; color: #2E008B;">
   <div class="container">
 	<div class="row">
 	 <div class="col-md-8 offset-md-2">

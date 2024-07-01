@@ -44,6 +44,7 @@ import com.cricket.captions.InfobarGfx;
 import com.cricket.captions.LowerThirdGfx;
 import com.cricket.captions.Scene;
 import com.cricket.containers.Infobar;
+import com.cricket.containers.Stats;
 import com.cricket.model.BestStats;
 import com.cricket.model.Bugs;
 import com.cricket.model.Commentator;
@@ -62,6 +63,7 @@ import com.cricket.model.Player;
 import com.cricket.model.Setup;
 import com.cricket.model.Staff;
 import com.cricket.model.Statistics;
+import com.cricket.model.StatsType;
 import com.cricket.model.Team;
 import com.cricket.model.Tournament;
 import com.cricket.model.VariousText;
@@ -142,16 +144,16 @@ public class IndexController
 		    }
 		}));
 		
-		if(cricket_matches == null || cricket_matches.size()<=0) {
-			cricket_matches = CricketFunctions.getTournamentMatches(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
-					CricketUtil.MATCHES_DIRECTORY).listFiles(new FileFilter() {
-				@Override
-			    public boolean accept(File pathname) {
-			        String name = pathname.getName().toLowerCase();
-			        return name.endsWith(".json") && pathname.isFile();
-			    }
-			}), cricketService);
-		}
+//		if(cricket_matches == null || cricket_matches.size()<=0) {
+//			cricket_matches = CricketFunctions.getTournamentMatches(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
+//					CricketUtil.MATCHES_DIRECTORY).listFiles(new FileFilter() {
+//				@Override
+//			    public boolean accept(File pathname) {
+//			        String name = pathname.getName().toLowerCase();
+//			        return name.endsWith(".json") && pathname.isFile();
+//			    }
+//			}), cricketService);
+//		}
 		
 //		headToHead = CricketFunctions.extractHeadToHead(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
 //				CricketUtil.HEADTOHEAD_DIRECTORY).listFiles(), cricketService);
@@ -571,6 +573,44 @@ public class IndexController
 	public String expiryDate(){
 		return new String();
 	}
+	
+	public static List<Stats> getPlayerFromMatchData(String whatToProcess, MatchAllData match)
+	{
+		List<Stats> stats = new ArrayList<Stats>();
+		
+		switch(whatToProcess) {
+		case "Shift_!":
+			for(Player plyr : match.getSetup().getHomeSquad()) {
+				stats.add(new Stats(plyr.getPlayerId(), match.getSetup().getHomeTeam(), plyr, new ArrayList<Statistics>()));
+			}
+			for(Player plyr : match.getSetup().getHomeSubstitutes()) {
+				stats.add(new Stats(plyr.getPlayerId(), match.getSetup().getHomeTeam(), plyr, new ArrayList<Statistics>()));
+			}
+			for(Player plyr : match.getSetup().getAwaySquad()) {
+				stats.add(new Stats(plyr.getPlayerId(), match.getSetup().getAwayTeam(), plyr, new ArrayList<Statistics>()));
+			}
+			for(Player plyr : match.getSetup().getAwaySubstitutes()) {
+				stats.add(new Stats(plyr.getPlayerId(), match.getSetup().getAwayTeam(), plyr, new ArrayList<Statistics>()));
+			}
+			break;
+		case "Shift_~":
+			for(Player plyr : match.getSetup().getHomeSquad()) {
+				stats.add(new Stats(plyr.getPlayerId(), match.getSetup().getHomeTeam(), plyr, null, null));
+			}
+			for(Player plyr : match.getSetup().getHomeSubstitutes()) {
+				stats.add(new Stats(plyr.getPlayerId(), match.getSetup().getHomeTeam(), plyr, null, null));
+			}
+			for(Player plyr : match.getSetup().getAwaySquad()) {
+				stats.add(new Stats(plyr.getPlayerId(), match.getSetup().getAwayTeam(), plyr, null, null));
+			}
+			for(Player plyr : match.getSetup().getAwaySubstitutes()) {
+				stats.add(new Stats(plyr.getPlayerId(), match.getSetup().getAwayTeam(), plyr, null, null));
+			}
+			break;
+		}
+		return stats;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public <T> List<T> GetGraphicOption(String whatToProcess) throws IOException, NumberFormatException, IllegalAccessException, 
 	InvocationTargetException, InterruptedException, ParseException, CloneNotSupportedException, JAXBException, UnsupportedAudioFileException, 
@@ -598,6 +638,51 @@ public class IndexController
 			return (List<T>) CricketFunctions.processAllPott(cricketService);
 		case "Alt_Shift_R":
 			return (List<T>) session_team;
+		case "Shift_!":
+			List<Stats> database_statistics = new ArrayList<Stats>();
+			database_statistics = getPlayerFromMatchData(whatToProcess ,session_match);
+			
+			for(Statistics stats : session_statistics) {
+				for(int i=0;i<=database_statistics.size()-1;i++) {
+					if(database_statistics.get(i).getPlayerId() == stats.getPlayer_id()) {
+						stats.setStats_type(cricketService.getStatsType(stats.getStats_type_id()));
+						database_statistics.get(i).getStatsList().add(stats);
+					}
+				}
+			}
+			
+			for(Stats stat : database_statistics) {
+				if(!stat.getStatsList().isEmpty()) {
+					for(Statistics st : stat.getStatsList()) {
+						System.out.println("ID : " + stat.getPlayerId() + " - " + st.toString());
+					}
+				}
+			}
+			
+			return (List<T>) database_statistics;
+		case "Shift_~":
+			List<Stats> statistics = new ArrayList<Stats>();
+			statistics = getPlayerFromMatchData(whatToProcess ,session_match);
+			
+			for(Statistics stats : session_statistics) {
+				for(int i=0;i<=statistics.size()-1;i++) {
+					if(statistics.get(i).getPlayerId() == stats.getPlayer_id()) {
+						stats.setStats_type(cricketService.getStatsType(stats.getStats_type_id()));
+						stats = CricketFunctions.updateTournamentWithH2h(stats, headToHead, session_match);
+						stats = CricketFunctions.updateStatisticsWithMatchData(stats, session_match);
+						statistics.get(i).setStats(stats);
+					}
+				}
+			}
+			for(Tournament tour : CricketFunctions.extractTournamentData("CURRENT_MATCH_DATA", false, headToHead,cricketService, session_match, past_tournament_stats)) {
+				for(int i=0;i<=statistics.size()-1;i++) {
+					if(tour.getPlayerId() == statistics.get(i).getPlayerId()) {
+						statistics.get(i).setTournament(tour);
+					}
+				}
+			}
+			
+			return (List<T>) statistics;
 		case "z": case "x": case "c": case "v": 
 			List<Tournament> tournament_stats = CricketFunctions.extractTournamentData("CURRENT_MATCH_DATA", false, headToHead, cricketService, 
 					session_match, past_tournament_stats);

@@ -94,7 +94,8 @@ public class BugsAndMiniGfx
 		if(team == null) {
 			return "Can't find team of the player";
 		}
-		batter_data = CricketFunctions.getBowlerVsAllBat(Integer.valueOf(whatToProcess.split(",")[2]), inning.getInningNumber(), cricketService.getAllPlayer(), matchAllData);
+//		batter_data = CricketFunctions.getBowlerVsAllBat(Integer.valueOf(whatToProcess.split(",")[2]), inning.getInningNumber(), 
+//				cricketService.getAllPlayer(), matchAllData);
 		for(BestStats bs : batter_data) {
 			System.out.println("NAME : "+bs.getPlayer().getFull_name()+" : BALLS : "+bs.getBalls()+" : RUNS : "+bs.getRuns());
 		}

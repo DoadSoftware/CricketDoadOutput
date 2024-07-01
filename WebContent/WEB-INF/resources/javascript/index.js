@@ -158,6 +158,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 		case '7':
 			processCricketProcedures('HEAD_TO_HEAD_FILE');
 			break;
+			
 		case 'SPEED':
 			processCricketProcedures('SHOW_SPEED');
 			break;
@@ -508,10 +509,32 @@ function setDropdownOptionForWicketSequence(whichIndex)
 	selected_options[0] = document.getElementById('which_inning').value;
 	selected_options[whichIndex+1] = $('#selectWicketSequence option:selected').val();
 }
+function getStrikeRate(totalRunsScored, totalBallsFaced, numberOfDecimals, defaultValue) {
+    if (totalBallsFaced <= 0) {
+        return defaultValue;
+    } else {
+        if (numberOfDecimals > 0) {
+            return ((totalRunsScored*100) / totalBallsFaced).toFixed(numberOfDecimals);
+        } else {
+            return defaultValue;
+        }
+    }
+}
+function getEconomy(totalRunsConceded, totalBallsBowled, numberOfDecimals, defaultValue) {
+    if (totalBallsBowled <= 0) {
+        return defaultValue;
+    } else {	
+        if (numberOfDecimals > 0) {
+            return ((totalRunsConceded / totalBallsBowled) * 6).toFixed(numberOfDecimals);
+        } else {
+            return defaultValue;
+		}
+ 	}
+ }
 function addItemsToList(whatToProcess,dataToProcess)
 {
-	var select,option,header_text,div,table,tbody,row;
-	var cellCount = 0;
+	var select,option,header_text,div,table,table_data,tbody,row;
+	var cellCount = 0,row_count=0;
 	
 	switch(whatToProcess) {	
 /*	case 'HELP-FILE':
@@ -562,6 +585,36 @@ function addItemsToList(whatToProcess,dataToProcess)
 			}
 		}
 		break;*/
+	/*case '8':
+		$("#captions_div").hide();
+		$('#select_graphic_options_div').empty();
+		
+		header_text = document.createElement('h6');
+		header_text.innerHTML = 'Select Graphic Options';
+		document.getElementById('select_graphic_options_div').appendChild(header_text);
+		
+		table_data = document.createElement('table');
+		table_data.setAttribute('class', 'table table-bordered');
+		tbody = document.createElement('tbody');
+		table_data.appendChild(tbody);
+		
+		dataToProcess.forEach(function(playerstats,index,arr1){
+			row = tbody.insertRow(tbody.rows.length);
+			for(var j = 1; j <= 2; j++){
+				text = document.createElement('text');
+				switch(j){
+					case 1:
+						alert(playerstats.playerId);
+						text.innerHTML = playerstats.playerId ;
+						break;
+				}
+				row.insertCell(j-1).appendChild(text);
+			}
+			//alert(playerstats.playerId);
+		});
+		
+		document.getElementById('select_graphic_options_div').appendChild(table_data);
+		break;*/
 		
 	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'Alt_w': case 'Control_j': case 'F8': case 'F9': case 'F10': case 'F7': case 'F11':
 	case 'Control_F5': case 'Control_F9': case 'Shift_T': case 'u': case 'p': case 'Control_p': case 'Control_d': case 'Control_e':
@@ -574,9 +627,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Alt_F6': case 'Shift_A': case 'Shift_R': case 'Control_Shift_F1': case 'Control_Shift_D': case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Control_Shift_F2':
 	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_F4': case 'Alt_Shift_C': case 'Control_Shift_L':
 	case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_E': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I': case 'Control_F11': case 'Control_Shift_M':
-	case 'Alt_Shift_R': case 'Control_Shift_U': case 'Control_Shift_V': case 'Control_4':
+	case 'Alt_Shift_R': case 'Control_Shift_U': case 'Control_Shift_V': case 'Control_4': case 'Shift_~': case 'Shift_!':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
-		
 		$("#captions_div").hide();
 		$('#select_graphic_options_div').empty();
    		initialiseSelectedOptionsList();
@@ -596,6 +648,129 @@ function addItemsToList(whatToProcess,dataToProcess)
 		row = tbody.insertRow(tbody.rows.length);
 		
 		switch(whatToProcess) {
+		case 'Shift_!':
+			header_text.innerHTML = 'PLAYER CAREER STATS';
+			
+			thead = document.createElement('thead');
+			//tbody = document.createElement('tbody');
+			tr = document.createElement('tr');
+			for (var j = 0; j <= 4; j++) {
+			    th = document.createElement('th'); // Column
+				th.scope = 'col';
+			    switch (j) {
+				case 0:
+				    th.innerHTML = 'TEAM/PLAYER';
+					break;
+				case 1:
+					th.innerHTML = 'BAT T20I STATS (M|R|50/100|SR)';
+					break;
+				case 2:
+					th.innerHTML = 'BALL T20I STATS (M|W|R|Econ.)';
+					break;
+				case 3:
+					th.innerHTML = 'BAT ODI STATS (M|R|50/100|SR)';
+					break;
+				case 4:
+					th.innerHTML = 'BALL ODI STATS (M|W|R|Econ.)';
+					break;
+				}	
+				tr.appendChild(th);
+			}
+			thead.appendChild(tr);
+			table.appendChild(thead);
+			alert(dataToProcess.length);
+			for(var i = 0; i <= dataToProcess.length - 1; i++){
+				row = tbody.insertRow(tbody.rows.length);
+				for(var j = 0; j <= 4; j++){
+					text = document.createElement('text');
+					switch(j){
+					case 0:
+						text.innerHTML = dataToProcess[i].playerId + ' - ' + dataToProcess[i].player.full_name + ' (' + dataToProcess[i].team.teamName4 + ')';
+						break;
+					case 1: case 2: case 3: case 4:
+						text.innerHTML = 'NO DATA IN DB' ;
+						break;
+					}
+					row.insertCell(j).appendChild(text);
+				}
+			}
+			break;
+		case 'Shift_~':
+			header_text.innerHTML = 'PLAYER STATS';
+			
+			thead = document.createElement('thead');
+			//tbody = document.createElement('tbody');
+			tr = document.createElement('tr');
+			for (var j = 0; j <= 4; j++) {
+			    th = document.createElement('th'); // Column
+				th.scope = 'col';
+			    switch (j) {
+				case 0:
+				    th.innerHTML = 'TEAM/PLAYER';
+					break;
+				case 1:
+					th.innerHTML = 'BAT CAREER STATS (M|R|50/100|SR)';
+					break;
+				case 2:
+					th.innerHTML = 'BALL CAREER STATS (M|W|R|Econ.)';
+					break;
+				case 3:
+					th.innerHTML = 'BAT THIS SERIES (M|R|50/100|SR)';
+					break;
+				case 4:
+					th.innerHTML = 'BALL THIS SERIES (M|W|R|Econ.)';
+					break;
+				}	
+				tr.appendChild(th);
+			}
+			thead.appendChild(tr);
+			table.appendChild(thead);
+			
+			for(var i = 0; i <= dataToProcess.length - 1; i++){
+				row = tbody.insertRow(tbody.rows.length);
+				for(var j = 0; j <= 4; j++){
+					text = document.createElement('text');
+					switch(j){
+					case 0:
+						text.innerHTML = dataToProcess[i].playerId + ' - ' + dataToProcess[i].player.full_name + ' (' + dataToProcess[i].team.teamName4 + ')';
+						break;
+					case 1:
+						if(dataToProcess[i].stats != null) {
+							text.innerHTML = dataToProcess[i].stats.matches + ' | ' + dataToProcess[i].stats.runs + ' | ' + dataToProcess[i].stats.fifties + '/' +
+								dataToProcess[i].stats.hundreds + ' | ' + getStrikeRate(dataToProcess[i].stats.runs,dataToProcess[i].stats.balls_faced,1,'-') ;
+						}else {
+							text.innerHTML = 'NO DATA IN DB' ;
+						}
+						break;
+					case 2:
+						if(dataToProcess[i].stats != null) {
+							text.innerHTML = dataToProcess[i].stats.matches + ' | ' + dataToProcess[i].stats.wickets + ' | ' + dataToProcess[i].stats.runs_conceded + 
+								' | ' + getEconomy(dataToProcess[i].stats.runs_conceded,dataToProcess[i].stats.balls_bowled,2,'-');
+						}else {
+							text.innerHTML = 'NO DATA IN DB' ;
+						}
+						break;
+					case 3:
+						if(dataToProcess[i].tournament != null) {
+							text.innerHTML = dataToProcess[i].tournament.matches + ' | ' + dataToProcess[i].tournament.runs + ' | ' + dataToProcess[i].tournament.fifty + '/' 
+								+ dataToProcess[i].tournament.hundreds + ' | ' + getStrikeRate(dataToProcess[i].tournament.runs,dataToProcess[i].tournament.ballsFaced,1,'-');
+						}else {
+							text.innerHTML = 'NO DATA' ;
+						}
+						break;
+					case 4:
+						if(dataToProcess[i].tournament != null) {
+							text.innerHTML = dataToProcess[i].tournament.matches + ' | ' + dataToProcess[i].tournament.wickets + ' | ' + dataToProcess[i].tournament.runsConceded + 
+								' | ' + getEconomy(dataToProcess[i].tournament.runsConceded,dataToProcess[i].tournament.ballsBowled,2,'-');
+						}else {
+							text.innerHTML = 'NO DATA' ;
+						}
+						break;
+					}
+					row.insertCell(j).appendChild(text);
+				}
+			}
+			break;
 		case 'Alt_Shift_R':
 			header_text.innerHTML = 'TEAM FIXTURES/RESULTS';
 			
@@ -4801,35 +4976,51 @@ function addItemsToList(whatToProcess,dataToProcess)
 	    	cellCount = cellCount + 1;
 		}
 		
-		option = document.createElement('input');
-		option.type = 'button';
-		option.name = 'populate_btn';
-		option.value = 'Populate Data';
-	    option.id = option.name;
-	    option.setAttribute('onclick','processUserSelection(this)');
-	    
-	    div = document.createElement('div');
-	    div.append(option);
-	    
-
-		option = document.createElement('input');
-		option.type = 'button';
-		option.name = 'cancel_graphics_btn';
-		option.id = option.name;
-		option.value = 'Cancel';
-		option.setAttribute('onclick','processUserSelection(this)');
-	    div.append(option);
-
-		option = document.createElement('input');
-		option.type = 'hidden';
-		option.name = 'key_press_hidden_input';
-		option.id = option.name;
-		option.value = whatToProcess;
-
-	    div.append(option);
-	    
-	    row.insertCell(cellCount).appendChild(div);
-	    cellCount = cellCount + 1;
+		switch(whatToProcess){
+			case 'Control_m': case 'F4': case 'F5': case 'F6': case 'Alt_w': case 'Control_j': case 'F8': case 'F9': case 'F10': case 'F7': case 'F11':
+			case 'Control_F5': case 'Control_F9': case 'Shift_T': case 'u': case 'p': case 'Control_p': case 'Control_d': case 'Control_e': case 'z': 
+			case 'x': case 'c': case 'v': case 'Shift_F11': case 'Control_y': case 'Alt_F8': case 'Alt_F1': case 'Alt_F2': case 'Shift_K': case 'Shift_O': 
+			case 'k': case 'g': case 'y': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q': case 'j': case 'Shift_F6': 
+			case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l': case 'Shift_E': //case 'Alt_F9':
+			case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9': case 'Alt_0':
+			case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10': case 'Alt_d': case 'Shift_F4': case 'Alt_a': case 'Alt_s': case 'Shift_P': 
+			case 'Shift_Q': case 'Alt_z': case 'Control_c': case 'Control_v': case 'Control_z': case 'Control_x': case 'Alt_q': case 'Shift_F': case 'Alt_F6': 
+			case 'Shift_A': case 'Shift_R': case 'Control_Shift_F1': case 'Control_Shift_D': case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Control_Shift_F2':
+			case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_F4': case 'Alt_Shift_C': case 'Control_Shift_L':
+			case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_E': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I': 
+			case 'Control_F11': case 'Control_Shift_M': case 'Alt_Shift_R': case 'Control_Shift_U': case 'Control_Shift_V': case 'Control_4':
+				
+				option = document.createElement('input');
+				option.type = 'button';
+				option.name = 'populate_btn';
+				option.value = 'Populate Data';
+			    option.id = option.name;
+			    option.setAttribute('onclick','processUserSelection(this)');
+			    
+			    div = document.createElement('div');
+			    div.append(option);
+			    
+		
+				option = document.createElement('input');
+				option.type = 'button';
+				option.name = 'cancel_graphics_btn';
+				option.id = option.name;
+				option.value = 'Cancel';
+				option.setAttribute('onclick','processUserSelection(this)');
+			    div.append(option);
+		
+				option = document.createElement('input');
+				option.type = 'hidden';
+				option.name = 'key_press_hidden_input';
+				option.id = option.name;
+				option.value = whatToProcess;
+		
+			    div.append(option);
+			    
+			    row.insertCell(cellCount).appendChild(div);
+			    cellCount = cellCount + 1;
+			    break;
+		}
 		
 		document.getElementById('select_graphic_options_div').style.display = '';
 		break;

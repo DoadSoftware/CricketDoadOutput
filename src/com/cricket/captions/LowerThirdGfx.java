@@ -148,7 +148,7 @@ public class LowerThirdGfx
 		if(inning == null) {
 			return "populateL3rdComparison: Inning is Not Found";
 		}
-		List<String> inning_comparison_stats = CricketFunctions.TeamStatsComparison(matchAllData);
+		List<String> inning_comparison_stats = CricketFunctions.TeamStatsComparison(matchAllData.getEventFile().getEvents());
 		
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.BENGAL_T20:
