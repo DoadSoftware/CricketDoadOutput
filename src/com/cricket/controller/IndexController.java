@@ -160,7 +160,12 @@ public class IndexController
 
 		return "initialise";
 	}
-
+	@RequestMapping(value = {"/Help"}, method={RequestMethod.GET,RequestMethod.POST}) 
+		public String HelpPage()  
+		{
+			return "Help";
+		}
+		
 	@RequestMapping(value = {"/output"}, method={RequestMethod.GET,RequestMethod.POST},
 		consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}) 
 	public String outputPage(ModelMap model,
@@ -307,7 +312,7 @@ public class IndexController
 				new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.CONFIGURATIONS_DIRECTORY + valueToProcess));
 			
 			return JSONObject.fromObject(session_configuration).toString();
-			
+		
 		case "RE_READ_DATA":
 			
 			headToHead = CricketFunctions.extractHeadToHead(session_match, cricketService);

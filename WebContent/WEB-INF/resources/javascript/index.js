@@ -31,7 +31,7 @@ function onPageLoadEvent(whichPage){
 			document.getElementById('inning2_teamScore_lbl').style.color = 'white';
 			document.getElementById('inning1_teamScore_lbl').style.color = '';
 		}
-		addItemsToList('HELP-FILE',session_match);
+		//addItemsToList('HELP-FILE',session_match);
 		break;
 	}
 }
@@ -120,7 +120,7 @@ function initialiseForm(whatToProcess,dataToProcess)
 }
 function processUserSelection(whichInput)
 {
-	switch ($(whichInput).attr('name')) {
+  switch ($(whichInput).attr('name')) {
 	case 'load_scene_btn':
       	document.initialise_form.method = 'post';
       	document.initialise_form.action = 'output';
@@ -147,6 +147,8 @@ function processUserSelection(whichInput)
 
 function processUserSelectionData(whatToProcess,dataToProcess)
 {
+	
+
 	switch (whatToProcess) {
 	case 'IMPACT-CHANGE-ON':
 		processCricketProcedures('IMPACT-CHANGE-ON');
@@ -239,8 +241,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			if(confirm('Animate Out Infobar? ') == true){
 				processCricketProcedures('ANIMATE-OUT-IDENT');
 			}
-			break;	
-		
+			break;
 		default:
 			
 			switch($('#which_inning').val()) {
@@ -536,7 +537,241 @@ function addItemsToList(whatToProcess,dataToProcess)
 	var select,option,header_text,div,table,table_data,tbody,row;
 	var cellCount = 0,row_count=0;
 	
-	switch(whatToProcess) {	
+	switch(whatToProcess) {
+	case 'HELP-FILE':
+		$("#captions_div").hide();
+		$('#select_graphic_options_div').empty();
+		
+		let sections = [
+		    { title: 'INFOBAR', captions: [
+		        ['FOUR DIRECTOR', 'F'],
+		        ['FREE HIT DIRECTOR', 'I'],
+		        ['SIX DIRECTOR', 'S'],
+		        ['POINTS TABLE', 'CTRL+S'],
+		        ['WICKET DIRECTOR', 'W'],
+		        ['NINE DIRECTOR', '0'],
+		        ['INFOBAR IN', 'F12'],
+		        ['INFOBAR_SPONSOR', ']'],
+		        ['HAT-TRICK DIRECTOR', ';'],
+		        ['TICKER PUSH OUT', 'PageDown/ARROW DOWN'],
+		        ['TICKER PUSH IN', 'PageUp/ARROW UP'],
+		        ['CHALLENGE RUNS', 'ALT+C'],
+		        ['POWER PLAY IN/OUT', 'ALT+E'],
+		        ['TICKER SHRINK', 'ALT+F'],
+		        ['COMMENTATOR', 'ALT+0'],
+		        ['BOTTOM LEFT SECTION', 'ALT+1'],
+		        ['MIDDLE SECTION', 'ALT+2'],
+		        ['BAT PROFILE', 'ALT+3'],
+		        ['BOWL PROFILE', 'ALT+4'],
+		        ['LAST X BALLS', 'ALT+5'],
+		        ['BAT + SPONSOR', 'ALT+6'],
+		        ['BOTTOM RIGHT SECTION', 'ALT+7'],		        
+		        ['RIGHT SECTION, RIGHT TOP, TICKER TIMELINE', 'ALT+8'],
+		        ['FREE TEXT INFO DB', 'ALT+9'],
+		        ['INFOBAR IDENT DATA', 'SHIFT+F12'],
+		        ['INFOBAR IDENT', 'CTRL+F12'],
+		        ['AnimateOut Infobar-Right', 'CTRL+0'],
+		        ['BONUS', 'CTRL+1'],
+		        ['POWERPLAY IN', 'CTRL+2'],
+		        ['POWERPLAY OUT', 'CTRL+3'],
+		        ['FREE TEXT USING INPUT BOX', 'CTRL+4'],
+		        ['RIGHT TOP INFOBAR OUT', 'CTRL+-'],
+		        ['CHALLENGE RUNS OUT', 'CTRL+='],
+		        ['INFOBAR OUT', '-'],
+		        ['INFOBAR IDENT OUT', '='],
+		        
+		    ]},
+		    { title: 'FULL FRAME', captions: [
+		        ['MOST FOURS', 'F'],
+		        ['POTT ', 'R'],
+		        ['MOST SIXES', 'V'],
+		        ['MOST WICKETS', 'X'],
+		        ['MOST RUNS', 'Z'],
+		        ['BATTING CARD', 'F1'],
+		        ['BOWLING CARD', 'F2'],
+		        ['ALL PARTNERSHIP', 'F4'],
+		        ['BATTING BY POSITION ', 'ALT+G'],
+		        ['BATTING BY YEARS ', 'ALT+H'],
+		        ["TODAY'S MATCH", 'ALT+J'],
+		        ['BATTING BARS ', 'ALT+K'],
+		        ['BATTING BY VENUE IN A COUNTRY ', 'ALT+L'],
+		        ['BAT MILESTONE', 'ALT+M'],
+		        ['BOWL MILESTONE', 'ALT+N'],
+		        ['BATSMAN v ALL BOWLERS', 'ALT+T'],
+		        ['BOWLER v ALL BATTERS', 'ALT+U'],
+		        ['BATTING BY COUNTRY ', 'ALT+V'],
+		        ['SQUAD ', 'ALT+Z'],
+		        ['FOW ', 'ALT+F3'],
+		        ["RICHIE'S CAPTION", 'ALT+F5'],
+		        ['SINGLE TEAM (CAREER)', 'ALT+F9'],
+		        ['SINGLE TEAM (THIS SERIES)', 'ALT+F10'],
+		        ['DOUBLE MANHATTAN', 'ALT+F11'],
+		        ['TARGET', 'SHIFT+D'],
+		        ['ECONOMY BARS ', 'SHIFT+G'],
+		        ['BOWLING BARS ', 'SHIFT+H'],
+		        ['IMPACT PLAYER ', 'SHIFT+I'],
+		        ['NEXT TO BAT ', 'SHIFT+J'],
+		        ['CURR PARTNERHIP ', 'SHIFT+K'],
+		        ['BOWLING BY YEARS ', 'M'],
+		        ['WICKETS TAKEN IN AN INNINGS ', 'SHIFT+N'],
+		        ['BAT PROFILE (THIS SERIES)', 'SHIFT+P'],
+		        ['BOWL PROFILE (THIS SERIES)', 'SHIFT+Q'],
+		        ['TEAMS WITH PHOTOS', 'SHIFT+T'],
+		        ['BOWLING BY COUNTRY', 'SHIFT+V'],
+		        ['Bowler Best Figures FF(THIS SERIES)', 'SHIFT+X'],
+		        ['Bowler Best Figures FF(THIS SERIES)', 'SHIFT+Z'],
+		        ['Bowler Best Figures FF(THIS SERIES)', 'SHIFT+D'],
+		        ['PREV MATCH SUMMARY', 'SHIFT+F10'],
+		        ['PREV MATCH SUMMARY', 'SHIFT+F11'],
+		        ['TAPE BALL LEADERBOARD', 'CTRL+C'],
+		        ['BAT PROFILE (DB)', 'CTRL+D'],
+		        ['BOWL PROFILE (DB)', 'CTRL+E'],
+		        ['BOWLING BY VENUE IN A COUNTRY ', 'CTRL+L'],
+		        ['MATCH PROMO', 'CTRL+M'],
+		        ['POINTS TABLE (6 TEAMS)', 'CTRL+P'],
+		        ['BEST BOWLING FIG', 'CTRL+X'],
+		        ['HIGHEST SCORE', 'CTRL+Z'],
+		        ['PHOTO SCORECARD', 'CTRL+F1'],
+		        ['DOUBLE TEAMS', 'CTRL+F7'],
+		        ['MANHATTAN', 'CTRL+F10'],
+		        ['MATCH SUMMARY', 'CTRL+F11'],
+		        ['BATSMAN CAREER MANHATTAN ', 'ALT + SHIFT+M'],
+		        ['HALF FRAME WAGON WHEEL', 'ALT + SHIFT+W'],
+		        ['FULL FRAME WAGON WHEEL', 'ALT + SHIFT+Y'],
+		    ]},
+		    { title: 'LOWER THIRDS', captions: [
+		        ['LT ALL POWERPLAY SUMM', 'A'],
+		        ['MATCH STATISTICS ', 'B'],
+		        ['LT TARGET', 'D'],
+		        ['EQUATION', 'E'],
+		        ['MOST RUNS', 'Z'],
+		        ['BATTING CARD', 'F1'],
+		        ['BOWLING CARD', 'F2'],
+		        ['ALL PARTNERSHIP', 'F4'],
+		        ['BATTING BY POSITION ', 'ALT+G'],
+		        ['BATTING BY YEARS ', 'ALT+H'],
+		        ["TODAY'S MATCH", 'ALT+J'],
+		        ['BATTING BARS ', 'ALT+K'],
+		        ['BATTING BY VENUE IN A COUNTRY ', 'ALT+L'],
+		        ['BAT MILESTONE', 'ALT+M'],
+		        ['BOWL MILESTONE', 'ALT+N'],
+		        ['BATSMAN v ALL BOWLERS', 'ALT+T'],
+		        ['BOWLER v ALL BATTERS', 'ALT+U'],
+		        ['BATTING BY COUNTRY ', 'ALT+V'],
+		        ['SQUAD ', 'ALT+Z'],
+		        ['FOW ', 'ALT+F3'],
+		        ["RICHIE'S CAPTION", 'ALT+F5'],
+		        ['SINGLE TEAM (CAREER)', 'ALT+F9'],
+		        ['SINGLE TEAM (THIS SERIES)', 'ALT+F10'],
+		        ['DOUBLE MANHATTAN', 'ALT+F11'],
+		        ['TARGET', 'SHIFT+D'],
+		        ['ECONOMY BARS ', 'SHIFT+G'],
+		        ['BOWLING BARS ', 'SHIFT+H'],
+		        ['IMPACT PLAYER ', 'SHIFT+I'],
+		        ['NEXT TO BAT ', 'SHIFT+J'],
+		        ['CURR PARTNERHIP ', 'SHIFT+K'],
+		        ['BOWLING BY YEARS ', 'M'],
+		        ['WICKETS TAKEN IN AN INNINGS ', 'SHIFT+N'],
+		        ['BAT PROFILE (THIS SERIES)', 'SHIFT+P'],
+		        ['BOWL PROFILE (THIS SERIES)', 'SHIFT+Q'],
+		        ['TEAMS WITH PHOTOS', 'SHIFT+T'],
+		        ['BOWLING BY COUNTRY', 'SHIFT+V'],
+		        ['Bowler Best Figures FF(THIS SERIES)', 'SHIFT+X'],
+		        ['Bowler Best Figures FF(THIS SERIES)', 'SHIFT+Z'],
+		        ['Bowler Best Figures FF(THIS SERIES)', 'SHIFT+D'],
+		        ['PREV MATCH SUMMARY', 'SHIFT+F10'],
+		        ['PREV MATCH SUMMARY', 'SHIFT+F11'],
+		        ['TAPE BALL LEADERBOARD', 'CTRL+C'],
+		        ['BAT PROFILE (DB)', 'CTRL+D'],
+		        ['BOWL PROFILE (DB)', 'CTRL+E'],
+		        ['BOWLING BY VENUE IN A COUNTRY ', 'CTRL+L'],
+		        ['MATCH PROMO', 'CTRL+M'],
+		        ['POINTS TABLE (6 TEAMS)', 'CTRL+P'],
+		        ['BEST BOWLING FIG', 'CTRL+X'],
+		        ['HIGHEST SCORE', 'CTRL+Z'],
+		        ['PHOTO SCORECARD', 'CTRL+F1'],
+		        ['DOUBLE TEAMS', 'CTRL+F7'],
+		        ['MANHATTAN', 'CTRL+F10'],
+		        ['MATCH SUMMARY', 'CTRL+F11'],
+		        ['BATSMAN CAREER MANHATTAN ', 'ALT + SHIFT+M'],
+		        ['HALF FRAME WAGON WHEEL', 'ALT + SHIFT+W'],
+		        ['FULL FRAME WAGON WHEEL', 'ALT + SHIFT+Y'],
+		    ]},
+		    { title: "MINI'S AND BUGS", captions: [
+		        ['BOWL FIG', 'G'],
+		        ['HIGHLIGHTS', 'H'],
+		        ['PLAYER OF THE MATCH', 'O'],
+		        ['THIRD UMPIRE', 'T'],
+		        ['BAT SCORE', 'Y'],
+		        ['TOURNAMENT SIX COUNTER', '6'],
+		        ['BUG 50-50', '.'],
+		        ['WICKET SEQUENCE BOWLER', 'ALT+B'],
+		        ['SIX DISTANCE', 'SHIFT+C'],
+		        ['WICKET SEQUENCE', 'SHIFT+F'],
+		        ['BAT DISMISSAL', 'SHIFT+O'],
+		        ['BUG MULTI PARTNERSHIP', 'SHIFT+F4'],
+		        ['MINI BATTING CARD', 'SHIFT+F1'],
+		        ['MINI BOWLING CARD', 'SHIFT+F2'],
+		        ['CURR PARTNERSHIP (BUGS)', 'CTRL+K'],
+		        ['POWERPLAY', 'CTRL+Y'],
+		    ]},
+		    { title: "POP UP", captions: [
+		        ['BAT POPUP', 'CTRL + SHIFT+U'],
+		        ['BOWL POPUP', 'CTRL + SHIFT+V'],
+		    ]}
+		];
+		
+    		sections.forEach(section => {
+		    table = document.createElement('table');
+		    table.setAttribute('class', 'table table-bordered');
+		
+		    tbody = document.createElement('tbody');
+		    table.appendChild(tbody);
+		
+		    headerRow = document.createElement('tr');
+		    headerText = document.createElement('th');
+		    headerText.setAttribute('class', 'thead-dark');
+		    headerText.setAttribute('colspan', '2');
+		    headerText.setAttribute('style', 'color: red;');
+		    headerText.innerHTML = `<b>${section.title}</b>`;
+		    headerRow.appendChild(headerText);
+		    tbody.appendChild(headerRow);
+		
+        for (let i = 0; i < Math.ceil(section.captions.length / 3); i++) {
+		        let row = document.createElement('tr');
+		
+		        for (let j = 0; j < 3; j++) {
+		            let index = i * 3 + j;
+		            if (index < section.captions.length) {
+		                cell1 = document.createElement('td');
+		                cell2 = document.createElement('td');
+		                cell1.innerHTML = `<b>${section.captions[index][0]}</b>`;
+		                if (section.captions[index][1].includes('/')) {
+        					cell2.innerHTML = `<b>${section.captions[index][1].replace('/', '/<br>')}</b>`;
+					    } else {
+					        cell2.innerHTML = `<b>${section.captions[index][1]}</b>`;
+					    }
+
+		                cell2.setAttribute('style', 'color: blue;');
+		                row.appendChild(cell1);
+		                row.appendChild(cell2);
+		            } else {
+		                cell1 = document.createElement('td');
+		                cell2 = document.createElement('td');
+		                row.appendChild(cell1);
+		                row.appendChild(cell2);
+		            }
+		        }
+		
+		        tbody.appendChild(row);
+		    }
+		
+		    $('#select_graphic_options_div').append(table);
+		    $('#select_graphic_options_div').append("<br>");
+		});
+		
+		$("#select_graphic_options_div").show();
+	break;
 /*	case 'HELP-FILE':
 		
 		$('#help_file_div').empty();

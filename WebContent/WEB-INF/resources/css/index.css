@@ -10,3 +10,43 @@
     background-color: transparent;
     border: none;
   }
+   .table-header {
+   	color: white; 
+   	}
+    .table-cell-black {
+    	 background-color: black; 
+    	 color: black;  
+    	 font-weight: bold; 
+    }
+    .table-cell-blue { 
+    	color: blue;
+    	font-weight: bold; 
+    }
+    thead{ 
+    	background-color: #00bfff;
+    }
+	@media (max-width: 768px) {
+        	.content { 
+        		padding: 10px;
+        	}
+        	.tab-content { 
+        	padding: 5px;
+        	width:768px;
+        	overflow-x: auto;
+        	width:fit-content; 
+        	display:inline-block;
+        	}
+       }
+
+    @media (min-width: 1200px) {
+        .content {
+        	padding-right: 414px; 
+      	  }
+        .tab-content { 
+        	width:fit-content;
+        	padding: 5px;
+        	overflow-x: auto; 
+        	display:inline-block;
+        }
+     }
+        

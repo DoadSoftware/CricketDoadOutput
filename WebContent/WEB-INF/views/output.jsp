@@ -153,5 +153,27 @@
 <input type="hidden" name="selected_match_max_overs" id="selected_match_max_overs" value="${session_match.setup.maxOvers}"/>
 <input type="hidden" id="matchFileTimeStamp" name="matchFileTimeStamp" value="${session_match.setup.matchFileTimeStamp}"></input>
 </form:form>
+ <script type="text/javascript">
+    var helpPageOpened = false, helpWindow = null; 
+    document.addEventListener('keydown', function(event) {
+        if (event.ctrlKey && event.shiftKey && event.key === 'H') {
+            event.preventDefault();           
+            var helpPageUrl = '<c:url value="/Help"/>';
+            if (!helpPageOpened || (helpWindow && helpWindow.closed)) {
+                helpWindow = window.open(helpPageUrl, '_blank'); 
+                helpPageOpened = true; 
+                if (helpWindow) {
+                    helpWindow.onbeforeunload = function() {
+                        helpPageOpened = false; 
+                    };
+                }
+            } else {
+                helpWindow.focus();
+                helpWindow.location.reload();
+            }
+        }
+    });
+</script>
+
 </body>
 </html>
