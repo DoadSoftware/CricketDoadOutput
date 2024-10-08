@@ -151,12 +151,12 @@ public class Animation
 			case "Control_F5": case "Control_F9": case "Control_a":  case "Control_F3": case "Alt_o": case "Alt_Shift_L":
 			case "Shift_F3": case "u": case "d": case "e": case "q": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "Control_g": case "Control_h": case "j": case "Control_F6": case "Shift_F6": case "Alt_F1": case "Alt_F2":
-			case "Control_s": case "Alt_d": case "Control_f": case "Control_q": case "l": case "Control_F4": case "a": case "Control_F2":
+			case "Control_s": case "Alt_d": case "Control_f": case "Control_q": case "l": case "Control_Shift_F9": case "a": case "Control_F2":
 			case "Alt_a": case "Alt_s":case "Shift_E": case "Alt_q": case "Alt_F6": case "Shift_A":  case "Shift_R": case "Shift_U":
 			case "Shift_F7": case "Alt_w": case "Control_j": case "Alt_i": case "Alt_j": case "b": case "Control_i":
 				
 				switch (whatToProcess.split(",")[0]) {
-				case "q": case "Control_q": case "Alt_q": case "Shift_F7": case "Control_F4":// Boundary L3rd
+				case "q": case "Control_q": case "Alt_q": case "Shift_F7": case "Control_Shift_F9":// Boundary L3rd
 					return Constants.BOUNDARIES + Constants.LOWER_THIRD;
 				default:
 					return Constants.LOWER_THIRD;
@@ -304,7 +304,7 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "anim_Lower_Third$Top_Header", "SHOW 0.0");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
-			 case "Shift_F7": case "Control_F4":
+			 case "Shift_F7": case "Control_Shift_F9":
 				 AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
 				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "Anim_Image_LT", "START");
@@ -1513,7 +1513,7 @@ public class Animation
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Teams$Out", "CONTINUE");
 					break;
 				case "Shift_T":
-					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Team_Single$Out", "CONTINUE");
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Team_Single", "CONTINUE");
 					break;
 				case "Shift_F8":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$LineUp_Image$Out", "CONTINUE");
@@ -1596,7 +1596,7 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "Anim_Center_Bug", "CONTINUE");
 				this.whichGraphicOnScreen = "";
 				break;
-			case "Shift_F7": case "Control_F4":
+			case "Shift_F7": case "Control_Shift_F9":
 				processAnimation(Constants.FRONT, print_writers, "Anim_Image_LT", "CONTINUE");
 				TimeUnit.MILLISECONDS.sleep(1000);
 				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
@@ -3004,7 +3004,7 @@ public class Animation
 			case "q": case "Control_q":
 				processAnimation(Constants.FRONT, print_writers, "Anim_Boundary_LTChange", "START");
 				break;
-			case "Shift_F7": case "Control_F4":
+			case "Shift_F7": case "Control_Shift_F9":
 				processAnimation(Constants.FRONT, print_writers, "Anim_Image_LtChange", "START");
 				break;	
 			case "Alt_c":
@@ -3660,7 +3660,7 @@ public class Animation
 						break;
 				 }
 				break;
-			 case "Shift_F7": case "Control_F4":
+			 case "Shift_F7": case "Control_Shift_F9":
 				 processAnimation(Constants.FRONT, print_writers, "Anim_Image_LtChange", "SHOW 0.0");
 				this.whichGraphicOnScreen = whatToProcess;
 				 break;
@@ -4855,7 +4855,7 @@ public class Animation
 						previewCommands = "Anim_Infobar$Push 0.500 anim_Boundary_LT$Essentials 2.200 anim_Boundary_LT$Essentials$In 1.400 "
 							+ "anim_Boundary_LT$Row 2.160 anim_Boundary_LT$Row$In 0.620";
 						break;
-					case "Shift_F7": case "Control_F4":
+					case "Shift_F7": case "Control_Shift_F9":
 						previewCommands = "Anim_Infobar$Push 0.560 "
 								+ "Anim_Image_LT$Top_Header 2.680  Anim_Image_LT$Top_Header$In 1.920 "
 								+ "Anim_Image_LT$Essentials 3.200 Anim_Image_LT$Essentials$In 1.900 "
@@ -4881,7 +4881,7 @@ public class Animation
 							+ "Anim_Boundary_LtChange$Topline 0.900 Anim_Boundary_LtChange$Lt_Position 0.940 Anim_Boundary_LtChange$HeaderDynamic 1.223 "
 							+ "Anim_Boundary_LtChange$HeaderDynamic$Change_In 1.223 Anim_Boundary_LtChange$HeaderDynamic$Change_Out 0.600";
 						break;
-					case "Shift_F7": case "Control_F4":
+					case "Shift_F7": case "Control_Shift_F9":
 						previewCommands = previewCommands + " Anim_Image_LtChange$Flag 1.300 Anim_Image_LtChange$Sublines 1.240 "
 								+ "Anim_Image_LtChange$Topline 0.900 Anim_Image_LtChange$Lt_Position 0.940 Anim_Image_LtChange$HeaderDynamic 1.180 "
 								+ "Anim_Image_LtChange$HeaderDynamic$Change_In 1.180 Anim_Image_LtChange$HeaderDynamic$Change_Out 0.560";

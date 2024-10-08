@@ -321,11 +321,11 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			break;	
 			case 'Control_4': case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_7':  case 'Alt_5': //case 'Alt_6': case 'Alt_8': case 'Alt_3': case 'Alt_4': case 'F7': case 'F11':
 			case 'Control_F5': case 'Shift_T': case 'Control_F9': case 'F5': case 'F6': case 'Alt_w':  case 'Control_j': case 'Alt_F8':
-			case 'F8': case 'F9':  case 'u': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6': case 'Control_y':
+			case 'F8': case 'F9':  case 'u': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6': case 'Control_y': case 'Shift_F8':
 			case 'Shift_O': case 'g': case 'y': case 'Control_g': case 'Control_s': case 'Control_f': //case 'Alt_F9':
 			case 'Control_h': case 'Alt_F12': case 'l': case 'p': case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_F10': case 'Alt_d':
 			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2': case 'Shift_E': case 'Shift_P': case 'Shift_Q': case 'Alt_z': case 'Shift_F':
-			case 'Alt_F6': case 'Shift_R': case 'Shift_A': case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'Shift_F7': case 'Control_F4':
+			case 'Alt_F6': case 'Shift_R': case 'Shift_A': case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'Shift_F7': case 'Control_Shift_F9':
 			case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_E': case 'Control_Shift_F': case 'Control_Shift_P': case 'Control_Shift_F1': case 'Control_Shift_D':
 			case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Shift_I': case 'Alt_Shift_C': case 'Control_Shift_F2': case 'Control_Shift_M':
 			case 'Control_Shift_U': case 'Control_Shift_V':
@@ -852,7 +852,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 		break;*/
 		
 	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'Alt_w': case 'Control_j': case 'F8': case 'F9': case 'F10': case 'F7': case 'F11':
-	case 'Control_F5': case 'Control_F9': case 'Shift_T': case 'u': case 'p': case 'Control_p': case 'Control_d': case 'Control_e':
+	case 'Control_F5': case 'Control_F9': case 'Shift_T': case 'u': case 'p': case 'Control_p': case 'Control_d': case 'Control_e': case 'Shift_F8':
 	case 'z': case 'x': case 'c': case 'v': case 'Shift_F11': case 'Control_y': case 'Alt_F8': case 'Alt_F1': case 'Alt_F2':
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'y': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q':
 	case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l': case 'Shift_E': //case 'Alt_F9':
@@ -860,7 +860,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10': case 'Alt_d': case 'Shift_F4': case 'Alt_a': case 'Alt_s': 
 	case 'Shift_P': case 'Shift_Q': case 'Alt_z': case 'Control_c': case 'Control_v': case 'Control_z': case 'Control_x': case 'Alt_q': case 'Shift_F': 
 	case 'Alt_F6': case 'Shift_A': case 'Shift_R': case 'Control_Shift_F1': case 'Control_Shift_D': case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Control_Shift_F2':
-	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_F4': case 'Alt_Shift_C': case 'Control_Shift_L':
+	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_Shift_F9': case 'Alt_Shift_C': case 'Control_Shift_L':
 	case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_E': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I': case 'Control_F11': case 'Control_Shift_M':
 	case 'Alt_Shift_R': case 'Control_Shift_U': case 'Control_Shift_V': case 'Control_4': case 'Shift_~': case 'Shift_!':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
@@ -3151,7 +3151,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			break;	
 			
-		case 'Shift_T': case 'Alt_F9': case 'Alt_F12': case 'Alt_F10': case 'Alt_z': 
+		case 'Shift_T': case 'Alt_F9': case 'Alt_F12': case 'Alt_F10': case 'Alt_z': case 'Shift_F8':
 		case 'Control_Shift_F7':
 			switch(whatToProcess) {
 			case 'Shift_T': case 'Control_Shift_F7':
@@ -3437,12 +3437,12 @@ function addItemsToList(whatToProcess,dataToProcess)
 				}
 			break;
 				
-		case 'Control_F9':  case 'Control_F4'://BowlerStyle
+		case 'Control_F9':  case 'Control_Shift_F9'://BowlerStyle
 			switch(whatToProcess) {
 			case 'Control_F9':
 				header_text.innerHTML = 'BALL STYLE';
 				break;	
-			case 'Control_F4':
+			case 'Control_Shift_F9':
 				header_text.innerHTML = 'BALL STYLE With Photo';
 				break;		
 			}
@@ -3499,7 +3499,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			
 			switch(whatToProcess) {
-			case 'Control_F9': case 'Control_F4':
+			case 'Control_F9': case 'Control_Shift_F9':
 				select = document.createElement('select');
 				select.id = 'selectBowlingEnd';
 				select.name = select.id;
@@ -5224,13 +5224,13 @@ function addItemsToList(whatToProcess,dataToProcess)
 			case 'Control_m': case 'F4': case 'F5': case 'F6': case 'Alt_w': case 'Control_j': case 'F8': case 'F9': case 'F10': case 'F7': case 'F11':
 			case 'Control_F5': case 'Control_F9': case 'Shift_T': case 'u': case 'p': case 'Control_p': case 'Control_d': case 'Control_e': case 'z': 
 			case 'x': case 'c': case 'v': case 'Shift_F11': case 'Control_y': case 'Alt_F8': case 'Alt_F1': case 'Alt_F2': case 'Shift_K': case 'Shift_O': 
-			case 'k': case 'g': case 'y': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q': case 'j': case 'Shift_F6': 
-			case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l': case 'Shift_E': //case 'Alt_F9':
+			case 'k': case 'g': case 'y': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q': case 'j': case 'Shift_F6': case 'Shift_F8':
+			case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l': case 'Shift_E': //case 'Alt_F9': 
 			case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9': case 'Alt_0':
 			case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10': case 'Alt_d': case 'Shift_F4': case 'Alt_a': case 'Alt_s': case 'Shift_P': 
 			case 'Shift_Q': case 'Alt_z': case 'Control_c': case 'Control_v': case 'Control_z': case 'Control_x': case 'Alt_q': case 'Shift_F': case 'Alt_F6': 
 			case 'Shift_A': case 'Shift_R': case 'Control_Shift_F1': case 'Control_Shift_D': case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Control_Shift_F2':
-			case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_F4': case 'Alt_Shift_C': case 'Control_Shift_L':
+			case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_Shift_F9': case 'Alt_Shift_C': case 'Control_Shift_L':
 			case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_E': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I': 
 			case 'Control_F11': case 'Control_Shift_M': case 'Alt_Shift_R': case 'Control_Shift_U': case 'Control_Shift_V': case 'Control_4':
 				

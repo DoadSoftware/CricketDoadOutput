@@ -144,16 +144,16 @@ public class IndexController
 		    }
 		}));
 		
-//		if(cricket_matches == null || cricket_matches.size()<=0) {
-//			cricket_matches = CricketFunctions.getTournamentMatches(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
-//					CricketUtil.MATCHES_DIRECTORY).listFiles(new FileFilter() {
-//				@Override
-//			    public boolean accept(File pathname) {
-//			        String name = pathname.getName().toLowerCase();
-//			        return name.endsWith(".json") && pathname.isFile();
-//			    }
-//			}), cricketService);
-//		}
+		if(cricket_matches == null || cricket_matches.size()<=0) {
+			cricket_matches = CricketFunctions.getTournamentMatches(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
+					CricketUtil.MATCHES_DIRECTORY).listFiles(new FileFilter() {
+				@Override
+			    public boolean accept(File pathname) {
+			        String name = pathname.getName().toLowerCase();
+			        return name.endsWith(".json") && pathname.isFile();
+			    }
+			}), cricketService);
+		}
 		
 //		headToHead = CricketFunctions.extractHeadToHead(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
 //				CricketUtil.HEADTOHEAD_DIRECTORY).listFiles(), cricketService);
@@ -753,13 +753,15 @@ public class IndexController
 			session_statistics = cricketService.getAllStats();
 			if(config.getBroadcaster().equalsIgnoreCase(Constants.ISPL)) {
 				past_tape = CricketFunctions.extractTapeData("PAST_MATCHES_DATA", cricketService, cricket_matches, session_match, null);
+				past_tournament_stats = CricketFunctions.extractTournamentStats("PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
+			}else {
+				past_tournament_stats = CricketFunctions.extractTournamentData("PAST_MATCHES_DATA", false, headToHead, cricketService, session_match, null);
 			}
 			
-			past_tournament_stats = CricketFunctions.extractTournamentData("PAST_MATCHES_DATA", false, headToHead, cricketService, session_match, null);
 //			headToHead = CricketFunctions.extractHeadToHead(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
 //					CricketUtil.HEADTOHEAD_DIRECTORY).listFiles(), cricketService);
 
-			//past_tournament_stats = CricketFunctions.extractTournamentStats("PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
+			
 			session_name_super =  cricketService.getNameSupers();
 			session_team =  cricketService.getTeams();
 			session_ground =  cricketService.getGrounds();

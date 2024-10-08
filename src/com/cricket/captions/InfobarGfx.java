@@ -6841,7 +6841,7 @@ public class InfobarGfx
 				if(matchAllData.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.SUPER_OVER) && matchAllData.getSetup().getMaxOvers() == 1) {
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Ident$Middle$Side" + WhichSide + "$txt_Title*GEOM*TEXT SET " + 
-							matchAllData.getMatch().getInning().get(1).getBatting_team().getTeamLogo() + " NEED " + "\0", print_writers);
+							matchAllData.getMatch().getInning().get(1).getBatting_team().getTeamBadge() + " NEED " + "\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Ident$Middle$Side" + WhichSide + "$txt_Subtitle*GEOM*TEXT SET " + 
 							CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN " + 
 							String.valueOf("FROM " + matchAllData.getSetup().getMaxOvers()*6)+ " BALLS" + "\0", print_writers);
@@ -6849,7 +6849,7 @@ public class InfobarGfx
 					if(matchAllData.getSetup().getTargetOvers() == "" || matchAllData.getSetup().getTargetOvers().trim().isEmpty() && matchAllData.getSetup().getTargetRuns() == 0) {
 						
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Ident$Middle$Side" + WhichSide + "$txt_Title*GEOM*TEXT SET " + 
-								matchAllData.getMatch().getInning().get(1).getBatting_team().getTeamLogo() + " NEED " + "\0", print_writers);
+								matchAllData.getMatch().getInning().get(1).getBatting_team().getTeamBadge() + " NEED " + "\0", print_writers);
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Ident$Middle$Side" + WhichSide + "$txt_Subtitle*GEOM*TEXT SET " + 
 								CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN " + 
 								String.valueOf("FROM " + CricketFunctions.getTargetOvers(matchAllData)) + " OVERS" + "\0", print_writers);
@@ -6859,7 +6859,7 @@ public class InfobarGfx
 						if(matchAllData.getSetup().getTargetOvers() != "") {
 							
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Ident$Middle$Side" + WhichSide + "$txt_Title*GEOM*TEXT SET " + 
-									matchAllData.getMatch().getInning().get(1).getBatting_team().getTeamLogo() + " NEED " + "\0", print_writers);
+									matchAllData.getMatch().getInning().get(1).getBatting_team().getTeamBadge() + " NEED " + "\0", print_writers);
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Ident$Middle$Side" + WhichSide + "$txt_Subtitle*GEOM*TEXT SET " + 
 									CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN " + 
 									String.valueOf("FROM " + CricketFunctions.getTargetOvers(matchAllData)) + " OVERS" + "\0", print_writers);
@@ -6867,7 +6867,7 @@ public class InfobarGfx
 						if(matchAllData.getSetup().getTargetType().toUpperCase().equalsIgnoreCase("VJD")) {
 							
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Ident$Middle$Side" + WhichSide + "$txt_Title*GEOM*TEXT SET " + 
-									matchAllData.getMatch().getInning().get(1).getBatting_team().getTeamLogo() + " NEED " + "\0", print_writers);
+									matchAllData.getMatch().getInning().get(1).getBatting_team().getTeamBadge() + " NEED " + "\0", print_writers);
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Ident$Middle$Side" + WhichSide + "$txt_Subtitle*GEOM*TEXT SET " + 
 									CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN " + 
 									String.valueOf("FROM " + CricketFunctions.getTargetOvers(matchAllData)) + " OVERS (VJD)" + "\0", print_writers);
@@ -6875,7 +6875,7 @@ public class InfobarGfx
 						}else if(matchAllData.getSetup().getTargetType().toUpperCase().equalsIgnoreCase("DLS")) {
 							
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Ident$Middle$Side" + WhichSide + "$txt_Title*GEOM*TEXT SET " + 
-									matchAllData.getMatch().getInning().get(1).getBatting_team().getTeamLogo() + " NEED " + "\0", print_writers);
+									matchAllData.getMatch().getInning().get(1).getBatting_team().getTeamBadge() + " NEED " + "\0", print_writers);
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Ident$Middle$Side" + WhichSide + "$txt_Subtitle*GEOM*TEXT SET " + 
 									CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN " + 
 									String.valueOf("FROM " + CricketFunctions.getTargetOvers(matchAllData)) + " OVERS (DLS)" + "\0", print_writers);

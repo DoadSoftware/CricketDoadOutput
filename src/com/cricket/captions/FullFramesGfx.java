@@ -6078,9 +6078,9 @@ public class FullFramesGfx
 							+ "img_TeamBadge_R*TEXTURE*IMAGE SET " + Constants.BENGAL_ICONS_PATH + FixturesList.get(i-1).getAway_Team().getTeamName4() + "\0", print_writers);
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_DoubleIdent$Main$DataAll$" + i + "$MainData$Team1$txt_Name*GEOM*TEXT SET " 
-							+ FixturesList.get(i-1).getHome_Team().getTeamLogo() + "\0", print_writers);
+							+ FixturesList.get(i-1).getHome_Team().getTeamBadge() + "\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_DoubleIdent$Main$DataAll$" + i + "$MainData$Team2$txt_Name*GEOM*TEXT SET " 
-							+ FixturesList.get(i-1).getAway_Team().getTeamLogo() + "\0", print_writers);
+							+ FixturesList.get(i-1).getAway_Team().getTeamBadge() + "\0", print_writers);
 					
 					if (WhichStyle.equalsIgnoreCase("TODAY")) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_DoubleIdent$Main$DataAll$" + i + "$VenueGrp$txt_Venue*GEOM*TEXT SET " 
@@ -9693,7 +9693,9 @@ public class FullFramesGfx
 					}
 				}
 				
+				System.out.println("PlayingXI = " + PlayingXI.size());
 				for(Player plyr : otherSquad) {
+					
 					rowId1 = rowId1 + 1;
 					if(rowId1 <= 4) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$Team_Single$" + 

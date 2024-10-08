@@ -2180,12 +2180,12 @@ public class BugsAndMiniGfx
 						cont_name = "$Highlight";
 						omo_num= 1;
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
-								+ rowId +"$Highlight$txt_BatterName*GEOM*TEXT SET "+"v "+griff.get(rowId-1).getOpponentTeam().getTeamLogo()+" \0", print_writers);
+								+ rowId +"$Highlight$txt_BatterName*GEOM*TEXT SET "+"v "+griff.get(rowId-1).getOpponentTeam().getTeamBadge()+" \0", print_writers);
 					}else {
 						cont_name = "$Dehighlight";
 						omo_num= 0;
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
-								+ rowId +"$Dehighlight$txt_TeamName*GEOM*TEXT SET "+"v "+griff.get(rowId-1).getOpponentTeam().getTeamLogo()+" \0", print_writers);
+								+ rowId +"$Dehighlight$txt_TeamName*GEOM*TEXT SET "+"v "+griff.get(rowId-1).getOpponentTeam().getTeamBadge()+" \0", print_writers);
 					}
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
 							+ "$Select_GraphicsType$Griff$Data$"+rowId+"$Select_Row_Type*FUNCTION*Omo*vis_con SET "+omo_num+" \0", print_writers);
@@ -2261,12 +2261,12 @@ public class BugsAndMiniGfx
 						cont_name = "$Highlight";
 						omo_num= 1;
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
-								+ rowId +cont_name+"$txt_BatterName*GEOM*TEXT SET "+"v "+griff.get(rowId-1).getOpponentTeam().getTeamLogo()+" \0", print_writers);
+								+ rowId +cont_name+"$txt_BatterName*GEOM*TEXT SET "+"v "+griff.get(rowId-1).getOpponentTeam().getTeamBadge()+" \0", print_writers);
 					}else {
 						cont_name = "$Dehighlight";
 						omo_num= 0;
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Griff$Rows$"
-								+ rowId +cont_name+"$txt_TeamName*GEOM*TEXT SET "+"v "+griff.get(rowId-1).getOpponentTeam().getTeamLogo()+" \0", print_writers);
+								+ rowId +cont_name+"$txt_TeamName*GEOM*TEXT SET "+"v "+griff.get(rowId-1).getOpponentTeam().getTeamBadge()+" \0", print_writers);
 					}
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
@@ -2382,7 +2382,7 @@ public class BugsAndMiniGfx
 						if(tm.getTeamName4().equalsIgnoreCase(leagueTable.getLeagueTeams().get(i).getTeamName())) {
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$Side" + WhichSide + "$Standings$Data"
 									+ "$Rows$" + rowId + "$Select_Highlight" + containerName + "$Data$txt_Name*GEOM*TEXT SET " + 
-									tm.getTeamLogo() + " \0", print_writers);
+									tm.getTeamBadge() + " \0", print_writers);
 						}
 					}
 
@@ -2409,7 +2409,7 @@ public class BugsAndMiniGfx
 						+ "$Select_GraphicsType*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
 
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
-						+ "$Select_GraphicsType$Batting_Card$Data$Title$Out$In$txt_TeamName*GEOM*TEXT SET " + inning.getBatting_team().getTeamLogo() + " \0", print_writers);
+						+ "$Select_GraphicsType$Batting_Card$Data$Title$Out$In$txt_TeamName*GEOM*TEXT SET " + inning.getBatting_team().getTeamBadge() + " \0", print_writers);
 				
 				Collections.sort(inning.getBattingCard());
 				
@@ -2527,7 +2527,7 @@ public class BugsAndMiniGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
 						+ "$Select_GraphicsType*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
-						+ "$Bowling_Card$Title$txt_TeamName*GEOM*TEXT SET " + inning.getBowling_team().getTeamLogo() + " \0", print_writers);
+						+ "$Bowling_Card$Title$txt_TeamName*GEOM*TEXT SET " + inning.getBowling_team().getTeamBadge() + " \0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Minis$All_Graphics$Side" + WhichSide 
 						+ "$Bowling_Card$Rows$Select_Row*FUNCTION*Omo*vis_con SET "+inning.getBowlingCard().size()+" \0", print_writers);
