@@ -373,7 +373,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				
 				break;
 			case 'Alt_f': case 'Alt_g': case 'ArrowDown': case 'ArrowUp': case 'w': case 'i': case 'f': case 's': case '0': case ';':
-			case 'Control_2': case 'Control_3':
+			case 'Control_2': case 'Control_3': case 'ArrowLeft': case 'ArrowRight':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("ANIMATE-IN-GRAPHICS", dataToProcess);
 				break;
@@ -1677,21 +1677,39 @@ function addItemsToList(whatToProcess,dataToProcess)
 		break;
 		case 'F12':
 			switch($('#selected_broadcaster').val().toUpperCase()){
-				case 'ISPL':
+			case 'NPL':
 				
-			select = document.createElement('select');
-			select.id = 'selectMiddleStat';
-			select.name = select.id;
+				select = document.createElement('select');
+				select.id = 'selectMiddleStat';
+				select.name = select.id;
+				
+				option = document.createElement('option');
+				option.value = 'BATSMAN';
+				option.text = 'Batsman/Bowler';
+				select.appendChild(option);
+				
+				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+				row.insertCell(cellCount).appendChild(select);
+				setDropdownOptionToSelectOptionArray($(select),0);
+				cellCount = cellCount + 1;
 			
-			option = document.createElement('option');
-			option.value = 'BATSMAN';
-			option.text = 'Batsman/Bowler';
-			select.appendChild(option);
-			
-			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
-			row.insertCell(cellCount).appendChild(select);
-			setDropdownOptionToSelectOptionArray($(select),0);
-			cellCount = cellCount + 1;
+				break;
+				
+			case 'ISPL':
+				
+				select = document.createElement('select');
+				select.id = 'selectMiddleStat';
+				select.name = select.id;
+				
+				option = document.createElement('option');
+				option.value = 'BATSMAN';
+				option.text = 'Batsman/Bowler';
+				select.appendChild(option);
+				
+				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+				row.insertCell(cellCount).appendChild(select);
+				setDropdownOptionToSelectOptionArray($(select),0);
+				cellCount = cellCount + 1;
 			
 				break;
 			
@@ -2088,6 +2106,88 @@ function addItemsToList(whatToProcess,dataToProcess)
 				});
 				break;
 				
+				case 'NPL':
+				header_text.innerHTML = 'MIDDLE INFOBAR SECTION';
+			
+				select = document.createElement('select');
+				select.id = 'selectMiddleStat';
+				select.name = select.id;
+	
+				option = document.createElement('option');
+				option.value = 'BATSMAN';
+				option.text = 'Batsman/Bowler';
+				select.appendChild(option);
+				
+				/*option = document.createElement('option');
+				option.value = 'BATSMAN_TOURNAMENT';
+				option.text = 'Batsman/Tournament';
+				select.appendChild(option);*/
+				
+				option = document.createElement('option');
+				option.value = 'CURR_PARTNERSHIP';
+				option.text = 'Current Partnership';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'EXTRAS';
+				option.text = 'Extras';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'FOW';
+				option.text = 'Fall Of Wickets';
+				select.appendChild(option);
+	
+				option = document.createElement('option');
+				option.value = 'LAST_WICKET';
+				option.text = 'Last Wicket';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'BALLS_SINCE_LAST_BOUNDARY';
+				option.text = 'Balls Since Last Boundary';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'THIS_MATCH_SIXES';
+				option.text = 'This Match Sixes';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'TOURNAMENT_SIXES';
+				option.text = 'Tournament Sixes';
+				select.appendChild(option);
+				
+				session_match.match.inning.forEach(function(inn,index,arr){
+					if(inn.isCurrentInning == 'YES' && session_match.setup.matchType != 'TEST'){
+						if(inn.inningNumber == 1){
+							
+							option = document.createElement('option');
+							option.value = 'PROJECTED';
+							option.text = 'Projected Score';
+							select.appendChild(option);
+							
+						}
+						else{
+							option = document.createElement('option');
+							option.value = 'TARGET';
+							option.text = 'Target';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'EQUATION';
+							option.text = 'Equation';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'RESULTS';
+							option.text = 'Result';
+							select.appendChild(option);
+						}
+					}
+				});
+				break;
+				
 				case 'ICC-U19-2023':
 				header_text.innerHTML = 'MIDDLE INFOBAR SECTION';
 			
@@ -2393,6 +2493,27 @@ function addItemsToList(whatToProcess,dataToProcess)
 				option.text = 'Bowling End';
 				select.appendChild(option);
 				break;
+			case 'NPL':
+				
+				select = document.createElement('select');
+				select.id = 'selectRightBottom';
+				select.name = select.id;
+				
+				option = document.createElement('option');
+				option.value = 'OVER';
+				option.text = 'This Over';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'BOWLING_END';
+				option.text = 'Bowling End';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'BOWLER_REPLACE';
+				option.text = 'Bowler Replace';
+				select.appendChild(option);
+				break;	
 			case 'ICC-U19-2023':
 				
 				select = document.createElement('select');
@@ -2491,7 +2612,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 					select.appendChild(option);
 					
 					break;
-				case 'ICC-U19-2023':
+					
+				case 'ICC-U19-2023': case 'NPL':
 					header_text.innerHTML = 'RIGHT INFOBAR SECTION';
 		
 					select = document.createElement('select');

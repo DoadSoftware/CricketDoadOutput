@@ -18,7 +18,7 @@ public class Scene
         CricketFunctions.DoadWriteCommandToAllViz("-1 IMAGE INFO\0", print_writers);
 		
 		switch (config.getBroadcaster().toUpperCase()) {
-		case "ICC-U19-2023":
+		case "ICC-U19-2023": case Constants.NPL:
 
 			switch (whatToProcess) {
 			case "FULL-FRAMERS":

@@ -270,7 +270,7 @@ public class IndexController
 				
 				this_animation.ResetAnimation("CLEAR-ALL", print_writers, session_configuration);
 				break;
-			case Constants.ICC_U19_2023: case Constants.BENGAL_T20:
+			case Constants.ICC_U19_2023: case Constants.BENGAL_T20: case Constants.NPL:
 				if(session_configuration.getPrimaryVariousOptions().contains(Constants.FULL_FRAMER)) {
 					this_scene.LoadScene("FULL-FRAMERS", print_writers, session_configuration);
 				}
@@ -390,7 +390,7 @@ public class IndexController
 					
 				default:
 					switch (session_configuration.getBroadcaster()) {
-					case Constants.ICC_U19_2023: case Constants.ISPL: case Constants.BENGAL_T20:
+					case Constants.ICC_U19_2023: case Constants.ISPL: case Constants.BENGAL_T20: case Constants.NPL:
 						if(!session_configuration.getPrimaryVariousOptions().contains(Constants.FULL_FRAMER)
 							&& this_animation.getTypeOfGraphicsOnScreen(session_configuration, valueToProcess).contains(Constants.FULL_FRAMER)) {
 							this_caption.setStatus("Error: Full framers captions NOT selected on start-up");
@@ -748,7 +748,7 @@ public class IndexController
 		IllegalAccessException, InvocationTargetException, JAXBException, IOException, CloneNotSupportedException, InterruptedException, URISyntaxException
 	{
 		switch (config.getBroadcaster()) {
-		case Constants.ICC_U19_2023: case Constants.ISPL: case Constants.BENGAL_T20:
+		case Constants.ICC_U19_2023: case Constants.ISPL: case Constants.BENGAL_T20: case Constants.NPL:
 			
 			session_statistics = cricketService.getAllStats();
 			if(config.getBroadcaster().equalsIgnoreCase(Constants.ISPL)) {

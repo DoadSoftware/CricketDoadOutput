@@ -65,5 +65,11 @@ public class Constants
 	public final static String LOCAL_ICC_U19_2023_PHOTOS_PATH = "c\\Images\\ICC\\U19_MENS";
 	public final static String Local_ISPL_PHOTOS_PATH = "c\\Images\\ISPL\\";
 	
+	public final static String NPL = "NPL";
+	public final static String NPL_LOGO_PATH = "IMAGE*/Default/Essentials/Logos/";
+	public final static String NPL_LOCAL_PHOTO_PATH = "C:\\\\Images\\\\NPL\\\\Photos\\\\";
+	public final static String NPL_PHOTO_PATH = "\\c\\Images\\NPL\\Photos\\";
+	public final static String NPL_SPONSOR_PATH = "IMAGE*/Default/Essentials/Sponsors/";
+	
 	
 }
