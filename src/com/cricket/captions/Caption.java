@@ -905,7 +905,7 @@ public class Caption
 				break;
 			case "Alt_9":
 				switch (config.getBroadcaster().toUpperCase()) {
-				case Constants.ICC_U19_2023:
+				case Constants.ICC_U19_2023: case Constants.NPL:
 					this_infobarGfx.infobar.setMiddle_section("FREE_TEXT");
 					this_infobarGfx.infobarStatsId = Integer.valueOf(whatToProcess.split(",")[2]);
 					status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
@@ -937,7 +937,7 @@ public class Caption
 				break;
 			case "Alt_0":
 				switch (config.getBroadcaster().toUpperCase()) {
-				case Constants.ICC_U19_2023:
+				case Constants.ICC_U19_2023: case Constants.NPL:
 					this_infobarGfx.infobar.setMiddle_section("COMMENTATORS");
 					this_infobarGfx.Comms_Name = whatToProcess;
 					status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);

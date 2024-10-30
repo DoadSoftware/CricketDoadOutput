@@ -271,6 +271,50 @@ public class InfobarGfx
 				}
 			}
 			break;
+		case Constants.NPL: 
+			
+			inning = matchAllData.getMatch().getInning().stream().filter(
+				inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).findAny().orElse(null);
+			if(inning == null) {
+				return "updateInfobar: Inning return is NULL";
+			}
+
+			populateInfobarTeamNameScore(true,print_writers,matchAllData,2);
+			if(infobar.getLeft_bottom() != null && !infobar.getLeft_bottom().isEmpty()) {
+				populateVizInfobarLeftBottom(print_writers, matchAllData, 1);
+			}
+			
+			if(infobar.getMiddle_section() != null && !infobar.getMiddle_section().isEmpty()) {
+				if(infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.RESULT) || infobar.getMiddle_section().equalsIgnoreCase("RESULTS")) {
+				} else {
+					stats_text = CricketFunctions.generateMatchSummaryStatus(inning.getInningNumber(), matchAllData, 
+						CricketUtil.FULL, "|", config.getBroadcaster()).toUpperCase();
+					if(stats_text.contains(" " + CricketUtil.BEAT + " ") || stats_text.contains(CricketUtil.TIED)) {
+						this.infobar.setMiddle_section(CricketUtil.RESULT);
+						this.infobar.setFreeText(Arrays.asList(stats_text.split("\\|")));
+						populateVizInfobarMiddleSection(print_writers, matchAllData, 2);
+						this_animation.ChangeOn("Alt_2,", print_writers, config);
+						TimeUnit.MILLISECONDS.sleep(2000);
+						populateVizInfobarMiddleSection(print_writers, matchAllData, 1);
+						this_animation.CutBack("Alt_2,", print_writers, config);
+					} else {
+						if(!infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
+							populateVizInfobarMiddleSection(print_writers, matchAllData, 1);
+						}else {
+							populateCurrentBatsmen(print_writers, matchAllData, 1);
+						}
+						if(infobar.getRight_section() != null && !infobar.getRight_section().isEmpty()) {
+							if(infobar.getRight_section().equalsIgnoreCase(CricketUtil.BOWLER)) {
+								populateVizInfobarBowler(print_writers, matchAllData, 1);
+								populateVizInfobarRightBottom(print_writers, matchAllData, 1, 1);
+							}else {
+								populateVizInfobarRightSection(true,print_writers, matchAllData, 1, 1);
+							}
+						}
+					}
+				}
+			}
+			break;	
 			
 		case Constants.BENGAL_T20:
 			
@@ -4184,7 +4228,11 @@ public class InfobarGfx
 					}
 					else {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
-								+ "$Select_Type*FUNCTION*Omo*vis_con SET 11 \0", print_writers);
+								+ "$Select_Type*FUNCTION*Omo*vis_con SET 9 \0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Basic_Wide$txt_Top*ACTIVE SET 0\0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Basic_Wide$txt_Bottom*ACTIVE SET 0\0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Basic_Wide$LongStringWithWordWrap*ACTIVE SET 1\0", print_writers);
+						
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Basic_Wide$txt_LongString*GEOM*TEXT SET " + 
 								infoBarStats.getText1() + "\0", print_writers);
 					}
