@@ -191,7 +191,7 @@ public class Animation
 				switch (config.getBroadcaster().toUpperCase()) {
 				case Constants.NPL:
 					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$In_Out", "START");
-					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$RightInfo_Bottom", "START");
+					//processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$RightInfo_Bottom", "START");
 					this.infobar.setInfobar_on_screen(true);
 					this.infobar.setInfobar_pushed(false);
 					this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
@@ -2414,7 +2414,8 @@ public class Animation
 			}
 			
 			switch(whatToProcess.split(",")[0]) {
-			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": case "Alt_9": case "Alt_0":
+			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": 
+			case "Alt_9": case "Alt_0":
 				switch(whatToProcess.split(",")[0]) {
 				case "Alt_1":
 					switch (config.getBroadcaster().toUpperCase()) {
@@ -2436,13 +2437,27 @@ public class Animation
 
 					switch(config.getBroadcaster().toUpperCase()) {
 					case Constants.NPL: 
-						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo_BottomRightPart", "START");
+//						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo_BottomRightPart", "START");
+						
+						if(infobar.getRight_bottom() != null && !infobar.getRight_bottom().trim().isEmpty()) {
+							processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo_BottomRightPart", "START");
+						}else {
+							processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$RightInfo_Bottom", "START");
+						}
+						infobar.setRight_bottom(whatToProcess.split(",")[2]);
 						break;
 					}
 					
 					break;
 				case "Alt_8":
-					if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
+					if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER) && 
+							infobar.getRight_bottom() != null && !infobar.getRight_bottom().trim().isEmpty()) {
+						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$RightInfo_Bottom", "CONTINUE");
+						TimeUnit.MILLISECONDS.sleep(400);
+						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$RightInfo_Bottom", "SHOW 0.0");
+					}else if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
+						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$RightInfo_Bottom", "SHOW 0.0");
+						TimeUnit.MILLISECONDS.sleep(400);
 						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_All$In_Out", "CONTINUE");
 						infobar.setRight_section("");
 					}else {
@@ -2453,6 +2468,7 @@ public class Animation
 						}
 						infobar.setRight_section(whatToProcess.split(",")[2]);
 					}
+					infobar.setRight_bottom("");
 					break;
 				}
 				break;

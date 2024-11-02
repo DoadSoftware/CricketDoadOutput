@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -737,12 +738,24 @@ public class Caption
 			case "Alt_7":
 				switch (config.getBroadcaster().toUpperCase()) {
 				case Constants.NPL:
-					if(this_infobarGfx.infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
-						this_infobarGfx.infobar.setRight_bottom(whatToProcess.split(",")[2]);
-						status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, 1, whichSide);
+//					if(this_infobarGfx.infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
+//						this_infobarGfx.infobar.setRight_bottom(whatToProcess.split(",")[2]);
+//						status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, 1, whichSide);
+//					}else {
+//						status = "IN Alt+2 Section BASTMAN/BOWLER NOT SELECTED";
+//					}
+					if(this_infobarGfx.infobar.getRight_bottom() != null && !this_infobarGfx.infobar.getRight_bottom().isEmpty()) {
+						if(!this_infobarGfx.infobar.getRight_bottom().equalsIgnoreCase(whatToProcess.split(",")[2])) {
+							whichSide = 2;
+						}else {
+							whichSide = 1;
+						}
 					}else {
-						status = "IN Alt+2 Section BASTMAN/BOWLER NOT SELECTED";
+						whichSide = 1;
 					}
+					
+					this_infobarGfx.infobar.setRight_bottom(whatToProcess.split(",")[2]);
+					status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, whichSide, 1);
 					break;
 				case Constants.ICC_U19_2023:
 					if(this_infobarGfx.infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
@@ -800,12 +813,19 @@ public class Caption
 					
 					if(this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(CricketUtil.BOWLER) && 
 							whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
-						
-						status = "IN Alt+8 Section BOWLER IS ALREADY SELECTED";
+						if(this_infobarGfx.infobar.getRight_bottom() != "" && !this_infobarGfx.infobar.getRight_bottom().isEmpty()) {
+//							this_anim.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$RightInfo_Bottom", "CONTINUE");
+//							TimeUnit.MILLISECONDS.sleep(400);
+//							this_anim.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$RightInfo_Bottom", "SHOW 0.0");
+							status = this_infobarGfx.populateVizInfobarBowler(print_writers, matchAllData, 1);
+							this_infobarGfx.infobar.setRight_bottom("");
+						}else {
+							status = "IN Alt+8 Section BOWLER IS ALREADY SELECTED";
+						}
 					}else {
 						if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
 							this_infobarGfx.infobar.setRight_section(CricketUtil.BOWLER);
-							this_infobarGfx.infobar.setRight_bottom("BOWLING_END");
+//							this_infobarGfx.infobar.setRight_bottom("BOWLING_END");
 							
 							status = this_infobarGfx.populateVizInfobarBowler(print_writers, matchAllData, 1);
 						}else {

@@ -532,7 +532,7 @@ public class InfobarGfx
 					
 					if(infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
 						this.infobar.setRight_section(CricketUtil.BOWLER);
-						this.infobar.setRight_bottom("BOWLING_END");
+//						this.infobar.setRight_bottom("BOWLING_END");
 					}
 					populateVizInfobarMiddleSection(print_writers, matchAllData, 1);
 				} else {
@@ -4144,7 +4144,7 @@ public class InfobarGfx
 					
 					infobar.setBatsmanAndBowlOrSponsor("$Bat");
 					this.infobar.setRight_section(CricketUtil.BOWLER);
-					this.infobar.setRight_bottom("BOWLING_END");
+//					this.infobar.setRight_bottom("BOWLING_END");
 					
 					populateCurrentBatsmen(print_writers, matchAllData, WhichSide);
 					populateVizInfobarBowler(print_writers, matchAllData, WhichSide);
