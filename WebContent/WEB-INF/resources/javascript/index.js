@@ -256,7 +256,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				case 'ISPL':
 					addItemsToList(dataToProcess,null);
 					break;
-				case 'ICC-U19-2023': case 'BENGAL-T20':
+				case 'ICC-U19-2023': case 'BENGAL-T20': case 'NPL':
 					dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 					processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 					break;
