@@ -1214,14 +1214,15 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			session_match.match.inning.forEach(function(inn,index,arr){
 				if(inn.inningNumber == document.getElementById('which_inning').value){
-					inn.bowlingCard.forEach(function(boc,index,arr){
-						if(boc.status == 'CURRENTBOWLER'){
-							option = document.createElement('option');
-							option.value = boc.player.playerId;
-							option.text = boc.player.full_name;
-							select.appendChild(option);
-						}
-					});
+					inn.bowlingCard.sort(function(a, b) {
+				      if (b.wickets === a.wickets) {
+						if(a.economyRate === b.economyRate){
+							return b.dots - a.dots;
+					  	}
+				        return a.economyRate - b.economyRate;
+				      }
+				      return b.wickets - a.wickets;
+				    });
 					
 					inn.bowlingCard.forEach(function(boc,boc_index,bc_arr){
 						option = document.createElement('option');

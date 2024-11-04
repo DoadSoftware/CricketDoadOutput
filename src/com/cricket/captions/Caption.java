@@ -200,8 +200,6 @@ public class Caption
 						status = this_fullFramesGfx.PopulateScorecardFF(whichSide, "F1", matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
 					}
 				}
-				
-				
 				status = this_fullFramesGfx.PopulateBatPerformerFF(whichSide, whatToProcess.split(",")[0], matchAllData, 
 						Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
@@ -209,9 +207,16 @@ public class Caption
 				this_fullFramesGfx.FirstPlayerId = Integer.valueOf(whatToProcess.split(",")[2]);
 				this_fullFramesGfx.WhichType = whatToProcess.split(",")[3];
 				
-				if(this_anim.whichGraphicOnScreen.equalsIgnoreCase("F2") || this_anim.whichGraphicOnScreen.equalsIgnoreCase("Control_Shift_F2")) {
+				if(config.getBroadcaster().equalsIgnoreCase(Constants.NPL)) {
+					if(captionWhichGfx.equalsIgnoreCase("F2") || captionWhichGfx.equalsIgnoreCase("Control_Shift_F2")) {
+					}else {
+						status = this_fullFramesGfx.PopulateBowlingCardFF(whichSide, "F2", matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
+					}
 				}else {
-					status = this_fullFramesGfx.PopulateBowlingCardFF(whichSide, "F2", matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
+					if(this_anim.whichGraphicOnScreen.equalsIgnoreCase("F2") || this_anim.whichGraphicOnScreen.equalsIgnoreCase("Control_Shift_F2")) {
+					}else {
+						status = this_fullFramesGfx.PopulateBowlingCardFF(whichSide, "F2", matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
+					}
 				}
 				status = this_fullFramesGfx.PopulateBallPerformerFF(whichSide, whatToProcess.split(",")[0], matchAllData, 
 						Integer.valueOf(whatToProcess.split(",")[1]));
