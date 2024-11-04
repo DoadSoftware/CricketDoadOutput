@@ -275,7 +275,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				break;
 			case 'Control_F11':
 				switch($('#selected_broadcaster').val().toUpperCase()){
-				case 'ISPL': case 'ICC-U19-2023':
+				case 'ISPL': case 'ICC-U19-2023': case 'NPL':
 					dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 					processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 					break;
@@ -2119,6 +2119,16 @@ function addItemsToList(whatToProcess,dataToProcess)
 				option.value = 'BATSMAN_TOURNAMENT';
 				option.text = 'Batsman/Tournament';
 				select.appendChild(option);*/
+				
+				option = document.createElement('option');
+				option.value = 'IDENT_TEAM';
+				option.text = 'Ident & team';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = 'IDENT_TOURNAMENT';
+				option.text = 'Ident & Tournament';
+				select.appendChild(option);
 				
 				option = document.createElement('option');
 				option.value = 'CURR_PARTNERSHIP';
@@ -4833,7 +4843,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			break;		
 		case 'Alt_3':
 			switch($('#selected_broadcaster').val().toUpperCase()){
-				case 'ICC-U19-2023':
+				case 'ICC-U19-2023': case 'NPL':
 				switch(whatToProcess){
 						case 'Alt_3':
 						header_text.innerHTML = 'MIDDLE INFOBAR SECTION - BAT PLAYER PROFILE';
@@ -4902,25 +4912,35 @@ function addItemsToList(whatToProcess,dataToProcess)
 					select.id = 'selectProfile';
 					select.name = select.id;
 					
-					option = document.createElement('option');
-					option.value = 'U19ODI';
-					option.text = 'U19 ODI';
-					select.appendChild(option);
-					
-					option = document.createElement('option');
-					option.value = 'LIST A';
-					option.text = 'LIST A';
-					select.appendChild(option);
-					
-					option = document.createElement('option');
-					option.value = 'ACCU19';
-					option.text = 'ACC U19';
-					select.appendChild(option);
-					
-					option = document.createElement('option');
-					option.value = 'SA TRI-NATION 2023-24';
-					option.text = 'SA TRI-NATION';
-					select.appendChild(option);
+					switch($('#selected_broadcaster').val().toUpperCase()){
+						case 'ICC-U19-2023':
+							option = document.createElement('option');
+							option.value = 'U19ODI';
+							option.text = 'U19 ODI';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'LIST A';
+							option.text = 'LIST A';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'ACCU19';
+							option.text = 'ACC U19';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'SA TRI-NATION 2023-24';
+							option.text = 'SA TRI-NATION';
+							select.appendChild(option);
+						break;
+						case 'NPL':
+							option = document.createElement('option');
+							option.value = 'DT20';
+							option.text = 'DT20';
+							select.appendChild(option);
+						break;
+					}
 					
 					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
 					row.insertCell(cellCount).appendChild(select);
@@ -5053,7 +5073,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			break;
 		case 'Alt_4': 
 			switch($('#selected_broadcaster').val().toUpperCase()){
-				case 'ICC-U19-2023':
+				case 'ICC-U19-2023': case 'NPL':
 					switch(whatToProcess){
 					case 'Alt_4':
 					header_text.innerHTML = 'MIDDLE INFOBAR SECTION - BALL PLAYER PROFILE';
@@ -5115,25 +5135,35 @@ function addItemsToList(whatToProcess,dataToProcess)
 					select.id = 'selectProfile';
 					select.name = select.id;
 					
-					option = document.createElement('option');
-					option.value = 'U19ODI';
-					option.text = 'U19 ODI';
-					select.appendChild(option);
-					
-					option = document.createElement('option');
-					option.value = 'LIST A';
-					option.text = 'LIST A';
-					select.appendChild(option);
-					
-					option = document.createElement('option');
-					option.value = 'ACCU19';
-					option.text = 'ACC U19';
-					select.appendChild(option);
-					
-					option = document.createElement('option');
-					option.value = 'SA TRI-NATION 2023-24';
-					option.text = 'SA TRI-NATION';
-					select.appendChild(option);
+					switch($('#selected_broadcaster').val().toUpperCase()){
+						case 'ICC-U19-2023':
+							option = document.createElement('option');
+							option.value = 'U19ODI';
+							option.text = 'U19 ODI';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'LIST A';
+							option.text = 'LIST A';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'ACCU19';
+							option.text = 'ACC U19';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'SA TRI-NATION 2023-24';
+							option.text = 'SA TRI-NATION';
+							select.appendChild(option);
+						break;
+						case 'NPL':
+							option = document.createElement('option');
+							option.value = 'DT20';
+							option.text = 'DT20';
+							select.appendChild(option);
+						break;
+					}
 					
 					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
 					row.insertCell(cellCount).appendChild(select);

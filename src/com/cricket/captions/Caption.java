@@ -757,18 +757,21 @@ public class Caption
 //					}else {
 //						status = "IN Alt+2 Section BASTMAN/BOWLER NOT SELECTED";
 //					}
-					if(this_infobarGfx.infobar.getRight_bottom() != null && !this_infobarGfx.infobar.getRight_bottom().isEmpty()) {
+					if(!this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(CricketUtil.BOWLER)) {
+						status = "IN Alt+8 Section BOWLER NOT SELECTED";
+					}else if(this_infobarGfx.infobar.getRight_bottom() != null && !this_infobarGfx.infobar.getRight_bottom().isEmpty()) {
 						if(!this_infobarGfx.infobar.getRight_bottom().equalsIgnoreCase(whatToProcess.split(",")[2])) {
 							whichSide = 2;
 						}else {
 							whichSide = 1;
 						}
+						this_infobarGfx.infobar.setRight_bottom(whatToProcess.split(",")[2]);
+						status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, whichSide, 1);
 					}else {
 						whichSide = 1;
+						this_infobarGfx.infobar.setRight_bottom(whatToProcess.split(",")[2]);
+						status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, whichSide, 1);
 					}
-					
-					this_infobarGfx.infobar.setRight_bottom(whatToProcess.split(",")[2]);
-					status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, whichSide, 1);
 					break;
 				case Constants.ICC_U19_2023:
 					if(this_infobarGfx.infobar.getMiddle_section().equalsIgnoreCase(CricketUtil.BATSMAN)) {
