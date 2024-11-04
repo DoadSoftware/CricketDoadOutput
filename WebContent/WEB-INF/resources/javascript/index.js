@@ -1274,21 +1274,17 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			session_match.match.inning.forEach(function(inn,index,arr){
 				if(inn.inningNumber == document.getElementById('which_inning').value){
-					inn.battingCard.forEach(function(bc,index,arr){
-						if(bc.status == 'NOT OUT'){
-							if(bc.onStrike == 'YES'){
-								option = document.createElement('option');
-								option.value = bc.playerId;
-								option.text = bc.player.full_name + " - " + bc.status;
-								select.appendChild(option);
-							}else{
-								option = document.createElement('option');
-								option.value = bc.playerId;
-								option.text = bc.player.full_name + " - " + bc.status;
-								select.appendChild(option);
-							}
-						}
-					});
+					inn.battingCard.sort(function(a, b) {
+				      if (b.runs === a.runs) {
+						if(a.balls === b.balls){
+							return b.fours - a.fours
+					  	}
+				        // If totalRuns are equal, sort by totalBalls (ascending)
+				        return a.balls - b.balls;
+				      }
+				      // Otherwise, sort by totalRuns (descending)
+				      return b.runs - a.runs;
+				    });
 					
 					inn.battingCard.forEach(function(bc,bc_index,bc_arr){
 						option = document.createElement('option');

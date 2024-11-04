@@ -80,7 +80,7 @@ public class Caption
 	public Team team;
 
 	public int FirstPlayerId, SecondPlayerId, whichSide;
-	public String WhichProfile, status;
+	public String WhichProfile, status, captionWhichGfx = "";
 	
 	public Caption() {
 		super();
@@ -189,11 +189,19 @@ public class Caption
 			case "Control_Shift_F1":
 				this_fullFramesGfx.FirstPlayerId = Integer.valueOf(whatToProcess.split(",")[2]);
 				this_fullFramesGfx.WhichType = whatToProcess.split(",")[3];
-				
-				if(this_anim.whichGraphicOnScreen.equalsIgnoreCase("F1") || this_anim.whichGraphicOnScreen.equalsIgnoreCase("Control_Shift_F1")) {
+				if(config.getBroadcaster().equalsIgnoreCase(Constants.NPL)) {
+					if(captionWhichGfx.equalsIgnoreCase("F1") || captionWhichGfx.equalsIgnoreCase("Control_Shift_F1")) {
+					}else {
+						status = this_fullFramesGfx.PopulateScorecardFF(whichSide, "F1", matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
+					}
 				}else {
-					status = this_fullFramesGfx.PopulateScorecardFF(whichSide, "F1", matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
+					if(this_anim.whichGraphicOnScreen.equalsIgnoreCase("F1") || this_anim.whichGraphicOnScreen.equalsIgnoreCase("Control_Shift_F1")) {
+					}else {
+						status = this_fullFramesGfx.PopulateScorecardFF(whichSide, "F1", matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
+					}
 				}
+				
+				
 				status = this_fullFramesGfx.PopulateBatPerformerFF(whichSide, whatToProcess.split(",")[0], matchAllData, 
 						Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
