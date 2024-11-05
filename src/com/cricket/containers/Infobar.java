@@ -15,6 +15,7 @@ public class Infobar {
 	private boolean challengeRunOnScreen = false;
 	private boolean result_on_screen = false;
 	private boolean top_stage = false;
+	private boolean right_section_play = false;
 	
 	private int player_id;
 	
@@ -214,6 +215,12 @@ public class Infobar {
 	}
 	public void setTop_stage(boolean top_stage) {
 		this.top_stage = top_stage;
+	}
+	public boolean isRight_section_play() {
+		return right_section_play;
+	}
+	public void setRight_section_play(boolean right_section_play) {
+		this.right_section_play = right_section_play;
 	}
 	
 }

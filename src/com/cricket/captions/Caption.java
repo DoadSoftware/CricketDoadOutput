@@ -829,38 +829,27 @@ public class Caption
 					
 					if(this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(CricketUtil.BOWLER) && 
 							whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
-						if(this_infobarGfx.infobar.getRight_bottom() != "" && !this_infobarGfx.infobar.getRight_bottom().isEmpty()) {
-//							this_anim.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$RightInfo_Bottom", "CONTINUE");
-//							TimeUnit.MILLISECONDS.sleep(400);
-//							this_anim.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$RightInfo_Bottom", "SHOW 0.0");
-							status = this_infobarGfx.populateVizInfobarBowler(print_writers, matchAllData, 1);
-							this_infobarGfx.infobar.setRight_bottom("");
-						}else {
-							status = "IN Alt+8 Section BOWLER IS ALREADY SELECTED";
-						}
+						status = "IN Alt+8 Section BOWLER IS ALREADY SELECTED";
 					}else {
 						if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
 							this_infobarGfx.infobar.setRight_section(CricketUtil.BOWLER);
-//							this_infobarGfx.infobar.setRight_bottom("BOWLING_END");
+							this_infobarGfx.infobar.setRight_bottom("BOWLING_END");
 							
 							status = this_infobarGfx.populateVizInfobarBowler(print_writers, matchAllData, 1);
 						}else {
 							if(this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(CricketUtil.BOWLER)) { 
 								// When Goes Bowler to Boundary/Compare Section
 								this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
-								status = this_infobarGfx.populateVizInfobarRightSection(false,print_writers, matchAllData, 1, 1);
-							}else {
-								this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
 								status = this_infobarGfx.populateVizInfobarRightSection(false,print_writers, matchAllData, 1, 2);
-								
-//								if(!this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(whatToProcess.split(",")[2])) {
-//									// Add Data in Main Side1 -> SubSide2 between Boundary and Comparison and vice-versa
-//									this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
-//									status = this_infobarGfx.populateVizInfobarRightSection(false,print_writers, matchAllData, 1, 2);
-//								}else {
-//									// Add Data in Main Side1 -> SubSide1  between Boundary and Comparison and vice-versa
-//									status = this_infobarGfx.populateVizInfobarRightSection(false,print_writers, matchAllData, 1, 1);
-//								}
+							}else {
+								if(!this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(whatToProcess.split(",")[2])) {
+									// Add Data in Main Side1 -> SubSide2 between Boundary and Comparison and vice-versa
+									this_infobarGfx.infobar.setRight_section(whatToProcess.split(",")[2]);
+									status = this_infobarGfx.populateVizInfobarRightSection(false,print_writers, matchAllData, 1, 2);
+								}else {
+									// Add Data in Main Side1 -> SubSide1  between Boundary and Comparison and vice-versa
+									status = this_infobarGfx.populateVizInfobarRightSection(false,print_writers, matchAllData, 1, 1);
+								}
 							}
 						}
 					}
