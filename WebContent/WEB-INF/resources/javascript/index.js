@@ -264,7 +264,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				break;	
 			case 'F4': case 'Shift_K':
 				switch($('#selected_broadcaster').val().toUpperCase()){
-				case 'ISPL': case 'BENGAL-T20':
+				case 'ISPL': case 'BENGAL-T20': case 'NPL':
 					dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 					processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 					break;
