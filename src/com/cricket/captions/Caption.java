@@ -221,7 +221,15 @@ public class Caption
 				status = this_fullFramesGfx.PopulateBallPerformerFF(whichSide, whatToProcess.split(",")[0], matchAllData, 
 						Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
-				
+			case "Control_Shift_F4":
+				this_fullFramesGfx.FirstPlayerId = Integer.valueOf(whatToProcess.split(",")[2]);
+				if(captionWhichGfx.equalsIgnoreCase("F4") || captionWhichGfx.equalsIgnoreCase("Control_Shift_F4")) {
+				}else {
+					status = this_fullFramesGfx.populatePartnership(whichSide, "F4", matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
+				}
+				status = this_fullFramesGfx.PopulatePartPerformerFF(whichSide, whatToProcess.split(",")[0], matchAllData, 
+						Integer.valueOf(whatToProcess.split(",")[1]));
+				break;
 			case "F1": // Scorecard FF
 				if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ISPL)) {
 					this_fullFramesGfx.WhichScoreCard = whatToProcess.split(",")[2];
@@ -529,7 +537,6 @@ public class Caption
 				status = this_lowerThirdGfx.populateLTMatchPromo(whatToProcess,whichSide,matchAllData);
 				break;
 			case "Control_Shift_D":
-				System.out.println("wot : "+whatToProcess);
 				status = this_fullFramesGfx.populateDoubleMatchIDAndPromo(whichSide, whatToProcess, matchAllData);
 				break;
 			case "Alt_Shift_Z":
