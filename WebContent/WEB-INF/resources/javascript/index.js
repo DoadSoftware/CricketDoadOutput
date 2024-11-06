@@ -275,11 +275,11 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				break;
 			case 'Control_F11':
 				switch($('#selected_broadcaster').val().toUpperCase()){
-				case 'ISPL': case 'ICC-U19-2023': case 'NPL':
+				case 'ISPL': case 'ICC-U19-2023':
 					dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 					processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 					break;
-				case 'BENGAL-T20':
+				case 'BENGAL-T20': case 'NPL':
 					addItemsToList(dataToProcess,null);
 					break;
 				}
@@ -1487,7 +1487,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 		case 'Control_F11':
 			header_text.innerHTML = 'SUMMARY';
 			select = document.createElement('select');
-			select.id = 'selectScoreCard';
+			select.id = 'selectSummary';
 			select.name = select.id;
 			
 			option = document.createElement('option');
@@ -1500,11 +1500,15 @@ function addItemsToList(whatToProcess,dataToProcess)
             option.text = 'logo';
             select.appendChild(option);
             
-            option = document.createElement('option');
-            option.value = 'trophy';
-            option.text = 'trophy';
-            select.appendChild(option);
-			
+            switch($('#selected_broadcaster').val().toUpperCase()){
+				case 'BENGAL-T20':
+				option = document.createElement('option');
+	            option.value = 'trophy';
+	            option.text = 'trophy';
+	            select.appendChild(option);
+				break;
+			}
+            
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
 			row.insertCell(cellCount).appendChild(select);
 			setDropdownOptionToSelectOptionArray($(select),0);

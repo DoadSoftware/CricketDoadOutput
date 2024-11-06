@@ -409,7 +409,8 @@ public class Caption
 				status = this_fullFramesGfx.populatePreviousMatchSummary(whichSide, whatToProcess, matchAllData, 0);
 				break;
 			case "Control_F11": //MATCH SUMMARY
-				if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.BENGAL_T20)) {
+				if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.BENGAL_T20) || 
+						config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.NPL)) {
 					this_fullFramesGfx.WhichType = whatToProcess.split(",")[2];
 				}
 				status = this_fullFramesGfx.populateMatchSummary(whichSide, whatToProcess.split(",")[0], matchAllData, 
