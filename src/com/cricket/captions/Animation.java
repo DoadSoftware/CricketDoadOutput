@@ -277,7 +277,7 @@ public class Animation
 			case "F1": case "Control_Shift_F1": case "F2": case "Control_Shift_F2": case "Control_F11": case "F4": case "Shift_K": case "Control_Shift_F4":
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
 				TimeUnit.MILLISECONDS.sleep(500);
-				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$Loop", "START");
+				processAnimation(Constants.BACK, print_writers, "Loop", "START");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Essentials", "START");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Logo", "START");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Header", "START");
@@ -1899,6 +1899,7 @@ public class Animation
 				}
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$ExtraData", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Footer", "CONTINUE");
+				processAnimation(Constants.BACK, print_writers, "Loop", "SHOW 0.0");
 				TimeUnit.MILLISECONDS.sleep(400);
 				AnimateIn("ArrowUp,", print_writers, config); // Push infobar
 				TimeUnit.MILLISECONDS.sleep(1500);
