@@ -4780,6 +4780,17 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select.name = select.id;
 			
 			switch($('#selected_broadcaster').val().toUpperCase()){
+				case 'NPL':
+					option = document.createElement('option');
+					option.value = 'DT20';
+					option.text = 'DT20';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'IT20';
+					option.text = 'IT20';
+					select.appendChild(option);
+					break;
 				case 'BENGAL-T20':
 					option = document.createElement('option');
 					option.value = 'BPTL2024';
@@ -4825,7 +4836,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			switch(whatToProcess){
 			case 'Control_d':
 				switch($('#selected_broadcaster').val().toUpperCase()){
-					case 'ICC-U19-2023':
+					case 'ICC-U19-2023': case 'NPL':
 					select = document.createElement('select');
 					select.id = 'selectStatType';
 					select.name = select.id;
@@ -5274,6 +5285,16 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select.name = select.id;
 			
 			switch($('#selected_broadcaster').val().toUpperCase()){
+				case 'NPL':
+					option = document.createElement('option');
+					option.value = 'DT20';
+					option.text = 'DT20';
+					select.appendChild(option);
+					option = document.createElement('option');
+					option.value = 'IT20';
+					option.text = 'IT20';
+					select.appendChild(option);
+				break;
 				case 'BENGAL-T20':
 					option = document.createElement('option');
 					option.value = 'BPTL2024';
@@ -5318,7 +5339,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			switch(whatToProcess){
 			case 'Control_e':
 				switch($('#selected_broadcaster').val().toUpperCase()){
-					case 'ICC-U19-2023':
+					case 'ICC-U19-2023': case 'NPL':
 						select = document.createElement('select');
 						select.id = 'selectStatType';
 						select.name = select.id;
