@@ -256,7 +256,7 @@ public class Caption
 				break;
 			case "Alt_F1": // BatGriff
 				switch (config.getBroadcaster().toUpperCase()) {
-				case Constants.BENGAL_T20: 
+				case Constants.BENGAL_T20: case Constants.NPL:
 					status = this_bugsAndMiniGfx.populateGriff(whatToProcess, whichSide, matchAllData);
 					break;
 

@@ -2189,6 +2189,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 				select.appendChild(option);
 				
 				option = document.createElement('option');
+				option.value = 'THIS_MATCH_FOURS';
+				option.text = 'This Match Fours';
+				select.appendChild(option);
+				
+				option = document.createElement('option');
 				option.value = 'THIS_MATCH_SIXES';
 				option.text = 'This Match Sixes';
 				select.appendChild(option);
@@ -2220,7 +2225,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 							select.appendChild(option);
 							
 							option = document.createElement('option');
-							option.value = 'RESULTS';
+							option.value = 'RESULT';
 							option.text = 'Result';
 							select.appendChild(option);
 						}
