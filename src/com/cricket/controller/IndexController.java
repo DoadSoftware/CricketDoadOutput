@@ -391,6 +391,7 @@ public class IndexController
 				default:
 					switch (session_configuration.getBroadcaster()) {
 					case Constants.ICC_U19_2023: case Constants.ISPL: case Constants.BENGAL_T20: case Constants.NPL:
+						System.out.println("TYPE OF GFX ON SCREE : "+this_animation.getTypeOfGraphicsOnScreen(session_configuration, valueToProcess));
 						if(!session_configuration.getPrimaryVariousOptions().contains(Constants.FULL_FRAMER)
 							&& this_animation.getTypeOfGraphicsOnScreen(session_configuration, valueToProcess).contains(Constants.FULL_FRAMER)) {
 							this_caption.setStatus("Error: Full framers captions NOT selected on start-up");
@@ -398,6 +399,7 @@ public class IndexController
 						}
 						break;
 					}
+					System.out.println("EMPTY OR NOT : "+this_animation.whichGraphicOnScreen);
 					if(this_animation.whichGraphicOnScreen.isEmpty()) {
 						if(!this_animation.specialBugOnScreen.equalsIgnoreCase(CricketUtil.TOSS)) {
 							if(this_animation.infobar.isInfobar_on_screen() == false) {

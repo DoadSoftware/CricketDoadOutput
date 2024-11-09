@@ -2593,6 +2593,8 @@ public class Animation
 					switch (config.getBroadcaster().toUpperCase()) {
 					case Constants.NPL:
 						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_CenterInfo", "START");
+						TimeUnit.MILLISECONDS.sleep(300);
+						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_Sixes", "SHOW 0.0");
 						break;
 					}
 					
@@ -3709,6 +3711,7 @@ public class Animation
 				processAnimation(Constants.BACK, print_writers, "Change$Footer", "SHOW 0.0");
 				
 				caption.captionWhichGfx = whatToProcess.split(",")[0];
+				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "Shift_F1": case "Shift_F2":
 				processAnimation(Constants.FRONT, print_writers, "Anim_MiniChange", "SHOW 0.0");
@@ -3718,8 +3721,6 @@ public class Animation
 				this.whichGraphicOnScreen = whatToProcess;
 				break;	
 			}
-			this.whichGraphicOnScreen = whatToProcess;
-			
 			break;
 		case Constants.ICC_U19_2023:
 
@@ -4737,31 +4738,34 @@ public class Animation
 					case "F1": case "F2": case "Control_Shift_F1": case "Control_Shift_F2": case "Control_F11": case "F4": case "Control_Shift_F4":
 						previewCommand = "Anim_Infobar$Push 0.500 Anim_FullFrames$In_Out$Essentials$In 2.800 Anim_FullFrames$In_Out$Header$In 2.000 Anim_FullFrames$In_Out$Logo$In 2.500"
 								+ " Anim_FullFrames$In_Out$SubHeader$In 2.000";
-						switch(whatToProcess.split(",")[0]) {
-						case "F1": case "F2": case "Control_Shift_F1": case "Control_Shift_F2": case "Control_F11": case "F4": case "Control_Shift_F4": case "Shift_F11": case "Shift_T":
-							previewCommand = previewCommand + "Anim_FullFrames$In_Out$Footer 3.000 Anim_FullFrames$In_Out$Footer$In_Out 3.000 Anim_FullFrames$In_Out$Footer$In_Out$Essentials 3.000"
-									+" Anim_FullFrames$In_Out$Footer$In_Out$Essentials$In 2.860 Anim_FullFrames$In_Out$Footer$In_Out$Data 3.000"
-									+" Anim_FullFrames$In_Out$Footer$In_Out$Data$In 2.860";
-							break;
-						}
 						switch (whatToProcess.split(",")[0]) {
 						case "F1": case "Control_Shift_F1":
-							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$BattingCard$In 2.880 Anim_FullFrames$In_Out$ExtraData$In 3.000";
+							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main 3.000 Anim_FullFrames$In_Out$Main$BattingCard 3.000 Anim_FullFrames$In_Out$Main$BattingCard$In 2.880 Anim_FullFrames$In_Out$ExtraData$In 3.000";
 							break;
 						case "F2": case "Control_Shift_F2":
-							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$BowlingCard$In 2.880 Anim_FullFrames$In_Out$ExtraData$In 3.000";
+							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$BowlingCard 3.000 Anim_FullFrames$In_Out$Main$BowlingCard$In 2.880 Anim_FullFrames$In_Out$ExtraData$In 3.000";
 							break;
 						case "Control_F11": case "Shift_F11":
-							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Summary$In 2.760 Anim_FullFrames$In_Out$ExtraData$In 3.000";
+							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Summary 3.000 Anim_FullFrames$In_Out$Main$Summary$In 2.760 Anim_FullFrames$In_Out$ExtraData$In 3.000";
 							break;	
 						case "F4": case "Control_Shift_F4":
-							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Partnership_List$In 2.880 Anim_FullFrames$In_Out$ExtraData$In 3.000";
+							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Partnership_List 3.000 Anim_FullFrames$In_Out$Main$Partnership_List$In 2.880 Anim_FullFrames$In_Out$ExtraData$In 3.000";
 							break;
 						case "Shift_T":
-							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$LineUp_Image$In 3.000 Anim_FullFrames$In_Out$ExtraData$In 3.000";
+							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$LineUp_Image 3.000 Anim_FullFrames$In_Out$Main$LineUp_Image$In 2.920 Anim_FullFrames$In_Out$ExtraData$In 3.000";
 							break;	
+						case "Shift_K":
+							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Partnership 3.000 Anim_FullFrames$In_Out$Main$Partnership$In 2.880 Anim_FullFrames$In_Out$ExtraData$In 3.000";
+							break;
 						case "Control_d": case "Control_e":
-							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Profile$In 2.880 Anim_FullFrames$In_Out$ExtraData$In 3.000";
+							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Profile 3.000 Anim_FullFrames$In_Out$Main$Profile$In 2.680 Anim_FullFrames$In_Out$ExtraData$In 3.000";
+							break;
+						}
+						switch(whatToProcess.split(",")[0]) {
+						case "F1": case "F2": case "Control_Shift_F1": case "Control_Shift_F2": case "Control_F11": case "F4": case "Control_Shift_F4": case "Shift_F11": case "Shift_T":
+							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Footer 3.000 Anim_FullFrames$In_Out$Footer$In_Out 3.000 Anim_FullFrames$In_Out$Footer$In_Out$Essentials 3.000"
+									+" Anim_FullFrames$In_Out$Footer$In_Out$Essentials$In 2.860 Anim_FullFrames$In_Out$Footer$In_Out$Data 3.000"
+									+" Anim_FullFrames$In_Out$Footer$In_Out$Data$In 2.860";
 							break;
 						}
 						break;
@@ -4770,23 +4774,33 @@ public class Animation
 						break;
 					}
 				}else {
+					System.out.println(whichGraphicOnScreen+" : "+whatToProcess);
 					switch(whichGraphicOnScreen.split(",")[0]) {
-					case "Shift_F11": case "Shift_T":
+					case "Shift_T":
 					case "F1": case "F2": case "Control_Shift_F1": case "Control_Shift_F2": case "Control_F11": case "F4": case "Control_Shift_F4":
 					previewCommand = "Change$Header 1.000 Change$Header$Change_Out 0.800 Change$Header$Change_In 1.000 Change$Logo 1.340 Change$Logo$Change_Out 1.000 Change$Logo$Change_In 1.340"
 							+ " Change$SubHeader 1.100 Change$SubHeader$Change_Out 0.500 Change$SubHeader$Change_In 1.100 Change$Footer 1.100 Change$Footer$Change_Out 0.800 Change$Footer$Change_In 1.100";
 						switch(whichGraphicOnScreen.split(",")[0]) {
 						case "F1": case "Control_Shift_F1":
-							previewCommand = previewCommand + " Change$BattingCard 1.400 Change$BattingCard$Change_Out 0.740 Change$BattingCard$Change_In 1.400 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
+							if(!whatToProcess.split(",")[0].equalsIgnoreCase("Control_Shift_F1")) {
+								previewCommand = previewCommand + " Change$BattingCard$Change_Out 0.740";
+							}
+							previewCommand = previewCommand + " Change$BattingCard 1.400 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
 							break;
 						case "F2": case "Control_Shift_F2":
-							previewCommand = previewCommand + " Change$BowlingCard 1.400 Change$BowlingCard$Change_Out 0.740 Change$BowlingCard$Change_In 1.400 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
+							if(!whatToProcess.split(",")[0].equalsIgnoreCase("Control_Shift_F2")) {
+								previewCommand = previewCommand + " Change$BowlingCard$Change_Out 0.740";
+							}
+							previewCommand = previewCommand + " Change$BowlingCard 1.400 Change$BowlingCard$Change_In 1.400 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
 							break;
 						case "Control_F11": case "Shift_F11":
 							previewCommand = previewCommand + " Change$Summary 1.280 Change$Summary$Change_Out 0.680 Change$Summary$Change_In 1.280 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
 							break;
 						case "F4": case "Control_Shift_F4":
-							previewCommand = previewCommand + " Change$Partnership_List 1.400 Change$Partnership_List$Change_Out 0.740 Change$Partnership_List$Change_In 1.400 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
+							if(!whatToProcess.split(",")[0].equalsIgnoreCase("Control_Shift_F4")) {
+								previewCommand = previewCommand + " Change$Partnership_List$Change_Out 0.740";
+							}
+							previewCommand = previewCommand + " Change$Partnership_List 1.400 Change$Partnership_List$Change_In 1.400 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
 							break;
 						case "Shift_T":
 							previewCommand = previewCommand + " Change$LineUp_Image 1.440 Change$LineUp_Image$Change_Out 0.620 Change$LineUp_Image$Change_In 1.440 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
@@ -4798,16 +4812,16 @@ public class Animation
 					case "Shift_T":	
 							switch(whatToProcess.split(",")[0]) {
 							case "F1": case "Control_Shift_F1":
-								previewCommand = previewCommand + " Change$BattingCard 1.400 Change$BattingCard$Change_Out 0.740 Change$BattingCard$Change_In 1.400 Change$ExtraData$Change_In 1.000";
+								previewCommand = previewCommand + " Change$BattingCard$Change_In 1.400 Change$ExtraData$Change_In 1.000";
 								break;
 							case "F2": case "Control_Shift_F2":
-								previewCommand = previewCommand + " Change$BowlingCard 1.400 Change$BowlingCard$Change_Out 0.740 Change$BowlingCard$Change_In 1.400 Change$ExtraData$Change_In 1.000";
+								previewCommand = previewCommand + " Change$BowlingCard$Change_In 1.400 Change$ExtraData$Change_In 1.000";
 								break;
 							case "Control_F11": case "Shift_F11":
 								previewCommand = previewCommand + " Change$Summary 1.280 Change$Summary$Change_Out 0.680 Change$Summary$Change_In 1.280 Change$ExtraData$Change_In 1.000";
 								break;
 							case "F4": case "Control_Shift_F4":
-								previewCommand = previewCommand + " Change$Partnership_List 1.400 Change$Partnership_List$Change_Out 0.740 Change$Partnership_List$Change_In 1.400 Change$ExtraData$Change_In 1.000";
+								previewCommand = previewCommand + " Change$Partnership_List$Change_In 1.400 Change$ExtraData$Change_In 1.000";
 								break;
 							case "Shift_T":
 								previewCommand = previewCommand + " Change$LineUp_Image 1.440 Change$LineUp_Image$Change_Out 0.620 Change$LineUp_Image$Change_In 1.440 Change$ExtraData$Change_In 1.000";
@@ -4815,7 +4829,7 @@ public class Animation
 							}
 					}
 				}
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/FullFrames " + "C:/Temp/Preview.png " + previewCommand + "\0", print_writer);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/FullFrames " + "C:/Temp/Preview.tga " + previewCommand + "\0", print_writer);
 				break;
 			case Constants.BENGAL_T20:
 				if(whichside == 1) {
@@ -5258,7 +5272,7 @@ public class Animation
 				}
 //				System.out.println("previewCommand = " + previewCommand);
 			    CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/FullFrames "
-				    	+ "C:/Temp/Preview.png " + previewCommand + " \0", print_writer);
+				    	+ "C:/Temp/Preview.tga " + previewCommand + " \0", print_writer);
 				break;
 			case Constants.ISPL:
 				if(whichside == 1) {
