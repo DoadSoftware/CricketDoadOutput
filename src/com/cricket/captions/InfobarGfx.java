@@ -2721,7 +2721,7 @@ public class InfobarGfx
 									"$Style2$Bowl_Part_All$Side" + WhichSubSide + "$Select*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
 							
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Data_Right_Normal$Side_" + WhichSide + "$Style2$Bowl_Part_All$Side" + 
-									WhichSubSide + "$FreeTex$Position$Boundaries$txt_Head*GEOM*TEXT SET " + inning.getBowling_team().getTeamName1() + " WERE" + 
+									WhichSubSide + "$FreeTex$Position$Boundaries$txt_Head*GEOM*TEXT SET WERE" + 
 									"\0", print_writers);
 							
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Data_Right_Normal$Side_" + WhichSide + "$Style2$Bowl_Part_All$Side" + 

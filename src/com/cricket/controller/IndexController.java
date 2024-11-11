@@ -144,16 +144,16 @@ public class IndexController
 		    }
 		}));
 		
-		if(cricket_matches == null || cricket_matches.size()<=0) {
-			cricket_matches = CricketFunctions.getTournamentMatches(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
-					CricketUtil.MATCHES_DIRECTORY).listFiles(new FileFilter() {
-				@Override
-			    public boolean accept(File pathname) {
-			        String name = pathname.getName().toLowerCase();
-			        return name.endsWith(".json") && pathname.isFile();
-			    }
-			}), cricketService);
-		}
+//		if(cricket_matches == null || cricket_matches.size()<=0) {
+//			cricket_matches = CricketFunctions.getTournamentMatches(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
+//					CricketUtil.MATCHES_DIRECTORY).listFiles(new FileFilter() {
+//				@Override
+//			    public boolean accept(File pathname) {
+//			        String name = pathname.getName().toLowerCase();
+//			        return name.endsWith(".json") && pathname.isFile();
+//			    }
+//			}), cricketService);
+//		}
 		
 //		headToHead = CricketFunctions.extractHeadToHead(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
 //				CricketUtil.HEADTOHEAD_DIRECTORY).listFiles(), cricketService);
