@@ -3202,7 +3202,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			switch(whatToProcess){
 				case 'Shift_P':
 				switch($('#selected_broadcaster').val().toUpperCase()){
-					case 'ICC-U19-2023':
+					case 'ICC-U19-2023': case 'NPL':
 						
 					select = document.createElement('select');
 					select.id = 'selectStatType';
@@ -3223,16 +3223,30 @@ function addItemsToList(whatToProcess,dataToProcess)
 					option.text = 'Runs';
 					select.appendChild(option);
 					
-					option = document.createElement('option');
-					option.value = '3';
-					option.text = 'Fifties';
-					select.appendChild(option);
-					
-					option = document.createElement('option');
-					option.value = '4';
-					option.text = 'Hundreds';
-					select.appendChild(option);
-					
+					switch($('#selected_broadcaster').val().toUpperCase()){
+						case 'ICC-U19-2023':
+						option = document.createElement('option');
+						option.value = '3';
+						option.text = 'Fifties';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = '4';
+						option.text = 'Hundreds';
+						select.appendChild(option);
+						break;
+						case 'NPL':
+						option = document.createElement('option');
+						option.value = '3';
+						option.text = 'Thirties';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = '4';
+						option.text = 'Fifties';
+						select.appendChild(option);
+						break;
+					}
 					option = document.createElement('option');
 					option.value = '5';
 					option.text = 'Average';
@@ -3758,7 +3772,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			switch(whatToProcess){
 			case 'Shift_Q':
 				switch($('#selected_broadcaster').val().toUpperCase()){
-					case 'ICC-U19-2023':
+					case 'ICC-U19-2023': case 'NPL':
 					select = document.createElement('select');
 					select.id = 'selectStatType';
 					select.name = select.id;
@@ -3793,11 +3807,20 @@ function addItemsToList(whatToProcess,dataToProcess)
 					option.text = 'Strike Rate';
 					select.appendChild(option);
 					
-					option = document.createElement('option');
-					option.value = '6';
-					option.text = '5WI';
-					select.appendChild(option);
-					
+					switch($('#selected_broadcaster').val().toUpperCase()){
+						case 'ICC-U19-2023':
+						option = document.createElement('option');
+						option.value = '6';
+						option.text = '5WI';
+						select.appendChild(option);
+						break;
+						case 'NPL':
+						option = document.createElement('option');
+						option.value = '6';
+						option.text = '3WI';
+						select.appendChild(option);
+						break;
+					}
 					option = document.createElement('option');
 					option.value = '7';
 					option.text = 'Best Fig';
@@ -4856,15 +4879,30 @@ function addItemsToList(whatToProcess,dataToProcess)
 					option.text = 'Runs';
 					select.appendChild(option);
 					
-					option = document.createElement('option');
-					option.value = '3';
-					option.text = 'Fifties';
-					select.appendChild(option);
-					
-					option = document.createElement('option');
-					option.value = '4';
-					option.text = 'Hundreds';
-					select.appendChild(option);
+					switch($('#selected_broadcaster').val().toUpperCase()){
+						case 'ICC-U19-2023':
+						option = document.createElement('option');
+						option.value = '3';
+						option.text = 'Fifties';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = '4';
+						option.text = 'Hundreds';
+						select.appendChild(option);
+						break;
+						case 'NPL':
+						option = document.createElement('option');
+						option.value = '3';
+						option.text = 'Thirties';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = '4';
+						option.text = 'Fifties';
+						select.appendChild(option);
+						break;
+					}
 					
 					option = document.createElement('option');
 					option.value = '5';

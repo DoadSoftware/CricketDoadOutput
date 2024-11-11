@@ -512,7 +512,6 @@ public class Caption
 				status = this_lowerThirdGfx.populateL3rdAllPowerPlay(whatToProcess,whichSide,matchAllData);
 				break;	
 			case "Control_a"://Projected
-				System.out.println("HELLO");
 				status = this_lowerThirdGfx.populateL3rdProjected(whatToProcess,whichSide,matchAllData);
 				break;
 			case "Control_F3"://Comparison
@@ -790,7 +789,6 @@ public class Caption
 					}
 					break;
 				case Constants.BENGAL_T20:
-					System.out.println("whatToProcess.split(\",\")[2] = " + whatToProcess.split(",")[2]);
 					this_infobarGfx.infobar.setRight_bottom(whatToProcess.split(",")[2]);
 					status = this_infobarGfx.populateVizInfobarRightBottom(print_writers, matchAllData, whichSide, whichSide);
 					break;	

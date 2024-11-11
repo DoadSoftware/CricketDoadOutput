@@ -211,7 +211,6 @@ public class IndexController
 			LocalDate date1 = LocalDate.parse(current_date, dtf);
 			LocalDate date2 = LocalDate.parse(expiry_date, dtf);
 			
-			System.out.println("date1 = " + date1 + "   date2 = " + date2);
 			long daysBetween = ChronoUnit.DAYS.between(date1, date2);
 			
 			expiryDate = String.valueOf(daysBetween);
@@ -391,7 +390,6 @@ public class IndexController
 				default:
 					switch (session_configuration.getBroadcaster()) {
 					case Constants.ICC_U19_2023: case Constants.ISPL: case Constants.BENGAL_T20: case Constants.NPL:
-						System.out.println("TYPE OF GFX ON SCREE : "+this_animation.getTypeOfGraphicsOnScreen(session_configuration, valueToProcess));
 						if(!session_configuration.getPrimaryVariousOptions().contains(Constants.FULL_FRAMER)
 							&& this_animation.getTypeOfGraphicsOnScreen(session_configuration, valueToProcess).contains(Constants.FULL_FRAMER)) {
 							this_caption.setStatus("Error: Full framers captions NOT selected on start-up");
@@ -399,7 +397,6 @@ public class IndexController
 						}
 						break;
 					}
-					System.out.println("EMPTY OR NOT : "+this_animation.whichGraphicOnScreen);
 					if(this_animation.whichGraphicOnScreen.isEmpty()) {
 						if(!this_animation.specialBugOnScreen.equalsIgnoreCase(CricketUtil.TOSS)) {
 							if(this_animation.infobar.isInfobar_on_screen() == false) {
@@ -654,14 +651,6 @@ public class IndexController
 					if(database_statistics.get(i).getPlayerId() == stats.getPlayer_id()) {
 						stats.setStats_type(cricketService.getStatsType(stats.getStats_type_id()));
 						database_statistics.get(i).getStatsList().add(stats);
-					}
-				}
-			}
-			
-			for(Stats stat : database_statistics) {
-				if(!stat.getStatsList().isEmpty()) {
-					for(Statistics st : stat.getStatsList()) {
-						System.out.println("ID : " + stat.getPlayerId() + " - " + st.toString());
 					}
 				}
 			}

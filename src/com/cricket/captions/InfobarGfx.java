@@ -6587,8 +6587,6 @@ public class InfobarGfx
 				
 			case "FREE_TEXT":
 				
-				System.out.println();
-				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Main$Fade_For_Shrink$Analytics$Side" + WhichSide + "$BaseAll$"
 						+ "Left_Mask1$img_Base1*TEXTURE*IMAGE SET " + 
 						Constants.BENGAL_BASE_PATH + "1/" + inning.getBatting_team().getTeamName4() + "\0", print_writers);
@@ -7511,7 +7509,6 @@ public class InfobarGfx
 			}
 			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$Stage3$Side" + WhichSide + "$Select*FUNCTION*Omo*vis_con SET 10 \0", print_writers);
 			
-			System.out.println("length = " + this_data_str.get(this_data_str.size()-1).split(",").length);
 			for(int iBall = 0; iBall < this_data_str.get(this_data_str.size()-1).split(",").length; iBall++) {
 				
 				switch (this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase()) {
