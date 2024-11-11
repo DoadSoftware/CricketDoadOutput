@@ -4834,10 +4834,10 @@ public class InfobarGfx
 					this_data_str = new ArrayList<String>();
 					
 					int thisMatchPrevFours = CricketFunctions.extracttournamentFoursAndSixes("CURRENT_MATCH_DATA",tournament_matches, matchAllData, null).getTournament_fours();
-					int thisMatchNewFours = thisMatchPrevFours+1;
+					int thisMatchNewFours = thisMatchPrevFours-1;
 					
-					this_data_str.add(CricketFunctions.hundredsTensUnits(String.valueOf(thisMatchPrevFours)));
 					this_data_str.add(CricketFunctions.hundredsTensUnits(String.valueOf(thisMatchNewFours)));
+					this_data_str.add(CricketFunctions.hundredsTensUnits(String.valueOf(thisMatchPrevFours)));
 					
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Tournament_Sixes$txt_Title"
@@ -4926,10 +4926,9 @@ public class InfobarGfx
 					this_data_str = new ArrayList<String>();
 					
 					int thisMatchPrevSixes = CricketFunctions.extracttournamentFoursAndSixes("CURRENT_MATCH_DATA",tournament_matches, matchAllData, null).getTournament_sixes();
-					this_data_str.add(CricketFunctions.hundredsTensUnits(String.valueOf(thisMatchPrevSixes)));
-					
-					int thisMatchNewSixes = thisMatchPrevSixes+1;
+					int thisMatchNewSixes = thisMatchPrevSixes-1;
 					this_data_str.add(CricketFunctions.hundredsTensUnits(String.valueOf(thisMatchNewSixes)));
+					this_data_str.add(CricketFunctions.hundredsTensUnits(String.valueOf(thisMatchPrevSixes)));
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Tournament_Sixes$txt_Title"
 							+ "*GEOM*TEXT SET " + "MATCH SIXES" + "\0", print_writers);
@@ -5017,12 +5016,11 @@ public class InfobarGfx
 					
 					int oldSixes = CricketFunctions.extracttournamentFoursAndSixesData("COMBINED_PAST_CURRENT_MATCH_DATA", 
 							headToHead, matchAllData, null).getTournament_sixes();
+					int newSixes = Integer.valueOf(oldSixes) - 1;
 					
 					this_data_str = new ArrayList<String>();
-					this_data_str.add(CricketFunctions.hundredsTensUnits(String.valueOf(oldSixes)));
-					
-					int newSixes = Integer.valueOf(oldSixes) + 1;
 					this_data_str.add(CricketFunctions.hundredsTensUnits(String.valueOf(newSixes)));
+					this_data_str.add(CricketFunctions.hundredsTensUnits(String.valueOf(oldSixes)));
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Tournament_Sixes$Side_1$txt_Hundread"
 							+ "*GEOM*TEXT SET 0\0", print_writers);
