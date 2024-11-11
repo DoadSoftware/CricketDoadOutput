@@ -6855,7 +6855,7 @@ public class FullFramesGfx
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.NPL:
 			switch(whatToProcess) {
-			case "F1": case "F2": case "F4":
+			case "F1": case "F2": case "F4": case "Control_Shift_F1": case "Control_Shift_F2": case "Control_Shift_F4":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Side" + WhichSide + "$Select_FooterType"
 						+ "*FUNCTION*Omo*vis_con SET 1\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Side" + WhichSide + "$txt_Extras_Value"
@@ -8123,8 +8123,6 @@ public class FullFramesGfx
 			for(int j=1;j<=10;j++) {
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide +"$BowlingCard$"+
 						+ (j+1) + "$Select_Row_Type*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
-				
-				
 			}
 			Collections.sort(inning.getBowlingCard());
 			if(inning.getBowlingCard() != null && inning.getBowlingCard().size() > 0) {
@@ -8194,14 +8192,18 @@ public class FullFramesGfx
 			}
 			
 			if(inning.getBowlingCard().size() <= 7) {
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$BowlingCard$9"
-						+ "$Select_Row_Type*FUNCTION*Omo*vis_con SET 4\0", print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$BowlingCard$10"
-						+ "$Select_Row_Type*FUNCTION*Omo*vis_con SET 5\0", print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$BowlingCard$11"
-						+ "$Select_Row_Type*FUNCTION*Omo*vis_con SET 6\0", print_writers);
 				
 				if(inning.getFallsOfWickets() != null) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$BowlingCard$9"
+							+ "$Select_Row_Type*FUNCTION*Omo*vis_con SET 4\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$BowlingCard$10"
+							+ "$Select_Row_Type*FUNCTION*Omo*vis_con SET 5\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$BowlingCard$11"
+							+ "$Select_Row_Type*FUNCTION*Omo*vis_con SET 6\0", print_writers);
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$BowlingCard$9"
+							+ "$FOW$txt_BowlerFirstName*GEOM*TEXT SET  FALL OFF WICKETS\0", print_writers);
+					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide+"$BowlingCard$10$Wickets$Data"
 							+ "*FUNCTION*Grid*num_col SET "+inning.getFallsOfWickets().size()+"\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide+"$BowlingCard$11$Score$Data"

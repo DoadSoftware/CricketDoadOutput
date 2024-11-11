@@ -190,10 +190,7 @@ public class Caption
 				this_fullFramesGfx.FirstPlayerId = Integer.valueOf(whatToProcess.split(",")[2]);
 				this_fullFramesGfx.WhichType = whatToProcess.split(",")[3];
 				if(config.getBroadcaster().equalsIgnoreCase(Constants.NPL)) {
-					if(captionWhichGfx.equalsIgnoreCase("F1") || captionWhichGfx.equalsIgnoreCase("Control_Shift_F1")) {
-					}else {
-						status = this_fullFramesGfx.PopulateScorecardFF(whichSide, "F1", matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
-					}
+					status = this_fullFramesGfx.PopulateScorecardFF(whichSide, "F1", matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
 				}else {
 					if(this_anim.whichGraphicOnScreen.equalsIgnoreCase("F1") || this_anim.whichGraphicOnScreen.equalsIgnoreCase("Control_Shift_F1")) {
 					}else {
@@ -208,10 +205,7 @@ public class Caption
 				this_fullFramesGfx.WhichType = whatToProcess.split(",")[3];
 				
 				if(config.getBroadcaster().equalsIgnoreCase(Constants.NPL)) {
-					if(captionWhichGfx.equalsIgnoreCase("F2") || captionWhichGfx.equalsIgnoreCase("Control_Shift_F2")) {
-					}else {
-						status = this_fullFramesGfx.PopulateBowlingCardFF(whichSide, "F2", matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
-					}
+					status = this_fullFramesGfx.PopulateBowlingCardFF(whichSide, "F2", matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
 				}else {
 					if(this_anim.whichGraphicOnScreen.equalsIgnoreCase("F2") || this_anim.whichGraphicOnScreen.equalsIgnoreCase("Control_Shift_F2")) {
 					}else {
@@ -223,10 +217,7 @@ public class Caption
 				break;
 			case "Control_Shift_F4":
 				this_fullFramesGfx.FirstPlayerId = Integer.valueOf(whatToProcess.split(",")[2]);
-				if(captionWhichGfx.equalsIgnoreCase("F4") || captionWhichGfx.equalsIgnoreCase("Control_Shift_F4")) {
-				}else {
-					status = this_fullFramesGfx.populatePartnership(whichSide, "F4", matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
-				}
+				status = this_fullFramesGfx.populatePartnership(whichSide, "F4", matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
 				status = this_fullFramesGfx.PopulatePartPerformerFF(whichSide, whatToProcess.split(",")[0], matchAllData, 
 						Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
