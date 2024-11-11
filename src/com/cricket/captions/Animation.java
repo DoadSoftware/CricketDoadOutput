@@ -305,6 +305,7 @@ public class Animation
 					break;
 				case "Shift_K":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Partnership", "START");
+					processAnimation(Constants.BACK, print_writers, "BG_Scale", "START");
 					break;
 				case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Profile", "START");
