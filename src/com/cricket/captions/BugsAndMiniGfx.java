@@ -510,6 +510,21 @@ public class BugsAndMiniGfx
 		return status;
 	}
 
+	public String populateBugResult(String whatToProcess, MatchAllData matchAllData, int whichSide) {
+		if (matchAllData == null || matchAllData.getMatch() == null ||
+				matchAllData.getMatch().getInning() == null|| matchAllData.getSetup() == null) {
+				status = "populateBugResult match is null Or Inning is null";
+			} else {
+				inning = matchAllData.getMatch().getInning().stream().
+						filter(inn -> inn.getIsCurrentInning().equalsIgnoreCase(CricketUtil.YES)).
+						findAny().orElse(null);
+			}
+			if(PopulateBugBody(whichSide, whatToProcess,matchAllData) == Constants.OK) {
+				status = Constants.OK;
+			}
+			return status;
+	}
+	
 	public String PopulateBugBody(int WhichSide, String whatToProcess,MatchAllData matchAllData) {
 		
 		switch (config.getBroadcaster().toUpperCase()) {
@@ -712,6 +727,56 @@ public class BugsAndMiniGfx
 				}
 				
 				
+				break;
+			case "Control_Shift_R":
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+						+ "$txt_Runs*GEOM*TEXT SET \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+						+ "$txt_Balls*GEOM*TEXT SET \0", print_writers);
+				
+				String matchResult = CricketFunctions.generateMatchSummaryStatus(inning.getInningNumber(), matchAllData, CricketUtil.FULL, "", config.getBroadcaster()).toUpperCase();
+				
+				if(matchAllData.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.SUPER_OVER)) {
+					if(matchResult.contains("tied")) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+								+ "$txt_Name*GEOM*TEXT SET SUPER OVER TIED\0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
+								+ "$txt_Sub*GEOM*TEXT SET WINNER WILL BE DECIDED BY ANOTHER SUPER OVER\0", print_writers);
+					}else {
+						if(matchAllData.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.SUPER_OVER)) {
+							if(CricketFunctions.getRequiredRuns(matchAllData) <= 0) {
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+										+ "$txt_Name*GEOM*TEXT SET "+matchAllData.getMatch().getInning().get(1).getBatting_team().getTeamName1()+" WIN THE SUPER OVER"+"\0", print_writers);
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
+										+ "$txt_Sub*GEOM*TEXT SET\0", print_writers);
+							}else if(matchAllData.getMatch().getInning().get(1).getTotalWickets() >= 10 || 
+									matchAllData.getMatch().getInning().get(1).getTotalOvers() >= matchAllData.getSetup().getMaxOvers()) {
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+										+ "$txt_Name*GEOM*TEXT SET "+matchAllData.getMatch().getInning().get(1).getBowling_team().getTeamName1()+" WIN THE SUPER OVER"+"\0", print_writers);
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
+										+ "$txt_Sub*GEOM*TEXT SET\0", print_writers);
+							}
+						}else {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+									+ "$txt_Name*GEOM*TEXT SET "+matchResult+"\0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
+									+ "$txt_Sub*GEOM*TEXT SET\0", print_writers);
+						}
+					}
+				}else {
+					if(matchResult.contains("tied")) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+								+ "$txt_Name*GEOM*TEXT SET MATCH TIED\0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
+								+ "$txt_Sub*GEOM*TEXT SET WINNER WILL BE DECIDED BY SUPER OVER\0", print_writers);
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+								+ "$txt_Name*GEOM*TEXT SET "+matchResult+"\0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
+								+ "$txt_Sub*GEOM*TEXT SET\0", print_writers);
+					}
+				}
 				break;
 			}
 			break;
