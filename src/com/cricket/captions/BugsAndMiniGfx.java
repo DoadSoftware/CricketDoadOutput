@@ -12,6 +12,7 @@ import javax.xml.bind.JAXBException;
 
 import org.apache.poi.ss.formula.atp.Switch;
 
+import com.cricket.containers.LowerThird;
 import com.cricket.model.BatBallGriff;
 import com.cricket.model.BattingCard;
 import com.cricket.model.BestStats;
@@ -442,6 +443,29 @@ public class BugsAndMiniGfx
 		}
 		return status;		
 	}
+	
+	public String populateBugTarget(String whatToProcess,MatchAllData matchAllData,int WhichSide)
+	{
+		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
+			status = "populateBugTarget match is null Or Inning is null";
+		} else {
+			inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == Integer.valueOf(whatToProcess.split(",")[1]))
+					.findAny().orElse(null);
+				
+			if(inning == null) {
+				return "populateTarget: Current Inning NOT found in this match";
+			}
+			
+			if(inning.getInningNumber() == 1) {
+				return "populateTarget: Current Inning is 1";
+			}
+		}
+		if(PopulateBugBody(WhichSide, whatToProcess,matchAllData) == Constants.OK) {
+			status = Constants.OK;
+		}
+		return status;
+	}
+	
 	public String populateBatScore(String whatToProcess,MatchAllData matchAllData,int WhichSide)
 	{
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
@@ -530,6 +554,52 @@ public class BugsAndMiniGfx
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.NPL:
 			switch (whatToProcess.split(",")[0]) {
+			case "Control_Shift_J":
+				
+				String summary = "";
+				
+				if(matchAllData.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.SUPER_OVER) && matchAllData.getSetup().getMaxOvers() == 1) {
+					
+					summary = inning.getBatting_team().getTeamName1() + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN " + 
+							"FROM " + (matchAllData.getSetup().getMaxOvers()*6) + " BALLS";
+					
+				}else {
+					if(matchAllData.getSetup().getTargetOvers() == "" || matchAllData.getSetup().getTargetOvers().trim().isEmpty() && matchAllData.getSetup().getTargetRuns() == 0) {
+						
+						summary = inning.getBatting_team().getTeamName1() + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN " + 
+								"FROM " + CricketFunctions.getTargetOvers(matchAllData) + " OVERS";
+						
+
+					}else {
+						
+						if(matchAllData.getSetup().getTargetOvers() != "") {
+							
+							summary = inning.getBatting_team().getTeamName1() + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN " + 
+									"FROM " + CricketFunctions.getTargetOvers(matchAllData) + " OVERS";
+						}
+						if(matchAllData.getSetup().getTargetType().toUpperCase().equalsIgnoreCase("VJD")) {
+							
+							summary = inning.getBatting_team().getTeamName1() + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN " + 
+									"FROM " + CricketFunctions.getTargetOvers(matchAllData) + " OVERS (VJD)";
+							
+						}else if(matchAllData.getSetup().getTargetType().toUpperCase().equalsIgnoreCase("DLS")) {
+							
+							summary = inning.getBatting_team().getTeamName1() + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN " + 
+									"FROM " + CricketFunctions.getTargetOvers(matchAllData) + " OVERS (DLS)";
+						}
+					}
+				}
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+						+ "$txt_Name*GEOM*TEXT SET " + summary + "\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+						+ "$txt_Runs*GEOM*TEXT SET \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+						+ "$txt_Balls*GEOM*TEXT SET \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
+						+ "$txt_Sub*GEOM*TEXT SET \0", print_writers);
+				
+				break;
 			case "g":
 				
 				if(matchAllData.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.TEST)) {

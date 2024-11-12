@@ -417,7 +417,10 @@ public class Caption
 				break;
 			case "Control_Shift_F9": 
 				status = this_lowerThirdGfx.populateBowlingStyleWithPhoto(whatToProcess,whichSide,matchAllData);
-				break;	
+				break;
+			case "Control_Shift_J": 
+				status = this_bugsAndMiniGfx.populateBugTarget(whatToProcess,matchAllData, whichSide);
+				break;
 			case "d": //Target
 				status = this_lowerThirdGfx.populateL3rdTarget(whatToProcess, whichSide, matchAllData);
 				break;
