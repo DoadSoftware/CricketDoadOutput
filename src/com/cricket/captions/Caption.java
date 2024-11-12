@@ -719,26 +719,33 @@ public class Caption
 				}
 				break;
 			case "Alt_5":
-				
-				if(this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(CricketUtil.BOWLER)) { 
-					// When Goes Bowler to Boundary/Compare Section
-					this_infobarGfx.infobar.setRight_section("LAST_X_BALLS");
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.NPL:
+					this_infobarGfx.infobar.setMiddle_section("LAST_X_BALLS");
 					this_infobarGfx.lastXballs = Integer.valueOf(whatToProcess.split(",")[2]);
-					status = this_infobarGfx.populateVizInfobarRightSection(false,print_writers, matchAllData, 1, 1);
-				}else {
-					if(!this_infobarGfx.infobar.getRight_section().equalsIgnoreCase("LAST_X_BALLS")) {
-						// Add Data in Main Side1 -> SubSide2 between Boundary and Comparison and vice-versa
-						this_infobarGfx.infobar.setRight_section("LAST_X_BALLS");
-						this_infobarGfx.lastXballs = Integer.valueOf(whatToProcess.split(",")[2]);
-						status = this_infobarGfx.populateVizInfobarRightSection(false,print_writers, matchAllData, 2, 2);
-					}else {
-						// Add Data in Main Side1 -> SubSide1  between Boundary and Comparison and vice-versa
+					status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers,matchAllData, whichSide);
+					break;
+				default:
+					if(this_infobarGfx.infobar.getRight_section().equalsIgnoreCase(CricketUtil.BOWLER)) { 
+						// When Goes Bowler to Boundary/Compare Section
 						this_infobarGfx.infobar.setRight_section("LAST_X_BALLS");
 						this_infobarGfx.lastXballs = Integer.valueOf(whatToProcess.split(",")[2]);
 						status = this_infobarGfx.populateVizInfobarRightSection(false,print_writers, matchAllData, 1, 1);
+					}else {
+						if(!this_infobarGfx.infobar.getRight_section().equalsIgnoreCase("LAST_X_BALLS")) {
+							// Add Data in Main Side1 -> SubSide2 between Boundary and Comparison and vice-versa
+							this_infobarGfx.infobar.setRight_section("LAST_X_BALLS");
+							this_infobarGfx.lastXballs = Integer.valueOf(whatToProcess.split(",")[2]);
+							status = this_infobarGfx.populateVizInfobarRightSection(false,print_writers, matchAllData, 2, 2);
+						}else {
+							// Add Data in Main Side1 -> SubSide1  between Boundary and Comparison and vice-versa
+							this_infobarGfx.infobar.setRight_section("LAST_X_BALLS");
+							this_infobarGfx.lastXballs = Integer.valueOf(whatToProcess.split(",")[2]);
+							status = this_infobarGfx.populateVizInfobarRightSection(false,print_writers, matchAllData, 1, 1);
+						}
 					}
+					break;
 				}
-				
 				break;
 			case "Alt_y":
 				status = this_infobarGfx.populateTarget(print_writers,matchAllData);

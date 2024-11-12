@@ -4155,7 +4155,6 @@ public class InfobarGfx
 			}
 			break;
 		case Constants.NPL:
-			System.out.println("infobar.getMiddle_section() = " + infobar.getMiddle_section());
 			switch(infobar.getMiddle_section().toUpperCase()) {
 				case CricketUtil.BATSMAN:
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
@@ -4238,6 +4237,19 @@ public class InfobarGfx
 								Commentators.get(Integer.valueOf(Comms_Name.split(",")[2])-1).getCommentatorName() + "\0", print_writers);
 					}
 					break;
+				
+				case CricketUtil.TOSS:
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
+							+ "$Select_Type*FUNCTION*Omo*vis_con SET 3 \0",print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Top*GEOM*TEXT SET " + 
+							CricketFunctions.generateTossResult(matchAllData, CricketUtil.FULL, CricketUtil.FIELD, CricketUtil.FULL, CricketUtil.ELECTED).toUpperCase().split("TOSS")[0] + " TOSS " + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + 
+							CricketFunctions.generateTossResult(matchAllData, CricketUtil.FULL, CricketUtil.FIELD, CricketUtil.FULL, CricketUtil.ELECTED).toUpperCase().split("TOSS")[1] + "\0", print_writers);
+					
+//					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$InfoBar$CenterGRp$IdentInfo$Side" + WhichSide + "$txt_IdentInfo*GEOM*TEXT SET " 
+//						+ CricketFunctions.generateTossResult(matchAllData, CricketUtil.FULL, CricketUtil.FIELD, CricketUtil.SHORT, CricketUtil.ELECTED).replace("toss", "tip-top").toUpperCase() + "\0", print_writers);
+				break;	
 					
 				case "FREE_TEXT":
 					infoBarStats = infobarStats.stream().filter(infostats -> infostats.getOrder() == infobarStatsId).findAny().orElse(null);

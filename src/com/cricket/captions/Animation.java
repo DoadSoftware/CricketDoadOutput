@@ -5695,13 +5695,13 @@ public class Animation
 						if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ICC_U19_2023) || 
 								config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.NPL)) {
 							
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.png Anim_Bugs 2.200 "
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.tga Anim_Bugs 2.200 "
 									+ "Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In 2.200 Anim_Bugs$Essentials$In$Anim_Bugs 2.200 "
 									+ "Anim_Bugs$Essentials$In$Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In$Anim_Bugs$Essentials$Out 2.200 \0", print_writer);
 							
 						}else if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ISPL)) {
 							
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.png Anim_Bugs 2.940 "
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.tga Anim_Bugs 2.940 "
 									+ "Anim_Bugs$Essentials 2.940 Anim_Bugs$Essentials$In 0.960 Anim_Bugs$Essentials$In$Anim_Bugs 2.940 "
 									+ "Anim_Bugs$Essentials$In$Anim_Bugs$Essentials 2.940 Anim_Bugs$Essentials$In$Anim_Bugs$Essentials$Out 2.940 \0", print_writer);	
 						}
@@ -5733,7 +5733,7 @@ public class Animation
 							if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ICC_U19_2023) || 
 									config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.NPL)) {
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-										+ "/Default/Overlays C:/Temp/Preview.png Anim_BugsChange 1.360 \0", print_writer);
+										+ "/Default/Overlays C:/Temp/Preview.tga Anim_BugsChange 1.360 \0", print_writer);
 								
 							}else if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ISPL)) {
 								

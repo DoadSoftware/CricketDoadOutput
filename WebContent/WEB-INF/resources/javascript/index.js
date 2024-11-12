@@ -2208,6 +2208,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 						if(inn.inningNumber == 1){
 							
 							option = document.createElement('option');
+							option.value = 'TOSS';
+							option.text = 'Toss';
+							select.appendChild(option);
+				
+							option = document.createElement('option');
 							option.value = 'PROJECTED';
 							option.text = 'Projected Score';
 							select.appendChild(option);
