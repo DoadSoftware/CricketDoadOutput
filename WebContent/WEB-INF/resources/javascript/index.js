@@ -442,15 +442,7 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 							$('.my_waiting_modal').modal('hide');
 							//setTimeout(function(){$('.my_waiting_modal').modal('hide');},3000);
 							processCricketProcedures(whatToProcess.replace('POPULATE-', 'ANIMATE-IN-'),dataToProcess);
-							if(dataToProcess.split(',')[0] != 'Control_F9' && 
-								dataToProcess.split(',')[0] != 'Control_F5' && 
-								dataToProcess.split(',')[0] != 'Shift_F' && dataToProcess.split(',')[0] != 'Shift_F7'
-								&& dataToProcess.split(',')[0] != 'n' && dataToProcess.split(',')[0] != 'Shift_I'){
-								$("#select_graphic_options_div").empty();
-								document.getElementById('select_graphic_options_div').style.display = 'none';
-								$("#captions_div").show();
-							}else {
-								if(dataToProcess.split(',')[0] == 'Shift_F') {
+							if(dataToProcess.split(',')[0] == 'Shift_F') {
 									if($('#selectWicketSequence option:last').val()){
 										
 									}
@@ -458,7 +450,6 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 									document.getElementById('selectWicketSequence').setAttribute('onchange','setDropdownOptionForWicketSequence(0)');
 									setDropdownOptionForWicketSequence(0);
 								}
-							}
 						}else {
 							processUserSelection($('#cancel_graphics_btn').attr('value','cancel_graphics_btn'));
 						}
