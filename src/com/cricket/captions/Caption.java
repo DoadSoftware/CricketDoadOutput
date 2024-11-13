@@ -565,6 +565,9 @@ public class Caption
 			case "Control_Shift_R":
 				status = this_bugsAndMiniGfx.populateBugResult(whatToProcess,matchAllData,whichSide);
 				break;
+			case "Shift_C":
+				status = this_bugsAndMiniGfx.populateBugSixDistance(whatToProcess,matchAllData,whichSide);
+				break;
 			case "Control_F6":
 				status = this_lowerThirdGfx.populateQuickHowOut(whatToProcess,whichSide,matchAllData);
 				break;

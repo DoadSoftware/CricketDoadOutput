@@ -319,6 +319,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 					break;
 				}
 			break;	
+			case 'Shift_C':
 			case 'Control_4': case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_7':  case 'Alt_5': //case 'Alt_6': case 'Alt_8': case 'Alt_3': case 'Alt_4': case 'F7': case 'F11':
 			case 'Control_F5': case 'Shift_T': case 'Control_F9': case 'F5': case 'F6': case 'Alt_w':  case 'Control_j': case 'Alt_F8':
 			case 'F8': case 'F9':  case 'u': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6': case 'Control_y': case 'Shift_F8':
@@ -851,6 +852,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 		document.getElementById('select_graphic_options_div').appendChild(table_data);
 		break;*/
 		
+	case 'Shift_C':
 	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'Alt_w': case 'Control_j': case 'F8': case 'F9': case 'F10': case 'F7': case 'F11':
 	case 'Control_F5': case 'Control_F9': case 'Shift_T': case 'u': case 'p': case 'Control_p': case 'Control_d': case 'Control_e': case 'Shift_F8':
 	case 'z': case 'x': case 'c': case 'v': case 'Shift_F11': case 'Control_y': case 'Alt_F8': case 'Alt_F1': case 'Alt_F2':
@@ -2476,6 +2478,18 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			
 			break;
+		case 'Shift_C':
+			header_text.innerHTML = 'SIX DISTANCE';
+		
+			select = document.createElement('input');
+			select.type = "text";
+			select.id = 'selectFreeText';
+			
+			select.setAttribute('onchange',"setTextBoxOptionToSelectOptionArray(0)");
+			row.insertCell(cellCount).appendChild(select);
+			setTextBoxOptionToSelectOptionArray(0);
+			cellCount = cellCount + 1;
+		break;
 			
 		case 'Alt_6':
 			switch($('#selected_broadcaster').val().toUpperCase()){
@@ -5472,6 +5486,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 		}
 		
 		switch(whatToProcess){
+			case 'Shift_C':
 			case 'Control_m': case 'F4': case 'F5': case 'F6': case 'Alt_w': case 'Control_j': case 'F8': case 'F9': case 'F10': case 'F7': case 'F11':
 			case 'Control_F5': case 'Control_F9': case 'Shift_T': case 'u': case 'p': case 'Control_p': case 'Control_d': case 'Control_e': case 'z': 
 			case 'x': case 'c': case 'v': case 'Shift_F11': case 'Control_y': case 'Alt_F8': case 'Alt_F1': case 'Alt_F2': case 'Shift_K': case 'Shift_O': 

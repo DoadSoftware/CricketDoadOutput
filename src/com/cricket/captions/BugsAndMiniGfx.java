@@ -548,6 +548,12 @@ public class BugsAndMiniGfx
 			}
 			return status;
 	}
+	public String populateBugSixDistance(String whatToProcess, MatchAllData matchAllData, int whichSide) {
+		if(PopulateBugBody(whichSide, whatToProcess,matchAllData) == Constants.OK) {
+			status = Constants.OK;
+		}
+		return status;
+	}
 	
 	public String PopulateBugBody(int WhichSide, String whatToProcess,MatchAllData matchAllData) {
 		
@@ -738,12 +744,6 @@ public class BugsAndMiniGfx
 						+ "$txt_Balls*GEOM*TEXT SET \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
 						+ "$txt_Sub*GEOM*TEXT SET \0", print_writers);
-				
-				
-//				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Center_Bug$Toss"
-//						+ "$txt_Info*GEOM*TEXT SET " + whatToProcess.split(",")[2].split("-")[0] + " WON THE TOSS & ELECTED TO " + 
-//						whatToProcess.split(",")[2].split("-")[1]+ "\0", print_writers);
-				
 				break;
 			case "h":
 				
@@ -847,6 +847,16 @@ public class BugsAndMiniGfx
 								+ "$txt_Sub*GEOM*TEXT SET\0", print_writers);
 					}
 				}
+				break;
+			case "Shift_C":
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+						+ "$txt_Name*GEOM*TEXT SET SIX DISTANCE\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+						+ "$txt_Runs*GEOM*TEXT SET\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+						+ "$txt_Balls*GEOM*TEXT SET \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
+						+ "$txt_Sub*GEOM*TEXT SET "+whatToProcess.split(",")[2]+" METRES\0", print_writers);
 				break;
 			}
 			break;
