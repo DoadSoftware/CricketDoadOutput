@@ -331,6 +331,8 @@ public class Animation
 				break;
 			case "Shift_O": case "Control_k": case "k": case "g": case "y": case "Control_y": case "h": case "Shift_F4": case "Shift_F": case "Alt_p":
 			case "Control_Shift_R": case "Control_Shift_J": case "Shift_C":
+				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
+				TimeUnit.MILLISECONDS.sleep(500);
 				processAnimation(Constants.FRONT, print_writers, "Anim_Bugs$Essentials", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
@@ -1942,6 +1944,8 @@ public class Animation
 			case "Shift_O": case "Control_k": case "k": case "g": case "y": case "Control_y": case "h": case "Shift_F4": case "Shift_F": case "Alt_p":
 			case "Control_Shift_R": case "Control_Shift_J": case "Shift_C":
 				processAnimation(Constants.FRONT, print_writers, "Anim_Bugs$Essentials", "CONTINUE");
+				TimeUnit.MILLISECONDS.sleep(400);
+				AnimateIn("ArrowUp,", print_writers, config);
 				this.whichGraphicOnScreen = "";
 				break;
 			case "Shift_F1": case "Shift_F2": case "Alt_F1": case "Alt_F2":
@@ -4833,7 +4837,7 @@ public class Animation
 							previewCommand = previewCommand + " Change$Partnership_List 1.400 Change$Partnership_List$Change_In 1.400 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
 							break;
 						case "Shift_T":
-							previewCommand = previewCommand + " Change$LineUp_Image 1.440 Change$LineUp_Image$Change_Out 0.620 Change$LineUp_Image$Change_In 1.440 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
+							previewCommand = previewCommand + " Change$LineUp_Image 1.440 Change$LineUp_Image$Change_Out 0.620 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
 							break;	
 						case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q":
 							if(!prevHighlightDirector.isEmpty()) {
@@ -4859,7 +4863,7 @@ public class Animation
 								previewCommand = previewCommand + " Change$Partnership_List$Change_In 1.400 Change$ExtraData$Change_In 1.000 BG_Scale 0.800";
 								break;
 							case "Shift_T":
-								previewCommand = previewCommand + " Change$LineUp_Image 1.440 Change$LineUp_Image$Change_Out 0.620 Change$LineUp_Image$Change_In 1.440 Change$ExtraData$Change_In 1.000 BG_Scale 0.800";
+								previewCommand = previewCommand + " Change$LineUp_Image 1.440 Change$LineUp_Image$Change_In 1.440 Change$ExtraData$Change_In 1.000 BG_Scale 0.800";
 								break;	
 							case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q":
 								if(Integer.valueOf(whatToProcess.split(",")[4])>0) {
@@ -5695,7 +5699,7 @@ public class Animation
 						if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ICC_U19_2023) || 
 								config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.NPL)) {
 							
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.tga Anim_Bugs 2.200 "
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.tga Anim_Infobar$Push 0.500 Anim_Bugs 2.200 "
 									+ "Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In 2.200 Anim_Bugs$Essentials$In$Anim_Bugs 2.200 "
 									+ "Anim_Bugs$Essentials$In$Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In$Anim_Bugs$Essentials$Out 2.200 \0", print_writer);
 							
@@ -5720,7 +5724,7 @@ public class Animation
 							 CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
 										+ "/Default/Overlays" + " C:/Temp/Preview.png anim_Toss 1.000 \0", print_writer);
 						 }else if(config.getBroadcaster().equalsIgnoreCase(Constants.NPL)) {
-							 CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.png Anim_Bugs 2.200 "
+							 CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$Push 0.500 Anim_Bugs 2.200 "
 										+ "Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In 2.200 Anim_Bugs$Essentials$In$Anim_Bugs 2.200 "
 										+ "Anim_Bugs$Essentials$In$Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In$Anim_Bugs$Essentials$Out 2.200 \0", print_writer);
 						 }

@@ -6870,7 +6870,7 @@ public class FullFramesGfx
 							+ "*GEOM*TEXT SET "+""+"\0", print_writers);
 				}
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Side" + WhichSide + "$txt_Score"
-						+ "*GEOM*TEXT SET "+inning.getTotalRuns() +"-"+ inning.getTotalWickets()+"\0", print_writers);
+						+ "*GEOM*TEXT SET "+CricketFunctions.getTeamScore(inning, "-", false)+"\0", print_writers);
 				break;
 			case "Control_F11": case "Shift_F11": //MATCH SUMMARY
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer*ACTIVE SET 1 \0", print_writers);
@@ -10719,6 +10719,8 @@ public class FullFramesGfx
 					}
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$LineUp_Image" + containerName
 							+ "$Photo_" + rowId + "$Name$txt_PlayerName*GEOM*TEXT SET " + PlayingXI.get(i-1).getTicker_name() + "\0", print_writers);
+					
+					System.out.println("ROLE : "+PlayingXI.get(i-1).getRole());
 					
 					if(PlayingXI.get(i-1).getRole().equalsIgnoreCase(CricketUtil.BATSMAN) || PlayingXI.get(i-1).getRole().equalsIgnoreCase("BAT/KEEPER")) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + "$LineUp_Image" + containerName
