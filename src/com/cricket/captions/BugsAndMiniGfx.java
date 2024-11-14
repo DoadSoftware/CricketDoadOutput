@@ -728,8 +728,15 @@ public class BugsAndMiniGfx
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
 							+ "$txt_Name*GEOM*TEXT SET " + partnership.getPartnershipNumber() +"th WICKET PARTNERSHIP" + "\0", print_writers);
 				}
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
-						+ "$txt_Runs*GEOM*TEXT SET " + partnership.getTotalRuns() + "\0", print_writers);
+				
+				if(partnership.getPartnershipNumber() == inning.getPartnerships().size()) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+							+ "$txt_Runs*GEOM*TEXT SET " + partnership.getTotalRuns() + "*" + "\0", print_writers);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+							+ "$txt_Runs*GEOM*TEXT SET " + partnership.getTotalRuns() + "\0", print_writers);
+				}
+				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
 						+ "$txt_Balls*GEOM*TEXT SET " + partnership.getTotalBalls() + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
@@ -737,7 +744,8 @@ public class BugsAndMiniGfx
 				break;
 			case "Alt_p": 
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
-						+ "$txt_Name*GEOM*TEXT SET " + whatToProcess.split(",")[2].split("-")[0]+" WON THE TOSS & ELECTED TO "+whatToProcess.split(",")[2].split("-")[1] + "\0", print_writers);
+						+ "$txt_Name*GEOM*TEXT SET " + whatToProcess.split(",")[2].split("-")[0] + " WON THE TOSS & ELECTED TO " + 
+						whatToProcess.split(",")[2].split("-")[1] + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
 						+ "$txt_Runs*GEOM*TEXT SET \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 

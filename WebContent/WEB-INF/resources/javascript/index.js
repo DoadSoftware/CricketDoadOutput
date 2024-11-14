@@ -2196,6 +2196,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 				option.text = 'Tournament Sixes';
 				select.appendChild(option);
 				
+				option = document.createElement('option');
+				option.value = 'REVIEWS_REMAINING';
+				option.text = 'REVIEWS REMAINING';
+				select.appendChild(option);
+				
 				session_match.match.inning.forEach(function(inn,index,arr){
 					if(inn.isCurrentInning == 'YES' && session_match.setup.matchType != 'TEST'){
 						if(inn.inningNumber == 1){
@@ -2225,6 +2230,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 							option = document.createElement('option');
 							option.value = 'RESULT';
 							option.text = 'Result';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'DLS_PAR_SCORE';
+							option.text = 'D/L Par Score';
 							select.appendChild(option);
 						}
 					}

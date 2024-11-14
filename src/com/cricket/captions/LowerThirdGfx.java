@@ -2345,7 +2345,13 @@ public class LowerThirdGfx
 				HideAndShowL3rdSubStrapContainers(WhichSide);
 				break;
 			}
-			setPositionOfLT(whatToProcess,WhichSide,config,lowerThird.getNumberOfSubLines());
+			
+			switch (config.getBroadcaster().toUpperCase()) {
+			case Constants.ISPL: case Constants.BENGAL_T20: case Constants.ICC_U19_2023:
+				setPositionOfLT(whatToProcess,WhichSide,config,lowerThird.getNumberOfSubLines());
+				break;
+			}
+			
 			return PopulateL3rdBody(WhichSide, whatToProcess.split(",")[0]);
 		} else {
 			return status;
@@ -4682,7 +4688,7 @@ public class LowerThirdGfx
 		}
 		
 		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023: case Constants.ISPL: case Constants.BENGAL_T20:
+		case Constants.ICC_U19_2023: case Constants.ISPL: case Constants.BENGAL_T20: case Constants.NPL:
 			switch(whatToProcess) {
 			case "Control_i":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$Position_With_Graphics$Top_Line$Bottom_Align$Data$Side_"+ WhichSide + 
@@ -6039,6 +6045,32 @@ public class LowerThirdGfx
 				
 			case "F8": case "Alt_F8":
 				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.NPL:
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Logo_Grp$Side" + WhichSide + "$Select"
+							+ "*FUNCTION*Omo*vis_con SET 0\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Header_Grp$Side" + WhichSide + "$Select"
+							+ "*FUNCTION*Omo*vis_con SET 1\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Sub_Info_Grp$Side" + WhichSide + "$Select"
+							+ "*FUNCTION*Omo*vis_con SET 0\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Right_Info_ALL$Side" + WhichSide + "$Select"
+							+ "*FUNCTION*Omo*vis_con SET 0\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide + "$Select"
+							+ "*FUNCTION*Omo*vis_con SET 0\0", print_writers);
+					
+					if(lowerThird.getWhichTeamFlag() != null) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Logo_Grp$Side" + WhichSide + 
+								"$Single$img_Logo_Shadow*TEXTURE*IMAGE SET " + Constants.NPL_LOGO_PATH + lowerThird.getWhichTeamFlag() + "\0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Logo_Grp$Side" + WhichSide + 
+								"$Single$img_Logo*TEXTURE*IMAGE SET " + Constants.NPL_LOGO_PATH + lowerThird.getWhichTeamFlag() + "\0", print_writers);
+					}
+
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Header_Grp$Side" + WhichSide 
+							+ "$Name_Big$txt_FirstName*GEOM*TEXT SET " + lowerThird.getFirstName() + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Header_Grp$Side" + WhichSide 
+							+ "$Name_Big$txt_LastName*GEOM*TEXT SET " + lowerThird.getSurName() + "\0", print_writers);
+					
+					break;
 				case Constants.ICC_U19_2023:
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_NameSupers$Overall_Position_Y$Sublines$Side_" + WhichSide + "$Select_Subline"
 							+ "*FUNCTION*Omo*vis_con SET 1  \0", print_writers);
@@ -7305,7 +7337,7 @@ public class LowerThirdGfx
 			containerName = "$Change_In";
 		}
 		switch (config.getBroadcaster().toUpperCase()) {
-		case Constants.ICC_U19_2023: case Constants.ISPL: case Constants.BENGAL_T20:
+		case Constants.ICC_U19_2023: case Constants.ISPL: case Constants.BENGAL_T20: case Constants.NPL:
 			switch (whatToProcess) {
 			case "Control_Shift_B":
 				switch (config.getBroadcaster().toUpperCase()) {
@@ -9425,6 +9457,19 @@ public class LowerThirdGfx
 								+ "$Select_Subline$1$Data$Left$txt_1*GEOM*TEXT SET " + lowerThird.getLeftText()[0].toUpperCase() + "\0", print_writers);
 					}
 					
+					break;
+				case Constants.NPL:
+					if(lowerThird.getLeftText()[0].equalsIgnoreCase("Captain") || lowerThird.getLeftText()[0].equalsIgnoreCase("Captain Wicket-Keeper") ||
+							lowerThird.getLeftText()[0].equalsIgnoreCase("Wicket-Keeper")) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
+								+ "$FreeText_Small*GEOM*TEXT SET " + lowerThird.getSubTitle() + " " + lowerThird.getLeftText()[0].toUpperCase() + "\0", print_writers);
+					}else if(lowerThird.getLeftText()[0].equalsIgnoreCase("Team")) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
+								+ "$FreeText_Small*GEOM*TEXT SET " + lowerThird.getSubTitle() + "\0", print_writers);
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
+								+ "$FreeText_Small*GEOM*TEXT SET " + lowerThird.getLeftText()[0].toUpperCase() + "\0", print_writers);
+					}
 					break;
 				case Constants.ICC_U19_2023:
 					if(lowerThird.getLeftText()[0].equalsIgnoreCase("Captain") || lowerThird.getLeftText()[0].equalsIgnoreCase("Captain Wicket-Keeper") ||
