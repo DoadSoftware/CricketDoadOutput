@@ -2874,6 +2874,10 @@ public class Animation
 				 processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change$Change_Out$LOGO", "START");
 				 processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change$Change_Out$HEADER", "START");
 				 processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change$Change_Out$BOTTOM_DATA", "START");
+				 
+				 processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change$Change_In$LOGO", "START");
+				 processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change$Change_In$HEADER", "START");
+				 processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change$Change_In$BOTTOM_DATA", "START");
 				break;	
 			}
 			break;
@@ -3799,9 +3803,7 @@ public class Animation
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "Alt_F8": case "F8": case "F10": case "j": case "Alt_a": case "Alt_s":
-				 processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change$Change_Out$LOGO", "SHOW 0.0");
-				 processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change$Change_Out$HEADER", "SHOW 0.0");
-				 processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change$Change_Out$BOTTOM_DATA", "SHOW 0.0");
+				 processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change", "SHOW 0.0");
 				break;	
 			}
 			break;
