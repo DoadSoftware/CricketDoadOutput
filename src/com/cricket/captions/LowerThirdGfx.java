@@ -1329,7 +1329,6 @@ public class LowerThirdGfx
 	}
 	public String populateBatThisMatch(String whatToProcess,int WhichSide,MatchAllData matchAllData) throws InterruptedException, JsonMappingException, JsonProcessingException
 	{
-		
 		String outOrNot = "",striktRate = "";
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
 			return status;
@@ -1460,15 +1459,27 @@ public class LowerThirdGfx
 					"", 2, "",inning.getBatting_team().getTeamName4(),new String[] {"BALLS","DOTS","FOURS","SIXES","NINES","S/R"},new String[] {String.valueOf(battingCard.getBalls()),
 					Count[0],String.valueOf(battingCard.getFours()),String.valueOf(battingCard.getSixes()),String.valueOf(battingCard.getNines()),striktRate},null,null,
 					new String[] {"0.0","145.0","303.0","454.0","600.0","743.0"});
-			break;	
+			break;
+		case Constants.NPL:
+			lowerThird = new LowerThird("", battingCard.getPlayer().getFirstname(), surName,outOrNot, String.valueOf(battingCard.getRuns()),
+					String.valueOf(battingCard.getBalls()), 4, "",inning.getBatting_team().getTeamBadge(),new String[] {"DOTS","FOURS","SIXES","STRIKE RATE"},new String[] {
+					Count[0],String.valueOf(battingCard.getFours()),String.valueOf(battingCard.getSixes()),striktRate},null,null,null);
+			break;
 		}
 		
 		status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);
 		if(status == Constants.OK) {
-			HideAndShowL3rdSubStrapContainers(WhichSide);
-//			setStatsPositionOfLT(4, 2, WhichSide,whatToProcess.split(",")[0], print_writers, config);
-			setPositionOfLT(whatToProcess,WhichSide,config,lowerThird.getNumberOfSubLines());
-//			setPositionOfLT(lowerThird.getNumberOfSubLines(), WhichSide, 4,print_writers, config);
+			switch (config.getBroadcaster()) {
+			case Constants.ICC_U19_2023: case Constants.ISPL: case Constants.BENGAL_T20:
+				HideAndShowL3rdSubStrapContainers(WhichSide);
+//				setStatsPositionOfLT(4, 2, WhichSide,whatToProcess.split(",")[0], print_writers, config);
+				setPositionOfLT(whatToProcess,WhichSide,config,lowerThird.getNumberOfSubLines());
+//				setPositionOfLT(lowerThird.getNumberOfSubLines(), WhichSide, 4,print_writers, config);
+				break;
+			case Constants.NPL:
+				setPositionOfLT(whatToProcess,WhichSide,config,lowerThird.getNumberOfSubLines());
+				break;
+			}
 			return PopulateL3rdBody(WhichSide, whatToProcess.split(",")[0]);
 		} else {
 			return status;
@@ -6112,8 +6123,6 @@ public class LowerThirdGfx
 									"$Data_grp$Icon$img_Icon*TEXTURE*IMAGE SET " + Constants.ICONS_PATH + "SpinBowlerIcon" + "\0", print_writers);
 						}
 					}
-					
-					
 					break;
 				}	
 				
@@ -6417,6 +6426,34 @@ public class LowerThirdGfx
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$TopLine$TopData_Position_Y$Side" + WhichSide 
 							+ "$Change$geom_ScorePositionX$txt_Not_Out*GEOM*TEXT SET " + lowerThird.getSubTitle() + "\0", print_writers);
 					break;	
+				case Constants.NPL:
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Logo_Grp$Side"+ WhichSide + 
+							"$Select*FUNCTION*Omo*vis_con SET 0\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Logo_Grp$Side" + WhichSide + 
+							"$Single$img_Logo_Shadow*TEXTURE*IMAGE SET " + Constants.NPL_LOGO_PATH + lowerThird.getWhichTeamFlag() + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Logo_Grp$Side" + WhichSide + 
+							"$Single$img_Logo*TEXTURE*IMAGE SET " + Constants.NPL_LOGO_PATH + lowerThird.getWhichTeamFlag() + "\0", print_writers);
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Header_Grp$Side"+ WhichSide + 
+							"$Select*FUNCTION*Omo*vis_con SET 1\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Sub_Info_Grp$Side"+ WhichSide + 
+							"$Select*FUNCTION*Omo*vis_con SET 1\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Right_Info_ALL$Side"+ WhichSide + 
+							"$Select*FUNCTION*Omo*vis_con SET 1\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Right_Info_ALL$Side"+ WhichSide + 
+							"$Select$Data*FUNCTION*Omo*vis_con SET 0\0", print_writers);
+
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Header_Grp$Side" + WhichSide 
+							+ "$Name_Small$txt_FirstName*GEOM*TEXT SET " + lowerThird.getFirstName() + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Header_Grp$Side" + WhichSide 
+							+ "$Name_Small$txt_LastName*GEOM*TEXT SET " + lowerThird.getSurName() + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Sub_Info_Grp$Side" + WhichSide 
+							+ "$txt_SubInfo*GEOM*TEXT SET " + lowerThird.getSubTitle() + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Right_Info_ALL$Side" + WhichSide + 
+							"$Data_grp$Player_Score$txt_Runs*GEOM*TEXT SET " +  lowerThird.getScoreText() + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Right_Info_ALL$Side" + WhichSide + 
+							"$Data_grp$Player_Score$txt_balls*GEOM*TEXT SET " +  lowerThird.getBallsFacedText() + "\0", print_writers);
+					break;
 				}
 				break;
 				
@@ -9345,7 +9382,19 @@ public class LowerThirdGfx
 									containerName+ "$Select_Subline$3" + "$Data$Stat$txt_" + (i+1) + "*GEOM*TEXT SET " + "" + "\0", print_writers);
 						}
 					}
-					break;	
+					break;
+				case Constants.NPL:
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side"+ WhichSide + 
+							"$Select*FUNCTION*Omo*vis_con SET 1\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
+							+ "$Multi$Data*FUNCTION*Omo*vis_con SET "+(lowerThird.getTitlesText().length - 1)+"\0", print_writers);
+					for(int i=0; i<lowerThird.getTitlesText().length; i++) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
+								+ "$Multi$Data$"+(i+1)+"$txt1*GEOM*TEXT SET " + lowerThird.getTitlesText()[i] + "\0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
+								+ "$Multi$Data$"+(i+1)+"$txt2*GEOM*TEXT SET " + lowerThird.getStatsText()[i] + "\0", print_writers);
+					}
+					break;
 				}
 				
 				break;
@@ -9422,6 +9471,19 @@ public class LowerThirdGfx
 							"$Select_Subline$1$Data$Title$txt_" + (i+1) + "*GEOM*TEXT SET " + lowerThird.getTitlesText()[i] + "\0", print_writers);
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$SubLines$Side" + WhichSide +
 							"$Select_Subline$2$Data$Stat$txt_" + (i+1) + "*GEOM*TEXT SET " + lowerThird.getStatsText()[i] + "\0", print_writers);
+					}
+					break;
+				case Constants.NPL:
+					System.out.println("LENGTH "+lowerThird.getTitlesText().length);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side"+ WhichSide + 
+							"$Select*FUNCTION*Omo*vis_con SET 1\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
+							+ "$Multi$Data*FUNCTION*Omo*vis_con SET "+(lowerThird.getTitlesText().length-1)+"\0", print_writers);
+					for(int i=0; i<lowerThird.getTitlesText().length; i++) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
+								+ "$Multi$Data$"+(i+1)+"$txt1*GEOM*TEXT SET " + lowerThird.getTitlesText()[i] + "\0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
+								+ "$Multi$Data$"+(i+1)+"$txt2*GEOM*TEXT SET " + lowerThird.getStatsText()[i] + "\0", print_writers);
 					}
 					break;
 				}
@@ -11081,6 +11143,21 @@ public class LowerThirdGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*" + ltWhichContainer + "$Sublines$Side" + WhichSide + "$Set_Rows_Side_" + WhichSide + 
 						"_Position_Y*TRANSFORMATION*POSITION*Y SET " + LT_Position_4 + "\0",print_writers);
 			}
+			break;
+		case Constants.NPL:
+			switch (subline) {
+			case 4:
+				LT_Position_1 = "151.0"; //col offset
+				LT_Position_2 = "140.0"; //autofollow distance
+				LT_Position_3 = "0.0"; //title show or not
+				break;
+			}
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
+					+ "$Multi$Data*FUNCTION*Grid*col_offset SET "+LT_Position_1+"\0", print_writers);
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
+					+ "$Multi$Data*FUNCTION*Autofollow*DEFAULT_DISTANCE SET "+LT_Position_2+"\0", print_writers);
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
+					+ "$Multi$Stat_Head_GRP*TRANSFORMATION*POSITION*X SET "+LT_Position_3+"\0", print_writers);
 			break;
 		}
 		
