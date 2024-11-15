@@ -1251,10 +1251,18 @@ public class LowerThirdGfx
 			surName = player.getSurname();
 		}
 		
-		lowerThird = new LowerThird(team.getTeamBadge(), player.getFirstname(), surName,"", null, null,
-				1,"",team.getTeamName4(),null,null,new String[]{CricketFunctions.getbowlingstyle(player.getBowlingStyle()).toUpperCase()},
-				new String[]{whatToProcess.split(",")[3]},null);
-		
+		switch (config.getBroadcaster().toUpperCase()) {
+		case Constants.ICC_U19_2023: case Constants.ISPL: case Constants.BENGAL_T20:
+			lowerThird = new LowerThird(team.getTeamBadge(), player.getFirstname(), surName,"", null, null,
+					1,"",team.getTeamName4(),null,null,new String[]{CricketFunctions.getbowlingstyle(player.getBowlingStyle()).toUpperCase()},
+					new String[]{whatToProcess.split(",")[3]},null);
+			break;
+
+		case Constants.NPL:
+			lowerThird = new LowerThird(team.getTeamName1(), player.getFirstname(), surName,CricketFunctions.getbowlingstyle(player.getBowlingStyle()).toUpperCase(), null, null,
+					1,"",team.getTeamBadge(),null,null,null,new String[]{whatToProcess.split(",")[3]},null);
+			break;
+		}
 		if (CricketFunctions.checkImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
 			impactOmo = 1;
 		} else if (CricketFunctions.checkImpactPlayerBowler(matchAllData.getEventFile().getEvents(),
@@ -1267,8 +1275,12 @@ public class LowerThirdGfx
 		
 		status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);
 		if(status == Constants.OK) {
-			HideAndShowL3rdSubStrapContainers(WhichSide);
-			setPositionOfLT(whatToProcess,WhichSide,config,lowerThird.getNumberOfSubLines());
+			switch (config.getBroadcaster().toUpperCase()) {
+			case Constants.ICC_U19_2023: case Constants.ISPL: case Constants.BENGAL_T20:
+				HideAndShowL3rdSubStrapContainers(WhichSide);
+				setPositionOfLT(whatToProcess,WhichSide,config,lowerThird.getNumberOfSubLines());
+				break;
+			}
 			return PopulateL3rdBody(WhichSide,whatToProcess.split(",")[0]);
 		} else {
 			return status;
@@ -6083,13 +6095,25 @@ public class LowerThirdGfx
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Header_Grp$Side" + WhichSide 
 							+ "$Name_Big$txt_LastName*GEOM*TEXT SET " + lowerThird.getSurName() + "\0", print_writers);
 					
-					if(lowerThird.getSubTitle().contains("LEFT")) {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Right_Info_ALL$Side" + WhichSide + 
-								"$Data_grp$Icon$img_Icon*TEXTURE*IMAGE SET " +  Constants.ICONS_PATH + "Batsman_Lefthand" + "\0", print_writers);
+					if(whatToProcess.equalsIgnoreCase("Control_F5")) {
+						if(lowerThird.getSubTitle().contains("LEFT")) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Right_Info_ALL$Side" + WhichSide + 
+									"$Data_grp$Icon$img_Icon*TEXTURE*IMAGE SET " +  Constants.ICONS_PATH + "Batsman_Lefthand" + "\0", print_writers);
+						}else {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Right_Info_ALL$Side" + WhichSide + 
+									"$Data_grp$Icon$img_Icon*TEXTURE*IMAGE SET " + Constants.ICONS_PATH + "Batsman" + "\0", print_writers);
+						}
 					}else {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Right_Info_ALL$Side" + WhichSide + 
-								"$Data_grp$Icon$img_Icon*TEXTURE*IMAGE SET " + Constants.ICONS_PATH + "Batsman" + "\0", print_writers);
+						if(lowerThird.getSubTitle().contains("BOWLER") || lowerThird.getSubTitle().contains("FAST") || lowerThird.getSubTitle().contains("MEDIUM")) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Right_Info_ALL$Side" + WhichSide + 
+									"$Data_grp$Icon$img_Icon*TEXTURE*IMAGE SET " +  Constants.ICONS_PATH + "FastBowler" + "\0", print_writers);
+						}else {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Right_Info_ALL$Side" + WhichSide + 
+									"$Data_grp$Icon$img_Icon*TEXTURE*IMAGE SET " + Constants.ICONS_PATH + "SpinBowlerIcon" + "\0", print_writers);
+						}
 					}
+					
+					
 					break;
 				}	
 				
@@ -8996,6 +9020,15 @@ public class LowerThirdGfx
 							}else {
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$SubLines$Side" + WhichSide +
 										"$Select_Subline$1$Data$Right$txt_1*GEOM*TEXT SET " + "" + "\0", print_writers);
+							}
+							break;
+						case Constants.NPL:
+							if(!lowerThird.getRightText()[0].equalsIgnoreCase("WITHOUTEND")) {
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
+										+ "$FreeText_Small$txt_Info*GEOM*TEXT SET " + lowerThird.getSubTitle()+"      "+lowerThird.getRightText()[0]+" END" + "\0", print_writers);
+							}else {
+								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
+										+ "$FreeText_Small$txt_Info*GEOM*TEXT SET " + lowerThird.getSubTitle() + "\0", print_writers);
 							}
 							break;
 					}
