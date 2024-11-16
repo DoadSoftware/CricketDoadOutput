@@ -307,14 +307,14 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				break;*/
 			case 'F7':
 				switch($('#selected_broadcaster').val().toUpperCase()){
-					case 'BENGAL-T20':
+					case 'BENGAL-T20': case 'NPL':
 					addItemsToList(dataToProcess,null); 
 					break;
 				}
 			break;		
 			case 'F11':
 				switch($('#selected_broadcaster').val().toUpperCase()){
-					case 'BENGAL-T20':
+					case 'BENGAL-T20': case 'NPL':
 					addItemsToList(dataToProcess,null); 
 					break;
 				}
@@ -3128,7 +3128,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			switch(whatToProcess) {
 			case 'Control_s':
 				switch($('#selected_broadcaster').val().toUpperCase()){
-					case 'BENGAL-T20':
+					case 'BENGAL-T20': case 'NPL':
 					break;
 					default:
 						select = document.createElement('select');
@@ -3614,7 +3614,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			
 			switch($('#selected_broadcaster').val().toUpperCase()){
-					case 'BENGAL-T20':
+					case 'BENGAL-T20': case 'NPL':
 					break;
 					default:
 						select = document.createElement('select');

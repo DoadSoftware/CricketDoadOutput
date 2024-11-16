@@ -230,8 +230,12 @@ public class FullFramesGfx
 			if(WhichProfile.equalsIgnoreCase("BPTL2024")) {
 				matchAllData.getSetup().setMatchType("BPTL2024");
 			}
-			stat = CricketFunctions.updateTournamentWithH2h(stat, headToHead, matchAllData);
-			stat = CricketFunctions.updateStatisticsWithMatchData(stat, matchAllData);
+			switch (WhichProfile.toUpperCase()) {
+			case "DT20": case "BPTL2024":
+				stat = CricketFunctions.updateTournamentWithH2h(stat, headToHead, matchAllData);
+				stat = CricketFunctions.updateStatisticsWithMatchData(stat, matchAllData);
+				break;
+			}
 			break;
 		default:
 			stat = CricketFunctions.updateTournamentDataWithStats(stat, tournament_matches, matchAllData);
