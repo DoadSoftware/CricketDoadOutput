@@ -628,7 +628,7 @@ public class IndexController
 		    return (List<T>) session_name_super;
 		case "k":
 			return (List<T>) session_bugs;
-		case "Control_m": case "Shift_F11":
+		case "Control_m": case "Shift_F11": case "Control_Shift_L":
 			return (List<T>) CricketFunctions.processAllFixtures(cricketService);
 		case "Alt_9":
 			return (List<T>) session_infoBarStats;
