@@ -5626,6 +5626,57 @@ public class Animation
 		if(config.getPreview().equalsIgnoreCase("WITH_PREVIEW")) {
 			String previewCommands = "";
 			switch (config.getBroadcaster().toUpperCase()) {
+			case Constants.NPL:
+				if(whichside == 1) {
+					switch(whatToProcess.split(",")[0]) {
+					case "F8": case "Alt_F8": case "F10": case "F9": case "d": case "e": case "F7": case "F11": case "Control_s": case "Control_f":
+					case "Control_F5": case "Control_F6": case "Shift_F6": case "F6": case "Control_F9": case "F5":
+					case "Control_a": case "Shift_F3": case "u": case "Shift_F5": case "Shift_F9": case "Alt_F12":
+						previewCommands = "Lower_Third$In_Out 1.460 Lower_Third$In_Out$In 1.440 Lower_Third$In_Out$In$BASE 1.040 Lower_Third$In_Out$In$LOGO 1.100"
+								+ " Lower_Third$In_Out$In$HEADER 1.320 Lower_Third$In_Out$In$BOTTOM_DATA 1.320";
+						break;
+					case "Control_Shift_M": case "Control_Shift_L":
+						previewCommands = "LT_MatchID$In_Out 1.420 LT_MatchID$In_Out$In 1.400 LT_MatchID$In_Out$In$BASE 1.200 LT_MatchID$In_Out$In$LOGO 1.100"
+								+ " LT_MatchID$In_Out$In$HEADER 1.320 LT_MatchID$In_Out$In$BOTTOM_DATA 1.320 LT_MatchID$In_Out$In$SUB_DATA 1.400";
+						break;
+					case "Control_F3":
+						previewCommands = "LT_Comparison$In_Out 3.060 LT_Comparison$In_Out$In 3.020 LT_Comparison$In_Out$In$BASE 1.200 LT_Comparison$In_Out$In$LOGO 3.020"
+								+ " LT_Comparison$In_Out$In$HEADER 1.320 LT_Comparison$In_Out$In$BOTTOM_DATA 1.320 LT_Comparison$In_Out$In$SUB_DATA 1.400";
+						break;
+					}
+					switch(whatToProcess.split(",")[0]) {
+					case "Control_F5": case "Control_F6": case "Shift_F6": case "F6": case "Control_F9": case "F5":
+					case "Control_a": case "Shift_F3": case "u": case "Shift_F5": case "Shift_F9": case "Alt_F12":
+						previewCommands = previewCommands +" Lower_Third$In_Out$In$RIGHT_DATA 1.440";
+						break;
+					}
+					switch (whatToProcess.split(",")[0]) {
+					case "Shift_F3": case "Control_a": case "u": case "Shift_F5": case "Shift_F9": case "Alt_F12": case "F5": case "F7": case "F11":
+					case "Control_s": case "Control_f":
+						previewCommands = previewCommands +" Lower_Third$In_Out$In$SUB_DATA 1.400";
+						break;
+					}
+				}else {
+					previewCommands = "Lower_Third$Change$Change_Out 1.020 Lower_Third$Change_Out$BASE 1.020 Lower_Third$Change_Out$LOGO 0.481"
+							+ " Lower_Third$Change_Out$HEADER 0.495 Lower_Third$Change_Out$BOTTOM_DATA 0.495 Lower_Third$Change$Change_In 2.500"
+							+ " Lower_Third$Change_In$BASE 2.100 Lower_Third$Change_In$LOGO 2.160 Lower_Third$Change_In$HEADER 2.380"
+							+ " Lower_Third$Change_In$BOTTOM_DATA 2.380";
+					switch(whatToProcess.split(",")[0]) {
+					case "Control_F5": case "Control_F6": case "Shift_F6": case "F6": case "Control_F9": case "F5":
+					case "Control_a": case "Shift_F3": case "u": case "Shift_F5": case "Shift_F9": case "Alt_F12":
+						previewCommands = previewCommands +" Lower_Third$Change_Out$RIGHT_DATA 0.425 Lower_Third$Change_In$RIGHT_DATA 2.500";
+						break;
+					}
+					switch (whatToProcess.split(",")[0]) {
+					case "Shift_F3": case "Control_a": case "u": case "Shift_F5": case "Shift_F9": case "Alt_F12": case "F5": case "F7": case "F11":
+					case "Control_s": case "Control_f":
+						previewCommands = previewCommands +" Lower_Third$Change_Out$SUB_DATA 0.552 Lower_Third$Change_In$SUB_DATA 2.460";
+						break;
+					}
+				}
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/Overlays "
+				    	+ "C:/Temp/Preview.tga " + previewCommands + "\0", print_writer);
+				break;
 			case Constants.BENGAL_T20:
 				if(whichside == 1) {
 					switch(whatToProcess.split(",")[0]) {
