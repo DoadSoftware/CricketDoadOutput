@@ -351,8 +351,6 @@ public class Animation
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "Shift_F1": case "Shift_F2": case "Alt_F1": case "Alt_F2":
-				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
-				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "Anim_Mini$In_Out", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
@@ -360,7 +358,7 @@ public class Animation
 			case "Shift_F3": case "F10": case "u": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "F9":  case "d": case "e": case "F6": case "Control_F6": case "Shift_F6": case "F7": case "F11": case "Control_s": case "Control_f":
 				
-				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
+				AnimateIn("ArrowLeft" + ",", print_writers, config); // Shrink infobar
 				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$In$BASE", "START");
 				processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$In$LOGO", "START");
@@ -384,14 +382,14 @@ public class Animation
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "Control_Shift_M": case "Control_Shift_L":
-				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
+				AnimateIn("ArrowLeft" + ",", print_writers, config); // Shrink infobar
 				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "LT_MatchID$In_Out", "START");
 				
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "Control_F3":
-				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Shrink infobar
+				AnimateIn("ArrowLeft"+ ",", print_writers, config); // Shrink infobar
 				TimeUnit.MILLISECONDS.sleep(1000);
 				processAnimation(Constants.FRONT, print_writers, "LT_Comparison$In_Out", "START");
 				
@@ -1991,7 +1989,7 @@ public class Animation
 				this.whichGraphicOnScreen = "";
 				break;
 			case "m": case "Control_m":
-				processAnimation(Constants.BACK, print_writers, "Loop", "START");
+				processAnimation(Constants.BACK, print_writers, "Loop", "SHOW 0.0");
 				processAnimation(Constants.BACK, print_writers, "Anim_Ident", "CONTINUE");
 				TimeUnit.MILLISECONDS.sleep(400);
 				AnimateIn("ArrowUp,", print_writers, config);
@@ -2007,21 +2005,20 @@ public class Animation
 			case "Shift_F1": case "Shift_F2": case "Alt_F1": case "Alt_F2":
 				processAnimation(Constants.FRONT, print_writers, "Anim_Mini$In_Out", "CONTINUE");
 				TimeUnit.MILLISECONDS.sleep(1000);
-				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;
 			case "Control_Shift_M": case "Control_Shift_L":
 				processAnimation(Constants.FRONT, print_writers, "LT_MatchID$In_Out", "CONTINUE");
 				
 				TimeUnit.MILLISECONDS.sleep(1000);
-				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
+				AnimateIn("ArrowRight" + ",", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;
 			case "Control_F3":
 				processAnimation(Constants.FRONT, print_writers, "LT_Comparison$In_Out", "CONTINUE");
 				
 				TimeUnit.MILLISECONDS.sleep(1000);
-				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
+				AnimateIn("ArrowRight" + ",", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;	
 			case "F10": case "Shift_F3": case "u": 
@@ -2060,7 +2057,7 @@ public class Animation
 					break;
 				}
 				TimeUnit.MILLISECONDS.sleep(1000);
-				AnimateIn(Constants.SHRUNK_INFOBAR + ",", print_writers, config); // Restore infobar
+				AnimateIn("ArrowRight" + ",", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;	
 			}
@@ -2961,7 +2958,7 @@ public class Animation
 					 processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change$Change_Out$SUB_DATA", "START");
 					 processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change$Change_In$SUB_DATA", "START");
 					break;
-				}
+				} 
 				 
 				 processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change$Change_In$LOGO", "START");
 				 processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change$Change_In$HEADER", "START");
@@ -4635,8 +4632,8 @@ public class Animation
 			processAnimation(Constants.BACK, print_writers, "Profile_Highlight", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Loop", "SHOW 0.0");
 			
-			processAnimation(Constants.FRONT, print_writers, "Anim_Bugs$Essentials", "SHOW 0.0");
-			processAnimation(Constants.FRONT, print_writers, "Anim_BugsChange", "SHOW 0.0");
+//			processAnimation(Constants.FRONT, print_writers, "Anim_Bugs$Essentials", "SHOW 0.0");
+//			processAnimation(Constants.FRONT, print_writers, "Anim_BugsChange", "SHOW 0.0");
 			
 			processAnimation(Constants.FRONT, print_writers, "Anim_Mini", "SHOW 0.0");
 			
@@ -5634,15 +5631,15 @@ public class Animation
 					case "F8": case "Alt_F8": case "F10": case "F9": case "d": case "e": case "F7": case "F11": case "Control_s": case "Control_f":
 					case "Control_F5": case "Control_F6": case "Shift_F6": case "F6": case "Control_F9": case "F5":
 					case "Control_a": case "Shift_F3": case "u": case "Shift_F5": case "Shift_F9": case "Alt_F12": case "Control_h":
-						previewCommands = "Lower_Third$In_Out 1.460 Lower_Third$In_Out$In 1.440 Lower_Third$In_Out$In$BASE 1.040 Lower_Third$In_Out$In$LOGO 1.100"
+						previewCommands = "Anim_Infobar$Small 0.820 Lower_Third$In_Out 1.460 Lower_Third$In_Out$In 1.440 Lower_Third$In_Out$In$BASE 1.040 Lower_Third$In_Out$In$LOGO 1.100"
 								+ " Lower_Third$In_Out$In$HEADER 1.320 Lower_Third$In_Out$In$BOTTOM_DATA 1.320";
 						break;
 					case "Control_Shift_M": case "Control_Shift_L":
-						previewCommands = "LT_MatchID$In_Out 1.420 LT_MatchID$In_Out$In 1.400 LT_MatchID$In_Out$In$BASE 1.200 LT_MatchID$In_Out$In$LOGO 1.100"
+						previewCommands = "Anim_Infobar$Small 0.820 LT_MatchID$In_Out 1.420 LT_MatchID$In_Out$In 1.400 LT_MatchID$In_Out$In$BASE 1.200 LT_MatchID$In_Out$In$LOGO 1.100"
 								+ " LT_MatchID$In_Out$In$HEADER 1.320 LT_MatchID$In_Out$In$BOTTOM_DATA 1.320 LT_MatchID$In_Out$In$SUB_DATA 1.400";
 						break;
 					case "Control_F3":
-						previewCommands = "LT_Comparison$In_Out 3.060 LT_Comparison$In_Out$In 3.020 LT_Comparison$In_Out$In$BASE 1.200 LT_Comparison$In_Out$In$LOGO 3.020"
+						previewCommands = "Anim_Infobar$Small 0.820 LT_Comparison$In_Out 3.060 LT_Comparison$In_Out$In 3.020 LT_Comparison$In_Out$In$BASE 1.200 LT_Comparison$In_Out$In$LOGO 3.020"
 								+ " LT_Comparison$In_Out$In$HEADER 1.320 LT_Comparison$In_Out$In$BOTTOM_DATA 1.320 LT_Comparison$In_Out$In$SUB_DATA 1.400";
 						break;
 					}
@@ -5902,9 +5899,8 @@ public class Animation
 						if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ICC_U19_2023) || 
 								config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.NPL)) {
 							
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.tga Anim_Infobar$Push 0.500 Anim_Bugs 2.200 "
-									+ "Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In 2.200 Anim_Bugs$Essentials$In$Anim_Bugs 2.200 "
-									+ "Anim_Bugs$Essentials$In$Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In$Anim_Bugs$Essentials$In 0.000 Anim_Bugs$Essentials$In$Anim_Bugs$Essentials$Out 2.200 \0", print_writer);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$Push 0.500 Anim_Bugs 2.200 "
+									+ "Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In 5.000 Anim_Bugs$Essentials$Out 2.200 \0", print_writer);
 							
 						}else if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ISPL)) {
 							
@@ -5927,9 +5923,8 @@ public class Animation
 							 CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
 										+ "/Default/Overlays" + " C:/Temp/Preview.png anim_Toss 1.000 \0", print_writer);
 						 }else if(config.getBroadcaster().equalsIgnoreCase(Constants.NPL)) {
-							 CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.tga Anim_Infobar$Push 0.500 Anim_Bugs 2.200 "
-										+ "Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In 2.200 Anim_Bugs$Essentials$In$Anim_Bugs 2.200 "
-										+ "Anim_Bugs$Essentials$In$Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In$Anim_Bugs$Essentials$Out 2.200 \0", print_writer);
+							 CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.png Anim_Infobar$Push 0.500 Anim_Bugs 2.200 "
+										+ "Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In 5.000 Anim_Bugs$Essentials$Out 2.200 \0", print_writer);
 						 }
 						break;
 					}
