@@ -2207,6 +2207,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 						if(inn.inningNumber == 1){
 							
 							option = document.createElement('option');
+							option.value = 'CRR';
+							option.text = 'Current Run Rate';
+							select.appendChild(option);
+				
+							option = document.createElement('option');
 							option.value = 'TOSS';
 							option.text = 'Toss';
 							select.appendChild(option);
@@ -2218,6 +2223,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 							
 						}
 						else{
+							option = document.createElement('option');
+							option.value = 'RRR';
+							option.text = 'Required Run Rate';
+							select.appendChild(option);
+				
 							option = document.createElement('option');
 							option.value = 'TARGET';
 							option.text = 'Target';
