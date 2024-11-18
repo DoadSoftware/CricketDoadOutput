@@ -1759,17 +1759,17 @@ public class LowerThirdGfx
 				break;
 			case Constants.BENGAL_T20:
 				lowerThird = new LowerThird("FALL OF WICKET", inning.getBatting_team().getTeamBadge(), "","", String.valueOf(inning.getTotalRuns()), String.valueOf(inning.getTotalWickets()),
-						2,"",inning.getBatting_team().getTeamName4(),fowNumber,fowData,new String[]{"WICKET","SCORE"},null,
+						2,"",inning.getBatting_team().getTeamName4(),fowNumber,fowData,new String[]{"WICKETS","SCORE"},null,
 						new String[] {"38.0","59.0","86.0","112.0","137.0","163.0","189.0","213.0","238.0","262.0"});
 				break;
 			case Constants.ICC_U19_2023:
 				lowerThird = new LowerThird("FALL OF WICKET", inning.getBatting_team().getTeamName1(), "","", String.valueOf(inning.getTotalRuns()), String.valueOf(inning.getTotalWickets()),
-						2,"",inning.getBatting_team().getTeamName4(),fowNumber,fowData,new String[]{"WICKET","SCORE"},null,
+						2,"",inning.getBatting_team().getTeamName4(),fowNumber,fowData,new String[]{"WICKETS","SCORE"},null,
 						new String[] {"-400.0","-285.0","-165.0","-45.0","70.0","170.0","270.0","370.0","470.0","570.0"});
 				break;
 			case Constants.ISPL:
 				lowerThird = new LowerThird("FALL OF WICKET", inning.getBatting_team().getTeamName1(), "","", String.valueOf(inning.getTotalRuns()), String.valueOf(inning.getTotalWickets()),
-						2,"",inning.getBatting_team().getTeamName4(),fowNumber,fowData,new String[]{"WICKET","SCORE"},null,
+						2,"",inning.getBatting_team().getTeamName4(),fowNumber,fowData,new String[]{"WICKETS","SCORE"},null,
 						new String[] {"85.0","162.0","241.0","321.0","400.0","478.0","556.0","632.0","710.0","789.0"});
 				break;	
 			}
@@ -8827,7 +8827,7 @@ public class LowerThirdGfx
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
 							+ "$Multi$Data*FUNCTION*Grid*col_offset SET 53.0\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
-							+ "$Multi$Data*FUNCTION*Autofollow*DEFAULT_DISTANCE SET 16.0\0", print_writers);
+							+ "$Multi$Data*FUNCTION*Autofollow*DEFAULT_DISTANCE SET -9.0\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
 							+ "$Multi$Stat_Head_GRP*TRANSFORMATION*POSITION*X SET 262.0\0", print_writers);
 					
