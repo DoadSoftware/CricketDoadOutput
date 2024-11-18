@@ -31,6 +31,7 @@ import com.cricket.model.HeadToHead;
 import com.cricket.model.Inning;
 import com.cricket.model.MatchAllData;
 import com.cricket.model.NameSuper;
+import com.cricket.model.OverByOverData;
 import com.cricket.model.POTT;
 import com.cricket.model.Partnership;
 import com.cricket.model.Player;
@@ -72,6 +73,7 @@ public class LowerThirdGfx
 	public List<HeadToHead> headToHead;
 	public List<Tournament> past_tournament_stats;
 	public List<Fixture> fixTures;
+	public List<OverByOverData> overByOverData;
 	
 	public BattingCard battingCard;
 	public Partnership partnership;
@@ -139,6 +141,27 @@ public class LowerThirdGfx
 		this.past_tournament_stats = past_tournament_stats;
 		this.cricketService = cricketService;
 		this.fixTures = fixTures;
+	}
+	
+	public String populateL3PhaseWise(String whatToProcess, int whichSide, MatchAllData matchAllData) throws InterruptedException {
+		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == Integer.valueOf(whatToProcess.split(",")[1])).findAny().orElse(null);
+		if(inning == null) {
+			return "populateL3PhaseWise Inning is null";
+		}
+		overByOverData = new ArrayList<OverByOverData>();
+		overByOverData = CricketFunctions.getOverByOverData(matchAllData, inning.getInningNumber(),"MANHATTAN" ,matchAllData.getEventFile().getEvents());
+		
+		lowerThird = new LowerThird("", inning.getBatting_team().getTeamName2(), inning.getBatting_team().getTeamName3(),"PHASE-WISE SCORES", String.valueOf(inning.getTotalRuns() + "-" + inning.getTotalWickets()), 
+				String.valueOf(CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls())),3,"",inning.getBatting_team().getTeamBadge(),new String[]{"1 - 6", "7 - 15", "16 - 20"},null,
+				new String[] {"OVERS", "SCORE"},null,null);
+		
+		
+		status = PopulateL3rdHeader(whatToProcess.split(",")[0],whichSide);
+		if(status == Constants.OK) {
+			return PopulateL3rdBody(whichSide, whatToProcess.split(",")[0]);
+		}else {
+			return status;
+		}
 	}
 	
 	public String populateInningComp(String whatToProcess, int whichSide, MatchAllData matchAllData) throws InterruptedException {
@@ -5907,7 +5930,7 @@ public class LowerThirdGfx
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Header_Grp$Side"+ WhichSide + 
 							"$Select*FUNCTION*Omo*vis_con SET 1\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Sub_Info_Grp$Side"+ WhichSide + 
-							"$Select*FUNCTION*Omo*vis_con SET 0\0", print_writers);
+							"$Select*FUNCTION*Omo*vis_con SET 1\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Right_Info_ALL$Side"+ WhichSide + 
 							"$Select*FUNCTION*Omo*vis_con SET 1\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Right_Info_ALL$Side"+ WhichSide + 
@@ -6262,6 +6285,37 @@ public class LowerThirdGfx
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$TopLine$TopData_Position_Y$Side" + WhichSide 
 							+ "$Change$geom_ScorePositionX*ACTIVE SET 0 \0", print_writers);
+					break;
+					
+				case Constants.NPL:
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Logo_Grp$Side"+ WhichSide + 
+							"$Select*FUNCTION*Omo*vis_con SET 0\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Logo_Grp$Side" + WhichSide + 
+							"$Single$img_Logo_Shadow*TEXTURE*IMAGE SET " + Constants.NPL_LOGO_PATH + inning.getBatting_team().getTeamBadge() + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Logo_Grp$Side" + WhichSide + 
+							"$Single$img_Logo*TEXTURE*IMAGE SET " + Constants.NPL_LOGO_PATH + lowerThird.getWhichTeamFlag() + "\0", print_writers);
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Header_Grp$Side"+ WhichSide + 
+							"$Select*FUNCTION*Omo*vis_con SET 1\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Sub_Info_Grp$Side"+ WhichSide + 
+							"$Select*FUNCTION*Omo*vis_con SET 1\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Right_Info_ALL$Side"+ WhichSide + 
+							"$Select*FUNCTION*Omo*vis_con SET 1\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Right_Info_ALL$Side"+ WhichSide + 
+							"$Select$Data*FUNCTION*Omo*vis_con SET 1\0", print_writers);
+
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Sub_Info_Grp$Side"+ WhichSide + 
+							"$ExtremRight$txt_SubInfo*GEOM*TEXT SET " + lowerThird.getSubTitle() + "\0", print_writers);
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Header_Grp$Side" + WhichSide 
+							+ "$Name_Small$txt_FirstName*GEOM*TEXT SET " + lowerThird.getFirstName() + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Header_Grp$Side" + WhichSide 
+							+ "$Name_Small$txt_LastName*GEOM*TEXT SET " + lowerThird.getSurName() + "\0", print_writers);
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Right_Info_ALL$Side" + WhichSide 
+							+ "$Data$Team_Score$txt_Runs*GEOM*TEXT SET " + lowerThird.getScoreText() + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Right_Info_ALL$Side" + WhichSide 
+							+ "$Data$Team_Score$txt_balls*GEOM*TEXT SET " + lowerThird.getBallsFacedText() + " OVERS" + "\0", print_writers);
 					break;
 				}
 				break;	
@@ -10163,6 +10217,65 @@ public class LowerThirdGfx
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$All_LowerThirds$MoveForShrink$Out$SubLines$Side" + WhichSide +
 						"$Select_Subline$3$Data$Left$txt_1*GEOM*TEXT SET " + lowerThird.getLeftText()[1] + "\0", print_writers);
 					
+					break;
+				case Constants.NPL:
+					int oneToSixRuns = 0, oneToSixfWkt = 0, sevenToFifteenRuns = 0, sevenToFifteenWkt = 0, sixteenToTweentyRuns = 0, sixteenToTweentyWkt = 0;
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side"+ WhichSide + 
+							"$Select*FUNCTION*Omo*vis_con SET 1\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
+							+ "$Multi$Data*FUNCTION*Omo*vis_con SET " + (lowerThird.getNumberOfSubLines() - 1) + "\0", print_writers);
+					
+					for(int i=0; i<lowerThird.getTitlesText().length; i++) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
+								"$Side" + WhichSide + "$Multi$Data$" + (i+1) + "$txt1*GEOM*TEXT SET " + lowerThird.getTitlesText()[i] + "\0", print_writers);
+					}
+					for(int j=1; j<=overByOverData.size()-1; j++) {
+						if(j>0 && j<=6) {
+							oneToSixRuns+= overByOverData.get(j).getOverTotalRuns();
+							oneToSixfWkt+=overByOverData.get(j).getOverTotalWickets();
+						}
+						if(j>6 && j<=15) {
+							sevenToFifteenRuns+= overByOverData.get(j).getOverTotalRuns();
+							sevenToFifteenWkt+=overByOverData.get(j).getOverTotalWickets();
+						}
+						if(j>15 && j<=20) {
+							sixteenToTweentyRuns+= overByOverData.get(j).getOverTotalRuns();
+							sixteenToTweentyWkt+=overByOverData.get(j).getOverTotalWickets();
+						}
+					}
+					if(oneToSixfWkt == 0 && oneToSixRuns == 0) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
+								"$Side" + WhichSide + "$Multi$Data$1$txt2*GEOM*TEXT SET " + "-" + "\0", print_writers);
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
+								"$Side" + WhichSide + "$Multi$Data$1$txt2*GEOM*TEXT SET " + oneToSixRuns+"-"+oneToSixfWkt + "\0", print_writers);
+					}
+					if(sevenToFifteenWkt == 0 && sevenToFifteenRuns == 0) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
+								"$Side" + WhichSide + "$Multi$Data$2$txt2*GEOM*TEXT SET " + "-" + "\0", print_writers);
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
+								"$Side" + WhichSide + "$Multi$Data$2$txt2*GEOM*TEXT SET " + sevenToFifteenRuns+"-"+sevenToFifteenWkt + "\0", print_writers);
+					}
+					if(sixteenToTweentyWkt == 0 && sixteenToTweentyRuns == 0) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
+								"$Side" + WhichSide + "$Multi$Data$3$txt2*GEOM*TEXT SET " + "-" + "\0", print_writers);
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
+								"$Side" + WhichSide + "$Multi$Data$3$txt2*GEOM*TEXT SET " + sixteenToTweentyRuns +"-"+sixteenToTweentyWkt + "\0", print_writers);
+					}
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
+						+ "$Multi$Stat_Head_GRP$txt1*GEOM*TEXT SET " + lowerThird.getLeftText()[0] + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
+						+ "$Multi$Stat_Head_GRP$txt2*GEOM*TEXT SET " + lowerThird.getLeftText()[1] + "\0", print_writers);
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
+							+ "$Multi$Data*FUNCTION*Grid*col_offset SET 187.0\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
+							+ "$Multi$Data*FUNCTION*Autofollow*DEFAULT_DISTANCE SET 70.0\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
+							+ "$Multi$Stat_Head_GRP*TRANSFORMATION*POSITION*X SET 262.0\0", print_writers);
+						
 					break;
 				}
 				break;	

@@ -295,16 +295,17 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 					break;
 				}
 				break;
-			/*case 'Control_h':
+			case 'Control_h':
 				switch($('#selected_broadcaster').val().toUpperCase()){
-				case 'ISPL':
-					processCricketProcedures("GRAPHICS-OPTIONS", dataToProcess);
+				case 'NPL':
+					dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value
+					processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 					break;
-				case 'ICC-U19-2023':
+				case 'ICC-U19-2023': case 'ISPL': 
 					addItemsToList(dataToProcess,null); 
 					break;
 				}
-				break;*/
+				break;
 			case 'F7':
 				switch($('#selected_broadcaster').val().toUpperCase()){
 					case 'BENGAL-T20': case 'NPL':
@@ -323,8 +324,8 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Control_4': case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_7':  case 'Alt_5': //case 'Alt_6': case 'Alt_8': case 'Alt_3': case 'Alt_4': case 'F7': case 'F11':
 			case 'Control_F5': case 'Shift_T': case 'Control_F9': case 'F5': case 'F6': case 'Alt_w':  case 'Control_j': case 'Alt_F8':
 			case 'F8': case 'F9':  case 'u': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6': case 'Control_y': case 'Shift_F8':
-			case 'Shift_O': case 'g': case 'y': case 'Control_g': case 'Control_s': case 'Control_f': //case 'Alt_F9':
-			case 'Control_h': case 'Alt_F12': case 'l': case 'p': case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_F10': case 'Alt_d':
+			case 'Shift_O': case 'g': case 'y': case 'Control_g': case 'Control_s': case 'Control_f': //case 'Alt_F9': case 'Control_h':
+			case 'Alt_F12': case 'l': case 'p': case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_F10': case 'Alt_d':
 			case 'Control_p': case 'Shift_F4': case 'Alt_F1': case 'Alt_F2': case 'Shift_E': case 'Shift_P': case 'Shift_Q': case 'Alt_z': case 'Shift_F':
 			case 'Alt_F6': case 'Shift_R': case 'Shift_A': case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'Shift_F7': case 'Control_Shift_F9':
 			case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_E': case 'Control_Shift_F': case 'Control_Shift_P': case 'Control_Shift_F1': case 'Control_Shift_D':

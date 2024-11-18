@@ -497,7 +497,15 @@ public class Caption
 				status = this_lowerThirdGfx.populatePowerplay(whatToProcess,whichSide,matchAllData);
 				break;
 			case "Control_h"://powerplay Summary
-				status = this_lowerThirdGfx.populateL3rdPowerPlay(whatToProcess,whichSide,matchAllData);
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.NPL:
+					status = this_lowerThirdGfx.populateL3PhaseWise(whatToProcess,whichSide,matchAllData);
+					break;
+
+				case Constants.ICC_U19_2023: case Constants.ISPL:
+					status = this_lowerThirdGfx.populateL3rdPowerPlay(whatToProcess,whichSide,matchAllData);
+					break;
+				}
 				break;
 			case "a": // All Powerplay Summary 
 				status = this_lowerThirdGfx.populateL3rdInningPowerPlay(whatToProcess,whichSide,matchAllData);
