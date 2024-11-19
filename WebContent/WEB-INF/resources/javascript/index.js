@@ -364,7 +364,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			//All key presses which doesn't require graphics population will come here
 			case '5': case '6': case '7': case '8': case '9':
 				switch($('#selected_broadcaster').val().toUpperCase()){
-				case 'ISPL':
+				case 'ISPL': case 'NPL':
 					dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 					processCricketProcedures("ANIMATE-IN-GRAPHICS", dataToProcess);
 					break;
@@ -374,7 +374,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				}
 				
 				break;
-			case 'Alt_f': case 'Alt_g': case 'ArrowDown': case 'ArrowUp': case 'w': case 'i': case 'f': case 's': case '0': case ';':
+			case 'Alt_f': case 'Alt_g': case 'ArrowDown': case 'ArrowUp': case 'w': case 'i': case 'f': case 's': case '0': case ';': 
 			case 'Control_2': case 'Control_3': case 'ArrowLeft': case 'ArrowRight':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("ANIMATE-IN-GRAPHICS", dataToProcess);

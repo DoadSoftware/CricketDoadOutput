@@ -1880,11 +1880,11 @@ public class InfobarGfx
 			}
 			if(infobar.getLast_bowler() != null) {
 				if(infobar.getLast_bowler().getPlayerId() != bowlingCard.getPlayerId()) {
-					populateRightTopBowler(print_writers, matchAllData, WhichSide, 2);
-					populateVizInfobarRightBottom(print_writers, matchAllData, WhichSide, 2);
+					populateRightTopBowler(print_writers, matchAllData, 2, 2);
+					populateVizInfobarRightBottom(print_writers, matchAllData, 2, 2);
 					this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_Change", "START");
 					this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo_BottomRightPart", "START");
-					TimeUnit.MILLISECONDS.sleep(800);
+					TimeUnit.MILLISECONDS.sleep(1200);
 					populateRightTopBowler(print_writers, matchAllData, WhichSide, 1);
 					populateVizInfobarRightBottom(print_writers, matchAllData, WhichSide, 1);
 					this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_Change", "SHOW 0.0");
@@ -4220,7 +4220,7 @@ public class InfobarGfx
 							+ "$Select_Type*FUNCTION*Omo*vis_con SET 3 \0",print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Top*GEOM*TEXT SET " + 
 							"CURRENT RUN RATE " + "\0", print_writers);
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET WON " + 
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + 
 							CricketFunctions.generateRunRate(inning.getTotalRuns(),inning.getTotalOvers(), inning.getTotalBalls(), 2,matchAllData) + "\0", print_writers);
 					
 					break;
@@ -4235,7 +4235,7 @@ public class InfobarGfx
 							+ "$Select_Type*FUNCTION*Omo*vis_con SET 3 \0",print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Top*GEOM*TEXT SET " + 
 							"REQUIRED RUN RATE " + "\0", print_writers);
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET WON " + 
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_1_Wide$txt_Bottom*GEOM*TEXT SET " + 
 							CricketFunctions.generateRunRate(CricketFunctions.getRequiredRuns(matchAllData),0,CricketFunctions.getRequiredBalls(matchAllData),2,matchAllData) + "\0", print_writers);
 					
 					break;	
