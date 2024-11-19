@@ -362,6 +362,7 @@ public class Animation
 				switch (whatToProcess.split(",")[0]) {
 				case "Control_F5": case "Control_F6": case "Shift_F6": case "F6": case "Control_F9": case "F5": case "F9":
 				case "Control_a": case "Shift_F3": case "u": case "Shift_F5": case "Shift_F9": case "Alt_F12": case "Control_h":
+				case "F7": case "F11": case "Control_s": case "Control_f":	
 					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$In$RIGHT_DATA", "START");
 					break;
 				}
@@ -2031,20 +2032,6 @@ public class Animation
 					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$HEADER", "CONTINUE");
 					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$BOTTOM_DATA", "CONTINUE");
 					break;
-				case "F7": case "F11": case "Control_s": case "Control_f":
-					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$BASE", "SHOW 1.600");
-					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$LOGO", "SHOW 1.600");
-					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$HEADER", "SHOW 1.600");
-					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$BOTTOM_DATA", "SHOW 1.600");
-					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$SUB_DATA", "SHOW 1.600");
-					
-					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$BASE", "CONTINUE");
-					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$LOGO", "CONTINUE");
-					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$HEADER", "CONTINUE");
-					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$BOTTOM_DATA", "CONTINUE");
-					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$SUB_DATA", "CONTINUE");
-					break;
-
 				default:
 					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out", "SHOW 1.600");
 					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out", "CONTINUE");
@@ -2945,7 +2932,7 @@ public class Animation
 				 
 				 switch (whatToProcess.split(",")[0]) {
 				 case "Control_F5": case "F6": case "Control_F6": case "Shift_F6": case "Control_F9": case "F5": case "F9":
-				 case "u": case "Shift_F5": case "Shift_F9": case "Alt_F12": case "Control_h":
+				 case "u": case "Shift_F5": case "Shift_F9": case "Alt_F12": case "Control_h": case "F7": case "F11": case "Control_s": case "Control_f":
 					 processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change$Change_Out$RIGHT_DATA", "START");
 					 processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change$Change_In$RIGHT_DATA", "START");
 					break;

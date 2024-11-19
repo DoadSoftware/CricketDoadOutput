@@ -2202,14 +2202,14 @@ function addItemsToList(whatToProcess,dataToProcess)
 				option.text = 'REVIEWS REMAINING';
 				select.appendChild(option);
 				
+				option = document.createElement('option');
+				option.value = 'CRR';
+				option.text = 'Current Run Rate';
+				select.appendChild(option);
+				
 				session_match.match.inning.forEach(function(inn,index,arr){
 					if(inn.isCurrentInning == 'YES' && session_match.setup.matchType != 'TEST'){
 						if(inn.inningNumber == 1){
-							
-							option = document.createElement('option');
-							option.value = 'CRR';
-							option.text = 'Current Run Rate';
-							select.appendChild(option);
 				
 							option = document.createElement('option');
 							option.value = 'TOSS';
@@ -2226,6 +2226,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 							option = document.createElement('option');
 							option.value = 'RRR';
 							option.text = 'Required Run Rate';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'CRR_RRR';
+							option.text = 'Current and Required Run Rate';
 							select.appendChild(option);
 				
 							option = document.createElement('option');
