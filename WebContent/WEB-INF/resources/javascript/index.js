@@ -3417,7 +3417,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 				/*option = document.createElement('option');
 				option.value = 'matches';
 				option.text = 'Matches';
-				select.appendChild(option);*/
+				select.appendChild(option);
 				
 				option = document.createElement('option');
 				option.value = 'runs';
@@ -3427,7 +3427,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 				option = document.createElement('option');
 				option.value = 'wickets';
 				option.text = 'Wickets';
-				select.appendChild(option);
+				select.appendChild(option);*/
 				
 				select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
 				row.insertCell(cellCount).appendChild(select);
