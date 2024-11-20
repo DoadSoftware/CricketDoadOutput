@@ -278,7 +278,7 @@ public class Animation
 				}
 				break;	
 			case "F1": case "Control_Shift_F1": case "F2": case "Control_Shift_F2": case "Control_F11": case "F4": case "Shift_K": case "Control_Shift_F4": case "Shift_F11":
-			case "Control_d": case "Control_e": case "Shift_T": case "Shift_P": case "Shift_Q": case "Alt_z": case "Shift_F8":
+			case "Control_d": case "Control_e": case "Shift_T": case "Shift_P": case "Shift_Q": case "Alt_z": case "Shift_F8": case "Control_F7":
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
 				TimeUnit.MILLISECONDS.sleep(500);
 				processAnimation(Constants.BACK, print_writers, "Loop", "START");
@@ -291,8 +291,8 @@ public class Animation
 				if(!whatToProcess.split(",")[0].equalsIgnoreCase("Control_F11") && !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_F11") 
 						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Control_d") && !whatToProcess.split(",")[0].equalsIgnoreCase("Control_e")
 						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_P") && !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_Q")
-						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_T") && !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_z")
-						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_F8")) {
+						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_T") && !whatToProcess.split(",")[0].equalsIgnoreCase("Control_F7")
+						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_z") && !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_F8")) {
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$LogoBase", "START");
 				}
 				switch (whatToProcess.split(",")[0]) {
@@ -314,6 +314,10 @@ public class Animation
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Partnership", "START");
 					processAnimation(Constants.BACK, print_writers, "BG_Scale", "START");
 					break;
+				case "Control_F7":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Teams", "START");
+					processAnimation(Constants.BACK, print_writers, "BG_Scale", "START");
+					break;	
 				case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Profile", "START");
 					processAnimation(Constants.BACK, print_writers, "BG_Scale", "START");
@@ -1947,7 +1951,7 @@ public class Animation
 				this.whichGraphicOnScreen = "";
 				break;
 				
-			case "Shift_F11": case "Control_d": case "Control_e": case "Shift_T": case "Shift_P": case "Shift_Q":
+			case "Shift_F11": case "Control_d": case "Control_e": case "Shift_T": case "Shift_P": case "Shift_Q": case "Control_F7":
 			case "F1": case "Control_Shift_F1": case "F2": case "Control_Shift_F2": case "Control_F11": case "F4": case "Shift_K": case "Control_Shift_F4":
 			case "Alt_z": case "Shift_F8":
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Essentials", "CONTINUE");
@@ -1959,7 +1963,8 @@ public class Animation
 				if(!whatToProcess.split(",")[0].equalsIgnoreCase("Control_F11") && !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_F11")
 						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Control_d") && !whatToProcess.split(",")[0].equalsIgnoreCase("Control_e")
 						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_P") && !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_Q")
-						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_T") && !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_z")) {
+						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_T") && !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_z")
+						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Control_F7")) {
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$LogoBase", "CONTINUE");
 				}
 				switch (whatToProcess.split(",")[0]) {
@@ -1983,6 +1988,10 @@ public class Animation
 					break;
 				case "Shift_T":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$LineUp_Image", "CONTINUE");
+					processAnimation(Constants.BACK, print_writers, "BG_Scale", "CONTINUE REVERSE");
+					break;
+				case "Control_F7":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Teams", "CONTINUE");
 					processAnimation(Constants.BACK, print_writers, "BG_Scale", "CONTINUE REVERSE");
 					break;	
 				case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q":
@@ -4952,7 +4961,7 @@ public class Animation
 			case Constants.NPL:
 				if(whichside == 1) {
 					switch (whatToProcess.split(",")[0]) {
-					case "Shift_F11": case "Control_d": case "Control_e": case "Shift_T": case "Shift_P": case "Shift_Q":
+					case "Shift_F11": case "Control_d": case "Control_e": case "Shift_T": case "Shift_P": case "Shift_Q": case "Control_F7":
 					case "F1": case "F2": case "Control_Shift_F1": case "Control_Shift_F2": case "Control_F11": case "F4": case "Control_Shift_F4": case "Shift_K":
 						previewCommand = "Anim_Infobar$Push 0.500 Anim_FullFrames$In_Out$Essentials$In 2.800 Anim_FullFrames$In_Out$Header$In 2.000 Anim_FullFrames$In_Out$Logo$In 2.500"
 								+ " Anim_FullFrames$In_Out$SubHeader$In 2.000 Anim_FullFrames$In_Out$Footer 3.000 Anim_FullFrames$In_Out$Footer$In_Out 3.000 Anim_FullFrames$In_Out$Footer$In_Out$Essentials 3.000"
@@ -4977,6 +4986,9 @@ public class Animation
 						case "Shift_K":
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Partnership 3.000 Anim_FullFrames$In_Out$Main$Partnership$In 2.880 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
 							break;
+						case "Control_F7":
+							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Teams 3.000 Anim_FullFrames$In_Out$Main$Teams$In 2.880 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
+							break;	
 						case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q":
 							if(Integer.valueOf(whatToProcess.split(",")[4])>0) {
 								previewCommand = previewCommand + " Profile_Highlight$Side1$"+whatToProcess.split(",")[4]+" 0.500";
@@ -4992,7 +5004,7 @@ public class Animation
 					}
 				}else {
 					switch(whichGraphicOnScreen.split(",")[0]) {
-					case "Shift_T": case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q":
+					case "Shift_T": case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q": case "Control_F7":
 					case "F1": case "F2": case "Control_Shift_F1": case "Control_Shift_F2": case "Control_F11": case "F4": case "Control_Shift_F4":
 					previewCommand = "Change$Header 1.000 Change$Header$Change_Out 0.800 Change$Header$Change_In 1.000 Change$Logo 1.340 Change$Logo$Change_Out 1.000 Change$Logo$Change_In 1.340"
 							+ " Change$SubHeader 1.100 Change$SubHeader$Change_Out 0.500 Change$SubHeader$Change_In 1.100 Change$Footer 1.100 Change$Footer$Change_Out 0.800 Change$Footer$Change_In 1.100";
@@ -5020,6 +5032,9 @@ public class Animation
 							break;
 						case "Shift_T":
 							previewCommand = previewCommand + " Change$LineUp_Image 1.440 Change$LineUp_Image$Change_Out 0.620 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
+							break;
+						case "Control_F7":
+							previewCommand = previewCommand + " Change$Teams 1.440 Change$Teams$Change_Out 0.620 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
 							break;	
 						case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q":
 							if(!prevHighlightDirector.isEmpty()) {
@@ -5030,7 +5045,7 @@ public class Animation
 					}
 					switch (whatToProcess.split(",")[0]) {
 					case "F1": case "F2": case "Control_Shift_F1": case "Control_Shift_F2": case "Control_F11": case "F4": case "Shift_F11": case "Control_Shift_F4":
-					case "Shift_T":	case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q":
+					case "Shift_T":	case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q": case "Control_F7":
 							switch(whatToProcess.split(",")[0]) {
 							case "F1": case "Control_Shift_F1":
 								previewCommand = previewCommand + " Change$BattingCard$Change_In 1.400 Change$ExtraData$Change_In 1.000";
@@ -5046,6 +5061,9 @@ public class Animation
 								break;
 							case "Shift_T":
 								previewCommand = previewCommand + " Change$LineUp_Image 1.440 Change$LineUp_Image$Change_In 1.440 Change$ExtraData$Change_In 1.000 BG_Scale 0.800";
+								break;
+							case "Control_F7":
+								previewCommand = previewCommand + " Change$Teams 1.440 Change$Teams$Change_In 1.440 Change$ExtraData$Change_In 1.000 BG_Scale 0.800";
 								break;	
 							case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q":
 								if(Integer.valueOf(whatToProcess.split(",")[4])>0) {
