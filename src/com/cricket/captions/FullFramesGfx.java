@@ -7082,14 +7082,14 @@ public class FullFramesGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Side" + WhichSide + "$Select_FooterType"
 						+ "*FUNCTION*Omo*vis_con SET 0\0", print_writers);
 				break;
-			case "Control_F7": case "Shift_T": //PlayingXI
+			case "Control_F7": case "Shift_T": case "Shift_F8": case "Alt_z": //PlayingXI
 				 
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer*ACTIVE SET 1 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Side" + WhichSide + "$Select_FooterType"
-						+ "*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
+						+ "*FUNCTION*Omo*vis_con SET 3\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Side"+WhichSide+"$Select_FooterType"
-						+ "$Info$txt_Info*GEOM*TEXT SET " + CricketFunctions.generateTossResult(matchAllData, CricketUtil.FULL, CricketUtil.FIELD, CricketUtil.FULL, 
+						+ "$InfoMiddle$txt_Info*GEOM*TEXT SET " + CricketFunctions.generateTossResult(matchAllData, CricketUtil.FULL, CricketUtil.FIELD, CricketUtil.FULL, 
 								CricketUtil.CHOSE).toUpperCase() + "\0", print_writers);
 				break;
 			case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q":

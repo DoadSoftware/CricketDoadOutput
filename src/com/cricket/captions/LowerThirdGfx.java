@@ -1081,7 +1081,7 @@ public class LowerThirdGfx
 			lowerThird = new LowerThird("", inning.getBatting_team().getTeamName2(), inning.getBatting_team().getTeamName3(),"PROJECTED SCORES", String.valueOf(inning.getTotalRuns() + "-" + inning.getTotalWickets()), 
 					String.valueOf(CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls())),3,"",inning.getBatting_team().getTeamBadge(),new String[]{"@CRR (" + this_data_str.get(0) + ")",this_data_str.get(2) + " RPO"
 					,this_data_str.get(4) + " RPO",this_data_str.get(6) + " RPO"},new String[]{this_data_str.get(1),this_data_str.get(3),this_data_str.get(5),this_data_str.get(7)},
-					new String[]{"RATE","SCORE"},null,new String[] {"WITH_TITLE"});
+					new String[]{"RATE","SCORE"},new String[] {"WITH_TITLE"},new String[] {"74","281","448"});
 			break;
 		case Constants.BENGAL_T20:
 			lowerThird = new LowerThird("", inning.getBatting_team().getTeamBadge(), "","PROJECTED SCORES", String.valueOf(inning.getTotalRuns() + "-" + inning.getTotalWickets()), 
@@ -1495,8 +1495,8 @@ public class LowerThirdGfx
 			break;
 		case Constants.NPL:
 			lowerThird = new LowerThird("", battingCard.getPlayer().getFirstname(), surName,outOrNot, String.valueOf(battingCard.getRuns()),
-					String.valueOf(battingCard.getBalls()), 4, "",inning.getBatting_team().getTeamBadge(),new String[] {"DOTS","FOURS","SIXES","STRIKE RATE"},new String[] {
-					Count[0],String.valueOf(battingCard.getFours()),String.valueOf(battingCard.getSixes()),striktRate},null,null,new String[] {"WITHOUT"});
+					String.valueOf(battingCard.getBalls()), 4, "",inning.getBatting_team().getTeamBadge(),new String[] {"DOTS","FOURS","SIXES","S/R"},new String[] {
+					Count[0],String.valueOf(battingCard.getFours()),String.valueOf(battingCard.getSixes()),striktRate},null,new String[] {"WITHOUT"},new String[] {"134","318","512","684"});
 			break;
 		}
 		
@@ -1645,7 +1645,7 @@ public class LowerThirdGfx
 			lowerThird = new LowerThird("", bowlingCard.getPlayer().getFirstname(), surName,"", String.valueOf(bowlingCard.getRuns()), String.valueOf(bowlingCard.getWickets()), 5, "", inning.getBowling_team().getTeamBadge(),
 					new String[] {"OVERS", "DOTS", "ECONOMY"},new String[]{CricketFunctions.OverBalls(bowlingCard.getOvers(), bowlingCard.getBalls()), 
 					String.valueOf(bowlingCard.getDots()), economy}
-					,null,null,new String[] {"WITHOUT"});
+					,null,new String[] {"WITHOUT"},new String[] {"173","394","648"});
 			break;
 		}
 		
@@ -1826,7 +1826,7 @@ public class LowerThirdGfx
 				case Constants.NPL:
 					lowerThird = new LowerThird("", matchAllData.getSetup().getAwayTeam().getTeamName2(), matchAllData.getSetup().getAwayTeam().getTeamName3(),
 							whichSplit, String.valueOf(inning.getTotalRuns() + "-" + inning.getTotalWickets()), CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls()),
-							10,"",matchAllData.getSetup().getAwayTeam().getTeamBadge(),splitNumber,splitData,new String[]{"THIRTIES","BALLS"},null,
+							10,"",matchAllData.getSetup().getAwayTeam().getTeamBadge(),splitNumber,splitData,new String[]{"THIRTIES","BALLS"},new String[]{"WITH_TITLE"},
 							new String[] {"-19","33","86","142","194","246","295","345","396","446"});
 					break;
 				case Constants.BENGAL_T20:
@@ -1851,7 +1851,7 @@ public class LowerThirdGfx
 				case Constants.NPL:
 					lowerThird = new LowerThird("", matchAllData.getSetup().getAwayTeam().getTeamName2(), matchAllData.getSetup().getAwayTeam().getTeamName3(),
 							whichSplit, String.valueOf(inning.getTotalRuns() + "-" + inning.getTotalWickets()), CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls()),
-							10,"",matchAllData.getSetup().getAwayTeam().getTeamBadge(),splitNumber,splitData,new String[]{"FIFTIES","BALLS"},null,
+							10,"",matchAllData.getSetup().getAwayTeam().getTeamBadge(),splitNumber,splitData,new String[]{"FIFTIES","BALLS"},new String[]{"WITH_TITLE"},
 							new String[] {"-19","33","86","142","194","246","295","345","396","446"});
 					break;
 				case Constants.BENGAL_T20:
@@ -1886,7 +1886,7 @@ public class LowerThirdGfx
 				case Constants.NPL:
 					lowerThird = new LowerThird("", matchAllData.getSetup().getHomeTeam().getTeamName2(), matchAllData.getSetup().getHomeTeam().getTeamName3(),
 							whichSplit, String.valueOf(inning.getTotalRuns() + "-" + inning.getTotalWickets()), CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls()),
-							10,"",matchAllData.getSetup().getHomeTeam().getTeamBadge(),splitNumber,splitData,new String[]{"THIRTIES","BALLS"},null,
+							10,"",matchAllData.getSetup().getHomeTeam().getTeamBadge(),splitNumber,splitData,new String[]{"THIRTIES","BALLS"},new String[]{"WITH_TITLE"},
 							new String[] {"-19","33","86","142","194","246","295","345","396","446"});
 					break;
 				case Constants.BENGAL_T20:
@@ -1911,7 +1911,7 @@ public class LowerThirdGfx
 				case Constants.NPL:
 					lowerThird = new LowerThird("", matchAllData.getSetup().getHomeTeam().getTeamName2(), matchAllData.getSetup().getHomeTeam().getTeamName3(),
 							whichSplit, String.valueOf(inning.getTotalRuns() + "-" + inning.getTotalWickets()), CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls()),
-							10,"",matchAllData.getSetup().getHomeTeam().getTeamBadge(),splitNumber,splitData,new String[]{"FIFTIES","BALLS"},null,
+							10,"",matchAllData.getSetup().getHomeTeam().getTeamBadge(),splitNumber,splitData,new String[]{"FIFTIES","BALLS"},new String[]{"WITH_TITLE"},
 							new String[] {"-19","33","86","142","194","246","295","345","396","446"});
 					break;
 				case Constants.BENGAL_T20:
@@ -3372,7 +3372,7 @@ public class LowerThirdGfx
 		case Constants.NPL:
 			lowerThird = new LowerThird("", battingCard.getPlayer().getFirstname(), surName,outOrNot, String.valueOf(battingCard.getRuns()), 
 					String.valueOf(battingCard.getBalls()), 6, "", inning.getBatting_team().getTeamBadge(),new String[] {"0s", "1s", "2s", "3s", "4s", "6s"},
-					new String[]{Count[0],Count[1],Count[2],Count[3],Count[4],Count[6]},null,new String[] {"WITHOUT_TITLE"},new String[] {"-12.0","42.0","94.0","146.0","198.0","250.0"});
+					new String[]{Count[0],Count[1],Count[2],Count[3],Count[4],Count[6]},null,new String[] {"WITHOUT_TITLE"},new String[] {"123","236.8","350.6","464.4","578.2","692"});
 			break;
 		case Constants.BENGAL_T20:
 			lowerThird = new LowerThird("", battingCard.getPlayer().getFirstname(), surName,outOrNot, String.valueOf(battingCard.getRuns()), 
@@ -3462,7 +3462,7 @@ public class LowerThirdGfx
 		case Constants.NPL:
 			lowerThird = new LowerThird("", bowlingCard.getPlayer().getFirstname(), surName,over_text, String.valueOf(bowlingCard.getWickets()) + "-" + String.valueOf(bowlingCard.getRuns()), 
 					String.valueOf(CricketFunctions.OverBalls(bowlingCard.getOvers(), bowlingCard.getBalls())), 6, "", inning.getBowling_team().getTeamBadge(),new String[] {"0s", "1s", "2s", "3s", "4s", "6s"},
-					new String[]{Count[0],Count[1],Count[2],Count[3],Count[4],Count[6]},null,null,new String[] {"WITHOUT_TITLE"});
+					new String[]{Count[0],Count[1],Count[2],Count[3],Count[4],Count[6]},null,new String[] {"WITHOUT_TITLE"},new String[] {"123","236.8","350.6","464.4","578.2","692"});
 			break;
 		case Constants.BENGAL_T20:
 			lowerThird = new LowerThird("", bowlingCard.getPlayer().getFirstname(), surName,over_text, String.valueOf(bowlingCard.getWickets()) + "-" + String.valueOf(bowlingCard.getRuns()), 
@@ -3516,7 +3516,7 @@ public class LowerThirdGfx
 			lowerThird = new LowerThird("", inning.getBatting_team().getTeamName2(), inning.getBatting_team().getTeamName3(),"", String.valueOf(inning.getTotalRuns()) + "-" + String.valueOf(inning.getTotalWickets()), 
 					CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls()), 6, "", inning.getBatting_team().getTeamBadge(),
 					new String[] {"0s", "1s", "2s", "3s", "4s", "6s"},new String[]{Count[0],Count[1],Count[2],Count[3],String.valueOf(inning.getTotalFours()),
-					String.valueOf(inning.getTotalSixes())},null,null,new String[] {"WITHOUT_TITLE"});
+					String.valueOf(inning.getTotalSixes())},null,new String[] {"WITHOUT_TITLE"},new String[] {"123","236.8","350.6","464.4","578.2","692"});
 			break;
 		case Constants.BENGAL_T20:
 			lowerThird = new LowerThird(inning.getBatting_team().getTeamName1(), "", "","", String.valueOf(inning.getTotalRuns()) + "-" + String.valueOf(inning.getTotalWickets()), 
@@ -4763,9 +4763,9 @@ public class LowerThirdGfx
 
 				case Constants.NPL:
 					lowerThird = new LowerThird("", player.getFirstname(), surName,short_name, "", "", 6,"",team.getTeamBadge(),
-							new String[]{"MATCHES", "RUNS", "30s", "50s", "BEST", "S/R"},
-							new String[]{String.valueOf(stat.getMatches()), runs , thirty, fifty, best,strikeRate},null,null,
-							new String[] {"WITHOUT"});
+							new String[]{"MATCHES", "RUNS", "THIRTIES", "FIFTIES", "BEST", "S/R"},
+							new String[]{String.valueOf(stat.getMatches()), runs , thirty, fifty, best,strikeRate},null,new String[] {"WITHOUT"},
+							new String[] {"145","260","369","500","607","684"});
 					break;
 				}
 				break;
@@ -4832,8 +4832,8 @@ public class LowerThirdGfx
 				}
 				lowerThird = new LowerThird("", player.getFirstname(), surName,short_name, "", "", 6,"",team.getTeamBadge(),
 						new String[]{"MATCHES", "WKTS", "AVG", "ECON", "5WI", "BEST"},new String[]{String.valueOf(stat.getMatches()), 
-						String.valueOf(stat.getWickets()),Data,economy, String.valueOf(stat.getPlus_5()), stat.getBest_figures()},null,null,
-						new String[] {"WITHOUT"});
+						String.valueOf(stat.getWickets()),Data,economy, String.valueOf(stat.getPlus_5()), stat.getBest_figures()},null,new String[] {"WITHOUT"},
+						new String[] {"145","260","369","500","607","684"});
 				break;
 
 			default:
