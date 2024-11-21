@@ -500,6 +500,7 @@ public class IndexController
 						break;
 					}
 				}
+				
 				processAnimations(whatToProcess, session_configuration, valueToProcess, print_writers);
 			}else if(whatToProcess.contains("ANIMATE-OUT-SECOND_PLAYING")) {
 				this_animation.processAnimation(Constants.BACK, print_writers, "Anim_Lineup_Image_Big", "CONTINUE");
@@ -518,6 +519,7 @@ public class IndexController
 		List<PrintWriter> print_writers) throws InterruptedException, NumberFormatException, ParseException, 
 		CloneNotSupportedException, IOException, JAXBException, UnsupportedAudioFileException, LineUnavailableException, IllegalAccessException, InvocationTargetException, URISyntaxException
 	{
+		System.out.println("valueToProcess123 = " + valueToProcess);
 		if(whatToProcess.contains("ANIMATE-IN-GRAPHICS")) {
 			switch(this_animation.getTypeOfGraphicsOnScreen(session_configuration,valueToProcess)){
 			case Constants.INFO_BAR:

@@ -471,7 +471,7 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 					break;
 				default:
 					if(whatToProcess.includes("ANIMATE-IN-") || whatToProcess.includes("ANIMATE-OUT-")) {
-						session_animation = data;	
+						session_animation = data;
 					}
 					break;
 				}

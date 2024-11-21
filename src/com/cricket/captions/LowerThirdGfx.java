@@ -109,9 +109,29 @@ public class LowerThirdGfx
 	public List<Tournament> addPastDataToCurr = new ArrayList<Tournament>();
 	
 	public int impactOmo=0;
+	public boolean impact = false;
+	public boolean prev_impact = false;
 	
 	String containerName = "",ltWhichContainer = "",surName = "", teamName = "", variousData = "",logo_name = "" , color_name = "",age = "", teamNameAsCity = "";
 	int subline = 0;
+	
+	
+	public boolean isImpact() {
+		return impact;
+	}
+
+	public void setImpact(boolean impact) {
+		this.impact = impact;
+	}
+
+	public boolean isPrev_impact() {
+		return prev_impact;
+	}
+
+	public void setPrev_impact(boolean prev_impact) {
+		this.prev_impact = prev_impact;
+	}
+
 	public LowerThirdGfx() {
 		super();
 	}
@@ -1218,13 +1238,14 @@ public class LowerThirdGfx
 			}
 		}
 		
-		if (CricketFunctions.checkImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
+		if(CricketFunctions.isImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), 
+				Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
 			impactOmo = 1;
-		} else if (CricketFunctions.checkImpactPlayerBowler(matchAllData.getEventFile().getEvents(),
-				inning.getInningNumber(), Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
-			impactOmo =1;
+			setImpact(true);
+			setPrev_impact(true);
 		} else {
 			impactOmo =0;
+			setImpact(false);
 		}
 		
 		if(battingCard.getPlayer().getSurname() == null) {
@@ -1296,15 +1317,16 @@ public class LowerThirdGfx
 					1,"",team.getTeamBadge(),null,null,null,new String[]{whatToProcess.split(",")[3]},null);
 			break;
 		}
-		if (CricketFunctions.checkImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
+		
+		if(CricketFunctions.isImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), 
+				Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
 			impactOmo = 1;
-		} else if (CricketFunctions.checkImpactPlayerBowler(matchAllData.getEventFile().getEvents(),
-				inning.getInningNumber(), Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
-			impactOmo =1;
+			setImpact(true);
+			setPrev_impact(true);
 		} else {
 			impactOmo =0;
+			setImpact(false);
 		}
-		
 		
 		status = PopulateL3rdHeader(whatToProcess.split(",")[0],WhichSide);
 		if(status == Constants.OK) {
@@ -1400,13 +1422,13 @@ public class LowerThirdGfx
 			surName = battingCard.getPlayer().getSurname();
 		}
 		
-		if (CricketFunctions.checkImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
+		if(CricketFunctions.isImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), 
+				Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
 			impactOmo = 1;
-		} else if (CricketFunctions.checkImpactPlayerBowler(matchAllData.getEventFile().getEvents(),
-				inning.getInningNumber(), Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
-			impactOmo =1;
+			setImpact(true);
 		} else {
 			impactOmo =0;
+			setImpact(false);
 		}
 		
 		switch (config.getBroadcaster().toUpperCase()) {
@@ -1545,13 +1567,14 @@ public class LowerThirdGfx
 		}else {
 			surName = bowlingCard.getPlayer().getSurname();
 		}
-		if (CricketFunctions.checkImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
+		
+		if(CricketFunctions.isImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), 
+				Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
 			impactOmo = 1;
-		} else if (CricketFunctions.checkImpactPlayerBowler(matchAllData.getEventFile().getEvents(),
-				inning.getInningNumber(), Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
-			impactOmo =1;
+			setImpact(true);
 		} else {
 			impactOmo =0;
+			setImpact(false);
 		}
 		
 		switch (config.getBroadcaster().toUpperCase()) {
@@ -2747,14 +2770,15 @@ public class LowerThirdGfx
 			}
 		}
 		
-		if (CricketFunctions.checkImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
+		if(CricketFunctions.isImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), 
+				Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
 			impactOmo = 1;
-		} else if (CricketFunctions.checkImpactPlayerBowler(matchAllData.getEventFile().getEvents(),
-				inning.getInningNumber(), Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
-			impactOmo =1;
+			setImpact(true);
 		} else {
 			impactOmo =0;
+			setImpact(false);
 		}
+		
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.BENGAL_T20: case Constants.NPL:
 			lowerThird = new LowerThird("", battingCard.getPlayer().getFirstname(), surName,"", 
@@ -2824,13 +2848,13 @@ public class LowerThirdGfx
 			surName = battingCard.getPlayer().getSurname();
 		}
 		
-		if (CricketFunctions.checkImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
+		if(CricketFunctions.isImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), 
+				Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
 			impactOmo = 1;
-		} else if (CricketFunctions.checkImpactPlayerBowler(matchAllData.getEventFile().getEvents(),
-				inning.getInningNumber(), Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
-			impactOmo =1;
+			setImpact(true);
 		} else {
 			impactOmo =0;
+			setImpact(false);
 		}
 		
 		String[] Count = CricketFunctions.getScoreTypeData(CricketUtil.BATSMAN,matchAllData, inning.getInningNumber(), Integer.valueOf(whatToProcess.split(",")[2]),
@@ -2949,15 +2973,13 @@ public class LowerThirdGfx
 			}
 		}
 		
-		if (CricketFunctions.checkImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), inning.getFallsOfWickets()
-				.get(inning.getFallsOfWickets().size() - 1).getFowPlayerID()).equalsIgnoreCase(CricketUtil.YES)) {
+		if(CricketFunctions.isImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), 
+				inning.getFallsOfWickets().get(inning.getFallsOfWickets().size() - 1).getFowPlayerID()).equalsIgnoreCase(CricketUtil.YES)) {
 			impactOmo = 1;
-		} else if (CricketFunctions.checkImpactPlayerBowler(matchAllData.getEventFile().getEvents(),
-				inning.getInningNumber(), inning.getFallsOfWickets().get(inning.getFallsOfWickets().size() - 1)
-				.getFowPlayerID()).equalsIgnoreCase(CricketUtil.YES)) {
-			impactOmo =1;
+			setImpact(true);
 		} else {
 			impactOmo =0;
+			setImpact(false);
 		}
 		
 		String[] Count = CricketFunctions.getScoreTypeData(CricketUtil.BATSMAN,matchAllData, inning.getInningNumber(), 
@@ -3359,13 +3381,13 @@ public class LowerThirdGfx
 			surName = battingCard.getPlayer().getSurname();
 		}
 		
-		if (CricketFunctions.checkImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
+		if(CricketFunctions.isImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), 
+				Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
 			impactOmo = 1;
-		} else if (CricketFunctions.checkImpactPlayerBowler(matchAllData.getEventFile().getEvents(),
-				inning.getInningNumber(), Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
-			impactOmo =1;
+			setImpact(true);
 		} else {
 			impactOmo =0;
+			setImpact(false);
 		}
 		
 		switch (config.getBroadcaster().toUpperCase()) {
@@ -3425,14 +3447,13 @@ public class LowerThirdGfx
 				return status;
 			}
 		}
-		
-		if (CricketFunctions.checkImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
+		if(CricketFunctions.isImpactPlayer(matchAllData.getEventFile().getEvents(), inning.getInningNumber(), 
+				Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
 			impactOmo = 1;
-		} else if (CricketFunctions.checkImpactPlayerBowler(matchAllData.getEventFile().getEvents(),
-				inning.getInningNumber(), Integer.valueOf(whatToProcess.split(",")[2])).equalsIgnoreCase(CricketUtil.YES)) {
-			impactOmo =1;
+			setImpact(true);
 		} else {
 			impactOmo =0;
+			setImpact(false);
 		}
 		
 		String[] Count = CricketFunctions.getScoreTypeData(CricketUtil.BOWLER,matchAllData, inning.getInningNumber(), Integer.valueOf(whatToProcess.split(",")[2]),

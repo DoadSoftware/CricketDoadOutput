@@ -322,6 +322,7 @@ public class Caption
 				status = this_lowerThirdGfx.populateLTStaff(whatToProcess,whichSide);
 				break;
 			case "Shift_F12":
+				System.out.println("whichSide = " + whichSide);
 				this_infobarGfx.infobar.setInfobar_ident_section(whatToProcess.split(",")[2]);
 				status = this_infobarGfx.infoIdentSection(print_writers, whatToProcess, matchAllData, whichSide);
 				break;

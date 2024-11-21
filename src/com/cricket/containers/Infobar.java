@@ -16,6 +16,7 @@ public class Infobar {
 	private boolean result_on_screen = false;
 	private boolean top_stage = false;
 	private boolean right_section_play = false;
+	private boolean player_impact = false;
 	
 	private int player_id;
 	
@@ -221,6 +222,12 @@ public class Infobar {
 	}
 	public void setRight_section_play(boolean right_section_play) {
 		this.right_section_play = right_section_play;
+	}
+	public boolean isPlayer_impact() {
+		return player_impact;
+	}
+	public void setPlayer_impact(boolean player_impact) {
+		this.player_impact = player_impact;
 	}
 	
 }

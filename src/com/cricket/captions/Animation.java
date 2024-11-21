@@ -2,6 +2,7 @@ package com.cricket.captions;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Time;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import com.cricket.containers.Infobar;
@@ -23,6 +24,7 @@ public class Animation
 	LowerThird LT = new LowerThird();
 	
 	public BugsAndMiniGfx this_bugs;
+	public LowerThirdGfx this_lowerGfx;
 	
 	
 	public Animation(Infobar infobar) {
@@ -69,7 +71,7 @@ public class Animation
 		case Constants.NPL:
 			switch (whatToProcess.split(",")[0]) {
 			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": 
-			case "Alt_9": case "Alt_0":
+			case "Alt_9": case "Alt_0": case "Control_F12": case "Shift_F12":
 				return Constants.INFO_BAR;
 			case "F1": case "Control_Shift_F1": case "F2": case "Control_Shift_F2": case "Control_F11": case "m": case "Control_m":
 			case "Shift_F11": case "F4": case "Control_Shift_F4": case "Shift_K": case "Control_d": case "Control_e": case "Shift_T": case "Shift_P": case "Shift_Q":
@@ -122,7 +124,7 @@ public class Animation
 					return Constants.LOWER_THIRD;
 				}
 			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": 
-			case "Alt_9": case "Alt_0":
+			case "Alt_9": case "Alt_0": case "Control_F12":
 				return Constants.INFO_BAR;
 			case "Shift_O": case "Control_k": case "k": case "g": case "y": case "Alt_p": case "o": case "t": 
 			case "Control_y": case "h": case "Shift_F4": case "Shift_F": case ".": case "/":
@@ -209,16 +211,38 @@ public class Animation
 		switch (config.getBroadcaster().toUpperCase()) {
 		case Constants.NPL:
 			switch (whatToProcess.split(",")[0]) {
-			case "F12": //Infobar
-				switch (config.getBroadcaster().toUpperCase()) {
-				case Constants.NPL:
-					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$In_Out", "START");
-					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$RightInfo_Bottom", "START");
-					this.infobar.setInfobar_on_screen(true);
-					this.infobar.setInfobar_pushed(false);
-					this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
-					break;
+			case "Control_F12":
+				
+				if(this.infobar.isInfobar_on_screen() == true) {
+					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$In_Out", "CONTINUE");
+					TimeUnit.MILLISECONDS.sleep(500);
+					
+				}else {
+					processAnimation(Constants.FRONT, print_writers, "Anim_Ident$In_Out", "SHOW 0.0");
 				}
+				
+				processAnimation(Constants.FRONT, print_writers, "Anim_Ident$In_Out", "START");
+				
+				infobar.setMiddle_section("");
+				infobar.setFull_section("");
+				infobar.setRight_bottom("");
+				infobar.setRight_section("");
+				this.infobar.setInfobar_on_screen(true);
+				this.whichGraphicOnScreen = whatToProcess;
+				break;
+			case "F12": //Infobar
+				
+				if(this.infobar.isInfobar_on_screen()) {
+					processAnimation(Constants.FRONT, print_writers, "Anim_Ident$In_Out", "CONTINUE");
+					TimeUnit.MILLISECONDS.sleep(500);
+				}
+				
+				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$In_Out", "START");
+				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$RightInfo_Bottom", "START");
+				this.infobar.setInfobar_on_screen(true);
+				this.infobar.setInfobar_pushed(false);
+				this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
+				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "ArrowUp":
 				if(this.infobar.isInfobar_on_screen() == true && this.infobar.isInfobar_pushed()) {
@@ -388,6 +412,11 @@ public class Animation
 					break;	
 				}
 				
+				if(caption.this_lowerThirdGfx.isImpact() == true) {
+					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$In$IMPACT", "START");
+					caption.this_lowerThirdGfx.setImpact(true);
+					caption.this_lowerThirdGfx.setPrev_impact(true);
+				}
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "Control_Shift_M": case "Control_Shift_L":
@@ -1943,6 +1972,17 @@ public class Animation
 			break;
 		case Constants.NPL:
 			switch (whatToProcess.split(",")[0]) {
+			case "Control_F12":
+				processAnimation(Constants.FRONT, print_writers, "Anim_Ident$In_Out", "CONTINUE");
+				
+				infobar.setMiddle_section("");
+				infobar.setFull_section("");
+				infobar.setRight_bottom("");
+				infobar.setRight_section("");
+				
+				this.infobar.setInfobar_on_screen(false);
+				this.whichGraphicOnScreen = "";
+				break;
 			case "F12": //Infobar
 				if(infobar.isInfobar_on_screen() == true) {
 					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$In_Out", "CONTINUE");
@@ -2053,23 +2093,37 @@ public class Animation
 			case "F6": case "Control_F6": case "Shift_F6": case "Control_a": case "Control_h":
 			case "Alt_F8": case "F8": case "Control_F5": case "Control_F9": case "F5": case "F9": 
 			case "Shift_F5": case "Shift_F9": case "Alt_F12": case "d": case "e": case "F7": case "F11": case "Control_s": case "Control_f":
+				
+				processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$BASE", "SHOW 1.600");
+				processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$LOGO", "SHOW 1.600");
+				processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$HEADER", "SHOW 1.600");
+				processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$BOTTOM_DATA", "SHOW 1.600");
+				
+				processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$BASE", "CONTINUE");
+				processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$LOGO", "CONTINUE");
+				processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$HEADER", "CONTINUE");
+				processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$BOTTOM_DATA", "CONTINUE");
+				
 				switch (whatToProcess.split(",")[0]) {
-				case "F8": case "Alt_F8": case "F10": case "d": case "e":
-					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$BASE", "SHOW 1.600");
-					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$LOGO", "SHOW 1.600");
-					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$HEADER", "SHOW 1.600");
-					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$BOTTOM_DATA", "SHOW 1.600");
+				case "Shift_F3": case "u": case "F6": case "Control_F6": case "Shift_F6": case "Control_a": case "Control_h":
+				case "Control_F5": case "Control_F9": case "F5": case "F9": case "Shift_F5": case "Shift_F9": case "Alt_F12":
+				case "F7": case "F11": case "Control_s": case "Control_f":
 					
-					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$BASE", "CONTINUE");
-					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$LOGO", "CONTINUE");
-					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$HEADER", "CONTINUE");
-					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$BOTTOM_DATA", "CONTINUE");
-					break;
-				default:
-					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out", "SHOW 1.600");
-					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out", "CONTINUE");
+					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$RIGHT_DATA", "SHOW 1.600");
+					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$RIGHT_DATA", "CONTINUE");
+					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$SUB_DATA", "SHOW 1.600");
+					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$SUB_DATA", "CONTINUE");
 					break;
 				}
+				
+				if(caption.this_lowerThirdGfx.isImpact() == true) {
+					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$IMPACT", "SHOW 1.600");
+					processAnimation(Constants.FRONT, print_writers, "Lower_Third$In_Out$Out$IMPACT", "CONTINUE");
+					
+					caption.this_lowerThirdGfx.setImpact(false);
+					caption.this_lowerThirdGfx.setPrev_impact(false);
+				}
+				
 				if(!infobar.getInfobar_status().equalsIgnoreCase(Constants.FORCED+Constants.SHRUNK_INFOBAR)) {
 					TimeUnit.MILLISECONDS.sleep(1000);
 					AnimateIn("ArrowRight" + ",", print_writers, config); // Restore infobar
@@ -2707,6 +2761,11 @@ public class Animation
 			}
 			
 			switch(whatToProcess.split(",")[0]) {
+			case "Shift_F12":
+				processAnimation(Constants.FRONT, print_writers, "Anim_Ident$Change_Bottom", "START");
+				
+				TimeUnit.MILLISECONDS.sleep(1000);
+				break;
 			case "Alt_1": case "Alt_2": case "Alt_3": case "Alt_4": case "Alt_5": case "Alt_6": case "Alt_7": case "Alt_8": 
 			case "Alt_9": case "Alt_0":
 				switch(whatToProcess.split(",")[0]) {
@@ -3007,6 +3066,20 @@ public class Animation
 				 processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change$Change_In$LOGO", "START");
 				 processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change$Change_In$HEADER", "START");
 				 processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change$Change_In$BOTTOM_DATA", "START");
+				 
+				 if(caption.this_lowerThirdGfx.isPrev_impact() == true) {
+					processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change$Change_Out$IMPACT", "START");
+					
+					caption.this_lowerThirdGfx.setPrev_impact(false);
+				}
+				
+				 if(caption.this_lowerThirdGfx.isImpact() == true) {
+					 processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change$Change_In$IMPACT", "START");
+					
+					caption.this_lowerThirdGfx.setImpact(true);
+					caption.this_lowerThirdGfx.setPrev_impact(true);
+				 }
+				 
 				break;	
 			}
 			break;
@@ -3807,6 +3880,9 @@ public class Animation
 			}
 			
 			switch(whatToProcess.split(",")[0]) {
+			case "Shift_F12":
+				processAnimation(Constants.FRONT, print_writers, "Anim_Ident$Change_Bottom", "SHOW 0.0");
+				break;
 			case "Alt_1":
 				switch (config.getBroadcaster().toUpperCase()) {
 				case Constants.NPL:
@@ -3940,6 +4016,10 @@ public class Animation
 			case "F6": case "Control_F6": case "Shift_F6": case "Control_F9": case "F5":
 			case "Shift_F5": case "Shift_F9": case "Alt_F12": case "F9":  case "d": case "e": case "F7": case "F11": case "Control_s": case "Control_f":
 				 processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change", "SHOW 0.0");
+				 
+				 if(caption.this_lowerThirdGfx.isPrev_impact() == false) {
+					 processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change$Change_Out$IMPACT", "SHOW 0.320"); 
+				 }
 				break;
 			case "Control_Shift_M": case "Control_Shift_L":
 				processAnimation(Constants.FRONT, print_writers, "LT_MatchID$Change$Change_Out$BOTTOM_DATA", "SHOW 0.0");
@@ -4701,6 +4781,9 @@ public class Animation
 			if(whatToProcess.contains("CLEAR-ALL")) {
 				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$In_Out", "SHOW 0.0");
+				
+				processAnimation(Constants.FRONT, print_writers, "Anim_Ident", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "Anim_Ident$In_Out", "SHOW 0.0");
 				this.infobar.setInfobar_on_screen(false);
 				this.infobar.setInfobar_status("");
 				infobar.setMiddle_section("");
@@ -5726,7 +5809,7 @@ public class Animation
 						break;
 					}
 					switch(whatToProcess.split(",")[0]) {
-					case "Control_F5": case "Control_F6": case "Shift_F6": case "F6": case "Control_F9": case "F5": case "F9":
+					case "Control_F5": case "Control_F6": case "Shift_F6": case "F6": case "Control_F9": case "F5": case "F9": case "F7":
 					case "Control_a": case "Shift_F3": case "u": case "Shift_F5": case "Shift_F9": case "Alt_F12": case "Control_h":
 						previewCommands = previewCommands +" Lower_Third$In_Out$In$RIGHT_DATA 1.440";
 						break;
@@ -5742,7 +5825,16 @@ public class Animation
 					case "F8": case "Alt_F8": case "F10": case "F9": case "d": case "e": case "F7": case "F11": case "Control_s": case "Control_f":
 					case "Control_F5": case "Control_F6": case "Shift_F6": case "F6": case "Control_F9": case "F5":
 					case "Control_a": case "Shift_F3": case "u": case "Shift_F5": case "Shift_F9": case "Alt_F12": case "Control_h":
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Lower_Third$Change$Change_Out SHOW 0.0 \0", print_writer);
+						
+						if(caption.this_lowerThirdGfx.isPrev_impact() == false) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Lower_Third$Change$Change_Out SHOW 0.0 \0", print_writer);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Lower_Third$Change$Change_Out$IMPACT SHOW 0.320 \0", print_writer);
+
+						}else {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Lower_Third$Change$Change_Out SHOW 0.0 \0", print_writer);
+							
+						}
+						
 						previewCommands = "Lower_Third$Change_In$BASE 2.100 Lower_Third$Change_In$LOGO 2.160 Lower_Third$Change_In$HEADER 2.380"
 								+ " Lower_Third$Change_In$BOTTOM_DATA 2.380 Lower_Third$Change_Out$BASE 1.020 Lower_Third$Change_Out$LOGO 0.481"
 								+ " Lower_Third$Change_Out$HEADER 0.495 Lower_Third$Change_Out$BOTTOM_DATA 0.495";
@@ -5754,7 +5846,7 @@ public class Animation
 					}
 					
 					switch(whatToProcess.split(",")[0]) {
-					case "Control_F5": case "Control_F6": case "Shift_F6": case "F6": case "Control_F9": case "F5": case "F9":
+					case "Control_F5": case "Control_F6": case "Shift_F6": case "F6": case "Control_F9": case "F5": case "F9": case "F7": 
 					case "Control_a": case "Shift_F3": case "u": case "Shift_F5": case "Shift_F9": case "Alt_F12": case "Control_h":
 						previewCommands = previewCommands +" Lower_Third$Change_Out$RIGHT_DATA 0.425 Lower_Third$Change_In$RIGHT_DATA 2.500";
 						break;
