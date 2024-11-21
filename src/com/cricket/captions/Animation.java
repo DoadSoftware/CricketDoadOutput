@@ -73,7 +73,7 @@ public class Animation
 				return Constants.INFO_BAR;
 			case "F1": case "Control_Shift_F1": case "F2": case "Control_Shift_F2": case "Control_F11": case "m": case "Control_m":
 			case "Shift_F11": case "F4": case "Control_Shift_F4": case "Shift_K": case "Control_d": case "Control_e": case "Shift_T": case "Shift_P": case "Shift_Q":
-			case "Alt_z": case "Shift_F8": case "highlightProfile":
+			case "Alt_z": case "Shift_F8": case "highlightProfile": case "Control_F7":
 				return Constants.FULL_FRAMER;
 			case "Shift_O": case "Control_k": case "k": case "g": case "y": case "Control_Shift_R":
 			case "h": case "Shift_F4": case "Shift_F": case "Alt_p": case "Control_Shift_J": case "Shift_C":
@@ -4978,6 +4978,7 @@ public class Animation
 					switch (whatToProcess.split(",")[0]) {
 					case "Shift_F11": case "Control_d": case "Control_e": case "Shift_T": case "Shift_P": case "Shift_Q": case "Control_F7":
 					case "F1": case "F2": case "Control_Shift_F1": case "Control_Shift_F2": case "Control_F11": case "F4": case "Control_Shift_F4": case "Shift_K":
+					case "Alt_z": case "Shift_F8":
 						previewCommand = "Anim_Infobar$Push 0.500 Anim_FullFrames$In_Out$Essentials$In 2.800 Anim_FullFrames$In_Out$Header$In 2.000 Anim_FullFrames$In_Out$Logo$In 2.500"
 								+ " Anim_FullFrames$In_Out$SubHeader$In 2.000 Anim_FullFrames$In_Out$Footer 3.000 Anim_FullFrames$In_Out$Footer$In_Out 3.000 Anim_FullFrames$In_Out$Footer$In_Out$Essentials 3.000"
 								+ " Anim_FullFrames$In_Out$Footer$In_Out$Essentials$In 2.860 Anim_FullFrames$In_Out$Footer$In_Out$Data 3.000"
@@ -5001,14 +5002,17 @@ public class Animation
 						case "Shift_K":
 							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Partnership 3.000 Anim_FullFrames$In_Out$Main$Partnership$In 2.880 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
 							break;
-						case "Control_F7":
-							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Teams 3.000 Anim_FullFrames$In_Out$Main$Teams$In 2.880 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
+						case "Control_F7": case "Alt_z":
+							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Teams 3.000 Anim_FullFrames$In_Out$Main$Teams$In 2.840 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
 							break;	
+						case "Shift_F8":
+							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$TeamSingle 3.000 Anim_FullFrames$In_Out$Main$TeamSingle$In 2.840 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
+							break;
 						case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q":
 							if(Integer.valueOf(whatToProcess.split(",")[4])>0) {
 								previewCommand = previewCommand + " Profile_Highlight$Side1$"+whatToProcess.split(",")[4]+" 0.500";
 							}
-							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Profile 3.000 Anim_FullFrames$In_Out$Main$Profile$In 2.680 Anim_FullFrames$In_Out$ExtraData$In 3.000";
+							previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Profile 3.000 Anim_FullFrames$In_Out$Main$Profile$In 2.680 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
 							break;
 						}
 						
@@ -5020,7 +5024,7 @@ public class Animation
 				}else {
 					switch(whichGraphicOnScreen.split(",")[0]) {
 					case "Shift_T": case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q": case "Control_F7":
-					case "F1": case "F2": case "Control_Shift_F1": case "Control_Shift_F2": case "Control_F11": case "F4": case "Control_Shift_F4":
+					case "F1": case "F2": case "Control_Shift_F1": case "Control_Shift_F2": case "Control_F11": case "F4": case "Control_Shift_F4": case "Alt_z": case "Shift_F8":
 					previewCommand = "Change$Header 1.000 Change$Header$Change_Out 0.800 Change$Header$Change_In 1.000 Change$Logo 1.340 Change$Logo$Change_Out 1.000 Change$Logo$Change_In 1.340"
 							+ " Change$SubHeader 1.100 Change$SubHeader$Change_Out 0.500 Change$SubHeader$Change_In 1.100 Change$Footer 1.100 Change$Footer$Change_Out 0.800 Change$Footer$Change_In 1.100";
 						switch(whichGraphicOnScreen.split(",")[0]) {
@@ -5056,11 +5060,17 @@ public class Animation
 								previewCommand = previewCommand + " Profile_Highlight$Side1$"+prevHighlightDirector+" 1.000";
 							}
 							break;
+						case "Alt_z":
+							previewCommand = previewCommand + " Change$Teams 1.440 Change$Teams$Change_Out 0.620 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
+							break;	
+						case "Shift_F8":
+							previewCommand = previewCommand + " Change$TeamSingle 1.440 Change$TeamSingle$Change_Out 0.620 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
+							break;
 						}
 					}
 					switch (whatToProcess.split(",")[0]) {
 					case "F1": case "F2": case "Control_Shift_F1": case "Control_Shift_F2": case "Control_F11": case "F4": case "Shift_F11": case "Control_Shift_F4":
-					case "Shift_T":	case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q": case "Control_F7":
+					case "Shift_T":	case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q": case "Control_F7": case "Alt_z": case "Shift_F8":
 							switch(whatToProcess.split(",")[0]) {
 							case "F1": case "Control_Shift_F1":
 								previewCommand = previewCommand + " Change$BattingCard$Change_In 1.400 Change$ExtraData$Change_In 1.000";
@@ -5085,6 +5095,12 @@ public class Animation
 									previewCommand = previewCommand + " Profile_Highlight$Side1$"+whatToProcess.split(",")[4]+" 0.500";
 								}
 								previewCommand = previewCommand + " Change$Profile 1.440 Change$Profile$Change_Out 0.500 Change$Profile$Change_In 2.680 Change$ExtraData$Change_In 0.720 BG_Scale 0.800";
+								break;
+							case "Alt_z":
+								previewCommand = previewCommand + " Change$Teams 1.440 Change$Teams$Change_In 1.440 Change$ExtraData$Change_In 1.000 BG_Scale 0.800";
+								break;	
+							case "Shift_F8":
+								previewCommand = previewCommand + " Change$TeamSingle 1.440 Change$TeamSingle$Change_In 1.440 Change$ExtraData$Change_In 1.000 BG_Scale 0.800";
 								break;
 							}
 					}

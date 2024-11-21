@@ -1241,7 +1241,7 @@ public class LowerThirdGfx
 			break;
 		case Constants.NPL:
 			lowerThird = new LowerThird(inning.getBatting_team().getTeamName1(), battingCard.getPlayer().getFirstname(), surName,CricketFunctions.getbattingstyle(battingCard.getPlayer().getBattingStyle(),
-					CricketUtil.SHORT, true, false).toUpperCase(), null, null, 1,"",
+					CricketUtil.FULL, true, false).toUpperCase(), null, null, 1,"",
 					inning.getBatting_team().getTeamBadge(),null,null,null,null,null);
 			break;
 		}

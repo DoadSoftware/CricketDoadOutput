@@ -4918,30 +4918,15 @@ function addItemsToList(whatToProcess,dataToProcess)
 					option.text = 'Runs';
 					select.appendChild(option);
 					
-					switch($('#selected_broadcaster').val().toUpperCase()){
-						case 'ICC-U19-2023':
-						option = document.createElement('option');
-						option.value = '3';
-						option.text = 'Fifties';
-						select.appendChild(option);
-						
-						option = document.createElement('option');
-						option.value = '4';
-						option.text = 'Hundreds';
-						select.appendChild(option);
-						break;
-						case 'NPL':
-						option = document.createElement('option');
-						option.value = '3';
-						option.text = 'Thirties';
-						select.appendChild(option);
-						
-						option = document.createElement('option');
-						option.value = '4';
-						option.text = 'Fifties';
-						select.appendChild(option);
-						break;
-					}
+					option = document.createElement('option');
+					option.value = '3';
+					option.text = 'Fifties';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '4';
+					option.text = 'Hundreds';
+					select.appendChild(option);
 					
 					option = document.createElement('option');
 					option.value = '5';
