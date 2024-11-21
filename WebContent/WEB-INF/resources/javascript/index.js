@@ -142,6 +142,9 @@ function processUserSelection(whichInput)
 	case 'change_on':
 		processUserSelectionData('IMPACT-CHANGE-ON', 'Shift_I');
 		break;
+	case 'highlightProfile':
+		processCricketProcedures('highlightProfile' + ',' + selected_options.toString(), null);
+		break;
 	}	
 }
 
@@ -5493,6 +5496,19 @@ function addItemsToList(whatToProcess,dataToProcess)
 			option.type = 'button';
 			option.name = 'change_on';
 			option.value = 'Change On';
+		    option.id = option.name;
+		    option.setAttribute('onclick','processUserSelection(this)');
+		    
+		    div = document.createElement('div');
+		    div.append(option);
+		    row.insertCell(cellCount).appendChild(div);
+	    	cellCount = cellCount + 1;
+		}
+		if(whatToProcess == 'Control_d' || whatToProcess == 'Control_e' || whatToProcess == 'Shift_P' || whatToProcess == 'Shift_Q'){
+			option = document.createElement('input');
+			option.type = 'button';
+			option.name = 'highlightProfile';
+			option.value = 'Highlight Profile';
 		    option.id = option.name;
 		    option.setAttribute('onclick','processUserSelection(this)');
 		    

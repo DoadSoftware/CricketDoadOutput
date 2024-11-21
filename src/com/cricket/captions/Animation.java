@@ -73,7 +73,7 @@ public class Animation
 				return Constants.INFO_BAR;
 			case "F1": case "Control_Shift_F1": case "F2": case "Control_Shift_F2": case "Control_F11": case "m": case "Control_m":
 			case "Shift_F11": case "F4": case "Control_Shift_F4": case "Shift_K": case "Control_d": case "Control_e": case "Shift_T": case "Shift_P": case "Shift_Q":
-			case "Alt_z": case "Shift_F8":
+			case "Alt_z": case "Shift_F8": case "highlightProfile":
 				return Constants.FULL_FRAMER;
 			case "Shift_O": case "Control_k": case "k": case "g": case "y": case "Control_Shift_R":
 			case "h": case "Shift_F4": case "Shift_F": case "Alt_p": case "Control_Shift_J": case "Shift_C":
@@ -1997,6 +1997,10 @@ public class Animation
 				case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Profile", "CONTINUE");
 					processAnimation(Constants.BACK, print_writers, "BG_Scale", "CONTINUE REVERSE");
+					if(Integer.valueOf(prevHighlightDirector) > 0) {
+						processAnimation(Constants.BACK, print_writers, "Profile_Highlight$Side1$"+prevHighlightDirector, "CONTINUE");
+					}
+					prevHighlightDirector = "0";
 					break;
 				case "Alt_z":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Teams", "CONTINUE");
@@ -2954,6 +2958,17 @@ public class Animation
 						break;
 					}
 					break;
+				}
+				break;
+			case "highlightProfile":
+				if(!prevHighlightDirector.isEmpty()) {
+					if(Integer.valueOf(prevHighlightDirector) > 0) {
+						processAnimation(Constants.BACK, print_writers, "Profile_Highlight$Side1$"+prevHighlightDirector, "CONTINUE");
+					}
+				}
+				if(Integer.valueOf(whatToProcess.split(",")[4]) > 0) {
+					processAnimation(Constants.BACK, print_writers, "Profile_Highlight$Side1$"+whatToProcess.split(",")[4], "START");
+					prevHighlightDirector = whatToProcess.split(",")[4];
 				}
 				break;
 			case "Shift_F": case "y": case "Shift_O":

@@ -348,6 +348,11 @@ public class IndexController
 			return JSONObject.fromObject(session_match).toString();
 		
 		default:
+			if(session_configuration.getBroadcaster().equalsIgnoreCase(Constants.NPL)) {
+				if(whatToProcess.split(",")[0].toUpperCase().equalsIgnoreCase("highlightProfile")) {
+					this_animation.ChangeOn(whatToProcess, print_writers, session_configuration);
+				}
+			}
 			if(whatToProcess.toUpperCase().equalsIgnoreCase("IMPACT-CHANGE-ON")) {
 				this_animation.AnimateIn("Shift_I", print_writers, session_configuration);
 			}
