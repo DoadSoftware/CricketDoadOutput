@@ -65,7 +65,7 @@
 			    <label for="select_broadcaster" class="col-sm-4 col-form-label text-left">Select Broadcaster </label>
 			    <div class="col-sm-6 col-md-6">
 			      <select id="select_broadcaster" name="select_broadcaster" class="browser-default custom-select custom-select-sm">
-			      		<option value="NPL">NEPAL</option>	
+			      		<option value="NPL">NPL 2024</option>	
 			      		<option value="BENGAL-T20">BENGAL T20</option>
 			      		<option value="ISPL">ISPL</option>
 			      		<option value="ICC-U19-2023">ICC Under-19 WC 2023</option>
