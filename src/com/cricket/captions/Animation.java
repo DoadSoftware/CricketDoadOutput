@@ -4766,17 +4766,19 @@ public class Animation
 			
 			processAnimation(Constants.FRONT, print_writers, "Anim_Mini", "SHOW 0.0");
 			
+			processAnimation(Constants.FRONT, print_writers, "Lower_Third", "SHOW 0.0");
+			processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change$Change_Out", "SHOW 1.020");
+			
 			processAnimation(Constants.FRONT, print_writers, "LT_Comparison", "SHOW 0.0");
-			processAnimation(Constants.FRONT, print_writers, "Change", "SHOW 0.0");
 			processAnimation(Constants.FRONT, print_writers, "LT_Comparison$Change$Change_Out", "SHOW 50.0");
 			
 			processAnimation(Constants.FRONT, print_writers, "LT_MatchID", "SHOW 0.0");
-			processAnimation(Constants.FRONT, print_writers, "Change", "SHOW 0.0");
 			processAnimation(Constants.FRONT, print_writers, "LT_MatchID$Change$Change_Out", "SHOW 50.0");
 			
-			processAnimation(Constants.FRONT, print_writers, "Lower_Third", "SHOW 0.0");
-			processAnimation(Constants.FRONT, print_writers, "Change", "SHOW 0.0");
-			processAnimation(Constants.FRONT, print_writers, "Lower_Third$Change$Change_Out", "SHOW 50.0");
+			processAnimation(Constants.FRONT, print_writers, "LT_PlayingXI", "SHOW 0.0");
+			processAnimation(Constants.FRONT, print_writers, "LT_PlayingXI$Change$Change_Out", "SHOW .820");
+			
+			
 			
 			if(whatToProcess.contains("CLEAR-ALL")) {
 				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar", "SHOW 0.0");
