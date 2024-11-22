@@ -519,7 +519,6 @@ public class IndexController
 		List<PrintWriter> print_writers) throws InterruptedException, NumberFormatException, ParseException, 
 		CloneNotSupportedException, IOException, JAXBException, UnsupportedAudioFileException, LineUnavailableException, IllegalAccessException, InvocationTargetException, URISyntaxException
 	{
-		System.out.println("valueToProcess123 = " + valueToProcess);
 		if(whatToProcess.contains("ANIMATE-IN-GRAPHICS")) {
 			switch(this_animation.getTypeOfGraphicsOnScreen(session_configuration,valueToProcess)){
 			case Constants.INFO_BAR:

@@ -300,6 +300,9 @@ public class Caption
 			case "F6"://HowOut
 				status = this_lowerThirdGfx.populateHowOut(whatToProcess,whichSide,matchAllData);
 				break;
+			case "Control_Shift_Q":
+				status = this_lowerThirdGfx.populateGeneric(whatToProcess,whichSide,matchAllData);
+				break;
 			case "Alt_Shift_C":
 				status = this_lowerThirdGfx.populateCaptain(whatToProcess,whichSide,matchAllData);
 				break;
@@ -376,6 +379,9 @@ public class Caption
 				break;
 			case "Control_Shift_P":
 				status = this_lowerThirdGfx.populateL3rdBowlerSpell(whatToProcess,whichSide,matchAllData);
+				break;
+			case "Control_Shift_A":
+				status = this_lowerThirdGfx.populateL3rdLineUp(whatToProcess,whichSide,matchAllData);
 				break;
 			case "Control_y":
 				status = this_bugsAndMiniGfx.populatebugPowerplay(whatToProcess,whichSide ,matchAllData);
