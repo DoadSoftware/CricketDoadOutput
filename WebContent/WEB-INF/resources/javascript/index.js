@@ -3273,34 +3273,39 @@ function addItemsToList(whatToProcess,dataToProcess)
 						option.value = '4';
 						option.text = 'Hundreds';
 						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = '5';
+						option.text = 'Average';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = '6';
+						option.text = 'Strike Rate';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = '7';
+						option.text = 'Best';
+						select.appendChild(option);
 						break;
 						case 'NPL':
 						option = document.createElement('option');
 						option.value = '3';
-						option.text = 'Thirties';
+						option.text = 'Strike Rate';
 						select.appendChild(option);
 						
 						option = document.createElement('option');
 						option.value = '4';
-						option.text = 'Fifties';
+						option.text = '30s/50s';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = '7';
+						option.text = 'Best';
 						select.appendChild(option);
 						break;
 					}
-					option = document.createElement('option');
-					option.value = '5';
-					option.text = 'Average';
-					select.appendChild(option);
-					
-					option = document.createElement('option');
-					option.value = '6';
-					option.text = 'Strike Rate';
-					select.appendChild(option);
-					
-					option = document.createElement('option');
-					option.value = '7';
-					option.text = 'Best';
-					select.appendChild(option);
-					
 					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 2)");
 					row.insertCell(cellCount).appendChild(select);
 					setDropdownOptionToSelectOptionArray($(select),2);
@@ -3836,34 +3841,41 @@ function addItemsToList(whatToProcess,dataToProcess)
 					option.text = 'Economy';
 					select.appendChild(option);
 					
-					option = document.createElement('option');
-					option.value = '4';
-					option.text = 'Average';
-					select.appendChild(option);
-					
-					option = document.createElement('option');
-					option.value = '5';
-					option.text = 'Strike Rate';
-					select.appendChild(option);
-					
 					switch($('#selected_broadcaster').val().toUpperCase()){
 						case 'ICC-U19-2023':
+						option = document.createElement('option');
+						option.value = '4';
+						option.text = 'Average';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = '5';
+						option.text = 'Strike Rate';
+						select.appendChild(option);
+						
 						option = document.createElement('option');
 						option.value = '6';
 						option.text = '5WI';
 						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = '7';
+						option.text = 'Best Fig';
+						select.appendChild(option);
 						break;
 						case 'NPL':
 						option = document.createElement('option');
-						option.value = '6';
+						option.value = '4';
 						option.text = '3WI';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = '7';
+						option.text = 'Best Fig';
 						select.appendChild(option);
 						break;
 					}
-					option = document.createElement('option');
-					option.value = '7';
-					option.text = 'Best Fig';
-					select.appendChild(option);
+					
 					
 					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 2)");
 					row.insertCell(cellCount).appendChild(select);
@@ -4898,7 +4910,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			switch(whatToProcess){
 			case 'Control_d':
 				switch($('#selected_broadcaster').val().toUpperCase()){
-					case 'ICC-U19-2023': case 'NPL':
+					case 'ICC-U19-2023':
 					select = document.createElement('select');
 					select.id = 'selectStatType';
 					select.name = select.id;
@@ -4936,6 +4948,46 @@ function addItemsToList(whatToProcess,dataToProcess)
 					option = document.createElement('option');
 					option.value = '6';
 					option.text = 'Strike Rate';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '7';
+					option.text = 'Best';
+					select.appendChild(option);
+					
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 2)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),2);
+					cellCount = cellCount + 1
+					break;
+				case 'NPL':
+					select = document.createElement('select');
+					select.id = 'selectStatType';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = '0';
+					option.text = '';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '1';
+					option.text = 'Matches';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '2';
+					option.text = 'Runs';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '3';
+					option.text = 'Strike Rate';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '4';
+					option.text = '50s/100s';
 					select.appendChild(option);
 					
 					option = document.createElement('option');
@@ -5401,7 +5453,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			switch(whatToProcess){
 			case 'Control_e':
 				switch($('#selected_broadcaster').val().toUpperCase()){
-					case 'ICC-U19-2023': case 'NPL':
+					case 'ICC-U19-2023': 
 						select = document.createElement('select');
 						select.id = 'selectStatType';
 						select.name = select.id;
@@ -5439,6 +5491,46 @@ function addItemsToList(whatToProcess,dataToProcess)
 						option = document.createElement('option');
 						option.value = '6';
 						option.text = 'Economy';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = '7';
+						option.text = 'Best Fig';
+						select.appendChild(option);
+						
+						select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 2)");
+						row.insertCell(cellCount).appendChild(select);
+						setDropdownOptionToSelectOptionArray($(select),2);
+						cellCount = cellCount + 1
+					break;
+					case 'NPL':
+						select = document.createElement('select');
+						select.id = 'selectStatType';
+						select.name = select.id;
+						
+						option = document.createElement('option');
+						option.value = '0';
+						option.text = '';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = '1';
+						option.text = 'Matches';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = '2';
+						option.text = 'Wickets';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = '3';
+						option.text = 'Economy';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = '4';
+						option.text = '5WI';
 						select.appendChild(option);
 						
 						option = document.createElement('option');

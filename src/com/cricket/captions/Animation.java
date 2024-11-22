@@ -15,7 +15,7 @@ import com.cricket.util.CricketUtil;
 public class Animation 
 {
 	public String whichGraphicOnScreen = "", specialBugOnScreen = "", status = "", whichPlayer = "", 
-			prevWhichPlayer = "",targetOnScreen = "",tapeballOnScreen = "", prevHighlightDirector = "";
+			prevWhichPlayer = "",targetOnScreen = "",tapeballOnScreen = "", prevHighlightDirector = "0";
 	public Infobar infobar;
 	public Caption caption;
 	public int lastNumberOfRows = 0;
@@ -228,7 +228,6 @@ public class Animation
 				infobar.setRight_bottom("");
 				infobar.setRight_section("");
 				this.infobar.setInfobar_on_screen(true);
-				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "F12": //Infobar
 				
@@ -242,7 +241,6 @@ public class Animation
 				this.infobar.setInfobar_on_screen(true);
 				this.infobar.setInfobar_pushed(false);
 				this.infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
-				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "ArrowUp":
 				if(this.infobar.isInfobar_on_screen() == true && this.infobar.isInfobar_pushed()) {
@@ -355,7 +353,7 @@ public class Animation
 					processAnimation(Constants.BACK, print_writers, "BG_Scale", "START");
 					break;
 				case "Alt_z":
-					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Teams", "START");
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Squad", "START");
 					processAnimation(Constants.BACK, print_writers, "BG_Scale", "START");
 					break;
 				case "Shift_F8":
