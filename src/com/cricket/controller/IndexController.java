@@ -349,7 +349,7 @@ public class IndexController
 		
 		default:
 			if(session_configuration.getBroadcaster().equalsIgnoreCase(Constants.NPL)) {
-				if(whatToProcess.split(",")[0].toUpperCase().equalsIgnoreCase("highlightProfile")) {
+				if(whatToProcess.split(",")[0].toUpperCase().equalsIgnoreCase("highlightProfile") || whatToProcess.split(",")[0].toUpperCase().equalsIgnoreCase("highlightLeader")) {
 					this_animation.ChangeOn(whatToProcess, print_writers, session_configuration);
 				}
 			}

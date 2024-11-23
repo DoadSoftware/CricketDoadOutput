@@ -145,6 +145,9 @@ function processUserSelection(whichInput)
 	case 'highlightProfile':
 		processCricketProcedures('highlightProfile' + ',' + selected_options.toString(), null);
 		break;
+	case 'highlightLeader':
+		processCricketProcedures('highlightLeader' + ',' + selected_options.toString(), null);
+		break;
 	}	
 }
 
@@ -289,7 +292,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				break;
 			case 'Control_p': case 'Alt_F7':
 				switch($('#selected_broadcaster').val().toUpperCase()){
-				case 'ISPL': case 'BENGAL-T20':
+				case 'ISPL': case 'BENGAL-T20': case 'NPL':
 					dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 					processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 					break;
@@ -5720,6 +5723,19 @@ function addItemsToList(whatToProcess,dataToProcess)
 			option.type = 'button';
 			option.name = 'highlightProfile';
 			option.value = 'Highlight Profile';
+		    option.id = option.name;
+		    option.setAttribute('onclick','processUserSelection(this)');
+		    
+		    div = document.createElement('div');
+		    div.append(option);
+		    row.insertCell(cellCount).appendChild(div);
+	    	cellCount = cellCount + 1;
+		}
+		if(whatToProcess == 'z' || whatToProcess == 'x' || whatToProcess == 'c' || whatToProcess == 'v'){
+			option = document.createElement('input');
+			option.type = 'button';
+			option.name = 'highlightLeader';
+			option.value = 'Highlight LeaderBoard';
 		    option.id = option.name;
 		    option.setAttribute('onclick','processUserSelection(this)');
 		    
