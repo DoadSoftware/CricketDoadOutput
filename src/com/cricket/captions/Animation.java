@@ -85,7 +85,7 @@ public class Animation
 			case "F8":
 			case "Control_F5": case "Control_F9": case "Alt_F8": case "F5":case "F9": case "d": case "e": case "F7": case "F11": case "Control_h":
 				
-			case "F6": case "F10": case "Control_Shift_Q": case "Control_Shift_A":
+			case "F6": case "F10": case "Control_Shift_Q": case "Control_Shift_O":
 			case "Control_a":  case "Control_F3": case "Alt_o":
 			case "Shift_F3": case "u":  case "q": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "Control_g": case "j": case "Control_F6": case "Shift_F6":
@@ -381,7 +381,13 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "Anim_Mini$In_Out", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
-			case "Control_Shift_A":
+			case "Control_Shift_O":
+				if(!infobar.getInfobar_status().equalsIgnoreCase(Constants.FORCED+Constants.SHRUNK_INFOBAR)) {
+					AnimateIn("ArrowLeft" + ",", print_writers, config); // Shrink infobar
+					TimeUnit.MILLISECONDS.sleep(1000);
+					infobar.setInfobar_status(Constants.SHRUNK_INFOBAR);
+				}
+				
 				processAnimation(Constants.FRONT, print_writers, "LT_PlayingXI$In_Out", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
@@ -2090,8 +2096,13 @@ public class Animation
 				AnimateIn("ArrowRight" + ",", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;
-			case "Control_Shift_A":
+			case "Control_Shift_O":
 				processAnimation(Constants.FRONT, print_writers, "LT_PlayingXI$In_Out", "CONTINUE");
+				if(!infobar.getInfobar_status().equalsIgnoreCase(Constants.FORCED+Constants.SHRUNK_INFOBAR)) {
+					TimeUnit.MILLISECONDS.sleep(1000);
+					AnimateIn("ArrowRight" + ",", print_writers, config); // Restore infobar
+					infobar.setInfobar_status(Constants.TWO_LINER_INFOBAR);
+				}
 				this.whichGraphicOnScreen = "";
 				break;	
 			case "F10": case "Shift_F3": case "u": case "Control_Shift_Q":
@@ -3045,7 +3056,7 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "LT_MatchID$Change$Change_Out$BOTTOM_DATA", "START");
 				processAnimation(Constants.FRONT, print_writers, "LT_MatchID$Change$Change_In$BOTTOM_DATA", "START");
 				break;
-			case "Control_Shift_A":
+			case "Control_Shift_O":
 				processAnimation(Constants.FRONT, print_writers, "LT_PlayingXI$Change", "START");
 				break;		
 			case "F10": case "u": case "Control_Shift_Q":
@@ -4019,7 +4030,7 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "Anim_BugsChange", "SHOW 0.0");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
-			case "Control_Shift_A":
+			case "Control_Shift_O":
 				processAnimation(Constants.FRONT, print_writers, "LT_PlayingXI$Change", "SHOW 0.0");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;	
@@ -5807,6 +5818,10 @@ public class Animation
 			case Constants.NPL:
 				if(whichside == 1) {
 					switch(whatToProcess.split(",")[0]) {
+					case "Control_Shift_O":
+						previewCommands = "Anim_Infobar$Push 0.500 Anim_Infobar$Small 0.820 LT_PlayingXI$In_Out 1.420 LT_PlayingXI$In_Out$In 1.380 LT_PlayingXI$In_Out$In$BASE 1.200 LT_PlayingXI$In_Out$In$LOGO 1.100"
+								+ " LT_PlayingXI$In_Out$In$BOTTOM_DATA 1.380";
+						break;
 					case "F8": case "Alt_F8": case "F10": case "F9": case "d": case "e": case "F7": case "F11": case "Control_s": case "Control_f":
 					case "Control_F5": case "Control_F6": case "Shift_F6": case "F6": case "Control_F9": case "F5":
 					case "Control_a": case "Shift_F3": case "u": case "Shift_F5": case "Shift_F9": case "Alt_F12": case "Control_h":
@@ -5836,6 +5851,11 @@ public class Animation
 					}
 				}else {
 					switch(whatToProcess.split(",")[0]) {
+					case "Control_Shift_O":
+						previewCommands = "LT_PlayingXI$Change_In$BASE 1.200 LT_PlayingXI$Change_In$LOGO 1.000"
+								+ " LT_PlayingXI$Change_In$BOTTOM_DATA 1.380 LT_PlayingXI$Change_Out$BASE 0.820 LT_PlayingXI$Change_Out$LOGO 0.427"
+								+ " LT_PlayingXI$Change_Out$BOTTOM_DATA 0.415";
+						break;
 					case "F8": case "Alt_F8": case "F10": case "F9": case "d": case "e": case "F7": case "F11": case "Control_s": case "Control_f":
 					case "Control_F5": case "Control_F6": case "Shift_F6": case "F6": case "Control_F9": case "F5":
 					case "Control_a": case "Shift_F3": case "u": case "Shift_F5": case "Shift_F9": case "Alt_F12": case "Control_h":

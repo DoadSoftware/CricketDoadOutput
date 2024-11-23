@@ -562,17 +562,19 @@ public class BugsAndMiniGfx
 			switch (whatToProcess.split(",")[0]) {
 			case "Control_Shift_J":
 				
-				String summary = "";
+				String summary = "",team_name = "";
 				
 				if(matchAllData.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.SUPER_OVER) && matchAllData.getSetup().getMaxOvers() == 1) {
 					
-					summary = inning.getBatting_team().getTeamName1() + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN " + 
+					team_name = inning.getBatting_team().getTeamName1(); 
+					summary = "NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN " + 
 							"FROM " + (matchAllData.getSetup().getMaxOvers()*6) + " BALLS";
 					
 				}else {
 					if(matchAllData.getSetup().getTargetOvers() == "" || matchAllData.getSetup().getTargetOvers().trim().isEmpty() && matchAllData.getSetup().getTargetRuns() == 0) {
 						
-						summary = inning.getBatting_team().getTeamName1() + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN " + 
+						team_name = inning.getBatting_team().getTeamName1();
+						summary = "NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN " + 
 								"FROM " + CricketFunctions.getTargetOvers(matchAllData) + " OVERS";
 						
 
@@ -580,30 +582,33 @@ public class BugsAndMiniGfx
 						
 						if(matchAllData.getSetup().getTargetOvers() != "") {
 							
-							summary = inning.getBatting_team().getTeamName1() + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN " + 
+							team_name = inning.getBatting_team().getTeamName1();
+							summary = "NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN " + 
 									"FROM " + CricketFunctions.getTargetOvers(matchAllData) + " OVERS";
 						}
 						if(matchAllData.getSetup().getTargetType().toUpperCase().equalsIgnoreCase("VJD")) {
 							
-							summary = inning.getBatting_team().getTeamName1() + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN " + 
+							team_name = inning.getBatting_team().getTeamName1();
+							summary = "NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN " + 
 									"FROM " + CricketFunctions.getTargetOvers(matchAllData) + " OVERS (VJD)";
 							
 						}else if(matchAllData.getSetup().getTargetType().toUpperCase().equalsIgnoreCase("DLS")) {
 							
-							summary = inning.getBatting_team().getTeamName1() + " NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN " + 
+							team_name = inning.getBatting_team().getTeamName1();
+							summary = "NEED " + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN " + 
 									"FROM " + CricketFunctions.getTargetOvers(matchAllData) + " OVERS (DLS)";
 						}
 					}
 				}
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
-						+ "$txt_Name*GEOM*TEXT SET " + summary + "\0", print_writers);
+						+ "$txt_Name*GEOM*TEXT SET " + team_name + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
 						+ "$txt_Runs*GEOM*TEXT SET \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
 						+ "$txt_Balls*GEOM*TEXT SET \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
-						+ "$txt_Sub*GEOM*TEXT SET \0", print_writers);
+						+ "$txt_Sub*GEOM*TEXT SET " + summary + "\0", print_writers);
 				
 				break;
 			case "g":
@@ -832,21 +837,21 @@ public class BugsAndMiniGfx
 						if(matchAllData.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.SUPER_OVER)) {
 							if(CricketFunctions.getRequiredRuns(matchAllData) <= 0) {
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
-										+ "$txt_Name*GEOM*TEXT SET "+matchAllData.getMatch().getInning().get(1).getBatting_team().getTeamName1()+" WIN THE SUPER OVER"+"\0", print_writers);
+										+ "$txt_Name*GEOM*TEXT SET "+matchAllData.getMatch().getInning().get(1).getBatting_team().getTeamName1() + "\0", print_writers);
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
-										+ "$txt_Sub*GEOM*TEXT SET\0", print_writers);
+										+ "$txt_Sub*GEOM*TEXT SET " + "WIN THE SUPER OVER" +  "\0", print_writers);
 							}else if(matchAllData.getMatch().getInning().get(1).getTotalWickets() >= 10 || 
 									matchAllData.getMatch().getInning().get(1).getTotalOvers() >= matchAllData.getSetup().getMaxOvers()) {
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
-										+ "$txt_Name*GEOM*TEXT SET "+matchAllData.getMatch().getInning().get(1).getBowling_team().getTeamName1()+" WIN THE SUPER OVER"+"\0", print_writers);
+										+ "$txt_Name*GEOM*TEXT SET "+matchAllData.getMatch().getInning().get(1).getBowling_team().getTeamName1() + "\0", print_writers);
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
-										+ "$txt_Sub*GEOM*TEXT SET\0", print_writers);
+										+ "$txt_Sub*GEOM*TEXT SET " + "WIN THE SUPER OVER" + "\0", print_writers);
 							}
 						}else {
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
-									+ "$txt_Name*GEOM*TEXT SET "+matchResult+"\0", print_writers);
+									+ "$txt_Name*GEOM*TEXT SET " + matchResult.split("WIN")[0] + "\0", print_writers);
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
-									+ "$txt_Sub*GEOM*TEXT SET\0", print_writers);
+									+ "$txt_Sub*GEOM*TEXT SET WIN " + matchResult.split("WIN")[1] + "\0", print_writers);
 						}
 					}
 				}else {
@@ -857,9 +862,9 @@ public class BugsAndMiniGfx
 								+ "$txt_Sub*GEOM*TEXT SET WINNER WILL BE DECIDED BY SUPER OVER\0", print_writers);
 					}else {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
-								+ "$txt_Name*GEOM*TEXT SET "+matchResult+"\0", print_writers);
+								+ "$txt_Name*GEOM*TEXT SET " + matchResult.split("WIN")[0] + "\0", print_writers);
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
-								+ "$txt_Sub*GEOM*TEXT SET\0", print_writers);
+								+ "$txt_Sub*GEOM*TEXT SET WIN " + matchResult.split("WIN")[1] + "\0", print_writers);
 					}
 				}
 				break;

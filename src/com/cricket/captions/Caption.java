@@ -380,7 +380,7 @@ public class Caption
 			case "Control_Shift_P":
 				status = this_lowerThirdGfx.populateL3rdBowlerSpell(whatToProcess,whichSide,matchAllData);
 				break;
-			case "Control_Shift_A":
+			case "Control_Shift_O":
 				status = this_lowerThirdGfx.populateL3rdLineUp(whatToProcess,whichSide,matchAllData);
 				break;
 			case "Control_y":
