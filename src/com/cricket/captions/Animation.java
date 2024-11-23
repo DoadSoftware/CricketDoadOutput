@@ -2875,12 +2875,34 @@ public class Animation
 					
 					break;
 				case "Alt_8":
-					if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
+					
+					System.out.println("whatToProcess.split(\",\")[2] = " + whatToProcess.split(",")[2]);
+					if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER) && infobar.isTarget_on_screen() == true) {
+						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Right_Bowl_Full_Over$In_Out", "CONTINUE");
+						infobar.setRight_section(whatToProcess.split(",")[2]);
+						TimeUnit.MILLISECONDS.sleep(700);
+						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_All", "SHOW 0.0");
+						infobar.setRight_section_play(false);
+						infobar.setTarget_on_screen(false);
+					}else if(whatToProcess.split(",")[2].equalsIgnoreCase(CricketUtil.BOWLER)) {
 						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_All", "CONTINUE");
 						infobar.setRight_section(whatToProcess.split(",")[2]);
 						TimeUnit.MILLISECONDS.sleep(700);
 						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_All", "SHOW 0.0");
 						infobar.setRight_section_play(false);
+					}else if(whatToProcess.split(",")[2].equalsIgnoreCase("TARGET")) {
+						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Right_Bowl_Full_Over$In_Out", "START");
+						TimeUnit.MILLISECONDS.sleep(700);
+						infobar.setRight_section(whatToProcess.split(",")[2]);
+						infobar.setTarget_on_screen(true);
+						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_All", "SHOW 0.0");
+					}else if(!infobar.getRight_section().equalsIgnoreCase(CricketUtil.BOWLER) && 
+							infobar.isTarget_on_screen() == true) {
+						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Right_Bowl_Full_Over$In_Out", "CONTINUE");
+						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_All", "CONTINUE");
+						infobar.setRight_section(whatToProcess.split(",")[2]);
+						infobar.setRight_section_play(true);
+						infobar.setTarget_on_screen(false);
 					}else if(!infobar.getRight_section().equalsIgnoreCase(CricketUtil.BOWLER) && infobar.isRight_section_play() == true) {
 						processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_All$Change", "START");
 						infobar.setRight_section(whatToProcess.split(",")[2]);

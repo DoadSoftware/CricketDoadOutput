@@ -2777,11 +2777,16 @@ public class InfobarGfx
 									compareInningData(matchAllData, "-", 1, matchAllData.getEventFile().getEvents()) + "\0", print_writers);
 						break;
 					case "TARGET":
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Data_Right_Normal$Side_" + WhichSide + 
-								"$Style2$Bowl_Part_All$Side" + WhichSubSide + "$Select*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Data_Right_Normal$Side_1" + 
+								"$Right_Bowl_Full_Over$Side1Select*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Data_Right_Normal$Side_1" + 
+								"$Right_Bowl_Full_Over$Side2$Select*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
 						
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Data_Right_Normal$Side_" + WhichSide + "$Style2$Bowl_Part_All$Side" + 
-								WhichSubSide + "$FreeText02$txt_Head*GEOM*TEXT SET TARGET \n " + (matchAllData.getMatch().getInning().get(0).getTotalRuns() + 1) + 
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Data_Right_Normal$Side_1$Right_Bowl_Full_Over$Side1" + 
+								"$Target_Full$txt_Target*GEOM*TEXT SET " + (matchAllData.getMatch().getInning().get(0).getTotalRuns() + 1) + 
+								"\0", print_writers);
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Data_Right_Normal$Side_1$Right_Bowl_Full_Over$Side2" + 
+								"$Target_Full$txt_Target*GEOM*TEXT SET " + (matchAllData.getMatch().getInning().get(0).getTotalRuns() + 1) + 
 								"\0", print_writers);
 						break;
 					}

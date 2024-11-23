@@ -4243,8 +4243,11 @@ public class FullFramesGfx
 								+ "Position*FUNCTION*Grid*num_col SET " + j + "\0", print_writers);
 						
 						switch (config.getBroadcaster().toUpperCase()) {
-						case Constants.BENGAL_T20: case Constants.ICC_U19_2023:case Constants.NPL:
+						case Constants.BENGAL_T20: case Constants.ICC_U19_2023:
 							lngth = ((135 * Integer.valueOf(manhattan.get(j).getOverTotalRuns())) / maxRuns);
+							break;
+						case Constants.NPL:
+							lngth = ((382 * Integer.valueOf(manhattan.get(j).getOverTotalRuns())) / maxRuns);
 							break;
 						case Constants.ISPL:
 							if(log_50_over == j) {
@@ -9077,7 +9080,11 @@ public class FullFramesGfx
 				}
 				else if(WhichType.equalsIgnoreCase("logo")) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$ExtraData$Side" + WhichSide + "$Select_DataType" + 
-							"*FUNCTION*Omo*vis_con SET " + "0" + "\0", print_writers);
+							"*FUNCTION*Omo*vis_con SET " + "4" + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$ExtraData$Side" + WhichSide + "$Select_DataType$" +
+							"$2_Logo$Team1$img_Badges*TEXTURE*IMAGE SET " + Constants.NPL_LOGO_PATH + matchAllData.getMatch().getInning().get(0).getBatting_team().getTeamBadge() + " \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$ExtraData$Side" + WhichSide + "$Select_DataType$" +
+							"$2_Logo$Team2$img_Badges*TEXTURE*IMAGE SET " + Constants.NPL_LOGO_PATH + matchAllData.getMatch().getInning().get(1).getBatting_team().getTeamBadge() + " \0", print_writers);
 				}
 			}
 			
