@@ -4222,8 +4222,11 @@ public class InfobarGfx
 						+ "$Select_Type*FUNCTION*Omo*vis_con SET 0 \0",print_writers);
 					
 					infobar.setBatsmanAndBowlOrSponsor("$Bat");
-					this.infobar.setRight_section(CricketUtil.BOWLER);
-					this.infobar.setRight_bottom("BOWLING_END");
+					
+					if(infobar.getLeft_bottom().equalsIgnoreCase("F12")) {
+						this.infobar.setRight_section(CricketUtil.BOWLER);
+						this.infobar.setRight_bottom("BOWLING_END");
+					}
 					
 					populateCurrentBatsmen(print_writers, matchAllData, WhichSide);
 					populateVizInfobarBowler(print_writers, matchAllData, WhichSide);

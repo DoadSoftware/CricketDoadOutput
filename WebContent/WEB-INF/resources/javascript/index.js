@@ -380,7 +380,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				}
 				
 				break;
-			case 'Alt_f': case 'Alt_g': case 'ArrowDown': case 'ArrowUp': case 'w': case 'i': case 'f': case 's': case '0': case ';': 
+			case 'Alt_f': case 'Alt_g': case 'ArrowDown': case 'ArrowUp': case 'w': case 'i': case 'f': case 's': case '0': case ';': case 'Alt_e':
 			case 'Control_2': case 'Control_3': case 'ArrowLeft': case 'ArrowRight':
 				dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 				processCricketProcedures("ANIMATE-IN-GRAPHICS", dataToProcess);
@@ -852,7 +852,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 		
 	case 'Shift_C': case 'Control_Shift_Q': case 'Control_Shift_O':
 	case 'Control_m': case 'F4': case 'F5': case 'F6': case 'Alt_w': case 'Control_j': case 'F8': case 'F9': case 'F10': case 'F7': case 'F11':
-	case 'Control_F5': case 'Control_F9': case 'Shift_T': case 'u': case 'p': case 'Control_p': case 'Control_d': case 'Control_e': case 'Shift_F8':
+	case 'Control_F5': case 'Control_F9': case 'Shift_T': case 'u': case 'p': case 'Control_p': case 'Control_d': case 'Control_e': //case 'Shift_F8':
 	case 'z': case 'x': case 'c': case 'v': case 'Shift_F11': case 'Control_y': case 'Alt_F8': case 'Alt_F1': case 'Alt_F2':
 	case 'Shift_K': case 'Shift_O': case 'k': case 'g': case 'y': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q':
 	case 'j': case 'Shift_F6': case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l': case 'Shift_E': //case 'Alt_F9':
@@ -3442,6 +3442,29 @@ function addItemsToList(whatToProcess,dataToProcess)
 					row.insertCell(cellCount).appendChild(select);
 					setDropdownOptionToSelectOptionArray($(select),2);
 					cellCount = cellCount + 1
+					
+					switch($('#selected_broadcaster').val().toUpperCase()){
+						case 'NPL':
+							select = document.createElement('select');
+							select.id = 'selectType';
+							select.name = select.id;
+							
+							option = document.createElement('option');
+							option.value = 'WITH_CURRENT';
+							option.text = 'With Current Match';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'WITHOUT_CURRENT';
+							option.text = 'Without Current Match';
+							select.appendChild(option);
+							
+							select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 3)");
+							row.insertCell(cellCount).appendChild(select);
+							setDropdownOptionToSelectOptionArray($(select),3);
+							cellCount = cellCount + 1;
+							break;
+					}
 				break;
 				}
 				break;
@@ -3508,7 +3531,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			
 			break;	
 			
-		case 'Shift_T': case 'Alt_F9': case 'Alt_F12': case 'Alt_F10': case 'Alt_z': case 'Shift_F8':
+		case 'Shift_T': case 'Alt_F9': case 'Alt_F12': case 'Alt_F10': case 'Alt_z': //case 'Shift_F8':
 		case 'Control_Shift_F7':
 			switch(whatToProcess) {
 			case 'Shift_T': case 'Control_Shift_F7':
@@ -4013,6 +4036,29 @@ function addItemsToList(whatToProcess,dataToProcess)
 					row.insertCell(cellCount).appendChild(select);
 					setDropdownOptionToSelectOptionArray($(select),2);
 					cellCount = cellCount + 1
+					
+					switch($('#selected_broadcaster').val().toUpperCase()){
+						case 'NPL':
+							select = document.createElement('select');
+							select.id = 'selectType';
+							select.name = select.id;
+							
+							option = document.createElement('option');
+							option.value = 'WITH_CURRENT';
+							option.text = 'With Current Match';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'WITHOUT_CURRENT';
+							option.text = 'Without Current Match';
+							select.appendChild(option);
+							
+							select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 3)");
+							row.insertCell(cellCount).appendChild(select);
+							setDropdownOptionToSelectOptionArray($(select),3);
+							cellCount = cellCount + 1;
+							break;
+					}
 					break;
 				}
 			}
@@ -4048,6 +4094,30 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			
 			cellCount = cellCount + 1;
+			
+			switch(whatToProcess) {
+				case 'Shift_F11':
+				
+					select = document.createElement('select');
+					select.id = 'selectpreSummary';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+		            option.value = 'captain';
+		            option.text = 'Captain';
+		            select.appendChild(option);
+		            
+					option = document.createElement('option');
+		            option.value = 'logo';
+		            option.text = 'logo';
+		            select.appendChild(option);
+		            
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),1);
+					cellCount = cellCount + 1;
+					break;
+			}
 			break;
 		case 'y':
 			select = document.createElement('select');
@@ -5750,7 +5820,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			case 'Control_m': case 'F4': case 'F5': case 'F6': case 'Alt_w': case 'Control_j': case 'F8': case 'F9': case 'F10': case 'F7': case 'F11':
 			case 'Control_F5': case 'Control_F9': case 'Shift_T': case 'u': case 'p': case 'Control_p': case 'Control_d': case 'Control_e': case 'z': 
 			case 'x': case 'c': case 'v': case 'Shift_F11': case 'Control_y': case 'Alt_F8': case 'Alt_F1': case 'Alt_F2': case 'Shift_K': case 'Shift_O': 
-			case 'k': case 'g': case 'y': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q': case 'j': case 'Shift_F6': case 'Shift_F8':
+			case 'k': case 'g': case 'y': case 'Shift_F5': case 'Shift_F9': case 'Control_h': case 'Control_g': case 'q': case 'j': case 'Shift_F6': //case 'Shift_F8':
 			case 'Control_s':  case 'Control_f': case 'Alt_F12': case 'l': case 'Shift_E': //case 'Alt_F9': 
 			case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_3': case 'Alt_4': case 'Alt_5': case 'Alt_6': case 'Alt_7': case 'Alt_8': case 'Alt_9': case 'Alt_0':
 			case 'Alt_m': case 'Alt_n': case 'Control_b': case 'Alt_p': case 'Alt_F10': case 'Alt_d': case 'Shift_F4': case 'Alt_a': case 'Alt_s': case 'Shift_P': 

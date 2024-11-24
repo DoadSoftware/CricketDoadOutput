@@ -333,6 +333,9 @@ public class Caption
 				status = this_infobarGfx.populateInfobarIdent(print_writers,whatToProcess,matchAllData,1);
 				break;
 			case "F12":// InfoBar
+				if(config.getBroadcaster().equalsIgnoreCase(Constants.NPL)) {
+					this_infobarGfx.infobar.setLeft_bottom(whatToProcess.split(",")[0]);
+				}
 				status = this_infobarGfx.populateInfobar(print_writers,whatToProcess,matchAllData);
 				break;
 			case "Control_F1":// Photo ScoreCard
@@ -652,6 +655,9 @@ public class Caption
 			case "Alt_2": // Infobar Middle
 				switch (config.getBroadcaster().toUpperCase()) {
 				case Constants.ICC_U19_2023: case Constants.NPL:
+					if(config.getBroadcaster().equalsIgnoreCase(Constants.NPL)) {
+						this_infobarGfx.infobar.setLeft_bottom(whatToProcess.split(",")[0]);
+					}
 					this_infobarGfx.infobar.setMiddle_section(whatToProcess.split(",")[2]);
 					status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers,matchAllData, whichSide);
 					break;

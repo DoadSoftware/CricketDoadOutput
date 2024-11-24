@@ -1703,7 +1703,7 @@ public class LowerThirdGfx
 			}
 			
 			lowerThird = new LowerThird("", bowlingCard.getPlayer().getFirstname(), surName,"", String.valueOf(bowlingCard.getRuns()), String.valueOf(bowlingCard.getWickets()), 5, "", inning.getBowling_team().getTeamBadge(),
-					new String[] {"OVERS", "DOTS", "ECONOMY"},new String[]{CricketFunctions.OverBalls(bowlingCard.getOvers(), bowlingCard.getBalls()), 
+					new String[] {plural, "DOTS", "ECONOMY"},new String[]{CricketFunctions.OverBalls(bowlingCard.getOvers(), bowlingCard.getBalls()), 
 					String.valueOf(bowlingCard.getDots()), economy}
 					,null,new String[] {"WITHOUT"},new String[] {"173","394","648"});
 			break;
@@ -2395,14 +2395,14 @@ public class LowerThirdGfx
 		}
 		
 		if(matchAllData.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.SUPER_OVER) && matchAllData.getSetup().getMaxOvers() == 1) {
-			summary = teamNameAsCity + " NEED" + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN ";
+			summary = teamNameAsCity + " NEED" + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN";
 			
 			lowerThird = new LowerThird(summary, inning.getBatting_team().getTeamName2(), inning.getBatting_team().getTeamName3(),"", "", "",1,"",inning.getBatting_team().getTeamBadge(),null,null,
 					new String[]{String.valueOf("FROM " + matchAllData.getSetup().getMaxOvers()*6)+ " BALLS",""},null,null);
 		}else {
 			if(matchAllData.getSetup().getTargetOvers() == "" || matchAllData.getSetup().getTargetOvers().trim().isEmpty() && matchAllData.getSetup().getTargetRuns() == 0) {
 				
-				summary = teamNameAsCity + " NEED" + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN ";
+				summary = teamNameAsCity + " NEED" + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN";
 				runRate = " AT " + CricketFunctions.generateRunRate(CricketFunctions.getTargetRuns(matchAllData), 
 						Integer.valueOf(CricketFunctions.getTargetOvers(matchAllData)), 0, 2, matchAllData) + " RUNS PER OVER";
 				
@@ -2410,7 +2410,7 @@ public class LowerThirdGfx
 						new String[]{String.valueOf("FROM " + CricketFunctions.getTargetOvers(matchAllData))+ " OVERS",runRate},null,null);
 
 			}else {
-				summary = teamNameAsCity + " NEED" + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN ";
+				summary = teamNameAsCity + " NEED" + CricketFunctions.getTargetRuns(matchAllData) + " RUNS" + " TO WIN";
 				runRate = " AT " + CricketFunctions.generateRunRate(CricketFunctions.getTargetRuns(matchAllData), 
 						Integer.valueOf(CricketFunctions.getTargetOvers(matchAllData)), 0, 2,matchAllData) + " RUNS PER OVER";
 				
@@ -2483,9 +2483,9 @@ public class LowerThirdGfx
 		summary = teamNameAsCity + " NEED" + CricketFunctions.getRequiredRuns(matchAllData);
 		
 		if(CricketFunctions.getRequiredRuns(matchAllData) <= 1) {
-			summary = summary + " RUN" + CricketFunctions.Plural(CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " TO WIN ";
+			summary = summary + " RUN" + CricketFunctions.Plural(CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " TO WIN";
 		}else {
-			summary = summary + " MORE RUN" + CricketFunctions.Plural(CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " TO WIN ";
+			summary = summary + " MORE RUN" + CricketFunctions.Plural(CricketFunctions.getRequiredRuns(matchAllData)).toUpperCase() + " TO WIN";
 		}
 		
 		line_1 = line_1 + " AT " + CricketFunctions.generateRunRate(CricketFunctions.getRequiredRuns(matchAllData), 0, 

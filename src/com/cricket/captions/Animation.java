@@ -75,6 +75,7 @@ public class Animation
 			case "F1": case "Control_Shift_F1": case "F2": case "Control_Shift_F2": case "Control_F11": case "m": case "Control_m":
 			case "Shift_F11": case "F4": case "Control_Shift_F4": case "Shift_K": case "Control_d": case "Control_e": case "Shift_T": case "Shift_P": case "Shift_Q":
 			case "Alt_z": case "Shift_F8": case "highlightProfile": case "Control_F7": case "z": case "x": case "c": case "v": case "Control_p":
+			case "Control_F10": case "Shift_F10":	
 				return Constants.FULL_FRAMER;
 			case "Shift_O": case "Control_k": case "k": case "g": case "y": case "Control_Shift_R":
 			case "h": case "Shift_F4": case "Shift_F": case "Alt_p": case "Control_Shift_J": case "Shift_C":
@@ -85,7 +86,7 @@ public class Animation
 			case "F8":
 			case "Control_F5": case "Control_F9": case "Alt_F8": case "F5":case "F9": case "d": case "e": case "F7": case "F11": case "Control_h":
 				
-			case "F6": case "F10": case "Control_Shift_Q": case "Control_Shift_A":
+			case "F6": case "F10": case "Control_Shift_Q": case "Control_Shift_O":
 			case "Control_a":  case "Control_F3": case "Alt_o":
 			case "Shift_F3": case "u":  case "q": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "Control_g": case "j": case "Control_F6": case "Shift_F6":
@@ -276,6 +277,15 @@ public class Animation
 					}
 				}
 				break;
+			case "Alt_e":
+				if(caption.this_infobarGfx.infobar.isPowerplay_on_screen() == false) {
+					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Powerplay", "START");
+					caption.this_infobarGfx.infobar.setPowerplay_on_screen(true);
+				}else {
+					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Powerplay", "CONTINUE REVERSE");
+					caption.this_infobarGfx.infobar.setPowerplay_on_screen(false);
+				}
+				break;
 			case "w": case "i": case "f": case "s": case "0": case "8": //case ";":
 				if(whatToProcess.split(",")[0].equalsIgnoreCase("w")) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Wipes$Select*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
@@ -415,7 +425,7 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "Anim_Mini$In_Out", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
-			case "Control_Shift_A":
+			case "Control_Shift_O":
 				processAnimation(Constants.FRONT, print_writers, "LT_PlayingXI$In_Out", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
@@ -2156,7 +2166,7 @@ public class Animation
 				AnimateIn("ArrowRight" + ",", print_writers, config); // Restore infobar
 				this.whichGraphicOnScreen = "";
 				break;
-			case "Control_Shift_A":
+			case "Control_Shift_O":
 				processAnimation(Constants.FRONT, print_writers, "LT_PlayingXI$In_Out", "CONTINUE");
 				this.whichGraphicOnScreen = "";
 				break;	
@@ -3163,7 +3173,7 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "LT_MatchID$Change$Change_Out$BOTTOM_DATA", "START");
 				processAnimation(Constants.FRONT, print_writers, "LT_MatchID$Change$Change_In$BOTTOM_DATA", "START");
 				break;
-			case "Control_Shift_A":
+			case "Control_Shift_O":
 				processAnimation(Constants.FRONT, print_writers, "LT_PlayingXI$Change", "START");
 				break;		
 			case "F10": case "u": case "Control_Shift_Q":
@@ -4156,7 +4166,7 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "Anim_BugsChange", "SHOW 0.0");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
-			case "Control_Shift_A":
+			case "Control_Shift_O":
 				processAnimation(Constants.FRONT, print_writers, "LT_PlayingXI$Change", "SHOW 0.0");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;	
@@ -5214,7 +5224,7 @@ public class Animation
 						previewCommand = "Anim_Infobar$Push 0.500 Anim_FullFrames$In_Out$Essentials$In 2.800 Anim_FullFrames$In_Out$Header$In 2.000 Anim_FullFrames$In_Out$Logo$In 2.500"
 								+ " Anim_FullFrames$In_Out$SubHeader$In 2.000";
 						break;
-					case "Shift_F11": case "Control_d": case "Control_e": case "Shift_T": case "Shift_P": case "Shift_Q": case "Control_F7":
+					case "Shift_F11": case "Control_d": case "Control_e": case "Shift_T": case "Shift_P": case "Shift_Q": case "Control_F7": case "Control_p":
 					case "F1": case "F2": case "Control_Shift_F1": case "Control_Shift_F2": case "Control_F11": case "F4": case "Control_Shift_F4": case "Shift_K":
 					case "Alt_z": case "Shift_F8":
 						previewCommand = "Anim_Infobar$Push 0.500 Anim_FullFrames$In_Out$Essentials$In 2.800 Anim_FullFrames$In_Out$Header$In 2.000 Anim_FullFrames$In_Out$Logo$In 2.500"
@@ -5239,6 +5249,9 @@ public class Animation
 					case "F4": case "Control_Shift_F4":
 						previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Partnership_List 3.000 Anim_FullFrames$In_Out$Main$Partnership_List$In 2.880 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
 						break;
+					case "Control_p":
+						previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main 3.000 Anim_FullFrames$In_Out$Main$Standings 3.000 Anim_FullFrames$In_Out$Main$Standings$In 2.720 Anim_FullFrames$In_Out$ExtraData$In 3.000";
+						break;	
 					case "Shift_T":
 						previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$LineUp_Image 3.000 Anim_FullFrames$In_Out$Main$LineUp_Image$In 2.920 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
 						break;	
@@ -5267,12 +5280,12 @@ public class Animation
 						previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Manhattan 3.000 Anim_FullFrames$In_Out$Main$Manhattan$In 2.840 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
 						break;	
 					case "Shift_F10":
-						previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Worms 3.000 Anim_FullFrames$In_Out$Main$Worms$In 2.840 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
+						previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Worms 3.000 Anim_FullFrames$In_Out$Main$Worms$In 2.980 Anim_FullFrames$In_Out$Main$Worms$In$Runs 2.980 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
 						break;
 					}
 				}else {
 					switch(whichGraphicOnScreen.split(",")[0]) {
-					case "z": case "x": case "c": case "v":
+					case "z": case "x": case "c": case "v": case "Control_F10": case "Shift_F10":
 						previewCommand = "Change$Header 1.000 Change$Header$Change_Out 0.800 Change$Header$Change_In 1.000 Change$Logo 1.340 Change$Logo$Change_Out 1.000 Change$Logo$Change_In 1.340"
 								+ " Change$SubHeader 1.100 Change$SubHeader$Change_Out 0.500 Change$SubHeader$Change_In 1.100";
 						break;
@@ -5304,6 +5317,9 @@ public class Animation
 						}
 						previewCommand = previewCommand + " Change$Partnership_List 1.400 Change$Partnership_List$Change_In 1.400 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
 						break;
+					case "Control_p":
+						previewCommand = previewCommand + " Change$Standings 1.200 Change$Standings$Change_Out 0.660 Change$Standings$Change_In 1.200 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
+						break;	
 					case "Shift_T":
 						previewCommand = previewCommand + " Change$LineUp_Image 1.440 Change$LineUp_Image$Change_Out 0.620 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
 						break;
@@ -5324,11 +5340,17 @@ public class Animation
 					case "z": case "x": case "c": case "v":
 						previewCommand = previewCommand + " LeaderBoardHighlight$Side2$Player"+whatToProcess.split(",")[2].split("_")[0]+" 1.780";
 						break;
+					case "Control_F10":
+						previewCommand = previewCommand + " Change$Manhattan 1.520 Change$Manhattan$Change_Out 0.500 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
+						break;
+					case "Shift_F10":
+						previewCommand = previewCommand + " Change$Worms 1.500 Change$Worms$Change_Out 0.560 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
+						break;	
 					}
 					switch (whatToProcess.split(",")[0]) {
 					case "F1": case "F2": case "Control_Shift_F1": case "Control_Shift_F2": case "Control_F11": case "F4": case "Shift_F11": case "Control_Shift_F4":
 					case "Shift_T":	case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q": case "Control_F7": case "Alt_z": case "Shift_F8":
-					case "z": case "x": case "c": case "v":
+					case "z": case "x": case "c": case "v": case "Control_F10": case "Shift_F10": case "Control_p":
 							switch(whatToProcess.split(",")[0]) {
 							case "F1": case "Control_Shift_F1":
 								previewCommand = previewCommand + " Change$BattingCard$Change_In 1.400 Change$ExtraData$Change_In 1.000";
@@ -5342,6 +5364,9 @@ public class Animation
 							case "F4": case "Control_Shift_F4":
 								previewCommand = previewCommand + " Change$Partnership_List$Change_In 1.400 Change$ExtraData$Change_In 1.000 BG_Scale 0.800";
 								break;
+							case "Control_p":
+								previewCommand = previewCommand + " Change$Standings 1.200 Change$Standings$Change_Out 0.660 Change$Standings$Change_In 1.200 Change$ExtraData$Change_In 1.000 BG_Scale 0.800";
+								break;	
 							case "Shift_T":
 								previewCommand = previewCommand + " Change$LineUp_Image 1.440 Change$LineUp_Image$Change_In 1.440 Change$ExtraData$Change_In 1.000 BG_Scale 0.800";
 								break;
@@ -5364,6 +5389,12 @@ public class Animation
 								previewCommand = previewCommand + " Change$Leader_Board 1.500 Change$Leader_Board$Change_Out 0.600 Change$Leader_Board$Change_In 1.500 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720"
 										+ " Change$ExtraData$Change_In 1.000";
 								break;
+							case "Control_F10":
+								previewCommand = previewCommand + " Change$Manhattan 1.520 Change$Manhattan$Change_In 1.520 Change$ExtraData$Change_In 1.000 BG_Scale 0.800";
+								break;
+							case "Shift_F10":
+								previewCommand = previewCommand + " Change$Worms 1.500 Change$Worms$Change_In 1.500 Change$Worms$Change_In$Runs 1.500 Change$ExtraData$Change_In 1.000 BG_Scale 0.800";
+								break;		
 							}
 					}
 				}
@@ -5972,6 +6003,10 @@ public class Animation
 			case Constants.NPL:
 				if(whichside == 1) {
 					switch(whatToProcess.split(",")[0]) {
+					case "Control_Shift_O":
+						previewCommands = "Anim_Infobar$Push 0.500 Anim_Infobar$Small 0.820 LT_PlayingXI$In_Out 1.420 LT_PlayingXI$In_Out$In 1.380 LT_PlayingXI$In_Out$In$BASE 1.200 LT_PlayingXI$In_Out$In$LOGO 1.100"
+								+ " LT_PlayingXI$In_Out$In$BOTTOM_DATA 1.380";
+						break;
 					case "F8": case "Alt_F8": case "F10": case "F9": case "d": case "e": case "F7": case "F11": case "Control_s": case "Control_f":
 					case "Control_F5": case "Control_F6": case "Shift_F6": case "F6": case "Control_F9": case "F5":
 					case "Control_a": case "Shift_F3": case "u": case "Shift_F5": case "Shift_F9": case "Alt_F12": case "Control_h":
@@ -5990,6 +6025,7 @@ public class Animation
 					switch(whatToProcess.split(",")[0]) {
 					case "Control_F5": case "Control_F6": case "Shift_F6": case "F6": case "Control_F9": case "F5": case "F9": case "F7":
 					case "Control_a": case "Shift_F3": case "u": case "Shift_F5": case "Shift_F9": case "Alt_F12": case "Control_h":
+					case "F11": case "Control_s": case "Control_f":	
 						previewCommands = previewCommands +" Lower_Third$In_Out$In$RIGHT_DATA 1.440";
 						break;
 					}
@@ -6001,6 +6037,11 @@ public class Animation
 					}
 				}else {
 					switch(whatToProcess.split(",")[0]) {
+					case "Control_Shift_O":
+						previewCommands = "LT_PlayingXI$Change_In$BASE 1.200 LT_PlayingXI$Change_In$LOGO 1.000"
+								+ " LT_PlayingXI$Change_In$BOTTOM_DATA 1.380 LT_PlayingXI$Change_Out$BASE 0.820 LT_PlayingXI$Change_Out$LOGO 0.427"
+								+ " LT_PlayingXI$Change_Out$BOTTOM_DATA 0.415";
+						break;
 					case "F8": case "Alt_F8": case "F10": case "F9": case "d": case "e": case "F7": case "F11": case "Control_s": case "Control_f":
 					case "Control_F5": case "Control_F6": case "Shift_F6": case "F6": case "Control_F9": case "F5":
 					case "Control_a": case "Shift_F3": case "u": case "Shift_F5": case "Shift_F9": case "Alt_F12": case "Control_h":
@@ -6027,6 +6068,7 @@ public class Animation
 					switch(whatToProcess.split(",")[0]) {
 					case "Control_F5": case "Control_F6": case "Shift_F6": case "F6": case "Control_F9": case "F5": case "F9": case "F7": 
 					case "Control_a": case "Shift_F3": case "u": case "Shift_F5": case "Shift_F9": case "Alt_F12": case "Control_h":
+					case "F11": case "Control_s": case "Control_f":	
 						previewCommands = previewCommands +" Lower_Third$Change_Out$RIGHT_DATA 0.425 Lower_Third$Change_In$RIGHT_DATA 2.500";
 						break;
 					}
@@ -6265,7 +6307,7 @@ public class Animation
 									config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.NPL)) {
 								
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.tga Anim_Infobar$Push 0.500 "
-										+ "Anim_Bugs$Essentials$In 2.140\0", print_writer);
+										+ "Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In 0.800\0", print_writer);
 								
 							}else if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ISPL)) {
 								
@@ -6289,7 +6331,7 @@ public class Animation
 											+ "/Default/Overlays" + " C:/Temp/Preview.png anim_Toss 1.000 \0", print_writer);
 							 }else if(config.getBroadcaster().equalsIgnoreCase(Constants.NPL)) {
 								 CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.tga Anim_Infobar$Push 0.500 Anim_Bugs 2.200 "
-											+ "Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In 5.000 Anim_Bugs$Essentials$Out 2.200 \0", print_writer);
+											+ "Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In 0.800\0", print_writer);
 							 }
 							break;
 						}
@@ -6300,7 +6342,7 @@ public class Animation
 							if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ICC_U19_2023) || 
 									config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.NPL)) {
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" 
-										+ "/Default/Overlays C:/Temp/Preview.tga Anim_BugsChange 1.360 \0", print_writer);
+										+ "/Default/Overlays C:/Temp/Preview.tga Anim_BugsChange 1.860 \0", print_writer);
 								
 							}else if(config.getBroadcaster().toUpperCase().equalsIgnoreCase(Constants.ISPL)) {
 								
