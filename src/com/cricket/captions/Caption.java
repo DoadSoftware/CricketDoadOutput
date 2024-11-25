@@ -27,6 +27,7 @@ import com.cricket.model.Inning;
 import com.cricket.model.MatchAllData;
 import com.cricket.model.NameSuper;
 import com.cricket.model.POTT;
+import com.cricket.model.PerformanceBug;
 import com.cricket.model.Player;
 import com.cricket.model.Statistics;
 import com.cricket.model.StatsType;
@@ -67,6 +68,7 @@ public class Caption
 	public List<String> TeamChanges;
 	public List<HeadToHead> headToHead;
 	public List<Tournament> past_tournament_stats;
+	public List<PerformanceBug> performanceBugs;
 	public CricketService cricketService;
 	
 	public BattingCard battingCard;
@@ -89,7 +91,7 @@ public class Caption
 	public Caption(List<PrintWriter> print_writers, Configuration config, List<Statistics> statistics, List<StatsType> statsTypes, 
 		List<MatchAllData> tournament_matches, List<NameSuper> nameSupers,List<Bugs> bugs, List<InfobarStats> infobarStats, List<Fixture> fixTures,
 		List<Team> Teams, List<Ground> Grounds, List<VariousText> varioustText, List<Commentator> commentators, List<Staff> staff, List<Player> players, 
-		List<POTT> pott, List<String> teamChanges, FullFramesGfx this_fullFramesGfx,LowerThirdGfx this_lowerThirdGfx, InfobarGfx this_infobarGfx, 
+		List<POTT> pott, List<String> teamChanges, List<PerformanceBug> performanceBugs, FullFramesGfx this_fullFramesGfx,LowerThirdGfx this_lowerThirdGfx, InfobarGfx this_infobarGfx, 
 		BugsAndMiniGfx this_bugsAndMiniGfx, int whichSide, String whichGraphhicsOnScreen, String slashOrDash, List<Tournament> tournament,
 		List<BestStats> tapeball,List<DuckWorthLewis> dls, List<HeadToHead> headToHead, List<Tournament> past_tournament_stats, CricketService cricketService) {
 	
@@ -116,6 +118,7 @@ public class Caption
 		this.headToHead = headToHead;
 		this.past_tournament_stats = past_tournament_stats;
 		this.cricketService = cricketService;
+		this.performanceBugs = performanceBugs;
 		
 		
 		this.dls = dls;
@@ -126,7 +129,7 @@ public class Caption
 		this.whichSide = whichSide;
 		this.this_infobarGfx = new InfobarGfx(config, slashOrDash, print_writers, statistics, statsTypes, infobarStats, 
 				Grounds, Commentators, tournament_matches, dls, players, headToHead);
-		this.this_bugsAndMiniGfx = new BugsAndMiniGfx(print_writers, config, bugs, Teams, VariousText, cricketService, headToHead, tournament_matches);
+		this.this_bugsAndMiniGfx = new BugsAndMiniGfx(print_writers, config, bugs, performanceBugs, Teams, VariousText, cricketService, headToHead, tournament_matches);
 		this.status = "";
 	}
 
@@ -142,6 +145,9 @@ public class Caption
 	{
 		if(whatToProcess.contains(",")) {
 			switch (whatToProcess.split(",")[0]) {
+			case "Control_Shift_J":
+				status = this_bugsAndMiniGfx.populatePerformanceBug(whatToProcess, whichSide, matchAllData);
+				break;
 			case "Alt_Shift_F3":
 				status = this_lowerThirdGfx.populateInningComp(whatToProcess,whichSide, matchAllData);
 				break;
@@ -428,7 +434,7 @@ public class Caption
 			case "Control_Shift_F9": 
 				status = this_lowerThirdGfx.populateBowlingStyleWithPhoto(whatToProcess,whichSide,matchAllData);
 				break;
-			case "Control_Shift_J": 
+			case "Control_Shift_F3": 
 				status = this_bugsAndMiniGfx.populateBugTarget(whatToProcess,matchAllData, whichSide);
 				break;
 			case "d": //Target

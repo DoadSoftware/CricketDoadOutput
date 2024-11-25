@@ -59,6 +59,7 @@ import com.cricket.model.Match;
 import com.cricket.model.MatchAllData;
 import com.cricket.model.NameSuper;
 import com.cricket.model.POTT;
+import com.cricket.model.PerformanceBug;
 import com.cricket.model.Player;
 import com.cricket.model.Setup;
 import com.cricket.model.Staff;
@@ -112,6 +113,7 @@ public class IndexController
 	public static List<Player> session_players = new ArrayList<Player>();
 	public static List<POTT> session_pott = new ArrayList<POTT>();
 	public static List<String> session_teamChanges = new ArrayList<String>();
+	public static List<PerformanceBug> session_performance_bug = new ArrayList<PerformanceBug>();
 	
 	BugsAndMiniGfx this_bugs_mini = new BugsAndMiniGfx();
 	
@@ -630,6 +632,8 @@ public class IndexController
 			this_caption.whichSide = 1;
 			this_caption.PopulateGraphics("Alt_e,", session_match);
 			break;
+		case "Control_Shift_J":
+			return (List<T>) session_performance_bug;
 		case "F10": case "j":
 		    return (List<T>) session_name_super;
 		case "k":
@@ -646,7 +650,7 @@ public class IndexController
 			return (List<T>) CricketFunctions.processAllStaff(cricketService, session_match.getSetup().getAwayTeamId());
 		case "Alt_q":
 			return (List<T>) CricketFunctions.processAllPott(cricketService);
-		case "Alt_Shift_R":
+		case "Alt_Shift_R": case "Alt_z":
 			return (List<T>) session_team;
 		case "Shift_!":
 			List<Stats> database_statistics = new ArrayList<Stats>();
@@ -758,7 +762,7 @@ public class IndexController
 //			headToHead = CricketFunctions.extractHeadToHead(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
 //					CricketUtil.HEADTOHEAD_DIRECTORY).listFiles(), cricketService);
 
-			
+			session_performance_bug = cricketService.getPerformanceBugs();
 			session_name_super =  cricketService.getNameSupers();
 			session_team =  cricketService.getTeams();
 			session_ground =  cricketService.getGrounds();
@@ -794,7 +798,7 @@ public class IndexController
 			case "NEW":
 				this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), cricket_matches, session_name_super,
 					session_bugs,session_infoBarStats,session_fixture, session_team, session_ground,session_variousText, session_commentator, session_staff, 
-					session_players, session_pott, session_teamChanges, new FullFramesGfx(),new LowerThirdGfx(), new InfobarGfx(), new BugsAndMiniGfx(), 1, "", "-", 
+					session_players, session_pott, session_teamChanges, session_performance_bug, new FullFramesGfx(),new LowerThirdGfx(), new InfobarGfx(), new BugsAndMiniGfx(), 1, "", "-", 
 					past_tournament_stats,past_tape,session_dls, headToHead, past_tournament_stats, cricketService);
 //				this_caption.this_infobarGfx.previous_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixes("COMBINED_PAST_CURRENT_MATCH_DATA", 
 //					cricket_matches, session_match, null).getTournament_sixes());
@@ -823,6 +827,7 @@ public class IndexController
 				this_caption.this_bugsAndMiniGfx.bugs = session_bugs;
 				this_caption.this_bugsAndMiniGfx.Teams = session_team;
 				this_caption.this_bugsAndMiniGfx.VariousText = session_variousText;
+				this_caption.this_bugsAndMiniGfx.performanceBugs = session_performance_bug;
 				
 				//InfoBar
 				this_caption.this_infobarGfx.statistics = session_statistics;

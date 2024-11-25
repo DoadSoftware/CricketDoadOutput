@@ -25,6 +25,7 @@ import com.cricket.model.Inning;
 import com.cricket.model.LeagueTable;
 import com.cricket.model.MatchAllData;
 import com.cricket.model.Partnership;
+import com.cricket.model.PerformanceBug;
 import com.cricket.model.Player;
 import com.cricket.model.Team;
 import com.cricket.model.VariousText;
@@ -48,6 +49,7 @@ public class BugsAndMiniGfx
 	public List<VariousText> VariousText;
 	public List<HeadToHead> headToHead;
 	public List<MatchAllData> tournament_matches;
+	public List<PerformanceBug> performanceBugs;
 	public List<BatBallGriff> griff = new ArrayList<BatBallGriff>();
 	public List<String> this_data_str = new ArrayList<String>();
 	ArrayList<BestStats> bowler_data = new ArrayList<BestStats>();
@@ -65,12 +67,14 @@ public class BugsAndMiniGfx
 	
 	public Team team;
 	public Bugs bug;
+	public PerformanceBug performanceBug;
+	
 
 	public BugsAndMiniGfx() {
 		super();
 	}
 	
-	public BugsAndMiniGfx(List<PrintWriter> print_writers, Configuration config, List<Bugs> bugs, List<Team> teams, List<VariousText> VariousText,CricketService cricketService,List<HeadToHead> headToHead, List<MatchAllData> tournament_matches) {
+	public BugsAndMiniGfx(List<PrintWriter> print_writers, Configuration config, List<Bugs> bugs, List<PerformanceBug> performanceBugs, List<Team> teams, List<VariousText> VariousText,CricketService cricketService,List<HeadToHead> headToHead, List<MatchAllData> tournament_matches) {
 		super();
 		this.print_writers = print_writers;
 		this.config = config;
@@ -80,6 +84,26 @@ public class BugsAndMiniGfx
 		this.cricketService = cricketService;
 		this.headToHead = headToHead;
 		this.tournament_matches = tournament_matches;
+		this.performanceBugs = performanceBugs;
+	}
+	
+	public String populatePerformanceBug(String whatToProcess, int whichSide, MatchAllData matchAllData) {
+		performanceBug = performanceBugs.stream().filter(p -> p.getBugId() == Integer.valueOf(whatToProcess.split(",")[2])).findAny().orElse(null);
+		if(performanceBug == null) {
+			return "performanceBug: performanceBug is returning NULL";
+		}
+		
+		if(performanceBug.getFlag() != null) {
+			team = Teams.stream().filter(tm -> tm.getTeamName4().equalsIgnoreCase(bug.getFlag())).findAny().orElse(null);
+			if(team == null) {
+				return "performanceBug: Flag in database is returning NULL";
+			}
+		}
+		
+		if(PopulateBugBody(whichSide, whatToProcess,matchAllData) == Constants.OK) {
+			status = Constants.OK;
+		}
+		return status;
 	}
 	
 	public String populateBowlerVsAllBatsman(String whatToProcess,int WhichSide,MatchAllData matchAllData) {
@@ -245,19 +269,9 @@ public class BugsAndMiniGfx
 	
 	public String populatePointsTable(String whatToProcess, MatchAllData matchAllData,int WhichSide) throws ParseException, JAXBException, InterruptedException
 	{
-		switch(config.getBroadcaster().toUpperCase()){
-		case Constants.BENGAL_T20:
-			if(new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.LEAGUE_TABLE_DIRECTORY + CricketUtil.LEAGUETABLE_XML).exists()) {
-				leagueTable = (LeagueTable)JAXBContext.newInstance(LeagueTable.class).createUnmarshaller().unmarshal(
-						new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.LEAGUE_TABLE_DIRECTORY + CricketUtil.LEAGUETABLE_XML));
-			}
-			break;
-		default:
-			if(new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.LEAGUE_TABLE_DIRECTORY + WhichGroup + CricketUtil.XML_EXTENSION).exists()) {
-				leagueTable = (LeagueTable)JAXBContext.newInstance(LeagueTable.class).createUnmarshaller().unmarshal(
-						new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.LEAGUE_TABLE_DIRECTORY + WhichGroup + CricketUtil.XML_EXTENSION));
-			}
-			break;
+		if(new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.LEAGUE_TABLE_DIRECTORY + WhichGroup + CricketUtil.XML_EXTENSION).exists()) {
+			leagueTable = (LeagueTable)JAXBContext.newInstance(LeagueTable.class).createUnmarshaller().unmarshal(
+					new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.LEAGUE_TABLE_DIRECTORY + WhichGroup + CricketUtil.XML_EXTENSION));
 		}
 		
 		if(leagueTable == null) {
@@ -561,6 +575,39 @@ public class BugsAndMiniGfx
 		case Constants.NPL:
 			switch (whatToProcess.split(",")[0]) {
 			case "Control_Shift_J":
+				if(performanceBug.getSubheader() != null) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+							+ "$txt_Balls*GEOM*TEXT SET " + performanceBug.getSubheader() + "\0", print_writers);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+							+ "$txt_Balls*GEOM*TEXT SET " + "" + "\0", print_writers);
+				}
+				
+				if(performanceBug.getText4() != null) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+							+ "$txt_Runs*GEOM*TEXT SET " + performanceBug.getText4() + "\0", print_writers);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+							+ "$txt_Runs*GEOM*TEXT SET " + "" + "\0", print_writers);
+				}
+				
+				if(performanceBug.getScore() != null) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
+							+ "$txt_Sub*GEOM*TEXT SET " + performanceBug.getScore() + "\0", print_writers);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
+							+ "$txt_Sub*GEOM*TEXT SET " + "" + "\0", print_writers);
+				}
+				
+				if(performanceBug.getPlayerName() != null) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+							+ "$txt_Name*GEOM*TEXT SET " + performanceBug.getPlayerName() + "\0", print_writers);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
+							+ "$txt_Name*GEOM*TEXT SET " + "" + "\0", print_writers);
+				}
+				break;
+			case "Control_Shift_F3": 
 				
 				String summary = "",team_name = "";
 				
@@ -2668,6 +2715,37 @@ public class BugsAndMiniGfx
 					
 				}
 				break;	
+			case "Alt_F7":
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$minis$Side" + WhichSide 
+						+ "*FUNCTION*Omo*vis_con SET 2\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$minis$Side" + WhichSide 
+						+ "*FUNCTION*Grid*num_row SET 9\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$PointsTale$Header$img_Flag*TEXTURE*IMAGE SET "+Constants.NPL_LOGO_PATH+"TLogo \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$PointsTale$Header$txt_FirstName*GEOM*TEXT SET POINTS TABLE\0", print_writers);
+				
+				rowId = 1;
+				for(int i=0; i<=leagueTable.getLeagueTeams().size()-1;i++) {
+					rowId++;
+					if(matchAllData.getSetup().getHomeTeam().getTeamName4().equalsIgnoreCase(leagueTable.getLeagueTeams().get(i).getTeamName())  
+							|| matchAllData.getSetup().getAwayTeam().getTeamName4().equalsIgnoreCase(leagueTable.getLeagueTeams().get(i).getTeamName())) {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$PointsTale$DataGrp$Row"+rowId+"$Select_Row_Type*FUNCTION*Omo*vis_con SET 1\0", print_writers);
+						containerName = "$Players_Highlight";
+					}else {
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$PointsTale$DataGrp$Row"+rowId+"$Select_Row_Type*FUNCTION*Omo*vis_con SET 0\0", print_writers);
+						containerName = "$Players_Dehighlight";
+					}
+					for(Team team : Teams) {
+						if(team.getTeamName4().equalsIgnoreCase(leagueTable.getLeagueTeams().get(i).getTeamName())) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$PointsTale$DataGrp$Row"+rowId+containerName+"$txt_Name*GEOM*TEXT SET "+team.getTeamName1()+"\0", print_writers);
+						}
+					}
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$PointsTale$DataGrp$Row"+rowId+containerName+"$fig_Played*GEOM*TEXT SET "+leagueTable.getLeagueTeams().get(i).getPlayed()+"\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$PointsTale$DataGrp$Row"+rowId+containerName+"$fig_Won*GEOM*TEXT SET "+leagueTable.getLeagueTeams().get(i).getWon()+"\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$PointsTale$DataGrp$Row"+rowId+containerName+"$fig_Lost*GEOM*TEXT SET "+leagueTable.getLeagueTeams().get(i).getLost()+"\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$PointsTale$DataGrp$Row"+rowId+containerName+"$fig_Draw*GEOM*TEXT SET "+leagueTable.getLeagueTeams().get(i).getNoResult()+"\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$PointsTale$DataGrp$Row"+rowId+containerName+"$fig_Points*GEOM*TEXT SET "+leagueTable.getLeagueTeams().get(i).getPoints()+"\0", print_writers);
+				}
+				break;
 			}
 			break;	
 		case Constants.ISPL:
