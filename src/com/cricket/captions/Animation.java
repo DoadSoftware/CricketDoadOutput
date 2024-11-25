@@ -5354,7 +5354,10 @@ public class Animation
 					case "Shift_K":
 						previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Partnership 3.000 Anim_FullFrames$In_Out$Main$Partnership$In 2.880 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
 						break;
-					case "Control_F7": case "Alt_z":
+					case "Alt_z":
+						previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Squad 3.000 Anim_FullFrames$In_Out$Main$Squad$In 2.800 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
+						break;
+					case "Control_F7":
 						previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Teams 3.000 Anim_FullFrames$In_Out$Main$Teams$In 2.840 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
 						break;	
 					case "Shift_F8":
@@ -5428,8 +5431,8 @@ public class Animation
 						}
 						break;
 					case "Alt_z":
-						previewCommand = previewCommand + " Change$Teams 1.440 Change$Teams$Change_Out 0.620 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
-						break;	
+						previewCommand = previewCommand + " Change$Squad 1.320 Change$Squad$Change_Out 0.700 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
+						break;
 					case "Shift_F8":
 						previewCommand = previewCommand + " Change$TeamSingle 1.440 Change$TeamSingle$Change_Out 0.620 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
 						break;
@@ -5476,8 +5479,8 @@ public class Animation
 								previewCommand = previewCommand + " Change$Profile 1.440 Change$Profile$Change_Out 0.500 Change$Profile$Change_In 2.680 Change$ExtraData$Change_In 0.720 BG_Scale 0.800";
 								break;
 							case "Alt_z":
-								previewCommand = previewCommand + " Change$Teams 1.440 Change$Teams$Change_In 1.440 Change$ExtraData$Change_In 1.000 BG_Scale 0.800";
-								break;	
+								previewCommand = previewCommand + " Change$Squad 1.320 Change$Squad$Change_In 1.320 Change$ExtraData$Change_In 1.000 BG_Scale 0.800";
+								break;
 							case "Shift_F8":
 								previewCommand = previewCommand + " Change$TeamSingle 1.440 Change$TeamSingle$Change_In 1.440 Change$ExtraData$Change_In 1.000 BG_Scale 0.800";
 								break;

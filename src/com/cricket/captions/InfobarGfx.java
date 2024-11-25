@@ -2786,7 +2786,7 @@ public class InfobarGfx
 						break;
 					case "TARGET":
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Data_Right_Normal$Side_1" + 
-								"$Right_Bowl_Full_Over$Side1Select*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+								"$Right_Bowl_Full_Over$Side1$Select*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Data_Right_Normal$Side_1" + 
 								"$Right_Bowl_Full_Over$Side2$Select*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
 						
