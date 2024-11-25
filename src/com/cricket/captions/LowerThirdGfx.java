@@ -74,6 +74,7 @@ public class LowerThirdGfx
 	public List<Tournament> past_tournament_stats;
 	public List<Fixture> fixTures;
 	public List<OverByOverData> overByOverData;
+	public List<OverByOverData> manhattan = new ArrayList<OverByOverData>();
 	
 	public BattingCard battingCard;
 	public Partnership partnership;
@@ -228,6 +229,84 @@ public class LowerThirdGfx
 		}
 	}
 	
+	public String InfobarManhattan(List<PrintWriter> print_writers, MatchAllData matchAllData,int WhichInning) {
+		
+		int maxRuns = 0,runsIncr = 0,powerplay_omo=0;
+		double lngth = 0;
+		String powerPlay = "";
+		
+		manhattan = new ArrayList<OverByOverData>();
+		manhattan = CricketFunctions.getOverByOverData(matchAllData, WhichInning,"MANHATTAN" ,matchAllData.getEventFile().getEvents());
+		if(manhattan == null) {
+			return "populateManhattan is null";
+		}
+		
+		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == WhichInning)
+				.findAny().orElse(null);
+		if(inning == null) {
+			return "PopulateManhattan: current inning is NULL";
+		}
+		
+		for (int j = 1; j < manhattan.size(); j++) {
+			if(manhattan.get(j).getInningNumber() == WhichInning) {
+				if(Integer.valueOf(manhattan.get(j).getOverTotalRuns()) > maxRuns){
+					maxRuns = Integer.valueOf(manhattan.get(j).getOverTotalRuns()); // 33 runs came off 34th over
+				}
+				while (maxRuns % 5 != 0) {     // 5 label in y-axis
+			 		maxRuns = maxRuns + 1;    // keep incrementing till max runs is divisible by 5. maxRuns = 35
+				}
+			}
+		}
+		
+		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_Man$Man20"
+				+ "$Row3$Runs*GEOM*TEXT SET 0\0", print_writers);
+		
+		for(int i = 0; i < 3;i++) {
+			runsIncr = maxRuns / 3; // 35/5=7 -> Y axis will be plot like 6,12,18,24,30 & 36
+			
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_Man$Man20"
+					+ "$Row" + (3-(i+1)) + "$Runs*GEOM*TEXT SET " + runsIncr*(i+1) + "\0", print_writers);
+		}
+		
+		
+		for(int j = 1; j <= matchAllData.getSetup().getMaxOvers(); j++) {
+			
+			if(j <= matchAllData.getMatch().getInning().get(WhichInning - 1).getFirstPowerplayEndOver()) {
+				powerplay_omo = 0;
+				powerPlay = "$PowerPlay";
+			}
+			else {
+				powerplay_omo = 1;
+				powerPlay = "$Normal";
+			}
+//			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Manhattan$Wickets_Axis"
+//					+ "$Out$Wkt_" + j + "$Select_PowerPlay*FUNCTION*Omo*vis_con SET " + powerplay_omo + "\0", print_writers);
+//			
+//			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Manhattan$Bar$"
+//					+ j + "$Select_PowerPlay*FUNCTION*Omo*vis_con SET " + powerplay_omo + "\0", print_writers);
+			
+			
+			if(j < manhattan.size()) {
+//				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Infobar$Manhattan$Bar$"
+//						+ "Position*FUNCTION*Grid*num_row SET 1\0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_Man$Man20$BarAll"
+						+ "*FUNCTION*Grid*num_col SET " + j + "\0", print_writers);
+				
+				lngth = ((125 * Integer.valueOf(manhattan.get(j).getOverTotalRuns())) / maxRuns);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_Man$Man20$BarAll$Bar" + j + "*GEOM*height SET " + lngth + "\0", print_writers);
+				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_Man$Man20$Wickets"
+						+ "$Wkt" + j + "*FUNCTION*Omo*vis_con SET " + manhattan.get(j).getOverTotalWickets() + "\0", print_writers);
+			}else {
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_Man$Man20$Wickets"
+						+ "$Wkt" + j + "*FUNCTION*Omo*vis_con SET 0\0", print_writers);
+			}
+		}
+		return Constants.OK;
+		
+	}
+
 	public String populateBatVsAllBowlers(String whatToProcess, int whichSide, MatchAllData matchAllData) throws InterruptedException {
 		inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == Integer.valueOf(whatToProcess.split(",")[1]))
 				.findAny().orElse(null);

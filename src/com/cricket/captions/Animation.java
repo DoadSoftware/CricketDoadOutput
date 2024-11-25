@@ -88,7 +88,7 @@ public class Animation
 			case "Control_F5": case "Control_F9": case "Alt_F8": case "F5":case "F9": case "d": case "e": case "F7": case "F11": case "Control_h":
 				
 			case "F6": case "F10": case "Control_Shift_Q": case "Control_Shift_O":
-			case "Control_a":  case "Control_F3": case "Alt_o":
+			case "Control_a":  case "Control_F3": case "Alt_o": case "Control_Shift_F10":
 			case "Shift_F3": case "u":  case "q": case "Shift_F5": case "Shift_F9": case "Alt_F12":
 			case "Control_g": case "j": case "Control_F6": case "Shift_F6":
 			case "Control_s": case "Alt_d": case "Control_f": case "Control_q": case "l": case "n": case "a": case "Control_F2":
@@ -521,6 +521,11 @@ public class Animation
 				break;
 			case "Control_Shift_U": case "Control_Shift_V":
 				processAnimation(Constants.FRONT, print_writers, "PopUps$In", "START");
+				
+				this.whichGraphicOnScreen = whatToProcess;
+				break;
+			case "Control_Shift_F10":
+				processAnimation(Constants.FRONT, print_writers, "LT_Manhattan$In", "START");
 				
 				this.whichGraphicOnScreen = whatToProcess;
 				break;	
@@ -2252,6 +2257,10 @@ public class Animation
 				}
 				this.whichGraphicOnScreen = "";
 				break;
+			case "Control_Shift_F10":
+				processAnimation(Constants.FRONT, print_writers, "LT_Manhattan$Out", "START");
+				this.whichGraphicOnScreen = "";
+				break;		
 			case "F10": case "Shift_F3": case "u": case "Control_Shift_Q":
 			case "F6": case "Control_F6": case "Shift_F6": case "Control_a": case "Control_h":
 			case "Alt_F8": case "F8": case "Control_F5": case "Control_F9": case "F5": case "F9": 
