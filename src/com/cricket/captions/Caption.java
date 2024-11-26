@@ -627,6 +627,14 @@ public class Caption
 				status = this_bugsAndMiniGfx.populateBugHighlight(whatToProcess,matchAllData,whichSide, Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
 			case "Control_Shift_F10":
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.ISPL:
+					status = this_infobarGfx.InfobarManhattan(print_writers,matchAllData,Integer.valueOf(whatToProcess.split(",")[1]));
+					break;
+				case Constants.NPL:
+					status = this_lowerThirdGfx.InfobarManhattan(print_writers,matchAllData,Integer.valueOf(whatToProcess.split(",")[1]));
+					break;	
+				}
 				status = this_infobarGfx.InfobarManhattan(print_writers,matchAllData,Integer.valueOf(whatToProcess.split(",")[1]));
 				break;	
 			case "Alt_1": // Infobar Left Bottom
