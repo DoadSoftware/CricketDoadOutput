@@ -217,7 +217,7 @@ public class Caption
 			case "Control_Shift_F2":
 				this_fullFramesGfx.FirstPlayerId = Integer.valueOf(whatToProcess.split(",")[2]);
 				this_fullFramesGfx.WhichType = whatToProcess.split(",")[3];
-				
+				System.out.println("WHAT : "+captionWhichGfx);
 				if(config.getBroadcaster().equalsIgnoreCase(Constants.NPL)) {
 					status = this_fullFramesGfx.PopulateBowlingCardFF(whichSide, "F2", matchAllData, Integer.valueOf(whatToProcess.split(",")[1]));
 				}else {
