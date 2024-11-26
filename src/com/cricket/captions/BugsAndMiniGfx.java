@@ -89,6 +89,7 @@ public class BugsAndMiniGfx
 	}
 	
 	public String populatePerformanceBug(String whatToProcess, int whichSide, MatchAllData matchAllData) {
+		System.out.println("what "+whatToProcess);
 		performanceBug = performanceBugs.stream().filter(p -> p.getBugId() == Integer.valueOf(whatToProcess.split(",")[2])).findAny().orElse(null);
 		if(performanceBug == null) {
 			return "performanceBug: performanceBug is returning NULL";
@@ -417,7 +418,7 @@ public class BugsAndMiniGfx
 		return status;
 	}
 	public String bugsDB(String whatToProcess,int WhichSide,MatchAllData matchAllData) {
-		
+		System.out.println("WHAT : "+whatToProcess);
 		bug = this.bugs.stream().filter(bug -> bug.getBugId() == Integer.valueOf(whatToProcess.split(",")[2])).findAny().orElse(null);
 		if(bug == null) {
 			return "bugsDB: bug is returning NULL";
