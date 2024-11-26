@@ -346,7 +346,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q': case 'Control_b': case 'o': case 'Control_F2': case 'b':
 			case 'Alt_F11': case 'r': case 'Shift_U': case 'Alt_j': case 'Alt_h': case 'Alt_Shift_L': //case 'Shift_F':
 			case 'Control_F8': case 'Alt_y': case '.': case '/': case 'Shift_V': case 'Alt_i': case 'b': case 'Shift_B': case 'Control_Shift_B':
-			case '6': case 'Alt_Shift_F3': case 'Control_Shift_R': case 'Control_Shift_F3': case 'Control_Shift_H':
+			case 'Alt_Shift_F3': case 'Control_Shift_R': case 'Control_Shift_F3': case 'Control_Shift_H':
 				/*switch(dataToProcess){
 				case 'Shift_F':
 					count++;
@@ -370,7 +370,16 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			//All key presses which doesn't require graphics population will come here
 			case '5': case '6': case '7': case '8': case '9':
 				switch($('#selected_broadcaster').val().toUpperCase()){
-				case 'ISPL': case 'NPL':
+				case 'NPL':
+					switch(dataToProcess) {
+						case '6': case '7':
+							dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
+							processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
+							break;
+					}
+					
+					break;
+				case 'ISPL':
 					dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 					processCricketProcedures("ANIMATE-IN-GRAPHICS", dataToProcess);
 					break;

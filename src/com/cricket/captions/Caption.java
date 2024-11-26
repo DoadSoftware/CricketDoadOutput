@@ -45,6 +45,7 @@ public class Caption
 	public LowerThirdGfx this_lowerThirdGfx;
 	public FullFramesGfx this_fullFramesGfx;
 	public Animation this_anim = new Animation();
+	public static Scene this_scene;
 	
 	public List<PrintWriter> print_writers; 
 	public Configuration config;
@@ -157,6 +158,13 @@ public class Caption
 			case "Control_Shift_B":
 				status = this_lowerThirdGfx.populateNextToBat(whatToProcess,whichSide, matchAllData);
 				break;
+			case "7":
+				this_scene = new Scene();
+				
+				this_scene.LoadScene("PLOTTER", print_writers, config);
+				
+				status = this_infobarGfx.populateFieldPlotter(print_writers, matchAllData);
+				break;	
 			case "Shift_I":
 				status = this_lowerThirdGfx.populateImpact(whatToProcess, whichSide, matchAllData);
 				break;

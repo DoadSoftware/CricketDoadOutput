@@ -2932,7 +2932,7 @@ public class BugsAndMiniGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$minis$Side" + WhichSide 
 						+ "*FUNCTION*Omo*vis_con SET 2\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$minis$Side" + WhichSide 
-						+ "*FUNCTION*Grid*num_row SET 9\0", print_writers);
+						+ "$PointsTale$AllDataGrp$DataGrp*FUNCTION*Grid*num_row SET 9\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$PointsTale$Header$img_Flag*TEXTURE*IMAGE SET "+Constants.NPL_LOGO_PATH+"TLogo \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$PointsTale$Header$txt_FirstName*GEOM*TEXT SET POINTS TABLE\0", print_writers);
 				
@@ -2949,7 +2949,7 @@ public class BugsAndMiniGfx
 					}
 					for(Team team : Teams) {
 						if(team.getTeamName4().equalsIgnoreCase(leagueTable.getLeagueTeams().get(i).getTeamName())) {
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$PointsTale$DataGrp$Row"+rowId+containerName+"$txt_Name*GEOM*TEXT SET "+team.getTeamName1()+"\0", print_writers);
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$PointsTale$DataGrp$Row"+rowId+containerName+"$txt_Name*GEOM*TEXT SET "+team.getTeamName2()+"\0", print_writers);
 						}
 					}
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$PointsTale$DataGrp$Row"+rowId+containerName+"$fig_Played*GEOM*TEXT SET "+leagueTable.getLeagueTeams().get(i).getPlayed()+"\0", print_writers);

@@ -18,6 +18,7 @@ public class Infobar {
 	private boolean right_section_play = false;
 	private boolean player_impact = false;
 	private boolean target_on_screen = false;
+	private boolean FieldPlotter_on_screen = false;
 	
 	private int player_id;
 	
@@ -235,6 +236,12 @@ public class Infobar {
 	}
 	public void setTarget_on_screen(boolean target_on_screen) {
 		this.target_on_screen = target_on_screen;
+	}
+	public boolean isFieldPlotter_on_screen() {
+		return FieldPlotter_on_screen;
+	}
+	public void setFieldPlotter_on_screen(boolean fieldPlotter_on_screen) {
+		FieldPlotter_on_screen = fieldPlotter_on_screen;
 	}
 	
 }

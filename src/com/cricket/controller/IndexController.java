@@ -9,6 +9,8 @@ import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -51,6 +53,7 @@ import com.cricket.model.Commentator;
 import com.cricket.model.Configuration;
 import com.cricket.model.DuckWorthLewis;
 import com.cricket.model.EventFile;
+import com.cricket.model.FieldersData;
 import com.cricket.model.Fixture;
 import com.cricket.model.Ground;
 import com.cricket.model.HeadToHead;
@@ -114,6 +117,13 @@ public class IndexController
 	public static List<POTT> session_pott = new ArrayList<POTT>();
 	public static List<String> session_teamChanges = new ArrayList<String>();
 	public static List<PerformanceBug> session_performance_bug = new ArrayList<PerformanceBug>();
+	
+	public static long plotter_match_time_stamp1=0,plotter_match_time_stamp2=0,
+			plotter_match_time_stamp3=0,plotter_match_time_stamp4=0,plotter_match_time_stamp=0,speed_match_time_stamp=0;
+	public static String plotterData;
+	public boolean Plotter_file_change = false;
+	
+	FieldersData fielderFormation = new FieldersData();
 	
 	BugsAndMiniGfx this_bugs_mini = new BugsAndMiniGfx();
 	
@@ -347,6 +357,68 @@ public class IndexController
 				
 				this_caption.this_infobarGfx.updateInfobar(print_writers, session_match);
 			}
+			
+			
+			if(new File("C:\\Sports\\Cricket\\Fielder\\Fielder_Text\\" + 
+		            "FieldPlotter.txt").exists()) {
+				
+				String data = new String(Files.readAllBytes(Paths.get("C:\\Sports\\Cricket\\Fielder\\Fielder_Text\\" + 
+			            "FieldPlotter.txt")));
+		        // Split the content by lines and print each line separately
+		        String[] lines = data.split("\n");
+		        
+		        plotterData = lines[0].trim();
+		        
+		        if(lines.length > 0) {
+					if(lines[1].trim().equalsIgnoreCase("true")) {
+						fielderFormation = CricketFunctions.getFielderFormation(CricketUtil.CRICKET_DIRECTORY + "Fielder/" + lines[0].trim());
+						
+						//System.out.println("BeforeCheckBox = " + fielderFormation.isCheckbox());
+						if(fielderFormation.isCheckbox() == true) {
+							if(lines[0].trim().equalsIgnoreCase("FielderFormation.JSON")) {
+								if(plotter_match_time_stamp != new File(CricketUtil.CRICKET_DIRECTORY + "Fielder/" + lines[0].trim()).lastModified()) {
+									plotter_match_time_stamp = new File(CricketUtil.CRICKET_DIRECTORY + "Fielder/" + lines[0].trim()).lastModified();
+									//System.out.println("AfterCheckBox = " + fielderFormation.isCheckbox());
+									Plotter_file_change = true;
+								}
+							}else if(lines[0].trim().equalsIgnoreCase("FielderFormation_1.JSON")) {
+								if(plotter_match_time_stamp1 != new File(CricketUtil.CRICKET_DIRECTORY + "Fielder/" + lines[0].trim()).lastModified()) {
+									plotter_match_time_stamp1 = new File(CricketUtil.CRICKET_DIRECTORY + "Fielder/" + lines[0].trim()).lastModified();
+									//System.out.println("AfterCheckBox = " + fielderFormation.isCheckbox());
+									Plotter_file_change = true;
+								}
+							}else if(lines[0].trim().equalsIgnoreCase("FielderFormation_2.JSON")) {
+								if(plotter_match_time_stamp2 != new File(CricketUtil.CRICKET_DIRECTORY + "Fielder/" + lines[0].trim()).lastModified()) {
+									plotter_match_time_stamp2 = new File(CricketUtil.CRICKET_DIRECTORY + "Fielder/" + lines[0].trim()).lastModified();
+									//System.out.println("AfterCheckBox = " + fielderFormation.isCheckbox());
+									Plotter_file_change = true;
+								}
+							}else if(lines[0].trim().equalsIgnoreCase("FielderFormation_3.JSON")) {
+								if(plotter_match_time_stamp3 != new File(CricketUtil.CRICKET_DIRECTORY + "Fielder/" + lines[0].trim()).lastModified()) {
+									plotter_match_time_stamp3 = new File(CricketUtil.CRICKET_DIRECTORY + "Fielder/" + lines[0].trim()).lastModified();
+									//System.out.println("AfterCheckBox = " + fielderFormation.isCheckbox());
+									Plotter_file_change = true;
+								}
+							}else if(lines[0].trim().equalsIgnoreCase("FielderFormation_4.JSON")) {
+								if(plotter_match_time_stamp4 != new File(CricketUtil.CRICKET_DIRECTORY + "Fielder/" + lines[0].trim()).lastModified()) {
+									plotter_match_time_stamp4 = new File(CricketUtil.CRICKET_DIRECTORY + "Fielder/" + lines[0].trim()).lastModified();
+									//System.out.println("AfterCheckBox = " + fielderFormation.isCheckbox());
+									Plotter_file_change = true;
+								}
+							}
+						}
+					}else if(lines[1].trim().equalsIgnoreCase("false")) {
+						
+					}
+				}
+			}
+			
+			if(Plotter_file_change == true) {
+				
+				this_caption.this_infobarGfx.updateFieldPlotter(print_writers, session_match);
+				Plotter_file_change = false;
+			}
+			
 			return JSONObject.fromObject(session_match).toString();
 		
 		default:

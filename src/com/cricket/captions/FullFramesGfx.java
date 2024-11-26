@@ -2471,7 +2471,7 @@ public class FullFramesGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$All$HeaderGrp$Side" + WhichSide + "$Header_Style2$txt_HeaderText1"
 						+ "*GEOM*TEXT SET \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$SudheaderGrp$Side" + WhichSide + "$txt_SubHeadText2"
-						+ "*GEOM*TEXT SET NPL - 2024\0", print_writers);
+						+ "*GEOM*TEXT SET NEPAL PREMIER LEAGUE 2024\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$All$HeaderGrp$Side" + WhichSide + "$Header_Style2$txt_HeaderText2"
 						+ "*GEOM*TEXT SET POINTS TABLE\0", print_writers);
 				break;
@@ -14301,7 +14301,7 @@ public class FullFramesGfx
 				for(Team team : Teams) {
 					if(team.getTeamName4().equalsIgnoreCase(leagueTable.getLeagueTeams().get(i).getTeamName())) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 
-								"$Standings$Rows$"+rowId+containerName+"$txt_Name*GEOM*TEXT SET "+team.getTeamName1()+"\0", print_writers);
+								"$Standings$Rows$"+rowId+containerName+"$txt_Name*GEOM*TEXT SET "+team.getTeamName2()+"\0", print_writers);
 					}
 				}
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + WhichSide + 

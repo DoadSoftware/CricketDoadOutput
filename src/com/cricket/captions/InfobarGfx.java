@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import com.cricket.model.Configuration;
 import com.cricket.model.DaySession;
 import com.cricket.model.DuckWorthLewis;
 import com.cricket.model.Event;
+import com.cricket.model.FieldersData;
 import com.cricket.model.Ground;
 import com.cricket.model.HeadToHead;
 import com.cricket.model.InfobarStats;
@@ -8784,5 +8787,83 @@ public class InfobarGfx
 		}
 		return Constants.OK;
 		
+	}
+	
+	public Infobar updateFieldPlotter(List<PrintWriter> print_writer, MatchAllData match)
+			throws InterruptedException, IOException {
+		if (infobar.isFieldPlotter_on_screen() == true) {
+			String data = new String(Files.readAllBytes(Paths.get("C:\\Sports\\Cricket\\Fielder\\Fielder_Text\\" + 
+		            "FieldPlotter.txt")));
+	        // Split the content by lines and print each line separately
+	        String[] lines = data.split("\n");
+	        
+	        String plotterData = lines[0].trim();
+	        
+			FieldersData fielderFormation = new FieldersData();
+			fielderFormation = CricketFunctions
+					.getFielderFormation(CricketUtil.CRICKET_DIRECTORY + "Fielder/" + plotterData);
+
+			if (fielderFormation.isCheckbox() == true) {
+				populateFieldPlotter(print_writer, match);
+			}
+		}
+		return infobar;
+	}
+	
+	public String populateFieldPlotter(List<PrintWriter> print_writers, MatchAllData matchAllData) throws InterruptedException, IOException {
+		
+		String data = new String(Files.readAllBytes(Paths.get("C:\\Sports\\Cricket\\Fielder\\Fielder_Text\\" + 
+	            "FieldPlotter.txt")));
+        // Split the content by lines and print each line separately
+        String[] lines = data.split("\n");
+        
+        String plotterData = lines[0].trim();
+        
+		FieldersData fielderFormation = new FieldersData();
+		fielderFormation = CricketFunctions
+				.getFielderFormation(CricketUtil.CRICKET_DIRECTORY + "Fielder/" + plotterData);
+		if (fielderFormation.getStyle().equalsIgnoreCase("RHB")) {
+			
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*TREE*$Main$All$Geom_GroundAll$RotationGrp$SideGrp1$Geom_Side$SelectSide"
+					+ "*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*TREE*$Main$All$Geom_GroundAll$RotationGrp$SideGrp1$Geom_Side$SelectSide"
+					+ "$Off*GEOM*TEXT SET " + "OFF" + "\0", print_writers);
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*TREE*$Main$All$Geom_GroundAll$RotationGrp$SideGrp2$Geom_Side$SelectSide"
+					+ "*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*TREE*$Main$All$Geom_GroundAll$RotationGrp$SideGrp2$Geom_Side$SelectSide"
+					+ "$Leg*GEOM*TEXT SET " + "LEG" + "\0", print_writers);
+		} else {
+			
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*TREE*$Main$All$Geom_GroundAll$RotationGrp$SideGrp1$Geom_Side$SelectSide"
+					+ "*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*TREE*$Main$All$Geom_GroundAll$RotationGrp$SideGrp1$Geom_Side$SelectSide"
+					+ "$Off*GEOM*TEXT SET " + "LEG" + "\0", print_writers);
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*TREE*$Main$All$Geom_GroundAll$RotationGrp$SideGrp2$Geom_Side$SelectSide"
+					+ "*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*TREE*$Main$All$Geom_GroundAll$RotationGrp$SideGrp2$Geom_Side$SelectSide"
+					+ "$Leg*GEOM*TEXT SET " + "OFF" + "\0", print_writers);
+		}
+		for (int i = 0; i <= fielderFormation.getFielders().size() - 1; i++) {
+			double ScaleX = 0, ScaleY = 0;
+			ScaleX = ((-186) + (341 * ((fielderFormation.getFielders().get(i).getLeftLocation() - 10) / 457.0)));
+			ScaleY = ((-186) + (341 * ((fielderFormation.getFielders().get(i).getTopLocation() - 50) / 427.0)))+10;
+
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*TREE*$Main$All$Geom_GroundAll$RotationGrp$Players$PlayerAll" + (i + 1) + 
+					"*TRANSFORMATION" + "*POSITION*X SET " + ScaleX + "\0", print_writers);
+			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*TREE*$Main$All$Geom_GroundAll$RotationGrp$Players$PlayerAll" + (i + 1) + 
+					"*TRANSFORMATION" + "*POSITION*Z SET " + ScaleY + "\0", print_writers);
+			
+			if (fielderFormation.getFielders().get(i).getFielderhighlight().equalsIgnoreCase("YES")) {
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*TREE*$Main$All$Geom_GroundAll$RotationGrp$Players$PlayerAll" + (i + 1) + 
+						"$PositionY$PositionX$SelectPlayer*FUNCTION*Omo*vis_con SET 1 \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*STAGE*DIRECTOR*Loop START \0", print_writers);
+			} else {
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*TREE*$Main$All$Geom_GroundAll$RotationGrp$Players$PlayerAll" + (i + 1) + 
+						"$PositionY$PositionX$SelectPlayer*FUNCTION*Omo*vis_con SET 0 \0", print_writers);
+			}
+		}
+//		print_writer.println("-1 RENDERER PREVIEW SCENE*" + viz_scene + " C:/Temp/Preview.png Plotter 1.000 \0");
+		TimeUnit.MILLISECONDS.sleep(100);
+		return Constants.OK;
 	}
 }
