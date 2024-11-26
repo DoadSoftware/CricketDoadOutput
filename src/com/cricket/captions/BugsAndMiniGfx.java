@@ -2936,6 +2936,9 @@ public class BugsAndMiniGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$PointsTale$Header$img_Flag*TEXTURE*IMAGE SET "+Constants.NPL_LOGO_PATH+"TLogo \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$PointsTale$Header$txt_FirstName*GEOM*TEXT SET POINTS TABLE\0", print_writers);
 				
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$PointsTale$DataGrp$Row1$Players_Dehighlight$txt_Name*GEOM*TEXT SET \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$PointsTale$DataGrp$Row1$Players_Dehighlight$fig_Points*GEOM*TEXT SET PTS\0", print_writers);
+				
 				rowId = 1;
 				for(int i=0; i<=leagueTable.getLeagueTeams().size()-1;i++) {
 					rowId++;

@@ -67,7 +67,6 @@ import com.cricket.model.Player;
 import com.cricket.model.Setup;
 import com.cricket.model.Staff;
 import com.cricket.model.Statistics;
-import com.cricket.model.StatsType;
 import com.cricket.model.Team;
 import com.cricket.model.Tournament;
 import com.cricket.model.VariousText;
@@ -372,8 +371,6 @@ public class IndexController
 		        if(lines.length > 0) {
 					if(lines[1].trim().equalsIgnoreCase("true")) {
 						fielderFormation = CricketFunctions.getFielderFormation(CricketUtil.CRICKET_DIRECTORY + "Fielder/" + lines[0].trim());
-						
-						//System.out.println("BeforeCheckBox = " + fielderFormation.isCheckbox());
 						if(fielderFormation.isCheckbox() == true) {
 							if(lines[0].trim().equalsIgnoreCase("FielderFormation.JSON")) {
 								if(plotter_match_time_stamp != new File(CricketUtil.CRICKET_DIRECTORY + "Fielder/" + lines[0].trim()).lastModified()) {

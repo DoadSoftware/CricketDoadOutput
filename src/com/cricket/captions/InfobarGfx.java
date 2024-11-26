@@ -1462,6 +1462,17 @@ public class InfobarGfx
 			break;
 		case Constants.NPL: 
 			
+			if (CricketFunctions.isImpactPlayer(matchAllData.getEventFile().getEvents(),inning.getInningNumber(), battingCardList.get(WhichBatsman-1).getPlayerId())
+					.equalsIgnoreCase(CricketUtil.YES)) {
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
+						+ infobar.getBatsmanAndBowlOrSponsor() + "$Bat_" + WhichBatsman + "_Impact$Select"
+								+ "*FUNCTION*Omo*vis_con SET 1\0", print_writers);
+			}else {
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
+						+ infobar.getBatsmanAndBowlOrSponsor() + "$Bat_" + WhichBatsman + "_Impact$Select"
+								+ "*FUNCTION*Omo*vis_con SET 0\0", print_writers);
+			}
+			
 			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
 				+ infobar.getBatsmanAndBowlOrSponsor() + "$Bat_" + WhichBatsman + "$Side" + WhichSubSide + "$Batsman$Batsman*GEOM*TEXT SET " 
 				+ battingCardList.get(WhichBatsman-1).getPlayer().getTicker_name() + "\0", print_writers);
@@ -1775,6 +1786,15 @@ public class InfobarGfx
 			
 			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Data_Right_Normal$Side_1$Style2$txt_Team_2" + 
 					"*GEOM*TEXT SET " + inning.getBowling_team().getTeamName1() + "\0", print_writers);
+			
+			if (CricketFunctions.isImpactPlayer(matchAllData.getEventFile().getEvents(),inning.getInningNumber(), bowlingCard.getPlayerId())
+					.equalsIgnoreCase(CricketUtil.YES)) {
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Data_Right_Normal$Side_1$Style2$Bowl_Impact$Select" + 
+						"*FUNCTION*Omo*vis_con SET 1\0", print_writers);
+			}else {
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Data_Right_Normal$Side_1$Style2$Bowl_Impact$Select" + 
+						"*FUNCTION*Omo*vis_con SET 0\0", print_writers);
+			}
 			
 			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Data_Right_Normal$Side_1$Style2$Bowl_Part$Side" + 
 					WhichSide + "$txt_Name*GEOM*TEXT SET " + bowlingCard.getPlayer().getTicker_name() + "\0", print_writers);

@@ -158,7 +158,7 @@ public class Caption
 			case "Control_Shift_B":
 				status = this_lowerThirdGfx.populateNextToBat(whatToProcess,whichSide, matchAllData);
 				break;
-			case "7":
+			case "9":
 				this_scene = new Scene();
 				
 				this_scene.LoadScene("PLOTTER", print_writers, config);

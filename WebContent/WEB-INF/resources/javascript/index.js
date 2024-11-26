@@ -372,7 +372,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				switch($('#selected_broadcaster').val().toUpperCase()){
 				case 'NPL':
 					switch(dataToProcess) {
-						case '6': case '7':
+						case '6': case '9':
 							dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 							processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 							break;
@@ -477,6 +477,7 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 						document.getElementById('select_graphic_options_div').style.display = 'none';
 						$("#captions_div").show();*/
 					}
+					document.activeElement.blur();
 					break;
 				case 'GRAPHICS-OPTIONS':
 					addItemsToList(dataToProcess,data);
@@ -485,6 +486,7 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 					if(whatToProcess.includes("ANIMATE-IN-") || whatToProcess.includes("ANIMATE-OUT-")) {
 						session_animation = data;
 					}
+					document.activeElement.blur();
 					break;
 				}
 				break;
@@ -5849,7 +5851,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 		    row.insertCell(cellCount).appendChild(div);
 	    	cellCount = cellCount + 1;
 		}
-		if(whatToProcess == 'z' || whatToProcess == 'x' || whatToProcess == 'c' || whatToProcess == 'v'){
+		if(whatToProcess == 'z' || whatToProcess == 'x' || whatToProcess == 'c' || whatToProcess == 'v' || 
+			whatToProcess == 'Control_z' || whatToProcess == 'Control_x'){
 			option = document.createElement('input');
 			option.type = 'button';
 			option.name = 'highlightLeader';

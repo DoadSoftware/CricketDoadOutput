@@ -2919,7 +2919,7 @@ public class LowerThirdGfx
 				return "populateGeneric: Inning return is NULL";
 			}
 			
-			data = "INNING BOUNDARIES : FOURS : " + inning.getTotalFours() + "  SIXES : " + inning.getTotalSixes();
+			data = "INNINGS BOUNDARIES : FOURS : " + inning.getTotalFours() + "  SIXES : " + inning.getTotalSixes();
 			
 		}else if(whatToProcess.split(",")[2].equalsIgnoreCase("CRR_RRR")) {
 			inning = matchAllData.getMatch().getInning().stream().filter(inn -> 
@@ -9415,13 +9415,54 @@ public class LowerThirdGfx
 							
 						}
 						
-						if(player.getCaptainWicketKeeper() != null) {
-							if (player.getCaptainWicketKeeper().equalsIgnoreCase(CricketUtil.CAPTAIN)) {
+						String cap_wkt = "";
+						if(inning.getBattingTeamId() == match.getSetup().getHomeTeamId()) {
+							
+							for (Player plyr : match.getSetup().getHomeSquad()) {
+								if(plyr.getPlayerId() == bc.getPlayerId()) {
+									cap_wkt = plyr.getCaptainWicketKeeper();
+								}
+							}
+							
+							for (Player plyr : match.getSetup().getHomeSubstitutes()) {
+								if(plyr.getPlayerId() == bc.getPlayerId()) {
+									cap_wkt = plyr.getCaptainWicketKeeper();
+								}
+							}
+							
+							for (Player plyr : match.getSetup().getHomeOtherSquad()) {
+								if(plyr.getPlayerId() == bc.getPlayerId()) {
+									cap_wkt = plyr.getCaptainWicketKeeper();
+								}
+							}
+						}else if(inning.getBattingTeamId() == match.getSetup().getAwayTeamId()) {
+							
+							for (Player plyr : match.getSetup().getAwaySquad()) {
+								if(plyr.getPlayerId() == bc.getPlayerId()) {
+									cap_wkt = plyr.getCaptainWicketKeeper();
+								}
+							}
+							
+							for (Player plyr : match.getSetup().getAwaySubstitutes()) {
+								if(plyr.getPlayerId() == bc.getPlayerId()) {
+									cap_wkt = plyr.getCaptainWicketKeeper();
+								}
+							}
+							
+							for (Player plyr : match.getSetup().getAwayOtherSquad()) {
+								if(plyr.getPlayerId() == bc.getPlayerId()) {
+									cap_wkt = plyr.getCaptainWicketKeeper();
+								}
+							}
+						}
+						
+						if(cap_wkt != null) {
+							if (cap_wkt.equalsIgnoreCase(CricketUtil.CAPTAIN)) {
 								
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_PlayingXI$Data_All$Side"+ WhichSide + 
 										"$" + row_id + "$Captain$Select*FUNCTION*Omo*vis_con SET 1\0", print_writers);
 								
-							} else if (player.getCaptainWicketKeeper().equalsIgnoreCase("CAPTAIN_WICKET_KEEPER")) {
+							} else if (cap_wkt.equalsIgnoreCase("CAPTAIN_WICKET_KEEPER")) {
 								
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_PlayingXI$Data_All$Side"+ WhichSide + 
 										"$" + row_id + "$Captain$Select*FUNCTION*Omo*vis_con SET 1\0", print_writers);
@@ -9429,7 +9470,7 @@ public class LowerThirdGfx
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_PlayingXI$Data_All" +
 										"$Side" + WhichSide + "$" + row_id + "$Bottom$Batsman_Lefthand*TEXTURE*IMAGE SET " + Constants.ICONS_PATH + 
 										"Keeper" + "\0", print_writers);
-							} else if (player.getCaptainWicketKeeper().equalsIgnoreCase(CricketUtil.WICKET_KEEPER)) {
+							} else if (cap_wkt.equalsIgnoreCase(CricketUtil.WICKET_KEEPER)) {
 								
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_PlayingXI$Data_All$Side"+ WhichSide + 
 										"$" + row_id + "$Captain$Select*FUNCTION*Omo*vis_con SET 0\0", print_writers);
@@ -9491,25 +9532,58 @@ public class LowerThirdGfx
 									"$Side" + WhichSide + "$" + row_id + "$Bottom$txt1*GEOM*TEXT SET " + bc.getRuns() + " (" + bc.getBalls() + ")" + "\0", print_writers);
 						}
 						
+						String cap_wkt = "";
 						if(inning.getBattingTeamId() == match.getSetup().getHomeTeamId()) {
-							player = match.getSetup().getHomeSquad().stream().filter(hs -> hs.getPlayerId() == bc.getPlayerId()).findAny().orElse(null);
 							
+							for (Player plyr : match.getSetup().getHomeSquad()) {
+								if(plyr.getPlayerId() == bc.getPlayerId()) {
+									cap_wkt = plyr.getCaptainWicketKeeper();
+								}
+							}
+							
+							for (Player plyr : match.getSetup().getHomeSubstitutes()) {
+								if(plyr.getPlayerId() == bc.getPlayerId()) {
+									cap_wkt = plyr.getCaptainWicketKeeper();
+								}
+							}
+							
+							for (Player plyr : match.getSetup().getHomeOtherSquad()) {
+								if(plyr.getPlayerId() == bc.getPlayerId()) {
+									cap_wkt = plyr.getCaptainWicketKeeper();
+								}
+							}
 						}else if(inning.getBattingTeamId() == match.getSetup().getAwayTeamId()) {
-							player = match.getSetup().getAwaySquad().stream().filter(as -> as.getPlayerId() == bc.getPlayerId()).findAny().orElse(null);
 							
+							for (Player plyr : match.getSetup().getAwaySquad()) {
+								if(plyr.getPlayerId() == bc.getPlayerId()) {
+									cap_wkt = plyr.getCaptainWicketKeeper();
+								}
+							}
+							
+							for (Player plyr : match.getSetup().getAwaySubstitutes()) {
+								if(plyr.getPlayerId() == bc.getPlayerId()) {
+									cap_wkt = plyr.getCaptainWicketKeeper();
+								}
+							}
+							
+							for (Player plyr : match.getSetup().getAwayOtherSquad()) {
+								if(plyr.getPlayerId() == bc.getPlayerId()) {
+									cap_wkt = plyr.getCaptainWicketKeeper();
+								}
+							}
 						}
 						
-						if(player.getCaptainWicketKeeper() != null) {
-							if (player.getCaptainWicketKeeper().equalsIgnoreCase(CricketUtil.CAPTAIN)) {
+						if(cap_wkt != null && !cap_wkt.isEmpty()) {
+							if (cap_wkt.equalsIgnoreCase(CricketUtil.CAPTAIN)) {
 								
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_PlayingXI$Data_All$Side"+ WhichSide + 
 										"$" + row_id + "$Captain$Select*FUNCTION*Omo*vis_con SET 1\0", print_writers);
 								
-							} else if (player.getCaptainWicketKeeper().equalsIgnoreCase("CAPTAIN_WICKET_KEEPER")) {
+							} else if (cap_wkt.equalsIgnoreCase("CAPTAIN_WICKET_KEEPER")) {
 								
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_PlayingXI$Data_All$Side"+ WhichSide + 
 										"$" + row_id + "$Captain$Select*FUNCTION*Omo*vis_con SET 1\0", print_writers);
-							} else if (player.getCaptainWicketKeeper().equalsIgnoreCase(CricketUtil.WICKET_KEEPER)) {
+							} else if (cap_wkt.equalsIgnoreCase(CricketUtil.WICKET_KEEPER)) {
 								
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_PlayingXI$Data_All$Side"+ WhichSide + 
 										"$" + row_id + "$Captain$Select*FUNCTION*Omo*vis_con SET 0\0", print_writers);
