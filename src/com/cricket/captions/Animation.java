@@ -75,7 +75,7 @@ public class Animation
 			case "F1": case "Control_Shift_F1": case "F2": case "Control_Shift_F2": case "Control_F11": case "m": case "Control_m":
 			case "Shift_F11": case "F4": case "Control_Shift_F4": case "Shift_K": case "Control_d": case "Control_e": case "Shift_T": case "Shift_P": case "Shift_Q":
 			case "Alt_z": case "Shift_F8": case "highlightProfile": case "Control_F7": case "z": case "x": case "c": case "v": case "Control_p":
-			case "Control_F10": case "Shift_F10":	
+			case "Control_F10": case "Shift_F10": case "Control_Shift_D": case "Shift_D": case "Alt_F11":
 				return Constants.FULL_FRAMER;
 			case "Shift_O": case "Control_k": case "k": case "g": case "y": case "Control_Shift_R": case "Control_Shift_U": case "Control_Shift_V":
 			case "h": case "Shift_F4": case "Shift_F": case "Alt_p": case "Control_Shift_F3":  case "Shift_C": case "Control_Shift_J":
@@ -326,10 +326,15 @@ public class Animation
 				}
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
+			case "Shift_D":
+				processAnimation(Constants.BACK, print_writers, "Anim_Target$In_Out", "START");
+				processAnimation(Constants.BACK, print_writers, "Loop", "START");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;
 				
 			case "F1": case "Control_Shift_F1": case "F2": case "Control_Shift_F2": case "Control_F11": case "F4": case "Shift_K": case "Control_Shift_F4": case "Shift_F11":
 			case "Control_d": case "Control_e": case "Shift_T": case "Shift_P": case "Shift_Q": case "Alt_z": case "Shift_F8": case "Control_F7": case "Control_p": case "Control_F10":
-			case "Shift_F10":
+			case "Shift_F10": case "Control_Shift_D": case "Alt_F11":
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
 				TimeUnit.MILLISECONDS.sleep(500);
 				processAnimation(Constants.BACK, print_writers, "Loop", "START");
@@ -337,7 +342,8 @@ public class Animation
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Header", "START");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$SubHeader", "START");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$ExtraData", "START");
-				if(!whatToProcess.split(",")[0].equalsIgnoreCase("Control_F10") && !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_F10")) {
+				if(!whatToProcess.split(",")[0].equalsIgnoreCase("Control_F10") && !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_F10")
+						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_F11")) {
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Footer", "START");
 				}
 				if(!whatToProcess.split(",")[0].equalsIgnoreCase("Control_F11") && !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_F11") 
@@ -345,7 +351,8 @@ public class Animation
 						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_P") && !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_Q")
 						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_T") && !whatToProcess.split(",")[0].equalsIgnoreCase("Control_F7")
 						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_z") && !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_F8")
-						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Control_F10") && !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_F10") ) {
+						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Control_F10") && !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_F10")
+						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Control_Shift_D") && !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_F11")) {
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Logo", "START");
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$LogoBase", "START");
 				}
@@ -402,6 +409,14 @@ public class Animation
 					break;
 				case "Shift_F10":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Worms", "START");
+					processAnimation(Constants.BACK, print_writers, "BG_Scale", "START");
+					break;
+				case "Control_Shift_D":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Double_MatchId", "START");
+					processAnimation(Constants.BACK, print_writers, "BG_Scale", "START");
+					break;
+				case "Alt_F11":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Manhattan_Comparison", "START");
 					processAnimation(Constants.BACK, print_writers, "BG_Scale", "START");
 					break;
 				}
@@ -2095,7 +2110,7 @@ public class Animation
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Leader_Board", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "BG_Scale", "CONTINUE REVERSE");
 				if(Integer.valueOf(prevLeaderHighlight) > 0) {
-					processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player"+prevHighlightDirector, "CONTINUE");
+					processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player"+prevLeaderHighlight, "CONTINUE");
 				}
 				prevLeaderHighlight = "0";
 				processAnimation(Constants.BACK, print_writers, "Loop", "SHOW 0.0");
@@ -2103,15 +2118,21 @@ public class Animation
 				AnimateIn("ArrowUp,", print_writers, config); // Push infobar
 				this.whichGraphicOnScreen = "";
 				break;
+			case "Shift_D":
+				processAnimation(Constants.BACK, print_writers, "Anim_Target$In_Out", "CONTINUE");
+				processAnimation(Constants.BACK, print_writers, "SHOW 0.0", "START");
+				this.whichGraphicOnScreen = "";
+				break;
 				
 			case "Shift_F11": case "Control_d": case "Control_e": case "Shift_T": case "Shift_P": case "Shift_Q": case "Control_F7":
 			case "F1": case "Control_Shift_F1": case "F2": case "Control_Shift_F2": case "Control_F11": case "F4": case "Shift_K": case "Control_Shift_F4":
-			case "Alt_z": case "Shift_F8": case "Control_p": case "Control_F10": case "Shift_F10":
+			case "Alt_z": case "Shift_F8": case "Control_p": case "Control_F10": case "Shift_F10": case "Control_Shift_D": case "Alt_F11":
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Essentials", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Header", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$SubHeader", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$ExtraData", "CONTINUE");
-				if(!whatToProcess.split(",")[0].equalsIgnoreCase("Control_F10") && !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_F10")) {
+				if(!whatToProcess.split(",")[0].equalsIgnoreCase("Control_F10") && !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_F10")
+					&& !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_F11")) {
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Footer", "CONTINUE");
 				}
 				if(!whatToProcess.split(",")[0].equalsIgnoreCase("Control_F11") && !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_F11")
@@ -2119,7 +2140,8 @@ public class Animation
 						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_P") && !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_Q")
 						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_T") && !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_z")
 						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Control_F7") && !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_F8")
-						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Control_F10") && !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_F10")) {
+						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Control_F10") && !whatToProcess.split(",")[0].equalsIgnoreCase("Shift_F10")
+						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Control_Shift_D") && !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_F11")) {
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Logo", "CONTINUE");
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$LogoBase", "CONTINUE");
 				}
@@ -2176,6 +2198,14 @@ public class Animation
 					break;
 				case "Shift_F10":
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Worms", "CONTINUE");
+					processAnimation(Constants.BACK, print_writers, "BG_Scale", "CONTINUE REVERSE");
+					break;
+				case "Control_Shift_D":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Double_MatchId", "CONTINUE");
+					processAnimation(Constants.BACK, print_writers, "BG_Scale", "CONTINUE REVERSE");
+					break;
+				case "Alt_F11":
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Manhattan_Comparison", "CONTINUE");
 					processAnimation(Constants.BACK, print_writers, "BG_Scale", "CONTINUE REVERSE");
 					break;
 				}
@@ -5021,6 +5051,9 @@ public class Animation
 			processAnimation(Constants.BACK, print_writers, "BG_Scale", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Profile_Highlight", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Loop", "SHOW 0.0");
+			processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight", "SHOW 0.0");
+			processAnimation(Constants.BACK, print_writers, "Profile_Highlight", "SHOW 0.0");
+			
 			
 			processAnimation(Constants.FRONT, print_writers, "Anim_Bugs$Essentials", "SHOW 0.0");
 //			processAnimation(Constants.FRONT, print_writers, "Anim_BugsChange", "SHOW 0.0");
@@ -5325,8 +5358,8 @@ public class Animation
 			case Constants.NPL:
 				if(whichside == 1) {
 					switch (whatToProcess.split(",")[0]) {
-					case "z": case "x": case "c": case "v": case "Control_F10": case "Shift_F10":
-						previewCommand = "Anim_Infobar$Push 0.500 Anim_FullFrames$In_Out$Essentials$In 2.800 Anim_FullFrames$In_Out$Header$In 2.000 Anim_FullFrames$In_Out$Logo$In 2.500"
+					case "z": case "x": case "c": case "v": case "Control_F10": case "Shift_F10": case "Alt_F11":
+						previewCommand = "Anim_Infobar$Push 0.500 Anim_FullFrames$In_Out$Essentials$In 2.800 Anim_FullFrames$In_Out$Header$In 2.000"
 								+ " Anim_FullFrames$In_Out$SubHeader$In 2.000";
 						break;
 					case "Shift_F11": case "Control_d": case "Control_e": case "Shift_T": case "Shift_P": case "Shift_Q": case "Control_F7": case "Control_p":
@@ -5337,8 +5370,17 @@ public class Animation
 								+ " Anim_FullFrames$In_Out$Footer$In_Out$Essentials$In 2.860 Anim_FullFrames$In_Out$Footer$In_Out$Data 3.000"
 								+ " Anim_FullFrames$In_Out$Footer$In_Out$Data$In 2.860";
 						break;
+					case "Control_Shift_D":
+						previewCommand = "Anim_Infobar$Push 0.500 Anim_FullFrames$In_Out$Essentials$In 2.800 Anim_FullFrames$In_Out$Header$In 2.000"
+								+ " Anim_FullFrames$In_Out$SubHeader$In 2.000 Anim_FullFrames$In_Out$Footer 3.000 Anim_FullFrames$In_Out$Footer$In_Out 3.000 Anim_FullFrames$In_Out$Footer$In_Out$Essentials 3.000"
+								+ " Anim_FullFrames$In_Out$Footer$In_Out$Essentials$In 2.860 Anim_FullFrames$In_Out$Footer$In_Out$Data 3.000"
+								+ " Anim_FullFrames$In_Out$Footer$In_Out$Data$In 2.860";
+						break;
 					case "m": case "Control_m":
 						previewCommand ="Anim_Ident$In_Out$In 2.760";
+						break;
+					case "Shift_D":
+						previewCommand ="Anim_Target$In_Out$In 2.760";
 						break;
 					}
 					switch (whatToProcess.split(",")[0]) {
@@ -5389,6 +5431,12 @@ public class Animation
 						break;	
 					case "Shift_F10":
 						previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Worms 3.000 Anim_FullFrames$In_Out$Main$Worms$In 2.980 Anim_FullFrames$In_Out$Main$Worms$In$Runs 2.980 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
+						break;
+					case "Alt_F11":
+						previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Manhattan_Comparison 3.000 Anim_FullFrames$In_Out$Main$Manhattan_Comparison$In 3.000 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
+						break;
+					case "Control_Shift_D":
+						previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Double_MatchId 3.000 Anim_FullFrames$In_Out$Main$Double_MatchId$In 2.480 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";	
 						break;
 					}
 				}else {
