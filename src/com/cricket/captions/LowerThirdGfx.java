@@ -9524,6 +9524,12 @@ public class LowerThirdGfx
 										"$Side" + WhichSide + "$" + row_id + "$Bottom$txt1*GEOM*TEXT SET DNB\0", print_writers);
 							}
 							
+						}else if(bc.getStatus().equalsIgnoreCase(CricketUtil.NOT_OUT)) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_PlayingXI$Data_All$Side"+ WhichSide + 
+									"$" + row_id + "$Bottom$Select*FUNCTION*Omo*vis_con SET 1\0", print_writers);
+							
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_PlayingXI$Data_All" +
+									"$Side" + WhichSide + "$" + row_id + "$Bottom$txt1*GEOM*TEXT SET " + bc.getRuns() + "* (" + bc.getBalls() + ")" + "\0", print_writers);
 						}else {
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_PlayingXI$Data_All$Side"+ WhichSide + 
 									"$" + row_id + "$Bottom$Select*FUNCTION*Omo*vis_con SET 1\0", print_writers);

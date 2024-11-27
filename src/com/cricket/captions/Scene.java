@@ -35,7 +35,7 @@ public class Scene
 		        CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*LT_MatchID$Change$Change_Out SHOW 50.0 \0", print_writers);
 		        CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*LT_Comparison$Change$Change_Out SHOW 50.0 \0", print_writers);
 		        CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*LT_PlayingXI$Change$Change_Out SHOW .820 \0", print_writers);
-		        CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*PopUps$Out SHOW 1.100 \0", print_writers);
+		        //CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*PopUps$Out SHOW 1.200 \0", print_writers);
 		        CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*LT_NextToBat$Change$Change_Out SHOW 0.700 \0", print_writers);
 				break;
 			case "PLOTTER":

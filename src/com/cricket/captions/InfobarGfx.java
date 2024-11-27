@@ -47,7 +47,7 @@ public class InfobarGfx
 			stats_text = "", par_Overs="", Comms_Name,color = "", color2 = "", prev_score = "", new_score = "",
 			prev_wicket = "", new_wicket = "", prevTeamScore = "", currTeamScore = "", freeText = "";
 	
-	boolean isThisOverLimitExceed = false, isbatsmannotout = false;
+	boolean isThisOverLimitExceed = false, isbatsmannotout = false,isimpactBowlIn = false,isimpactBatIn = false;
 //	int runs = 0,wicket = 0;
 //	List<String> allData = new ArrayList<String>();
 	
@@ -1467,6 +1467,11 @@ public class InfobarGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
 						+ infobar.getBatsmanAndBowlOrSponsor() + "$Bat_" + WhichBatsman + "_Impact$Select"
 								+ "*FUNCTION*Omo*vis_con SET 1\0", print_writers);
+				
+				if(isimpactBatIn == false) {
+					this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Impact_Bat", "START");
+					isimpactBatIn = true;
+				}
 			}else {
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide 
 						+ infobar.getBatsmanAndBowlOrSponsor() + "$Bat_" + WhichBatsman + "_Impact$Select"
@@ -1673,6 +1678,8 @@ public class InfobarGfx
 					TimeUnit.MILLISECONDS.sleep(800);
 					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 1, 1, battingCardList);
 					this_animation.processAnimation(Constants.FRONT, print_writers, "Bat_1_Change", "SHOW 0.0");
+					
+					isimpactBatIn = false;
 				} else {
 					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 1, 1, battingCardList);
 				}
@@ -1682,6 +1689,8 @@ public class InfobarGfx
 					TimeUnit.MILLISECONDS.sleep(800);
 					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 1, 2, battingCardList);
 					this_animation.processAnimation(Constants.FRONT, print_writers, "Bat_2_Change", "SHOW 0.0");
+					
+					isimpactBatIn = false;
 				} else {
 					populateTwoBatsmenSingleBatsman(print_writers, matchAllData, WhichSide, 1, 2, battingCardList);
 				}
@@ -1789,6 +1798,12 @@ public class InfobarGfx
 			
 			if (CricketFunctions.isImpactPlayer(matchAllData.getEventFile().getEvents(),inning.getInningNumber(), bowlingCard.getPlayerId())
 					.equalsIgnoreCase(CricketUtil.YES)) {
+				
+				if(isimpactBowlIn == false) {
+					this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Impact_Bowl", "START");
+					isimpactBowlIn = true;
+				}
+				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Data_Right_Normal$Side_1$Style2$Bowl_Impact$Select" + 
 						"*FUNCTION*Omo*vis_con SET 1\0", print_writers);
 			}else {
@@ -1916,6 +1931,8 @@ public class InfobarGfx
 					populateVizInfobarRightBottom(print_writers, matchAllData, WhichSide, 1);
 					this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Bowl_Change", "SHOW 0.0");
 					this_animation.processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Change_RightInfo_BottomRightPart", "SHOW 0.0");
+					
+					isimpactBowlIn = false;
 				} else {
 					populateRightTopBowler(print_writers, matchAllData, 1, 1);
 					populateRightTopBowler(print_writers, matchAllData, 1, 2);

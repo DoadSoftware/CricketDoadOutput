@@ -3140,6 +3140,30 @@ function addItemsToList(whatToProcess,dataToProcess)
 					setDropdownOptionToSelectOptionArray($(select),0);
 					cellCount = cellCount + 1
 					break;
+				case 'NPL':
+					header_text.innerHTML = 'POWERPLAY';
+	
+					select = document.createElement('select');
+					select.style = 'width:130px';
+					select.id = 'selectTeam';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = '1';
+					option.text = '1st Inning';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = '2';
+					option.text = '2nd Inning';
+					select.appendChild(option);
+					
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),0);
+					
+					cellCount = cellCount + 1;
+					break;
 				case 'ISPL':
 					header_text.innerHTML = 'POWERPLAY';
 	
@@ -3163,7 +3187,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 					setDropdownOptionToSelectOptionArray($(select),0);
 					
 					cellCount = cellCount + 1;
-					break;
+					break;	
 			}
 			
 			break;	
