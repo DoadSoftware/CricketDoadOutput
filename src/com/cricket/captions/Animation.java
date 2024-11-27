@@ -5405,9 +5405,9 @@ public class Animation
 			case Constants.NPL:
 				if(whichside == 1) {
 					switch (whatToProcess.split(",")[0]) {
-					case "z": case "x": case "c": case "v": case "Control_F10": case "Shift_F10": case "Alt_F11": case "Control_z": case "Control_x":
+					case "Control_F10": case "Shift_F10": case "Alt_F11": case "z": case "x": case "c": case "v": case "Control_z": case "Control_x":
 						previewCommand = "Anim_Infobar$Push 0.500 Anim_FullFrames$In_Out$Essentials$In 2.800 Anim_FullFrames$In_Out$Header$In 2.000"
-								+ " Anim_FullFrames$In_Out$SubHeader$In 2.000";
+								+ " Anim_FullFrames$In_Out$SubHeader$In 2.000 Anim_FullFrames$In_Out$T_Logo 3.000 Anim_FullFrames$In_Out$T_Logo$In 2.500";
 						break;
 					case "Shift_F11": case "Control_d": case "Control_e": case "Shift_T": case "Shift_P": case "Shift_Q": case "Control_F7": case "Control_p":
 					case "F1": case "F2": case "Control_Shift_F1": case "Control_Shift_F2": case "Control_F11": case "F4": case "Control_Shift_F4": case "Shift_K":
@@ -5415,7 +5415,7 @@ public class Animation
 						previewCommand = "Anim_Infobar$Push 0.500 Anim_FullFrames$In_Out$Essentials$In 2.800 Anim_FullFrames$In_Out$Header$In 2.000 Anim_FullFrames$In_Out$Logo$In 2.500"
 								+ " Anim_FullFrames$In_Out$SubHeader$In 2.000 Anim_FullFrames$In_Out$Footer 3.000 Anim_FullFrames$In_Out$Footer$In_Out 3.000 Anim_FullFrames$In_Out$Footer$In_Out$Essentials 3.000"
 								+ " Anim_FullFrames$In_Out$Footer$In_Out$Essentials$In 2.860 Anim_FullFrames$In_Out$Footer$In_Out$Data 3.000"
-								+ " Anim_FullFrames$In_Out$Footer$In_Out$Data$In 2.860";
+								+ " Anim_FullFrames$In_Out$Footer$In_Out$Data$In 2.860 Anim_FullFrames$In_Out$T_Logo 3.000 Anim_FullFrames$In_Out$T_Logo$In 2.500";
 						break;
 					case "Control_Shift_D":
 						previewCommand = "Anim_Infobar$Push 0.500 Anim_FullFrames$In_Out$Essentials$In 2.800 Anim_FullFrames$In_Out$Header$In 2.000"
@@ -5469,7 +5469,7 @@ public class Animation
 						break;
 					case "z": case "x": case "c": case "v": case "Control_z": case "Control_x":
 						if(Integer.valueOf(whatToProcess.split(",")[2].split("_")[0])>0) {
-							previewCommand = previewCommand + " LeaderBoardHighlight$Side1$Player"+whatToProcess.split(",")[2].split("_")[0]+" 1.780";
+							previewCommand = previewCommand + " LeaderBoardHighlight$Side1$Player"+whatToProcess.split(",")[2].split("_")[0]+" 1.000";
 						}
 						previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Leader_Board 3.000 Anim_FullFrames$In_Out$Main$Leader_Board$In 3.000 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
 						break;
@@ -5533,6 +5533,7 @@ public class Animation
 						if(!prevHighlightDirector.isEmpty()) {
 							previewCommand = previewCommand + " Profile_Highlight$Side1$"+prevHighlightDirector+" 1.000";
 						}
+						previewCommand = previewCommand + " Change$Profile 1.440 Change$Profile$Change_Out 0.500 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
 						break;
 					case "Alt_z":
 						previewCommand = previewCommand + " Change$Squad 1.320 Change$Squad$Change_Out 0.700 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
@@ -5541,7 +5542,7 @@ public class Animation
 						previewCommand = previewCommand + " Change$TeamSingle 1.440 Change$TeamSingle$Change_Out 0.620 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
 						break;
 					case "z": case "x": case "c": case "v": case "Control_z": case "Control_x":
-						previewCommand = previewCommand + " LeaderBoardHighlight$Side2$Player"+whatToProcess.split(",")[2].split("_")[0]+" 1.780";
+						previewCommand = previewCommand + " LeaderBoardHighlight$Side2$Player"+whatToProcess.split(",")[2].split("_")[0]+" 1.000";
 						break;
 					case "Control_F10":
 						previewCommand = previewCommand + " Change$Manhattan 1.520 Change$Manhattan$Change_Out 0.500 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
@@ -6524,7 +6525,6 @@ public class Animation
 										+ "PopUps$InOut 1.700 PopUps$InOut$In 1.700\0", print_writer);
 							 break; 
 						 case "6":
-							 
 							 CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.tga "
 										+ "PopUps$InOut 1.700 PopUps$InOut$In 1.700\0", print_writer);
 							 break; 	 
@@ -6616,6 +6616,7 @@ public class Animation
 			}
 		}
 	}
+
 	public void processMiniPreview(String whatToProcess, List<PrintWriter> print_writer, int whichside, Configuration config, String whichGraphicOnScreen) throws InterruptedException {
 		if(config.getPreview().equalsIgnoreCase("WITH_PREVIEW")) {
 			switch (config.getBroadcaster().toUpperCase()) {
