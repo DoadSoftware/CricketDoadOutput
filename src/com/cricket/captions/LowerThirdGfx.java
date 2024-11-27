@@ -8541,7 +8541,7 @@ public class LowerThirdGfx
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_NextToBat$Side"+WhichSide+containerName+"$Data_All$"+rowId+"$Name_Grp$txt_LastName*GEOM*TEXT SET " 
 									+ bc.getPlayer().getTicker_name() + " \0", print_writers);
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_NextToBat$Side"+WhichSide+containerName+"$Data_All$"+rowId+"$Bottom$txt1*GEOM*TEXT SET " 
-									+ bc.getRuns()+"("+bc.getBalls()+")" + " \0", print_writers);
+									+ bc.getRuns()+"* ("+bc.getBalls()+")" + " \0", print_writers);
 							break;
 						case CricketUtil.STILL_TO_BAT:
 							if(bc.getHowOut() != null && !bc.getHowOut().equalsIgnoreCase(CricketUtil.RETIRED_HURT)) continue;

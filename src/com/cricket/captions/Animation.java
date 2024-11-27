@@ -223,6 +223,7 @@ public class Animation
 				}
 				
 				processAnimation(Constants.FRONT, print_writers, "Anim_Ident$In_Out", "START");
+				processAnimation(Constants.FRONT, print_writers, "Anim_Ident$Loop", "START");
 				
 				infobar.setMiddle_section("");
 				infobar.setFull_section("");
@@ -236,7 +237,7 @@ public class Animation
 					processAnimation(Constants.FRONT, print_writers, "Anim_Ident$In_Out", "CONTINUE");
 					TimeUnit.MILLISECONDS.sleep(500);
 				}
-				
+				processAnimation(Constants.FRONT, print_writers, "Anim_Ident$Loop", "START");
 				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$In_Out", "START");
 				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$RightInfo_Bottom", "START");
 				this.infobar.setInfobar_on_screen(true);
@@ -314,6 +315,9 @@ public class Animation
 				TimeUnit.MILLISECONDS.sleep(500);
 				processAnimation(Constants.BACK, print_writers, "Loop", "START");
 				processAnimation(Constants.BACK, print_writers, "BG_Scale", "START");
+				if(!whatToProcess.split(",")[0].equalsIgnoreCase("Control_Shift_D")) {
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$T_Logo", "START");
+				}
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Essentials", "START");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Logo", "START");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Header", "START");
@@ -327,6 +331,8 @@ public class Animation
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "Shift_D":
+				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
+				TimeUnit.MILLISECONDS.sleep(500);
 				processAnimation(Constants.BACK, print_writers, "Anim_Target$In_Out", "START");
 				processAnimation(Constants.BACK, print_writers, "Loop", "START");
 				this.whichGraphicOnScreen = whatToProcess;
@@ -338,6 +344,9 @@ public class Animation
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
 				TimeUnit.MILLISECONDS.sleep(500);
 				processAnimation(Constants.BACK, print_writers, "Loop", "START");
+				if(!whatToProcess.split(",")[0].equalsIgnoreCase("Control_Shift_D")) {
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$T_Logo", "START");
+				}
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Essentials", "START");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Header", "START");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$SubHeader", "START");
@@ -2113,6 +2122,9 @@ public class Animation
 				break;
 				
 			case "z": case "x": case "c": case "v": case "Control_z": case "Control_x":
+				if(!whatToProcess.split(",")[0].equalsIgnoreCase("Control_Shift_D")) {
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$T_Logo", "CONTINUE");
+				}
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Essentials", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Header", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$SubHeader", "CONTINUE");
@@ -2131,12 +2143,17 @@ public class Animation
 			case "Shift_D":
 				processAnimation(Constants.BACK, print_writers, "Anim_Target$In_Out", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "SHOW 0.0", "START");
+				TimeUnit.MILLISECONDS.sleep(500);
+				AnimateIn("ArrowUp,", print_writers, config); // Push infobar
 				this.whichGraphicOnScreen = "";
 				break;
 				
 			case "Shift_F11": case "Control_d": case "Control_e": case "Shift_T": case "Shift_P": case "Shift_Q": case "Control_F7":
 			case "F1": case "Control_Shift_F1": case "F2": case "Control_Shift_F2": case "Control_F11": case "F4": case "Shift_K": case "Control_Shift_F4":
 			case "Alt_z": case "Shift_F8": case "Control_p": case "Control_F10": case "Shift_F10": case "Control_Shift_D": case "Alt_F11":
+				if(!whatToProcess.split(",")[0].equalsIgnoreCase("Control_Shift_D")) {
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$T_Logo", "CONTINUE");
+				}
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Essentials", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Header", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$SubHeader", "CONTINUE");
@@ -6190,10 +6207,10 @@ public class Animation
 				if(whichside == 1) {
 					switch(whatToProcess.split(",")[0]) {
 					case "Control_Shift_F10":
-						previewCommands = "Anim_Infobar$Small 0.820 LT_Manhattan$In_Out 1.420 LT_Manhattan$In 3.120 LT_Manhattan$In$DataIn 0.956 LT_Manhattan$In$DataIn 0.356";
+						previewCommands = "Anim_Infobar$Push 0.500 LT_Manhattan$In_Out 1.420 LT_Manhattan$In 3.120 LT_Manhattan$In$DataIn 0.956 LT_Manhattan$In$DataIn 0.356";
 						break;
 					case "Control_Shift_B":
-						previewCommands = "Anim_Infobar$Small 0.820 LT_NextToBat$In_Out 1.420 LT_NextToBat$In_Out$In 1.140 LT_NextToBat$In_Out$In$BASE 1.040 LT_NextToBat$In_Out$In$LOGO 1.000"
+						previewCommands = "Anim_Infobar$Push 0.500 LT_NextToBat$In_Out 1.420 LT_NextToBat$In_Out$In 1.140 LT_NextToBat$In_Out$In$BASE 1.040 LT_NextToBat$In_Out$In$LOGO 1.000"
 								+ " LT_NextToBat$In_Out$In$BOTTOM_DATA 1.140";
 						break;
 					case "Control_Shift_O":
@@ -6497,11 +6514,6 @@ public class Animation
 						switch(whatToProcess.split(",")[0]) {
 						case "Shift_O": case "Control_k": case "k": case "g": case "y": case "Control_y": case "h": case "Shift_F4": case "Shift_F":
 						case ".": case "/": case "Shift_C": case "Control_Shift_R": case "Control_Shift_F3": case "Control_Shift_J": case "Alt_p": case "o": case "t":
-							
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/Overlays C:/Temp/Preview.tga "
-									+ "Anim_Bugs 2.200 Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In 0.800 Anim_Bugs$RightPart 2.200 Anim_Bugs$RightPart$In 0.700\0", print_writer);
-							
-							TimeUnit.MILLISECONDS.sleep(500);
 							
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/Overlays C:/Temp/Preview.tga "
 									+ "Anim_Bugs 2.200 Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In 0.800 Anim_Bugs$RightPart 2.200 Anim_Bugs$RightPart$In 0.700\0", print_writer);
