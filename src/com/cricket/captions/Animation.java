@@ -6549,6 +6549,9 @@ public class Animation
 						case "Shift_O": case "Control_k": case "k": case "g": case "y": case "Control_y": case "h": case "Shift_F4": case "Shift_F":
 						case ".": case "/": case "Shift_C": case "Control_Shift_R": case "Control_Shift_F3": case "Control_Shift_J": case "Alt_p": case "o": case "t":
 							
+//							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/Overlays C:/Temp/Preview.tga "
+//									+ "Anim_Bugs$Essentials$In 2.200 Anim_Bugs$RightPart$In 2.200\0", print_writer);
+
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/Overlays C:/Temp/Preview.tga "
 									+ "Anim_Bugs 2.200 Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In 0.800 Anim_Bugs$RightPart 2.200 Anim_Bugs$RightPart$In 0.700\0", print_writer);
 							

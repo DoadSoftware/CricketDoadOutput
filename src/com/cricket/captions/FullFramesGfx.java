@@ -12174,7 +12174,7 @@ public class FullFramesGfx
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$ExtraData$Side" + WhichSide + "$Select_DataType"
 							+ "*FUNCTION*Omo*vis_con SET 5\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$ExtraData$Side" + WhichSide + "$Select_DataType$Substitues_Team$Title"
-							+"$txt_Title*GEOM*TEXT SET "+team.getTeamName1()+"\0", print_writers);
+							+"$txt_Title*GEOM*TEXT SET SUBSTITUTES\0", print_writers);
 					for(int i=1; i<=5; i++) {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$ExtraData$Side" + WhichSide + "$Select_DataType$Substitues_Team"
 								+"$"+i+"*ACTIVE SET 0\0", print_writers);
@@ -13794,7 +13794,7 @@ public class FullFramesGfx
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$AllGraphics$Side" + WhichSide 
 									+"$Leader_Board$Stats$Stats$" + rowId + containerName + "$txt_Name*GEOM*TEXT SET " + top_bowler_beststats.get(i).getPlayer().getFull_name() + "\0", print_writers);
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$AllGraphics$Side" + WhichSide 
-									+"$Leader_Board$Stats$Stats$" + rowId + containerName + "$txt_Team*GEOM*TEXT SET vs " + top_bowler_beststats.get(i).getOpponentTeam().getTeamName1().toUpperCase() + "\0", print_writers);
+									+"$Leader_Board$Stats$Stats$" + rowId + containerName + "$txt_Team*GEOM*TEXT SET v " + top_bowler_beststats.get(i).getOpponentTeam().getTeamName1().toUpperCase() + "\0", print_writers);
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$AllGraphics$Side" + WhichSide 
 									+"$Leader_Board$Stats$Stats$" + rowId + containerName + "$txt_NotOutStar*ACTIVE SET 0\0", print_writers);
 							
@@ -13807,7 +13807,7 @@ public class FullFramesGfx
 							else if(top_bowler_beststats.get(i).getBestEquation() % 1000 < 0) {
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$AllGraphics$Side" + WhichSide 
 										+"$Leader_Board$Stats$Stats$" + rowId + containerName + "$txt_Fig*GEOM*TEXT SET " + (top_bowler_beststats.get(i).getBestEquation() / 1000) 
-										+ "-" + Math.abs(top_batsman_beststats.get(i).getBestEquation()) + "\0", print_writers);
+										+ "-" + Math.abs(top_bowler_beststats.get(i).getBestEquation()) + "\0", print_writers);
 							}else {
 								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$AllGraphics$Side" + WhichSide 
 										+"$Leader_Board$Stats$Stats$" + rowId + containerName + "$txt_Fig*GEOM*TEXT SET " + 
