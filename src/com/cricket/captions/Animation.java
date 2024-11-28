@@ -2996,7 +2996,6 @@ public class Animation
 			if(!whatToProcess.contains(",")) {
 				return CricketUtil.NO;
 			}
-			System.out.println(whatToProcess);
 			switch(whatToProcess.split(",")[0]) {
 			case "Shift_F12":
 				processAnimation(Constants.FRONT, print_writers, "Anim_Ident$Change_Bottom", "START");
@@ -3120,7 +3119,26 @@ public class Animation
 							|| whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("Control_Shift_F4") && whatToProcess.split(",")[0].equalsIgnoreCase("F4")) {
 						
 					}else {
-						processAnimation(Constants.BACK, print_writers, "Change$Logo", "START");
+						if(whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("F1") || whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("Control_Shift_F1")
+								|| whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("F2") || whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("Control_Shift_F2")
+								|| whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("F4") || whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("Control_Shift_F4")) {
+							if(whatToProcess.split(",")[0].equalsIgnoreCase("Control_F11") || whatToProcess.split(",")[0].equalsIgnoreCase("Control_p")) {
+								processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Logo", "CONTINUE");
+							}else {
+								processAnimation(Constants.BACK, print_writers, "Change$Logo", "START");
+							}
+						}else {
+							if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("Control_F11") && !whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("Control_p")) {
+								processAnimation(Constants.BACK, print_writers, "Change$Logo", "START");
+							}else {
+								if(whatToProcess.split(",")[0].equalsIgnoreCase("F1") || whatToProcess.split(",")[0].equalsIgnoreCase("Control_Shift_F1")
+										|| whatToProcess.split(",")[0].equalsIgnoreCase("F2") || whatToProcess.split(",")[0].equalsIgnoreCase("Control_Shift_F2")
+										|| whatToProcess.split(",")[0].equalsIgnoreCase("F4") || whatToProcess.split(",")[0].equalsIgnoreCase("Control_Shift_F4")) {
+									processAnimation(Constants.BACK, print_writers, "Change$Logo", "START");
+								}
+							}
+						}
+						
 						processAnimation(Constants.BACK, print_writers, "Change$Header", "START");
 						processAnimation(Constants.BACK, print_writers, "Change$SubHeader", "START");
 						processAnimation(Constants.BACK, print_writers, "Change$Footer", "START");
@@ -3161,7 +3179,8 @@ public class Animation
 					case "Control_F11":
 						processAnimation(Constants.BACK, print_writers, "Change$Summary", "START");
 						processAnimation(Constants.BACK, print_writers, "Change$ExtraData", "START");
-						if(!whatToProcess.split(",")[0].equalsIgnoreCase("F4") && !whatToProcess.split(",")[0].equalsIgnoreCase("Control_Shift_F4")) {
+						if(!whatToProcess.split(",")[0].equalsIgnoreCase("F4") && !whatToProcess.split(",")[0].equalsIgnoreCase("Control_Shift_F4")
+								&& !whatToProcess.split(",")[0].equalsIgnoreCase("Control_p")) {
 							processAnimation(Constants.BACK, print_writers, "BG_Scale", "CONTINUE REVERSE");
 						}
 						break;
@@ -3176,7 +3195,8 @@ public class Animation
 //						
 //						break;
 					case "F4":
-						if(!whatToProcess.split(",")[0].equalsIgnoreCase("Control_F11") && !whatToProcess.split(",")[0].equalsIgnoreCase("Control_Shift_F4")) {
+						if(!whatToProcess.split(",")[0].equalsIgnoreCase("Control_F11") && !whatToProcess.split(",")[0].equalsIgnoreCase("Control_Shift_F4")
+								&& !whatToProcess.split(",")[0].equalsIgnoreCase("Control_p")) {
 							processAnimation(Constants.BACK, print_writers, "BG_Scale", "CONTINUE REVERSE");
 						}
 						
@@ -3188,7 +3208,8 @@ public class Animation
 						}
 						break;
 					case "Control_Shift_F4":
-						if(!whatToProcess.split(",")[0].equalsIgnoreCase("Control_F11") && !whatToProcess.split(",")[0].equalsIgnoreCase("F4")) {
+						if(!whatToProcess.split(",")[0].equalsIgnoreCase("Control_F11") && !whatToProcess.split(",")[0].equalsIgnoreCase("F4")
+								&& !whatToProcess.split(",")[0].equalsIgnoreCase("Control_p")) {
 							processAnimation(Constants.BACK, print_writers, "BG_Scale", "CONTINUE REVERSE");
 						}
 						if(whatToProcess.split(",")[0].equalsIgnoreCase("F4")) {
@@ -3201,7 +3222,10 @@ public class Animation
 					case "Control_p":
 						processAnimation(Constants.BACK, print_writers, "Change$Standings", "START");
 						processAnimation(Constants.BACK, print_writers, "Change$ExtraData", "START");
-						processAnimation(Constants.BACK, print_writers, "BG_Scale", "CONTINUE REVERSE");
+						if(!whatToProcess.split(",")[0].equalsIgnoreCase("F4") && !whatToProcess.split(",")[0].equalsIgnoreCase("Control_Shift_F4")
+								&& !whatToProcess.split(",")[0].equalsIgnoreCase("Control_p") && !whatToProcess.split(",")[0].equalsIgnoreCase("Control_F11")) {
+							processAnimation(Constants.BACK, print_writers, "BG_Scale", "CONTINUE REVERSE");
+						}
 						break;
 					}
 					break;
@@ -3265,19 +3289,22 @@ public class Animation
 						}
 						break;
 					case "Control_F11":
-						if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("F4") && !whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("Control_Shift_F4")) {
+						if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("F4") && !whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("Control_Shift_F4")
+								&& !whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("Control_p")) {
 							processAnimation(Constants.BACK, print_writers, "BG_Scale", "START");
 						}
 						processAnimation(Constants.BACK, print_writers, "Change$Summary", "START");
 						break;
 					case "F4":
-						if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("Control_F11") && !whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("Control_Shift_F4")) {
+						if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("Control_F11") && !whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("Control_Shift_F4")
+								&& !whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("Control_p")) {
 							processAnimation(Constants.BACK, print_writers, "BG_Scale", "START");
 						}
 						processAnimation(Constants.BACK, print_writers, "Change$Partnership_List", "START");
 						break;
 					case "Control_Shift_F4":
-						if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("Control_F11") && !whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("F4")) {
+						if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("Control_F11") && !whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("F4")
+								&& !whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("Control_p")) {
 							processAnimation(Constants.BACK, print_writers, "BG_Scale", "START");
 						}
 						if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("F4")) {
@@ -3293,7 +3320,10 @@ public class Animation
 						break;
 					case "Control_p":
 						processAnimation(Constants.BACK, print_writers, "Change$Standings", "START");
-						processAnimation(Constants.BACK, print_writers, "BG_Scale", "START");
+						if(!whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("F4") && !whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("Control_Shift_F4")
+								&& !whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("Control_p") && !whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("Control_F11")) {
+							processAnimation(Constants.BACK, print_writers, "BG_Scale", "START");
+						}
 						break;
 					}
 					break;
@@ -4319,6 +4349,9 @@ public class Animation
 				}
 				if(whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("Control_F11") || whichGraphicOnScreen.split(",")[0].equalsIgnoreCase("Control_p")) {
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Logo", "SHOW 3.000");
+				}
+				if(whatToProcess.split(",")[0].equalsIgnoreCase("Control_F11") || whatToProcess.split(",")[0].equalsIgnoreCase("Control_p")) {
+					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Logo", "SHOW 0.000");
 				}
 				processAnimation(Constants.BACK, print_writers, "Change$Logo", "SHOW 0.0");
 				processAnimation(Constants.BACK, print_writers, "Change$Header", "SHOW 0.0");
