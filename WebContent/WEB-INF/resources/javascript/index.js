@@ -873,7 +873,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Alt_F6': case 'Shift_A': case 'Shift_R': case 'Control_Shift_F1': case 'Control_Shift_D': case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Control_Shift_F2':
 	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_Shift_F9': case 'Alt_Shift_C': case 'Control_Shift_L':
 	case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_E': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I': case 'Control_F11': case 'Control_Shift_M':
-	case 'Alt_Shift_R': case 'Control_Shift_U': case 'Control_Shift_V': case 'Control_4': case 'Shift_~': case 'Shift_!': case 'Control_Shift_F4':
+	case 'Alt_Shift_R': case 'Control_Shift_U': case 'Control_Shift_V': case 'Control_4': case 'Shift_~': case 'Shift_!': case 'Control_Shift_F4': case 'Control_Shift_Z':
+	case 'Control_Shift_Y':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		$("#captions_div").hide();
 		$('#select_graphic_options_div').empty();
@@ -3715,7 +3716,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			}
 			break;
 		
-		case 'z': case 'x': case 'c': case 'v': case 'Control_z': case 'Control_x': case 'Control_c': case 'Control_v':
+		case 'z': case 'x': case 'c': case 'v': case 'Control_z': case 'Control_x': case 'Control_c': case 'Control_v': case 'Control_Shift_Z': case 'Control_Shift_Y':
 			switch(whatToProcess) {
 			case 'z':
 				header_text.innerHTML = 'LEADERBOARD - MOST RUNS';
@@ -3741,23 +3742,75 @@ function addItemsToList(whatToProcess,dataToProcess)
 			case 'Control_v':
 				header_text.innerHTML = 'LEADERBOARD - MOST ECONOMICAL 50-50 OVER';
 				break;
+			case 'Control_Shift_Z':
+				header_text.innerHTML = 'LEADERBOARD - BEST STRIKE RATE'
+				break;
+			case 'Control_Shift_Y':
+				header_text.innerHTML = 'LEADERBOARD - BEST ECONOMY'
+				break;
 			}
-		
-			select = document.createElement('select');
-			select.id = 'selectPlayerName';
-			select.name = select.id;
-			for(i=0;i<dataToProcess.length;i++){
-				if(i<5){
+			let num = 0;
+			switch(whatToProcess){
+				case 'Control_Shift_Z':
+					select = document.createElement('select');
+					select.id = 'selectPlayerName';
+					select.name = select.id;
+					num = 0;
+					for(i=0;i<dataToProcess.length;i++){
+						if(dataToProcess[i].ballsFaced>=30){
+							if(num<5){
+								option = document.createElement('option');
+					            option.value = (num+1)+ "_" + dataToProcess[i].playerId;
+					            option.text = dataToProcess[i].player.full_name;
+					            select.appendChild(option);
+					            num++;
+							}
+						}
+					}
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),0);
+					cellCount = cellCount + 1
+				
+					select = document.createElement('select');
+					select.id = 'selectType';
+					select.name = select.id;
+					
 					option = document.createElement('option');
-		            option.value = (i+1)+ "_" + dataToProcess[i].playerId;
-		            option.text = dataToProcess[i].player.full_name;
-		            select.appendChild(option);
-				}
+					option.value = 'withoutsponsor';
+					option.text = 'WITHOUT SPONSOR';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'withsponsor';
+					option.text = 'WITH SPONSOR';
+					select.appendChild(option);
+					
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),1);
+					cellCount = cellCount + 1;
+				break;
+				default:
+					select = document.createElement('select');
+					select.id = 'selectPlayerName';
+					select.name = select.id;
+					num = 0;
+					for(i=0;i<dataToProcess.length;i++){
+						if(num<5){
+							option = document.createElement('option');
+				            option.value = (num+1)+ "_" + dataToProcess[i].playerId;
+				            option.text = dataToProcess[i].player.full_name;
+				            select.appendChild(option);
+				            num++;
+						}
+					}
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),0);
+					cellCount = cellCount + 1
+				break;
 			}
-			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
-			row.insertCell(cellCount).appendChild(select);
-			setDropdownOptionToSelectOptionArray($(select),0);
-			cellCount = cellCount + 1
 			break;
 		
 		case 'Control_Shift_P':
@@ -5876,7 +5929,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	    	cellCount = cellCount + 1;
 		}
 		if(whatToProcess == 'z' || whatToProcess == 'x' || whatToProcess == 'c' || whatToProcess == 'v' || 
-			whatToProcess == 'Control_z' || whatToProcess == 'Control_x'){
+			whatToProcess == 'Control_z' || whatToProcess == 'Control_x' || whatToProcess == 'Control_Shift_Z' || whatToProcess == 'Control_Shift_Y'){
 			option = document.createElement('input');
 			option.type = 'button';
 			option.name = 'highlightLeader';
@@ -5904,7 +5957,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_Shift_F9': case 'Alt_Shift_C': case 'Control_Shift_L':
 			case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_E': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I': 
 			case 'Control_F11': case 'Control_Shift_M': case 'Alt_Shift_R': case 'Control_Shift_U': case 'Control_Shift_V': case 'Control_4': case 'Control_Shift_F4':
-				
+			case 'Control_Shift_Z': case 'Control_Shift_Y':
 				option = document.createElement('input');
 				option.type = 'button';
 				option.name = 'populate_btn';

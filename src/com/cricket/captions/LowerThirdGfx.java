@@ -168,7 +168,7 @@ public class LowerThirdGfx
 		if(inning == null) {
 			return "populateL3PhaseWise Inning is null";
 		}
-		
+		phaseWiseScore = "";
 		phaseWiseScore = CricketFunctions.getPhaseWiseScore(matchAllData, inning.getInningNumber(),matchAllData.getEventFile().getEvents());
 		
 		lowerThird = new LowerThird("", inning.getBatting_team().getTeamName2(), inning.getBatting_team().getTeamName3(),"THIS INNINGS", String.valueOf(inning.getTotalRuns() + "-" + inning.getTotalWickets()), 
@@ -11049,38 +11049,40 @@ public class LowerThirdGfx
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
 								"$Side" + WhichSide + "$Multi$Data$" + (i+1) + "$txt1*GEOM*TEXT SET " + lowerThird.getTitlesText()[i] + "\0", print_writers);
 					}
-//					for(int j=1; j<=overByOverData.size()-1; j++) {
-//						if(j>0 && j<=6) {
-//							oneToSixRuns+= overByOverData.get(j).getOverTotalRuns();
-//							oneToSixfWkt+=overByOverData.get(j).getOverTotalWickets();
-//						}
-//						if(j>6 && j<=15) {
-//							sevenToFifteenRuns+= overByOverData.get(j).getOverTotalRuns();
-//							sevenToFifteenWkt+=overByOverData.get(j).getOverTotalWickets();
-//						}
-//						if(j>15 && j<=20) {
-//							sixteenToTweentyRuns+= overByOverData.get(j).getOverTotalRuns();
-//							sixteenToTweentyWkt+=overByOverData.get(j).getOverTotalWickets();
-//						}
-//					}
+					System.out.println(Float.valueOf(CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls()))+" : "+phaseWiseScore);
 					
 					if(Integer.valueOf(phaseWiseScore.split("_")[0].split(",")[0]) == 0 && Integer.valueOf(phaseWiseScore.split("_")[0].split(",")[1]) == 0) {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
-								"$Side" + WhichSide + "$Multi$Data$1$txt2*GEOM*TEXT SET " + "-" + "\0", print_writers);
+						if(Float.valueOf(CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls())) > 0.0) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
+									"$Side" + WhichSide + "$Multi$Data$1$txt2*GEOM*TEXT SET " + "0-0" + "\0", print_writers);
+						}else {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
+									"$Side" + WhichSide + "$Multi$Data$1$txt2*GEOM*TEXT SET " + "-" + "\0", print_writers);
+						}
 					}else {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
 								"$Side" + WhichSide + "$Multi$Data$1$txt2*GEOM*TEXT SET " + phaseWiseScore.split("_")[0].split(",")[0]+"-"+phaseWiseScore.split("_")[0].split(",")[1] + "\0", print_writers);
 					}
 					if(Integer.valueOf(phaseWiseScore.split("_")[1].split(",")[0]) == 0 && Integer.valueOf(phaseWiseScore.split("_")[1].split(",")[1]) == 0) {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
-								"$Side" + WhichSide + "$Multi$Data$2$txt2*GEOM*TEXT SET " + "-" + "\0", print_writers);
+						if(Float.valueOf(CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls())) > 6.0) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
+									"$Side" + WhichSide + "$Multi$Data$2$txt2*GEOM*TEXT SET " + "0-0" + "\0", print_writers);
+						}else {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
+									"$Side" + WhichSide + "$Multi$Data$2$txt2*GEOM*TEXT SET " + "-" + "\0", print_writers);
+						}
 					}else {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
 								"$Side" + WhichSide + "$Multi$Data$2$txt2*GEOM*TEXT SET " + phaseWiseScore.split("_")[1].split(",")[0]+"-"+phaseWiseScore.split("_")[1].split(",")[1] + "\0", print_writers);
 					}
 					if(Integer.valueOf(phaseWiseScore.split("_")[2].split(",")[0]) == 0 && Integer.valueOf(phaseWiseScore.split("_")[2].split(",")[1]) == 0) {
-						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
-								"$Side" + WhichSide + "$Multi$Data$3$txt2*GEOM*TEXT SET " + "-" + "\0", print_writers);
+						if(Float.valueOf(CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls())) > 15.0) {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
+									"$Side" + WhichSide + "$Multi$Data$3$txt2*GEOM*TEXT SET " + "0-0" + "\0", print_writers);
+						}else {
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
+									"$Side" + WhichSide + "$Multi$Data$3$txt2*GEOM*TEXT SET " + "-" + "\0", print_writers);
+						}
 					}else {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
 								"$Side" + WhichSide + "$Multi$Data$3$txt2*GEOM*TEXT SET " + phaseWiseScore.split("_")[2].split(",")[0] +"-"+phaseWiseScore.split("_")[2].split(",")[1] + "\0", print_writers);

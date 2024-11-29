@@ -483,12 +483,15 @@ public class Caption
 				status = this_fullFramesGfx.populateFFPointsTable(whichSide,whatToProcess.split(",")[0], matchAllData, 0);
 				break;
 			case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": case "Control_c": case "Control_v": case "Shift_V":
-			case "Shift_Z": case "Shift_X":
+			case "Shift_Z": case "Shift_X": case "Control_Shift_Z": case "Control_Shift_Y":
 				if(whatToProcess.split(",")[0].equalsIgnoreCase("Shift_Z") || whatToProcess.split(",")[0].equalsIgnoreCase("Shift_X")) {
 					this_fullFramesGfx.FirstPlayerId = Integer.valueOf((whatToProcess.split(",")[2]));
 				}
 				else if(!whatToProcess.split(",")[0].equalsIgnoreCase("Shift_V")) {
 					this_fullFramesGfx.FirstPlayerId = Integer.valueOf((whatToProcess.split(",")[2]).split("_")[1]);
+				}
+				if(whatToProcess.split(",")[0].equalsIgnoreCase("Control_Shift_Z")){
+					this_fullFramesGfx.whichSponsor = whatToProcess.split(",")[3];
 				}
 				status = this_fullFramesGfx.populateLeaderBoard(whichSide, whatToProcess.split(",")[0], matchAllData, 0);
 				break;

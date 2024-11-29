@@ -758,7 +758,7 @@ public class IndexController
 			}
 			
 			return (List<T>) statistics;
-		case "z": case "x": case "c": case "v": 
+		case "z": case "x": case "c": case "v": case "Control_Shift_Z": case "Control_Shift_Y":
 			List<Tournament> tournament_stats = CricketFunctions.extractTournamentData("CURRENT_MATCH_DATA", false, headToHead, cricketService, 
 					session_match, past_tournament_stats);
 			switch (whatToProcess) {
@@ -773,6 +773,12 @@ public class IndexController
 				break;
 			case "v":
 				Collections.sort(tournament_stats,new CricketFunctions.BatsmanSixesComparator());
+				break;
+			case "Control_Shift_Z":
+				Collections.sort(tournament_stats,new CricketFunctions.BestBatsmanStrikeRateComparator());
+				break;
+			case "Control_Shift_Y":
+				Collections.sort(tournament_stats,new CricketFunctions.BestBowlerEconomyComparator());
 				break;
 			}
 			return (List<T>) tournament_stats;
