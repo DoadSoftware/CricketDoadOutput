@@ -78,7 +78,7 @@ public class Animation
 			case "Shift_F11": case "F4": case "Control_Shift_F4": case "Shift_K": case "Control_d": case "Control_e": case "Shift_T": case "Shift_P": case "Shift_Q":
 			case "Alt_z": case "Shift_F8": case "highlightProfile": case "Control_F7": case "z": case "x": case "c": case "v": case "Control_p":
 			case "Control_F10": case "Shift_F10": case "Control_Shift_D": case "Shift_D": case "Alt_F11": case "Control_z": case "Control_x": case "Control_Shift_Z":
-			case "Control_Shift_Y":
+			case "Control_Shift_Y": case "Alt_m": case "Alt_n":
 				return Constants.FULL_FRAMER;
 			case "Shift_O": case "Control_k": case "k": case "g": case "y": case "Control_Shift_R": case "Control_Shift_U": case "Control_Shift_V":
 			case "h": case "Shift_F4": case "Shift_F": case "Alt_p": case "Control_Shift_F3":  case "Shift_C": case "Control_Shift_J": case "6":
@@ -312,7 +312,14 @@ public class Animation
 				if(this.infobar.isInfobar_on_screen() == true && !this.infobar.isInfobar_pushed()) {
 					processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$Wipes", "START");
 				}
-				break;	
+				break;
+			case "Alt_m": case "Alt_n":
+				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
+				TimeUnit.MILLISECONDS.sleep(500);
+				processAnimation(Constants.BACK, print_writers, "Loop", "START");
+				processAnimation(Constants.BACK, print_writers, "Anim_Milestone", "START");
+				this.whichGraphicOnScreen = whatToProcess;
+				break;
 			case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": case "Control_Shift_Z": case "Control_Shift_Y":
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
 				TimeUnit.MILLISECONDS.sleep(500);
@@ -2129,7 +2136,15 @@ public class Animation
 				}
 				this.whichGraphicOnScreen = "";
 				break;
-				 
+			
+			case "Alt_m": case "Alt_n":
+				processAnimation(Constants.BACK, print_writers, "Anim_Milestone", "CONTINUE");
+				processAnimation(Constants.BACK, print_writers, "Loop", "SHOW 0.0");
+				TimeUnit.MILLISECONDS.sleep(400);
+				AnimateIn("ArrowUp,", print_writers, config); // Push infobar
+				this.whichGraphicOnScreen = "";
+				break;	
+				
 			case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": case "Control_Shift_Z": case "Control_Shift_Y":
 				if(sponsorOnScreen) {
 					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Sponsor", "CONTINUE");
@@ -5137,6 +5152,7 @@ public class Animation
 			processAnimation(Constants.BACK, print_writers, "Loop", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Anim_Target", "SHOW 0.0");
+			processAnimation(Constants.BACK, print_writers, "Anim_Milestone", "SHOW 0.0");
 			
 			
 			processAnimation(Constants.FRONT, print_writers, "Anim_Bugs$Essentials", "SHOW 0.0");
@@ -5445,6 +5461,9 @@ public class Animation
 			case Constants.NPL:
 				if(whichside == 1) {
 					switch (whatToProcess.split(",")[0]) {
+					case "Alt_m": case "Alt_n":
+						previewCommand = "Anim_Infobar$Push 0.500 Anim_Milestone$In_Out 2.760 Anim_Milestone$In_Out$In 2.560";
+						break;
 					case "Control_F10": case "Shift_F10": case "Alt_F11": case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": case "Control_Shift_Z":
 					case "Control_Shift_Y":
 						previewCommand = "Anim_Infobar$Push 0.500 Anim_FullFrames$In_Out$Essentials$In 2.800 Anim_FullFrames$In_Out$Header$In 2.000"
