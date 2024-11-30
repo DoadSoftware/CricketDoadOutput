@@ -455,8 +455,7 @@ public class Animation
 			case "Control_Shift_R": case "Control_Shift_F3":  case "Shift_C": case "Control_Shift_J":
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
 				TimeUnit.MILLISECONDS.sleep(500);
-				processAnimation(Constants.FRONT, print_writers, "Anim_Bugs$Essentials", "START");
-				processAnimation(Constants.FRONT, print_writers, "Anim_Bugs$RightPart", "START");
+				processAnimation(Constants.FRONT, print_writers, "Bug_In", "START");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "Shift_F1": case "Shift_F2": case "Alt_F1": case "Alt_F2": case "Alt_F7":
@@ -2264,9 +2263,10 @@ public class Animation
 				break;
 			case "Shift_O": case "Control_k": case "k": case "g": case "y": case "Control_y": case "h": case "Shift_F4": case "Shift_F": case "Alt_p":
 			case "Control_Shift_R": case "Control_Shift_F3":  case "Shift_C": case "Control_Shift_J":
-				processAnimation(Constants.FRONT, print_writers, "Anim_Bugs$Essentials", "CONTINUE");
-				TimeUnit.MILLISECONDS.sleep(400);
-				processAnimation(Constants.FRONT, print_writers, "Anim_Bugs$RightPart", "CONTINUE");
+				processAnimation(Constants.FRONT, print_writers, "Bug_Out", "START");
+				TimeUnit.MILLISECONDS.sleep(300);
+				processAnimation(Constants.FRONT, print_writers, "Bug_In", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "Bug_Out", "SHOW 0.0");
 				AnimateIn("ArrowUp,", print_writers, config);
 				this.whichGraphicOnScreen = "";
 				break;
@@ -3361,9 +3361,7 @@ public class Animation
 				}
 				break;
 			case "Shift_F": case "y": case "Shift_O":
-				processAnimation(Constants.FRONT, print_writers, "Anim_BugsChange", "CONTINUE");
-				TimeUnit.MILLISECONDS.sleep(200);
-				processAnimation(Constants.FRONT, print_writers, "Anim_Bug_Right_Change", "CONTINUE");
+				processAnimation(Constants.FRONT, print_writers, "Bug_Change", "START");
 				break;
 			case "Shift_F1": case "Shift_F2": case "Alt_F1": case "Alt_F2": case "Alt_F7":
 				processAnimation(Constants.FRONT, print_writers, "Anim_MiniChange", "START");
@@ -4376,8 +4374,8 @@ public class Animation
 				processAnimation(Constants.FRONT, print_writers, "Anim_MiniChange", "SHOW 0.0");
 				break;
 			case "Shift_F": case "y": case "Shift_O":
-				processAnimation(Constants.FRONT, print_writers, "Anim_BugsChange", "SHOW 0.0");
-				processAnimation(Constants.FRONT, print_writers, "Anim_Bug_Right_Change", "SHOW 0.0");
+				processAnimation(Constants.FRONT, print_writers, "Bug_In", "SHOW 0.714");
+				processAnimation(Constants.FRONT, print_writers, "Bug_Change", "SHOW 0.0");
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "Control_Shift_O":
@@ -6568,18 +6566,8 @@ public class Animation
 						case "Shift_O": case "Control_k": case "k": case "g": case "y": case "Control_y": case "h": case "Shift_F4": case "Shift_F":
 						case ".": case "/": case "Shift_C": case "Control_Shift_R": case "Control_Shift_F3": case "Control_Shift_J": case "Alt_p": case "o": case "t":
 							
-//							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/Overlays C:/Temp/Preview.tga "
-//									+ "Anim_Bugs$Essentials$In 2.200 Anim_Bugs$RightPart$In 2.200\0", print_writer);
-							
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + whichside 
-									+ "$txt_Name*VALUE*X SET 1.0\0", print_writer);
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + whichside 
-									+ "$txt_Runs*VALUE*X SET 1.0\0", print_writer);
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + whichside 
-									+ "$txt_Balls*VALUE*X SET 0.8\0", print_writer);
-
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/Overlays C:/Temp/Preview.tga "
-									+ "Anim_Bugs 2.200 Anim_Bugs$Essentials 2.200 Anim_Bugs$Essentials$In 0.800 Anim_Bugs$RightPart 2.200 Anim_Bugs$RightPart$In 0.700\0", print_writer);
+									+ "Bug_In 0.714\0", print_writer);
 							
 							break;
 						 case "Control_Shift_U": case "Control_Shift_V":
@@ -6596,7 +6584,7 @@ public class Animation
 						case "Shift_O": case "Control_k": case "k": case "g": case "y": case "Control_y": case "h": case "Shift_F4": case "Shift_F":
 						case ".": case "/":	case "Control_Shift_F3": case "Control_Shift_J":
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*"
-									+ "/Default/Overlays C:/Temp/Preview.tga Anim_BugsChange 1.160 Anim_Bug_Right_Change 1.260 \0", print_writer);
+									+ "/Default/Overlays C:/Temp/Preview.tga Bug_Change 1.334 Bug_Change$Out 0.600 Bug_Change$Bug_In 1.334\0", print_writer);
 							break;
 						case "Control_Shift_U": case "Control_Shift_V":
 							 CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*" + "/Default/Overlays" + " C:/Temp/Preview.tga "
