@@ -13956,7 +13956,7 @@ public class FullFramesGfx
 			}else if(whatToProcess.equalsIgnoreCase("Control_Shift_Y")){
 				rowId = 0;
 				for(int i = 0; i <= tournament_stats.size() - 1 ; i++) {
-					if(tournament_stats.get(i).getBallsFaced() >= 30) {
+					if(tournament_stats.get(i).getBallsBowled() >= 60) {
 						rowId++;
 						if(rowId>=6) break;
 						if(tournament_stats.get(i).getPlayerId() == FirstPlayerId) {
@@ -13985,7 +13985,7 @@ public class FullFramesGfx
 									+"$Leader_Board$Stats$Stats$"+rowId+containerName+"$txt_NotOutStar*ACTIVE SET 0\0", print_writers);
 						
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$AllGraphics$Side" + WhichSide 
-									+"$Leader_Board$Stats$Stats$"+rowId+containerName+"$txt_Fig*GEOM*TEXT SET "+CricketFunctions.getEconomy(tournament_stats.get(i).getRuns(), tournament_stats.get(i).getBallsBowled(), 1, "-")+"\0", print_writers);
+									+"$Leader_Board$Stats$Stats$"+rowId+containerName+"$txt_Fig*GEOM*TEXT SET "+CricketFunctions.getEconomy(tournament_stats.get(i).getRunsConceded(), tournament_stats.get(i).getBallsBowled(), 1, "-")+"\0", print_writers);
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$AllGraphics$Side" + WhichSide 
 									+"$Leader_Board$Stats$Stats$"+rowId+containerName+"$txt_Team*GEOM*TEXT SET "+Teams.get(tournament_stats.get(i).getPlayer().
 											getTeamId() - 1).getTeamName1()+"\0", print_writers);

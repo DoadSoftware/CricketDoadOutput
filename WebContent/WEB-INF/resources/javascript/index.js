@@ -3751,6 +3751,27 @@ function addItemsToList(whatToProcess,dataToProcess)
 			}
 			let num = 0;
 			switch(whatToProcess){
+				case 'Control_Shift_Y':
+					select = document.createElement('select');
+					select.id = 'selectPlayerName';
+					select.name = select.id;
+					num = 0;
+					for(i=0;i<dataToProcess.length;i++){
+						if(dataToProcess[i].ballsBowled>=60){
+							if(num<5){
+								option = document.createElement('option');
+					            option.value = (num+1)+ "_" + dataToProcess[i].playerId;
+					            option.text = dataToProcess[i].player.full_name;
+					            select.appendChild(option);
+					            num++;
+							}
+						}
+					}
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),0);
+					cellCount = cellCount + 1
+					break;
 				case 'Control_Shift_Z':
 					select = document.createElement('select');
 					select.id = 'selectPlayerName';
