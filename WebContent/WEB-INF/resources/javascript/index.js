@@ -346,7 +346,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Shift_F1': case 'Shift_F2': case 'Shift_D': case 'Control_q': case 'Control_b': case 'o': case 'Control_F2': case 'b':
 			case 'Alt_F11': case 'r': case 'Shift_U': case 'Alt_j': case 'Alt_h': case 'Alt_Shift_L': //case 'Shift_F':
 			case 'Control_F8': case 'Alt_y': case '.': case '/': case 'Shift_V': case 'Alt_i': case 'b': case 'Shift_B': case 'Control_Shift_B':
-			case 'Alt_Shift_F3': case 'Control_Shift_R': case 'Control_Shift_F3': case 'Control_Shift_H':
+			case 'Alt_Shift_F3': case 'Control_Shift_R': case 'Control_Shift_F3': case 'Control_Shift_H': case "Control_Shift_I":
 				/*switch(dataToProcess){
 				case 'Shift_F':
 					count++;
@@ -1499,7 +1499,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			
 			switch($('#selected_broadcaster').val().toUpperCase()){
-				case 'BENGAL-T20':
+				case 'BENGAL-T20': case 'NPL':
 				break;
 				default:
 				select = document.createElement('select');
@@ -3519,23 +3519,23 @@ function addItemsToList(whatToProcess,dataToProcess)
 			select.name = select.id;
 			
 			option = document.createElement('option');
-			option.value = session_match.setup.homeTeam.teamName4 + '-' + 'BAT';
-			option.text = session_match.setup.homeTeam.teamName4 + '-' + 'BAT';
+			option.value = session_match.setup.homeTeam.teamName2 + '-' + 'BAT';
+			option.text = session_match.setup.homeTeam.teamName2 + '-' + 'BAT';
 			select.appendChild(option);
 			
 			option = document.createElement('option');
-			option.value = session_match.setup.homeTeam.teamName4 + '-' + 'FIELD';
-			option.text = session_match.setup.homeTeam.teamName4 + '-' + 'FIELD';
+			option.value = session_match.setup.homeTeam.teamName2 + '-' + 'FIELD';
+			option.text = session_match.setup.homeTeam.teamName2 + '-' + 'FIELD';
 			select.appendChild(option);
 			
 			option = document.createElement('option');
-			option.value = session_match.setup.awayTeam.teamName4 + '-' + 'BAT';
-			option.text = session_match.setup.awayTeam.teamName4 + '-' + 'BAT';
+			option.value = session_match.setup.awayTeam.teamName2 + '-' + 'BAT';
+			option.text = session_match.setup.awayTeam.teamName2 + '-' + 'BAT';
 			select.appendChild(option);
 			
 			option = document.createElement('option');
-			option.value = session_match.setup.awayTeam.teamName4 + '-' + 'FIELD';
-			option.text = session_match.setup.awayTeam.teamName4 + '-' + 'FIELD';
+			option.value = session_match.setup.awayTeam.teamName2 + '-' + 'FIELD';
+			option.text = session_match.setup.awayTeam.teamName2 + '-' + 'FIELD';
 			select.appendChild(option);
 			
 			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");

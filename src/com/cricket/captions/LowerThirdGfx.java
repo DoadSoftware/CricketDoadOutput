@@ -4736,11 +4736,11 @@ public class LowerThirdGfx
 		Calendar cal_bengal = Calendar.getInstance();
 		cal_bengal.add(Calendar.DATE, +1);
 		if(fixture.getDate().equalsIgnoreCase(new SimpleDateFormat("dd-MM-yyyy").format(cal_bengal.getTime()))) {
-			text = "TOMORROW - " + fixture.getLocalTime() + " IST - " + fixture.getVenue();
+			text = "TOMORROW - " + fixture.getLocalTime() + " NST - " + fixture.getVenue();
 		}else {
 			cal_bengal.add(Calendar.DATE, -1);
 			if(fixture.getDate().equalsIgnoreCase(new SimpleDateFormat("dd-MM-yyyy").format(cal_bengal.getTime()))) {
-				text = "UP NEXT - " + fixture.getLocalTime() + " IST - " + fixture.getVenue();
+				text = "UP NEXT - "+match_name;
 			}else {
 				newDate = fixture.getDate().split("-")[0];
 				if(Integer.valueOf(newDate) < 10) {
@@ -4749,7 +4749,7 @@ public class LowerThirdGfx
 				date_data = newDate + dateSuffix[Integer.valueOf(newDate)] + " " + 
 						Month.of(Integer.valueOf(fixture.getDate().split("-")[1])) + " " + fixture.getDate().split("-")[2];
 				
-				text = date_data + " - " + fixture.getLocalTime() + " IST - " + fixture.getVenue();
+				text = date_data + " - " + fixture.getLocalTime() + " NST - " + fixture.getVenue();
 			}
 		}
 		
@@ -8208,7 +8208,7 @@ public class LowerThirdGfx
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Right_Info_ALL$Side" + WhichSide 
 							+ "$Data_grp$Player_Score$txt_Runs*GEOM*TEXT SET " + lowerThird.getScoreText() + "\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Right_Info_ALL$Side" + WhichSide 
-							+ "$Data_grp$Player_Score$txt_balls*GEOM*TEXT SET OFF " + lowerThird.getBallsFacedText() + "\0", print_writers);
+							+ "$Data_grp$Player_Score$txt_balls*GEOM*TEXT SET " + lowerThird.getBallsFacedText()+ " BALLS" + "\0", print_writers);
 					
 					break;
 				case Constants.BENGAL_T20:
@@ -11051,7 +11051,7 @@ public class LowerThirdGfx
 					}
 					System.out.println(Float.valueOf(CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls()))+" : "+phaseWiseScore);
 					
-					if(Integer.valueOf(phaseWiseScore.split("_")[0].split(",")[0]) == 0 && Integer.valueOf(phaseWiseScore.split("_")[0].split(",")[1]) == 0) {
+					if(Integer.valueOf(phaseWiseScore.split("\\|")[0].split("_")[0].split(",")[0]) == 0 && Integer.valueOf(phaseWiseScore.split("\\|")[0].split("_")[0].split(",")[1]) == 0) {
 						if(Float.valueOf(CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls())) > 0.0) {
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
 									"$Side" + WhichSide + "$Multi$Data$1$txt2*GEOM*TEXT SET " + "0-0" + "\0", print_writers);
@@ -11061,9 +11061,9 @@ public class LowerThirdGfx
 						}
 					}else {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
-								"$Side" + WhichSide + "$Multi$Data$1$txt2*GEOM*TEXT SET " + phaseWiseScore.split("_")[0].split(",")[0]+"-"+phaseWiseScore.split("_")[0].split(",")[1] + "\0", print_writers);
+								"$Side" + WhichSide + "$Multi$Data$1$txt2*GEOM*TEXT SET " + phaseWiseScore.split("\\|")[0].split("_")[0].split(",")[0]+"-"+phaseWiseScore.split("\\|")[0].split("_")[0].split(",")[1] + "\0", print_writers);
 					}
-					if(Integer.valueOf(phaseWiseScore.split("_")[1].split(",")[0]) == 0 && Integer.valueOf(phaseWiseScore.split("_")[1].split(",")[1]) == 0) {
+					if(Integer.valueOf(phaseWiseScore.split("\\|")[0].split("_")[1].split(",")[0]) == 0 && Integer.valueOf(phaseWiseScore.split("\\|")[0].split("_")[1].split(",")[1]) == 0) {
 						if(Float.valueOf(CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls())) > 6.0) {
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
 									"$Side" + WhichSide + "$Multi$Data$2$txt2*GEOM*TEXT SET " + "0-0" + "\0", print_writers);
@@ -11073,9 +11073,9 @@ public class LowerThirdGfx
 						}
 					}else {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
-								"$Side" + WhichSide + "$Multi$Data$2$txt2*GEOM*TEXT SET " + phaseWiseScore.split("_")[1].split(",")[0]+"-"+phaseWiseScore.split("_")[1].split(",")[1] + "\0", print_writers);
+								"$Side" + WhichSide + "$Multi$Data$2$txt2*GEOM*TEXT SET " + phaseWiseScore.split("\\|")[0].split("_")[1].split(",")[0]+"-"+phaseWiseScore.split("\\|")[0].split("_")[1].split(",")[1] + "\0", print_writers);
 					}
-					if(Integer.valueOf(phaseWiseScore.split("_")[2].split(",")[0]) == 0 && Integer.valueOf(phaseWiseScore.split("_")[2].split(",")[1]) == 0) {
+					if(Integer.valueOf(phaseWiseScore.split("\\|")[0].split("_")[2].split(",")[0]) == 0 && Integer.valueOf(phaseWiseScore.split("\\|")[0].split("_")[2].split(",")[1]) == 0) {
 						if(Float.valueOf(CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls())) > 15.0) {
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
 									"$Side" + WhichSide + "$Multi$Data$3$txt2*GEOM*TEXT SET " + "0-0" + "\0", print_writers);
@@ -11085,7 +11085,7 @@ public class LowerThirdGfx
 						}
 					}else {
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp" +
-								"$Side" + WhichSide + "$Multi$Data$3$txt2*GEOM*TEXT SET " + phaseWiseScore.split("_")[2].split(",")[0] +"-"+phaseWiseScore.split("_")[2].split(",")[1] + "\0", print_writers);
+								"$Side" + WhichSide + "$Multi$Data$3$txt2*GEOM*TEXT SET " + phaseWiseScore.split("\\|")[0].split("_")[2].split(",")[0] +"-"+phaseWiseScore.split("\\|")[0].split("_")[2].split(",")[1] + "\0", print_writers);
 					}
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Bottom_Grp$Side" + WhichSide 
 						+ "$Multi$Stat_Head_GRP$txt1*GEOM*TEXT SET " + lowerThird.getLeftText()[0] + "\0", print_writers);

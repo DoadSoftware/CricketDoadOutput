@@ -8452,7 +8452,7 @@ public class InfobarGfx
 			switch (whatToProcess.split(",")[2]) {
 			case CricketUtil.TOSS:
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$SB_Ident$Data_Grp$Bottom_Grp$Stat_Head_GRP$Side" + WhichSide + "$txt1*GEOM*TEXT SET " + 
-						CricketFunctions.generateTossResult(matchAllData, CricketUtil.FULL, CricketUtil.FIELD, CricketUtil.FULL, CricketUtil.ELECTED).toUpperCase() + "\0", print_writers);
+						CricketFunctions.generateTossResult(matchAllData, CricketUtil.FULL, CricketUtil.FIELD, CricketUtil.FULL, CricketUtil.CHOSE).toUpperCase() + "\0", print_writers);
 				break;
 			case "TOURNAMENT":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$SB_Ident$Data_Grp$Bottom_Grp$Stat_Head_GRP$Side" + WhichSide + "$txt1*GEOM*TEXT SET " + 

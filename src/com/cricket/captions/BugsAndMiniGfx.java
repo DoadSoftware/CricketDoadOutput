@@ -1038,7 +1038,7 @@ public class BugsAndMiniGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_new$Side" + WhichSide 
 						+ "$Single$img_Badges*TEXTURE*IMAGE SET "+Constants.NPL_LOGO_PATH+whatToProcess.split(",")[2].split("-")[0]+"\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_new$Side" + WhichSide 
-						+ "$Single$Info03*GEOM*TEXT SET "+whatToProcess.split(",")[2].split("-")[0] + " WON THE TOSS "+"& CHOOSE TO "+whatToProcess.split(",")[2].split("-")[1]+"\0", print_writers);
+						+ "$Single$Info03*GEOM*TEXT SET "+whatToProcess.split(",")[2].split("-")[0] + " WON THE TOSS "+"& CHOSE TO "+whatToProcess.split(",")[2].split("-")[1]+"\0", print_writers);
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_new$Side" + WhichSide 
 						+ "$Single$Info01*ACTIVE SET 0\0", print_writers);

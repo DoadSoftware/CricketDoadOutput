@@ -169,10 +169,21 @@ public class Caption
 				status = this_lowerThirdGfx.populateImpact(whatToProcess, whichSide, matchAllData);
 				break;
 			case "Control_Shift_E":
-				status = this_bugsAndMiniGfx.populateBowlerVsAllBatsman(whatToProcess, whichSide, matchAllData);
+				switch (config.getBroadcaster()) {
+				case Constants.NPL:
+					status = this_fullFramesGfx.populateBowlerVsAllBatsman(whatToProcess, whichSide, matchAllData);
+					break;
+
+				default:
+					status = this_bugsAndMiniGfx.populateBowlerVsAllBatsman(whatToProcess, whichSide, matchAllData);
+					break;
+				}
 				break;
 			case "Control_Shift_F":
 				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.NPL:
+					status = this_fullFramesGfx.populateBatVsAllBowlers(whatToProcess, whichSide, matchAllData);
+					break;
 				case Constants.ICC_U19_2023:
 					status = this_lowerThirdGfx.populateBatVsAllBowlers(whatToProcess, whichSide, matchAllData);
 					break;
@@ -258,6 +269,10 @@ public class Caption
 				break;
 			case "Alt_F11":
 				status = this_fullFramesGfx.populateDoubleManhattan(whichSide, whatToProcess.split(",")[0],matchAllData,Integer.valueOf(whatToProcess.split(",")[1]));
+				break;
+			case "Control_Shift_I": // Bowling FF
+				status = this_fullFramesGfx.populateFFInningSummary(whichSide, whatToProcess.split(",")[0], matchAllData, 
+					Integer.valueOf(whatToProcess.split(",")[1]));
 				break;
 			case "Alt_F1": // BatGriff
 				switch (config.getBroadcaster().toUpperCase()) {
