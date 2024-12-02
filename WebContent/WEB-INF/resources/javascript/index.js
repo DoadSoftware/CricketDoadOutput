@@ -874,7 +874,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_Shift_F9': case 'Alt_Shift_C': case 'Control_Shift_L':
 	case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_E': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I': case 'Control_F11': case 'Control_Shift_M':
 	case 'Alt_Shift_R': case 'Control_Shift_U': case 'Control_Shift_V': case 'Control_4': case 'Shift_~': case 'Shift_!': case 'Control_Shift_F4': case 'Control_Shift_Z':
-	case 'Control_Shift_Y':
+	case 'Control_Shift_Y': case 'Alt_Shift_W':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		$("#captions_div").hide();
 		$('#select_graphic_options_div').empty();
@@ -3571,8 +3571,16 @@ function addItemsToList(whatToProcess,dataToProcess)
 			cellCount = cellCount + 1;
 			
 			break;	
-		case 'Alt_z':
-			header_text.innerHTML = 'SQUAD';
+		case 'Alt_z': case 'Alt_Shift_W':
+			switch(whatToProcess) {
+				case 'Alt_z':
+					header_text.innerHTML = 'SQUAD';
+					break;
+				case 'Alt_Shift_W':
+					header_text.innerHTML = 'MOST';
+					break;
+			}
+			
 			
 			select = document.createElement('select');
 			select.id = 'selectTeams';
@@ -3590,34 +3598,68 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
 			
-			select = document.createElement('select');
-			select.id = 'selectType';
-			select.name = select.id;
-			
-			option = document.createElement('option');
-			option.value = 'role';
-			option.text = 'Role';
-			select.appendChild(option);
-			
-			/*option = document.createElement('option');
-			option.value = 'matches';
-			option.text = 'Matches';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'runs';
-			option.text = 'Runs';
-			select.appendChild(option);
-			
-			option = document.createElement('option');
-			option.value = 'wickets';
-			option.text = 'Wickets';
-			select.appendChild(option);*/
-			
-			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
-			row.insertCell(cellCount).appendChild(select);
-			setDropdownOptionToSelectOptionArray($(select),1);
-			cellCount = cellCount + 1
+			switch(whatToProcess) {
+				case 'Alt_z':
+					select = document.createElement('select');
+					select.id = 'selectType';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = 'role';
+					option.text = 'Role';
+					select.appendChild(option);
+					
+					/*option = document.createElement('option');
+					option.value = 'matches';
+					option.text = 'Matches';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'runs';
+					option.text = 'Runs';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'wickets';
+					option.text = 'Wickets';
+					select.appendChild(option);*/
+					
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),1);
+					cellCount = cellCount + 1;
+					break;
+				case 'Alt_Shift_W':
+					select = document.createElement('select');
+					select.id = 'selectType';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = 'most_runs';
+					option.text = 'MOST RUNS';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'most_wickets';
+					option.text = 'MOST WICKETS';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'most_fours';
+					option.text = 'MOST FOURS';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'most_sixes';
+					option.text = 'MOST SIXES';
+					select.appendChild(option);
+					
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),1);
+					cellCount = cellCount + 1;
+					break;
+			}
 			break;
 			
 		case 'Shift_T': case 'Alt_F9': case 'Alt_F12': case 'Alt_F10': //case 'Shift_F8':
@@ -5978,7 +6020,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_Shift_F9': case 'Alt_Shift_C': case 'Control_Shift_L':
 			case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_E': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I': 
 			case 'Control_F11': case 'Control_Shift_M': case 'Alt_Shift_R': case 'Control_Shift_U': case 'Control_Shift_V': case 'Control_4': case 'Control_Shift_F4':
-			case 'Control_Shift_Z': case 'Control_Shift_Y':
+			case 'Control_Shift_Z': case 'Control_Shift_Y': case 'Alt_Shift_W':
 				option = document.createElement('input');
 				option.type = 'button';
 				option.name = 'populate_btn';

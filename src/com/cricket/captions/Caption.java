@@ -6,7 +6,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -498,16 +497,20 @@ public class Caption
 				status = this_fullFramesGfx.populateFFPointsTable(whichSide,whatToProcess.split(",")[0], matchAllData, 0);
 				break;
 			case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": case "Control_c": case "Control_v": case "Shift_V":
-			case "Shift_Z": case "Shift_X": case "Control_Shift_Z": case "Control_Shift_Y":
+			case "Shift_Z": case "Shift_X": case "Control_Shift_Z": case "Control_Shift_Y": case "Alt_Shift_W":
 				if(whatToProcess.split(",")[0].equalsIgnoreCase("Shift_Z") || whatToProcess.split(",")[0].equalsIgnoreCase("Shift_X")) {
 					this_fullFramesGfx.FirstPlayerId = Integer.valueOf((whatToProcess.split(",")[2]));
 				}
-				else if(!whatToProcess.split(",")[0].equalsIgnoreCase("Shift_V")) {
+				else if(!whatToProcess.split(",")[0].equalsIgnoreCase("Shift_V") && !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_Shift_W")) {
 					this_fullFramesGfx.FirstPlayerId = Integer.valueOf((whatToProcess.split(",")[2]).split("_")[1]);
 				}
 				if(whatToProcess.split(",")[0].equalsIgnoreCase("Control_Shift_Z")){
 					this_fullFramesGfx.whichSponsor = whatToProcess.split(",")[3];
+				}else if(whatToProcess.split(",")[0].equalsIgnoreCase("Alt_Shift_W")){
+					this_fullFramesGfx.whichtype = whatToProcess.split(",")[3];
+					this_fullFramesGfx.whichTeam = Integer.valueOf(whatToProcess.split(",")[2]);
 				}
+				
 				status = this_fullFramesGfx.populateLeaderBoard(whichSide, whatToProcess.split(",")[0], matchAllData, 0);
 				break;
 			case "u": //30-50

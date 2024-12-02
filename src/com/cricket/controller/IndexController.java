@@ -719,7 +719,7 @@ public class IndexController
 			return (List<T>) CricketFunctions.processAllStaff(cricketService, session_match.getSetup().getAwayTeamId());
 		case "Alt_q":
 			return (List<T>) CricketFunctions.processAllPott(cricketService);
-		case "Alt_Shift_R": case "Alt_z":
+		case "Alt_Shift_R": case "Alt_z": case "Alt_Shift_W":
 			return (List<T>) session_team;
 		case "Shift_!":
 			List<Stats> database_statistics = new ArrayList<Stats>();
