@@ -2177,6 +2177,7 @@ public class InfobarGfx
 					if(this_data_str.get(this_data_str.size()-1) == null) {
 						return "populateVizInfobarRightBottom: This over data returned invalid";
 					}
+					System.out.println("DATA : "+this_data_str.get(0));
 					
 					if(this_data_str.get(this_data_str.size()-1).split(",").length <= 10) {
 						
@@ -2236,7 +2237,16 @@ public class InfobarGfx
 												split(",")[iBall].toUpperCase() + "\0", print_writers);
 									CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Data_Right_Normal$Side_1$Style2$Bottom_Right_Part$Side_" + 
 											WhichSide + "$Balls$" + (iBall + 1) + "$Choose_Type*FUNCTION*Omo*vis_con SET 6 \0", print_writers);
-									totalOverSize++;
+									switch (this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase()) {
+									case "1B": case "2B": case "3B": case "4B": case "5B": case "6B":
+									case "1LB": case "2LB": case "3LB": case "4LB": case "5LB": case "6LB":
+										
+										break;
+
+									default:
+										totalOverSize++;
+										break;
+									}
 								}
 								
 //								CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_"+ WhichSide + "$Bottom_Right_Part$Side_" + 
