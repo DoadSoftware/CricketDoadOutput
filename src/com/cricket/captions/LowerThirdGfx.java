@@ -4739,8 +4739,9 @@ public class LowerThirdGfx
 			text = "TOMORROW - " + fixture.getLocalTime() + " NST - " + fixture.getVenue();
 		}else {
 			cal_bengal.add(Calendar.DATE, -1);
+			System.out.println("cal_bengal.getTime() = " + cal_bengal.getTime());
 			if(fixture.getDate().equalsIgnoreCase(new SimpleDateFormat("dd-MM-yyyy").format(cal_bengal.getTime()))) {
-				text = "UP NEXT - "+match_name;
+				text = "UP NEXT - " + match_name;
 			}else {
 				newDate = fixture.getDate().split("-")[0];
 				if(Integer.valueOf(newDate) < 10) {
