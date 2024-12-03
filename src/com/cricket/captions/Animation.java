@@ -2402,6 +2402,8 @@ public class Animation
 				break;
 			case "Control_Shift_F10":
 				processAnimation(Constants.FRONT, print_writers, "LT_Manhattan$Out", "START");
+				TimeUnit.MILLISECONDS.sleep(2000);
+				processAnimation(Constants.FRONT, print_writers, "LT_Manhattan", "SHOW 0.0");
 				this.whichGraphicOnScreen = "";
 				break;		
 			case "F10": case "Shift_F3": case "u": case "Control_Shift_Q":

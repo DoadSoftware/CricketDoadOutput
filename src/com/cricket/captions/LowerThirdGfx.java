@@ -246,6 +246,13 @@ public class LowerThirdGfx
 			return "PopulateManhattan: current inning is NULL";
 		}
 		
+		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_Man$Logo_Grp"
+				+ "$img_Logo_Shadow*TEXTURE*IMAGE SET " + Constants.NPL_LOGO_PATH + 
+				matchAllData.getMatch().getInning().get(WhichInning - 1).getBatting_team().getTeamBadge() + "\0", print_writers);
+		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_Man$Logo_Grp"
+				+ "$img_Logo*TEXTURE*IMAGE SET " + Constants.NPL_LOGO_PATH + 
+				matchAllData.getMatch().getInning().get(WhichInning - 1).getBatting_team().getTeamBadge() + "\0", print_writers);
+		
 		for (int j = 1; j < manhattan.size(); j++) {
 			if(manhattan.get(j).getInningNumber() == WhichInning) {
 				if(Integer.valueOf(manhattan.get(j).getOverTotalRuns()) > maxRuns){
@@ -260,11 +267,11 @@ public class LowerThirdGfx
 		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_Man$Man20"
 				+ "$Row3$Runs*GEOM*TEXT SET 0\0", print_writers);
 		
-		for(int i = 0; i < 3;i++) {
-			runsIncr = maxRuns / 3; // 35/5=7 -> Y axis will be plot like 6,12,18,24,30 & 36
+		for(int i = 1; i < 3;i++) {
+			runsIncr = maxRuns / 2; // 35/5=7 -> Y axis will be plot like 6,12,18,24,30 & 36
 			
 			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_Man$Man20"
-					+ "$Row" + (3-(i+1)) + "$Runs*GEOM*TEXT SET " + runsIncr*(i+1) + "\0", print_writers);
+					+ "$Row" + (3-(i)) + "$Runs*GEOM*TEXT SET " + runsIncr*(i) + "\0", print_writers);
 		}
 		
 		
@@ -8209,7 +8216,8 @@ public class LowerThirdGfx
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Right_Info_ALL$Side" + WhichSide 
 							+ "$Data_grp$Player_Score$txt_Runs*GEOM*TEXT SET " + lowerThird.getScoreText() + "\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LowerThird$Data_Grp$Right_Info_ALL$Side" + WhichSide 
-							+ "$Data_grp$Player_Score$txt_balls*GEOM*TEXT SET " + lowerThird.getBallsFacedText()+ " BALLS" + "\0", print_writers);
+							+ "$Data_grp$Player_Score$txt_balls*GEOM*TEXT SET " + lowerThird.getBallsFacedText()+ " BALL" + 
+							CricketFunctions.Plural(Integer.valueOf(lowerThird.getBallsFacedText())).toUpperCase() + "\0", print_writers);
 					
 					break;
 				case Constants.BENGAL_T20:

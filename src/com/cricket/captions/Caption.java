@@ -664,7 +664,7 @@ public class Caption
 					status = this_lowerThirdGfx.InfobarManhattan(print_writers,matchAllData,Integer.valueOf(whatToProcess.split(",")[1]));
 					break;	
 				}
-				status = this_infobarGfx.InfobarManhattan(print_writers,matchAllData,Integer.valueOf(whatToProcess.split(",")[1]));
+				//status = this_infobarGfx.InfobarManhattan(print_writers,matchAllData,Integer.valueOf(whatToProcess.split(",")[1]));
 				break;	
 			case "Alt_1": // Infobar Left Bottom
 				switch (config.getBroadcaster().toUpperCase()) {

@@ -376,6 +376,10 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 							dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
 							processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
 							break;
+						case '8':
+							dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
+							processCricketProcedures("ANIMATE-IN-GRAPHICS", dataToProcess);
+							break;	
 					}
 					
 					break;
@@ -5703,6 +5707,11 @@ function addItemsToList(whatToProcess,dataToProcess)
 							option = document.createElement('option');
 							option.value = 'DT20';
 							option.text = 'DT20';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'IT20';
+							option.text = 'IT20';
 							select.appendChild(option);
 						break;
 					}
