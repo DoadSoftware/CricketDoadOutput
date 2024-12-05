@@ -510,11 +510,18 @@ public class Caption
 				break;
 			case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": case "Control_c": case "Control_v": case "Shift_V":
 			case "Shift_Z": case "Shift_X": case "Control_Shift_Z": case "Control_Shift_Y": case "Alt_Shift_W": case "Control_Shift_F8":
+				
+				System.out.println(whatToProcess);
 				if(whatToProcess.split(",")[0].equalsIgnoreCase("Shift_Z") || whatToProcess.split(",")[0].equalsIgnoreCase("Shift_X")) {
 					this_fullFramesGfx.FirstPlayerId = Integer.valueOf((whatToProcess.split(",")[2]));
 				}
-				else if(!whatToProcess.split(",")[0].equalsIgnoreCase("Shift_V") && !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_Shift_W")) {
+				else if(!whatToProcess.split(",")[0].equalsIgnoreCase("Shift_V") && !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_Shift_W")
+						&& !whatToProcess.split(",")[0].equalsIgnoreCase("Control_Shift_F8")) {
 					this_fullFramesGfx.FirstPlayerId = Integer.valueOf((whatToProcess.split(",")[2]).split("_")[1]);
+				}else if(whatToProcess.split(",")[0].equalsIgnoreCase("Control_Shift_F8")) {
+					this_fullFramesGfx.FirstPlayerId = Integer.valueOf((whatToProcess.split(",")[2]).split("_")[1]);
+					this_fullFramesGfx.whichtype = whatToProcess.split(",")[3];
+					this_fullFramesGfx.whichTeam = Integer.valueOf(whatToProcess.split(",")[4]);
 				}
 				if(whatToProcess.split(",")[0].equalsIgnoreCase("Control_Shift_Z")){
 					this_fullFramesGfx.whichSponsor = whatToProcess.split(",")[3];

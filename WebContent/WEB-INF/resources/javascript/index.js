@@ -536,19 +536,21 @@ function setPlayerInDropdown(dataToProcess) {
     const playerSelect = document.createElement('select');
     playerSelect.id = 'playerDropdown';
     
-    dataToProcess.forEach(player => {
-        const option = document.createElement('option');
-        option.value = player.playerId;  
+    let numb = 0;
+	dataToProcess.forEach(player => {
+		numb++;
+		const option = document.createElement('option');
+        option.value = numb + '_' + player.playerId;  
         option.text = player.player.full_name; 
         playerSelect.appendChild(option);
-      });
-
+  	});
+    
 	playerSelect.selectedIndex = 0;
     $(playerSelect).on('change', function() {
-		setDropdownOptionToSelectOptionArray($(this), 2);
+		setDropdownOptionToSelectOptionArray($(this), 0);
     });        
     playerCell.appendChild(playerSelect);
-	   setDropdownOptionToSelectOptionArray($(this), 2);
+	   setDropdownOptionToSelectOptionArray($(this), 0);
 	$(playerSelect).trigger('change');
 }
 function setDropdownOptionToSelectOptionArray(whichInput, whichIndex)
@@ -1097,12 +1099,12 @@ function addItemsToList(whatToProcess,dataToProcess)
 				});
 			
 			     $(select).on('change', function() {
-			        setDropdownOptionToSelectOptionArray(this, 0);
+			        setDropdownOptionToSelectOptionArray(this, 2);
 			        processCricketProcedures("GRAPHICS-OPTIONS_DATA", whatToProcess + "," +$('#selectTeam').val() + "," + 
 			            ($('#selectStats').val() || $('#selectStats').find('option').first().val()));
 			    });
 			    row.insertCell(cellCount).appendChild(select);
-			    setDropdownOptionToSelectOptionArray($(select), 0);
+			    setDropdownOptionToSelectOptionArray($(select), 2);
 			    cellCount++;
 			
 			    select = document.createElement('select');
@@ -6094,7 +6096,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 	    	cellCount = cellCount + 1;
 		}
 		if(whatToProcess == 'z' || whatToProcess == 'x' || whatToProcess == 'c' || whatToProcess == 'v' || 
-			whatToProcess == 'Control_z' || whatToProcess == 'Control_x' || whatToProcess == 'Control_Shift_Z' || whatToProcess == 'Control_Shift_Y'){
+			whatToProcess == 'Control_z' || whatToProcess == 'Control_x' || whatToProcess == 'Control_Shift_Z' || whatToProcess == 'Control_Shift_Y' || 
+			whatToProcess == 'Control_Shift_F8'){
 			option = document.createElement('input');
 			option.type = 'button';
 			option.name = 'highlightLeader';

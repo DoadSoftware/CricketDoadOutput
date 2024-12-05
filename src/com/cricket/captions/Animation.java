@@ -334,22 +334,9 @@ public class Animation
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Row_Col", "START");
 				
 				this.whichGraphicOnScreen = whatToProcess;
-				break;
-			case "Control_Shift_F8":
-				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
-				TimeUnit.MILLISECONDS.sleep(500);
-				processAnimation(Constants.BACK, print_writers, "Loop", "START");
-				processAnimation(Constants.BACK, print_writers, "BG_Scale", "START");
-				
-				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Essentials", "START");
-				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Header", "START");
-				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$SubHeader", "START");
-				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$ExtraData", "START");
-				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Leader_Board", "START");
-				
-				this.whichGraphicOnScreen = whatToProcess;
 				break;	
 			case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": case "Control_Shift_Z": case "Control_Shift_Y":
+			case "Control_Shift_F8":	
 				AnimateIn("ArrowDown,", print_writers, config); // Push infobar
 				TimeUnit.MILLISECONDS.sleep(500);
 				processAnimation(Constants.BACK, print_writers, "Loop", "START");
@@ -370,10 +357,12 @@ public class Animation
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$SubHeader", "START");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$ExtraData", "START");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Leader_Board", "START");
+				
 				if(Integer.valueOf(whatToProcess.split(",")[2].split("_")[0]) > 0) {
-					processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player"+whatToProcess.split(",")[2].split("_")[0], "START");
+					processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player" + whatToProcess.split(",")[2].split("_")[0], "START");
 					prevLeaderHighlight = whatToProcess.split(",")[2].split("_")[0];
 				}
+				
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "Shift_D":
@@ -2189,22 +2178,6 @@ public class Animation
 				this.whichGraphicOnScreen = "";
 				break;	
 			
-			case "Control_Shift_F8":
-				
-				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Essentials", "CONTINUE");
-				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Header", "CONTINUE");
-				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$SubHeader", "CONTINUE");
-				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$ExtraData", "CONTINUE");
-				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Row_Col", "CONTINUE");
-				processAnimation(Constants.BACK, print_writers, "BG_Scale", "CONTINUE REVERSE");
-				
-				processAnimation(Constants.BACK, print_writers, "Loop", "SHOW 0.0");
-				TimeUnit.MILLISECONDS.sleep(400);
-				AnimateIn("ArrowUp,", print_writers, config); // Push infobar
-				this.whichGraphicOnScreen = "";
-				
-				break;
-				
 			case "Alt_Shift_W":
 				
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Essentials", "CONTINUE");
@@ -2221,6 +2194,7 @@ public class Animation
 				
 				break;
 			case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": case "Control_Shift_Z": case "Control_Shift_Y":
+			case "Control_Shift_F8":	
 //				if(sponsorOnScreen) {
 //					processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Sponsor", "CONTINUE");
 //					sponsorOnScreen = false;
@@ -2233,9 +2207,11 @@ public class Animation
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$ExtraData", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "Anim_FullFrames$In_Out$Main$Leader_Board", "CONTINUE");
 				processAnimation(Constants.BACK, print_writers, "BG_Scale", "CONTINUE REVERSE");
+				
 				if(Integer.valueOf(prevLeaderHighlight) > 0) {
-					processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player"+prevLeaderHighlight, "CONTINUE");
+					processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player" + prevLeaderHighlight, "CONTINUE");
 				}
+				
 				prevLeaderHighlight = "0";
 				processAnimation(Constants.BACK, print_writers, "Loop", "SHOW 0.0");
 				TimeUnit.MILLISECONDS.sleep(400);
@@ -3203,12 +3179,6 @@ public class Animation
 					infobar.setRight_bottom("");
 					break;
 				}
-				break;
-			case "Control_Shift_F8":
-				processAnimation(Constants.BACK, print_writers, "Change$Header", "START");
-				processAnimation(Constants.BACK, print_writers, "Change$SubHeader", "START");
-				processAnimation(Constants.BACK, print_writers, "Change$ExtraData", "START");
-				processAnimation(Constants.BACK, print_writers, "Change$Leader_Board", "START");
 				break;	
 			case "Alt_Shift_W":
 				processAnimation(Constants.BACK, print_writers, "Change$Header", "START");
@@ -3217,13 +3187,15 @@ public class Animation
 				processAnimation(Constants.BACK, print_writers, "Change$Row_Col", "START");
 				break;
 			case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": case "Control_Shift_Z": case "Control_Shift_Y":
+			case "Control_Shift_F8":
 				if(!whatToProcess.split(",")[0].equalsIgnoreCase(whichGraphicOnScreen.split(",")[0])) {
 					processAnimation(Constants.BACK, print_writers, "Change$Header", "START");
 					processAnimation(Constants.BACK, print_writers, "Change$SubHeader", "START");
 					processAnimation(Constants.BACK, print_writers, "Change$ExtraData", "START");
 					processAnimation(Constants.BACK, print_writers, "Change$Leader_Board", "START");
+					
 					if(Integer.valueOf(whatToProcess.split(",")[2].split("_")[0]) > 0) {
-						processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side2$Player"+whatToProcess.split(",")[2].split("_")[0], "START");
+						processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side2$Player" + whatToProcess.split(",")[2].split("_")[0], "START");
 					}
 				}
 				break;
@@ -3390,9 +3362,11 @@ public class Animation
 					processAnimation(Constants.BACK, print_writers, "Change$SubHeader", "START");
 					processAnimation(Constants.BACK, print_writers, "Change$Profile", "START");
 					processAnimation(Constants.BACK, print_writers, "Change$ExtraData", "START");
+					
 					if(Integer.valueOf(prevHighlightDirector) > 0) {
-						processAnimation(Constants.BACK, print_writers, "Profile_Highlight$Side1$"+prevHighlightDirector, "CONTINUE");
+						processAnimation(Constants.BACK, print_writers, "Profile_Highlight$Side1$" + prevHighlightDirector, "CONTINUE");
 					}
+					
 					break;
 				}
 				
@@ -3473,8 +3447,8 @@ public class Animation
 				break;
 			case "highlightLeader":
 				if(Integer.valueOf(prevLeaderHighlight) > 0) {
-					processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player"+prevLeaderHighlight, "SHOW 1.0");
-					processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player"+prevLeaderHighlight, "CONTINUE");
+					processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player" + prevLeaderHighlight, "SHOW 1.0");
+					processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player" + prevLeaderHighlight, "CONTINUE");
 				}
 				TimeUnit.MILLISECONDS.sleep(200);
 				if(Integer.valueOf(whatToProcess.split(",")[2].split("_")[0]) > 0) {
@@ -4379,13 +4353,6 @@ public class Animation
 					}
 				}
 				break;
-			case "Control_Shift_F8":
-				processAnimation(Constants.BACK, print_writers, "Change$Header", "SHOW 0.0");
-				processAnimation(Constants.BACK, print_writers, "Change$SubHeader", "SHOW 0.0");
-				processAnimation(Constants.BACK, print_writers, "Change$ExtraData", "SHOW 0.0");
-				processAnimation(Constants.BACK, print_writers, "Change$Leader_Board", "SHOW 0.0");
-				this.whichGraphicOnScreen = whatToProcess;
-				break;	
 			case "Alt_Shift_W":
 				processAnimation(Constants.BACK, print_writers, "Change$Header", "SHOW 0.0");
 				processAnimation(Constants.BACK, print_writers, "Change$SubHeader", "SHOW 0.0");
@@ -4394,16 +4361,19 @@ public class Animation
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": case "Control_Shift_Z": case "Control_Shift_Y":
+			case "Control_Shift_F8":	
 				processAnimation(Constants.BACK, print_writers, "Change$Header", "SHOW 0.0");
 				processAnimation(Constants.BACK, print_writers, "Change$SubHeader", "SHOW 0.0");
 				processAnimation(Constants.BACK, print_writers, "Change$ExtraData", "SHOW 0.0");
 				processAnimation(Constants.BACK, print_writers, "Change$Leader_Board", "SHOW 0.0");
+				
 				if(Integer.valueOf(whatToProcess.split(",")[2].split("_")[0]) > 0) {
 					processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player"+whatToProcess.split(",")[2].split("_")[0], "SHOW 1.000");
 				}
 				processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side2$Player"+whatToProcess.split(",")[2].split("_")[0], "SHOW 0.00");
 				processAnimation(Constants.BACK, print_writers, "LeaderBoardHighlight$Side1$Player"+prevLeaderHighlight, "SHOW 0.00");
 				prevLeaderHighlight = whatToProcess.split(",")[2].split("_")[0];
+				
 				this.whichGraphicOnScreen = whatToProcess;
 				break;
 			case "Control_Shift_F1": case "F1": case "F2": case "Control_Shift_F2": case "Control_F11": case "F4": case "Control_Shift_F4":
@@ -5654,17 +5624,14 @@ public class Animation
 						break;
 					case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q":
 						if(Integer.valueOf(whatToProcess.split(",")[4])>0) {
-							previewCommand = previewCommand + " Profile_Highlight$Side1$"+whatToProcess.split(",")[4]+" 1.780";
+							previewCommand = previewCommand + " Profile_Highlight$Side1$" + whatToProcess.split(",")[4] + " 1.780";
 						}
 						previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Profile 3.000 Anim_FullFrames$In_Out$Main$Profile$In 2.680 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
 						break;
 					case "Alt_Shift_W":
 						previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Row_Col 3.000 Anim_FullFrames$In_Out$Main$Row_Col$In 2.780 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
 						break;
-					case "Control_Shift_F8":
-						previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$Leader_Board 3.000 Anim_FullFrames$In_Out$Main$Leader_Board$In 3.000 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
-						break;
-					case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": case "Control_Shift_Z": case "Control_Shift_Y":
+					case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": case "Control_Shift_Z": case "Control_Shift_Y": case "Control_Shift_F8":
 						if(Integer.valueOf(whatToProcess.split(",")[2].split("_")[0])>0) {
 							previewCommand = previewCommand + " LeaderBoardHighlight$Side1$Player"+whatToProcess.split(",")[2].split("_")[0]+" 1.000";
 						}
@@ -5746,7 +5713,7 @@ public class Animation
 					case "Shift_F8":
 						previewCommand = previewCommand + " Change$TeamSingle 1.440 Change$TeamSingle$Change_Out 0.620 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
 						break;
-					case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": case "Control_Shift_Z": case "Control_Shift_Y":
+					case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": case "Control_Shift_Z": case "Control_Shift_Y": case "Control_Shift_F8":
 						previewCommand = previewCommand + " LeaderBoardHighlight$Side2$Player"+whatToProcess.split(",")[2].split("_")[0]+" 1.000";
 						break;
 					case "Control_F10":
@@ -5798,12 +5765,8 @@ public class Animation
 							case "Alt_Shift_W":	
 								previewCommand = previewCommand + " Change$Row_Col 1.380 Change$Row_Col$Change_Out 0.740 Change$Row_Col$Change_In 1.380 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720"
 										+ " Change$ExtraData$Change_In 1.000";
-								break;
-							case "Control_Shift_F8":
-								previewCommand = previewCommand + " Change$Leader_Board 1.500 Change$Leader_Board$Change_Out 0.600 Change$Leader_Board$Change_In 1.500 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720"
-										+ " Change$ExtraData$Change_In 1.000";
 								break;	
-							case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": case "Control_Shift_Z": case "Control_Shift_Y":
+							case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": case "Control_Shift_Z": case "Control_Shift_Y": case "Control_Shift_F8":
 								previewCommand = previewCommand + " Change$Leader_Board 1.500 Change$Leader_Board$Change_Out 0.600 Change$Leader_Board$Change_In 1.500 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720"
 										+ " Change$ExtraData$Change_In 1.000";
 								break;

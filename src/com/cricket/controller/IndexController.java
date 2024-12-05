@@ -419,8 +419,10 @@ public class IndexController
 			return JSONObject.fromObject(session_match).toString();
 		
 		default:
+			System.out.println("whatToProcess = " + whatToProcess);
 			if(session_configuration.getBroadcaster().equalsIgnoreCase(Constants.NPL)) {
 				if(whatToProcess.split(",")[0].toUpperCase().equalsIgnoreCase("highlightProfile") || whatToProcess.split(",")[0].toUpperCase().equalsIgnoreCase("highlightLeader")) {
+					
 					this_animation.ChangeOn(whatToProcess, print_writers, session_configuration);
 				}
 			}
@@ -760,24 +762,24 @@ public class IndexController
 			return (List<T>) statistics;
 		case "Control_Shift_F8":
 			if(whatToProcess.contains(",")) {
-				List<Tournament> tournament_stats = CricketFunctions.extractTournamentData("CURRENT_MATCH_DATA", false, headToHead, cricketService, 
+				FullFramesGfx.past_tournament_stats = CricketFunctions.extractTournamentData("CURRENT_MATCH_DATA", false, headToHead, cricketService, 
 						session_match, past_tournament_stats);
-				tournament_stats.removeIf(tournament -> tournament.getPlayer().getTeamId() != Integer.valueOf(whatToProcess.split(",")[1])); 
+				FullFramesGfx.past_tournament_stats.removeIf(tournament -> tournament.getPlayer().getTeamId() != Integer.valueOf(whatToProcess.split(",")[1])); 
 				switch(whatToProcess.split(",")[2]) {
 					case "MOST RUNS":
-						Collections.sort(tournament_stats,new CricketFunctions.BatsmenMostRunComparator());
+						Collections.sort(FullFramesGfx.past_tournament_stats,new CricketFunctions.BatsmenMostRunComparator());
 						break;
 					case "MOST WICKETS":
-						Collections.sort(tournament_stats,new CricketFunctions.BowlerWicketsComparator());
+						Collections.sort(FullFramesGfx.past_tournament_stats,new CricketFunctions.BowlerWicketsComparator());
 						break;
 					case "MOST FOURS":
-						Collections.sort(tournament_stats,new CricketFunctions.BatsmanFoursComparator());
+						Collections.sort(FullFramesGfx.past_tournament_stats,new CricketFunctions.BatsmanFoursComparator());
 						break;
 					case "MOST SIXES":
-						Collections.sort(tournament_stats,new CricketFunctions.BatsmanSixesComparator());
+						Collections.sort(FullFramesGfx.past_tournament_stats,new CricketFunctions.BatsmanSixesComparator());
 						break;
 					}
-		        return tournament_stats.size() > 5 ? (List<T>) tournament_stats.subList(0, 5) : (List<T>) tournament_stats;
+		        return FullFramesGfx.past_tournament_stats.size() > 5 ? (List<T>) FullFramesGfx.past_tournament_stats.subList(0, 5) : (List<T>) FullFramesGfx.past_tournament_stats;
 			}else {
 				return (List<T>) cricketService.getTeams();
 			}
