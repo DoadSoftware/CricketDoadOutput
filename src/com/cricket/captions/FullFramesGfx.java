@@ -14407,20 +14407,20 @@ public class FullFramesGfx
 								+"$Leader_Board$Stats$Stats$" + rowId + containerName + "$txt_Team*GEOM*TEXT SET MATCHES - " + past_tournament_stats.get(i).getMatches() + "\0", print_writers);
 						
 						switch (whichtype.toUpperCase()) {
-						case "MOST_RUNS":
+						case "MOST RUNS":
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$AllGraphics$Side" + WhichSide 
 									+"$Leader_Board$Stats$Stats$" + rowId + containerName + "$txt_Fig*GEOM*TEXT SET " + past_tournament_stats.get(i).getRuns() + "\0", print_writers);
 							break;
-						case "MOST_WICKETS":
+						case "MOST WICKETS":
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$AllGraphics$Side" + WhichSide 
 									+"$Leader_Board$Stats$Stats$" + rowId + containerName + "$txt_Fig*GEOM*TEXT SET " + past_tournament_stats.get(i).getWickets() + "\0", print_writers);
 							break;
-						case "MOST_FOURS":
+						case "MOST FOURS":
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$AllGraphics$Side" + WhichSide 
 									+"$Leader_Board$Stats$Stats$" + rowId + containerName + "$txt_Fig*GEOM*TEXT SET " + past_tournament_stats.get(i).getFours() + "\0", print_writers);
 							
 							break;
-						case "MOST_SIXES":
+						case "MOST SIXES":
 							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$AllGraphics$Side" + WhichSide 
 									+"$Leader_Board$Stats$Stats$" + rowId + containerName + "$txt_Fig*GEOM*TEXT SET " + past_tournament_stats.get(i).getSixes() + "\0", print_writers);
 							break;
