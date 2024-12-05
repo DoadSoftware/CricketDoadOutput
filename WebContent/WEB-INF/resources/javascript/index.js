@@ -518,6 +518,7 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 		}
 	});
 }
+
 function removeSelectDuplicates(select_id)
 {
 	var this_list = {};
@@ -919,7 +920,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_Shift_F9': case 'Alt_Shift_C': case 'Control_Shift_L':
 	case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_E': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I': case 'Control_F11': case 'Control_Shift_M':
 	case 'Alt_Shift_R': case 'Control_Shift_U': case 'Control_Shift_V': case 'Control_4': case 'Shift_~': case 'Shift_!': case 'Control_Shift_F4': case 'Control_Shift_Z':
-	case 'Control_Shift_Y': case 'Alt_Shift_W': case 'Control_Shift_F8':
+	case 'Control_Shift_Y': case 'Alt_Shift_W':case "Control_Shift_F8":
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		$("#captions_div").hide();
 		$('#select_graphic_options_div').empty();
@@ -1083,6 +1084,51 @@ function addItemsToList(whatToProcess,dataToProcess)
 			removeSelectDuplicates(select.id);
 			cellCount = cellCount + 1;
 			break;
+		case "Control_Shift_F8":
+				header_text.innerHTML = 'TOURNAMENT TEAM TOP 5';
+			    select = document.createElement('select');
+			    select.id = 'selectTeam';
+			    
+				dataToProcess.forEach(function(teams){
+					option = document.createElement('option');
+					option.value = teams.teamId;
+					option.text = teams.teamName1;
+					select.appendChild(option);
+				});
+			
+			     $(select).on('change', function() {
+			        setDropdownOptionToSelectOptionArray(this, 0);
+			        processCricketProcedures("GRAPHICS-OPTIONS_DATA", whatToProcess + "," +$('#selectTeam').val() + "," + 
+			            ($('#selectStats').val() || $('#selectStats').find('option').first().val()));
+			    });
+			    row.insertCell(cellCount).appendChild(select);
+			    setDropdownOptionToSelectOptionArray($(select), 0);
+			    cellCount++;
+			
+			    select = document.createElement('select');
+			    select.id = 'selectStats';
+			    select.name = select.id;
+			    ['MOST RUNS', 'MOST WICKETS', 'MOST FOURS', 'MOST SIXES'].forEach(stat => {
+			        option = document.createElement('option');
+			        option.value = stat;
+			        option.text = stat;
+			        select.appendChild(option);
+			    });
+			    select.setAttribute('onchange', "setDropdownOptionToSelectOptionArray(this, 1)");
+			     $('#selectStats').on('change', function() {
+			            setDropdownOptionToSelectOptionArray($(select), 1);
+			       });
+			    row.insertCell(cellCount).appendChild(select);
+			    cellCount++;
+			    document.getElementById('selectStats').dispatchEvent(new Event('change'));
+			    row.insertCell(cellCount).id = 'Player';
+			    cellCount++;
+			    $('#selectStats').on('change', function() {
+	    			processCricketProcedures("GRAPHICS-OPTIONS_DATA", whatToProcess + "," + $('#selectTeam').val()+","+
+	    				($('#selectStats').val() || $(this).find('option').first().val()));
+			    });
+			    $('#selectStats').trigger('change');
+			    break;
 		case 'Control_Shift_M':
 			header_text.innerHTML = 'LT MATCH IDENT';
 			
@@ -3615,53 +3661,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
 			
-			break;
-		case "Control_Shift_F8":
-			header_text.innerHTML = 'TOURNAMENT TEAM TOP 5';
-		    select = document.createElement('select');
-		    select.id = 'selectTeam';
-		    
-			dataToProcess.forEach(function(teams){
-				option = document.createElement('option');
-				option.value = teams.teamId;
-				option.text = teams.teamName1;
-				select.appendChild(option);
-			});
-		
-		     $(select).on('change', function() {
-		        setDropdownOptionToSelectOptionArray(this, 0);
-		        processCricketProcedures("GRAPHICS-OPTIONS_DATA", whatToProcess + "," +$('#selectTeam').val() + "," + 
-		            ($('#selectStats').val() || $('#selectStats').find('option').first().val()));
-		    });
-		    row.insertCell(cellCount).appendChild(select);
-		    setDropdownOptionToSelectOptionArray($(select), 0);
-		    cellCount++;
-		
-		    select = document.createElement('select');
-		    select.id = 'selectStats';
-		    select.name = select.id;
-		    ['MOST RUNS', 'MOST WICKETS', 'MOST FOURS', 'MOST SIXES'].forEach(stat => {
-		        option = document.createElement('option');
-		        option.value = stat;
-		        option.text = stat;
-		        select.appendChild(option);
-		    });
-		    select.setAttribute('onchange', "setDropdownOptionToSelectOptionArray(this, 1)");
-		     $('#selectStats').on('change', function() {
-		            setDropdownOptionToSelectOptionArray($(select), 1);
-		       });
-		    row.insertCell(cellCount).appendChild(select);
-		    cellCount++;
-		    document.getElementById('selectStats').dispatchEvent(new Event('change'));
-		    row.insertCell(cellCount).id = 'Player';
-		    cellCount++;
-		    $('#selectStats').on('change', function() {
-    			processCricketProcedures("GRAPHICS-OPTIONS_DATA", whatToProcess + "," + $('#selectTeam').val()+","+
-    				($('#selectStats').val() || $(this).find('option').first().val()));
-		    });
-		    $('#selectStats').trigger('change');
-		    break;		
-			    
+			break;    
 		case 'Alt_z': case 'Alt_Shift_W':
 			switch(whatToProcess) {
 				case 'Alt_z':
@@ -6109,7 +6109,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 		}
 		
 		switch(whatToProcess){
-			case 'Shift_C': case 'Control_Shift_Q': case 'Control_Shift_O': case 'Control_Shift_J':
+			case 'Shift_C': case 'Control_Shift_Q': case 'Control_Shift_O': case 'Control_Shift_J':case "Control_Shift_F8":
 			case 'Control_m': case 'F4': case 'F5': case 'F6': case 'Alt_w': case 'Control_j': case 'F8': case 'F9': case 'F10': case 'F7': case 'F11':
 			case 'Control_F5': case 'Control_F9': case 'Shift_T': case 'u': case 'p': case 'Control_p': case 'Control_d': case 'Control_e': case 'z': 
 			case 'x': case 'c': case 'v': case 'Shift_F11': case 'Control_y': case 'Alt_F8': case 'Alt_F1': case 'Alt_F2': case 'Shift_K': case 'Shift_O': 
@@ -6122,7 +6122,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_Shift_F9': case 'Alt_Shift_C': case 'Control_Shift_L':
 			case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_E': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I': 
 			case 'Control_F11': case 'Control_Shift_M': case 'Alt_Shift_R': case 'Control_Shift_U': case 'Control_Shift_V': case 'Control_4': case 'Control_Shift_F4':
-			case 'Control_Shift_Z': case 'Control_Shift_Y': case 'Alt_Shift_W': case 'Control_Shift_F8':
+			case 'Control_Shift_Z': case 'Control_Shift_Y': case 'Alt_Shift_W': 
 				option = document.createElement('input');
 				option.type = 'button';
 				option.name = 'populate_btn';

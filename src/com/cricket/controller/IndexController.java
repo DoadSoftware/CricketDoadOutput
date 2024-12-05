@@ -696,9 +696,6 @@ public class IndexController
 	public <T> List<T> GetGraphicOption(String whatToProcess) throws IOException, NumberFormatException, IllegalAccessException, 
 	InvocationTargetException, InterruptedException, ParseException, CloneNotSupportedException, JAXBException, UnsupportedAudioFileException, 
 	LineUnavailableException, URISyntaxException {
-		
-		System.out.println("whatToProcess = " + whatToProcess);
-		
 		switch ((whatToProcess.contains(",")? whatToProcess.split(",")[0]:whatToProcess)) {
 		case "Alt_e":
 			this_caption.whichSide = 1;
@@ -761,7 +758,6 @@ public class IndexController
 			}
 			
 			return (List<T>) statistics;
-		
 		case "Control_Shift_F8":
 			if(whatToProcess.contains(",")) {
 				List<Tournament> tournament_stats = CricketFunctions.extractTournamentData("CURRENT_MATCH_DATA", false, headToHead, cricketService, 
