@@ -427,9 +427,9 @@ public class IndexController
 			if(whatToProcess.toUpperCase().equalsIgnoreCase("IMPACT-CHANGE-ON")) {
 				this_animation.AnimateIn("Shift_I", print_writers, session_configuration);
 			}
-			if(whatToProcess.contains("GRAPHICS-OPTIONS")) {
+			if(whatToProcess.contains("GRAPHICS-OPTIONS")||whatToProcess.contains("GRAPHICS-OPTIONS_DATA")) {
 				return JSONArray.fromObject(GetGraphicOption(valueToProcess)).toString();
-			} else if(whatToProcess.contains("POPULATE-GRAPHICS")) {
+			}else if(whatToProcess.contains("POPULATE-GRAPHICS")) {
 				switch(this_animation.getTypeOfGraphicsOnScreen(session_configuration,valueToProcess)){
 				case Constants.INFO_BAR:
 					if(valueToProcess.split(",")[0].equalsIgnoreCase("Control_F12")) {
@@ -696,7 +696,10 @@ public class IndexController
 	public <T> List<T> GetGraphicOption(String whatToProcess) throws IOException, NumberFormatException, IllegalAccessException, 
 	InvocationTargetException, InterruptedException, ParseException, CloneNotSupportedException, JAXBException, UnsupportedAudioFileException, 
 	LineUnavailableException, URISyntaxException {
-		switch (whatToProcess) {
+		
+		System.out.println("whatToProcess = " + whatToProcess);
+		
+		switch ((whatToProcess.contains(",")? whatToProcess.split(",")[0]:whatToProcess)) {
 		case "Alt_e":
 			this_caption.whichSide = 1;
 			this_caption.PopulateGraphics("Alt_e,", session_match);
@@ -719,7 +722,7 @@ public class IndexController
 			return (List<T>) CricketFunctions.processAllStaff(cricketService, session_match.getSetup().getAwayTeamId());
 		case "Alt_q":
 			return (List<T>) CricketFunctions.processAllPott(cricketService);
-		case "Alt_Shift_R": case "Alt_z": case "Alt_Shift_W":
+		case "Alt_Shift_R": case "Alt_z": case "Alt_Shift_W": //case "Control_Shift_F8":
 			return (List<T>) session_team;
 		case "Shift_!":
 			List<Stats> database_statistics = new ArrayList<Stats>();
@@ -758,6 +761,30 @@ public class IndexController
 			}
 			
 			return (List<T>) statistics;
+		
+		case "Control_Shift_F8":
+			if(whatToProcess.contains(",")) {
+				List<Tournament> tournament_stats = CricketFunctions.extractTournamentData("CURRENT_MATCH_DATA", false, headToHead, cricketService, 
+						session_match, past_tournament_stats);
+				tournament_stats.removeIf(tournament -> tournament.getPlayer().getTeamId() != Integer.valueOf(whatToProcess.split(",")[1])); 
+				switch(whatToProcess.split(",")[2]) {
+					case "MOST RUNS":
+						Collections.sort(tournament_stats,new CricketFunctions.BatsmenMostRunComparator());
+						break;
+					case "MOST WICKETS":
+						Collections.sort(tournament_stats,new CricketFunctions.BowlerWicketsComparator());
+						break;
+					case "MOST FOURS":
+						Collections.sort(tournament_stats,new CricketFunctions.BatsmanFoursComparator());
+						break;
+					case "MOST SIXES":
+						Collections.sort(tournament_stats,new CricketFunctions.BatsmanSixesComparator());
+						break;
+					}
+		        return tournament_stats.size() > 5 ? (List<T>) tournament_stats.subList(0, 5) : (List<T>) tournament_stats;
+			}else {
+				return (List<T>) cricketService.getTeams();
+			}
 		case "z": case "x": case "c": case "v": case "Control_Shift_Z": case "Control_Shift_Y":
 			List<Tournament> tournament_stats = CricketFunctions.extractTournamentData("CURRENT_MATCH_DATA", false, headToHead, cricketService, 
 					session_match, past_tournament_stats);
@@ -883,6 +910,9 @@ public class IndexController
 						
 				this_caption.this_bugsAndMiniGfx.previous_sixes =  String.valueOf(CricketFunctions.extracttournamentFoursAndSixesData("PAST_MATCHES_DATA", 
 						headToHead, session_match, null).getTournament_sixes());
+				
+				this_caption.this_bugsAndMiniGfx.previous_fours =  String.valueOf(CricketFunctions.extracttournamentFoursAndSixesData("PAST_MATCHES_DATA", 
+						headToHead, session_match, null).getTournament_fours());
 				break;
 			case "UPDATE":
 				

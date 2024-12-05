@@ -2225,6 +2225,7 @@ public class InfobarGfx
 								break;
 
 							default:
+								System.out.println("this = " + this_data_str.get(this_data_str.size()-1).split(",")[iBall]);
 								if(this_data_str.get(this_data_str.size()-1).split(",")[iBall].toUpperCase().contains("BOUNDARY")) {
 									CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Data_Right_Normal$Side_1$Style2$Bottom_Right_Part$Side_" + 
 											WhichSide + "$Balls$" + (iBall + 1) + "$Four$txt_4*GEOM*TEXT SET " + this_data_str.get(this_data_str.size()-1).
@@ -2244,7 +2245,10 @@ public class InfobarGfx
 										break;
 
 									default:
-										totalOverSize++;
+										if(this_data_str.get(this_data_str.size()-1).split(",")[iBall].contains("NB") || 
+												this_data_str.get(this_data_str.size()-1).split(",")[iBall].contains("WD")) {
+											totalOverSize++;
+										}
 										break;
 									}
 								}
@@ -4984,9 +4988,9 @@ public class InfobarGfx
 								+ "$txt_Fig*GEOM*TEXT SET " + stat.getRuns() + "\0", print_writers);
 						
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$5_Stats$Stat_3"
-								+ "$txt_Desig*GEOM*TEXT SET " + "AVERAGE" + "\0", print_writers);
+								+ "$txt_Desig*GEOM*TEXT SET " + "S/R" + "\0", print_writers);
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$5_Stats$Stat_3"
-								+ "$txt_Fig*GEOM*TEXT SET " + CricketFunctions.getAverage(stat.getMatches(), stat.getNot_out(), stat.getRuns(), 2, slashOrDash) + "\0", 
+								+ "$txt_Fig*GEOM*TEXT SET " + CricketFunctions.generateStrikeRate(stat.getRuns(), stat.getBalls_faced(), 0) + "\0", 
 									print_writers);
 						
 						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Infobar$Right$Side_" + WhichSide + "$Analytics_2_Wide$5_Stats$Stat_4"

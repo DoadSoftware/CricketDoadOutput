@@ -327,7 +327,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				}
 			break;	
 			case 'Shift_C': case 'Control_Shift_Q':
-			case 'Control_4': case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_7':  case 'Alt_5': //case 'Alt_6': case 'Alt_8': case 'Alt_3': case 'Alt_4': case 'F7': case 'F11':
+			case 'F12': case 'Alt_1': case 'Alt_2': case 'Alt_7':  case 'Alt_5': //case 'Alt_6': case 'Alt_8': case 'Alt_3': case 'Alt_4': case 'F7': case 'F11':
 			case 'Control_F5': case 'Shift_T': case 'Control_F9': case 'F5': case 'F6': case 'Alt_w':  case 'Control_j': case 'Alt_F8':
 			case 'F8': case 'F9':  case 'u': case 'q': case 'Shift_F5': case 'Shift_F9': case 'Shift_F6': case 'Control_y': //case 'Shift_F8':
 			case 'Shift_O': case 'g': case 'y': case 'Control_g': case 'Control_s': case 'Control_f': //case 'Alt_F9': case 'Control_h':
@@ -365,6 +365,22 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 				} else {
 					addItemsToList(dataToProcess,null);
 					//processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
+				}
+				break;
+			case 'Control_4': 
+				switch($('#selected_broadcaster').val().toUpperCase()){
+				case 'NPL':
+					switch(dataToProcess) {
+						case 'Control_4':
+							dataToProcess = dataToProcess + ',' + document.getElementById('which_inning').value;
+							processCricketProcedures("POPULATE-GRAPHICS", dataToProcess);
+							break;	
+					}
+					
+					break;
+				default:
+					addItemsToList(dataToProcess,null);
+					break;	
 				}
 				break;
 			//All key presses which doesn't require graphics population will come here
@@ -486,6 +502,10 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 				case 'GRAPHICS-OPTIONS':
 					addItemsToList(dataToProcess,data);
 					break;
+				case "GRAPHICS-OPTIONS_DATA":
+					//alert(JSON.stringify(data));
+					setPlayerInDropdown(data);
+					break;	
 				default:
 					if(whatToProcess.includes("ANIMATE-IN-") || whatToProcess.includes("ANIMATE-OUT-")) {
 						session_animation = data;
@@ -508,6 +528,27 @@ function removeSelectDuplicates(select_id)
 	        this_list[this.text] = this.value;
 	    }
 	});
+}
+function setPlayerInDropdown(dataToProcess) {
+ 	const playerCell = document.getElementById('Player');
+ 	playerCell.innerHTML = ''; 	
+    const playerSelect = document.createElement('select');
+    playerSelect.id = 'playerDropdown';
+    
+    dataToProcess.forEach(player => {
+        const option = document.createElement('option');
+        option.value = player.playerId;  
+        option.text = player.player.full_name; 
+        playerSelect.appendChild(option);
+      });
+
+	playerSelect.selectedIndex = 0;
+    $(playerSelect).on('change', function() {
+		setDropdownOptionToSelectOptionArray($(this), 2);
+    });        
+    playerCell.appendChild(playerSelect);
+	   setDropdownOptionToSelectOptionArray($(this), 2);
+	$(playerSelect).trigger('change');
 }
 function setDropdownOptionToSelectOptionArray(whichInput, whichIndex)
 {
@@ -878,7 +919,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_Shift_F9': case 'Alt_Shift_C': case 'Control_Shift_L':
 	case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_E': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I': case 'Control_F11': case 'Control_Shift_M':
 	case 'Alt_Shift_R': case 'Control_Shift_U': case 'Control_Shift_V': case 'Control_4': case 'Shift_~': case 'Shift_!': case 'Control_Shift_F4': case 'Control_Shift_Z':
-	case 'Control_Shift_Y': case 'Alt_Shift_W':
+	case 'Control_Shift_Y': case 'Alt_Shift_W': case 'Control_Shift_F8':
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
 		$("#captions_div").hide();
 		$('#select_graphic_options_div').empty();
@@ -3574,7 +3615,53 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionToSelectOptionArray($(select),0);
 			cellCount = cellCount + 1;
 			
-			break;	
+			break;
+		case "Control_Shift_F8":
+			header_text.innerHTML = 'TOURNAMENT TEAM TOP 5';
+		    select = document.createElement('select');
+		    select.id = 'selectTeam';
+		    
+			dataToProcess.forEach(function(teams){
+				option = document.createElement('option');
+				option.value = teams.teamId;
+				option.text = teams.teamName1;
+				select.appendChild(option);
+			});
+		
+		     $(select).on('change', function() {
+		        setDropdownOptionToSelectOptionArray(this, 0);
+		        processCricketProcedures("GRAPHICS-OPTIONS_DATA", whatToProcess + "," +$('#selectTeam').val() + "," + 
+		            ($('#selectStats').val() || $('#selectStats').find('option').first().val()));
+		    });
+		    row.insertCell(cellCount).appendChild(select);
+		    setDropdownOptionToSelectOptionArray($(select), 0);
+		    cellCount++;
+		
+		    select = document.createElement('select');
+		    select.id = 'selectStats';
+		    select.name = select.id;
+		    ['MOST RUNS', 'MOST WICKETS', 'MOST FOURS', 'MOST SIXES'].forEach(stat => {
+		        option = document.createElement('option');
+		        option.value = stat;
+		        option.text = stat;
+		        select.appendChild(option);
+		    });
+		    select.setAttribute('onchange', "setDropdownOptionToSelectOptionArray(this, 1)");
+		     $('#selectStats').on('change', function() {
+		            setDropdownOptionToSelectOptionArray($(select), 1);
+		       });
+		    row.insertCell(cellCount).appendChild(select);
+		    cellCount++;
+		    document.getElementById('selectStats').dispatchEvent(new Event('change'));
+		    row.insertCell(cellCount).id = 'Player';
+		    cellCount++;
+		    $('#selectStats').on('change', function() {
+    			processCricketProcedures("GRAPHICS-OPTIONS_DATA", whatToProcess + "," + $('#selectTeam').val()+","+
+    				($('#selectStats').val() || $(this).find('option').first().val()));
+		    });
+		    $('#selectStats').trigger('change');
+		    break;		
+			    
 		case 'Alt_z': case 'Alt_Shift_W':
 			switch(whatToProcess) {
 				case 'Alt_z':
@@ -3585,22 +3672,27 @@ function addItemsToList(whatToProcess,dataToProcess)
 					break;
 			}
 			
+			let num1 = 0;
 			
-			select = document.createElement('select');
-			select.id = 'selectTeams';
-			select.name = select.id;
-			
-			dataToProcess.forEach(function(teams,index,arr1){
-				option = document.createElement('option');
-				option.value = teams.teamId;
-				option.text = teams.teamName1;
-				select.appendChild(option);
-			});
-			
-			select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
-			row.insertCell(cellCount).appendChild(select);
-			setDropdownOptionToSelectOptionArray($(select),0);
-			cellCount = cellCount + 1;
+			switch(whatToProcess) {
+				case 'Alt_z': case 'Alt_Shift_W':
+					select = document.createElement('select');
+					select.id = 'selectTeams';
+					select.name = select.id;
+					
+					dataToProcess.forEach(function(teams,index,arr1){
+						option = document.createElement('option');
+						option.value = teams.teamId;
+						option.text = teams.teamName1;
+						select.appendChild(option);
+					});
+					
+					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+					row.insertCell(cellCount).appendChild(select);
+					setDropdownOptionToSelectOptionArray($(select),0);
+					cellCount = cellCount + 1;
+					break;
+			}
 			
 			switch(whatToProcess) {
 				case 'Alt_z':
@@ -3627,7 +3719,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 					option.value = 'wickets';
 					option.text = 'Wickets';
 					select.appendChild(option);*/
-					
+					//select.setAttribute('onchange', "processUserSelection(this)");
 					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
 					row.insertCell(cellCount).appendChild(select);
 					setDropdownOptionToSelectOptionArray($(select),1);
@@ -3658,6 +3750,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 					option.text = 'MOST SIXES';
 					select.appendChild(option);
 					
+					//select.setAttribute('onchange', "processUserSelection(this)");
 					select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
 					row.insertCell(cellCount).appendChild(select);
 					setDropdownOptionToSelectOptionArray($(select),1);
@@ -6005,7 +6098,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			option = document.createElement('input');
 			option.type = 'button';
 			option.name = 'highlightLeader';
-			option.value = 'Highlight LeaderBoard';
+			option.value = 'Player ChangeON';
 		    option.id = option.name;
 		    option.setAttribute('onclick','processUserSelection(this)');
 		    
@@ -6029,7 +6122,7 @@ function addItemsToList(whatToProcess,dataToProcess)
 			case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_Shift_F9': case 'Alt_Shift_C': case 'Control_Shift_L':
 			case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_E': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I': 
 			case 'Control_F11': case 'Control_Shift_M': case 'Alt_Shift_R': case 'Control_Shift_U': case 'Control_Shift_V': case 'Control_4': case 'Control_Shift_F4':
-			case 'Control_Shift_Z': case 'Control_Shift_Y': case 'Alt_Shift_W':
+			case 'Control_Shift_Z': case 'Control_Shift_Y': case 'Alt_Shift_W': case 'Control_Shift_F8':
 				option = document.createElement('input');
 				option.type = 'button';
 				option.name = 'populate_btn';

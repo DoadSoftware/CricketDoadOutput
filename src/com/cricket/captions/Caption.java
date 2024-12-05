@@ -151,6 +151,18 @@ public class Caption
 			case "Alt_Shift_F3":
 				status = this_lowerThirdGfx.populateInningComp(whatToProcess,whichSide, matchAllData);
 				break;
+			case "Control_4":
+				switch (config.getBroadcaster().toUpperCase()) {
+				case Constants.BENGAL_T20:
+					this_infobarGfx.infobar.setMiddle_section("FREE_TEXT");
+					this_infobarGfx.freeText = whatToProcess.split(",")[2];
+					status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
+					break;
+				case Constants.NPL:
+					status = this_bugsAndMiniGfx.populateFourCounter(whatToProcess, whichSide, matchAllData);
+					break;
+				}
+				break;	
 			case "6":
 				status = this_bugsAndMiniGfx.populateCounter(whatToProcess, whichSide, matchAllData);
 				break;
@@ -497,7 +509,7 @@ public class Caption
 				status = this_fullFramesGfx.populateFFPointsTable(whichSide,whatToProcess.split(",")[0], matchAllData, 0);
 				break;
 			case "z": case "x": case "c": case "v": case "Control_z": case "Control_x": case "Control_c": case "Control_v": case "Shift_V":
-			case "Shift_Z": case "Shift_X": case "Control_Shift_Z": case "Control_Shift_Y": case "Alt_Shift_W":
+			case "Shift_Z": case "Shift_X": case "Control_Shift_Z": case "Control_Shift_Y": case "Alt_Shift_W": case "Control_Shift_F8":
 				if(whatToProcess.split(",")[0].equalsIgnoreCase("Shift_Z") || whatToProcess.split(",")[0].equalsIgnoreCase("Shift_X")) {
 					this_fullFramesGfx.FirstPlayerId = Integer.valueOf((whatToProcess.split(",")[2]));
 				}
@@ -777,15 +789,6 @@ public class Caption
 				this_infobarGfx.FirstPlayerId = Integer.valueOf(whatToProcess.split(",")[2]);
 				this_infobarGfx.WhichProfile = whatToProcess.split(",")[3];
 				status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
-				break;
-			case "Control_4":
-				switch (config.getBroadcaster().toUpperCase()) {
-				case Constants.BENGAL_T20:
-					this_infobarGfx.infobar.setMiddle_section("FREE_TEXT");
-					this_infobarGfx.freeText = whatToProcess.split(",")[2];
-					status = this_infobarGfx.populateVizInfobarMiddleSection(print_writers, matchAllData, whichSide);
-					break;
-				}
 				break;
 			case "Alt_5":
 				switch (config.getBroadcaster().toUpperCase()) {
