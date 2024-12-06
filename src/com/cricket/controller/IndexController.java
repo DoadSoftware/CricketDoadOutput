@@ -116,6 +116,7 @@ public class IndexController
 	public static List<POTT> session_pott = new ArrayList<POTT>();
 	public static List<String> session_teamChanges = new ArrayList<String>();
 	public static List<PerformanceBug> session_performance_bug = new ArrayList<PerformanceBug>();
+	public static List<BestStats> top_ten_beststat = new ArrayList<BestStats>();
 	
 	public static long plotter_match_time_stamp1=0,plotter_match_time_stamp2=0,
 			plotter_match_time_stamp3=0,plotter_match_time_stamp4=0,plotter_match_time_stamp=0,speed_match_time_stamp=0;
@@ -818,7 +819,7 @@ public class IndexController
 			Collections.sort(log_fifty,new CricketFunctions.LogFiftyWicketsComparator());
 			return (List<T>) log_fifty;
 		case "Control_z": case "Control_x":
-			List<BestStats> top_ten_beststat = new ArrayList<BestStats>();
+			top_ten_beststat.clear();
 			switch (whatToProcess) {
 			case "Control_z":
 				for(Tournament tourn : CricketFunctions.extractTournamentData("CURRENT_MATCH_DATA", false, headToHead, cricketService, 
@@ -828,6 +829,10 @@ public class IndexController
 					}
 				}
 				Collections.sort(top_ten_beststat,new CricketFunctions.BatsmanBestStatsComparator());
+				
+				for(BestStats bs : top_ten_beststat) {
+					System.out.println("bsID = " + bs.getPlayerId() + "   runs = " + bs.getRuns());
+				}
 				return (List<T>) top_ten_beststat;
 				
 			case "Control_x":
