@@ -7501,25 +7501,27 @@ public class FullFramesGfx
 			case "Control_F11": case "Shift_F11"://MATCH SUMMARY
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer*ACTIVE SET 1 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Side" + WhichSide + "$Select_FooterType"
-						+ "*FUNCTION*Omo*vis_con SET 2 \0", print_writers);
+						+ "*FUNCTION*Omo*vis_con SET 3 \0", print_writers);
 				
 				switch (whatToProcess.split(",")[0]) {
 				case "Control_F11":
 					for(VariousText vt : VariousText) {
 						if(vt.getVariousType().equalsIgnoreCase("MATCHSUMMARYFOOTER") && vt.getUseThis().toUpperCase().equalsIgnoreCase(CricketUtil.YES)) {
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Side" + WhichSide + "$Select_FooterType"
-									+ "$Info$txt_Info*GEOM*TEXT SET " + vt.getVariousText() + "\0", print_writers);
+							
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Side"+WhichSide+"$Select_FooterType"
+									+ "$InfoMiddle$txt_Info*GEOM*TEXT SET "+vt.getVariousText()+"\0", print_writers);
 						}else if(vt.getVariousType().equalsIgnoreCase("MATCHSUMMARYFOOTER") && vt.getUseThis().toUpperCase().equalsIgnoreCase(CricketUtil.NO)) {
-							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Side" + WhichSide + "$Select_FooterType"
-								+ "$Info$txt_Info*GEOM*TEXT SET " + CricketFunctions.
-								generateMatchSummaryStatus(WhichInning, matchAllData, CricketUtil.FULL, "", config.getBroadcaster()).toUpperCase() + "\0", print_writers);
+							
+							CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Side"+WhichSide+"$Select_FooterType"
+									+ "$InfoMiddle$txt_Info*GEOM*TEXT SET "+CricketFunctions.
+									generateMatchSummaryStatus(WhichInning, matchAllData, CricketUtil.FULL, "", config.getBroadcaster()).toUpperCase()+"\0", print_writers);
 						}
 					}
 					break;
 				case "Shift_F11":
-					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Side" + WhichSide + "$Select_FooterType"
-							+ "$Info$txt_Info*GEOM*TEXT SET " + CricketFunctions.generateMatchSummaryStatus(2, previous_match, CricketUtil.FULL, "", 
-									config.getBroadcaster()).replace("win", "won").replace("Match tied - winner will be decided by super over", "Match tied").toUpperCase() + "\0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$Footer$Side"+WhichSide+"$Select_FooterType"
+							+ "$InfoMiddle$txt_Info*GEOM*TEXT SET "+CricketFunctions.generateMatchSummaryStatus(2, previous_match, CricketUtil.FULL, "", 
+									config.getBroadcaster()).replace("win", "won").replace("Match tied - winner will be decided by super over", "Match tied").toUpperCase()+"\0", print_writers);
 					break;
 				}
 				break;
