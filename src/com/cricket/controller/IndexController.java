@@ -762,24 +762,24 @@ public class IndexController
 			return (List<T>) statistics;
 		case "Control_Shift_F8":
 			if(whatToProcess.contains(",")) {
-				FullFramesGfx.past_tournament_stats = CricketFunctions.extractTournamentData("CURRENT_MATCH_DATA", false, headToHead, cricketService, 
+				FullFramesGfx.stats_past_tournament = CricketFunctions.extractTournamentData("CURRENT_MATCH_DATA", false, headToHead, cricketService, 
 						session_match, past_tournament_stats);
-				FullFramesGfx.past_tournament_stats.removeIf(tournament -> tournament.getPlayer().getTeamId() != Integer.valueOf(whatToProcess.split(",")[1])); 
+				FullFramesGfx.stats_past_tournament.removeIf(tournament -> tournament.getPlayer().getTeamId() != Integer.valueOf(whatToProcess.split(",")[1])); 
 				switch(whatToProcess.split(",")[2]) {
 					case "MOST RUNS":
-						Collections.sort(FullFramesGfx.past_tournament_stats,new CricketFunctions.BatsmenMostRunComparator());
+						Collections.sort(FullFramesGfx.stats_past_tournament,new CricketFunctions.BatsmenMostRunComparator());
 						break;
 					case "MOST WICKETS":
-						Collections.sort(FullFramesGfx.past_tournament_stats,new CricketFunctions.BowlerWicketsComparator());
+						Collections.sort(FullFramesGfx.stats_past_tournament,new CricketFunctions.BowlerWicketsComparator());
 						break;
 					case "MOST FOURS":
-						Collections.sort(FullFramesGfx.past_tournament_stats,new CricketFunctions.BatsmanFoursComparator());
+						Collections.sort(FullFramesGfx.stats_past_tournament,new CricketFunctions.BatsmanFoursComparator());
 						break;
 					case "MOST SIXES":
-						Collections.sort(FullFramesGfx.past_tournament_stats,new CricketFunctions.BatsmanSixesComparator());
+						Collections.sort(FullFramesGfx.stats_past_tournament,new CricketFunctions.BatsmanSixesComparator());
 						break;
 					}
-		        return FullFramesGfx.past_tournament_stats.size() > 5 ? (List<T>) FullFramesGfx.past_tournament_stats.subList(0, 5) : (List<T>) FullFramesGfx.past_tournament_stats;
+		        return FullFramesGfx.stats_past_tournament.size() > 5 ? (List<T>) FullFramesGfx.stats_past_tournament.subList(0, 5) : (List<T>) FullFramesGfx.stats_past_tournament;
 			}else {
 				return (List<T>) cricketService.getTeams();
 			}
