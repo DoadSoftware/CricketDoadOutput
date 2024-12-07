@@ -828,12 +828,13 @@ public class IndexController
 		                session_match, past_tournament_stats);
 		        
 		        for(Tournament tour : tournaments) {
+		        	
 		        	for(BestStats bs : tour.getBatsman_best_Stats()) {	
 		        		
-		        		if(bs.getPlayerId()== tour.getPlayerId() && FullFramesGfx.top_batsman_beststat.stream().noneMatch(ply -> ply.getMatchNumber() != null &&
+		        		if(!FullFramesGfx.top_batsman_beststat.stream().anyMatch(ply -> 
+		        			   ply.getPlayerId()== tour.getPlayerId() && ply.getMatchNumber() != null &&
 		        			  Integer.parseInt(ply.getMatchNumber().replaceAll("\\D+", "")) == Integer.parseInt(session_match.getMatch()
-		        			  .getMatchFileName().replaceAll("\\D+", "")) && ply.getPlayerId() == tour.getPlayerId())) {
-	        			
+		        			  .getMatchFileName().replaceAll("\\D+", "")))) {
 		        			FullFramesGfx.top_batsman_beststat.add(CricketFunctions.getProcessedBatsmanBestStats(bs));
 		        		}
 	        		}
