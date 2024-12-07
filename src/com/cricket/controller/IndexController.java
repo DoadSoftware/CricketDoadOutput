@@ -857,8 +857,8 @@ public class IndexController
 				
 			case "Control_x":
 				List<BestStats> top_ten_beststat = new ArrayList<BestStats>();
-		        for(Tournament tourn : CricketFunctions.extractTournamentData("COMBINED_PAST_CURRENT_MATCH_DATA", false, headToHead, cricketService, 
-		                session_match, null)) {
+		        for(Tournament tourn : CricketFunctions.extractTournamentData("CURRENT_MATCH_DATA", false, headToHead, cricketService, 
+		                session_match, past_tournament_stats)) {
 		            for(BestStats bs : tourn.getBowler_best_Stats()) {
 		            	top_ten_beststat.add(CricketFunctions.getProcessedBowlerBestStats(bs));
 		            }

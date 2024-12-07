@@ -5236,6 +5236,8 @@ public class Animation
 			break;
 		case Constants.NPL: 
 
+			processAnimation(Constants.MIDDLE, print_writers, "Plotter", "SHOW 0.0");
+			
 			processAnimation(Constants.BACK, print_writers, "Anim_FullFrames", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Anim_Ident", "SHOW 0.0");
 			processAnimation(Constants.BACK, print_writers, "Change", "SHOW 0.0");
@@ -6384,6 +6386,9 @@ public class Animation
 			case Constants.NPL:
 				if(whichside == 1) {
 					switch(whatToProcess.split(",")[0]) {
+					case "9":
+						previewCommands = "Plotter 1.000";
+						break;
 					case "Control_Shift_F10":
 						previewCommands = "Anim_Infobar$Push 0.500 LT_Manhattan$In_Out 1.420 LT_Manhattan$In 3.120 "
 								+ "LT_Manhattan$In$LOGO 0.980 LT_Manhattan$In$BASE 0.840 LT_Manhattan$In$DataIn 1.636 LT_Manhattan$In$DataIn1 1.016";
@@ -6473,8 +6478,17 @@ public class Animation
 						break;
 					}
 				}
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/Overlays "
-				    	+ "C:/Temp/Preview.tga " + previewCommands + "\0", print_writer);
+				switch(whatToProcess.split(",")[0]) {
+				case "9":
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/FieldPlotter_LLC "
+					    	+ "C:/Temp/Preview.tga " + previewCommands + "\0", print_writer);
+					break;
+				default:
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER PREVIEW SCENE*/Default/Overlays "
+					    	+ "C:/Temp/Preview.tga " + previewCommands + "\0", print_writer);
+					break;
+				}
+				
 				break;
 			case Constants.BENGAL_T20:
 				if(whichside == 1) {
