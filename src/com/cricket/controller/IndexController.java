@@ -822,38 +822,24 @@ public class IndexController
 		case "Control_z": case "Control_x":
 			switch (whatToProcess) {
 			case "Control_z":
-				List<BestStats> top_ten_beststats = new ArrayList<BestStats>();
+				FullFramesGfx.top_batsman_beststat.clear();
 		        
-		        List<Tournament> tournaments = CricketFunctions.extractTournamentData("COMBINED_PAST_CURRENT_MATCH_DATA", false, headToHead, cricketService, 
-		        		session_match, null);
+		        List<Tournament> tournaments = CricketFunctions.extractTournamentData("CURRENT_MATCH_DATA", false, headToHead, cricketService, 
+		                session_match, past_tournament_stats);
 		        
 		        for(Tournament tour : tournaments) {
-//		        	System.out.println("PLAYER ID : " + tour.getPlayerId() + " - MATCHES : " + tour.getMatches() + " - SIZE : " + tour.getBatsman_best_Stats().size());
-		        	for(BestStats bs : tour.getBatsman_best_Stats()) {
-		        		BestStats processedBs = CricketFunctions.getProcessedBatsmanBestStats(bs);
-		                top_ten_beststats.add(processedBs);
+		        	for(BestStats bs : tour.getBatsman_best_Stats()) {	
+		        		
+		        		if(bs.getPlayerId()== tour.getPlayerId() && FullFramesGfx.top_batsman_beststat.stream().noneMatch(ply -> ply.getMatchNumber() != null &&
+		        			  Integer.parseInt(ply.getMatchNumber().replaceAll("\\D+", "")) == Integer.parseInt(session_match.getMatch()
+		        			  .getMatchFileName().replaceAll("\\D+", "")) && ply.getPlayerId() == tour.getPlayerId())) {
+	        			
+		        			FullFramesGfx.top_batsman_beststat.add(CricketFunctions.getProcessedBatsmanBestStats(bs));
+		        		}
 	        		}
 		        }
-//		        System.out.println("SIZE 2 : " + top_ten_beststats.size());
-		        
-//		        for(Tournament tourn : tournaments) {
-//		        	System.out.println(tourn.getPlayer().getFull_name() + " - " + tourn.getBatsman_best_Stats().toString());
-//		            for(BestStats bs : tourn.getBatsman_best_Stats()) {
-//		            	BestStats processedBs = CricketFunctions.getProcessedBatsmanBestStats(bs);
-//		                top_ten_beststats.add(processedBs);
-//		            }
-//		            System.out.println("Batsman stats: " + tourn.getBatsman_best_Stats());
-//		        }
-//		        
-		        Collections.sort(top_ten_beststats, new CricketFunctions.BatsmanBestStatsComparator());
-//		        
-//		        System.out.println("-----------------------------------------------");
-//		        for (BestStats bs : top_ten_beststats) {
-//		            //System.out.println("bsID = " + bs.getPlayerId() + "   runs = " + bs.getRuns());
-//		        }
-//		        System.out.println("-----------------------------------------------");
-			 
-			 return (List<T>) top_ten_beststats;
+		        Collections.sort(FullFramesGfx.top_batsman_beststat, new CricketFunctions.BatsmanBestStatsComparator());
+			 return (List<T>) FullFramesGfx.top_batsman_beststat;
 				
 			case "Control_x":
 				List<BestStats> top_ten_beststat = new ArrayList<BestStats>();
