@@ -178,6 +178,9 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 		case 'Alt_r':
 			processCricketProcedures('RE_READ_DATA');
 			break;
+		case 'Alt_v':
+			processCricketProcedures('DB_DATA_READ');
+			break;	
 		case 'Control_ ':
 			processCricketProcedures('CLEAR-ALL-WITH-INFOBAR');
 			break;
@@ -453,12 +456,12 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 			case 'GET-CONFIG-DATA':
 				initialiseForm('UPDATE-CONFIG',data);
 				break;
-			case 'READ-MATCH-AND-POPULATE': case "RE_READ_DATA":
+			case 'READ-MATCH-AND-POPULATE': case "RE_READ_DATA": case 'DB_DATA_READ':
 				if(data){
 					session_match = data;
 					initialiseForm('UPDATE-MATCH-ON-OUTPUT-FORM',data);
 				}
-				if(whatToProcess == "RE_READ_DATA"){
+				if(whatToProcess == "RE_READ_DATA" || whatToProcess == 'DB_DATA_READ'){
 					alert("Data is Loaded");
 				}
 				break;

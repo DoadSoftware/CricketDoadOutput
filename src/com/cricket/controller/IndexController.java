@@ -324,7 +324,11 @@ public class IndexController
 				new File(CricketUtil.CRICKET_DIRECTORY + CricketUtil.CONFIGURATIONS_DIRECTORY + valueToProcess));
 			
 			return JSONObject.fromObject(session_configuration).toString();
-		
+			
+		case "DB_DATA_READ":
+			GetVariousDBData("ONLY_DB", session_configuration);
+			return JSONObject.fromObject(session_match).toString();
+			
 		case "RE_READ_DATA":
 			
 			headToHead = CricketFunctions.extractHeadToHead(session_match, cricketService);
@@ -864,81 +868,24 @@ public class IndexController
 		switch (config.getBroadcaster()) {
 		case Constants.ICC_U19_2023: case Constants.ISPL: case Constants.BENGAL_T20: case Constants.NPL:
 			
-			session_statistics = cricketService.getAllStats();
-			if(config.getBroadcaster().equalsIgnoreCase(Constants.ISPL)) {
-				past_tape = CricketFunctions.extractTapeData("PAST_MATCHES_DATA", cricketService, cricket_matches, session_match, null);
-				past_tournament_stats = CricketFunctions.extractTournamentStats("PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
-			}else {
-				past_tournament_stats = CricketFunctions.extractTournamentData("PAST_MATCHES_DATA", false, headToHead, cricketService, session_match, null);
-			}
-			
-//			headToHead = CricketFunctions.extractHeadToHead(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
-//					CricketUtil.HEADTOHEAD_DIRECTORY).listFiles(), cricketService);
-
-			session_performance_bug = cricketService.getPerformanceBugs();
-			session_name_super =  cricketService.getNameSupers();
-			session_team =  cricketService.getTeams();
-			session_ground =  cricketService.getGrounds();
-			session_bugs = cricketService.getBugs();
-			session_infoBarStats = cricketService.getInfobarStats();
-			session_variousText = cricketService.getVariousTexts();
-			session_commentator = cricketService.getCommentator();
-			session_staff = cricketService.getStaff();
-			session_fixture =  CricketFunctions.processAllFixtures(cricketService);
-			session_players = cricketService.getAllPlayer();
-			session_pott = cricketService.getPott();
-			
-			if(new File(CricketUtil.CRICKET_DIRECTORY + "ParScores BB.html").exists()) {
-				session_dls = CricketFunctions.populateDuckWorthLewis(session_match);
-			}
-			
-			if(new File(CricketUtil.CRICKET_DIRECTORY + "TeamChanges.txt").exists()) {
-				String text_to_return = "";
-				try (BufferedReader br = new BufferedReader(new FileReader(CricketUtil.CRICKET_DIRECTORY + "TeamChanges.txt"))) {
-					while((text_to_return = br.readLine()) != null) {
-						if(text_to_return.contains("|")) {
-							
-						}else {
-							if(text_to_return.contains("H") || text_to_return.contains("A")) {
-								session_teamChanges.add(text_to_return);
-							}
-						}
-					}
-				}
-			}
-			
 			switch (typeOfUpdate) {
-			case "NEW":
-				this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), cricket_matches, session_name_super,
-					session_bugs,session_infoBarStats,session_fixture, session_team, session_ground,session_variousText, session_commentator, session_staff, 
-					session_players, session_pott, session_teamChanges, session_performance_bug, new FullFramesGfx(),new LowerThirdGfx(), new InfobarGfx(), new BugsAndMiniGfx(), 1, "", "-", 
-					past_tournament_stats,past_tape,session_dls, headToHead, past_tournament_stats, cricketService);
-//				this_caption.this_infobarGfx.previous_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixes("COMBINED_PAST_CURRENT_MATCH_DATA", 
-//					cricket_matches, session_match, null).getTournament_sixes());
-				
-				this_caption.this_infobarGfx.previous_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixesData("COMBINED_PAST_CURRENT_MATCH_DATA", 
-						headToHead, session_match, null).getTournament_sixes());
-						
-				this_caption.this_bugsAndMiniGfx.previous_sixes =  String.valueOf(CricketFunctions.extracttournamentFoursAndSixesData("PAST_MATCHES_DATA", 
-						headToHead, session_match, null).getTournament_sixes());
-				
-				this_caption.this_bugsAndMiniGfx.previous_fours =  String.valueOf(CricketFunctions.extracttournamentFoursAndSixesData("PAST_MATCHES_DATA", 
-						headToHead, session_match, null).getTournament_fours());
-				break;
-			case "UPDATE":
-				
+			case "ONLY_DB":
 				session_match = CricketFunctions.populateMatchVariables(cricketService, CricketFunctions.readOrSaveMatchFile(CricketUtil.READ, 
 						CricketUtil.SETUP + "," + CricketUtil.MATCH + "," + CricketUtil.EVENT, session_match));
-				
-				cricket_matches = CricketFunctions.getTournamentMatches(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
-						CricketUtil.MATCHES_DIRECTORY).listFiles(new FileFilter() {
-					@Override
-				    public boolean accept(File pathname) {
-				        String name = pathname.getName().toLowerCase();
-				        return name.endsWith(".json") && pathname.isFile();
-				    }
-				}), cricketService);
 
+				session_performance_bug = cricketService.getPerformanceBugs();
+				session_name_super =  cricketService.getNameSupers();
+				session_team =  cricketService.getTeams();
+				session_ground =  cricketService.getGrounds();
+				session_bugs = cricketService.getBugs();
+				session_infoBarStats = cricketService.getInfobarStats();
+				session_variousText = cricketService.getVariousTexts();
+				session_commentator = cricketService.getCommentator();
+				session_staff = cricketService.getStaff();
+				session_fixture =  CricketFunctions.processAllFixtures(cricketService);
+				session_players = cricketService.getAllPlayer();
+				session_pott = cricketService.getPott();
+				
 				//Bug and Mini
 				this_caption.this_bugsAndMiniGfx.bugs = session_bugs;
 				this_caption.this_bugsAndMiniGfx.Teams = session_team;
@@ -979,22 +926,141 @@ public class IndexController
 				this_caption.this_fullFramesGfx.tournaments = past_tournament_stats;
 				this_caption.this_fullFramesGfx.VariousText = session_variousText;
 				this_caption.this_fullFramesGfx.Potts = session_pott;
+				break;
+			default:
+				session_statistics = cricketService.getAllStats();
+				if(config.getBroadcaster().equalsIgnoreCase(Constants.ISPL)) {
+					past_tape = CricketFunctions.extractTapeData("PAST_MATCHES_DATA", cricketService, cricket_matches, session_match, null);
+					past_tournament_stats = CricketFunctions.extractTournamentStats("PAST_MATCHES_DATA",false, cricket_matches, cricketService, session_match, null);
+				}else {
+					past_tournament_stats = CricketFunctions.extractTournamentData("PAST_MATCHES_DATA", false, headToHead, cricketService, session_match, null);
+				}
+				
+//				headToHead = CricketFunctions.extractHeadToHead(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
+//						CricketUtil.HEADTOHEAD_DIRECTORY).listFiles(), cricketService);
+
+				session_performance_bug = cricketService.getPerformanceBugs();
+				session_name_super =  cricketService.getNameSupers();
+				session_team =  cricketService.getTeams();
+				session_ground =  cricketService.getGrounds();
+				session_bugs = cricketService.getBugs();
+				session_infoBarStats = cricketService.getInfobarStats();
+				session_variousText = cricketService.getVariousTexts();
+				session_commentator = cricketService.getCommentator();
+				session_staff = cricketService.getStaff();
+				session_fixture =  CricketFunctions.processAllFixtures(cricketService);
+				session_players = cricketService.getAllPlayer();
+				session_pott = cricketService.getPott();
+				
+				if(new File(CricketUtil.CRICKET_DIRECTORY + "ParScores BB.html").exists()) {
+					session_dls = CricketFunctions.populateDuckWorthLewis(session_match);
+				}
+				
 				if(new File(CricketUtil.CRICKET_DIRECTORY + "TeamChanges.txt").exists()) {
 					String text_to_return = "";
-					this_caption.this_fullFramesGfx.TeamChanges.clear();
 					try (BufferedReader br = new BufferedReader(new FileReader(CricketUtil.CRICKET_DIRECTORY + "TeamChanges.txt"))) {
 						while((text_to_return = br.readLine()) != null) {
 							if(text_to_return.contains("|")) {
 								
 							}else {
 								if(text_to_return.contains("H") || text_to_return.contains("A")) {
-									this_caption.this_fullFramesGfx.TeamChanges.add(text_to_return);
+									session_teamChanges.add(text_to_return);
 								}
 							}
 						}
 					}
 				}
 				
+				switch (typeOfUpdate) {
+				case "NEW":
+					this_caption = new Caption(print_writers, config, session_statistics,cricketService.getAllStatsType(), cricket_matches, session_name_super,
+						session_bugs,session_infoBarStats,session_fixture, session_team, session_ground,session_variousText, session_commentator, session_staff, 
+						session_players, session_pott, session_teamChanges, session_performance_bug, new FullFramesGfx(),new LowerThirdGfx(), new InfobarGfx(), new BugsAndMiniGfx(), 1, "", "-", 
+						past_tournament_stats,past_tape,session_dls, headToHead, past_tournament_stats, cricketService);
+//					this_caption.this_infobarGfx.previous_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixes("COMBINED_PAST_CURRENT_MATCH_DATA", 
+//						cricket_matches, session_match, null).getTournament_sixes());
+					
+					this_caption.this_infobarGfx.previous_sixes = String.valueOf(CricketFunctions.extracttournamentFoursAndSixesData("COMBINED_PAST_CURRENT_MATCH_DATA", 
+							headToHead, session_match, null).getTournament_sixes());
+							
+					this_caption.this_bugsAndMiniGfx.previous_sixes =  String.valueOf(CricketFunctions.extracttournamentFoursAndSixesData("PAST_MATCHES_DATA", 
+							headToHead, session_match, null).getTournament_sixes());
+					
+					this_caption.this_bugsAndMiniGfx.previous_fours =  String.valueOf(CricketFunctions.extracttournamentFoursAndSixesData("PAST_MATCHES_DATA", 
+							headToHead, session_match, null).getTournament_fours());
+					break;
+				case "UPDATE":
+					
+					session_match = CricketFunctions.populateMatchVariables(cricketService, CricketFunctions.readOrSaveMatchFile(CricketUtil.READ, 
+							CricketUtil.SETUP + "," + CricketUtil.MATCH + "," + CricketUtil.EVENT, session_match));
+					
+					cricket_matches = CricketFunctions.getTournamentMatches(new File(CricketUtil.CRICKET_SERVER_DIRECTORY + 
+							CricketUtil.MATCHES_DIRECTORY).listFiles(new FileFilter() {
+						@Override
+					    public boolean accept(File pathname) {
+					        String name = pathname.getName().toLowerCase();
+					        return name.endsWith(".json") && pathname.isFile();
+					    }
+					}), cricketService);
+
+					//Bug and Mini
+					this_caption.this_bugsAndMiniGfx.bugs = session_bugs;
+					this_caption.this_bugsAndMiniGfx.Teams = session_team;
+					this_caption.this_bugsAndMiniGfx.VariousText = session_variousText;
+					this_caption.this_bugsAndMiniGfx.performanceBugs = session_performance_bug;
+					
+					//InfoBar
+					this_caption.this_infobarGfx.statistics = session_statistics;
+					this_caption.this_infobarGfx.statsTypes = cricketService.getAllStatsType();
+					this_caption.this_infobarGfx.infobarStats  = session_infoBarStats;
+					this_caption.this_infobarGfx.Grounds = session_ground;
+					this_caption.this_infobarGfx.tournament_matches = cricket_matches;
+					this_caption.this_infobarGfx.dls  = session_dls;
+					this_caption.this_infobarGfx.Commentators = session_commentator;
+					
+					//LowerThird
+					this_caption.this_lowerThirdGfx.statistics = session_statistics;
+					this_caption.this_lowerThirdGfx.statsTypes = cricketService.getAllStatsType();
+					this_caption.this_lowerThirdGfx.tournament_matches = cricket_matches;
+					this_caption.this_lowerThirdGfx.nameSupers = session_name_super;
+					this_caption.this_lowerThirdGfx.Teams = session_team;
+					this_caption.this_lowerThirdGfx.Grounds = session_ground;
+					this_caption.this_lowerThirdGfx.tournaments = past_tournament_stats;
+					this_caption.this_lowerThirdGfx.tapeballs = past_tape;
+					this_caption.this_lowerThirdGfx.dls = session_dls;
+					this_caption.this_lowerThirdGfx.Staff = session_staff;
+					this_caption.this_lowerThirdGfx.VariousText = session_variousText;
+					this_caption.this_lowerThirdGfx.Potts = session_pott;
+					
+					
+					//FullFrames
+					this_caption.this_fullFramesGfx.statistics = session_statistics;
+					this_caption.this_fullFramesGfx.statsTypes = cricketService.getAllStatsType();
+					this_caption.this_fullFramesGfx.tournament_matches = cricket_matches;
+					this_caption.this_fullFramesGfx.fixTures = session_fixture;
+					this_caption.this_fullFramesGfx.Teams = session_team;
+					this_caption.this_fullFramesGfx.Grounds = session_ground;
+					this_caption.this_fullFramesGfx.tournaments = past_tournament_stats;
+					this_caption.this_fullFramesGfx.VariousText = session_variousText;
+					this_caption.this_fullFramesGfx.Potts = session_pott;
+					if(new File(CricketUtil.CRICKET_DIRECTORY + "TeamChanges.txt").exists()) {
+						String text_to_return = "";
+						this_caption.this_fullFramesGfx.TeamChanges.clear();
+						try (BufferedReader br = new BufferedReader(new FileReader(CricketUtil.CRICKET_DIRECTORY + "TeamChanges.txt"))) {
+							while((text_to_return = br.readLine()) != null) {
+								if(text_to_return.contains("|")) {
+									
+								}else {
+									if(text_to_return.contains("H") || text_to_return.contains("A")) {
+										this_caption.this_fullFramesGfx.TeamChanges.add(text_to_return);
+									}
+								}
+							}
+						}
+					}
+					
+					break;
+				}
 				break;
 			}
 			break;
