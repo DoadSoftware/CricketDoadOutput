@@ -5574,6 +5574,10 @@ public class Animation
 								+ " Anim_FullFrames$In_Out$Footer$In_Out$Essentials$In 2.860 Anim_FullFrames$In_Out$Footer$In_Out$Data 3.000"
 								+ " Anim_FullFrames$In_Out$Footer$In_Out$Data$In 2.860";
 						break;
+					case "Control_Shift_I":
+						previewCommand = "Anim_Infobar$Push 0.500 Anim_FullFrames$In_Out$Essentials$In 2.800 Anim_FullFrames$In_Out$Header$In 2.000"
+								+ " Anim_FullFrames$In_Out$SubHeader$In 2.000";
+						break;	
 					case "F1": case "F2": case "Control_Shift_F1": case "Control_Shift_F2": case "F4": case "Control_Shift_F4": case "Shift_K":
 						previewCommand = "Anim_Infobar$Push 0.500 Anim_FullFrames$In_Out$Essentials$In 2.800 Anim_FullFrames$In_Out$Header$In 2.000 Anim_FullFrames$In_Out$Logo$In 2.500"
 								+ " Anim_FullFrames$In_Out$SubHeader$In 2.000 Anim_FullFrames$In_Out$Footer 3.000 Anim_FullFrames$In_Out$Footer$In_Out 3.000 Anim_FullFrames$In_Out$Footer$In_Out$Essentials 3.000"
@@ -5608,7 +5612,10 @@ public class Animation
 						break;
 					case "Control_p":
 						previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main 3.000 Anim_FullFrames$In_Out$Main$Standings 3.000 Anim_FullFrames$In_Out$Main$Standings$In 2.720 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
-						break;	
+						break;
+					case "Control_Shift_I":
+						previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main 3.000 Anim_FullFrames$In_Out$Main$Innings_Story 3.000 Anim_FullFrames$In_Out$Main$Innings_Story$In 2.460 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
+						break;
 					case "Shift_T":
 						previewCommand = previewCommand + " Anim_FullFrames$In_Out$Main$LineUp_Image 3.000 Anim_FullFrames$In_Out$Main$LineUp_Image$In 2.920 Anim_FullFrames$In_Out$ExtraData$In 3.000 BG_Scale 0.800";
 						break;	
@@ -5667,6 +5674,10 @@ public class Animation
 					previewCommand = "Change$Header 1.000 Change$Header$Change_Out 0.800 Change$Header$Change_In 1.000"
 							+ " Change$SubHeader 1.100 Change$SubHeader$Change_Out 0.500 Change$SubHeader$Change_In 1.100 Change$Footer 1.100 Change$Footer$Change_Out 0.800 Change$Footer$Change_In 1.100";
 						break;
+					case "Control_Shift_I":
+						previewCommand = "Change$Header 1.000 Change$Header$Change_Out 0.800 Change$Header$Change_In 1.000"
+								+ " Change$SubHeader 1.100 Change$SubHeader$Change_Out 0.500 Change$SubHeader$Change_In 1.100";
+							break;	
 					case "F1": case "F2": case "Control_Shift_F1": case "Control_Shift_F2":case "F4": case "Control_Shift_F4":
 					previewCommand = "Change$Header 1.000 Change$Header$Change_Out 0.800 Change$Header$Change_In 1.000 Change$Logo 1.340"
 							+ " Change$SubHeader 1.100 Change$SubHeader$Change_Out 0.500 Change$SubHeader$Change_In 1.100 Change$Footer 1.100 Change$Footer$Change_Out 0.800 Change$Footer$Change_In 1.100";
@@ -5696,6 +5707,9 @@ public class Animation
 						break;
 					case "Control_p":
 						previewCommand = previewCommand + " Change$Standings 1.200 Change$Standings$Change_Out 0.660 Change$Standings$Change_In 1.200 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
+						break;
+					case "Control_Shift_I":
+						previewCommand = previewCommand + " Change$Innings_Story 1.060 Change$Innings_Story$Change_Out 0.440 Change$Innings_Story$Change_In 1.060 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
 						break;	
 					case "Shift_T":
 						previewCommand = previewCommand + " Change$LineUp_Image 1.440 Change$LineUp_Image$Change_Out 0.620 Change$ExtraData 1.000 Change$ExtraData$Change_Out 0.720";
@@ -5729,7 +5743,7 @@ public class Animation
 					case "F1": case "F2": case "Control_Shift_F1": case "Control_Shift_F2": case "Control_F11": case "F4": case "Shift_F11": case "Control_Shift_F4":
 					case "Shift_T":	case "Control_d": case "Control_e": case "Shift_P": case "Shift_Q": case "Control_F7": case "Alt_z": case "Shift_F8": case "Alt_Shift_W":
 					case "z": case "x": case "c": case "v": case "Control_F10": case "Shift_F10": case "Control_p": case "Control_z": case "Control_x": case "Control_Shift_Z": case "Control_Shift_Y":
-					case "Control_Shift_F8":
+					case "Control_Shift_F8": case "Control_Shift_I":
 							switch(whatToProcess.split(",")[0]) {
 							case "F1": case "Control_Shift_F1":
 								previewCommand = previewCommand + " Change$BattingCard$Change_In 1.400 Change$Logo$Change_In 1.340 Change$ExtraData$Change_In 1.000";
@@ -5745,6 +5759,9 @@ public class Animation
 								break;
 							case "Control_p":
 								previewCommand = previewCommand + " Change$Standings 1.200 Change$Standings$Change_Out 0.660 Change$Standings$Change_In 1.200 Change$ExtraData$Change_In 1.000 BG_Scale 0.800";
+								break;
+							case "Control_Shift_I":
+								previewCommand = previewCommand + " Change$Innings_Story$Change_In 1.060 Change$Logo$Change_In 1.340 Change$ExtraData$Change_In 1.000 BG_Scale 0.800";
 								break;	
 							case "Shift_T":
 								previewCommand = previewCommand + " Change$LineUp_Image 1.440 Change$LineUp_Image$Change_In 1.440 Change$ExtraData$Change_In 1.000 BG_Scale 0.800";
