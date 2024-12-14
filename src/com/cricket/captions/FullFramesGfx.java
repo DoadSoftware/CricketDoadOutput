@@ -15742,7 +15742,7 @@ public class FullFramesGfx
 			Player bottomPlayer = new Player();
 			
 			
-			System.out.println("overs = " + Float.valueOf(CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls())));
+			//System.out.println("overs = " + Float.valueOf(CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls())));
 			if(Float.valueOf(CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls())) <= 6.0) {
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
 						"$InningsStory$Rows*FUNCTION*Grid*num_row SET 1\0", print_writers);
@@ -15755,7 +15755,7 @@ public class FullFramesGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
 						"$InningsStory$Rows*FUNCTION*Grid*num_row SET 3\0", print_writers);
 			}
-			
+			//System.out.println("phaseWiseScore = " + phaseWiseScore);
 			//-----------------------------phase1----------------------------------------------------------------
 			if(!phaseWiseScore.split("\\|")[2].split("\\.")[0].equalsIgnoreCase("NONE")) {
 				if(phaseWiseScore.split("\\|")[2].split("\\.")[0].split(",").length == 2) {
@@ -16138,16 +16138,17 @@ public class FullFramesGfx
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
 							"$InningsStory$Rows$3$TopPerformerTopLine$Data1$Balls*GEOM*TEXT SET " + phaseWiseScore.split("\\|")[1].split("\\.")[2].split(",")[0].split("_")[2] + "\0", print_writers);
 					
+					//System.out.println("Data = " + phaseWiseScore.split("\\|")[2].split("\\.")[2].split(",")[0]);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
 							"$InningsStory$Rows$3$TopPerformerBottomLine$Data1$PlayerName*GEOM*TEXT SET " + bottomPlayer.getTicker_name()+"\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
 							"$InningsStory$Rows$3$TopPerformerBottomLine$Data1$Runs*GEOM*TEXT SET " + phaseWiseScore.split("\\|")[2].split("\\.")[2].split(",")[0].split("_")[1] + "-" + 
-							phaseWiseScore.split("\\|")[2].split("\\.")[0].split(",")[0].split("_")[2] + "\0", print_writers);
+							phaseWiseScore.split("\\|")[2].split("\\.")[2].split(",")[0].split("_")[2] + "\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
 							"$InningsStory$Rows$3$TopPerformerBottomLine$Data1$NotOutStar*GEOM*TEXT SET \0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
 							"$InningsStory$Rows$3$TopPerformerBottomLine$Data1$Balls*GEOM*TEXT SET " + 
-							CricketFunctions.OverBalls(0, Integer.valueOf(phaseWiseScore.split("\\|")[2].split("\\.")[0].split(",")[0].split("_")[3])) + " \0", print_writers);
+							CricketFunctions.OverBalls(0, Integer.valueOf(phaseWiseScore.split("\\|")[2].split("\\.")[2].split(",")[0].split("_")[3])) + " \0", print_writers);
 				}
 			}else {
 				//---------------------------------------------Batsman-------------------------------------------------
