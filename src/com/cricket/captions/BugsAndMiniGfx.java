@@ -968,8 +968,20 @@ public class BugsAndMiniGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_new$Side" + WhichSide + "$PowerPlayBug$Info04" 
 						+ "*GEOM*TEXT SET " + battingCard.getBalls() + "\0", print_writers);
 				
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_new$Side" + WhichSide + "$PowerPlayBug$Info02" 
-						+ "*GEOM*TEXT SET " + battingCard.getFours() +" FOURS    " + battingCard.getSixes() + " SIXES" + "\0", print_writers);
+				if(battingCard.getSixes() != 0 && battingCard.getFours() != 0) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_new$Side" + WhichSide + "$PowerPlayBug$Info02" 
+							+ "*GEOM*TEXT SET " + battingCard.getFours() +" FOURS    " + battingCard.getSixes() + " SIXES" + "\0", print_writers);
+				}else if(battingCard.getFours() != 0) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_new$Side" + WhichSide + "$PowerPlayBug$Info02" 
+							+ "*GEOM*TEXT SET " + battingCard.getFours() +" FOURS" + "\0", print_writers);
+				}else if(battingCard.getSixes() != 0) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_new$Side" + WhichSide + "$PowerPlayBug$Info02" 
+							+ "*GEOM*TEXT SET " + battingCard.getSixes() + " SIXES" + "\0", print_writers);
+				}else {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_new$Side" + WhichSide + "$PowerPlayBug$Info02" 
+							+ "*GEOM*TEXT SET " + "STRIKE RATE " + CricketFunctions.generateStrikeRate(battingCard.getRuns(), battingCard.getBalls(), 1) + "\0", print_writers);
+				}
+				
 				break;
 			case "Shift_F":
 				

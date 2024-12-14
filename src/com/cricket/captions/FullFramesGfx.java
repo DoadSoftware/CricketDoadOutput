@@ -15742,11 +15742,12 @@ public class FullFramesGfx
 			Player bottomPlayer = new Player();
 			
 			
+			System.out.println("overs = " + Float.valueOf(CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls())));
 			if(Float.valueOf(CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls())) <= 6.0) {
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
 						"$InningsStory$Rows*FUNCTION*Grid*num_row SET 1\0", print_writers);
 			}else if(Float.valueOf(CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls())) > 6.0 && 
-	    			Float.valueOf(CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls())) < 16.0) {
+	    			Float.valueOf(CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls())) <= 15.0) {
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
 						"$InningsStory$Rows*FUNCTION*Grid*num_row SET 2\0", print_writers);
 			}else if(Float.valueOf(CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls())) >15.0 && 
@@ -16182,7 +16183,7 @@ public class FullFramesGfx
 					}
 					
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
-							"$InningsStory$Rows$3$TopPerformerBotttomLine$Data1$PlayerName*GEOM*TEXT SET " + bottomPlayer.getTicker_name()+"\0", print_writers);
+							"$InningsStory$Rows$3$TopPerformerBottomLine$Data1$PlayerName*GEOM*TEXT SET " + bottomPlayer.getTicker_name()+"\0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
 							"$InningsStory$Rows$3$TopPerformerBottomLine$Data1$Runs*GEOM*TEXT SET " + phaseWiseScore.split("\\|")[1].split("\\.")[2].split(",")[1].split("_")[1] + "\0", print_writers);
 					
