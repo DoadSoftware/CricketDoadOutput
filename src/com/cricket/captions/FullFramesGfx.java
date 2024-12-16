@@ -15755,6 +15755,63 @@ public class FullFramesGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
 						"$InningsStory$Rows*FUNCTION*Grid*num_row SET 3\0", print_writers);
 			}
+			for(int i=matchAllData.getEventFile().getEvents().size(); i>=0; i--) {
+				if(Float.valueOf(CricketFunctions.OverBalls(matchAllData.getEventFile().getEvents().get(i-1).getEventOverNo(), matchAllData.getEventFile().getEvents().get(i-1).getEventBallNo())) == 0) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
+							"$InningsStory$Rows*FUNCTION*Grid*num_row SET 1\0", print_writers);
+					break;
+				}else if(Float.valueOf(CricketFunctions.OverBalls(matchAllData.getEventFile().getEvents().get(i-1).getEventOverNo(), matchAllData.getEventFile().getEvents().get(i-1).getEventBallNo())) == 6 
+						&& matchAllData.getEventFile().getEvents().get(i-1).getEventType().equalsIgnoreCase(CricketUtil.NO_BALL) || matchAllData.getEventFile().getEvents().get(i-1).getEventType().equalsIgnoreCase(CricketUtil.WIDE) 
+						|| matchAllData.getEventFile().getEvents().get(i-1).getEventType().equalsIgnoreCase(CricketUtil.LOG_ANY_BALL)) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
+							"$InningsStory$Rows*FUNCTION*Grid*num_row SET 2\0", print_writers);
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
+							"$InningsStory$Rows$2$TopPerformerTopLine$Data1$PlayerName*GEOM*TEXT SET \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
+							"$InningsStory$Rows$2$TopPerformerTopLine$Data1$Runs*GEOM*TEXT SET \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
+							"$InningsStory$Rows$2$TopPerformerTopLine$Data1$NotOutStar*GEOM*TEXT SET \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
+							"$InningsStory$Rows$2$TopPerformerTopLine$Data1$Balls*GEOM*TEXT SET \0", print_writers);
+					
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
+							"$InningsStory$Rows$2$TopPerformerBottomLine$Data1$PlayerName*GEOM*TEXT SET \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
+							"$InningsStory$Rows$2$TopPerformerBottomLine$Data1$Runs*GEOM*TEXT SET \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
+							"$InningsStory$Rows$2$TopPerformerBottomLine$Data1$NotOutStar*GEOM*TEXT SET \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
+							"$InningsStory$Rows$2$TopPerformerBottomLine$Data1$Balls*GEOM*TEXT SET \0", print_writers);
+					break;
+				}else if(Float.valueOf(CricketFunctions.OverBalls(matchAllData.getEventFile().getEvents().get(i-1).getEventOverNo(), matchAllData.getEventFile().getEvents().get(i-1).getEventBallNo())) == 15 
+						&& matchAllData.getEventFile().getEvents().get(i-1).getEventType().equalsIgnoreCase(CricketUtil.NO_BALL) || matchAllData.getEventFile().getEvents().get(i-1).getEventType().equalsIgnoreCase(CricketUtil.WIDE) 
+						|| matchAllData.getEventFile().getEvents().get(i-1).getEventType().equalsIgnoreCase(CricketUtil.LOG_ANY_BALL)) {
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
+							"$InningsStory$Rows*FUNCTION*Grid*num_row SET 3\0", print_writers);
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
+							"$InningsStory$Rows$3$TopPerformerTopLine$Data1$PlayerName*GEOM*TEXT SET \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
+							"$InningsStory$Rows$3$TopPerformerTopLine$Data1$Runs*GEOM*TEXT SET \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
+							"$InningsStory$Rows$3$TopPerformerTopLine$Data1$NotOutStar*GEOM*TEXT SET \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
+							"$InningsStory$Rows$3$TopPerformerTopLine$Data1$Balls*GEOM*TEXT SET \0", print_writers);
+					
+					
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
+							"$InningsStory$Rows$3$TopPerformerBottomLine$Data1$PlayerName*GEOM*TEXT SET \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
+							"$InningsStory$Rows$3$TopPerformerBottomLine$Data1$Runs*GEOM*TEXT SET \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
+							"$InningsStory$Rows$3$TopPerformerBottomLine$Data1$NotOutStar*GEOM*TEXT SET \0", print_writers);
+					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
+							"$InningsStory$Rows$3$TopPerformerBottomLine$Data1$Balls*GEOM*TEXT SET \0", print_writers);
+					break;
+				}
+			}
 			//System.out.println("phaseWiseScore = " + phaseWiseScore);
 			//-----------------------------phase1----------------------------------------------------------------
 			if(!phaseWiseScore.split("\\|")[2].split("\\.")[0].equalsIgnoreCase("NONE")) {
