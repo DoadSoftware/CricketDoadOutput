@@ -15759,7 +15759,6 @@ public class FullFramesGfx
 				if(Float.valueOf(CricketFunctions.OverBalls(matchAllData.getEventFile().getEvents().get(i-1).getEventOverNo(), matchAllData.getEventFile().getEvents().get(i-1).getEventBallNo())) == 0) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
 							"$InningsStory$Rows*FUNCTION*Grid*num_row SET 1\0", print_writers);
-					break;
 				}else if(Float.valueOf(CricketFunctions.OverBalls(matchAllData.getEventFile().getEvents().get(i-1).getEventOverNo(), matchAllData.getEventFile().getEvents().get(i-1).getEventBallNo())) == 6 
 						&& matchAllData.getEventFile().getEvents().get(i-1).getEventType().equalsIgnoreCase(CricketUtil.NO_BALL) || matchAllData.getEventFile().getEvents().get(i-1).getEventType().equalsIgnoreCase(CricketUtil.WIDE) 
 						|| matchAllData.getEventFile().getEvents().get(i-1).getEventType().equalsIgnoreCase(CricketUtil.LOG_ANY_BALL)) {
@@ -15784,7 +15783,6 @@ public class FullFramesGfx
 							"$InningsStory$Rows$2$TopPerformerBottomLine$Data1$NotOutStar*GEOM*TEXT SET \0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
 							"$InningsStory$Rows$2$TopPerformerBottomLine$Data1$Balls*GEOM*TEXT SET \0", print_writers);
-					break;
 				}else if(Float.valueOf(CricketFunctions.OverBalls(matchAllData.getEventFile().getEvents().get(i-1).getEventOverNo(), matchAllData.getEventFile().getEvents().get(i-1).getEventBallNo())) == 15 
 						&& matchAllData.getEventFile().getEvents().get(i-1).getEventType().equalsIgnoreCase(CricketUtil.NO_BALL) || matchAllData.getEventFile().getEvents().get(i-1).getEventType().equalsIgnoreCase(CricketUtil.WIDE) 
 						|| matchAllData.getEventFile().getEvents().get(i-1).getEventType().equalsIgnoreCase(CricketUtil.LOG_ANY_BALL)) {
@@ -15809,8 +15807,8 @@ public class FullFramesGfx
 							"$InningsStory$Rows$3$TopPerformerBottomLine$Data1$NotOutStar*GEOM*TEXT SET \0", print_writers);
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Full_Frame$AllGraphics$Side" + whichSide + 
 							"$InningsStory$Rows$3$TopPerformerBottomLine$Data1$Balls*GEOM*TEXT SET \0", print_writers);
-					break;
 				}
+				break;
 			}
 			//System.out.println("phaseWiseScore = " + phaseWiseScore);
 			//-----------------------------phase1----------------------------------------------------------------
