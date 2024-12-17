@@ -171,7 +171,7 @@ public class LowerThirdGfx
 		phaseWiseScore = "";
 		phaseWiseScore = CricketFunctions.getPhaseWiseScore(matchAllData, inning.getInningNumber(),matchAllData.getEventFile().getEvents());
 		
-		lowerThird = new LowerThird("", inning.getBatting_team().getTeamName2(), inning.getBatting_team().getTeamName3(),"THIS INNINGS", String.valueOf(inning.getTotalRuns() + "-" + inning.getTotalWickets()), 
+		lowerThird = new LowerThird("", inning.getBatting_team().getTeamName2(), inning.getBatting_team().getTeamName3(),"THIS INNINGS",CricketFunctions.getTeamScore(inning, "-", false), 
 				String.valueOf(CricketFunctions.OverBalls(inning.getTotalOvers(), inning.getTotalBalls())),3,"",inning.getBatting_team().getTeamBadge(),new String[]{"1 - 6", "7 - 15", "16 - 20"},null,
 				new String[] {"OVERS", "SCORE"},null,null);
 		
