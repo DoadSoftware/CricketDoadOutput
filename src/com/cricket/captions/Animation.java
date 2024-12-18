@@ -5276,8 +5276,7 @@ public class Animation
 			processAnimation(Constants.FRONT, print_writers, "LT_NextToBat", "SHOW 0.0");
 			processAnimation(Constants.FRONT, print_writers, "LT_NextToBat$Change$Change_Out", "SHOW 0.700");
 			
-			
-			
+			processAnimation(Constants.FRONT, print_writers, "LT_Manhattan", "SHOW 0.0");
 			if(whatToProcess.contains("CLEAR-ALL")) {
 				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar", "SHOW 0.0");
 				processAnimation(Constants.FRONT, print_writers, "Anim_Infobar$In_Out", "SHOW 0.0");
