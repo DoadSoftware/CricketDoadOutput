@@ -836,7 +836,8 @@ public class IndexController
 		        	for(BestStats bs : tour.getBatsman_best_Stats()) {	
 		        		
 		        		if(!FullFramesGfx.top_batsman_beststat.stream().anyMatch(ply -> 
-		        			   ply.getPlayerId()== tour.getPlayerId() && ply.getMatchNumber() != null &&
+		        			   ply.getPlayerId()== tour.getPlayerId() && ply.getMatchNumber() != null && isNumeric(ply.getMatchNumber().replaceAll("\\D+", "")) && 
+		        				        isNumeric(session_match.getMatch().getMatchFileName().replaceAll("\\D+", "")) &&
 		        			  Integer.parseInt(ply.getMatchNumber().replaceAll("\\D+", "")) == Integer.parseInt(session_match.getMatch()
 		        			  .getMatchFileName().replaceAll("\\D+", "")))) {
 		        			FullFramesGfx.top_batsman_beststat.add(CricketFunctions.getProcessedBatsmanBestStats(bs));
@@ -862,6 +863,9 @@ public class IndexController
 		return null;
 	}
 	
+	private static boolean isNumeric(String str) {
+	    return str != null && !str.isEmpty() && str.matches("\\d+"); // Matches one or more digits
+	}
 	public void GetVariousDBData(String typeOfUpdate, Configuration config) throws StreamReadException, DatabindException, 
 		IllegalAccessException, InvocationTargetException, JAXBException, IOException, CloneNotSupportedException, InterruptedException, URISyntaxException
 	{
