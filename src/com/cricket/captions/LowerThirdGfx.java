@@ -258,20 +258,20 @@ public class LowerThirdGfx
 				if(Integer.valueOf(manhattan.get(j).getOverTotalRuns()) > maxRuns){
 					maxRuns = Integer.valueOf(manhattan.get(j).getOverTotalRuns()); // 33 runs came off 34th over
 				}
-				while (maxRuns % 5 != 0) {     // 5 label in y-axis
+				while (maxRuns % 3 != 0) {     // 5 label in y-axis
 			 		maxRuns = maxRuns + 1;    // keep incrementing till max runs is divisible by 5. maxRuns = 35
 				}
 			}
 		}
 		
-		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_Man$Man20"
-				+ "$Row3$Runs*GEOM*TEXT SET 0\0", print_writers);
+//		CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_Man$Man20"
+//				+ "$Row3$Runs*GEOM*TEXT SET 0\0", print_writers);
 		
-		for(int i = 1; i < 3;i++) {
-			runsIncr = maxRuns / 2; // 35/5=7 -> Y axis will be plot like 6,12,18,24,30 & 36
+		for(int i = 1; i <= 3;i++) {
+			runsIncr = maxRuns / 3; // 35/5=7 -> Y axis will be plot like 6,12,18,24,30 & 36
 			
 			CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$LT_Man$Man20"
-					+ "$Row" + (3-(i)) + "$Runs*GEOM*TEXT SET " + runsIncr*(i) + "\0", print_writers);
+					+ "$Row" + (4-(i)) + "$Runs*GEOM*TEXT SET " + runsIncr*(i) + "\0", print_writers);
 		}
 		
 		

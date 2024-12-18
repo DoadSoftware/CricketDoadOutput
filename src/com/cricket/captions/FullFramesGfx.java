@@ -12846,8 +12846,7 @@ public class FullFramesGfx
 			if(matchAllData.getSetup().getMatchType().equalsIgnoreCase(CricketUtil.SUPER_OVER) && matchAllData.getSetup().getMaxOvers() == 1) {
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Target$Footer$txt_Info1*GEOM*TEXT SET " + "FROM " + 
 						(matchAllData.getSetup().getMaxOvers()*6) + " BALLS" + " \0", print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Target$Footer$txt_Info2*GEOM*TEXT SET " + 
-						"WINNER WILL BE DECIDED BY SUPER OVER" + " \0", print_writers);
+				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*BACK_LAYER*TREE*$gfx_Target$Footer$txt_Info2*GEOM*TEXT SET \0", print_writers);
 			}else {
 				if(matchAllData.getSetup().getTargetOvers() == "" || matchAllData.getSetup().getTargetOvers().trim().isEmpty() && matchAllData.getSetup().getTargetRuns() == 0) {
 					
