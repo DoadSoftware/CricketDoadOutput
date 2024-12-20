@@ -90,7 +90,7 @@ public class IndexController
 	CricketService cricketService;
 	
 	public static MatchAllData session_match;
-	public static String expiry_date = "2024-12-31";
+	public static String expiry_date = "2025-12-31";
 	public static String current_date;
 	public static long last_match_time_stamp = 0;
 	public static Scene this_scene;
@@ -704,13 +704,23 @@ public class IndexController
 	public <T> List<T> GetGraphicOption(String whatToProcess) throws IOException, NumberFormatException, IllegalAccessException, 
 	InvocationTargetException, InterruptedException, ParseException, CloneNotSupportedException, JAXBException, UnsupportedAudioFileException, 
 	LineUnavailableException, URISyntaxException {
-		switch ((whatToProcess.contains(",")? whatToProcess.split(",")[0]:whatToProcess)) {
+  switch ((whatToProcess.contains(",")?whatToProcess.split(",")[0]:whatToProcess)) {
 		case "Alt_e":
 			this_caption.whichSide = 1;
 			this_caption.PopulateGraphics("Alt_e,", session_match);
 			break;
 		case "Control_Shift_J":
 			return (List<T>) session_performance_bug;
+		case "Control_Shift_X":
+			if(whatToProcess.split(",")[whatToProcess.split(",").length-1].equalsIgnoreCase("BowlerVsBatsman")) {
+				LowerThirdGfx.PlayerList = CricketFunctions.BowlerVsBatsman(Integer.valueOf(whatToProcess.split(",")[1]), 
+					Integer.valueOf(whatToProcess.split(",")[2]), session_match.getEventFile().getEvents(), session_match);
+			
+			}else if(whatToProcess.split(",")[whatToProcess.split(",").length-1].equalsIgnoreCase("BatsmanVsBowler")) {
+				LowerThirdGfx.PlayerList = CricketFunctions.BatsmanVsBowler(Integer.valueOf(whatToProcess.split(",")[1]), 
+						Integer.valueOf(whatToProcess.split(",")[2]), session_match.getEventFile().getEvents(), session_match);
+			}
+			return (List<T>) LowerThirdGfx.PlayerList;
 		case "F10": case "j":
 		    return (List<T>) session_name_super;
 		case "k":

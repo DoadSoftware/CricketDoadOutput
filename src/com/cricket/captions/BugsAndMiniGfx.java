@@ -40,7 +40,7 @@ public class BugsAndMiniGfx
 	public String status = "",homecolor = "", awaycolor = "",WhichGroup = "",containerName = "", previous_sixes = "",today_sixes="",
 			previous_fours = "",today_fours="";
 	int fallOfWickets;
-	
+	public static int  index_Player =0;
 	int rowId=0, omo_num=0;
 	String cont_name = "",text_name = "";
 	public List<PrintWriter> print_writers; 
@@ -64,6 +64,7 @@ public class BugsAndMiniGfx
 	public VariousText variousText;
 	public Inning inning;
 	public Player player;
+	public List<BattingCard> playerCards;
 	public LeagueTable leagueTable;
 	public CricketService cricketService;
 	
@@ -338,7 +339,29 @@ public class BugsAndMiniGfx
 		}
 		return status;
 	}
-	
+	public String populateBowlerWicketSequencing(String whatToProcess,MatchAllData matchAllData,int WhichSide)
+	{
+		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
+			status = "populateWicketSequencing match is null Or Inning is null";
+		} else {
+			inning = matchAllData.getMatch().getInning().stream().filter(inn -> inn.getInningNumber() == Integer.valueOf(whatToProcess.split(",")[1])).findAny().orElse(null);
+			if(inning == null) {
+				return "populateWicketSequencing Inning is null";
+			}
+			player = CricketFunctions.getPlayerFromMatchData(Integer.valueOf(whatToProcess.split(",")[2]), matchAllData);			
+			
+			battingCard = inning.getBattingCard().stream().filter(bc->bc.getPlayerId() == Integer.valueOf(whatToProcess.split(",")[4])).findAny().orElse(null);
+			
+			team = Teams.stream().filter(tm -> tm.getTeamId() == player.getTeamId()).findAny().orElse(null);
+			if(team == null) {
+				return "populateWicketSequencing: Team id [" + battingCard.getPlayer().getTeamId() + "] from database is returning NULL";
+			}
+		}
+		if(PopulateBugBody(WhichSide, whatToProcess,matchAllData) == Constants.OK) {
+			status = Constants.OK;
+		}
+		return status;
+	}
 	public String bugsDismissal(String whatToProcess,MatchAllData matchAllData,int WhichSide) {
 		
 		if (matchAllData == null || matchAllData.getMatch() == null || matchAllData.getMatch().getInning() == null) {
@@ -1294,7 +1317,7 @@ public class BugsAndMiniGfx
 							+ "$img_Shadow*ACTIVE SET 1 \0", print_writers);
 				}
 				break;
-			case "g": case "y": case "Shift_O": case "Shift_F": case "Control_k": case "Shift_F4":
+			case "g": case "y": case "Shift_O": case "Shift_F": case "Control_k": case "Shift_F4":case "Alt_b":
 				if(team.getTeamName4().equalsIgnoreCase("NEP")) {
 					CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$MainTxt_Grp$Side" + WhichSide 
 							+ "$img_Shadow*ACTIVE SET 0 \0", print_writers);
@@ -1500,7 +1523,7 @@ public class BugsAndMiniGfx
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$Data$SubText$Side" + WhichSide 
 						+ "$img_Sponsor*ACTIVE SET 0 \0", print_writers);
 				break;
-			case "Shift_F":
+			case "Shift_F":case "Alt_b":
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
 						+ "$img_Flag*ACTIVE SET 1 \0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide + 
@@ -1523,8 +1546,16 @@ public class BugsAndMiniGfx
 						+ "$txt_Runs*GEOM*TEXT SET " + battingCard.getRuns() + "\0", print_writers);
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$MainTxt_Grp$Side" + WhichSide 
 						+ "$txt_Balls*GEOM*TEXT SET " + battingCard.getBalls() + "\0", print_writers);
-				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
-						+ "$txt_Sub*GEOM*TEXT SET " + battingCard.getHowOutText() + "\0", print_writers);
+				switch(whatToProcess) {
+					case "Alt_b":
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
+								+ "$txt_Sub*GEOM*TEXT SET  b " + player.getTicker_name() + "\0", print_writers);
+						break;
+					default:
+						CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
+								+ "$txt_Sub*GEOM*TEXT SET " + battingCard.getHowOutText() + "\0", print_writers);
+						break;
+				}
 				
 				CricketFunctions.DoadWriteCommandToAllViz("-1 RENDERER*FRONT_LAYER*TREE*$Bugs_All$SubText$Side" + WhichSide 
 						+ "$img_Sponsor*ACTIVE SET 0 \0", print_writers);

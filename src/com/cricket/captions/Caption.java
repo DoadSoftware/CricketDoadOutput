@@ -600,14 +600,31 @@ public class Caption
 			case "Control_Shift_L": // Lt promo
 				status = this_lowerThirdGfx.populateLTMatchPromo(whatToProcess,whichSide,matchAllData);
 				break;
+			case "Control_u"://Bowler vs Batsman(LHS/RHS)
+				status = this_lowerThirdGfx.populateBowlerVSBatsman(whatToProcess,whichSide,matchAllData);
+				break;
+			case "Shift_G"://last few Overs
+				status = this_lowerThirdGfx.populateLastFewOvers(whatToProcess,whichSide,matchAllData);
+				break;
+			case "Alt_Shift_D":case "Alt_Shift_E":case "Alt_Shift_F":case "Alt_Shift_G":case "Alt_Shift_H":
+				status = this_lowerThirdGfx.populateTimeSince(whatToProcess, whichSide, matchAllData);
+				break;
+			case "Shift_W":
+				status = this_lowerThirdGfx.populatePlayerMatchesCatches(whatToProcess, whichSide, matchAllData);
+				break;
+			case "Alt_b":	
+				status = this_bugsAndMiniGfx.populateBowlerWicketSequencing(whatToProcess, matchAllData, whichSide);
+				break;
+			case "Control_Shift_X":
+				status = this_lowerThirdGfx.populatePlayerVsPlayer(whatToProcess, whichSide, matchAllData);
+				break;
 			case "Control_Shift_D":
 				status = this_fullFramesGfx.populateDoubleMatchIDAndPromo(whichSide, whatToProcess, matchAllData);
 				break;
 			case "Alt_Shift_Z":
 				status = this_fullFramesGfx.populateTeamLogoAndCaptain(whichSide, whatToProcess, matchAllData);
 				break;
-				
-			case "Shift_B": //Lt MATCH SUMMARY
+			case "Shift_B": //Lt MATCH SUMMARY 
 				status = this_lowerThirdGfx.populateL3rdMatchSummary(whatToProcess,whichSide,matchAllData);
 				break;
 			case "Shift_K"://FF curr part

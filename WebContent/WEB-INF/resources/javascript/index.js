@@ -64,16 +64,26 @@ function initialiseForm(whatToProcess,dataToProcess)
 		break;
 		
 	case 'UPDATE-MATCH-ON-OUTPUT-FORM':
-	
 		dataToProcess.match.inning.forEach(function(inn,index,arr){
-			document.getElementById('inning1_teamScore_lbl').innerHTML = dataToProcess.match.inning[0].batting_team.teamName4 + ' : ' + 
+			if(inn.inningNumber<=2){
+			 document.getElementById('inning1_teamScore_lbl').innerHTML = dataToProcess.match.inning[0].batting_team.teamName4 + ' : ' + 
 				parseInt(dataToProcess.match.inning[0].totalRuns) + '-' + parseInt(dataToProcess.match.inning[0].totalWickets) + ' (' + 
 				parseInt(dataToProcess.match.inning[0].totalOvers) + '.' + parseInt(dataToProcess.match.inning[0].totalBalls) + ')';
 				
-			document.getElementById('inning2_teamScore_lbl').innerHTML = dataToProcess.match.inning[1].batting_team.teamName4 + ' : ' + 
+			 document.getElementById('inning2_teamScore_lbl').innerHTML = dataToProcess.match.inning[1].batting_team.teamName4 + ' : ' + 
 				parseInt(dataToProcess.match.inning[1].totalRuns) + '-' + parseInt(dataToProcess.match.inning[1].totalWickets) + ' (' + 
 				parseInt(dataToProcess.match.inning[1].totalOvers) + '.' + parseInt(dataToProcess.match.inning[1].totalBalls) + ')';
-			
+		
+			}else if(inn.inningNumber>2 && inn.inningNumber<=4){
+			 document.getElementById('inning1_teamScore_lbl').innerHTML = dataToProcess.match.inning[2].batting_team.teamName4 + ' : ' + 
+				parseInt(dataToProcess.match.inning[2].totalRuns) + '-' + parseInt(dataToProcess.match.inning[2].totalWickets) + ' (' + 
+				parseInt(dataToProcess.match.inning[2].totalOvers) + '.' + parseInt(dataToProcess.match.inning[2].totalBalls) + ')';
+				
+			 document.getElementById('inning2_teamScore_lbl').innerHTML = dataToProcess.match.inning[3].batting_team.teamName4 + ' : ' + 
+				parseInt(dataToProcess.match.inning[3].totalRuns) + '-' + parseInt(dataToProcess.match.inning[3].totalWickets) + ' (' + 
+				parseInt(dataToProcess.match.inning[3].totalOvers) + '.' + parseInt(dataToProcess.match.inning[3].totalBalls) + ')';
+		
+			}
 			if(inn.isCurrentInning == 'YES'){
 				inn.battingCard.forEach(function(bc,index,arr){
 					if(inn.partnerships != null && inn.partnerships.length > 0) {
@@ -153,8 +163,6 @@ function processUserSelection(whichInput)
 
 function processUserSelectionData(whatToProcess,dataToProcess)
 {
-	
-
 	switch (whatToProcess) {
 	case 'IMPACT-CHANGE-ON':
 		processCricketProcedures('IMPACT-CHANGE-ON');
@@ -191,7 +199,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			processCricketProcedures('ANIMATE-OUT-SECOND_PLAYING');
 			break;
 		case '1': case '2': case '3': case '4':
-			if(session_match.setup.maxOvers > 0){
+			if(session_match.setup.maxOvers > 0 && session_match.setup.matchType !='TEST' ){
 				switch (dataToProcess) {
 				case '3': case '4': // Key 1 to 4
 					alert("3rd and 4th inning NOT available in a limited over match");
@@ -201,13 +209,13 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			document.getElementById('which_inning').value = dataToProcess;
 			document.getElementById('selected_inning').innerHTML = 'Selected Inning: ' + dataToProcess;
 			
-			if(dataToProcess == 1){
+			if(dataToProcess == 1 ||dataToProcess == 3){
 				document.getElementById('inning1_teamScore_lbl').style.backgroundColor ='#990000';
 				document.getElementById('inning2_teamScore_lbl').style.backgroundColor ='';
 				document.getElementById('inning1_teamScore_lbl').style.color ='white';
 				document.getElementById('inning2_teamScore_lbl').style.color ='';
 				
-			}else if(dataToProcess == 2){
+			}else if(dataToProcess == 2 ||dataToProcess == 4){
 				document.getElementById('inning2_teamScore_lbl').style.backgroundColor = '#990000';
 				document.getElementById('inning1_teamScore_lbl').style.backgroundColor = '';
 				document.getElementById('inning2_teamScore_lbl').style.color = 'white';
@@ -339,7 +347,7 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Alt_F6': case 'Shift_R': case 'Shift_A': case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'Shift_F7': case 'Control_Shift_F9':
 			case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_E': case 'Control_Shift_F': case 'Control_Shift_P': case 'Control_Shift_F1': case 'Control_Shift_D':
 			case 'Alt_Shift_Z': case 'Control_Shift_F7': case 'Shift_I': case 'Alt_Shift_C': case 'Control_Shift_F2': case 'Control_Shift_M': case 'Control_Shift_F4':
-			case 'Control_Shift_U': case 'Control_Shift_V': case 'Control_Shift_O':
+			case 'Control_Shift_U': case 'Control_Shift_V': case 'Control_Shift_O':case 'Control_u':case 'Shift_W':case "Alt_b": case "Shift_G":
 				addItemsToList(dataToProcess,null); 
 				break;
 			//changed shift_f11 to control_f11
@@ -350,6 +358,9 @@ function processUserSelectionData(whatToProcess,dataToProcess)
 			case 'Alt_F11': case 'r': case 'Shift_U': case 'Alt_j': case 'Alt_h': case 'Alt_Shift_L': //case 'Shift_F':
 			case 'Control_F8': case 'Alt_y': case '.': case '/': case 'Shift_V': case 'Alt_i': case 'b': case 'Shift_B': case 'Control_Shift_B':
 			case 'Alt_Shift_F3': case 'Control_Shift_R': case 'Control_Shift_F3': case 'Control_Shift_H': case "Control_Shift_I":
+			case "Alt_Shift_D":case "Alt_Shift_E":case "Alt_Shift_F":case "Alt_Shift_G":case "Alt_Shift_H":
+
+
 				/*switch(dataToProcess){
 				case 'Shift_F':
 					count++;
@@ -488,7 +499,16 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 									$('#selectWicketSequence option:selected').next().prop('selected', true);
 									document.getElementById('selectWicketSequence').setAttribute('onchange','setDropdownOptionForWicketSequence(0)');
 									setDropdownOptionForWicketSequence(0);
+							}else if(dataToProcess.split(',')[0] == 'Alt_b') {
+								if($('#selectWicketplayer option:last').val()){
+									
 								}
+								document.getElementById('selectWicketSequence').setAttribute('onchange','setDropdownOptionForWicketBowlerSequence(0)');
+								setDropdownOptionForWicketBowlerSequence(0);
+								$('#selectWicketplayer option:selected').next().prop('selected', true);
+								document.getElementById('selectWicketplayer').setAttribute('onchange','setDropdownOptionForWicketBowlerSequence(1)');
+								setDropdownOptionForWicketBowlerSequence(1);
+							}
 						}else {
 							processUserSelection($('#cancel_graphics_btn').attr('value','cancel_graphics_btn'));
 						}
@@ -507,7 +527,13 @@ function processCricketProcedures(whatToProcess,dataToProcess)
 					break;
 				case "GRAPHICS-OPTIONS_DATA":
 					//alert(JSON.stringify(data));
-					setPlayerInDropdown(data);
+					if(valueToProcess.includes("Control_Shift_X") || valueToProcess.includes("Control_u")||
+						valueToProcess.includes("Shift_W")){
+						setPlayerDropdown(data)
+					}else{
+						setPlayerInDropdown(data);
+					}
+				
 					break;	
 				default:
 					if(whatToProcess.includes("ANIMATE-IN-") || whatToProcess.includes("ANIMATE-OUT-")) {
@@ -570,6 +596,12 @@ function setDropdownOptionForWicketSequence(whichIndex)
 {
 	selected_options[0] = document.getElementById('which_inning').value;
 	selected_options[whichIndex+1] = $('#selectWicketSequence option:selected').val();
+}
+function setDropdownOptionForWicketBowlerSequence(whichIndex)
+{
+	selected_options[0] = document.getElementById('which_inning').value+ ","+
+		$('#selectWicketSequence option:selected').val();
+	selected_options[whichIndex+1] = $('#selectWicketplayer option:selected').val();
 }
 function getStrikeRate(totalRunsScored, totalBallsFaced, numberOfDecimals, defaultValue) {
     if (totalBallsFaced <= 0) {
@@ -925,8 +957,9 @@ function addItemsToList(whatToProcess,dataToProcess)
 	case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_Shift_F9': case 'Alt_Shift_C': case 'Control_Shift_L':
 	case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_E': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I': case 'Control_F11': case 'Control_Shift_M':
 	case 'Alt_Shift_R': case 'Control_Shift_U': case 'Control_Shift_V': case 'Control_4': case 'Shift_~': case 'Shift_!': case 'Control_Shift_F4': case 'Control_Shift_Z':
-	case 'Control_Shift_Y': case 'Alt_Shift_W':case "Control_Shift_F8":
+	case 'Control_Shift_Y': case 'Alt_Shift_W':case "Control_Shift_F8": case 'Control_Shift_X':case 'Control_u': case 'Shift_W':case "Shift_G":
 	 //InfoBar LeftBottom-Middle-BatPP-BallPP-LastXBalls-Batsman/Sponsor-RightBottom
+	case "Alt_b": 
 		$("#captions_div").hide();
 		$('#select_graphic_options_div').empty();
    		initialiseSelectedOptionsList();
@@ -1068,6 +1101,155 @@ function addItemsToList(whatToProcess,dataToProcess)
 					row.insertCell(j).appendChild(text);
 				}
 			}
+			break;
+		case "Shift_G":
+	    let label = document.createElement('label');
+	    label.setAttribute('for', 'selectFreeText'); 
+	    label.innerHTML = 'Overs:';	
+	    header_text.innerHTML = 'LAST FEW OVERS';
+	
+	    select = document.createElement('input');
+	    select.type = "text";
+	    select.id = 'selectFreeText';
+	    select.value = '5';
+	    select.setAttribute('onchange', "setTextBoxOptionToSelectOptionArray(0)");
+		let cell = row.insertCell(cellCount);
+	    cell.appendChild(label); 
+	    cell.appendChild(document.createTextNode(' '));
+	    cell.appendChild(select); 	
+	    setTextBoxOptionToSelectOptionArray(0);
+   		cellCount = cellCount + 1;
+   		 break;
+
+		case 'Control_Shift_X':case 'Control_u': case 'Shift_W':
+		switch(whatToProcess) {
+			 case 'Control_Shift_X':
+			 	header_text.innerHTML = 'Bowler vs Batsman';
+			  break;
+			 case 'Control_u':
+				 header_text.innerHTML = 'Bowler vs Batsman[LHS vs RHS]';
+			  break;
+			 case 'Shift_W':
+			 	header_text.innerHTML = 'Player matches and catches';
+			 	break;
+			}
+			
+			let selectH2HTeam = document.createElement('select');
+				selectH2HTeam.id = 'selectTeam';
+				selectH2HTeam.name = selectH2HTeam.id;
+				
+			    option = document.createElement('option');
+				option.value = session_match.setup.homeTeam.teamId;
+				option.text = session_match.setup.homeTeam.teamName2;
+				selectH2HTeam.appendChild(option);
+				
+				option = document.createElement('option');
+				option.value = session_match.setup.awayTeam.teamId;
+				option.text = session_match.setup.awayTeam.teamName2;
+				selectH2HTeam.appendChild(option);
+				
+				selectH2HTeam.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 0)");
+				row.insertCell(cellCount).appendChild(selectH2HTeam);
+				setDropdownOptionToSelectOptionArray($(selectH2HTeam),0);
+				
+				cellCount = cellCount + 1;
+				
+				let selection = document.createElement('select');
+				selection.id = 'selectTeamids';
+				selection.name = selection.id;
+				selection.style.width = 'auto';
+				selection.style.height = 'auto';
+				
+				selectH2HTeam.addEventListener('change', function() {
+	           	 selection.innerHTML = '';  
+	           	  if (parseInt(this.value, 10) === session_match.setup.homeTeam.teamId) {
+					session_match.setup.homeSquad.forEach(function(hs){
+						option = document.createElement('option');
+						option.value = hs.playerId;
+						option.text =  hs.full_name;
+						selection.appendChild(option);
+					});
+				  }else if (parseInt(this.value, 10) === session_match.setup.awayTeam.teamId) {
+						session_match.setup.awaySquad.forEach(function(hs){
+						option = document.createElement('option');
+						option.value = hs.playerId;
+						option.text = hs.full_name;
+						selection.appendChild(option);
+					});
+				  }
+				  	$(selection).trigger('change');
+	            });
+	        	selectH2HTeam.dispatchEvent(new Event('change'));
+				selection.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 1)");
+				row.insertCell(cellCount).appendChild(selection);
+				setDropdownOptionToSelectOptionArray($(selection),1);
+				
+				cellCount = cellCount + 1;
+				
+				switch (whatToProcess) {
+			        case 'Control_Shift_X':
+				        select = document.createElement('select');
+						select.id = 'selectDirection';
+						select.name = select.id;
+						['BowlerVsBatsman','BatsmanVsBowler'].forEach(function(teams){
+							option = document.createElement('option');
+							option.value = teams;
+							option.text = teams;
+							select.appendChild(option);
+						});
+						row.insertCell(cellCount).appendChild(select);
+						cellCount = cellCount + 1;
+						
+			            row.insertCell(cellCount).id = 'Player';
+			            cellCount++;	
+			            	 let directionValue = select.value;	
+			            	   $(select).on('change', function() {
+						        directionValue = select.value; 						
+						        processCricketProcedures(
+						            "GRAPHICS-OPTIONS_DATA",whatToProcess + "," +
+			                		(selected_options[1] || $(selection).find('option').first().val()) + "," 
+						             + document.getElementById('which_inning').value + "," + directionValue 
+						        );
+						    });
+			                 $(selection).on('change', function () {
+				                let selectedPlayerId = $(this).val();				
+				                processCricketProcedures(
+				                    "GRAPHICS-OPTIONS_DATA",
+				                    whatToProcess + "," + selectedPlayerId + "," +
+				                    document.getElementById('which_inning').value+","+
+				                    directionValue );
+			            });			
+			            processCricketProcedures(
+			                "GRAPHICS-OPTIONS_DATA",
+			                whatToProcess + "," +
+			                (selected_options[1] || $(selection).find('option').first().val()) + "," +
+			                document.getElementById('which_inning').value+","+directionValue);
+			            break;
+			           case 'Shift_W':
+			           	select = document.createElement('select');
+						select.id = 'selectProfile';
+						select.name = select.id;
+						const Caption = [
+						    { value: 'U19ODI', text: 'U19 ODI' },
+						    { value: 'LIST A', text: 'LIST A' },
+						    { value: 'ACCU19', text: 'ACC U19' },
+						    { value: 'SA TRI-NATION 2023-24', text: 'SA TRI-NATION' }
+						];
+						
+						Caption.forEach(optionData => {
+						    option = document.createElement('option');
+						    option.value = optionData.value;
+						    option.text = optionData.text;
+						    select.appendChild(option);
+						});
+						select.setAttribute('onchange',"setDropdownOptionToSelectOptionArray(this, 2)");
+						row.insertCell(cellCount).appendChild(select);
+						removeSelectDuplicates(select.id);
+						setDropdownOptionToSelectOptionArray($(select),2);
+						cellCount = cellCount + 1;
+						
+					break;
+			    }
 			break;
 		case 'Alt_Shift_R':
 			header_text.innerHTML = 'TEAM FIXTURES/RESULTS';
@@ -1758,6 +1940,50 @@ function addItemsToList(whatToProcess,dataToProcess)
 			setDropdownOptionForWicketSequence(0);
 			cellCount = cellCount + 1;
 		break;
+		case "Alt_b": 
+		    header_text.innerHTML = 'BOWLER WICKET SEQUENCE';
+		    select = document.createElement('select');
+		    select.id = 'selectWicketSequence';
+		    select.name = select.id;
+		    session_match.match.inning.forEach(function(inn) {
+		        if (inn.inningNumber == document.getElementById('which_inning').value) {
+		            inn.bowlingCard.forEach(function(bc) {
+		                option = document.createElement('option');
+		                option.value = bc.playerId;
+		                option.text = bc.player.full_name;    
+		                select.appendChild(option);
+		            });
+		        }
+		    });		
+		    select.setAttribute('onchange',"setDropdownOptionForWicketBowlerSequence(this, 0)");
+			row.insertCell(0).appendChild(select);
+			setDropdownOptionForWicketBowlerSequence(0);
+			cellCount = cellCount + 1;	
+				    
+		    select = document.createElement('select');
+		    select.id = 'selectWicketplayer';
+		    select.name = select.id;
+		    
+		    $('#selectWicketSequence').on('change', function() { 
+				$('#selectWicketplayer').empty()
+			    session_match.match.inning.forEach(function(inn) {
+			        if (inn.inningNumber == document.getElementById('which_inning').value) {
+			             inn.battingCard.forEach(function(bc) {
+						if (bc.howOutPartTwo && $('#selectWicketSequence option:selected').text().toUpperCase().includes(bc.howOutPartTwo.split(' ')[1])) {
+							option = document.createElement('option');
+			                option.value = bc.playerId;
+			                option.text = bc.player.full_name;    
+			                select.appendChild(option);
+						}   
+			          });
+			        }
+			    });
+			    select.setAttribute('onchange',"setDropdownOptionForWicketBowlerSequence(this, 1)");
+				row.insertCell(1).appendChild(select);
+				setDropdownOptionForWicketBowlerSequence(1);
+			}).trigger('change');
+			cellCount = 2;
+		    break;
 		case 'Alt_q':
 			header_text.innerHTML = 'POTT';
 			select = document.createElement('select');
@@ -6128,7 +6354,8 @@ function addItemsToList(whatToProcess,dataToProcess)
 			case 'Alt_c': case 'Control_F12': case 'Shift_F12': case 'F1': case 'Shift_F7': case 'Control_Shift_F9': case 'Alt_Shift_C': case 'Control_Shift_L':
 			case 'Shift_Z': case 'Shift_X': case 'Control_i': case 'Control_Shift_E': case 'Control_Shift_F': case 'Control_Shift_P': case 'Shift_I': 
 			case 'Control_F11': case 'Control_Shift_M': case 'Alt_Shift_R': case 'Control_Shift_U': case 'Control_Shift_V': case 'Control_4': case 'Control_Shift_F4':
-			case 'Control_Shift_Z': case 'Control_Shift_Y': case 'Alt_Shift_W': 
+			case 'Control_Shift_Z': case 'Control_Shift_Y': case 'Alt_Shift_W':  case 'Control_Shift_X':case 'Control_u': case 'Shift_W':case "Alt_b":
+			case "Shift_G": 
 				option = document.createElement('input');
 				option.type = 'button';
 				option.name = 'populate_btn';
@@ -6164,4 +6391,25 @@ function addItemsToList(whatToProcess,dataToProcess)
 		document.getElementById('select_graphic_options_div').style.display = '';
 		break;
 	}
+}
+function setPlayerDropdown(dataToProcess) {
+ 	const playerCell = document.getElementById('Player');
+ 	playerCell.innerHTML = ''; 	
+    const playerSelect = document.createElement('select');
+    playerSelect.id = 'playerDropdown';
+    
+    dataToProcess.forEach(player => {
+        const option = document.createElement('option');
+        option.value = player.id;  
+        option.text = player.name; 
+        playerSelect.appendChild(option);
+      });
+
+	playerSelect.selectedIndex = 0;
+    $(playerSelect).on('change', function() {
+		setDropdownOptionToSelectOptionArray($(this), 3);
+    });        
+    playerCell.appendChild(playerSelect);
+	setDropdownOptionToSelectOptionArray($(this), 3);
+	$(playerSelect).trigger('change');
 }

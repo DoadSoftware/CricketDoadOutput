@@ -297,7 +297,7 @@
 					               <td class="table-cell-black">INNINGS BUILDER LT</td><td class="table-cell-blue">CTRL+I</td>
 					               <td class="table-cell-black">ALL SESSION</td><td class="table-cell-blue">CTRL+J</td>
 					               <td class="table-cell-black">TALL ROUNDER LT - BATTING TEAM</td><td class="table-cell-blue">CTRL+N</td>
-					               <td class="table-cell-black">PLAYER v PLAYER LT</td><td class="table-cell-blue">CTRL+O</td>
+					               <td class="table-cell-black">PLAYER v PLAYER LT</td><td class="table-cell-blue">Control + Shift + X</td>
 					               <td class="table-cell-black">TEAM BOUNDARIES</td><td class="table-cell-blue">CTRL+Q</td>
 					               <td class="table-cell-black">ALL ROUNDER LT - BOWLING TEAM</td><td class="table-cell-blue">CTRL+R</td>
 					               <td class="table-cell-black">ALL BOWLER'S SPEED COMPARISON LT</td><td class="table-cell-blue">CTRL+T</td>
@@ -308,7 +308,7 @@
 					               <td class="table-cell-black">PHOTO BOWL STYLE</td><td class="table-cell-blue">CTRL+F4</td>
 					               <td class="table-cell-black">SPEEDS THIS OVER LT</td><td class="table-cell-blue">CTRL+F8</td>
 					               <td class="table-cell-black">BOWLER V LHB/RHB LT</td><td class="table-cell-blue">CTRL+U</td>
-					               <td class="table-cell-black">LAST FEW OVERS LT</td><td class="table-cell-blue">CTRL+V</td>
+					               <td class="table-cell-black">LAST FEW OVERS LT</td><td class="table-cell-blue">Shift + G</td>
 					               <td class="table-cell-black">COMMENTATOR LT</td><td class="table-cell-blue">CTRL + SHIFT+C</td>
 				               </tr>
 					             <tr>
