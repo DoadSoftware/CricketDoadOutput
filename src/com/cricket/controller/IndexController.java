@@ -833,49 +833,51 @@ public class IndexController
 			log_fifty = CricketFunctions.extractLogFifty("COMBINED_PAST_CURRENT_MATCH_DATA",CricketUtil.BOWLER,cricketService, cricket_matches, session_match, null);
 			Collections.sort(log_fifty,new CricketFunctions.LogFiftyWicketsComparator());
 			return (List<T>) log_fifty;
+//		case "Control_z": case "Control_x":
+//			
+//	        List<Tournament> tournaments = CricketFunctions.extractTournamentData("CURRENT_MATCH_DATA", false, 
+//	        	headToHead, cricketService, session_match, past_tournament_stats);
+//
+//	        switch (whatToProcess) {
+//			case "Control_z":
+//		        Collections.sort(tournaments, new CricketFunctions.TopBatsmenBestStatsComparator());
+//		        return (List<T>) tournaments;
+//			case "Control_x":
+//		        Collections.sort(tournaments, new CricketFunctions.TopBowlerBestStatsComparator());
+//		        return (List<T>) tournaments;
+//			}
+//			return null;	
 		case "Control_z": case "Control_x":
-			switch (whatToProcess) {
-			case "Control_z":
-				FullFramesGfx.top_batsman_beststat.clear();
-		        
-		        List<Tournament> tournaments = CricketFunctions.extractTournamentData("CURRENT_MATCH_DATA", false, headToHead, cricketService, 
+			 List<Tournament> tournaments = CricketFunctions.extractTournamentData("CURRENT_MATCH_DATA", false, headToHead, cricketService, 
 		                session_match, past_tournament_stats);
-		        
-		        for(Tournament tour : tournaments) {
-		        	
-		        	for(BestStats bs : tour.getBatsman_best_Stats()) {	
-		        		
-		        		if(!FullFramesGfx.top_batsman_beststat.stream().anyMatch(ply -> 
-		        			   ply.getPlayerId()== tour.getPlayerId() && ply.getMatchNumber() != null && isNumeric(ply.getMatchNumber().replaceAll("\\D+", "")) && 
-		        				        isNumeric(session_match.getMatch().getMatchFileName().replaceAll("\\D+", "")) &&
-		        			  Integer.parseInt(ply.getMatchNumber().replaceAll("\\D+", "")) == Integer.parseInt(session_match.getMatch()
-		        			  .getMatchFileName().replaceAll("\\D+", "")))) {
-		        			FullFramesGfx.top_batsman_beststat.add(CricketFunctions.getProcessedBatsmanBestStats(bs));
-		        		}
-	        		}
-		        }
-		        Collections.sort(FullFramesGfx.top_batsman_beststat, new CricketFunctions.BatsmanBestStatsComparator());
-			 return (List<T>) FullFramesGfx.top_batsman_beststat;
-				
-			case "Control_x":
-				List<BestStats> top_ten_beststat = new ArrayList<BestStats>();
-		        for(Tournament tourn : CricketFunctions.extractTournamentData("CURRENT_MATCH_DATA", false, headToHead, cricketService, 
-		                session_match, past_tournament_stats)) {
+			
+			List<BestStats> top_ten_beststat = new ArrayList<BestStats>();
+	        for(Tournament tourn : tournaments) {
+	        	
+				switch (whatToProcess) {
+				case "Control_z":
+					//top_ten_beststat.clear();
+		            for(BestStats bs : tourn.getBatsman_best_Stats()) {
+//		            	System.out.println("bs = " + bs.getPlayer().getFull_name() + "  runs = " + bs.getBestEquation());
+		            	top_ten_beststat.add(CricketFunctions.getProcessedBatsmanBestStats(bs));
+		            	//break;
+		            }
+					Collections.sort(top_ten_beststat,new CricketFunctions.BatsmanBestStatsComparator());
+					break;
+				case "Control_x":
 		            for(BestStats bs : tourn.getBowler_best_Stats()) {
 		            	top_ten_beststat.add(CricketFunctions.getProcessedBowlerBestStats(bs));
 		            }
-		        }
-				Collections.sort(top_ten_beststat,new CricketFunctions.BowlerBestStatsComparator());
-				return (List<T>) top_ten_beststat;
-			}
-			return null;
+					Collections.sort(top_ten_beststat,new CricketFunctions.BowlerBestStatsComparator());
+					break;
+				}
+	        }
+	        
+			return (List<T>) top_ten_beststat;	
 		}
 		return null;
 	}
 	
-	private static boolean isNumeric(String str) {
-	    return str != null && !str.isEmpty() && str.matches("\\d+"); // Matches one or more digits
-	}
 	public void GetVariousDBData(String typeOfUpdate, Configuration config) throws StreamReadException, DatabindException, 
 		IllegalAccessException, InvocationTargetException, JAXBException, IOException, CloneNotSupportedException, InterruptedException, URISyntaxException
 	{

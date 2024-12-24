@@ -1130,6 +1130,7 @@ public class FullFramesGfx
 		tournament_stats = new ArrayList<Tournament>();
 		tape_ball = new ArrayList<BestStats>();
 		log_fifty = new ArrayList<BestStats>();
+		top_batsman_beststat.clear();
 		
 		if(!whatToProcess.split(",")[0].equalsIgnoreCase("Shift_V") && !whatToProcess.split(",")[0].equalsIgnoreCase("Alt_Shift_W")) {
 			if(FirstPlayerId <= 0) {
@@ -1162,6 +1163,30 @@ public class FullFramesGfx
 				default:
 					tournament_stats = CricketFunctions.extractTournamentData("CURRENT_MATCH_DATA", false, headToHead, cricketService, 
 							matchAllData, past_tournament_stats);
+					
+					switch (whatToProcess.split(",")[0]) {
+					case "Control_z": case "Control_x":
+						for(Tournament tourn : tournament_stats) {
+							switch (whatToProcess.split(",")[0]) {
+							case "Control_z":
+								//top_ten_beststat.clear();
+					            for(BestStats bs : tourn.getBatsman_best_Stats()) {
+//					            	System.out.println("bs = " + bs.getPlayer().getFull_name() + "  runs = " + bs.getBestEquation());
+					            	top_batsman_beststat.add(CricketFunctions.getProcessedBatsmanBestStats(bs));
+					            	//break;
+					            }
+								Collections.sort(top_batsman_beststat,new CricketFunctions.BatsmanBestStatsComparator());
+								break;
+							case "Control_x":
+					            for(BestStats bs : tourn.getBowler_best_Stats()) {
+					            	top_batsman_beststat.add(CricketFunctions.getProcessedBowlerBestStats(bs));
+					            }
+								Collections.sort(top_batsman_beststat,new CricketFunctions.BowlerBestStatsComparator());
+								break;
+							}
+				        }
+						break;
+					}
 					break;
 				}
 			}else {
